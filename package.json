@@ -7,10 +7,13 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "check": "pnpm run check:astro && pnpm run check:lint && pnpm run check:prettier",
+    "check:astro": "astro check",
+    "check:lint": "eslint .",
+    "check:prettier": "prettier --check .",
+    "fix": "pnpm run fix:eslint && pnpm run fix:prettier",
+    "fix:eslint": "eslint . --fix",
+    "fix:prettier": "prettier --write ."
   },
   "dependencies": {
     "astro": "^5.16.6"
