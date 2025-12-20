@@ -16,11 +16,15 @@
     "fix:prettier": "prettier --write ."
   },
   "dependencies": {
-    "astro": "^5.16.6"
+    "astro": "^5.16.6",
+    "js-yaml": "^4.1.1",
+    "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
     "@eslint/js": "^9.39.2",
+    "@types/js-yaml": "^4.0.9",
+    "@types/lodash.merge": "^4.6.9",
     "@typescript-eslint/parser": "^8.50.0",
     "astro-eslint-parser": "^1.2.2",
     "eslint": "^9.39.2",
