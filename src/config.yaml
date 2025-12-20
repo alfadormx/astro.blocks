@@ -1,0 +1,74 @@
+# yaml-language-server: $schema=../.vscode/site-config/config-schema.json
+
+site:
+  name: 'Astro Components'
+  site: 'https://astroblocks.alfador.mx'
+  base: '/'
+  trailingSlash: false
+
+i18n:
+  default: 'en'
+  languages:
+    - code: 'en'
+      locale: 'en-US'
+      basePath: '/'
+      direction: 'ltr'
+      label: 'English'
+    - code: 'es'
+      locale: 'es-ES'
+      basePath: '/es'
+      direction: 'ltr'
+      label: 'Español'
+
+metadata:
+  title:
+    default: 'Astro Components'
+    template: '%s | Astro Components'
+    separator: '|'
+  description: 'Modern, accessible Astro components for building amazing web experiences.'
+  author: 'Your Name'
+  keywords: [] # Optional, less important now but can help
+  robots:
+    index: true
+    follow: true
+  canonical: 'https://astroblocks.alfador.mx' # Base, will be extended per page
+
+  # Favicons and icons
+  icons:
+    favicon: '/favicon.ico'
+    apple: '/apple-touch-icon.png'
+    icon32: '/favicon-32x32.png'
+    icon16: '/favicon-16x16.png'
+
+  # Open Graph
+  openGraph:
+    site_name: 'Astro Components'
+    locale: 'en_US'
+    type: 'website'
+    images:
+      - url: '/og-image.png'
+        width: 1200
+        height: 630
+        alt: 'Astro Components'
+
+  # Twitter
+  twitter:
+    handle: '@yourhandle'
+    site: '@yourhandle'
+    cardType: 'summary_large_image'
+
+  # Theme
+  theme:
+    color: '#000000'
+    colorScheme: 'light dark'
+
+  # Per-language overrides (consistent with i18n structure)
+  localized:
+    es:
+      title:
+        default: 'Componentes Astro'
+        template: '%s | Componentes Astro'
+      description: 'Componentes Astro modernos y accesibles para crear experiencias web increíbles.'
+      openGraph:
+        site_name: 'Componentes Astro'
+        locale: 'es_ES'

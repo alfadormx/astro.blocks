@@ -1,0 +1,144 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "site": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "site": { "type": "string" },
+        "base": { "type": "string" },
+        "trailingSlash": { "type": "boolean" }
+      },
+      "required": ["name", "site", "base", "trailingSlash"],
+      "additionalProperties": false
+    },
+    "i18n": {
+      "type": "object",
+      "properties": {
+        "default": { "type": "string" },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": { "type": "string" },
+              "locale": { "type": "string" },
+              "basePath": { "type": "string" },
+              "direction": { "type": "string", "enum": ["ltr", "rtl"] },
+              "label": { "type": "string" }
+            },
+            "required": ["code", "locale", "basePath", "direction", "label"]
+          }
+        }
+      },
+      "required": ["default", "languages"],
+      "additionalProperties": false
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "object",
+          "properties": {
+            "default": { "type": "string" },
+            "template": { "type": "string" },
+            "separator": { "type": "string" }
+          },
+          "required": ["default", "template"]
+        },
+        "description": { "type": "string" },
+        "author": { "type": "string" },
+        "keywords": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "robots": {
+          "type": "object",
+          "properties": {
+            "index": { "type": "boolean" },
+            "follow": { "type": "boolean" }
+          },
+          "required": ["index", "follow"]
+        },
+        "canonical": { "type": "string" },
+        "icons": {
+          "type": "object",
+          "properties": {
+            "favicon": { "type": "string" },
+            "apple": { "type": "string" },
+            "icon32": { "type": "string" },
+            "icon16": { "type": "string" }
+          }
+        },
+        "openGraph": {
+          "type": "object",
+          "properties": {
+            "site_name": { "type": "string" },
+            "locale": { "type": "string" },
+            "type": { "type": "string" },
+            "images": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "url": { "type": "string" },
+                  "width": { "type": "integer" },
+                  "height": { "type": "integer" },
+                  "alt": { "type": "string" }
+                },
+                "required": ["url", "width", "height"]
+              }
+            }
+          },
+          "required": ["site_name", "locale", "type", "images"]
+        },
+        "twitter": {
+          "type": "object",
+          "properties": {
+            "handle": { "type": "string" },
+            "site": { "type": "string" },
+            "cardType": {
+              "type": "string",
+              "enum": ["summary", "summary_large_image", "app", "player"]
+            }
+          },
+          "required": ["handle", "site", "cardType"]
+        },
+        "theme": {
+          "type": "object",
+          "properties": {
+            "color": { "type": "string" },
+            "colorScheme": { "type": "string" }
+          }
+        },
+        "localized": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "object",
+                "properties": {
+                  "default": { "type": "string" },
+                  "template": { "type": "string" }
+                }
+              },
+              "description": { "type": "string" },
+              "openGraph": {
+                "type": "object",
+                "properties": {
+                  "site_name": { "type": "string" },
+                  "locale": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": ["title", "description", "robots", "openGraph", "twitter"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["site", "i18n", "metadata"]
+}
