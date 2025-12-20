@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../.vscode/site-config/config-schema.json
 
 site:
-  name: 'Astro Components'
+  name: 'Astro Blocks'
   site: 'https://astrocomponents.dev'
   base: '/'
   trailingSlash: false
@@ -22,10 +22,10 @@ i18n:
 
 metadata:
   title:
-    default: 'Astro Components'
-    template: '%s | Astro Components'
+    default: 'Astro Blocks'
+    template: '%s | Astro Blocks'
     separator: '|'
-  description: 'Modern, accessible Astro components for building amazing web experiences.'
+  description: 'Modern, accessible Astro Blocks for building amazing web experiences.'
   author: 'Your Name'
   keywords: [] # Optional, less important now but can help
   robots:
@@ -42,14 +42,14 @@ metadata:
 
   # Open Graph
   openGraph:
-    site_name: 'Astro Components'
+    site_name: 'Astro Blocks'
     locale: 'en_US'
     type: 'website'
     images:
       - url: '/og-image.png'
         width: 1200
         height: 630
-        alt: 'Astro Components'
+        alt: 'Astro Blocks'
 
   # Twitter
   twitter:
