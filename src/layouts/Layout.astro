@@ -3,6 +3,7 @@ import '~/styles/global.css';
 import type { MetaData } from '~/types/metadata.types';
 import Analytics from '~/components/HtmlHeader/Analytics.astro';
 import Metadata from '~/components/HtmlHeader/Metadata.astro';
+import SiteVerification from '~/components/HtmlHeader/SiteVerification.astro';
 
 export type Props = {
   metadata?: Partial<MetaData>;
@@ -20,6 +21,7 @@ export type Props = {
 
     <Analytics />
     <Metadata {...Astro.props.metadata} />
+    <SiteVerification />
   </head>
   <body>
     <slot />

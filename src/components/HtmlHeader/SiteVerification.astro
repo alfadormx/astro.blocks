@@ -1,0 +1,9 @@
+---
+import { SITE } from 'site-config';
+---
+
+{
+  SITE.googleSiteVerificationId ? (
+    <meta name="google-site-verification" content={SITE.googleSiteVerificationId} />
+  ) : null
+}

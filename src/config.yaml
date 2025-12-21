@@ -5,6 +5,7 @@ site:
   site: 'https://astroblocks.alfador.mx'
   base: '/'
   trailingSlash: false
+  googleSiteVerificationId: 'some-verification-id'
 
 i18n:
   default: 'en'

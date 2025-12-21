@@ -8,7 +8,8 @@
         "name": { "type": "string" },
         "site": { "type": "string" },
         "base": { "type": "string" },
-        "trailingSlash": { "type": "boolean" }
+        "trailingSlash": { "type": "boolean" },
+        "googleSiteVerificationId": { "type": "string" }
       },
       "required": ["name", "site", "base", "trailingSlash"],
       "additionalProperties": false
