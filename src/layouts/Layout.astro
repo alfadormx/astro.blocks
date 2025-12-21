@@ -1,5 +1,8 @@
 ---
 import '~/styles/global.css';
+
+import { I18N } from 'site-config';
+
 import type { MetaData } from '~/types/metadata.types';
 import CommonMeta from '~/components/HtmlHeader/CommonMeta.astro';
 import Favicons from '~/components/HtmlHeader/Favicons.astro';
@@ -8,18 +11,28 @@ import Metadata from '~/components/HtmlHeader/Metadata.astro';
 import SiteVerification from '~/components/HtmlHeader/SiteVerification.astro';
 
 export type Props = {
+  langCode?: string;
   metadata?: Partial<MetaData>;
 };
+
+const { metadata, langCode } = Astro.props;
+
+// Find the language configuration
+const currentLang =
+  I18N.languages.find((lang: (typeof I18N.languages)[number]) => lang.code === langCode) ||
+  I18N.languages.find((lang: (typeof I18N.languages)[number]) => lang.code === I18N.default) ||
+  I18N.languages[0];
+
+const htmlLang = currentLang.code;
+const htmlDir = currentLang.direction;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={htmlLang} dir={htmlDir}>
   <head>
-    <title>Astro Basics</title>
-
     <CommonMeta />
     <Favicons />
-    <Metadata {...Astro.props.metadata} />
+    <Metadata {...metadata} />
     <SiteVerification />
     <Analytics />
   </head>
