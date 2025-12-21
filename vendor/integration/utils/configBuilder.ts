@@ -5,6 +5,7 @@ export type Config = {
   site?: SiteConfig;
   metadata?: MetaDataConfig;
   i18n?: I18NConfig;
+  analytics?: AnalyticsConfig;
 };
 
 export interface SiteConfig {
@@ -33,6 +34,15 @@ export interface I18NLanguage {
 export interface I18NConfig {
   default: string;
   languages: I18NLanguage[];
+}
+
+export interface AnalyticsConfig {
+  vendors?: {
+    googleAnalytics?: {
+      id: string;
+      partytown?: boolean;
+    };
+  };
 }
 
 const DEFAULT_SITE_NAME = 'Website';
@@ -91,8 +101,17 @@ const getI18N = (config: Config) => {
   return value as I18NConfig;
 };
 
+const getAnalytics = (config: Config) => {
+  const _default = {
+    vendors: {},
+  };
+
+  return merge({}, _default, config?.analytics ?? {}) as AnalyticsConfig;
+};
+
 export default (config: Config) => ({
   SITE: getSite(config),
   I18N: getI18N(config),
   METADATA: getMetadata(config),
+  ANALYTICS: getAnalytics(config),
 });
