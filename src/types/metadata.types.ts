@@ -1,7 +1,7 @@
 export interface MetaData {
   title?: {
     default: string;
-    template: string;
+    template?: string;
     separator?: string;
   };
   ignoreTitleTemplate?: boolean;
