@@ -1,0 +1,132 @@
+---
+import { SEO } from 'astro-seo';
+import { SITE, METADATA, I18N } from 'site-config';
+import type { MetaData } from '~/types/metadata.types';
+import merge from 'lodash.merge';
+
+export type Props = Partial<MetaData>;
+
+const props = Astro.props;
+
+// Deep merge METADATA with props (props take priority)
+const merged = merge({}, METADATA, props) as MetaData;
+
+// Handle special cases
+const title = merged.title?.default ?? SITE.name;
+const titleTemplate = merged.ignoreTitleTemplate ? undefined : merged.title?.template;
+const description = merged.description ?? '';
+const canonical = merged.canonical ?? SITE.site;
+const charset = merged.charset ?? 'UTF-8';
+
+// Robots
+const robots = {
+  index: props.robots?.index !== undefined ? props.robots.index : (merged.robots?.index ?? true),
+  follow:
+    props.robots?.follow !== undefined ? props.robots.follow : (merged.robots?.follow ?? true),
+};
+
+// OpenGraph
+const openGraph = merged.openGraph
+  ? {
+      basic: {
+        title: merged.openGraph.site_name ?? SITE.name,
+        type: merged.openGraph.type ?? 'website',
+        image: merged.openGraph.images?.[0]?.url ?? '',
+        url: merged.openGraph.url ?? canonical,
+      },
+      optional: {
+        siteName: merged.openGraph.site_name ?? SITE.name,
+        locale: merged.openGraph.locale ?? I18N.languages[0]?.locale ?? 'en_US',
+        localeAlternate: merged.openGraph.localeAlternate,
+        description: merged.openGraph.description,
+        audio: merged.openGraph.audio,
+        video: merged.openGraph.video,
+        determiner: merged.openGraph.determiner,
+      },
+      image: merged.openGraph.images?.[0]
+        ? {
+            url: merged.openGraph.images[0].url,
+            width: merged.openGraph.images[0].width,
+            height: merged.openGraph.images[0].height,
+            alt: merged.openGraph.images[0].alt,
+            type: merged.openGraph.images[0].type,
+            secureUrl: merged.openGraph.images[0].secureUrl,
+          }
+        : undefined,
+      article: merged.openGraph.article
+        ? {
+            publishedTime: merged.openGraph.article.publishedTime,
+            modifiedTime: merged.openGraph.article.modifiedTime,
+            expirationTime: merged.openGraph.article.expirationTime,
+            authors: merged.openGraph.article.authors,
+            section: merged.openGraph.article.section,
+            tags: merged.openGraph.article.tags,
+          }
+        : undefined,
+    }
+  : undefined;
+
+// Twitter
+const twitter = merged.twitter
+  ? {
+      card: (merged.twitter.cardType ?? 'summary_large_image') as
+        | 'summary'
+        | 'summary_large_image'
+        | 'player'
+        | 'app',
+      site: merged.twitter.site,
+      creator: merged.twitter.handle,
+      title: merged.twitter.title,
+      description: merged.twitter.description,
+      image: merged.twitter.image,
+      imageAlt: merged.twitter.imageAlt,
+    }
+  : undefined;
+
+// Language alternates
+const languageAlternates = I18N.languages.map(
+  (lang: { code: string; basePath: string; locale?: string }) => ({
+    href: `${SITE.site}${lang.basePath}`,
+    hrefLang: lang.code,
+  })
+);
+
+// Extended meta and link tags
+const extendedMeta = [
+  merged.author ? { name: 'author', content: merged.author } : null,
+  merged.keywords && merged.keywords.length > 0
+    ? { name: 'keywords', content: merged.keywords.join(', ') }
+    : null,
+].filter((item): item is { name: string; content: string } => item !== null);
+
+const extendedLinks = [
+  merged.icons?.favicon ? { rel: 'icon', href: merged.icons.favicon } : null,
+  merged.icons?.apple ? { rel: 'apple-touch-icon', href: merged.icons.apple } : null,
+  merged.icons?.icon16
+    ? { rel: 'icon', type: 'image/png', sizes: '16x16', href: merged.icons.icon16 }
+    : null,
+  merged.icons?.icon32
+    ? { rel: 'icon', type: 'image/png', sizes: '32x32', href: merged.icons.icon32 }
+    : null,
+].filter((item): item is NonNullable<typeof item> => item !== null);
+---
+
+<SEO
+  charset={charset}
+  title={title}
+  titleTemplate={titleTemplate}
+  description={description}
+  canonical={canonical}
+  noindex={!robots.index}
+  nofollow={!robots.follow}
+  openGraph={openGraph}
+  twitter={twitter}
+  languageAlternates={languageAlternates}
+  extend={{
+    meta: extendedMeta,
+    link: extendedLinks,
+  }}
+/>
+
+{merged.theme?.color && <meta name="theme-color" content={merged.theme.color} />}
+{merged.theme?.colorScheme && <meta name="color-scheme" content={merged.theme.colorScheme} />}

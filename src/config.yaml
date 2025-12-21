@@ -27,11 +27,17 @@ metadata:
     separator: '|'
   description: 'Modern, accessible Astro Blocks for building amazing web experiences.'
   author: 'Your Name'
-  keywords: [] # Optional, less important now but can help
+  keywords: ['astro', 'components', 'blocks', 'web', 'design']
+  charset: 'UTF-8'
   robots:
     index: true
     follow: true
   canonical: 'https://astroblocks.alfador.mx' # Base, will be extended per page
+
+  # Theme
+  theme:
+    color: '#FFFFFF'
+    colorScheme: 'light dark'
 
   # Favicons and icons
   icons:
@@ -44,23 +50,25 @@ metadata:
   openGraph:
     site_name: 'Astro Blocks'
     locale: 'en_US'
+    localeAlternate: ['es_ES']
     type: 'website'
+    description: 'Build modern web experiences with accessible Astro Blocks'
     images:
       - url: '/og-image.png'
         width: 1200
         height: 630
         alt: 'Astro Blocks'
+        type: 'image/png'
 
   # Twitter
   twitter:
     handle: '@yourhandle'
     site: '@yourhandle'
     cardType: 'summary_large_image'
-
-  # Theme
-  theme:
-    color: '#000000'
-    colorScheme: 'light dark'
+    title: 'Astro Blocks'
+    description: 'Modern, accessible Astro Blocks for building amazing web experiences.'
+    image: '/twitter-image.png'
+    imageAlt: 'Astro Blocks Preview'
 
   # Per-language overrides (consistent with i18n structure)
   localized:

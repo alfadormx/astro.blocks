@@ -9,6 +9,7 @@ export interface MetaData {
   description?: string;
   author?: string;
   keywords?: string[];
+  charset?: string;
 
   canonical?: string;
 
@@ -41,6 +42,8 @@ export interface MetaDataImage {
   width?: number;
   height?: number;
   alt?: string;
+  secureUrl?: string;
+  type?: string;
 }
 
 export interface MetaDataOpenGraph {
@@ -49,13 +52,31 @@ export interface MetaDataOpenGraph {
   siteName?: string; // Alias for compatibility
   images?: Array<MetaDataImage>;
   locale?: string;
+  localeAlternate?: string[];
   type?: string;
+  description?: string;
+  audio?: string;
+  video?: string;
+  determiner?: string;
+  // Article specific
+  article?: {
+    publishedTime?: string;
+    modifiedTime?: string;
+    expirationTime?: string;
+    authors?: string[];
+    section?: string;
+    tags?: string[];
+  };
 }
 
 export interface MetaDataTwitter {
   handle?: string;
   site?: string;
   cardType?: string;
+  title?: string;
+  description?: string;
+  image?: string;
+  imageAlt?: string;
 }
 
 export interface MetaDataTheme {

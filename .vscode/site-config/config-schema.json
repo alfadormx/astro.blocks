@@ -53,13 +53,13 @@
           "type": "array",
           "items": { "type": "string" }
         },
+        "charset": { "type": "string" },
         "robots": {
           "type": "object",
           "properties": {
             "index": { "type": "boolean" },
             "follow": { "type": "boolean" }
-          },
-          "required": ["index", "follow"]
+          }
         },
         "canonical": { "type": "string" },
         "icons": {
@@ -76,7 +76,16 @@
           "properties": {
             "site_name": { "type": "string" },
             "locale": { "type": "string" },
+            "localeAlternate": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
             "type": { "type": "string" },
+            "description": { "type": "string" },
+            "url": { "type": "string" },
+            "audio": { "type": "string" },
+            "video": { "type": "string" },
+            "determiner": { "type": "string" },
             "images": {
               "type": "array",
               "items": {
@@ -85,13 +94,31 @@
                   "url": { "type": "string" },
                   "width": { "type": "integer" },
                   "height": { "type": "integer" },
-                  "alt": { "type": "string" }
+                  "alt": { "type": "string" },
+                  "type": { "type": "string" },
+                  "secureUrl": { "type": "string" }
                 },
                 "required": ["url", "width", "height"]
               }
+            },
+            "article": {
+              "type": "object",
+              "properties": {
+                "publishedTime": { "type": "string" },
+                "modifiedTime": { "type": "string" },
+                "expirationTime": { "type": "string" },
+                "authors": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                },
+                "section": { "type": "string" },
+                "tags": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
             }
-          },
-          "required": ["site_name", "locale", "type", "images"]
+          }
         },
         "twitter": {
           "type": "object",
@@ -101,9 +128,12 @@
             "cardType": {
               "type": "string",
               "enum": ["summary", "summary_large_image", "app", "player"]
-            }
-          },
-          "required": ["handle", "site", "cardType"]
+            },
+            "title": { "type": "string" },
+            "description": { "type": "string" },
+            "image": { "type": "string" },
+            "imageAlt": { "type": "string" }
+          }
         },
         "theme": {
           "type": "object",
@@ -136,7 +166,7 @@
           }
         }
       },
-      "required": ["title", "description", "robots", "openGraph", "twitter"],
+      "required": ["title", "description"],
       "additionalProperties": false
     }
   },

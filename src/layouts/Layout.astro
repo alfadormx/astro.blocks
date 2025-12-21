@@ -1,5 +1,11 @@
 ---
 import '~/styles/global.css';
+import type { MetaData } from '~/types/metadata.types';
+import Metadata from '~/components/HtmlHeader/Metadata.astro';
+
+export type Props = {
+  metadata?: Partial<MetaData>;
+};
 ---
 
 <!doctype html>
@@ -10,6 +16,8 @@ import '~/styles/global.css';
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>Astro Basics</title>
+
+    <Metadata {...Astro.props.metadata} />
   </head>
   <body>
     <slot />
