@@ -1,0 +1,25 @@
+---
+import { METADATA } from 'site-config';
+---
+
+{METADATA.icons?.favicon && <link rel="icon" href={METADATA.icons.favicon} />}
+{
+  METADATA.icons?.apple && (
+    <link rel="apple-touch-icon" sizes="180x180" href={METADATA.icons.apple} />
+  )
+}
+{
+  METADATA.icons?.icon16 && (
+    <link rel="icon" type="image/png" sizes="16x16" href={METADATA.icons.icon16} />
+  )
+}
+{
+  METADATA.icons?.icon32 && (
+    <link rel="icon" type="image/png" sizes="32x32" href={METADATA.icons.icon32} />
+  )
+}
+{
+  METADATA.icons?.maskIcon && (
+    <link rel="mask-icon" href={METADATA.icons.maskIcon} color={METADATA.icons.maskIconColor} />
+  )
+}
