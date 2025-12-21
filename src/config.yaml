@@ -80,3 +80,9 @@ metadata:
       openGraph:
         site_name: 'Componentes Astro'
         locale: 'es_ES'
+
+analytics:
+  vendors:
+    googleAnalytics:
+      id: 'G-XXXXXXXXXX'
+      partytown: true

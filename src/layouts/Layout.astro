@@ -1,6 +1,7 @@
 ---
 import '~/styles/global.css';
 import type { MetaData } from '~/types/metadata.types';
+import Analytics from '~/components/HtmlHeader/Analytics.astro';
 import Metadata from '~/components/HtmlHeader/Metadata.astro';
 
 export type Props = {
@@ -17,6 +18,7 @@ export type Props = {
     <meta name="generator" content={Astro.generator} />
     <title>Astro Basics</title>
 
+    <Analytics />
     <Metadata {...Astro.props.metadata} />
   </head>
   <body>

@@ -170,5 +170,24 @@
       "additionalProperties": false
     }
   },
+  "analytics": {
+    "type": "object",
+    "properties": {
+      "vendors": {
+        "type": "object",
+        "properties": {
+          "googleAnalytics": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "partytown": { "type": "boolean" }
+            },
+            "required": ["id"]
+          }
+        }
+      }
+    },
+    "additionalProperties": false
+  },
   "required": ["site", "i18n", "metadata"]
 }
