@@ -69,7 +69,9 @@
             "favicon": { "type": "string" },
             "apple": { "type": "string" },
             "icon32": { "type": "string" },
-            "icon16": { "type": "string" }
+            "icon16": { "type": "string" },
+            "maskIcon": { "type": "string" },
+            "maskIconColor": { "type": "string" }
           }
         },
         "openGraph": {

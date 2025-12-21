@@ -2,6 +2,7 @@
 import '~/styles/global.css';
 import type { MetaData } from '~/types/metadata.types';
 import CommonMeta from '~/components/HtmlHeader/CommonMeta.astro';
+import Favicons from '~/components/HtmlHeader/Favicons.astro';
 import Analytics from '~/components/HtmlHeader/Analytics.astro';
 import Metadata from '~/components/HtmlHeader/Metadata.astro';
 import SiteVerification from '~/components/HtmlHeader/SiteVerification.astro';
@@ -21,9 +22,10 @@ export type Props = {
     <title>Astro Basics</title>
 
     <CommonMeta />
-    <Analytics />
+    <Favicons />
     <Metadata {...Astro.props.metadata} />
     <SiteVerification />
+    <Analytics />
   </head>
   <body>
     <slot />
