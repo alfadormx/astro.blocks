@@ -4,12 +4,11 @@ import '~/styles/global.css';
 import { I18N } from 'site-config';
 
 import type { MetaData } from '~/types/metadata.types';
-import CommonMeta from '~/components/HtmlHeader/CommonMeta.astro';
-import Favicons from '~/components/HtmlHeader/Favicons.astro';
-import Analytics from '~/components/HtmlHeader/Analytics.astro';
-import Metadata from '~/components/HtmlHeader/Metadata.astro';
-import SiteVerification from '~/components/HtmlHeader/SiteVerification.astro';
-
+import CommonMeta from '~/components/htmlheader/CommonMeta.astro';
+import Favicons from '~/components/htmlheader/Favicons.astro';
+import Analytics from '~/components/htmlheader/Analytics.astro';
+import Metadata from '~/components/htmlheader/Metadata.astro';
+import SiteVerification from '~/components/htmlheader/SiteVerification.astro';
 export type Props = {
   langCode?: string;
   metadata?: Partial<MetaData>;

@@ -1,0 +1,41 @@
+---
+import type { ContainerProps } from '../../types/container.types';
+
+const props = Astro.props as ContainerProps;
+const ContainerTag = props.as ?? 'section';
+const containerWidthType = props.containerWidthType ?? 'full';
+const widthClass = props.width ?? '';
+const minHeightClass = props.minHeight ?? '';
+const items = props.items ?? [];
+const className = props.className ?? props.class ?? '';
+
+// Outer container classes
+let outerClass = className;
+if (containerWidthType === 'boxed' || containerWidthType === 'custom') {
+  outerClass += ' mx-auto';
+}
+if (widthClass) {
+  outerClass += ` ${widthClass}`;
+}
+if (minHeightClass) {
+  outerClass += ` ${minHeightClass}`;
+}
+
+// Inner wrapper classes (for full-width layouts with constrained content)
+let innerClass = 'w-full';
+if (containerWidthType === 'full' && widthClass) {
+  innerClass += ` ${widthClass} mx-auto`;
+}
+---
+
+<ContainerTag class={outerClass.trim()}>
+  <div class={innerClass.trim()}>
+    {
+      items && items.length > 0 ? (
+        items.map((item) => <div class={item.class} id={item.id} set:html={item.content} />)
+      ) : (
+        <slot />
+      )
+    }
+  </div>
+</ContainerTag>

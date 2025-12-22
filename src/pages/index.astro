@@ -1,4 +1,5 @@
 ---
+import Container from '~/components/blocks/Container.astro';
 import Layout from '../layouts/Layout.astro';
 
 var metadata = {
@@ -9,4 +10,8 @@ var metadata = {
 };
 ---
 
-<Layout metadata={metadata} />
+<Layout metadata={metadata}>
+  <Container as="section" containerWidthType="boxed" className="border border-red-500">
+    <p>This is content inside a Container component.</p>
+  </Container>
+</Layout>
