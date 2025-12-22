@@ -2,34 +2,47 @@
 import type { ContainerProps } from '../../types/container.types';
 
 const props = Astro.props as ContainerProps;
-const ContainerTag = props.as ?? 'section';
+const ContainerTag = props.htmlTag ?? 'section';
 const containerWidthType = props.containerWidthType ?? 'full';
+const contentWidthType = props.contentWidthType ?? 'boxed';
+const contentBoxWidth = props.contentBoxWidth ?? 'max-w-[var(--container-max-width)]';
 const widthClass = props.width ?? '';
 const minHeightClass = props.minHeight ?? '';
 const items = props.items ?? [];
-const className = props.className ?? props.class ?? '';
+const containerClassName = props.containerClassName ?? props.containerClass ?? '';
+const contentClassName = props.contentClassName ?? props.contentClass ?? '';
 
-// Outer container classes
-let outerClass = className;
-if (containerWidthType === 'boxed' || containerWidthType === 'custom') {
-  outerClass += ' mx-auto';
+let containerClass = '';
+if (containerWidthType === 'boxed') {
+  containerClass += 'mx-auto max-w-[var(--container-max-width)] ';
+} else if (containerWidthType === 'custom') {
+  containerClass += 'mx-auto ';
 }
 if (widthClass) {
-  outerClass += ` ${widthClass}`;
+  containerClass += `${widthClass} `;
 }
 if (minHeightClass) {
-  outerClass += ` ${minHeightClass}`;
+  containerClass += `${minHeightClass} `;
+}
+if (containerClassName) {
+  containerClass += containerClassName;
 }
 
-// Inner wrapper classes (for full-width layouts with constrained content)
-let innerClass = 'w-full';
-if (containerWidthType === 'full' && widthClass) {
-  innerClass += ` ${widthClass} mx-auto`;
+let contentClass = 'w-full';
+if (containerWidthType === 'full') {
+  if (contentWidthType === 'boxed') {
+    contentClass += ` ${contentBoxWidth} mx-auto`;
+  } else if (contentWidthType === 'full') {
+    contentClass += ' w-full';
+  }
+}
+if (contentClassName) {
+  contentClass += ` ${contentClassName}`;
 }
 ---
 
-<ContainerTag class={outerClass.trim()}>
-  <div class={innerClass.trim()}>
+<ContainerTag class={containerClass.trim()}>
+  <div class={contentClass.trim()}>
     {
       items && items.length > 0 ? (
         items.map((item) => <div class={item.class} id={item.id} set:html={item.content} />)

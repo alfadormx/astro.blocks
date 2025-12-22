@@ -13,6 +13,7 @@ export type ContainerTag =
   | 'a';
 
 export type ContainerWidthType = 'full' | 'boxed' | 'custom';
+export type ContentWidthType = 'full' | 'boxed';
 
 export interface ContainerItem {
   id?: string;
@@ -22,10 +23,14 @@ export interface ContainerItem {
 }
 
 export interface ContainerProps {
-  as?: ContainerTag;
-  class?: string;
-  className?: string;
+  htmlTag?: ContainerTag;
+  containerClass?: string;
+  containerClassName?: string;
   containerWidthType?: ContainerWidthType;
+  contentClass?: string;
+  contentClassName?: string;
+  contentWidthType?: ContentWidthType;
+  contentBoxWidth?: string; // Tailwind class for inner max-width
   width?: string; // Tailwind class or CSS value
   minHeight?: string; // Tailwind class or CSS value
   items?: ContainerItem[];

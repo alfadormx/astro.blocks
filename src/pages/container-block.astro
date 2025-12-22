@@ -1,0 +1,91 @@
+---
+import Container from '~/components/blocks/Container.astro';
+import Layout from '../layouts/Layout.astro';
+
+var metadata = {
+  title: {
+    default: 'Home',
+  },
+  description: 'Welcome to Astro Blocks - Modern components for the web',
+};
+---
+
+<Layout metadata={metadata}>
+  <h1 class="text-2xl font-bold mb-6">Container Component Demo & Documentation</h1>
+  <ul class="mb-8 list-disc pl-6">
+    <li><b>containerWidthType</b>: Controls the outer container (background/section) width.</li>
+    <li>
+      <b>contentWidthType</b>: Controls the inner content width (only when containerWidthType is <code
+        >full</code
+      >).
+    </li>
+    <li>
+      <b>contentBoxWidth</b>: Custom max-width for boxed content (default: <code
+        >max-w-[var(--container-max-width)]</code
+      >).
+    </li>
+  </ul>
+
+  <h2 class="text-xl font-semibold mt-8 mb-2">
+    1. Full-bleed background, boxed content (default max-width)
+  </h2>
+  <Container
+    htmlTag="section"
+    containerWidthType="full"
+    contentWidthType="boxed"
+    containerClassName="border border-blue-500 mb-8"
+    contentClassName="border border-red-500"
+  >
+    <p class="text-center py-8">Full-width container, boxed content (default max-width).</p>
+  </Container>
+
+  <h2 class="text-xl font-semibold mt-8 mb-2">
+    2. Full-bleed background, boxed content (custom 50% width)
+  </h2>
+  <Container
+    htmlTag="section"
+    containerWidthType="full"
+    contentWidthType="boxed"
+    contentBoxWidth="max-w-1/2"
+    containerClassName="border border-blue-500 mb-8"
+    contentClassName="border border-red-500"
+  >
+    <p class="text-center py-8">Full-width container, boxed content at <b>50%</b> width.</p>
+  </Container>
+
+  <h2 class="text-xl font-semibold mt-8 mb-2">3. Full-bleed background, full-width content</h2>
+  <Container
+    htmlTag="section"
+    containerWidthType="full"
+    contentWidthType="full"
+    containerClassName="border border-blue-500 mb-8"
+    contentClassName="border border-red-500"
+  >
+    <p class="text-center py-8">Full-width container, full-width content.</p>
+  </Container>
+
+  <h2 class="text-xl font-semibold mt-8 mb-2">4. Boxed container (background and content boxed)</h2>
+  <Container
+    htmlTag="section"
+    containerWidthType="boxed"
+    containerClassName="border border-blue-500 mb-8"
+    contentClassName="border border-red-500"
+  >
+    <p class="text-center py-8">Boxed container (background and content boxed).</p>
+  </Container>
+
+  <h2 class="text-xl font-semibold mt-8 mb-2">
+    5. Custom container width (background and content custom)
+  </h2>
+  <Container
+    htmlTag="section"
+    containerWidthType="custom"
+    width="w-3/4"
+    containerClassName="border border-blue-500 mb-8"
+    contentClassName="border border-red-500"
+  >
+    <p class="text-center py-8">
+      Custom container width (background and content custom, e.g., 75%).
+    </p>
+  </Container>
+</Layout>
