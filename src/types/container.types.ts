@@ -33,5 +33,6 @@ export interface ContainerProps {
   contentBoxWidth?: string; // Tailwind class for inner max-width
   width?: string; // Tailwind class or CSS value
   minHeight?: string; // Tailwind class or CSS value
+  equalHeight?: boolean;
   items?: ContainerItem[];
 }

@@ -9,6 +9,7 @@ const contentBoxWidth = props.contentBoxWidth ?? 'max-w-[var(--container-max-wid
 const widthClass = props.width ?? '';
 const minHeightClass = props.minHeight ?? '';
 const items = props.items ?? [];
+const equalHeight = props.equalHeight ?? false;
 const containerClassName = props.containerClassName ?? props.containerClass ?? '';
 const contentClassName = props.contentClassName ?? props.contentClass ?? '';
 
@@ -38,6 +39,9 @@ if (containerWidthType === 'full') {
 }
 if (contentClassName) {
   contentClass += ` ${contentClassName}`;
+}
+if (equalHeight) {
+  contentClass += ' items-stretch';
 }
 ---
 
