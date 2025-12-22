@@ -14,6 +14,7 @@ export type ContainerTag =
 
 export type ContainerWidthType = 'full' | 'boxed' | 'custom';
 export type ContentWidthType = 'full' | 'boxed';
+export type OverflowType = 'visible' | 'hidden' | 'auto';
 
 export interface ContainerItem {
   id?: string;
@@ -23,6 +24,7 @@ export interface ContainerItem {
 }
 
 export interface ContainerProps {
+  overflow?: OverflowType;
   htmlTag?: ContainerTag;
   containerClass?: string;
   containerClassName?: string;

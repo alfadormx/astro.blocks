@@ -10,6 +10,7 @@ const widthClass = props.width ?? '';
 const minHeightClass = props.minHeight ?? '';
 const items = props.items ?? [];
 const equalHeight = props.equalHeight ?? false;
+const overflow = props.overflow ?? undefined;
 const containerClassName = props.containerClassName ?? props.containerClass ?? '';
 const contentClassName = props.contentClassName ?? props.contentClass ?? '';
 
@@ -24,6 +25,9 @@ if (widthClass) {
 }
 if (minHeightClass) {
   containerClass += `${minHeightClass} `;
+}
+if (overflow) {
+  containerClass += ` overflow-${overflow}`;
 }
 if (containerClassName) {
   containerClass += containerClassName;
