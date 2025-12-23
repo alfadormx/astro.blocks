@@ -18,6 +18,13 @@ export type OverflowType = 'visible' | 'hidden' | 'auto';
 
 export type BackgroundAttachment = 'scroll' | 'fixed';
 
+export interface BackgroundConfig {
+  image?: string;
+  video?: string;
+  attachment?: BackgroundAttachment;
+  class?: string;
+}
+
 export interface ContainerItem {
   id?: string;
   content?: string; // simple string content; can be expanded to richer types later
@@ -26,10 +33,7 @@ export interface ContainerItem {
 }
 
 export interface ContainerProps {
-  backgroundClass?: string;
-  backgroundImage?: string;
-  backgroundVideo?: string;
-  backgroundAttachment?: BackgroundAttachment;
+  background?: BackgroundConfig;
   overflow?: OverflowType;
   htmlTag?: ContainerTag;
   containerClass?: string;

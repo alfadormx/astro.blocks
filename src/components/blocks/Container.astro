@@ -13,10 +13,11 @@ const equalHeight = props.equalHeight ?? false;
 const overflow = props.overflow ?? undefined;
 const containerClassName = props.containerClassName ?? props.containerClass ?? '';
 const contentClassName = props.contentClassName ?? props.contentClass ?? '';
-const backgroundClass = props.backgroundClass ?? '';
-const backgroundImage = props.backgroundImage ?? '';
-const backgroundVideo = props.backgroundVideo ?? '';
-const backgroundAttachment = props.backgroundAttachment ?? 'scroll';
+
+const backgroundClass = props.background?.class ?? '';
+const backgroundImage = props.background?.image ?? '';
+const backgroundVideo = props.background?.video ?? '';
+const backgroundAttachment = props.background?.attachment ?? 'scroll';
 
 let containerClass = backgroundClass ? backgroundClass + ' ' : '';
 if (containerWidthType === 'boxed') {

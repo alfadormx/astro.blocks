@@ -104,9 +104,9 @@ var metadata = {
   <!-- Section 2: Backgrounds -->
   <h2 class="text-3xl font-bold mt-12 mb-4">Backgrounds</h2>
   <p class="mb-8">
-    Add visual richness with background images, videos, colors, or gradients using <code
-      >backgroundImage</code
-    >, <code>backgroundVideo</code>, or <code>backgroundClass</code>.
+    Add visual richness with background images, videos, colors, or gradients using the <code
+      >background</code
+    > prop object.
   </p>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">1. Background Image (with parallax effect)</h3>
@@ -115,8 +115,10 @@ var metadata = {
     containerWidthType="full"
     contentWidthType="boxed"
     minHeight="min-h-64"
-    backgroundImage="https://images.pexels.com/photos/1629236/pexels-photo-1629236.jpeg"
-    backgroundAttachment="fixed"
+    background={{
+      image: 'https://images.pexels.com/photos/1629236/pexels-photo-1629236.jpeg',
+      attachment: 'fixed',
+    }}
     containerClassName="mb-8"
     contentClassName="py-12"
   >
@@ -131,7 +133,7 @@ var metadata = {
     containerWidthType="full"
     contentWidthType="boxed"
     minHeight="min-h-64"
-    backgroundVideo="https://www.pexels.com/download/video/1918465/"
+    background={{ video: 'https://www.pexels.com/download/video/1918465/' }}
     containerClassName="mb-8"
     contentClassName="py-12"
   >
@@ -146,7 +148,7 @@ var metadata = {
     containerWidthType="full"
     contentWidthType="boxed"
     minHeight="min-h-64"
-    backgroundClass="bg-blue-600"
+    background={{ class: 'bg-blue-600' }}
     containerClassName="mb-8"
     contentClassName="py-12"
   >
@@ -161,7 +163,7 @@ var metadata = {
     containerWidthType="full"
     contentWidthType="boxed"
     minHeight="min-h-64"
-    backgroundClass="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500"
+    background={{ class: 'bg-gradient-to-r from-purple-500 via-pink-500 to-red-500' }}
     containerClassName="mb-8"
     contentClassName="py-12"
   >
