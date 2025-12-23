@@ -11,8 +11,20 @@ var metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <h1 class="text-2xl font-bold mb-6">Container Component Demo & Documentation</h1>
-  <ul class="mb-8 list-disc pl-6">
+  <h1 class="text-2xl font-bold mb-6">Container Block Documentation & Examples</h1>
+  <p class="mb-8">
+    The Container block provides flexible layout control with support for various width
+    configurations and rich background options.
+  </p>
+
+  <!-- Section 1: Container & Content Width -->
+  <h2 class="text-3xl font-bold mt-12 mb-4">Container & Content Width</h2>
+  <p class="mb-4">
+    Control how your container and content are sized using <code>containerWidthType</code> and <code
+      >contentWidthType</code
+    >.
+  </p>
+  <ul class="mb-8 list-disc list-inside">
     <li><b>containerWidthType</b>: Controls the outer container (background/section) width.</li>
     <li>
       <b>contentWidthType</b>: Controls the inner content width (only when containerWidthType is <code
@@ -26,9 +38,9 @@ var metadata = {
     </li>
   </ul>
 
-  <h2 class="text-xl font-semibold mt-8 mb-2">
+  <h3 class="text-xl font-semibold mt-8 mb-2">
     1. Full-bleed background, boxed content (default max-width)
-  </h2>
+  </h3>
   <Container
     htmlTag="section"
     containerWidthType="full"
@@ -39,9 +51,9 @@ var metadata = {
     <p class="text-center py-8">Full-width container, boxed content (default max-width).</p>
   </Container>
 
-  <h2 class="text-xl font-semibold mt-8 mb-2">
+  <h3 class="text-xl font-semibold mt-8 mb-2">
     2. Full-bleed background, boxed content (custom 50% width)
-  </h2>
+  </h3>
   <Container
     htmlTag="section"
     containerWidthType="full"
@@ -53,7 +65,7 @@ var metadata = {
     <p class="text-center py-8">Full-width container, boxed content at <b>50%</b> width.</p>
   </Container>
 
-  <h2 class="text-xl font-semibold mt-8 mb-2">3. Full-bleed background, full-width content</h2>
+  <h3 class="text-xl font-semibold mt-8 mb-2">3. Full-bleed background, full-width content</h3>
   <Container
     htmlTag="section"
     containerWidthType="full"
@@ -64,7 +76,7 @@ var metadata = {
     <p class="text-center py-8">Full-width container, full-width content.</p>
   </Container>
 
-  <h2 class="text-xl font-semibold mt-8 mb-2">4. Boxed container (background and content boxed)</h2>
+  <h3 class="text-xl font-semibold mt-8 mb-2">4. Boxed container (background and content boxed)</h3>
   <Container
     htmlTag="section"
     containerWidthType="boxed"
@@ -74,9 +86,9 @@ var metadata = {
     <p class="text-center py-8">Boxed container (background and content boxed).</p>
   </Container>
 
-  <h2 class="text-xl font-semibold mt-8 mb-2">
+  <h3 class="text-xl font-semibold mt-8 mb-2">
     5. Custom container width (background and content custom)
-  </h2>
+  </h3>
   <Container
     htmlTag="section"
     containerWidthType="custom"
@@ -86,6 +98,75 @@ var metadata = {
   >
     <p class="text-center py-8">
       Custom container width (background and content custom, e.g., 75%).
+    </p>
+  </Container>
+
+  <!-- Section 2: Backgrounds -->
+  <h2 class="text-3xl font-bold mt-12 mb-4">Backgrounds</h2>
+  <p class="mb-8">
+    Add visual richness with background images, videos, colors, or gradients using <code
+      >backgroundImage</code
+    >, <code>backgroundVideo</code>, or <code>backgroundClass</code>.
+  </p>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">1. Background Image (with parallax effect)</h3>
+  <Container
+    htmlTag="section"
+    containerWidthType="full"
+    contentWidthType="boxed"
+    minHeight="min-h-64"
+    backgroundImage="https://images.pexels.com/photos/1629236/pexels-photo-1629236.jpeg"
+    backgroundAttachment="fixed"
+    containerClassName="mb-8"
+    contentClassName="py-12"
+  >
+    <p class="text-center py-8 text-white drop-shadow-lg bg-black/30 rounded">
+      Full-width container with a <b>fixed</b> background image (parallax effect).
+    </p>
+  </Container>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">2. Background Video</h3>
+  <Container
+    htmlTag="section"
+    containerWidthType="full"
+    contentWidthType="boxed"
+    minHeight="min-h-64"
+    backgroundVideo="https://www.pexels.com/download/video/1918465/"
+    containerClassName="mb-8"
+    contentClassName="py-12"
+  >
+    <p class="text-center py-8 text-white drop-shadow-lg bg-black/30 rounded">
+      Container with a looping <b>background video</b>.
+    </p>
+  </Container>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">3. Background Color</h3>
+  <Container
+    htmlTag="section"
+    containerWidthType="full"
+    contentWidthType="boxed"
+    minHeight="min-h-64"
+    backgroundClass="bg-blue-600"
+    containerClassName="mb-8"
+    contentClassName="py-12"
+  >
+    <p class="text-center py-8 text-white drop-shadow-lg bg-black/30 rounded">
+      Container with a solid <b>background color</b> (Tailwind: bg-blue-600).
+    </p>
+  </Container>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">4. Background Gradient</h3>
+  <Container
+    htmlTag="section"
+    containerWidthType="full"
+    contentWidthType="boxed"
+    minHeight="min-h-64"
+    backgroundClass="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500"
+    containerClassName="mb-8"
+    contentClassName="py-12"
+  >
+    <p class="text-center py-8 text-white drop-shadow-lg bg-black/30 rounded">
+      Container with a <b>gradient background</b> (Tailwind gradient utilities).
     </p>
   </Container>
 </Layout>
