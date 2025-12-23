@@ -1,0 +1,220 @@
+---
+import ThreeColumnContainer from '~/components/blocks/ThreeColumnContainer.astro';
+import Layout from '../layouts/Layout.astro';
+
+var metadata = {
+  title: {
+    default: 'Three Column Container',
+  },
+  description: 'Three Column Container Block - Equal 1/3 split layout',
+};
+---
+
+<Layout metadata={metadata}>
+  <h1 class="text-2xl font-bold mb-6">Three Column Container Block</h1>
+  <p class="mb-8">
+    A pre-built layout wrapper for three equal columns. Perfect for features, services, or card
+    layouts.
+  </p>
+
+  <h2 class="text-3xl font-bold mt-12 mb-4">Basic Examples</h2>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">1. Basic Three Column Layout</h3>
+  <ThreeColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    border={{ width: 'border', color: 'border-gray-300' }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1" class="bg-blue-500 text-white p-6 rounded text-center">
+      <h3 class="text-xl font-bold mb-2">Column 1</h3>
+      <p>First column content.</p>
+    </div>
+    <div slot="column2" class="bg-green-500 text-white p-6 rounded text-center">
+      <h3 class="text-xl font-bold mb-2">Column 2</h3>
+      <p>Second column content.</p>
+    </div>
+    <div slot="column3" class="bg-purple-500 text-white p-6 rounded text-center">
+      <h3 class="text-xl font-bold mb-2">Column 3</h3>
+      <p>Third column content.</p>
+    </div>
+  </ThreeColumnContainer>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">2. Feature Cards</h3>
+  <ThreeColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    gap="gap-8"
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1" class="text-center">
+      <div class="text-5xl mb-4">🚀</div>
+      <h3 class="text-xl font-bold mb-2">Fast Performance</h3>
+      <p class="text-gray-600">Lightning-fast load times and optimized performance.</p>
+    </div>
+    <div slot="column2" class="text-center">
+      <div class="text-5xl mb-4">🔒</div>
+      <h3 class="text-xl font-bold mb-2">Secure</h3>
+      <p class="text-gray-600">Enterprise-grade security for your peace of mind.</p>
+    </div>
+    <div slot="column3" class="text-center">
+      <div class="text-5xl mb-4">💡</div>
+      <h3 class="text-xl font-bold mb-2">Easy to Use</h3>
+      <p class="text-gray-600">Intuitive interface that anyone can master.</p>
+    </div>
+  </ThreeColumnContainer>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">3. With Background Gradient</h3>
+  <ThreeColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    background={{ class: 'bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500' }}
+    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
+      <h3 class="text-xl font-bold mb-2">Service 1</h3>
+      <p>Premium quality service with attention to detail.</p>
+    </div>
+    <div slot="column2" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
+      <h3 class="text-xl font-bold mb-2">Service 2</h3>
+      <p>Expert support available 24/7 for your needs.</p>
+    </div>
+    <div slot="column3" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
+      <h3 class="text-xl font-bold mb-2">Service 3</h3>
+      <p>Flexible plans tailored to your requirements.</p>
+    </div>
+  </ThreeColumnContainer>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">4. Responsive (Stacks on Mobile)</h3>
+  <ThreeColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    border={{ width: 'border', color: 'border-gray-300' }}
+    responsive={true}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1" class="bg-orange-500 text-white p-6 rounded text-center">
+      <h3 class="text-xl font-bold mb-2">Mobile Friendly</h3>
+      <p>Stacks vertically on small screens.</p>
+    </div>
+    <div slot="column2" class="bg-red-500 text-white p-6 rounded text-center">
+      <h3 class="text-xl font-bold mb-2">Tablet Ready</h3>
+      <p>Responsive by default.</p>
+    </div>
+    <div slot="column3" class="bg-pink-500 text-white p-6 rounded text-center">
+      <h3 class="text-xl font-bold mb-2">Desktop Optimized</h3>
+      <p>Three columns on larger screens.</p>
+    </div>
+  </ThreeColumnContainer>
+
+  <h2 class="text-3xl font-bold mt-12 mb-4">Practical Use Cases</h2>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">5. Team Members</h3>
+  <ThreeColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    gap="gap-8"
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1" class="text-center">
+      <div class="w-32 h-32 bg-blue-500 rounded-full mx-auto mb-4"></div>
+      <h3 class="text-xl font-bold mb-1">John Doe</h3>
+      <p class="text-gray-600 mb-2">CEO & Founder</p>
+      <p class="text-sm">Leading the company with vision and passion.</p>
+    </div>
+    <div slot="column2" class="text-center">
+      <div class="w-32 h-32 bg-green-500 rounded-full mx-auto mb-4"></div>
+      <h3 class="text-xl font-bold mb-1">Jane Smith</h3>
+      <p class="text-gray-600 mb-2">CTO</p>
+      <p class="text-sm">Building innovative technical solutions.</p>
+    </div>
+    <div slot="column3" class="text-center">
+      <div class="w-32 h-32 bg-purple-500 rounded-full mx-auto mb-4"></div>
+      <h3 class="text-xl font-bold mb-1">Mike Johnson</h3>
+      <p class="text-gray-600 mb-2">Lead Designer</p>
+      <p class="text-sm">Creating beautiful user experiences.</p>
+    </div>
+  </ThreeColumnContainer>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">6. Pricing Plans</h3>
+  <ThreeColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    gap="gap-6"
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1" class="border-2 border-gray-300 rounded-lg p-6">
+      <h3 class="text-xl font-bold mb-2">Basic</h3>
+      <div class="text-3xl font-bold mb-4">$9<span class="text-lg text-gray-600">/mo</span></div>
+      <ul class="space-y-2 mb-6">
+        <li class="flex items-start gap-2">
+          <span class="text-green-600">✓</span>
+          <span>5 Projects</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-green-600">✓</span>
+          <span>Basic Support</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-green-600">✓</span>
+          <span>1 GB Storage</span>
+        </li>
+      </ul>
+      <button class="w-full bg-gray-200 text-gray-800 py-2 rounded hover:bg-gray-300">
+        Get Started
+      </button>
+    </div>
+    <div
+      slot="column2"
+      class="border-2 border-blue-500 rounded-lg p-6 shadow-lg transform scale-105"
+    >
+      <div class="text-xs bg-blue-500 text-white px-2 py-1 rounded inline-block mb-2">POPULAR</div>
+      <h3 class="text-xl font-bold mb-2">Pro</h3>
+      <div class="text-3xl font-bold mb-4">$29<span class="text-lg text-gray-600">/mo</span></div>
+      <ul class="space-y-2 mb-6">
+        <li class="flex items-start gap-2">
+          <span class="text-green-600">✓</span>
+          <span>Unlimited Projects</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-green-600">✓</span>
+          <span>Priority Support</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-green-600">✓</span>
+          <span>10 GB Storage</span>
+        </li>
+      </ul>
+      <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+        Get Started
+      </button>
+    </div>
+    <div slot="column3" class="border-2 border-gray-300 rounded-lg p-6">
+      <h3 class="text-xl font-bold mb-2">Enterprise</h3>
+      <div class="text-3xl font-bold mb-4">$99<span class="text-lg text-gray-600">/mo</span></div>
+      <ul class="space-y-2 mb-6">
+        <li class="flex items-start gap-2">
+          <span class="text-green-600">✓</span>
+          <span>Unlimited Everything</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-green-600">✓</span>
+          <span>24/7 Support</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-green-600">✓</span>
+          <span>Unlimited Storage</span>
+        </li>
+      </ul>
+      <button class="w-full bg-gray-200 text-gray-800 py-2 rounded hover:bg-gray-300">
+        Contact Sales
+      </button>
+    </div>
+  </ThreeColumnContainer>
+</Layout>
