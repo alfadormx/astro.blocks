@@ -168,4 +168,134 @@ var metadata = {
       Container with a <b>gradient background</b> (Tailwind gradient utilities).
     </p>
   </Container>
+
+  <!-- Section 3: Layout -->
+  <h2 class="text-3xl font-bold mt-12 mb-4">Layout</h2>
+  <p class="mb-8">
+    Control how child elements are arranged using the <code>layout</code> prop with Flexbox or Grid.
+  </p>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">1. Flex Row (Horizontal)</h3>
+  <Container
+    htmlTag="section"
+    containerWidthType="full"
+    layout={{ type: 'flex', class: 'flex-row gap-4 items-center justify-between' }}
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    border={{ width: 'border', color: 'border-gray-300' }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div class="bg-blue-500 text-white p-4 rounded">Item 1</div>
+    <div class="bg-green-500 text-white p-4 rounded">Item 2</div>
+    <div class="bg-purple-500 text-white p-4 rounded">Item 3</div>
+  </Container>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">2. Flex Column (Vertical)</h3>
+  <Container
+    htmlTag="section"
+    containerWidthType="full"
+    layout={{ type: 'flex', class: 'flex-col gap-4 items-stretch' }}
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    border={{ width: 'border', color: 'border-gray-300' }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div class="bg-blue-500 text-white p-4 rounded">Item 1</div>
+    <div class="bg-green-500 text-white p-4 rounded">Item 2</div>
+    <div class="bg-purple-500 text-white p-4 rounded">Item 3</div>
+  </Container>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">3. Grid - 2 Columns</h3>
+  <Container
+    htmlTag="section"
+    containerWidthType="full"
+    layout={{ type: 'grid', class: 'grid-cols-2 gap-6' }}
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    border={{ width: 'border', color: 'border-gray-300' }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div class="bg-blue-500 text-white p-6 rounded">Column 1</div>
+    <div class="bg-green-500 text-white p-6 rounded">Column 2</div>
+    <div class="bg-purple-500 text-white p-6 rounded">Column 3</div>
+    <div class="bg-orange-500 text-white p-6 rounded">Column 4</div>
+  </Container>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">4. Grid - 3 Columns</h3>
+  <Container
+    htmlTag="section"
+    containerWidthType="full"
+    layout={{ type: 'grid', class: 'grid-cols-3 gap-4' }}
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    border={{ width: 'border', color: 'border-gray-300' }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div class="bg-blue-500 text-white p-4 rounded text-center">1</div>
+    <div class="bg-green-500 text-white p-4 rounded text-center">2</div>
+    <div class="bg-purple-500 text-white p-4 rounded text-center">3</div>
+    <div class="bg-orange-500 text-white p-4 rounded text-center">4</div>
+    <div class="bg-pink-500 text-white p-4 rounded text-center">5</div>
+    <div class="bg-red-500 text-white p-4 rounded text-center">6</div>
+  </Container>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">5. Responsive Grid (2 cols mobile, 4 cols desktop)</h3>
+  <Container
+    htmlTag="section"
+    containerWidthType="full"
+    layout={{ type: 'grid', class: 'grid-cols-2 md:grid-cols-4 gap-4' }}
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    border={{ width: 'border', color: 'border-gray-300' }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div class="bg-blue-500 text-white p-4 rounded text-center">1</div>
+    <div class="bg-green-500 text-white p-4 rounded text-center">2</div>
+    <div class="bg-purple-500 text-white p-4 rounded text-center">3</div>
+    <div class="bg-orange-500 text-white p-4 rounded text-center">4</div>
+    <div class="bg-pink-500 text-white p-4 rounded text-center">5</div>
+    <div class="bg-red-500 text-white p-4 rounded text-center">6</div>
+    <div class="bg-indigo-500 text-white p-4 rounded text-center">7</div>
+    <div class="bg-yellow-500 text-white p-4 rounded text-center">8</div>
+  </Container>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">6. Min Height with Default Alignment (Top)</h3>
+  <Container
+    htmlTag="section"
+    containerWidthType="full"
+    minHeight="min-h-96"
+    layout={{ type: 'flex', class: 'flex-row gap-4 items-start' }}
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    border={{ width: 'border', color: 'border-gray-300' }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div class="bg-blue-500 text-white p-4 rounded text-center">Item 1</div>
+    <div class="bg-green-500 text-white p-4 rounded text-center">Item 2</div>
+    <div class="bg-purple-500 text-white p-4 rounded text-center">Item 3</div>
+  </Container>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">7. Min Height with Vertical Center</h3>
+  <Container
+    htmlTag="section"
+    containerWidthType="full"
+    minHeight="min-h-96"
+    layout={{ type: 'flex', class: 'flex-row gap-4 items-center' }}
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    border={{ width: 'border', color: 'border-gray-300' }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div class="bg-blue-500 text-white p-4 rounded text-center">Item 1</div>
+    <div class="bg-green-500 text-white p-4 rounded text-center">Item 2</div>
+    <div class="bg-purple-500 text-white p-4 rounded text-center">Item 3</div>
+  </Container>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">8. Min Height with Full Center (Both Axes)</h3>
+  <Container
+    htmlTag="section"
+    containerWidthType="full"
+    minHeight="min-h-96"
+    layout={{ type: 'flex', class: 'flex-col gap-4 justify-center items-center' }}
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    border={{ width: 'border', color: 'border-gray-300' }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div class="bg-blue-500 text-white p-4 rounded text-center">Item 1</div>
+    <div class="bg-green-500 text-white p-4 rounded text-center">Item 2</div>
+    <div class="bg-purple-500 text-white p-4 rounded text-center">Item 3</div>
+  </Container>
 </Layout>

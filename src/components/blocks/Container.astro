@@ -18,6 +18,8 @@ const backgroundClass = props.background?.class ?? '';
 const backgroundImage = props.background?.image ?? '';
 const backgroundVideo = props.background?.video ?? '';
 const backgroundAttachment = props.background?.attachment ?? 'scroll';
+const layoutType = props.layout?.type ?? '';
+const layoutClass = props.layout?.class ?? '';
 
 let containerClass = backgroundClass ? backgroundClass + ' ' : '';
 if (containerWidthType === 'boxed') {
@@ -72,9 +74,19 @@ if (backgroundImage && !Astro.slots.background) {
 }
 
 let contentClass = 'w-full relative z-1';
+if (layoutType) {
+  contentClass += ` ${layoutType}`;
+}
+if (layoutClass) {
+  contentClass += ` ${layoutClass}`;
+}
 if (containerWidthType === 'full') {
   if (contentWidthType === 'boxed') {
     contentClass += ` ${contentBoxWidth} mx-auto`;
+    // Apply min-height to content div when container is full-width and content is boxed
+    if (minHeightClass) {
+      contentClass += ` ${minHeightClass}`;
+    }
   } else if (contentWidthType === 'full') {
     contentClass += ' w-full';
   }

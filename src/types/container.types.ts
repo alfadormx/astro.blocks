@@ -44,7 +44,10 @@ export interface BorderConfig {
   color?: string; // e.g., "border-gray-200"
   radius?: string; // e.g., "rounded-lg"
 }
-
+export interface LayoutConfig {
+  type?: 'flex' | 'grid';
+  class?: string; // e.g., "flex-row gap-4 items-center" or "grid-cols-3 gap-6"
+}
 export interface ContainerItem {
   id?: string;
   content?: string; // simple string content; can be expanded to richer types later
@@ -57,6 +60,7 @@ export interface ContainerProps {
   content?: ContentConfig;
   spacing?: SpacingConfig;
   border?: BorderConfig;
+  layout?: LayoutConfig;
   overflow?: OverflowType;
   htmlTag?: ContainerTag;
   containerClass?: string;
