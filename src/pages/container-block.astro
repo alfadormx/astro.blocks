@@ -20,19 +20,19 @@ var metadata = {
   <!-- Section 1: Container & Content Width -->
   <h2 class="text-3xl font-bold mt-12 mb-4">Container & Content Width</h2>
   <p class="mb-4">
-    Control how your container and content are sized using <code>containerWidthType</code> and <code
-      >contentWidthType</code
-    >.
+    Control how your container and content are sized using <code>containerWidthType</code> and the <code
+      >content</code
+    > object.
   </p>
   <ul class="mb-8 list-disc list-inside">
     <li><b>containerWidthType</b>: Controls the outer container (background/section) width.</li>
     <li>
-      <b>contentWidthType</b>: Controls the inner content width (only when containerWidthType is <code
+      <b>content.widthType</b>: Controls the inner content width (only when containerWidthType is <code
         >full</code
       >).
     </li>
     <li>
-      <b>contentBoxWidth</b>: Custom max-width for boxed content (default: <code
+      <b>content.boxWidth</b>: Custom max-width for boxed content (default: <code
         >max-w-[var(--container-max-width)]</code
       >).
     </li>
@@ -44,9 +44,8 @@ var metadata = {
   <Container
     htmlTag="section"
     containerWidthType="full"
-    contentWidthType="boxed"
+    content={{ widthType: 'boxed', className: 'border border-red-500' }}
     containerClassName="border border-blue-500 mb-8"
-    contentClassName="border border-red-500"
   >
     <p class="text-center py-8">Full-width container, boxed content (default max-width).</p>
   </Container>
@@ -57,10 +56,8 @@ var metadata = {
   <Container
     htmlTag="section"
     containerWidthType="full"
-    contentWidthType="boxed"
-    contentBoxWidth="max-w-1/2"
+    content={{ widthType: 'boxed', boxWidth: 'max-w-1/2', className: 'border border-red-500' }}
     containerClassName="border border-blue-500 mb-8"
-    contentClassName="border border-red-500"
   >
     <p class="text-center py-8">Full-width container, boxed content at <b>50%</b> width.</p>
   </Container>
@@ -69,9 +66,8 @@ var metadata = {
   <Container
     htmlTag="section"
     containerWidthType="full"
-    contentWidthType="full"
+    content={{ widthType: 'full', className: 'border border-red-500' }}
     containerClassName="border border-blue-500 mb-8"
-    contentClassName="border border-red-500"
   >
     <p class="text-center py-8">Full-width container, full-width content.</p>
   </Container>
@@ -80,8 +76,8 @@ var metadata = {
   <Container
     htmlTag="section"
     containerWidthType="boxed"
+    content={{ className: 'border border-red-500' }}
     containerClassName="border border-blue-500 mb-8"
-    contentClassName="border border-red-500"
   >
     <p class="text-center py-8">Boxed container (background and content boxed).</p>
   </Container>
@@ -93,8 +89,8 @@ var metadata = {
     htmlTag="section"
     containerWidthType="custom"
     width="w-3/4"
+    content={{ className: 'border border-red-500' }}
     containerClassName="border border-blue-500 mb-8"
-    contentClassName="border border-red-500"
   >
     <p class="text-center py-8">
       Custom container width (background and content custom, e.g., 75%).
@@ -113,14 +109,13 @@ var metadata = {
   <Container
     htmlTag="section"
     containerWidthType="full"
-    contentWidthType="boxed"
     minHeight="min-h-64"
     background={{
       image: 'https://images.pexels.com/photos/1629236/pexels-photo-1629236.jpeg',
       attachment: 'fixed',
     }}
+    content={{ widthType: 'boxed', className: 'py-12' }}
     containerClassName="mb-8"
-    contentClassName="py-12"
   >
     <p class="text-center py-8 text-white drop-shadow-lg bg-black/30 rounded">
       Full-width container with a <b>fixed</b> background image (parallax effect).
@@ -131,11 +126,10 @@ var metadata = {
   <Container
     htmlTag="section"
     containerWidthType="full"
-    contentWidthType="boxed"
     minHeight="min-h-64"
     background={{ video: 'https://www.pexels.com/download/video/1918465/' }}
+    content={{ widthType: 'boxed', className: 'py-12' }}
     containerClassName="mb-8"
-    contentClassName="py-12"
   >
     <p class="text-center py-8 text-white drop-shadow-lg bg-black/30 rounded">
       Container with a looping <b>background video</b>.
@@ -146,11 +140,10 @@ var metadata = {
   <Container
     htmlTag="section"
     containerWidthType="full"
-    contentWidthType="boxed"
     minHeight="min-h-64"
     background={{ class: 'bg-blue-600' }}
+    content={{ widthType: 'boxed', className: 'py-12' }}
     containerClassName="mb-8"
-    contentClassName="py-12"
   >
     <p class="text-center py-8 text-white drop-shadow-lg bg-black/30 rounded">
       Container with a solid <b>background color</b> (Tailwind: bg-blue-600).
@@ -161,11 +154,10 @@ var metadata = {
   <Container
     htmlTag="section"
     containerWidthType="full"
-    contentWidthType="boxed"
     minHeight="min-h-64"
     background={{ class: 'bg-gradient-to-r from-purple-500 via-pink-500 to-red-500' }}
+    content={{ widthType: 'boxed', className: 'py-12' }}
     containerClassName="mb-8"
-    contentClassName="py-12"
   >
     <p class="text-center py-8 text-white drop-shadow-lg bg-black/30 rounded">
       Container with a <b>gradient background</b> (Tailwind gradient utilities).
