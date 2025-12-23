@@ -1,0 +1,174 @@
+---
+import TwoColumnContainer from '~/components/blocks/TwoColumnContainer.astro';
+import Layout from '../layouts/Layout.astro';
+
+var metadata = {
+  title: {
+    default: 'Two Column Container',
+  },
+  description: 'Two Column Container Block - Equal 50/50 split layout',
+};
+---
+
+<Layout metadata={metadata}>
+  <h1 class="text-2xl font-bold mb-6">Two Column Container Block</h1>
+  <p class="mb-8">
+    A pre-built layout wrapper for two equal columns. Responsive by default (stacks on mobile,
+    side-by-side on desktop).
+  </p>
+
+  <h2 class="text-3xl font-bold mt-12 mb-4">Basic Examples</h2>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">1. Basic Two Column Layout</h3>
+  <TwoColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    border={{ width: 'border', color: 'border-gray-300' }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1" class="bg-blue-500 text-white p-6 rounded">
+      <h3 class="text-xl font-bold mb-2">Column 1</h3>
+      <p>This is the first column with some content.</p>
+    </div>
+    <div slot="column2" class="bg-green-500 text-white p-6 rounded">
+      <h3 class="text-xl font-bold mb-2">Column 2</h3>
+      <p>This is the second column with some content.</p>
+    </div>
+  </TwoColumnContainer>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">2. With Background Image</h3>
+  <TwoColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    background={{
+      image: 'https://images.pexels.com/photos/1629236/pexels-photo-1629236.jpeg',
+      class: 'bg-cover bg-center',
+    }}
+    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
+      <h3 class="text-xl font-bold mb-2">Left Content</h3>
+      <p>Content over a background image with glassmorphism effect.</p>
+    </div>
+    <div slot="column2" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
+      <h3 class="text-xl font-bold mb-2">Right Content</h3>
+      <p>Both columns have semi-transparent backgrounds.</p>
+    </div>
+  </TwoColumnContainer>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">3. With Background Color & Custom Gap</h3>
+  <TwoColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    background={{ class: 'bg-gradient-to-r from-purple-500 to-pink-500' }}
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    gap="gap-8"
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1" class="bg-white p-6 rounded shadow-lg">
+      <h3 class="text-xl font-bold mb-2 text-purple-600">Feature 1</h3>
+      <p>Larger gap between columns (gap-8).</p>
+    </div>
+    <div slot="column2" class="bg-white p-6 rounded shadow-lg">
+      <h3 class="text-xl font-bold mb-2 text-pink-600">Feature 2</h3>
+      <p>With gradient background.</p>
+    </div>
+  </TwoColumnContainer>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">4. Non-Responsive (Always 2 Columns)</h3>
+  <TwoColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    border={{ width: 'border', color: 'border-gray-300' }}
+    responsive={false}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1" class="bg-orange-500 text-white p-6 rounded">
+      <h3 class="text-xl font-bold mb-2">Column 1</h3>
+      <p>This layout stays side-by-side even on mobile.</p>
+    </div>
+    <div slot="column2" class="bg-red-500 text-white p-6 rounded">
+      <h3 class="text-xl font-bold mb-2">Column 2</h3>
+      <p>Set responsive=false to prevent stacking.</p>
+    </div>
+  </TwoColumnContainer>
+
+  <h2 class="text-3xl font-bold mt-12 mb-4">Practical Use Cases</h2>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">5. Image + Text</h3>
+  <TwoColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1">
+      <img
+        src="https://images.pexels.com/photos/1170686/pexels-photo-1170686.jpeg?auto=compress&cs=tinysrgb&w=600"
+        alt="Sample"
+        class="w-full h-full object-cover rounded"
+      />
+    </div>
+    <div slot="column2" class="flex flex-col justify-center">
+      <h3 class="text-2xl font-bold mb-4">About Our Product</h3>
+      <p class="mb-4">
+        This is a common pattern for landing pages - image on one side, content on the other.
+      </p>
+      <p class="mb-4">Perfect for features, about sections, or product showcases.</p>
+      <button class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+        Learn More
+      </button>
+    </div>
+  </TwoColumnContainer>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">6. Feature Comparison</h3>
+  <TwoColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    border={{ width: 'border', color: 'border-gray-300' }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1" class="space-y-4">
+      <h3 class="text-xl font-bold mb-4">Free Plan</h3>
+      <div class="flex items-start gap-2">
+        <span class="text-green-600">✓</span>
+        <span>Basic features</span>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="text-green-600">✓</span>
+        <span>Up to 5 users</span>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="text-red-600">✗</span>
+        <span>Advanced analytics</span>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="text-red-600">✗</span>
+        <span>Priority support</span>
+      </div>
+    </div>
+    <div slot="column2" class="space-y-4">
+      <h3 class="text-xl font-bold mb-4">Pro Plan</h3>
+      <div class="flex items-start gap-2">
+        <span class="text-green-600">✓</span>
+        <span>All features</span>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="text-green-600">✓</span>
+        <span>Unlimited users</span>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="text-green-600">✓</span>
+        <span>Advanced analytics</span>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="text-green-600">✓</span>
+        <span>Priority support</span>
+      </div>
+    </div>
+  </TwoColumnContainer>
+</Layout>
