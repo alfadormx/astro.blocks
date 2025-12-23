@@ -31,6 +31,15 @@ if (widthClass) {
 if (minHeightClass) {
   containerClass += `${minHeightClass} `;
 }
+// Add background utilities when there's a background image
+if (backgroundImage) {
+  if (!backgroundClass.includes('bg-')) {
+    containerClass += 'bg-cover bg-center ';
+  }
+  if (backgroundAttachment === 'fixed') {
+    containerClass += 'bg-fixed ';
+  }
+}
 if (overflow) {
   containerClass += ` overflow-${overflow}`;
 }
@@ -38,17 +47,13 @@ if (containerClassName) {
   containerClass += containerClassName;
 }
 
-// Build inline styles for background
+// Build inline styles (dynamic background-image URL)
 let containerStyle = 'position:relative;';
 if (backgroundImage && !Astro.slots.background) {
   containerStyle += `background-image:url('${backgroundImage}');`;
-  containerStyle += `background-attachment:${backgroundAttachment};`;
-  if (!backgroundClass.includes('bg-')) {
-    containerStyle += 'background-size:cover;background-position:center;';
-  }
 }
 
-let contentClass = 'w-full';
+let contentClass = 'w-full relative z-1';
 if (containerWidthType === 'full') {
   if (contentWidthType === 'boxed') {
     contentClass += ` ${contentBoxWidth} mx-auto`;
@@ -81,7 +86,7 @@ if (equalHeight) {
       </video>
     ) : null
   }
-  <div class={contentClass.trim()} style="position:relative; z-index:1;">
+  <div class={contentClass.trim()}>
     {
       items && items.length > 0 ? (
         items.map((item) => <div class={item.class} id={item.id} set:html={item.content} />)
