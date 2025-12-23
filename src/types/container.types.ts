@@ -25,6 +25,13 @@ export interface BackgroundConfig {
   class?: string;
 }
 
+export interface ContentConfig {
+  class?: string;
+  className?: string;
+  boxWidth?: string; // Tailwind class for inner max-width
+  widthType?: ContentWidthType;
+}
+
 export interface ContainerItem {
   id?: string;
   content?: string; // simple string content; can be expanded to richer types later
@@ -34,15 +41,12 @@ export interface ContainerItem {
 
 export interface ContainerProps {
   background?: BackgroundConfig;
+  content?: ContentConfig;
   overflow?: OverflowType;
   htmlTag?: ContainerTag;
   containerClass?: string;
   containerClassName?: string;
   containerWidthType?: ContainerWidthType;
-  contentClass?: string;
-  contentClassName?: string;
-  contentWidthType?: ContentWidthType;
-  contentBoxWidth?: string; // Tailwind class for inner max-width
   width?: string; // Tailwind class or CSS value
   minHeight?: string; // Tailwind class or CSS value
   equalHeight?: boolean;

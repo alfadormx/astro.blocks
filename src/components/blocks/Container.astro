@@ -4,15 +4,15 @@ import type { ContainerProps } from '../../types/container.types';
 const props = Astro.props as ContainerProps;
 const ContainerTag = props.htmlTag ?? 'section';
 const containerWidthType = props.containerWidthType ?? 'full';
-const contentWidthType = props.contentWidthType ?? 'boxed';
-const contentBoxWidth = props.contentBoxWidth ?? 'max-w-[var(--container-max-width)]';
+const contentWidthType = props.content?.widthType ?? 'boxed';
+const contentBoxWidth = props.content?.boxWidth ?? 'max-w-[var(--container-max-width)]';
 const widthClass = props.width ?? '';
 const minHeightClass = props.minHeight ?? '';
 const items = props.items ?? [];
 const equalHeight = props.equalHeight ?? false;
 const overflow = props.overflow ?? undefined;
 const containerClassName = props.containerClassName ?? props.containerClass ?? '';
-const contentClassName = props.contentClassName ?? props.contentClass ?? '';
+const contentClassName = props.content?.className ?? props.content?.class ?? '';
 
 const backgroundClass = props.background?.class ?? '';
 const backgroundImage = props.background?.image ?? '';
