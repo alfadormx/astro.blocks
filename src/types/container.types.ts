@@ -27,7 +27,6 @@ export interface BackgroundConfig {
 
 export interface ContentConfig {
   class?: string;
-  className?: string;
   boxWidth?: string; // Tailwind class for inner max-width
   widthType?: ContentWidthType;
 }
@@ -45,7 +44,6 @@ export interface ContainerProps {
   overflow?: OverflowType;
   htmlTag?: ContainerTag;
   containerClass?: string;
-  containerClassName?: string;
   containerWidthType?: ContainerWidthType;
   width?: string; // Tailwind class or CSS value
   minHeight?: string; // Tailwind class or CSS value
