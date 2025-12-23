@@ -13,8 +13,12 @@ const equalHeight = props.equalHeight ?? false;
 const overflow = props.overflow ?? undefined;
 const containerClassName = props.containerClassName ?? props.containerClass ?? '';
 const contentClassName = props.contentClassName ?? props.contentClass ?? '';
+const backgroundClass = props.backgroundClass ?? '';
+const backgroundImage = props.backgroundImage ?? '';
+const backgroundVideo = props.backgroundVideo ?? '';
+const backgroundAttachment = props.backgroundAttachment ?? 'scroll';
 
-let containerClass = '';
+let containerClass = backgroundClass ? backgroundClass + ' ' : '';
 if (containerWidthType === 'boxed') {
   containerClass += 'mx-auto max-w-[var(--container-max-width)] ';
 } else if (containerWidthType === 'custom') {
@@ -33,6 +37,16 @@ if (containerClassName) {
   containerClass += containerClassName;
 }
 
+// Build inline styles for background
+let containerStyle = 'position:relative;';
+if (backgroundImage && !Astro.slots.background) {
+  containerStyle += `background-image:url('${backgroundImage}');`;
+  containerStyle += `background-attachment:${backgroundAttachment};`;
+  if (!backgroundClass.includes('bg-')) {
+    containerStyle += 'background-size:cover;background-position:center;';
+  }
+}
+
 let contentClass = 'w-full';
 if (containerWidthType === 'full') {
   if (contentWidthType === 'boxed') {
@@ -49,8 +63,24 @@ if (equalHeight) {
 }
 ---
 
-<ContainerTag class={containerClass.trim()}>
-  <div class={contentClass.trim()}>
+<ContainerTag class={containerClass.trim()} style={containerStyle}>
+  {
+    Astro.slots.background ? (
+      <slot name="background" />
+    ) : backgroundVideo ? (
+      <video
+        class="absolute z-0 inset-0 w-full h-full object-cover"
+        autoplay
+        loop
+        muted
+        playsinline
+        aria-hidden="true"
+      >
+        <source src={backgroundVideo} type="video/mp4" />
+      </video>
+    ) : null
+  }
+  <div class={contentClass.trim()} style="position:relative; z-index:1;">
     {
       items && items.length > 0 ? (
         items.map((item) => <div class={item.class} id={item.id} set:html={item.content} />)

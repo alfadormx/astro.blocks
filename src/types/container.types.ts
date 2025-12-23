@@ -16,6 +16,8 @@ export type ContainerWidthType = 'full' | 'boxed' | 'custom';
 export type ContentWidthType = 'full' | 'boxed';
 export type OverflowType = 'visible' | 'hidden' | 'auto';
 
+export type BackgroundAttachment = 'scroll' | 'fixed';
+
 export interface ContainerItem {
   id?: string;
   content?: string; // simple string content; can be expanded to richer types later
@@ -24,6 +26,10 @@ export interface ContainerItem {
 }
 
 export interface ContainerProps {
+  backgroundClass?: string;
+  backgroundImage?: string;
+  backgroundVideo?: string;
+  backgroundAttachment?: BackgroundAttachment;
   overflow?: OverflowType;
   htmlTag?: ContainerTag;
   containerClass?: string;
