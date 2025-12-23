@@ -44,8 +44,9 @@ var metadata = {
   <Container
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', class: 'border border-red-500' }}
-    containerClass="border border-blue-500 mb-8"
+    content={{ widthType: 'boxed', border: { width: 'border', color: 'border-red-500' } }}
+    border={{ width: 'border', color: 'border-blue-500' }}
+    spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8">Full-width container, boxed content (default max-width).</p>
   </Container>
@@ -56,8 +57,9 @@ var metadata = {
   <Container
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', boxWidth: 'max-w-1/2', class: 'border border-red-500' }}
-    containerClass="border border-blue-500 mb-8"
+    content={{ widthType: 'boxed', boxWidth: 'max-w-1/2', border: { width: 'border', color: 'border-red-500' } }}
+    border={{ width: 'border', color: 'border-blue-500' }}
+    spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8">Full-width container, boxed content at <b>50%</b> width.</p>
   </Container>
@@ -66,8 +68,9 @@ var metadata = {
   <Container
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'full', class: 'border border-red-500' }}
-    containerClass="border border-blue-500 mb-8"
+    content={{ widthType: 'full', border: { width: 'border', color: 'border-red-500' } }}
+    border={{ width: 'border', color: 'border-blue-500' }}
+    spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8">Full-width container, full-width content.</p>
   </Container>
@@ -76,8 +79,9 @@ var metadata = {
   <Container
     htmlTag="section"
     containerWidthType="boxed"
-    content={{ class: 'border border-red-500' }}
-    containerClass="border border-blue-500 mb-8"
+    content={{ border: { width: 'border', color: 'border-red-500' } }}
+    border={{ width: 'border', color: 'border-blue-500' }}
+    spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8">Boxed container (background and content boxed).</p>
   </Container>
@@ -89,8 +93,9 @@ var metadata = {
     htmlTag="section"
     containerWidthType="custom"
     width="w-3/4"
-    content={{ class: 'border border-red-500' }}
-    containerClass="border border-blue-500 mb-8"
+    content={{ border: { width: 'border', color: 'border-red-500' } }}
+    border={{ width: 'border', color: 'border-blue-500' }}
+    spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8">
       Custom container width (background and content custom, e.g., 75%).
@@ -114,8 +119,8 @@ var metadata = {
       image: 'https://images.pexels.com/photos/1629236/pexels-photo-1629236.jpeg',
       attachment: 'fixed',
     }}
-    content={{ widthType: 'boxed', class: 'py-12' }}
-    containerClass="mb-8"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8 text-white drop-shadow-lg bg-black/30 rounded">
       Full-width container with a <b>fixed</b> background image (parallax effect).
@@ -128,8 +133,8 @@ var metadata = {
     containerWidthType="full"
     minHeight="min-h-64"
     background={{ video: 'https://www.pexels.com/download/video/1918465/' }}
-    content={{ widthType: 'boxed', class: 'py-12' }}
-    containerClass="mb-8"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8 text-white drop-shadow-lg bg-black/30 rounded">
       Container with a looping <b>background video</b>.
@@ -142,8 +147,8 @@ var metadata = {
     containerWidthType="full"
     minHeight="min-h-64"
     background={{ class: 'bg-blue-600' }}
-    content={{ widthType: 'boxed', class: 'py-12' }}
-    containerClass="mb-8"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8 text-white drop-shadow-lg bg-black/30 rounded">
       Container with a solid <b>background color</b> (Tailwind: bg-blue-600).
@@ -156,8 +161,8 @@ var metadata = {
     containerWidthType="full"
     minHeight="min-h-64"
     background={{ class: 'bg-gradient-to-r from-purple-500 via-pink-500 to-red-500' }}
-    content={{ widthType: 'boxed', class: 'py-12' }}
-    containerClass="mb-8"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8 text-white drop-shadow-lg bg-black/30 rounded">
       Container with a <b>gradient background</b> (Tailwind gradient utilities).

@@ -29,6 +29,20 @@ export interface ContentConfig {
   class?: string;
   boxWidth?: string; // Tailwind class for inner max-width
   widthType?: ContentWidthType;
+  spacing?: SpacingConfig;
+  border?: BorderConfig;
+}
+
+export interface SpacingConfig {
+  padding?: string; // e.g., "p-8" or "px-4 py-8"
+  margin?: string; // e.g., "mx-auto mb-8"
+  gap?: string; // e.g., "gap-4"
+}
+
+export interface BorderConfig {
+  width?: string; // e.g., "border" or "border-2" or "border-t-2"
+  color?: string; // e.g., "border-gray-200"
+  radius?: string; // e.g., "rounded-lg"
 }
 
 export interface ContainerItem {
@@ -41,6 +55,8 @@ export interface ContainerItem {
 export interface ContainerProps {
   background?: BackgroundConfig;
   content?: ContentConfig;
+  spacing?: SpacingConfig;
+  border?: BorderConfig;
   overflow?: OverflowType;
   htmlTag?: ContainerTag;
   containerClass?: string;

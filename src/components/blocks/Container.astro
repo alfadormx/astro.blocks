@@ -43,6 +43,24 @@ if (backgroundImage) {
 if (overflow) {
   containerClass += ` overflow-${overflow}`;
 }
+if (props.spacing?.padding) {
+  containerClass += ` ${props.spacing.padding}`;
+}
+if (props.spacing?.margin) {
+  containerClass += ` ${props.spacing.margin}`;
+}
+if (props.spacing?.gap) {
+  containerClass += ` ${props.spacing.gap}`;
+}
+if (props.border?.width) {
+  containerClass += ` ${props.border.width}`;
+}
+if (props.border?.color) {
+  containerClass += ` ${props.border.color}`;
+}
+if (props.border?.radius) {
+  containerClass += ` ${props.border.radius}`;
+}
 if (containerClassName) {
   containerClass += containerClassName;
 }
@@ -60,6 +78,24 @@ if (containerWidthType === 'full') {
   } else if (contentWidthType === 'full') {
     contentClass += ' w-full';
   }
+}
+if (props.content?.spacing?.padding) {
+  contentClass += ` ${props.content.spacing.padding}`;
+}
+if (props.content?.spacing?.margin) {
+  contentClass += ` ${props.content.spacing.margin}`;
+}
+if (props.content?.spacing?.gap) {
+  contentClass += ` ${props.content.spacing.gap}`;
+}
+if (props.content?.border?.width) {
+  contentClass += ` ${props.content.border.width}`;
+}
+if (props.content?.border?.color) {
+  contentClass += ` ${props.content.border.color}`;
+}
+if (props.content?.border?.radius) {
+  contentClass += ` ${props.content.border.radius}`;
 }
 if (contentClassName) {
   contentClass += ` ${contentClassName}`;
