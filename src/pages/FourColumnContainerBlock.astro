@@ -1,0 +1,238 @@
+---
+import FourColumnContainer from '~/components/blocks/FourColumnContainer.astro';
+import Layout from '../layouts/Layout.astro';
+
+var metadata = {
+  title: {
+    default: 'Four Column Container',
+  },
+  description: 'Four Column Container Block - Equal 1/4 split layout',
+};
+---
+
+<Layout metadata={metadata}>
+  <h1 class="text-2xl font-bold mb-6">Four Column Container Block</h1>
+  <p class="mb-8">
+    A pre-built layout wrapper for four equal columns. Perfect for feature grids, card layouts, or
+    icon showcases.
+  </p>
+
+  <h2 class="text-3xl font-bold mt-12 mb-4">Basic Examples</h2>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">1. Basic Four Column Layout</h3>
+  <FourColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    border={{ width: 'border', color: 'border-gray-300' }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1" class="bg-blue-500 text-white p-6 rounded text-center">
+      <h3 class="text-xl font-bold mb-2">Column 1</h3>
+      <p>First column</p>
+    </div>
+    <div slot="column2" class="bg-green-500 text-white p-6 rounded text-center">
+      <h3 class="text-xl font-bold mb-2">Column 2</h3>
+      <p>Second column</p>
+    </div>
+    <div slot="column3" class="bg-purple-500 text-white p-6 rounded text-center">
+      <h3 class="text-xl font-bold mb-2">Column 3</h3>
+      <p>Third column</p>
+    </div>
+    <div slot="column4" class="bg-orange-500 text-white p-6 rounded text-center">
+      <h3 class="text-xl font-bold mb-2">Column 4</h3>
+      <p>Fourth column</p>
+    </div>
+  </FourColumnContainer>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">2. Feature Icons</h3>
+  <FourColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    gap="gap-8"
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1" class="text-center">
+      <div class="text-5xl mb-4">🚀</div>
+      <h3 class="text-lg font-bold mb-2">Fast</h3>
+      <p class="text-sm text-gray-600">Lightning speed performance</p>
+    </div>
+    <div slot="column2" class="text-center">
+      <div class="text-5xl mb-4">🔒</div>
+      <h3 class="text-lg font-bold mb-2">Secure</h3>
+      <p class="text-sm text-gray-600">Enterprise-grade security</p>
+    </div>
+    <div slot="column3" class="text-center">
+      <div class="text-5xl mb-4">💡</div>
+      <h3 class="text-lg font-bold mb-2">Smart</h3>
+      <p class="text-sm text-gray-600">Intelligent automation</p>
+    </div>
+    <div slot="column4" class="text-center">
+      <div class="text-5xl mb-4">🌍</div>
+      <h3 class="text-lg font-bold mb-2">Global</h3>
+      <p class="text-sm text-gray-600">Worldwide coverage</p>
+    </div>
+  </FourColumnContainer>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">3. With Background Color</h3>
+  <FourColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    background={{ class: 'bg-gray-300' }}
+    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1" class="bg-white p-6 rounded shadow text-black">
+      <h3 class="text-lg font-bold mb-2">Step 1</h3>
+      <p class="text-sm">Sign up for free</p>
+    </div>
+    <div slot="column2" class="bg-white p-6 rounded shadow text-black">
+      <h3 class="text-lg font-bold mb-2">Step 2</h3>
+      <p class="text-sm">Choose your plan</p>
+    </div>
+    <div slot="column3" class="bg-white p-6 rounded shadow text-black">
+      <h3 class="text-lg font-bold mb-2">Step 3</h3>
+      <p class="text-sm">Start building</p>
+    </div>
+    <div slot="column4" class="bg-white p-6 rounded shadow text-black">
+      <h3 class="text-lg font-bold mb-2">Step 4</h3>
+      <p class="text-sm">Deploy & scale</p>
+    </div>
+  </FourColumnContainer>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">4. Responsive (Stacks on Mobile)</h3>
+  <FourColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    border={{ width: 'border', color: 'border-gray-300' }}
+    responsive={true}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1" class="bg-red-500 text-white p-6 rounded text-center">
+      <h3 class="text-lg font-bold">Mobile</h3>
+    </div>
+    <div slot="column2" class="bg-orange-500 text-white p-6 rounded text-center">
+      <h3 class="text-lg font-bold">Tablet</h3>
+    </div>
+    <div slot="column3" class="bg-yellow-500 text-white p-6 rounded text-center">
+      <h3 class="text-lg font-bold">Desktop</h3>
+    </div>
+    <div slot="column4" class="bg-green-500 text-white p-6 rounded text-center">
+      <h3 class="text-lg font-bold">4K</h3>
+    </div>
+  </FourColumnContainer>
+
+  <h2 class="text-3xl font-bold mt-12 mb-4">Practical Use Cases</h2>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">5. Statistics Dashboard</h3>
+  <FourColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    gap="gap-6"
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1" class="bg-blue-50 p-6 rounded-lg border-2 border-blue-200">
+      <div class="text-3xl font-bold text-blue-600 mb-2">1.2M</div>
+      <p class="text-gray-600">Active Users</p>
+    </div>
+    <div slot="column2" class="bg-green-50 p-6 rounded-lg border-2 border-green-200">
+      <div class="text-3xl font-bold text-green-600 mb-2">98%</div>
+      <p class="text-gray-600">Satisfaction Rate</p>
+    </div>
+    <div slot="column3" class="bg-purple-50 p-6 rounded-lg border-2 border-purple-200">
+      <div class="text-3xl font-bold text-purple-600 mb-2">24/7</div>
+      <p class="text-gray-600">Support Available</p>
+    </div>
+    <div slot="column4" class="bg-orange-50 p-6 rounded-lg border-2 border-orange-200">
+      <div class="text-3xl font-bold text-orange-600 mb-2">150+</div>
+      <p class="text-gray-600">Countries</p>
+    </div>
+  </FourColumnContainer>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">6. Product Features</h3>
+  <FourColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    gap="gap-8"
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1">
+      <div
+        class="bg-linear-to-br from-blue-400 to-blue-700 w-16 h-16 rounded-lg mb-4 flex items-center justify-center text-white text-2xl"
+      >
+        📱
+      </div>
+      <h3 class="text-lg font-bold mb-2">Mobile First</h3>
+      <p class="text-sm text-gray-600">Optimized for all mobile devices with responsive design.</p>
+    </div>
+    <div slot="column2">
+      <div
+        class="bg-linear-to-br from-green-400 to-green-700 w-16 h-16 rounded-lg mb-4 flex items-center justify-center text-white text-2xl"
+      >
+        ⚡
+      </div>
+      <h3 class="text-lg font-bold mb-2">Lightning Fast</h3>
+      <p class="text-sm text-gray-600">Blazing fast performance with optimized code.</p>
+    </div>
+    <div slot="column3">
+      <div
+        class="bg-linear-to-br from-purple-400 to-purple-700 w-16 h-16 rounded-lg mb-4 flex items-center justify-center text-white text-2xl"
+      >
+        🎨
+      </div>
+      <h3 class="text-lg font-bold mb-2">Customizable</h3>
+      <p class="text-sm text-gray-600">Fully customizable with Tailwind CSS utilities.</p>
+    </div>
+    <div slot="column4">
+      <div
+        class="bg-linear-to-br from-orange-400 to-orange-700 w-16 h-16 rounded-lg mb-4 flex items-center justify-center text-white text-2xl"
+      >
+        🔧
+      </div>
+      <h3 class="text-lg font-bold mb-2">Easy Setup</h3>
+      <p class="text-sm text-gray-600">Get started in minutes with simple configuration.</p>
+    </div>
+  </FourColumnContainer>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">7. Image Gallery</h3>
+  <FourColumnContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    gap="gap-4"
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="column1">
+      <img
+        src="https://images.pexels.com/photos/1170686/pexels-photo-1170686.jpeg?auto=compress&cs=tinysrgb&w=400"
+        alt="Gallery 1"
+        class="w-full h-48 object-cover rounded"
+      />
+    </div>
+    <div slot="column2">
+      <img
+        src="https://images.pexels.com/photos/1629236/pexels-photo-1629236.jpeg?auto=compress&cs=tinysrgb&w=400"
+        alt="Gallery 2"
+        class="w-full h-48 object-cover rounded"
+      />
+    </div>
+    <div slot="column3">
+      <img
+        src="https://images.pexels.com/photos/23384599/pexels-photo-23384599.jpeg?auto=compress&cs=tinysrgb&w=400"
+        alt="Gallery 3"
+        class="w-full h-48 object-cover rounded"
+      />
+    </div>
+    <div slot="column4">
+      <img
+        src="https://images.pexels.com/photos/1261728/pexels-photo-1261728.jpeg?auto=compress&cs=tinysrgb&w=400"
+        alt="Gallery 4"
+        class="w-full h-48 object-cover rounded"
+      />
+    </div>
+  </FourColumnContainer>
+</Layout>
