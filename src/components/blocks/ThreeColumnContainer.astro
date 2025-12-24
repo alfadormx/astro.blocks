@@ -34,13 +34,7 @@ layoutClass += ` ${gap}`;
     class: layoutClass,
   }}
 >
-  <div class="col-span-1">
-    <slot name="column1" />
-  </div>
-  <div class="col-span-1">
-    <slot name="column2" />
-  </div>
-  <div class="col-span-1">
-    <slot name="column3" />
-  </div>
+  <slot name="column1" />
+  <slot name="column2" />
+  <slot name="column3" />
 </Container>
