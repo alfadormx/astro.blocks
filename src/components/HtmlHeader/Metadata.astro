@@ -3,6 +3,7 @@ import { SEO } from 'astro-seo';
 import { SITE, METADATA, I18N } from 'site-config';
 import type { MetaData } from '~/types/metadata.types';
 import merge from 'lodash.merge';
+import { adaptOpenGraphImages } from '~/utils/images';
 
 export type Props = Partial<MetaData>;
 
@@ -25,42 +26,47 @@ const robots = {
     props.robots?.follow !== undefined ? props.robots.follow : (merged.robots?.follow ?? true),
 };
 
+// Optimize OpenGraph images (convert local paths, optimize dimensions, ensure absolute URLs)
+const optimizedOpenGraph = merged.openGraph
+  ? await adaptOpenGraphImages(merged.openGraph, Astro.site)
+  : undefined;
+
 // OpenGraph
-const openGraph = merged.openGraph
+const openGraph = optimizedOpenGraph
   ? {
       basic: {
-        title: merged.openGraph.site_name ?? SITE.name,
-        type: merged.openGraph.type ?? 'website',
-        image: merged.openGraph.images?.[0]?.url ?? '',
-        url: merged.openGraph.url ?? canonical,
+        title: optimizedOpenGraph.site_name ?? SITE.name,
+        type: optimizedOpenGraph.type ?? 'website',
+        image: optimizedOpenGraph.images?.[0]?.url ?? '',
+        url: optimizedOpenGraph.url ?? canonical,
       },
       optional: {
-        siteName: merged.openGraph.site_name ?? SITE.name,
-        locale: merged.openGraph.locale ?? I18N.languages[0]?.locale ?? 'en_US',
-        localeAlternate: merged.openGraph.localeAlternate,
-        description: merged.openGraph.description,
-        audio: merged.openGraph.audio,
-        video: merged.openGraph.video,
-        determiner: merged.openGraph.determiner,
+        siteName: optimizedOpenGraph.site_name ?? SITE.name,
+        locale: optimizedOpenGraph.locale ?? I18N.languages[0]?.locale ?? 'en_US',
+        localeAlternate: optimizedOpenGraph.localeAlternate,
+        description: optimizedOpenGraph.description,
+        audio: optimizedOpenGraph.audio,
+        video: optimizedOpenGraph.video,
+        determiner: optimizedOpenGraph.determiner,
       },
-      image: merged.openGraph.images?.[0]
+      image: optimizedOpenGraph.images?.[0]
         ? {
-            url: merged.openGraph.images[0].url,
-            width: merged.openGraph.images[0].width,
-            height: merged.openGraph.images[0].height,
-            alt: merged.openGraph.images[0].alt,
-            type: merged.openGraph.images[0].type,
-            secureUrl: merged.openGraph.images[0].secureUrl,
+            url: optimizedOpenGraph.images[0].url,
+            width: optimizedOpenGraph.images[0].width,
+            height: optimizedOpenGraph.images[0].height,
+            alt: optimizedOpenGraph.images[0].alt,
+            type: optimizedOpenGraph.images[0].type,
+            secureUrl: optimizedOpenGraph.images[0].secureUrl,
           }
         : undefined,
-      article: merged.openGraph.article
+      article: optimizedOpenGraph.article
         ? {
-            publishedTime: merged.openGraph.article.publishedTime,
-            modifiedTime: merged.openGraph.article.modifiedTime,
-            expirationTime: merged.openGraph.article.expirationTime,
-            authors: merged.openGraph.article.authors,
-            section: merged.openGraph.article.section,
-            tags: merged.openGraph.article.tags,
+            publishedTime: optimizedOpenGraph.article.publishedTime,
+            modifiedTime: optimizedOpenGraph.article.modifiedTime,
+            expirationTime: optimizedOpenGraph.article.expirationTime,
+            authors: optimizedOpenGraph.article.authors,
+            section: optimizedOpenGraph.article.section,
+            tags: optimizedOpenGraph.article.tags,
           }
         : undefined,
     }
