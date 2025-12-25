@@ -1,17 +1,8 @@
 ---
 import Container from '~/components/blocks/Container.astro';
-import type { ContainerProps } from '~/types/container.types';
+import type { ThreeColumnContainerProps } from '~/types/container.types';
 
-interface Props extends Omit<ContainerProps, 'layout' | 'items'> {
-  /** Gap between columns (default: 'gap-6') */
-  gap?: string;
-  /** Responsive behavior (default: false - always 3 cols) */
-  responsive?: boolean;
-  /** Responsive breakpoint (default: 'md:' - use 'sm:', 'lg:', etc.) */
-  breakpoint?: string;
-  /** Custom grid classes (overrides responsive default) */
-  gridClass?: string;
-}
+type Props = ThreeColumnContainerProps;
 
 const {
   gap = 'gap-6',

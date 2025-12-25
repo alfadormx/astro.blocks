@@ -1,17 +1,8 @@
 ---
 import Container from '~/components/blocks/Container.astro';
-import type { ContainerProps } from '~/types/container.types';
+import type { SidebarContainerProps } from '~/types/container.types';
 
-interface Props extends Omit<ContainerProps, 'layout' | 'items'> {
-  /** Gap between main content and sidebar (default: 'gap-6') */
-  gap?: string;
-  /** Responsive behavior (default: false - always side-by-side) */
-  responsive?: boolean;
-  /** Responsive breakpoint (default: 'md:' - use 'sm:', 'lg:', etc.) */
-  breakpoint?: string;
-  /** Custom grid classes (overrides default) */
-  gridClass?: string;
-}
+type Props = SidebarContainerProps;
 
 const {
   gap = 'gap-6',
