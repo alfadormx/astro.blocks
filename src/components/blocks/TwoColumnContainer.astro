@@ -11,6 +11,8 @@ interface Props extends Omit<ContainerProps, 'layout' | 'items'> {
   breakpoint?: string;
   /** Custom grid classes (overrides responsive default) */
   gridClass?: string;
+  /** Reverse order on mobile (default: false) */
+  reverseOnMobile?: boolean;
 }
 
 const {
@@ -18,6 +20,7 @@ const {
   responsive = false,
   breakpoint = 'md:',
   gridClass,
+  reverseOnMobile = false,
   ...containerProps
 } = Astro.props;
 
@@ -25,6 +28,10 @@ const {
 let layoutClass =
   gridClass || (responsive ? `grid-cols-1 ${breakpoint}grid-cols-2` : 'grid-cols-2');
 layoutClass += ` ${gap}`;
+
+// Handle reverse order on mobile
+const column1Class = reverseOnMobile && responsive ? `${breakpoint}order-1 order-2` : '';
+const column2Class = reverseOnMobile && responsive ? `${breakpoint}order-2 order-1` : '';
 ---
 
 <Container
@@ -34,6 +41,10 @@ layoutClass += ` ${gap}`;
     class: layoutClass,
   }}
 >
-  <slot name="column1" />
-  <slot name="column2" />
+  <div class={column1Class}>
+    <slot name="column1" />
+  </div>
+  <div class={column2Class}>
+    <slot name="column2" />
+  </div>
 </Container>

@@ -5,6 +5,7 @@
 @source inline('{md:,}grid-cols-[1fr_3fr]');
 @source inline('{md:,}grid-cols-[75%_25%]');
 @source inline('{md:,}grid-cols-[3fr_1fr]');
+@source inline('{sm:,md:,lg:,xl:,}order-{1,2}');
 
 :root {
   --container-max-width: 1200px;
