@@ -1,4 +1,6 @@
 ---
+import { getImage } from 'astro:assets';
+import { findImage } from '~/utils/images';
 import type { BackgroundProps } from '~/types/background.types';
 
 type Props = BackgroundProps;
@@ -12,6 +14,21 @@ const {
   overlayClass,
 } = Astro.props;
 
+// Resolve image path (supports ~/assets/, public URLs, and external URLs)
+let resolvedImageUrl = '';
+if (image) {
+  const resolvedImage = await findImage(image);
+
+  if (typeof resolvedImage === 'string') {
+    // Already a URL (public or external)
+    resolvedImageUrl = resolvedImage;
+  } else if (resolvedImage) {
+    // ImageMetadata from ~/assets/ - optimize it
+    const optimizedImage = await getImage({ src: resolvedImage });
+    resolvedImageUrl = optimizedImage.src;
+  }
+}
+
 // Build background classes
 let bgClass = 'absolute inset-0 z-0';
 
@@ -21,19 +38,19 @@ if (className) {
 }
 
 // Add background utilities when there's an image
-if (image && !className.includes('bg-')) {
+if (resolvedImageUrl && !className.includes('bg-')) {
   bgClass += ' bg-cover bg-center';
 }
 
 // Add attachment
-if (image && attachment === 'fixed') {
+if (resolvedImageUrl && attachment === 'fixed') {
   bgClass += ' bg-fixed';
 }
 
 // Build inline styles for dynamic background-image URL
 let bgStyle = '';
-if (image) {
-  bgStyle = `background-image:url('${image}');`;
+if (resolvedImageUrl) {
+  bgStyle = `background-image:url('${resolvedImageUrl}');`;
 }
 
 // Overlay class for dark theme or custom overlay
@@ -56,7 +73,7 @@ const overlay = overlayClass || (isDark ? 'bg-surface-light' : '');
       {overlay && <div class:list={['absolute inset-0', overlay]} />}
       <slot />
     </div>
-  ) : image ? (
+  ) : resolvedImageUrl ? (
     <div class={bgClass} style={bgStyle}>
       {overlay && <div class:list={['absolute inset-0', overlay]} />}
       <slot />
