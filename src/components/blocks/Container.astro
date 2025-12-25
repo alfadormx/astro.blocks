@@ -1,7 +1,10 @@
 ---
 import type { ContainerProps } from '~/types/container.types';
+import Background from '~/components/blocks/Background.astro';
 
-const props = Astro.props as ContainerProps;
+type Props = ContainerProps;
+
+const props = Astro.props;
 const ContainerTag = props.htmlTag ?? 'section';
 const containerWidthType = props.containerWidthType ?? 'full';
 const contentWidthType = props.content?.widthType ?? 'boxed';
@@ -14,14 +17,14 @@ const overflow = props.overflow ?? undefined;
 const containerClassName = props.containerClass ?? '';
 const contentClassName = props.content?.class ?? '';
 
-const backgroundClass = props.background?.class ?? '';
-const backgroundImage = props.background?.image ?? '';
-const backgroundVideo = props.background?.video ?? '';
-const backgroundAttachment = props.background?.attachment ?? 'scroll';
 const layoutType = props.layout?.type ?? '';
 const layoutClass = props.layout?.class ?? '';
 
-let containerClass = backgroundClass ? backgroundClass + ' ' : '';
+// Check if there's a background
+const hasBackground = !!props.background || Astro.slots.has('background');
+
+// Build container classes
+let containerClass = '';
 if (containerWidthType === 'boxed') {
   containerClass += 'mx-auto max-w-[var(--container-max-width)] ';
 } else if (containerWidthType === 'custom') {
@@ -32,15 +35,6 @@ if (widthClass) {
 }
 if (minHeightClass) {
   containerClass += `${minHeightClass} `;
-}
-// Add background utilities when there's a background image
-if (backgroundImage) {
-  if (!backgroundClass.includes('bg-')) {
-    containerClass += 'bg-cover bg-center ';
-  }
-  if (backgroundAttachment === 'fixed') {
-    containerClass += 'bg-fixed ';
-  }
 }
 if (overflow) {
   containerClass += ` overflow-${overflow}`;
@@ -64,14 +58,15 @@ if (props.border?.radius) {
   containerClass += ` ${props.border.radius}`;
 }
 if (containerClassName) {
-  containerClass += containerClassName;
+  containerClass += ` ${containerClassName}`;
 }
 
-// Build inline styles (dynamic background-image URL)
-let containerStyle = 'position:relative;';
-if (backgroundImage && !Astro.slots.background) {
-  containerStyle += `background-image:url('${backgroundImage}');`;
+// Add relative positioning if there's a background
+if (hasBackground) {
+  containerClass = 'relative ' + containerClass;
 }
+
+const containerStyle = hasBackground ? 'position:relative;' : '';
 
 let contentClass = 'w-full relative z-1';
 if (layoutType) {
@@ -121,17 +116,13 @@ if (equalHeight) {
   {
     Astro.slots.background ? (
       <slot name="background" />
-    ) : backgroundVideo ? (
-      <video
-        class="absolute z-0 inset-0 w-full h-full object-cover"
-        autoplay
-        loop
-        muted
-        playsinline
-        aria-hidden="true"
-      >
-        <source src={backgroundVideo} type="video/mp4" />
-      </video>
+    ) : props.background ? (
+      <Background
+        image={props.background.image}
+        video={props.background.video}
+        attachment={props.background.attachment}
+        class={props.background.class}
+      />
     ) : null
   }
   <div class={contentClass.trim()}>

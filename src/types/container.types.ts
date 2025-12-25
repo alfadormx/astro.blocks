@@ -1,3 +1,5 @@
+import type { BackgroundConfig } from './background.types';
+
 export type ContainerTag =
   | 'div'
   | 'header'
@@ -15,15 +17,6 @@ export type ContainerTag =
 export type ContainerWidthType = 'full' | 'boxed' | 'custom';
 export type ContentWidthType = 'full' | 'boxed';
 export type OverflowType = 'visible' | 'hidden' | 'auto';
-
-export type BackgroundAttachment = 'scroll' | 'fixed';
-
-export interface BackgroundConfig {
-  image?: string;
-  video?: string;
-  attachment?: BackgroundAttachment;
-  class?: string;
-}
 
 export interface ContentConfig {
   class?: string;
