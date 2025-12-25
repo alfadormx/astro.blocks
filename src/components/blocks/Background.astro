@@ -1,0 +1,69 @@
+---
+import type { BackgroundProps } from '~/types/background.types';
+
+type Props = BackgroundProps;
+
+const {
+  image,
+  video,
+  attachment = 'scroll',
+  class: className = '',
+  isDark = false,
+  overlayClass,
+} = Astro.props;
+
+// Build background classes
+let bgClass = 'absolute inset-0 z-0';
+
+// Add custom classes
+if (className) {
+  bgClass += ` ${className}`;
+}
+
+// Add background utilities when there's an image
+if (image && !className.includes('bg-')) {
+  bgClass += ' bg-cover bg-center';
+}
+
+// Add attachment
+if (image && attachment === 'fixed') {
+  bgClass += ' bg-fixed';
+}
+
+// Build inline styles for dynamic background-image URL
+let bgStyle = '';
+if (image) {
+  bgStyle = `background-image:url('${image}');`;
+}
+
+// Overlay class for dark theme or custom overlay
+const overlay = overlayClass || (isDark ? 'bg-surface-light' : '');
+---
+
+{
+  video ? (
+    <div class={bgClass}>
+      <video
+        class="absolute inset-0 w-full h-full object-cover"
+        autoplay
+        loop
+        muted
+        playsinline
+        aria-hidden="true"
+      >
+        <source src={video} type="video/mp4" />
+      </video>
+      {overlay && <div class:list={['absolute inset-0', overlay]} />}
+      <slot />
+    </div>
+  ) : image ? (
+    <div class={bgClass} style={bgStyle}>
+      {overlay && <div class:list={['absolute inset-0', overlay]} />}
+      <slot />
+    </div>
+  ) : (
+    <div class:list={[bgClass, overlay]}>
+      <slot />
+    </div>
+  )
+}
