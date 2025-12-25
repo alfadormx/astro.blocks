@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+@source inline('{sm:,md:,lg:,xl:,}grid-cols-{1,2,3,4}');
+@source inline('{md:,}grid-cols-[25%_75%]');
+@source inline('{md:,}grid-cols-[1fr_3fr]');
+
 :root {
   --container-max-width: 1200px;
 }
