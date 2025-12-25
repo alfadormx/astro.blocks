@@ -77,22 +77,22 @@ var metadata = {
     </div>
   </TwoColumnContainer>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">4. Non-Responsive (Always 2 Columns)</h3>
+  <h3 class="text-xl font-semibold mt-8 mb-2">4. Responsive (Stacks on Mobile)</h3>
   <TwoColumnContainer
     htmlTag="section"
     containerWidthType="full"
     content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
     border={{ width: 'border', color: 'border-gray-300' }}
-    responsive={false}
+    responsive={true}
     spacing={{ margin: 'mb-8' }}
   >
     <div slot="column1" class="bg-orange-500 text-white p-6 rounded">
       <h3 class="text-xl font-bold mb-2">Column 1</h3>
-      <p>This layout stays side-by-side even on mobile.</p>
+      <p>This layout stacks vertically on mobile, side-by-side on desktop.</p>
     </div>
     <div slot="column2" class="bg-red-500 text-white p-6 rounded">
       <h3 class="text-xl font-bold mb-2">Column 2</h3>
-      <p>Set responsive=false to prevent stacking.</p>
+      <p>Set responsive=true for mobile-friendly layouts.</p>
     </div>
   </TwoColumnContainer>
 
