@@ -1,6 +1,6 @@
 ---
-import Container from './Container.astro';
-import type { ContainerProps } from '../../types/container.types';
+import Container from '~/components/blocks/Container.astro';
+import type { ContainerProps } from '~/types/container.types';
 
 interface Props extends Omit<ContainerProps, 'layout' | 'items'> {
   /** Gap between sidebar and main content (default: 'gap-6') */
