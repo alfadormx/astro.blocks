@@ -1,0 +1,44 @@
+---
+import type { HeadlineProps } from '~/types/headline.types';
+
+type Props = HeadlineProps;
+
+const {
+  tagline,
+  title,
+  subtitle,
+  taglineClass = '',
+  titleClass = '',
+  subtitleClass = '',
+  class: className = '',
+  align = 'left',
+} = Astro.props;
+
+const alignmentClass = {
+  left: 'text-left',
+  center: 'text-center',
+  right: 'text-right',
+}[align];
+
+// Build classes additively (defaults + custom)
+let finalTaglineClass = 'text-sm font-semibold uppercase tracking-wider text-gray-600';
+if (taglineClass) {
+  finalTaglineClass += ` ${taglineClass}`;
+}
+
+let finalTitleClass = 'text-4xl md:text-5xl font-bold text-gray-900 mt-2';
+if (titleClass) {
+  finalTitleClass += ` ${titleClass}`;
+}
+
+let finalSubtitleClass = 'text-lg text-gray-600 mt-4 max-w-3xl';
+if (subtitleClass) {
+  finalSubtitleClass += ` ${subtitleClass}`;
+}
+---
+
+<div class:list={['space-y-2', alignmentClass, className]}>
+  {tagline && <p class={finalTaglineClass}>{tagline}</p>}
+  <h1 class={finalTitleClass}>{title}</h1>
+  {subtitle && <p class={finalSubtitleClass}>{subtitle}</p>}
+</div>
