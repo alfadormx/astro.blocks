@@ -1,0 +1,256 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SidebarRightContainer from '../components/blocks/SidebarRightContainer.astro';
+
+var metadata = {
+  title: {
+    default: 'SidebarRightContainer - Blocks Demo',
+  },
+  description: 'Sidebar Right Container Block - 75% main content left, 25% sidebar right',
+};
+---
+
+<Layout metadata={metadata}>
+  <h1 class="text-2xl font-bold mb-6">Sidebar Right Container Block</h1>
+  <p class="mb-8">
+    A pre-built layout wrapper with main content on the left (3/4 width) and a sidebar on the right
+    (1/4 width). Perfect for supplementary information, quick actions, or metadata.
+  </p>
+
+  <h2 class="text-3xl font-bold mt-12 mb-4">Basic Examples</h2>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">1. Basic Sidebar Layout</h3>
+  <SidebarRightContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    border={{ width: 'border', color: 'border-gray-300' }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="main" class="bg-green-500 text-white p-6 rounded">
+      <h3 class="text-xl font-bold mb-4">Main Content</h3>
+      <p>3/4 width main content area</p>
+    </div>
+    <div slot="sidebar" class="bg-blue-500 text-white p-6 rounded">
+      <h3 class="text-xl font-bold mb-4">Sidebar</h3>
+      <p>1/4 width sidebar content</p>
+    </div>
+  </SidebarRightContainer>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">2. Content with Quick Actions</h3>
+  <SidebarRightContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="main" class="bg-white p-6 rounded border border-gray-300">
+      <h2 class="text-2xl font-bold mb-4">Project Details</h2>
+      <p class="mb-4">
+        This is a comprehensive overview of the current project status, including milestones,
+        deliverables, and team assignments.
+      </p>
+      <div class="grid grid-cols-3 gap-4 mt-6">
+        <div class="bg-blue-50 p-4 rounded">
+          <div class="text-2xl font-bold text-blue-600">8</div>
+          <div class="text-sm text-gray-600">Tasks Completed</div>
+        </div>
+        <div class="bg-yellow-50 p-4 rounded">
+          <div class="text-2xl font-bold text-yellow-600">5</div>
+          <div class="text-sm text-gray-600">In Progress</div>
+        </div>
+        <div class="bg-gray-50 p-4 rounded">
+          <div class="text-2xl font-bold text-gray-600">12</div>
+          <div class="text-sm text-gray-600">Pending</div>
+        </div>
+      </div>
+    </div>
+    <div slot="sidebar" class="bg-purple-600 p-6 rounded">
+      <h3 class="text-lg font-bold mb-4 text-white">Actions</h3>
+      <nav class="space-y-2">
+        <button class="w-full text-left py-2 px-3 bg-white text-purple-600 rounded">
+          Edit Project
+        </button>
+        <button class="w-full text-left py-2 px-3 hover:bg-purple-700 text-white rounded">
+          Add Task
+        </button>
+        <button class="w-full text-left py-2 px-3 hover:bg-purple-700 text-white rounded">
+          Assign Team
+        </button>
+        <button class="w-full text-left py-2 px-3 hover:bg-purple-700 text-white rounded">
+          Export Report
+        </button>
+      </nav>
+    </div>
+  </SidebarRightContainer>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">3. Content with Metadata Sidebar</h3>
+  <SidebarRightContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="main" class="bg-white p-6 rounded border border-gray-300">
+      <h2 class="text-2xl font-bold mb-4">Article Title: Modern Web Development</h2>
+      <p class="mb-4">
+        The landscape of web development has changed dramatically over the past few years. Modern
+        frameworks, tools, and best practices have emerged to help developers build better
+        applications faster.
+      </p>
+      <p class="mb-4">
+        From component-based architectures to server-side rendering, the ecosystem continues to
+        evolve. Understanding these patterns is essential for building scalable, maintainable
+        applications.
+      </p>
+      <p class="mb-4">
+        Performance optimization, accessibility, and user experience remain critical factors in
+        successful web development projects.
+      </p>
+    </div>
+    <div slot="sidebar" class="space-y-4">
+      <div class="bg-blue-50 p-4 rounded border border-blue-200">
+        <h4 class="font-semibold mb-2">Metadata</h4>
+        <dl class="text-sm space-y-1">
+          <div>
+            <dt class="text-gray-600">Author:</dt>
+            <dd class="font-medium">Jane Smith</dd>
+          </div>
+          <div>
+            <dt class="text-gray-600">Published:</dt>
+            <dd class="font-medium">Dec 25, 2025</dd>
+          </div>
+          <div>
+            <dt class="text-gray-600">Category:</dt>
+            <dd class="font-medium">Technology</dd>
+          </div>
+          <div>
+            <dt class="text-gray-600">Reading Time:</dt>
+            <dd class="font-medium">5 min</dd>
+          </div>
+        </dl>
+      </div>
+      <div class="bg-green-50 p-4 rounded border border-green-200">
+        <h4 class="font-semibold mb-2 text-green-900">Tags</h4>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-2 py-1 bg-green-200 text-green-800 text-xs rounded">JavaScript</span>
+          <span class="px-2 py-1 bg-green-200 text-green-800 text-xs rounded">React</span>
+          <span class="px-2 py-1 bg-green-200 text-green-800 text-xs rounded">Astro</span>
+        </div>
+      </div>
+    </div>
+  </SidebarRightContainer>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">4. With Background Gradient</h3>
+  <SidebarRightContainer
+    htmlTag="section"
+    containerWidthType="full"
+    background={{ class: 'bg-gradient-to-r from-cyan-500 to-blue-500' }}
+    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="main" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
+      <h2 class="text-2xl font-bold mb-4">Premium Features</h2>
+      <p class="mb-4">
+        Unlock advanced capabilities designed for power users and teams. Get access to exclusive
+        features that streamline your workflow.
+      </p>
+      <ul class="space-y-2 mb-4">
+        <li>✓ Advanced analytics and reporting</li>
+        <li>✓ Priority customer support</li>
+        <li>✓ Custom integrations</li>
+        <li>✓ Team collaboration tools</li>
+      </ul>
+      <button class="bg-cyan-600 text-white px-6 py-2 rounded hover:bg-cyan-700">
+        Upgrade Now
+      </button>
+    </div>
+    <div slot="sidebar" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
+      <h3 class="text-lg font-bold mb-4">Pricing</h3>
+      <div class="text-center mb-4">
+        <div class="text-3xl font-bold text-cyan-600">$49</div>
+        <div class="text-sm text-gray-600">per month</div>
+      </div>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#" class="text-cyan-600 hover:underline">Compare Plans</a></li>
+        <li><a href="#" class="text-cyan-600 hover:underline">FAQ</a></li>
+        <li><a href="#" class="text-cyan-600 hover:underline">Contact Sales</a></li>
+      </ul>
+    </div>
+  </SidebarRightContainer>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">5. Responsive (Stacks on Mobile)</h3>
+  <SidebarRightContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    border={{ width: 'border', color: 'border-gray-300' }}
+    responsive={true}
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="main" class="bg-red-500 text-white p-6 rounded">
+      <h3 class="text-lg font-bold mb-2">Main Content</h3>
+      <p class="text-sm">Main content appears first on mobile.</p>
+    </div>
+    <div slot="sidebar" class="bg-orange-500 text-white p-6 rounded">
+      <h3 class="text-lg font-bold mb-2">Sidebar</h3>
+      <p class="text-sm">This sidebar appears below on mobile devices.</p>
+    </div>
+  </SidebarRightContainer>
+
+  <h2 class="text-3xl font-bold mt-12 mb-4">Practical Use Cases</h2>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">6. Documentation Page</h3>
+  <SidebarRightContainer
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    gap="gap-8"
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="main" class="bg-white p-8 rounded border border-gray-300">
+      <h1 class="text-3xl font-bold mb-4">API Authentication Guide</h1>
+      <div class="text-sm text-gray-600 mb-6">Last updated: December 25, 2025</div>
+      <p class="mb-4">
+        Learn how to authenticate your API requests securely using our authentication system. This
+        guide covers OAuth 2.0, API keys, and best practices for secure integration.
+      </p>
+      <h2 class="text-xl font-bold mb-3 mt-6">Getting Started</h2>
+      <p class="mb-4">
+        Before making API calls, you'll need to obtain credentials from your developer dashboard.
+        Choose the authentication method that best fits your use case.
+      </p>
+      <h2 class="text-xl font-bold mb-3 mt-6">API Keys</h2>
+      <p class="mb-4">
+        API keys are simple to use and perfect for server-to-server communication. Keep your keys
+        secure and never expose them in client-side code.
+      </p>
+    </div>
+    <div slot="sidebar" class="space-y-6">
+      <div class="bg-white p-6 rounded border border-gray-300">
+        <h3 class="text-lg font-bold mb-3">On This Page</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-sm text-blue-600 hover:underline">Getting Started</a></li>
+          <li><a href="#" class="text-sm text-blue-600 hover:underline">API Keys</a></li>
+          <li><a href="#" class="text-sm text-blue-600 hover:underline">OAuth 2.0</a></li>
+          <li><a href="#" class="text-sm text-blue-600 hover:underline">Best Practices</a></li>
+        </ul>
+      </div>
+      <div class="bg-white p-6 rounded border border-gray-300">
+        <h3 class="text-lg font-bold mb-3">Related Docs</h3>
+        <ul class="space-y-2">
+          <li>
+            <a href="#" class="text-sm text-blue-600 hover:underline">Rate Limiting</a>
+          </li>
+          <li><a href="#" class="text-sm text-blue-600 hover:underline">Error Handling</a></li>
+          <li><a href="#" class="text-sm text-blue-600 hover:underline">Webhooks</a></li>
+        </ul>
+      </div>
+      <div class="bg-yellow-50 p-4 rounded border border-yellow-200">
+        <p class="text-xs text-yellow-800">
+          <strong>Note:</strong> API v1 will be deprecated on June 1, 2026.
+        </p>
+      </div>
+    </div>
+  </SidebarRightContainer>
+</Layout>
