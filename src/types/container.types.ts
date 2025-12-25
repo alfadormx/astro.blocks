@@ -70,3 +70,25 @@ export interface ContainerProps {
   equalHeight?: boolean;
   items?: ContainerItem[];
 }
+
+export interface GridLayoutProps extends Omit<ContainerProps, 'layout' | 'items'> {
+  /** Gap between columns/sections (default: 'gap-6') */
+  gap?: string;
+  /** Responsive behavior (default: false - always side-by-side) */
+  responsive?: boolean;
+  /** Responsive breakpoint (default: 'md:' - use 'sm:', 'lg:', etc.) */
+  breakpoint?: string;
+  /** Custom grid classes (overrides default) */
+  gridClass?: string;
+}
+
+export interface TwoColumnContainerProps extends GridLayoutProps {
+  /** Reverse order on mobile (default: false) */
+  reverseOnMobile?: boolean;
+}
+
+export type ThreeColumnContainerProps = GridLayoutProps;
+
+export type FourColumnContainerProps = GridLayoutProps;
+
+export type SidebarContainerProps = GridLayoutProps;
