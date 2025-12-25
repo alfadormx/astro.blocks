@@ -1,0 +1,161 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import Image from '~/components/blocks/primitives/Image.astro';
+
+const metadata = {
+  title: {
+    default: 'Image Primitive - Component Demo',
+  },
+  description: 'Responsive image optimization with multiple layouts',
+};
+---
+
+<Layout metadata={metadata}>
+  <div class="container mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold mb-8">Image Primitive Component</h1>
+    <p class="text-lg mb-12 text-gray-600">
+      Demonstrating responsive image optimization with srcset, lazy loading, and multiple layout
+      modes.
+    </p>
+
+    <!-- Example 1: Constrained Layout (default) -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-semibold mb-4">1. Constrained Layout (Default)</h2>
+      <p class="text-gray-600 mb-6">
+        Image scales down to fit container but never exceeds its natural size. Perfect for content
+        images.
+      </p>
+      <div class="border-2 border-dashed border-gray-300 p-8">
+        <Image
+          src="https://images.unsplash.com/photo-1682687220742-aba13b6e50ba"
+          alt="Mountain landscape"
+          width={800}
+          height={600}
+          layout="constrained"
+        />
+      </div>
+    </section>
+
+    <!-- Example 2: Full Width Layout -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-semibold mb-4">2. Full Width Layout</h2>
+      <p class="text-gray-600 mb-6">
+        Image always spans 100% of container width. Ideal for hero images and banners.
+      </p>
+      <div class="border-2 border-dashed border-gray-300 p-8">
+        <Image
+          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
+          alt="Mountain range"
+          width={1200}
+          height={400}
+          layout="fullWidth"
+        />
+      </div>
+    </section>
+
+    <!-- Example 3: Fixed Layout -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-semibold mb-4">3. Fixed Layout</h2>
+      <p class="text-gray-600 mb-6">
+        Image maintains exact dimensions regardless of screen size. Good for thumbnails and avatars.
+      </p>
+      <div class="border-2 border-dashed border-gray-300 p-8">
+        <Image
+          src="https://images.unsplash.com/photo-1682687220063-4742bd7fd538"
+          alt="Portrait"
+          width={200}
+          height={200}
+          layout="fixed"
+        />
+      </div>
+    </section>
+
+    <!-- Example 4: Responsive Layout -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-semibold mb-4">4. Responsive Layout</h2>
+      <p class="text-gray-600 mb-6">
+        Width is 100%, height scales automatically. Maintains aspect ratio perfectly.
+      </p>
+      <div class="border-2 border-dashed border-gray-300 p-8 max-w-2xl">
+        <Image
+          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
+          alt="Landscape"
+          width={1000}
+          height={667}
+          layout="responsive"
+        />
+      </div>
+    </section>
+
+    <!-- Example 5: Contained Layout -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-semibold mb-4">5. Contained Layout</h2>
+      <p class="text-gray-600 mb-6">
+        Image fits within container using object-fit: contain. No cropping, maintains full
+        visibility.
+      </p>
+      <div class="border-2 border-dashed border-gray-300 p-8 h-96 bg-gray-100">
+        <Image
+          src="https://images.unsplash.com/photo-1682687220742-aba13b6e50ba"
+          alt="Portrait orientation"
+          width={600}
+          height={900}
+          layout="contained"
+        />
+      </div>
+    </section>
+
+    <!-- Example 6: Cover Layout -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-semibold mb-4">6. Cover Layout</h2>
+      <p class="text-gray-600 mb-6">
+        Image covers container completely using object-fit: cover. May crop to fit.
+      </p>
+      <div class="border-2 border-dashed border-gray-300 p-8 h-96 bg-gray-100">
+        <Image
+          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
+          alt="Wide landscape"
+          width={1200}
+          height={800}
+          layout="cover"
+        />
+      </div>
+    </section>
+
+    <!-- Example 7: Aspect Ratio Control -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-semibold mb-4">7. Custom Aspect Ratio</h2>
+      <p class="text-gray-600 mb-6">
+        Force specific aspect ratio (16:9) regardless of source image dimensions.
+      </p>
+      <div class="border-2 border-dashed border-gray-300 p-8 max-w-4xl">
+        <Image
+          src="https://images.unsplash.com/photo-1682687220742-aba13b6e50ba"
+          alt="Forced 16:9 ratio"
+          width={1200}
+          aspectRatio="16:9"
+          layout="responsive"
+        />
+      </div>
+    </section>
+
+    <!-- Example 8: Eager Loading -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-semibold mb-4">8. Eager Loading (Above Fold)</h2>
+      <p class="text-gray-600 mb-6">
+        Load immediately without lazy loading. Use for hero images and LCP elements.
+      </p>
+      <div class="border-2 border-dashed border-gray-300 p-8">
+        <Image
+          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
+          alt="Hero image"
+          width={1200}
+          height={600}
+          layout="fullWidth"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </section>
+  </div>
+</Layout>

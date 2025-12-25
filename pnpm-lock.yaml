@@ -29,6 +29,9 @@ importers:
       tailwindcss:
         specifier: ^4.1.18
         version: 4.1.18
+      unpic:
+        specifier: ^4.2.2
+        version: 4.2.2
     devDependencies:
       '@astrojs/check':
         specifier: ^0.9.6
@@ -2249,6 +2252,9 @@ packages:
 
   unist-util-visit@5.0.0:
     resolution: {integrity: sha512-MR04uvD+07cwl/yhVuVWAtw+3GOR/knlL55Nd/wAdblk27GCVt3lqpTivy/tkJcZoNPzTwS1Y+KMojlLDhoTzg==}
+
+  unpic@4.2.2:
+    resolution: {integrity: sha512-z6T2ScMgRV2y2H8MwwhY5xHZWXhUx/YxtOCGJwfURSl7ypVy4HpLIMWoIZKnnxQa/RKzM0kg8hUh0paIrpLfvw==}
 
   unstorage@1.17.3:
     resolution: {integrity: sha512-i+JYyy0DoKmQ3FximTHbGadmIYb8JEpq7lxUjnjeB702bCPum0vzo6oy5Mfu0lpqISw7hCyMW2yj4nWC8bqJ3Q==}
@@ -5083,6 +5089,8 @@ snapshots:
       '@types/unist': 3.0.3
       unist-util-is: 6.0.1
       unist-util-visit-parents: 6.0.2
+
+  unpic@4.2.2: {}
 
   unstorage@1.17.3:
     dependencies:
