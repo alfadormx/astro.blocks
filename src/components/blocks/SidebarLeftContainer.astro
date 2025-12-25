@@ -1,0 +1,44 @@
+---
+import Container from './Container.astro';
+import type { ContainerProps } from '../../types/container.types';
+
+interface Props extends Omit<ContainerProps, 'layout' | 'items'> {
+  /** Gap between sidebar and main content (default: 'gap-6') */
+  gap?: string;
+  /** Responsive behavior (default: false - always side-by-side) */
+  responsive?: boolean;
+  /** Responsive breakpoint (default: 'md:' - use 'sm:', 'lg:', etc.) */
+  breakpoint?: string;
+  /** Custom grid classes (overrides default) */
+  gridClass?: string;
+}
+
+const {
+  gap = 'gap-6',
+  responsive = false,
+  breakpoint = 'md:',
+  gridClass,
+  ...containerProps
+} = Astro.props;
+
+// Build grid classes - use grid-cols-[25%_75%] for precise 1/4 and 3/4 split
+let layoutClass =
+  gridClass ||
+  (responsive ? `grid-cols-1 ${breakpoint}grid-cols-[25%_75%]` : 'grid-cols-[25%_75%]');
+layoutClass += ` ${gap}`;
+---
+
+<Container
+  {...containerProps}
+  layout={{
+    type: 'grid',
+    class: layoutClass,
+  }}
+>
+  <div>
+    <slot name="sidebar" />
+  </div>
+  <div>
+    <slot name="main" />
+  </div>
+</Container>
