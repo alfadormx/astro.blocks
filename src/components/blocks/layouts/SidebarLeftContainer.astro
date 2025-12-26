@@ -1,6 +1,7 @@
 ---
 import Container from '~/components/blocks/composite/Container.astro';
 import type { SidebarContainerProps } from '~/types/container.types';
+import { cn } from '~/utils/styles';
 
 type Props = SidebarContainerProps;
 
@@ -13,10 +14,11 @@ const {
 } = Astro.props;
 
 // Build grid classes - use grid-cols-[25%_75%] for precise 1/4 and 3/4 split
-let layoutClass =
+const layoutClass = cn(
   gridClass ||
-  (responsive ? `grid-cols-1 ${breakpoint}grid-cols-[25%_75%]` : 'grid-cols-[25%_75%]');
-layoutClass += ` ${gap}`;
+    (responsive ? `grid-cols-1 ${breakpoint}grid-cols-[25%_75%]` : 'grid-cols-[25%_75%]'),
+  gap
+);
 ---
 
 <Container
