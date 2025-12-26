@@ -1,6 +1,7 @@
 ---
 import type { ContainerProps } from '~/types/container.types';
 import Background from '~/components/blocks/primitives/Background.astro';
+import { cn } from '~/utils/styles';
 
 type Props = ContainerProps;
 
@@ -20,99 +21,45 @@ const contentClassName = props.content?.class ?? '';
 const layoutType = props.layout?.type ?? '';
 const layoutClass = props.layout?.class ?? '';
 
-// Check if there's a background
 const hasBackground = !!props.background || Astro.slots.has('background');
 
-// Build container classes
-let containerClass = '';
-if (containerWidthType === 'boxed') {
-  containerClass += 'mx-auto max-w-[var(--container-max-width)] ';
-} else if (containerWidthType === 'custom') {
-  containerClass += 'mx-auto ';
-}
-if (widthClass) {
-  containerClass += `${widthClass} `;
-}
-if (minHeightClass) {
-  containerClass += `${minHeightClass} `;
-}
-if (overflow) {
-  containerClass += ` overflow-${overflow}`;
-}
-if (props.spacing?.padding) {
-  containerClass += ` ${props.spacing.padding}`;
-}
-if (props.spacing?.margin) {
-  containerClass += ` ${props.spacing.margin}`;
-}
-if (props.spacing?.gap) {
-  containerClass += ` ${props.spacing.gap}`;
-}
-if (props.border?.width) {
-  containerClass += ` ${props.border.width}`;
-}
-if (props.border?.color) {
-  containerClass += ` ${props.border.color}`;
-}
-if (props.border?.radius) {
-  containerClass += ` ${props.border.radius}`;
-}
-if (containerClassName) {
-  containerClass += ` ${containerClassName}`;
-}
-
-// Add relative positioning if there's a background
-if (hasBackground) {
-  containerClass = 'relative ' + containerClass;
-}
+const containerClass = cn(
+  hasBackground && 'relative',
+  containerWidthType === 'boxed' && 'mx-auto max-w-[var(--container-max-width)]',
+  containerWidthType === 'custom' && 'mx-auto',
+  widthClass,
+  minHeightClass,
+  overflow && `overflow-${overflow}`,
+  props.spacing?.padding,
+  props.spacing?.margin,
+  props.spacing?.gap,
+  props.border?.width,
+  props.border?.color,
+  props.border?.radius,
+  containerClassName
+);
 
 const containerStyle = hasBackground ? 'position:relative;' : '';
 
-let contentClass = 'w-full relative z-1';
-if (layoutType) {
-  contentClass += ` ${layoutType}`;
-}
-if (layoutClass) {
-  contentClass += ` ${layoutClass}`;
-}
-if (containerWidthType === 'full') {
-  if (contentWidthType === 'boxed') {
-    contentClass += ` ${contentBoxWidth} mx-auto`;
-    // Apply min-height to content div when container is full-width and content is boxed
-    if (minHeightClass) {
-      contentClass += ` ${minHeightClass}`;
-    }
-  } else if (contentWidthType === 'full') {
-    contentClass += ' w-full';
-  }
-}
-if (props.content?.spacing?.padding) {
-  contentClass += ` ${props.content.spacing.padding}`;
-}
-if (props.content?.spacing?.margin) {
-  contentClass += ` ${props.content.spacing.margin}`;
-}
-if (props.content?.spacing?.gap) {
-  contentClass += ` ${props.content.spacing.gap}`;
-}
-if (props.content?.border?.width) {
-  contentClass += ` ${props.content.border.width}`;
-}
-if (props.content?.border?.color) {
-  contentClass += ` ${props.content.border.color}`;
-}
-if (props.content?.border?.radius) {
-  contentClass += ` ${props.content.border.radius}`;
-}
-if (contentClassName) {
-  contentClass += ` ${contentClassName}`;
-}
-if (equalHeight) {
-  contentClass += ' items-stretch';
-}
+const contentClass = cn(
+  'w-full relative z-1',
+  layoutType,
+  layoutClass,
+  containerWidthType === 'full' &&
+    contentWidthType === 'boxed' && [contentBoxWidth, 'mx-auto', minHeightClass],
+  containerWidthType === 'full' && contentWidthType === 'full' && 'w-full',
+  props.content?.spacing?.padding,
+  props.content?.spacing?.margin,
+  props.content?.spacing?.gap,
+  props.content?.border?.width,
+  props.content?.border?.color,
+  props.content?.border?.radius,
+  contentClassName,
+  equalHeight && 'items-stretch'
+);
 ---
 
-<ContainerTag class={containerClass.trim()} style={containerStyle}>
+<ContainerTag class={containerClass} style={containerStyle}>
   {
     Astro.slots.background ? (
       <slot name="background" />
@@ -125,7 +72,7 @@ if (equalHeight) {
       />
     ) : null
   }
-  <div class={contentClass.trim()}>
+  <div class={contentClass}>
     {
       items && items.length > 0 ? (
         items.map((item) => <div class={item.class} id={item.id} set:html={item.content} />)
