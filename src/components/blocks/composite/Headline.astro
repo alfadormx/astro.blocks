@@ -1,5 +1,6 @@
 ---
 import type { HeadlineProps } from '~/types/headline.types';
+import { cn } from '~/utils/styles';
 
 type Props = HeadlineProps;
 
@@ -20,21 +21,14 @@ const alignmentClass = {
   right: 'text-right',
 }[align];
 
-// Build classes additively (defaults + custom)
-let finalTaglineClass = 'text-sm font-semibold uppercase tracking-wider text-gray-600';
-if (taglineClass) {
-  finalTaglineClass += ` ${taglineClass}`;
-}
+const finalTaglineClass = cn(
+  'text-sm font-semibold uppercase tracking-wider text-gray-600',
+  taglineClass
+);
 
-let finalTitleClass = 'text-4xl md:text-5xl font-bold text-gray-900 mt-2';
-if (titleClass) {
-  finalTitleClass += ` ${titleClass}`;
-}
+const finalTitleClass = cn('text-4xl md:text-5xl font-bold text-gray-900 mt-2', titleClass);
 
-let finalSubtitleClass = 'text-lg text-gray-600 mt-4 max-w-3xl';
-if (subtitleClass) {
-  finalSubtitleClass += ` ${subtitleClass}`;
-}
+const finalSubtitleClass = cn('text-lg text-gray-600 mt-4 max-w-3xl', subtitleClass);
 ---
 
 <div class:list={['space-y-2', alignmentClass, className]}>
