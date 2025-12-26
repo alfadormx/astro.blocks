@@ -1,6 +1,7 @@
 ---
 import Container from '~/components/blocks/composite/Container.astro';
 import type { TwoColumnContainerProps } from '~/types/container.types';
+import { cn } from '~/utils/styles';
 
 type Props = TwoColumnContainerProps;
 
@@ -14,13 +15,14 @@ const {
 } = Astro.props;
 
 // Build grid classes
-let layoutClass =
-  gridClass || (responsive ? `grid-cols-1 ${breakpoint}grid-cols-2` : 'grid-cols-2');
-layoutClass += ` ${gap}`;
+const layoutClass = cn(
+  gridClass || (responsive ? `grid-cols-1 ${breakpoint}grid-cols-2` : 'grid-cols-2'),
+  gap
+);
 
 // Handle reverse order on mobile
-const column1Class = reverseOnMobile && responsive ? `${breakpoint}order-1 order-2` : '';
-const column2Class = reverseOnMobile && responsive ? `${breakpoint}order-2 order-1` : '';
+const column1Class = cn(reverseOnMobile && responsive && `${breakpoint}order-1 order-2`);
+const column2Class = cn(reverseOnMobile && responsive && `${breakpoint}order-2 order-1`);
 ---
 
 <Container
