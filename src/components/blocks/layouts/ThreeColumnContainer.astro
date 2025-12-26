@@ -1,6 +1,7 @@
 ---
 import Container from '~/components/blocks/composite/Container.astro';
 import type { ThreeColumnContainerProps } from '~/types/container.types';
+import { cn } from '~/utils/styles';
 
 type Props = ThreeColumnContainerProps;
 
@@ -13,9 +14,10 @@ const {
 } = Astro.props;
 
 // Build grid classes
-let layoutClass =
-  gridClass || (responsive ? `grid-cols-1 ${breakpoint}grid-cols-3` : 'grid-cols-3');
-layoutClass += ` ${gap}`;
+const layoutClass = cn(
+  gridClass || (responsive ? `grid-cols-1 ${breakpoint}grid-cols-3` : 'grid-cols-3'),
+  gap
+);
 ---
 
 <Container
