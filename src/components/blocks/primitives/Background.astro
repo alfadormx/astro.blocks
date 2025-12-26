@@ -2,6 +2,7 @@
 import { getImage } from 'astro:assets';
 import { findImage } from '~/utils/images';
 import type { BackgroundProps } from '~/types/background.types';
+import { cn } from '~/utils/styles';
 
 type Props = BackgroundProps;
 
@@ -30,22 +31,12 @@ if (image) {
 }
 
 // Build background classes
-let bgClass = 'absolute inset-0 z-0';
-
-// Add custom classes
-if (className) {
-  bgClass += ` ${className}`;
-}
-
-// Add background utilities when there's an image
-if (resolvedImageUrl && !className.includes('bg-')) {
-  bgClass += ' bg-cover bg-center';
-}
-
-// Add attachment
-if (resolvedImageUrl && attachment === 'fixed') {
-  bgClass += ' bg-fixed';
-}
+const bgClass = cn(
+  'absolute inset-0 z-0',
+  className,
+  resolvedImageUrl && !className.includes('bg-') && 'bg-cover bg-center',
+  resolvedImageUrl && attachment === 'fixed' && 'bg-fixed'
+);
 
 // Build inline styles for dynamic background-image URL
 let bgStyle = '';
