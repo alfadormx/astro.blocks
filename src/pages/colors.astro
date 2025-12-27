@@ -1,0 +1,368 @@
+---
+import Container from '~/components/blocks/composite/Container.astro';
+import Layout from '../layouts/Layout.astro';
+
+var metadata = {
+  title: {
+    default: 'Colors',
+  },
+  description: 'Color palette showcase for Astro Blocks',
+};
+
+// Read colors.css and extract OKLCH values
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const colorsPath = join(__dirname, '../styles/colors.css');
+const colorsContent = readFileSync(colorsPath, 'utf-8');
+
+// Extract all color definitions
+const colorMap: Record<string, string> = {};
+const colorRegex = /--color-([^:]+):\s*(oklch\([^)]+\))/g;
+let match;
+while ((match = colorRegex.exec(colorsContent)) !== null) {
+  colorMap[match[1]] = match[2];
+}
+
+// Helper to create color button attributes
+const getColorAttrs = (colorKey: string) => {
+  const oklchValue = colorMap[colorKey] || '';
+  return {
+    title: oklchValue,
+    'data-color': oklchValue,
+  };
+};
+
+// Spectrum colors in order
+const spectrumColors = [
+  'red',
+  'maroon',
+  'peach',
+  'yellow',
+  'lime',
+  'green',
+  'emerald',
+  'teal',
+  'cyan',
+  'sky',
+  'sapphire',
+  'blue',
+  'lavender',
+  'mauve',
+  'pink',
+  'flamingo',
+  'rosewater',
+  'slate',
+  'gray',
+  'zinc',
+  'neutral',
+  'stone',
+];
+
+const shades = [
+  '',
+  '-50',
+  '-100',
+  '-200',
+  '-300',
+  '-400',
+  '-500',
+  '-600',
+  '-700',
+  '-800',
+  '-900',
+  '-950',
+];
+---
+
+<Layout metadata={metadata}>
+  <Container
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed' }}
+    spacing={{ margin: 'my-8', padding: 'p-6' }}
+  >
+    <h2 class="text-2xl font-bold mb-6">Light Theme Colors</h2>
+
+    <h3 class="text-xl font-semibold mt-8 mb-2">Semantic Colors</h3>
+    <Container
+      htmlTag="section"
+      containerWidthType="full"
+      content={{ widthType: 'boxed' }}
+      spacing={{ margin: 'mb-8' }}
+      background={{ class: 'bg-base' }}
+      containerClass="text-text"
+    >
+      <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-12 grid grid-cols-12 gap-4 font-medium">
+          <div class="text-center">text</div>
+          <div class="text-center">subtext1</div>
+          <div class="text-center">subtext0</div>
+          <div class="text-center">overlay2</div>
+          <div class="text-center">overlay1</div>
+          <div class="text-center">overlay0</div>
+          <div class="text-center">surface2</div>
+          <div class="text-center">surface1</div>
+          <div class="text-center">surface0</div>
+          <div class="text-center">crust</div>
+          <div class="text-center">mantle</div>
+          <div class="text-center">base</div>
+        </div>
+        <button
+          class="bg-text w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+          title={colorMap['text']}
+          data-color={colorMap['text']}></button>
+        <button
+          class="bg-subtext1 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+          title={colorMap['subtext1']}
+          data-color={colorMap['subtext1']}></button>
+        <button
+          class="bg-subtext0 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+          title={colorMap['subtext0']}
+          data-color={colorMap['subtext0']}></button>
+        <button
+          class="bg-overlay2 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+          title={colorMap['overlay2']}
+          data-color={colorMap['overlay2']}></button>
+        <button
+          class="bg-overlay1 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+          title={colorMap['overlay1']}
+          data-color={colorMap['overlay1']}></button>
+        <button
+          class="bg-overlay0 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+          title={colorMap['overlay0']}
+          data-color={colorMap['overlay0']}></button>
+        <button
+          class="bg-surface2 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+          title={colorMap['surface2']}
+          data-color={colorMap['surface2']}></button>
+        <button
+          class="bg-surface1 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+          title={colorMap['surface1']}
+          data-color={colorMap['surface1']}></button>
+        <button
+          class="bg-surface0 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+          title={colorMap['surface0']}
+          data-color={colorMap['surface0']}></button>
+        <button
+          class="bg-crust w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+          title={colorMap['crust']}
+          data-color={colorMap['crust']}></button>
+        <button
+          class="bg-mantle w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+          title={colorMap['mantle']}
+          data-color={colorMap['mantle']}></button>
+        <button
+          class="bg-base w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+          title={colorMap['base']}
+          data-color={colorMap['base']}></button>
+      </div>
+    </Container>
+
+    <h3 class="text-xl font-semibold mt-8 mb-2">Spectrum Colors</h3>
+    <Container
+      htmlTag="section"
+      containerWidthType="full"
+      content={{ widthType: 'boxed' }}
+      spacing={{ margin: 'mb-8' }}
+      background={{ class: 'bg-base' }}
+      containerClass="text-text"
+    >
+      <div class="grid grid-cols-13 gap-4">
+        <div>&nbsp;</div>
+        <div>base</div>
+        <div>50</div>
+        <div>100</div>
+        <div>200</div>
+        <div>300</div>
+        <div>400</div>
+        <div>500</div>
+        <div>600</div>
+        <div>700</div>
+        <div>800</div>
+        <div>900</div>
+        <div>950</div>
+
+        {
+          spectrumColors.map((color) => (
+            <>
+              <p class="font-medium capitalize">{color}</p>
+              {shades.map((shade) => {
+                const colorKey = `${color}${shade}`;
+                const attrs = getColorAttrs(colorKey);
+                return (
+                  <button
+                    class={`bg-${colorKey} w-full rounded-sm border-2 border-black cursor-pointer hover:opacity-80 transition-all`}
+                    title={attrs.title}
+                    data-color={attrs['data-color']}
+                  />
+                );
+              })}
+            </>
+          ))
+        }
+      </div>
+    </Container>
+  </Container>
+
+  <div data-theme="dark">
+    <Container
+      htmlTag="section"
+      containerWidthType="full"
+      content={{ widthType: 'boxed' }}
+      spacing={{ margin: 'my-8', padding: 'p-6' }}
+    >
+      <h2 class="text-2xl font-bold mb-6">Dark Theme Colors</h2>
+
+      <h3 class="text-xl font-semibold mt-8 mb-2">Semantic Colors</h3>
+      <Container
+        htmlTag="section"
+        containerWidthType="full"
+        content={{ widthType: 'boxed' }}
+        spacing={{ margin: 'mb-8' }}
+        background={{ class: 'bg-base' }}
+        containerClass="text-text"
+      >
+        <div class="grid grid-cols-12 gap-4">
+          <div class="col-span-12 grid grid-cols-12 gap-4 font-medium">
+            <div class="text-center">text</div>
+            <div class="text-center">subtext1</div>
+            <div class="text-center">subtext0</div>
+            <div class="text-center">overlay2</div>
+            <div class="text-center">overlay1</div>
+            <div class="text-center">overlay0</div>
+            <div class="text-center">surface2</div>
+            <div class="text-center">surface1</div>
+            <div class="text-center">surface0</div>
+            <div class="text-center">crust</div>
+            <div class="text-center">mantle</div>
+            <div class="text-center">base</div>
+          </div>
+          <button
+            class="bg-text w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+            title={colorMap['text']}
+            data-color={colorMap['text']}></button>
+          <button
+            class="bg-subtext1 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+            title={colorMap['subtext1']}
+            data-color={colorMap['subtext1']}></button>
+          <button
+            class="bg-subtext0 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+            title={colorMap['subtext0']}
+            data-color={colorMap['subtext0']}></button>
+          <button
+            class="bg-overlay2 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+            title={colorMap['overlay2']}
+            data-color={colorMap['overlay2']}></button>
+          <button
+            class="bg-overlay1 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+            title={colorMap['overlay1']}
+            data-color={colorMap['overlay1']}></button>
+          <button
+            class="bg-overlay0 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+            title={colorMap['overlay0']}
+            data-color={colorMap['overlay0']}></button>
+          <button
+            class="bg-surface2 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+            title={colorMap['surface2']}
+            data-color={colorMap['surface2']}></button>
+          <button
+            class="bg-surface1 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+            title={colorMap['surface1']}
+            data-color={colorMap['surface1']}></button>
+          <button
+            class="bg-surface0 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+            title={colorMap['surface0']}
+            data-color={colorMap['surface0']}></button>
+          <button
+            class="bg-crust w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+            title={colorMap['crust']}
+            data-color={colorMap['crust']}></button>
+          <button
+            class="bg-mantle w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+            title={colorMap['mantle']}
+            data-color={colorMap['mantle']}></button>
+          <button
+            class="bg-base w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
+            title={colorMap['base']}
+            data-color={colorMap['base']}></button>
+        </div>
+      </Container>
+
+      <h3 class="text-xl font-semibold mt-8 mb-2">Spectrum Colors</h3>
+      <Container
+        htmlTag="section"
+        containerWidthType="full"
+        content={{ widthType: 'boxed' }}
+        spacing={{ margin: 'mb-8' }}
+        background={{ class: 'bg-base' }}
+        containerClass="text-text"
+      >
+        <div class="grid grid-cols-13 gap-4">
+          <div>&nbsp;</div>
+          <div>base</div>
+          <div>50</div>
+          <div>100</div>
+          <div>200</div>
+          <div>300</div>
+          <div>400</div>
+          <div>500</div>
+          <div>600</div>
+          <div>700</div>
+          <div>800</div>
+          <div>900</div>
+          <div>950</div>
+
+          {
+            spectrumColors.map((color) => (
+              <>
+                <p class="font-medium capitalize">{color}</p>
+                {shades.map((shade) => {
+                  const colorKey = `${color}${shade}`;
+                  const attrs = getColorAttrs(colorKey);
+                  return (
+                    <button
+                      class={`bg-${colorKey} w-full rounded-sm border-2 border-black cursor-pointer hover:opacity-80 transition-all`}
+                      title={attrs.title}
+                      data-color={attrs['data-color']}
+                    />
+                  );
+                })}
+              </>
+            ))
+          }
+        </div>
+      </Container>
+    </Container>
+  </div>
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const colorButtons = document.querySelectorAll('button[data-color]');
+
+    colorButtons.forEach((button) => {
+      button.addEventListener('click', async () => {
+        const colorValue = button.getAttribute('data-color');
+        if (colorValue && button instanceof HTMLButtonElement) {
+          try {
+            await navigator.clipboard.writeText(colorValue);
+            // Visual feedback
+            const originalTitle = button.title;
+            button.title = 'Copied!';
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+              button.title = originalTitle;
+              button.style.transform = 'scale(1)';
+            }, 300);
+          } catch (err) {
+            console.error('Failed to copy:', err);
+          }
+        }
+      });
+    });
+  });
+</script>
