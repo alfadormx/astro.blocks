@@ -1,4 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 @import 'tailwindcss';
+@import './colors.css';
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {
+  --container-max-width: 1200px;
+}
 
 @source inline('{sm:,md:,lg:,xl:,}grid-cols-{1,2,3,4}');
 @source inline('{md:,}grid-cols-[25%_75%]');
@@ -6,7 +15,3 @@
 @source inline('{md:,}grid-cols-[75%_25%]');
 @source inline('{md:,}grid-cols-[3fr_1fr]');
 @source inline('{sm:,md:,lg:,xl:,}order-{1,2}');
-
-:root {
-  --container-max-width: 1200px;
-}
