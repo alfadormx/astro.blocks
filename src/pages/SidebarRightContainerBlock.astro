@@ -23,15 +23,19 @@ var metadata = {
   <SidebarRightContainer
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
-    border={{ width: 'border', color: 'border-gray-300' }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-8' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="main" class="bg-green-500 text-white p-6 rounded">
+    <div slot="main" class="bg-green text-white p-6 rounded">
       <h3 class="text-xl font-bold mb-4">Main Content</h3>
       <p>3/4 width main content area</p>
     </div>
-    <div slot="sidebar" class="bg-blue-500 text-white p-6 rounded">
+    <div slot="sidebar" class="bg-blue text-white p-6 rounded">
       <h3 class="text-xl font-bold mb-4">Sidebar</h3>
       <p>1/4 width sidebar content</p>
     </div>
@@ -41,43 +45,48 @@ var metadata = {
   <SidebarRightContainer
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-12' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="main" class="bg-white p-6 rounded border border-gray-300">
+    <div slot="main" class="bg-white p-6 rounded border border-gray">
       <h2 class="text-2xl font-bold mb-4">Project Details</h2>
       <p class="mb-4">
         This is a comprehensive overview of the current project status, including milestones,
         deliverables, and team assignments.
       </p>
       <div class="grid grid-cols-3 gap-4 mt-6">
-        <div class="bg-blue-50 p-4 rounded">
-          <div class="text-2xl font-bold text-blue-600">8</div>
-          <div class="text-sm text-gray-600">Tasks Completed</div>
+        <div class="bg-blue p-4 rounded">
+          <div class="text-2xl font-bold text-white">8</div>
+          <div class="text-sm text-white">Tasks Completed</div>
         </div>
-        <div class="bg-yellow-50 p-4 rounded">
-          <div class="text-2xl font-bold text-yellow-600">5</div>
-          <div class="text-sm text-gray-600">In Progress</div>
+        <div class="bg-yellow p-4 rounded">
+          <div class="text-2xl font-bold text-white">5</div>
+          <div class="text-sm text-white">In Progress</div>
         </div>
-        <div class="bg-gray-50 p-4 rounded">
-          <div class="text-2xl font-bold text-gray-600">12</div>
-          <div class="text-sm text-gray-600">Pending</div>
+        <div class="bg-gray p-4 rounded">
+          <div class="text-2xl font-bold text-white">12</div>
+          <div class="text-sm text-white">Pending</div>
         </div>
       </div>
     </div>
-    <div slot="sidebar" class="bg-purple-600 p-6 rounded">
+    <div slot="sidebar" class="bg-mauve p-6 rounded">
       <h3 class="text-lg font-bold mb-4 text-white">Actions</h3>
       <nav class="space-y-2">
-        <button class="w-full text-left py-2 px-3 bg-white text-purple-600 rounded">
+        <button class="w-full text-left py-2 px-3 bg-white text-mauve rounded">
           Edit Project
         </button>
-        <button class="w-full text-left py-2 px-3 hover:bg-purple-700 text-white rounded">
+        <button class="w-full text-left py-2 px-3 hover:bg-mauve text-white rounded">
           Add Task
         </button>
-        <button class="w-full text-left py-2 px-3 hover:bg-purple-700 text-white rounded">
+        <button class="w-full text-left py-2 px-3 hover:bg-mauve text-white rounded">
           Assign Team
         </button>
-        <button class="w-full text-left py-2 px-3 hover:bg-purple-700 text-white rounded">
+        <button class="w-full text-left py-2 px-3 hover:bg-mauve text-white rounded">
           Export Report
         </button>
       </nav>
@@ -88,10 +97,15 @@ var metadata = {
   <SidebarRightContainer
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-12' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="main" class="bg-white p-6 rounded border border-gray-300">
+    <div slot="main" class="bg-white p-6 rounded border border-gray">
       <h2 class="text-2xl font-bold mb-4">Article Title: Modern Web Development</h2>
       <p class="mb-4">
         The landscape of web development has changed dramatically over the past few years. Modern
@@ -109,33 +123,33 @@ var metadata = {
       </p>
     </div>
     <div slot="sidebar" class="space-y-4">
-      <div class="bg-blue-50 p-4 rounded border border-blue-200">
-        <h4 class="font-semibold mb-2">Metadata</h4>
+      <div class="bg-blue p-4 rounded border border-blue">
+        <h4 class="font-semibold mb-2 text-white">Metadata</h4>
         <dl class="text-sm space-y-1">
           <div>
-            <dt class="text-gray-600">Author:</dt>
+            <dt class="text-white">Author:</dt>
             <dd class="font-medium">Jane Smith</dd>
           </div>
           <div>
-            <dt class="text-gray-600">Published:</dt>
+            <dt class="text-white">Published:</dt>
             <dd class="font-medium">Dec 25, 2025</dd>
           </div>
           <div>
-            <dt class="text-gray-600">Category:</dt>
+            <dt class="text-white">Category:</dt>
             <dd class="font-medium">Technology</dd>
           </div>
           <div>
-            <dt class="text-gray-600">Reading Time:</dt>
+            <dt class="text-white">Reading Time:</dt>
             <dd class="font-medium">5 min</dd>
           </div>
         </dl>
       </div>
-      <div class="bg-green-50 p-4 rounded border border-green-200">
-        <h4 class="font-semibold mb-2 text-green-900">Tags</h4>
+      <div class="bg-green p-4 rounded border border-green">
+        <h4 class="font-semibold mb-2 text-green">Tags</h4>
         <div class="flex flex-wrap gap-2">
-          <span class="px-2 py-1 bg-green-200 text-green-800 text-xs rounded">JavaScript</span>
-          <span class="px-2 py-1 bg-green-200 text-green-800 text-xs rounded">React</span>
-          <span class="px-2 py-1 bg-green-200 text-green-800 text-xs rounded">Astro</span>
+          <span class="px-2 py-1 bg-green text-white text-xs rounded">JavaScript</span>
+          <span class="px-2 py-1 bg-green text-white text-xs rounded">React</span>
+          <span class="px-2 py-1 bg-green text-white text-xs rounded">Astro</span>
         </div>
       </div>
     </div>
@@ -145,8 +159,13 @@ var metadata = {
   <SidebarRightContainer
     htmlTag="section"
     containerWidthType="full"
-    background={{ class: 'bg-gradient-to-r from-cyan-500 to-blue-500' }}
-    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    background={{ class: 'bg-gradient-to-r from-cyan to-blue' }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-12' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
     <div slot="main" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
@@ -161,20 +180,18 @@ var metadata = {
         <li>✓ Custom integrations</li>
         <li>✓ Team collaboration tools</li>
       </ul>
-      <button class="bg-cyan-600 text-white px-6 py-2 rounded hover:bg-cyan-700">
-        Upgrade Now
-      </button>
+      <button class="bg-cyan text-white px-6 py-2 rounded hover:bg-cyan"> Upgrade Now </button>
     </div>
     <div slot="sidebar" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
       <h3 class="text-lg font-bold mb-4">Pricing</h3>
       <div class="text-center mb-4">
-        <div class="text-3xl font-bold text-cyan-600">$49</div>
-        <div class="text-sm text-gray-600">per month</div>
+        <div class="text-3xl font-bold text-cyan">$49</div>
+        <div class="text-sm text-gray">per month</div>
       </div>
       <ul class="space-y-2 text-sm">
-        <li><a href="#" class="text-cyan-600 hover:underline">Compare Plans</a></li>
-        <li><a href="#" class="text-cyan-600 hover:underline">FAQ</a></li>
-        <li><a href="#" class="text-cyan-600 hover:underline">Contact Sales</a></li>
+        <li><a href="#" class="text-cyan hover:underline">Compare Plans</a></li>
+        <li><a href="#" class="text-cyan hover:underline">FAQ</a></li>
+        <li><a href="#" class="text-cyan hover:underline">Contact Sales</a></li>
       </ul>
     </div>
   </SidebarRightContainer>
@@ -183,16 +200,20 @@ var metadata = {
   <SidebarRightContainer
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
-    border={{ width: 'border', color: 'border-gray-300' }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-8' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     responsive={true}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="main" class="bg-red-500 text-white p-6 rounded">
+    <div slot="main" class="bg-red text-white p-6 rounded">
       <h3 class="text-lg font-bold mb-2">Main Content</h3>
       <p class="text-sm">Main content appears first on mobile.</p>
     </div>
-    <div slot="sidebar" class="bg-orange-500 text-white p-6 rounded">
+    <div slot="sidebar" class="bg-peach text-white p-6 rounded">
       <h3 class="text-lg font-bold mb-2">Sidebar</h3>
       <p class="text-sm">This sidebar appears below on mobile devices.</p>
     </div>
@@ -204,13 +225,18 @@ var metadata = {
   <SidebarRightContainer
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-12' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     gap="gap-8"
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="main" class="bg-white p-8 rounded border border-gray-300">
+    <div slot="main" class="bg-white p-8 rounded border border-gray">
       <h1 class="text-3xl font-bold mb-4">API Authentication Guide</h1>
-      <div class="text-sm text-gray-600 mb-6">Last updated: December 25, 2025</div>
+      <div class="text-sm text-gray mb-6">Last updated: December 25, 2025</div>
       <p class="mb-4">
         Learn how to authenticate your API requests securely using our authentication system. This
         guide covers OAuth 2.0, API keys, and best practices for secure integration.
@@ -227,27 +253,27 @@ var metadata = {
       </p>
     </div>
     <div slot="sidebar" class="space-y-6">
-      <div class="bg-white p-6 rounded border border-gray-300">
+      <div class="bg-white p-6 rounded border border-gray">
         <h3 class="text-lg font-bold mb-3">On This Page</h3>
         <ul class="space-y-2">
-          <li><a href="#" class="text-sm text-blue-600 hover:underline">Getting Started</a></li>
-          <li><a href="#" class="text-sm text-blue-600 hover:underline">API Keys</a></li>
-          <li><a href="#" class="text-sm text-blue-600 hover:underline">OAuth 2.0</a></li>
-          <li><a href="#" class="text-sm text-blue-600 hover:underline">Best Practices</a></li>
+          <li><a href="#" class="text-sm text-blue hover:underline">Getting Started</a></li>
+          <li><a href="#" class="text-sm text-blue hover:underline">API Keys</a></li>
+          <li><a href="#" class="text-sm text-blue hover:underline">OAuth 2.0</a></li>
+          <li><a href="#" class="text-sm text-blue hover:underline">Best Practices</a></li>
         </ul>
       </div>
-      <div class="bg-white p-6 rounded border border-gray-300">
+      <div class="bg-white p-6 rounded border border-gray">
         <h3 class="text-lg font-bold mb-3">Related Docs</h3>
         <ul class="space-y-2">
           <li>
-            <a href="#" class="text-sm text-blue-600 hover:underline">Rate Limiting</a>
+            <a href="#" class="text-sm text-blue hover:underline">Rate Limiting</a>
           </li>
-          <li><a href="#" class="text-sm text-blue-600 hover:underline">Error Handling</a></li>
-          <li><a href="#" class="text-sm text-blue-600 hover:underline">Webhooks</a></li>
+          <li><a href="#" class="text-sm text-blue hover:underline">Error Handling</a></li>
+          <li><a href="#" class="text-sm text-blue hover:underline">Webhooks</a></li>
         </ul>
       </div>
-      <div class="bg-yellow-50 p-4 rounded border border-yellow-200">
-        <p class="text-xs text-yellow-800">
+      <div class="bg-yellow p-4 rounded border border-yellow">
+        <p class="text-xs text-white">
           <strong>Note:</strong> API v1 will be deprecated on June 1, 2026.
         </p>
       </div>

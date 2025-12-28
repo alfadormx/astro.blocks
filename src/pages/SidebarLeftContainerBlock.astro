@@ -23,15 +23,19 @@ var metadata = {
   <SidebarLeftContainer
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
-    border={{ width: 'border', color: 'border-gray-300' }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-8' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="sidebar" class="bg-blue-500 text-white p-6 rounded">
+    <div slot="sidebar" class="bg-blue text-white p-6 rounded">
       <h3 class="text-xl font-bold mb-4">Sidebar</h3>
       <p>1/3 width sidebar content</p>
     </div>
-    <div slot="main" class="bg-green-500 text-white p-6 rounded">
+    <div slot="main" class="bg-green text-white p-6 rounded">
       <h3 class="text-xl font-bold mb-4">Main Content</h3>
       <p>2/3 width main content area</p>
     </div>
@@ -41,16 +45,21 @@ var metadata = {
   <SidebarLeftContainer
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-12' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="sidebar" class="bg-blue-600 p-6 rounded">
+    <div slot="sidebar" class="bg-blue p-6 rounded">
       <h3 class="text-lg font-bold mb-4">Navigation</h3>
       <nav class="space-y-2">
-        <a href="#" class="block py-2 px-3 bg-white text-blue-600 rounded">Dashboard</a>
-        <a href="#" class="block py-2 px-3 hover:bg-gray-200 rounded">Projects</a>
-        <a href="#" class="block py-2 px-3 hover:bg-gray-200 rounded">Team</a>
-        <a href="#" class="block py-2 px-3 hover:bg-gray-200 rounded">Settings</a>
+        <a href="#" class="block py-2 px-3 bg-white text-blue rounded">Dashboard</a>
+        <a href="#" class="block py-2 px-3 hover:bg-gray rounded">Projects</a>
+        <a href="#" class="block py-2 px-3 hover:bg-gray rounded">Team</a>
+        <a href="#" class="block py-2 px-3 hover:bg-gray rounded">Settings</a>
       </nav>
     </div>
     <div slot="main" class="bg-white p-6 rounded border border-gray-300">
@@ -60,13 +69,13 @@ var metadata = {
         configure settings.
       </p>
       <div class="grid grid-cols-2 gap-4 mt-6">
-        <div class="bg-blue-50 p-4 rounded">
-          <div class="text-2xl font-bold text-blue-600">24</div>
-          <div class="text-sm text-gray-600">Active Projects</div>
+        <div class="bg-blue p-4 rounded">
+          <div class="text-2xl font-bold text-blue">24</div>
+          <div class="text-sm text-gray">Active Projects</div>
         </div>
-        <div class="bg-green-50 p-4 rounded">
-          <div class="text-2xl font-bold text-green-600">156</div>
-          <div class="text-sm text-gray-600">Completed Tasks</div>
+        <div class="bg-green p-4 rounded">
+          <div class="text-2xl font-bold text-green">156</div>
+          <div class="text-sm text-gray">Completed Tasks</div>
         </div>
       </div>
     </div>
@@ -76,10 +85,15 @@ var metadata = {
   <SidebarLeftContainer
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-12' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="sidebar" class="bg-white p-6 rounded border border-gray-300">
+    <div slot="sidebar" class="bg-white p-6 rounded border border-border">
       <h3 class="text-lg font-bold mb-4">Filters</h3>
       <div class="space-y-4">
         <div>
@@ -117,18 +131,18 @@ var metadata = {
     <div slot="main" class="space-y-4">
       <div class="bg-white p-6 rounded border border-gray-300">
         <h3 class="text-lg font-bold mb-2">Product 1</h3>
-        <p class="text-gray-600 mb-2">High-quality wireless headphones with noise cancellation.</p>
-        <div class="text-xl font-bold text-blue-600">$89.99</div>
+        <p class="text-gray mb-2">High-quality wireless headphones with noise cancellation.</p>
+        <div class="text-xl font-bold text-blue">$89.99</div>
       </div>
       <div class="bg-white p-6 rounded border border-gray-300">
         <h3 class="text-lg font-bold mb-2">Product 2</h3>
-        <p class="text-gray-600 mb-2">Premium laptop stand with adjustable height.</p>
-        <div class="text-xl font-bold text-blue-600">$49.99</div>
+        <p class="text-gray mb-2">Premium laptop stand with adjustable height.</p>
+        <div class="text-xl font-bold text-blue">$49.99</div>
       </div>
       <div class="bg-white p-6 rounded border border-gray-300">
         <h3 class="text-lg font-bold mb-2">Product 3</h3>
-        <p class="text-gray-600 mb-2">Ergonomic mechanical keyboard for productivity.</p>
-        <div class="text-xl font-bold text-blue-600">$129.99</div>
+        <p class="text-gray mb-2">Ergonomic mechanical keyboard for productivity.</p>
+        <div class="text-xl font-bold text-blue">$129.99</div>
       </div>
     </div>
   </SidebarLeftContainer>
@@ -137,17 +151,22 @@ var metadata = {
   <SidebarLeftContainer
     htmlTag="section"
     containerWidthType="full"
-    background={{ class: 'bg-gradient-to-r from-purple-500 to-pink-500' }}
-    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    background={{ class: 'bg-gradient-to-r from-purple to-pink' }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-12' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
     <div slot="sidebar" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
       <h3 class="text-lg font-bold mb-4">Quick Links</h3>
       <ul class="space-y-2">
-        <li><a href="#" class="text-purple-600 hover:underline">Getting Started</a></li>
-        <li><a href="#" class="text-purple-600 hover:underline">Documentation</a></li>
-        <li><a href="#" class="text-purple-600 hover:underline">API Reference</a></li>
-        <li><a href="#" class="text-purple-600 hover:underline">Support</a></li>
+        <li><a href="#" class="text-purple hover:underline">Getting Started</a></li>
+        <li><a href="#" class="text-purple hover:underline">Documentation</a></li>
+        <li><a href="#" class="text-purple hover:underline">API Reference</a></li>
+        <li><a href="#" class="text-purple hover:underline">Support</a></li>
       </ul>
     </div>
     <div slot="main" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
@@ -159,7 +178,7 @@ var metadata = {
         Our intuitive interface makes it easy to get started, while advanced features give you the
         flexibility you need as you grow.
       </p>
-      <button class="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700">
+      <button class="bg-purple text-white px-6 py-2 rounded hover:bg-purple-700">
         Get Started
       </button>
     </div>
@@ -169,16 +188,20 @@ var metadata = {
   <SidebarLeftContainer
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
-    border={{ width: 'border', color: 'border-gray-300' }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-8' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     responsive={true}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="sidebar" class="bg-orange-500 text-white p-6 rounded">
+    <div slot="sidebar" class="bg-orange text-white p-6 rounded">
       <h3 class="text-lg font-bold mb-2">Sidebar</h3>
       <p class="text-sm">This sidebar stacks on top on mobile devices.</p>
     </div>
-    <div slot="main" class="bg-red-500 text-white p-6 rounded">
+    <div slot="main" class="bg-red text-white p-6 rounded">
       <h3 class="text-lg font-bold mb-2">Main Content</h3>
       <p class="text-sm">Main content appears below sidebar on mobile.</p>
     </div>
@@ -190,42 +213,47 @@ var metadata = {
   <SidebarLeftContainer
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-12' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     gap="gap-8"
     spacing={{ margin: 'mb-8' }}
   >
     <div slot="sidebar" class="space-y-6">
       <div class="bg-white p-6 rounded border border-gray-300">
         <h3 class="text-lg font-bold mb-3">About the Author</h3>
-        <div class="w-20 h-20 bg-blue-500 rounded-full mx-auto mb-3"></div>
-        <p class="text-sm text-gray-600 text-center">
+        <div class="w-20 h-20 bg-blue rounded-full mx-auto mb-3"></div>
+        <p class="text-sm text-gray text-center">
           John Doe is a software engineer with 10 years of experience.
         </p>
       </div>
       <div class="bg-white p-6 rounded border border-gray-300">
         <h3 class="text-lg font-bold mb-3">Categories</h3>
         <ul class="space-y-2">
-          <li><a href="#" class="text-blue-600 hover:underline">Technology (24)</a></li>
-          <li><a href="#" class="text-blue-600 hover:underline">Design (18)</a></li>
-          <li><a href="#" class="text-blue-600 hover:underline">Business (12)</a></li>
+          <li><a href="#" class="text-blue hover:underline">Technology (24)</a></li>
+          <li><a href="#" class="text-blue hover:underline">Design (18)</a></li>
+          <li><a href="#" class="text-blue hover:underline">Business (12)</a></li>
         </ul>
       </div>
       <div class="bg-white p-6 rounded border border-gray-300">
         <h3 class="text-lg font-bold mb-3">Recent Posts</h3>
         <ul class="space-y-2">
           <li>
-            <a href="#" class="text-sm text-blue-600 hover:underline">Getting Started with Astro</a>
+            <a href="#" class="text-sm text-blue hover:underline">Getting Started with Astro</a>
           </li>
-          <li><a href="#" class="text-sm text-blue-600 hover:underline">Tailwind CSS Tips</a></li>
+          <li><a href="#" class="text-sm text-blue hover:underline">Tailwind CSS Tips</a></li>
           <li>
-            <a href="#" class="text-sm text-blue-600 hover:underline">Modern Web Development</a>
+            <a href="#" class="text-sm text-blue hover:underline">Modern Web Development</a>
           </li>
         </ul>
       </div>
     </div>
     <div slot="main" class="bg-white p-8 rounded border border-gray-300">
       <h1 class="text-3xl font-bold mb-4">Building Modern Web Applications</h1>
-      <div class="text-sm text-gray-600 mb-6">Published on December 24, 2025 • 5 min read</div>
+      <div class="text-sm text-gray mb-6">Published on December 24, 2025 • 5 min read</div>
       <p class="mb-4">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
         labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
