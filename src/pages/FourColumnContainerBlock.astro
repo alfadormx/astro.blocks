@@ -23,23 +23,27 @@ var metadata = {
   <FourColumnContainer
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
-    border={{ width: 'border', color: 'border-gray-300' }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-8' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="column1" class="bg-blue-500 text-white p-6 rounded text-center">
+    <div slot="column1" class="bg-blue text-white p-6 rounded text-center">
       <h3 class="text-xl font-bold mb-2">Column 1</h3>
       <p>First column</p>
     </div>
-    <div slot="column2" class="bg-green-500 text-white p-6 rounded text-center">
+    <div slot="column2" class="bg-green text-white p-6 rounded text-center">
       <h3 class="text-xl font-bold mb-2">Column 2</h3>
       <p>Second column</p>
     </div>
-    <div slot="column3" class="bg-purple-500 text-white p-6 rounded text-center">
+    <div slot="column3" class="bg-mauve text-white p-6 rounded text-center">
       <h3 class="text-xl font-bold mb-2">Column 3</h3>
       <p>Third column</p>
     </div>
-    <div slot="column4" class="bg-orange-500 text-white p-6 rounded text-center">
+    <div slot="column4" class="bg-peach text-white p-6 rounded text-center">
       <h3 class="text-xl font-bold mb-2">Column 4</h3>
       <p>Fourth column</p>
     </div>
@@ -49,29 +53,34 @@ var metadata = {
   <FourColumnContainer
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-12' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     gap="gap-8"
     spacing={{ margin: 'mb-8' }}
   >
     <div slot="column1" class="text-center">
       <div class="text-5xl mb-4">🚀</div>
       <h3 class="text-lg font-bold mb-2">Fast</h3>
-      <p class="text-sm text-gray-600">Lightning speed performance</p>
+      <p class="text-sm">Lightning speed performance</p>
     </div>
     <div slot="column2" class="text-center">
       <div class="text-5xl mb-4">🔒</div>
       <h3 class="text-lg font-bold mb-2">Secure</h3>
-      <p class="text-sm text-gray-600">Enterprise-grade security</p>
+      <p class="text-sm">Enterprise-grade security</p>
     </div>
     <div slot="column3" class="text-center">
       <div class="text-5xl mb-4">💡</div>
       <h3 class="text-lg font-bold mb-2">Smart</h3>
-      <p class="text-sm text-gray-600">Intelligent automation</p>
+      <p class="text-sm">Intelligent automation</p>
     </div>
     <div slot="column4" class="text-center">
       <div class="text-5xl mb-4">🌍</div>
       <h3 class="text-lg font-bold mb-2">Global</h3>
-      <p class="text-sm text-gray-600">Worldwide coverage</p>
+      <p class="text-sm">Worldwide coverage</p>
     </div>
   </FourColumnContainer>
 
@@ -80,22 +89,27 @@ var metadata = {
     htmlTag="section"
     containerWidthType="full"
     background={{ class: 'bg-gray-300' }}
-    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-12' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="column1" class="bg-white p-6 rounded shadow text-black">
+    <div slot="column1" class="bg-white p-6 rounded">
       <h3 class="text-lg font-bold mb-2">Step 1</h3>
       <p class="text-sm">Sign up for free</p>
     </div>
-    <div slot="column2" class="bg-white p-6 rounded shadow text-black">
+    <div slot="column2" class="bg-white p-6 rounded">
       <h3 class="text-lg font-bold mb-2">Step 2</h3>
       <p class="text-sm">Choose your plan</p>
     </div>
-    <div slot="column3" class="bg-white p-6 rounded shadow text-black">
+    <div slot="column3" class="bg-white p-6 rounded">
       <h3 class="text-lg font-bold mb-2">Step 3</h3>
       <p class="text-sm">Start building</p>
     </div>
-    <div slot="column4" class="bg-white p-6 rounded shadow text-black">
+    <div slot="column4" class="bg-white p-6 rounded">
       <h3 class="text-lg font-bold mb-2">Step 4</h3>
       <p class="text-sm">Deploy & scale</p>
     </div>
@@ -105,21 +119,25 @@ var metadata = {
   <FourColumnContainer
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
-    border={{ width: 'border', color: 'border-gray-300' }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-8' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     responsive={true}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="column1" class="bg-red-500 text-white p-6 rounded text-center">
+    <div slot="column1" class="bg-red text-white p-6 rounded text-center">
       <h3 class="text-lg font-bold">Mobile</h3>
     </div>
-    <div slot="column2" class="bg-orange-500 text-white p-6 rounded text-center">
+    <div slot="column2" class="bg-peach text-white p-6 rounded text-center">
       <h3 class="text-lg font-bold">Tablet</h3>
     </div>
-    <div slot="column3" class="bg-yellow-500 text-white p-6 rounded text-center">
+    <div slot="column3" class="bg-yellow text-white p-6 rounded text-center">
       <h3 class="text-lg font-bold">Desktop</h3>
     </div>
-    <div slot="column4" class="bg-green-500 text-white p-6 rounded text-center">
+    <div slot="column4" class="bg-green text-white p-6 rounded text-center">
       <h3 class="text-lg font-bold">4K</h3>
     </div>
   </FourColumnContainer>
@@ -130,7 +148,12 @@ var metadata = {
   <FourColumnContainer
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-12' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     gap="gap-6"
     spacing={{ margin: 'mb-8' }}
   >
@@ -156,7 +179,12 @@ var metadata = {
   <FourColumnContainer
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-12' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     gap="gap-8"
     spacing={{ margin: 'mb-8' }}
   >
@@ -202,7 +230,12 @@ var metadata = {
   <FourColumnContainer
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-8' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     gap="gap-4"
     spacing={{ margin: 'mb-8' }}
   >
