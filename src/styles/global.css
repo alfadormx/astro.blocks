@@ -3,11 +3,34 @@
 @import 'tailwindcss';
 @import './colors.css';
 
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
-
-@theme {
-  --container-max-width: 1200px;
+@layer base {
+  body {
+    @apply bg-background text-normal min-h-screen antialiased tracking-tight;
+  }
 }
+
+@layer components {
+}
+
+@layer utilities {
+}
+
+@theme inline {
+  --container-max-width: 1200px;
+
+  --color-primary: var(--color-blue);
+  --color-secondary: var(--color-sky);
+  --color-tertiary: var(--color-slate);
+
+  --color-accent: var(--color-peach);
+
+  --color-normal: var(--color-text);
+  --color-muted: var(--color-subtext0);
+
+  --color-background: var(--color-base);
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @source inline('{sm:,md:,lg:,xl:,}grid-cols-{1,2,3,4}');
 @source inline('{md:,}grid-cols-[25%_75%]');
