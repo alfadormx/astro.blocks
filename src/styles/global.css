@@ -4,31 +4,33 @@
 @import './colors.css';
 
 @layer base {
-  @layer base {
-    body {
-      @apply bg-background text-normal min-h-screen antialiased tracking-tight;
-    }
+  ::selection {
+    @apply bg-accent text-background;
+  }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      @apply font-bold;
-    }
+  body {
+    @apply bg-background text-normal min-h-screen antialiased tracking-tight;
+  }
 
-    a {
-      @apply text-link hover:text-link-hover hover:underline transition-colors;
-    }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold;
+  }
 
-    ul {
-      @apply list-disc list-inside;
-    }
+  a {
+    @apply text-link hover:text-link-hover hover:underline transition-colors;
+  }
 
-    ol {
-      @apply list-decimal list-inside;
-    }
+  ul {
+    @apply list-disc list-inside;
+  }
+
+  ol {
+    @apply list-decimal list-inside;
   }
 }
 
