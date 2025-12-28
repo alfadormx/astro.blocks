@@ -13,10 +13,10 @@ const {
   ...containerProps
 } = Astro.props;
 
-// Build grid classes - use grid-cols-[75%_25%] for precise 3/4 and 1/4 split
+// Build grid classes - use 3fr/1fr for 3/4 and 1/4 split (accounts for gap)
 const layoutClass = cn(
   gridClass ||
-    (responsive ? `grid-cols-1 ${breakpoint}grid-cols-[75%_25%]` : 'grid-cols-[75%_25%]'),
+    (responsive ? `grid-cols-1 ${breakpoint}grid-cols-[3fr_1fr]` : 'grid-cols-[3fr_1fr]'),
   gap
 );
 ---
