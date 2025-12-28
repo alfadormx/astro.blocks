@@ -22,13 +22,13 @@ const alignmentClass = {
 }[align];
 
 const finalTaglineClass = cn(
-  'text-sm font-semibold uppercase tracking-wider text-gray-600',
+  'text-secondary text-sm font-semibold uppercase tracking-wider',
   taglineClass
 );
 
-const finalTitleClass = cn('text-4xl md:text-5xl font-bold text-gray-900 mt-2', titleClass);
+const finalTitleClass = cn('text-normal text-4xl md:text-5xl font-bold mt-2', titleClass);
 
-const finalSubtitleClass = cn('text-lg text-gray-600 mt-4 max-w-3xl', subtitleClass);
+const finalSubtitleClass = cn('text-muted text-lg mt-4 max-w-3xl', subtitleClass);
 ---
 
 <div class:list={['space-y-2', alignmentClass, className]}>
