@@ -44,8 +44,11 @@ var metadata = {
   <Container
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'boxed', border: { width: 'border', color: 'border-red-500' } }}
-    border={{ width: 'border', color: 'border-blue-500' }}
+    content={{
+      widthType: 'boxed',
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8">Full-width container, boxed content (default max-width).</p>
@@ -60,9 +63,9 @@ var metadata = {
     content={{
       widthType: 'boxed',
       boxWidth: 'max-w-1/2',
-      border: { width: 'border', color: 'border-red-500' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
     }}
-    border={{ width: 'border', color: 'border-blue-500' }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8">Full-width container, boxed content at <b>50%</b> width.</p>
@@ -72,8 +75,11 @@ var metadata = {
   <Container
     htmlTag="section"
     containerWidthType="full"
-    content={{ widthType: 'full', border: { width: 'border', color: 'border-red-500' } }}
-    border={{ width: 'border', color: 'border-blue-500' }}
+    content={{
+      widthType: 'full',
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8">Full-width container, full-width content.</p>
@@ -83,8 +89,8 @@ var metadata = {
   <Container
     htmlTag="section"
     containerWidthType="boxed"
-    content={{ border: { width: 'border', color: 'border-red-500' } }}
-    border={{ width: 'border', color: 'border-blue-500' }}
+    content={{ border: { width: 'border', color: 'border-border-emphasis border-dotted' } }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8">Boxed container (background and content boxed).</p>
@@ -97,8 +103,8 @@ var metadata = {
     htmlTag="section"
     containerWidthType="custom"
     width="w-3/4"
-    content={{ border: { width: 'border', color: 'border-red-500' } }}
-    border={{ width: 'border', color: 'border-blue-500' }}
+    content={{ border: { width: 'border', color: 'border-border-emphasis border-dotted' } }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8">
@@ -120,13 +126,18 @@ var metadata = {
     containerWidthType="full"
     minHeight="min-h-64"
     background={{
-      image: 'https://images.pexels.com/photos/1629236/pexels-photo-1629236.jpeg',
+      image: 'https://images.pexels.com/photos/32838840/pexels-photo-32838840.jpeg',
       attachment: 'fixed',
     }}
-    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-12' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <p class="text-center py-8 text-white drop-shadow-lg bg-black/30 rounded">
+    <p class="text-center py-8 rounded bg-surface/80">
       Full-width container with a <b>fixed</b> background image (parallax effect).
     </p>
   </Container>
@@ -137,10 +148,15 @@ var metadata = {
     containerWidthType="full"
     minHeight="min-h-64"
     background={{ video: 'https://www.pexels.com/download/video/1918465/' }}
-    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-12' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <p class="text-center py-8 text-white drop-shadow-lg bg-black/30 rounded">
+    <p class="text-center py-8 rounded bg-surface/80">
       Container with a looping <b>background video</b>.
     </p>
   </Container>
@@ -151,10 +167,15 @@ var metadata = {
     containerWidthType="full"
     minHeight="min-h-64"
     background={{ class: 'bg-blue-600' }}
-    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-12' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <p class="text-center py-8 text-white drop-shadow-lg bg-black/30 rounded">
+    <p class="text-center py-8 rounded bg-surface/80">
       Container with a solid <b>background color</b> (Tailwind: bg-blue-600).
     </p>
   </Container>
@@ -164,11 +185,16 @@ var metadata = {
     htmlTag="section"
     containerWidthType="full"
     minHeight="min-h-64"
-    background={{ class: 'bg-gradient-to-r from-purple-500 via-pink-500 to-red-500' }}
-    content={{ widthType: 'boxed', spacing: { padding: 'py-12' } }}
+    background={{ class: 'bg-gradient-to-r from-mauve via-pink to-red' }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-12' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <p class="text-center py-8 text-white drop-shadow-lg bg-black/30 rounded">
+    <p class="text-center py-8 rounded bg-surface/80">
       Container with a <b>gradient background</b> (Tailwind gradient utilities).
     </p>
   </Container>
@@ -184,13 +210,17 @@ var metadata = {
     htmlTag="section"
     containerWidthType="full"
     layout={{ type: 'flex', class: 'flex-row gap-4 items-center justify-between' }}
-    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
-    border={{ width: 'border', color: 'border-gray-300' }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-8' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div class="bg-blue-500 text-white p-4 rounded">Item 1</div>
-    <div class="bg-green-500 text-white p-4 rounded">Item 2</div>
-    <div class="bg-purple-500 text-white p-4 rounded">Item 3</div>
+    <div class="bg-blue text-white p-4 rounded">Item 1</div>
+    <div class="bg-green text-white p-4 rounded">Item 2</div>
+    <div class="bg-mauve text-white p-4 rounded">Item 3</div>
   </Container>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">2. Flex Column (Vertical)</h3>
@@ -198,13 +228,17 @@ var metadata = {
     htmlTag="section"
     containerWidthType="full"
     layout={{ type: 'flex', class: 'flex-col gap-4 items-stretch' }}
-    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
-    border={{ width: 'border', color: 'border-gray-300' }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-8' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div class="bg-blue-500 text-white p-4 rounded">Item 1</div>
-    <div class="bg-green-500 text-white p-4 rounded">Item 2</div>
-    <div class="bg-purple-500 text-white p-4 rounded">Item 3</div>
+    <div class="bg-blue text-white p-4 rounded">Item 1</div>
+    <div class="bg-green text-white p-4 rounded">Item 2</div>
+    <div class="bg-mauve text-white p-4 rounded">Item 3</div>
   </Container>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">3. Grid - 2 Columns</h3>
@@ -212,14 +246,18 @@ var metadata = {
     htmlTag="section"
     containerWidthType="full"
     layout={{ type: 'grid', class: 'grid-cols-2 gap-6' }}
-    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
-    border={{ width: 'border', color: 'border-gray-300' }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-8' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div class="bg-blue-500 text-white p-6 rounded">Column 1</div>
-    <div class="bg-green-500 text-white p-6 rounded">Column 2</div>
-    <div class="bg-purple-500 text-white p-6 rounded">Column 3</div>
-    <div class="bg-orange-500 text-white p-6 rounded">Column 4</div>
+    <div class="bg-blue text-white p-6 rounded">Column 1</div>
+    <div class="bg-green text-white p-6 rounded">Column 2</div>
+    <div class="bg-mauve text-white p-6 rounded">Column 3</div>
+    <div class="bg-peach text-white p-6 rounded">Column 4</div>
   </Container>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">4. Grid - 3 Columns</h3>
@@ -227,16 +265,20 @@ var metadata = {
     htmlTag="section"
     containerWidthType="full"
     layout={{ type: 'grid', class: 'grid-cols-3 gap-4' }}
-    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
-    border={{ width: 'border', color: 'border-gray-300' }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-8' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div class="bg-blue-500 text-white p-4 rounded text-center">1</div>
-    <div class="bg-green-500 text-white p-4 rounded text-center">2</div>
-    <div class="bg-purple-500 text-white p-4 rounded text-center">3</div>
-    <div class="bg-orange-500 text-white p-4 rounded text-center">4</div>
-    <div class="bg-pink-500 text-white p-4 rounded text-center">5</div>
-    <div class="bg-red-500 text-white p-4 rounded text-center">6</div>
+    <div class="bg-blue text-white p-4 rounded text-center">1</div>
+    <div class="bg-green text-white p-4 rounded text-center">2</div>
+    <div class="bg-mauve text-white p-4 rounded text-center">3</div>
+    <div class="bg-peach text-white p-4 rounded text-center">4</div>
+    <div class="bg-pink text-white p-4 rounded text-center">5</div>
+    <div class="bg-red text-white p-4 rounded text-center">6</div>
   </Container>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">
@@ -246,18 +288,22 @@ var metadata = {
     htmlTag="section"
     containerWidthType="full"
     layout={{ type: 'grid', class: 'grid-cols-2 md:grid-cols-4 gap-4' }}
-    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
-    border={{ width: 'border', color: 'border-gray-300' }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-8' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div class="bg-blue-500 text-white p-4 rounded text-center">1</div>
-    <div class="bg-green-500 text-white p-4 rounded text-center">2</div>
-    <div class="bg-purple-500 text-white p-4 rounded text-center">3</div>
-    <div class="bg-orange-500 text-white p-4 rounded text-center">4</div>
-    <div class="bg-pink-500 text-white p-4 rounded text-center">5</div>
-    <div class="bg-red-500 text-white p-4 rounded text-center">6</div>
-    <div class="bg-indigo-500 text-white p-4 rounded text-center">7</div>
-    <div class="bg-yellow-500 text-white p-4 rounded text-center">8</div>
+    <div class="bg-blue text-white p-4 rounded text-center">1</div>
+    <div class="bg-green text-white p-4 rounded text-center">2</div>
+    <div class="bg-mauve text-white p-4 rounded text-center">3</div>
+    <div class="bg-peach text-white p-4 rounded text-center">4</div>
+    <div class="bg-pink text-white p-4 rounded text-center">5</div>
+    <div class="bg-red text-white p-4 rounded text-center">6</div>
+    <div class="bg-cyan text-white p-4 rounded text-center">7</div>
+    <div class="bg-yellow text-white p-4 rounded text-center">8</div>
   </Container>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">6. Min Height with Default Alignment (Top)</h3>
@@ -266,13 +312,17 @@ var metadata = {
     containerWidthType="full"
     minHeight="min-h-96"
     layout={{ type: 'flex', class: 'flex-row gap-4 items-start' }}
-    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
-    border={{ width: 'border', color: 'border-gray-300' }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-8' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div class="bg-blue-500 text-white p-4 rounded text-center">Item 1</div>
-    <div class="bg-green-500 text-white p-4 rounded text-center">Item 2</div>
-    <div class="bg-purple-500 text-white p-4 rounded text-center">Item 3</div>
+    <div class="bg-blue text-white p-4 rounded text-center">Item 1</div>
+    <div class="bg-green text-white p-4 rounded text-center">Item 2</div>
+    <div class="bg-mauve text-white p-4 rounded text-center">Item 3</div>
   </Container>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">7. Min Height with Vertical Center</h3>
@@ -281,13 +331,17 @@ var metadata = {
     containerWidthType="full"
     minHeight="min-h-96"
     layout={{ type: 'flex', class: 'flex-row gap-4 items-center' }}
-    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
-    border={{ width: 'border', color: 'border-gray-300' }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-8' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div class="bg-blue-500 text-white p-4 rounded text-center">Item 1</div>
-    <div class="bg-green-500 text-white p-4 rounded text-center">Item 2</div>
-    <div class="bg-purple-500 text-white p-4 rounded text-center">Item 3</div>
+    <div class="bg-blue text-white p-4 rounded text-center">Item 1</div>
+    <div class="bg-green text-white p-4 rounded text-center">Item 2</div>
+    <div class="bg-mauve text-white p-4 rounded text-center">Item 3</div>
   </Container>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">8. Min Height with Full Center (Both Axes)</h3>
@@ -296,12 +350,16 @@ var metadata = {
     containerWidthType="full"
     minHeight="min-h-96"
     layout={{ type: 'flex', class: 'flex-col gap-4 justify-center items-center' }}
-    content={{ widthType: 'boxed', spacing: { padding: 'py-8' } }}
-    border={{ width: 'border', color: 'border-gray-300' }}
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-8' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div class="bg-blue-500 text-white p-4 rounded text-center">Item 1</div>
-    <div class="bg-green-500 text-white p-4 rounded text-center">Item 2</div>
-    <div class="bg-purple-500 text-white p-4 rounded text-center">Item 3</div>
+    <div class="bg-blue text-white p-4 rounded text-center">Item 1</div>
+    <div class="bg-green text-white p-4 rounded text-center">Item 2</div>
+    <div class="bg-mauve text-white p-4 rounded text-center">Item 3</div>
   </Container>
 </Layout>
