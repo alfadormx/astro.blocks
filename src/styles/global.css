@@ -4,30 +4,74 @@
 @import './colors.css';
 
 @layer base {
-  body {
-    @apply bg-background text-normal min-h-screen antialiased tracking-tight;
+  @layer base {
+    body {
+      @apply bg-background text-normal min-h-screen antialiased tracking-tight;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply font-bold;
+    }
+
+    a {
+      @apply text-link hover:text-link-hover hover:underline transition-colors;
+    }
+
+    ul {
+      @apply list-disc list-inside;
+    }
+
+    ol {
+      @apply list-decimal list-inside;
+    }
   }
-}
-
-@layer components {
-}
-
-@layer utilities {
 }
 
 @theme inline {
   --container-max-width: 1200px;
 
+  /* intent-based colors */
   --color-primary: var(--color-blue);
   --color-secondary: var(--color-sky);
   --color-tertiary: var(--color-slate);
-
   --color-accent: var(--color-peach);
 
+  /* content colors */
   --color-normal: var(--color-text);
   --color-muted: var(--color-subtext0);
+  --color-emphasis: var(--color-subtext1);
 
+  /* status colors */
+  --color-success: var(--color-green);
+  --color-warning: var(--color-yellow);
+  --color-error: var(--color-red);
+  --color-info: var(--color-cyan);
+
+  /* surface colors */
   --color-background: var(--color-base);
+  --color-surface: var(--color-mantle);
+  --color-elevated: var(--color-crust);
+
+  /* border colors */
+  --color-border: var(--color-surface2);
+  --color-border-emphasis: var(--color-overlay0);
+
+  /* interactive states */
+  --color-interactive: var(--color-primary);
+  --color-interactive-hover: var(--color-blue-600);
+
+  /* link colors */
+  --color-link: var(--color-primary);
+  --color-link-hover: var(--primary);
+
+  /* Code/syntax */
+  --color-code: var(--color-lavender);
+  --color-code-bg: var(--color-surface0);
 }
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
