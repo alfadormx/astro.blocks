@@ -28,7 +28,12 @@ const finalTaglineClass = cn(
 
 const finalTitleClass = cn('text-normal text-4xl md:text-5xl font-bold mt-2', titleClass);
 
-const finalSubtitleClass = cn('text-muted text-lg mt-4 max-w-3xl', subtitleClass);
+const finalSubtitleClass = cn(
+  'text-muted text-lg mt-4 max-w-3xl',
+  align === 'center' && 'mx-auto',
+  align === 'right' && 'ml-auto',
+  subtitleClass
+);
 ---
 
 <div class:list={['space-y-2', alignmentClass, className]}>
