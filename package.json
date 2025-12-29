@@ -17,8 +17,13 @@
   },
   "dependencies": {
     "@astrolib/analytics": "^0.6.1",
+    "@iconify-json/heroicons": "^1.2.3",
+    "@iconify-json/lucide": "^1.2.82",
+    "@iconify-json/mdi": "^1.2.3",
+    "@iconify-json/tabler": "^1.2.25",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.6",
+    "astro-icon": "^1.1.5",
     "astro-seo": "^0.8.4",
     "clsx": "^2.1.1",
     "js-yaml": "^4.1.1",

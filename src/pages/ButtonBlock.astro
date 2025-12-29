@@ -1,0 +1,205 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '~/components/blocks/composite/Container.astro';
+import Headline from '~/components/blocks/composite/Headline.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
+
+const metadata = {
+  title: {
+    default: 'Button Block',
+  },
+  description: 'Button component showcase for Astro Blocks',
+};
+---
+
+<Layout metadata={metadata}>
+  <Container
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed' }}
+    spacing={{ margin: 'my-8', padding: 'p-6' }}
+  >
+    <Headline
+      title="Button Block"
+      subtitle="Versatile button component with multiple variants, sizes, and styles"
+      align="center"
+    />
+
+    <!-- Basic Buttons -->
+    <Container spacing={{ margin: 'mt-12 mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">Basic Buttons</h2>
+      <div class="flex flex-wrap gap-4">
+        <Button label="Click Here" />
+        <Button
+          label="Subscribe Now"
+          icon="heroicons:arrow-top-right-on-square"
+          iconPosition="right"
+        />
+        <Button icon="heroicons:plus" />
+      </div>
+    </Container>
+
+    <!-- Sizes -->
+    <Container spacing={{ margin: 'mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">Sizes</h2>
+      <div class="flex flex-wrap items-center gap-4">
+        <Button label="Extra Small" size="xs" />
+        <Button label="Small" size="sm" />
+        <Button label="Medium" size="md" />
+        <Button label="Large" size="lg" />
+        <Button label="Extra Large" size="xl" />
+      </div>
+    </Container>
+
+    <!-- Variants -->
+    <Container spacing={{ margin: 'mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">Variants</h2>
+      <div class="flex flex-wrap gap-4">
+        <Button label="Solid" variant="solid" />
+        <Button label="Outline" variant="outline" />
+        <Button label="Ghost" variant="ghost" />
+        <Button label="Link" variant="link" />
+      </div>
+    </Container>
+
+    <!-- Intents -->
+    <Container spacing={{ margin: 'mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">Intent Colors (Solid)</h2>
+      <div class="flex flex-wrap gap-4">
+        <Button label="Primary" intent="primary" />
+        <Button label="Secondary" intent="secondary" />
+        <Button label="Tertiary" intent="tertiary" />
+        <Button label="Accent" intent="accent" />
+        <Button label="Success" intent="success" />
+        <Button label="Warning" intent="warning" />
+        <Button label="Error" intent="error" />
+        <Button label="Neutral" intent="neutral" />
+      </div>
+    </Container>
+
+    <!-- Outline Intents -->
+    <Container spacing={{ margin: 'mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">Intent Colors (Outline)</h2>
+      <div class="flex flex-wrap gap-4">
+        <Button label="Primary" variant="outline" intent="primary" />
+        <Button label="Secondary" variant="outline" intent="secondary" />
+        <Button label="Tertiary" variant="outline" intent="tertiary" />
+        <Button label="Accent" variant="outline" intent="accent" />
+        <Button label="Success" variant="outline" intent="success" />
+        <Button label="Warning" variant="outline" intent="warning" />
+        <Button label="Error" variant="outline" intent="error" />
+        <Button label="Neutral" variant="outline" intent="neutral" />
+      </div>
+    </Container>
+
+    <!-- With Icons -->
+    <Container spacing={{ margin: 'mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">With Icons</h2>
+      <div class="flex flex-wrap gap-4">
+        <Button label="Left Icon" icon="heroicons:arrow-left" iconPosition="left" />
+        <Button label="Right Icon" icon="heroicons:arrow-right" iconPosition="right" />
+        <Button
+          label="Download"
+          icon="heroicons:arrow-down-tray"
+          iconPosition="left"
+          intent="success"
+        />
+        <Button
+          label="External Link"
+          icon="heroicons:arrow-top-right-on-square"
+          iconPosition="right"
+          intent="secondary"
+        />
+      </div>
+    </Container>
+
+    <!-- Icon Only -->
+    <Container spacing={{ margin: 'mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">Icon Only</h2>
+      <div class="flex flex-wrap items-center gap-4">
+        <Button icon="heroicons:plus" size="xs" />
+        <Button icon="heroicons:plus" size="sm" />
+        <Button icon="heroicons:plus" size="md" />
+        <Button icon="heroicons:plus" size="lg" />
+        <Button icon="heroicons:plus" size="xl" />
+      </div>
+      <div class="flex flex-wrap gap-4 mt-4">
+        <Button icon="heroicons:pencil" variant="outline" />
+        <Button icon="heroicons:trash" variant="outline" intent="error" />
+        <Button icon="heroicons:check" variant="ghost" intent="success" />
+        <Button icon="heroicons:x-mark" variant="ghost" intent="error" />
+      </div>
+    </Container>
+
+    <!-- Promotional / Subtitle -->
+    <Container spacing={{ margin: 'mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">Promotional Buttons (with Subtitle)</h2>
+      <div class="flex flex-wrap gap-4">
+        <Button
+          label="Subscribe Now"
+          subtitle="Get access to Premium Features for FREE for a year!"
+          icon="heroicons:arrow-top-right-on-square"
+          iconPosition="right"
+          size="lg"
+        />
+        <Button
+          label="Start Free Trial"
+          subtitle="No credit card required"
+          icon="heroicons:rocket-launch"
+          iconPosition="left"
+          size="lg"
+          intent="accent"
+        />
+      </div>
+    </Container>
+
+    <!-- Shapes -->
+    <Container spacing={{ margin: 'mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">Shapes</h2>
+      <div class="flex flex-wrap gap-4">
+        <Button label="Rounded" shape="rounded" />
+        <Button label="Square" shape="square" />
+        <Button label="Pill" shape="pill" />
+      </div>
+      <div class="flex flex-wrap items-center gap-4 mt-4">
+        <Button icon="heroicons:plus" shape="rounded" />
+        <Button icon="heroicons:plus" shape="square" />
+        <Button icon="heroicons:plus" shape="pill" />
+      </div>
+    </Container>
+
+    <!-- Width -->
+    <Container spacing={{ margin: 'mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">Width Options</h2>
+      <div class="space-y-4">
+        <Button label="Auto Width (Default)" width="auto" />
+        <Button label="Full Width" width="full" />
+      </div>
+    </Container>
+
+    <!-- States -->
+    <Container spacing={{ margin: 'mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">States</h2>
+      <div class="flex flex-wrap gap-4">
+        <Button label="Normal" />
+        <Button label="Disabled" disabled />
+        <Button label="Disabled Outline" variant="outline" disabled />
+      </div>
+    </Container>
+
+    <!-- As Links -->
+    <Container spacing={{ margin: 'mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">As Links</h2>
+      <div class="flex flex-wrap gap-4">
+        <Button label="Internal Link" href="/colors" />
+        <Button
+          label="External Link"
+          href="https://astro.build"
+          target="_blank"
+          icon="heroicons:arrow-top-right-on-square"
+          iconPosition="right"
+        />
+      </div>
+    </Container>
+  </Container>
+</Layout>

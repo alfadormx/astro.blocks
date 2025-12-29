@@ -44,9 +44,13 @@
 
   /* intent-based colors */
   --color-primary: var(--color-blue);
+  --color-primary-hover: var(--color-blue-600);
   --color-secondary: var(--color-sky);
+  --color-secondary-hover: var(--color-sky-600);
   --color-tertiary: var(--color-slate);
+  --color-tertiary-hover: var(--color-slate-600);
   --color-accent: var(--color-peach);
+  --color-accent-hover: var(--color-peach-600);
 
   /* content colors */
   --color-normal: var(--color-text);
@@ -55,9 +59,13 @@
 
   /* status colors */
   --color-success: var(--color-green);
+  --color-success-hover: var(--color-green-600);
   --color-warning: var(--color-yellow);
+  --color-warning-hover: var(--color-yellow-600);
   --color-error: var(--color-red);
+  --color-error-hover: var(--color-red-600);
   --color-info: var(--color-cyan);
+  --color-info-hover: var(--color-cyan-600);
 
   /* surface colors */
   --color-background: var(--color-base);
@@ -74,7 +82,7 @@
 
   /* link colors */
   --color-link: var(--color-primary);
-  --color-link-hover: var(--primary);
+  --color-link-hover: var(--color-primary);
 
   /* Code/syntax */
   --color-code: var(--color-lavender);
