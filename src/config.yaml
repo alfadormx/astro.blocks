@@ -38,7 +38,7 @@ metadata:
   # Theme
   theme:
     color: '#FFFFFF'
-    colorScheme: 'light dark'
+    colorScheme: 'light dark' # Values: "normal", "light", "dark", "light dark", "dark light", "only light", "only dark"
 
   # Favicons and icons
   icons:

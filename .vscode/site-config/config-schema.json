@@ -142,7 +142,18 @@
           "type": "object",
           "properties": {
             "color": { "type": "string" },
-            "colorScheme": { "type": "string" }
+            "colorScheme": {
+              "type": "string",
+              "enum": [
+                "normal",
+                "light",
+                "dark",
+                "light dark",
+                "dark light",
+                "only light",
+                "only dark"
+              ]
+            }
           }
         },
         "localized": {
