@@ -1,4 +1,7 @@
 export interface ButtonProps {
+  /** HTML id attribute */
+  id?: string;
+
   /** Button text label (optional if icon-only) */
   label?: string;
 
