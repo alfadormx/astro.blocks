@@ -340,6 +340,332 @@ const shades = [
   </div>
 </Layout>
 
+<!-- Hidden safelist so Tailwind detects all bg- classes used dynamically -->
+<div style="display:none" aria-hidden="true">
+  <!-- semantic colors -->
+  <span class="bg-text"></span>
+  <span class="bg-subtext1"></span>
+  <span class="bg-subtext0"></span>
+  <span class="bg-overlay2"></span>
+  <span class="bg-overlay1"></span>
+  <span class="bg-overlay0"></span>
+  <span class="bg-surface2"></span>
+  <span class="bg-surface1"></span>
+  <span class="bg-surface0"></span>
+  <span class="bg-crust"></span>
+  <span class="bg-mantle"></span>
+  <span class="bg-base"></span>
+
+  <!-- spectrum colors (base + shades) -->
+  <!-- red -->
+  <span class="bg-red"></span>
+  <span class="bg-red-50"></span>
+  <span class="bg-red-100"></span>
+  <span class="bg-red-200"></span>
+  <span class="bg-red-300"></span>
+  <span class="bg-red-400"></span>
+  <span class="bg-red-500"></span>
+  <span class="bg-red-600"></span>
+  <span class="bg-red-700"></span>
+  <span class="bg-red-800"></span>
+  <span class="bg-red-900"></span>
+  <span class="bg-red-950"></span>
+
+  <!-- maroon -->
+  <span class="bg-maroon"></span>
+  <span class="bg-maroon-50"></span>
+  <span class="bg-maroon-100"></span>
+  <span class="bg-maroon-200"></span>
+  <span class="bg-maroon-300"></span>
+  <span class="bg-maroon-400"></span>
+  <span class="bg-maroon-500"></span>
+  <span class="bg-maroon-600"></span>
+  <span class="bg-maroon-700"></span>
+  <span class="bg-maroon-800"></span>
+  <span class="bg-maroon-900"></span>
+  <span class="bg-maroon-950"></span>
+
+  <!-- peach -->
+  <span class="bg-peach"></span>
+  <span class="bg-peach-50"></span>
+  <span class="bg-peach-100"></span>
+  <span class="bg-peach-200"></span>
+  <span class="bg-peach-300"></span>
+  <span class="bg-peach-400"></span>
+  <span class="bg-peach-500"></span>
+  <span class="bg-peach-600"></span>
+  <span class="bg-peach-700"></span>
+  <span class="bg-peach-800"></span>
+  <span class="bg-peach-900"></span>
+  <span class="bg-peach-950"></span>
+
+  <!-- yellow -->
+  <span class="bg-yellow"></span>
+  <span class="bg-yellow-50"></span>
+  <span class="bg-yellow-100"></span>
+  <span class="bg-yellow-200"></span>
+  <span class="bg-yellow-300"></span>
+  <span class="bg-yellow-400"></span>
+  <span class="bg-yellow-500"></span>
+  <span class="bg-yellow-600"></span>
+  <span class="bg-yellow-700"></span>
+  <span class="bg-yellow-800"></span>
+  <span class="bg-yellow-900"></span>
+  <span class="bg-yellow-950"></span>
+
+  <!-- lime -->
+  <span class="bg-lime"></span>
+  <span class="bg-lime-50"></span>
+  <span class="bg-lime-100"></span>
+  <span class="bg-lime-200"></span>
+  <span class="bg-lime-300"></span>
+  <span class="bg-lime-400"></span>
+  <span class="bg-lime-500"></span>
+  <span class="bg-lime-600"></span>
+  <span class="bg-lime-700"></span>
+  <span class="bg-lime-800"></span>
+  <span class="bg-lime-900"></span>
+  <span class="bg-lime-950"></span>
+
+  <!-- green -->
+  <span class="bg-green"></span>
+  <span class="bg-green-50"></span>
+  <span class="bg-green-100"></span>
+  <span class="bg-green-200"></span>
+  <span class="bg-green-300"></span>
+  <span class="bg-green-400"></span>
+  <span class="bg-green-500"></span>
+  <span class="bg-green-600"></span>
+  <span class="bg-green-700"></span>
+  <span class="bg-green-800"></span>
+  <span class="bg-green-900"></span>
+  <span class="bg-green-950"></span>
+
+  <!-- emerald -->
+  <span class="bg-emerald"></span>
+  <span class="bg-emerald-50"></span>
+  <span class="bg-emerald-100"></span>
+  <span class="bg-emerald-200"></span>
+  <span class="bg-emerald-300"></span>
+  <span class="bg-emerald-400"></span>
+  <span class="bg-emerald-500"></span>
+  <span class="bg-emerald-600"></span>
+  <span class="bg-emerald-700"></span>
+  <span class="bg-emerald-800"></span>
+  <span class="bg-emerald-900"></span>
+  <span class="bg-emerald-950"></span>
+
+  <!-- teal -->
+  <span class="bg-teal"></span>
+  <span class="bg-teal-50"></span>
+  <span class="bg-teal-100"></span>
+  <span class="bg-teal-200"></span>
+  <span class="bg-teal-300"></span>
+  <span class="bg-teal-400"></span>
+  <span class="bg-teal-500"></span>
+  <span class="bg-teal-600"></span>
+  <span class="bg-teal-700"></span>
+  <span class="bg-teal-800"></span>
+  <span class="bg-teal-900"></span>
+  <span class="bg-teal-950"></span>
+
+  <!-- cyan -->
+  <span class="bg-cyan"></span>
+  <span class="bg-cyan-50"></span>
+  <span class="bg-cyan-100"></span>
+  <span class="bg-cyan-200"></span>
+  <span class="bg-cyan-300"></span>
+  <span class="bg-cyan-400"></span>
+  <span class="bg-cyan-500"></span>
+  <span class="bg-cyan-600"></span>
+  <span class="bg-cyan-700"></span>
+  <span class="bg-cyan-800"></span>
+  <span class="bg-cyan-900"></span>
+  <span class="bg-cyan-950"></span>
+
+  <!-- sky -->
+  <span class="bg-sky"></span>
+  <span class="bg-sky-50"></span>
+  <span class="bg-sky-100"></span>
+  <span class="bg-sky-200"></span>
+  <span class="bg-sky-300"></span>
+  <span class="bg-sky-400"></span>
+  <span class="bg-sky-500"></span>
+  <span class="bg-sky-600"></span>
+  <span class="bg-sky-700"></span>
+  <span class="bg-sky-800"></span>
+  <span class="bg-sky-900"></span>
+  <span class="bg-sky-950"></span>
+
+  <!-- sapphire -->
+  <span class="bg-sapphire"></span>
+  <span class="bg-sapphire-50"></span>
+  <span class="bg-sapphire-100"></span>
+  <span class="bg-sapphire-200"></span>
+  <span class="bg-sapphire-300"></span>
+  <span class="bg-sapphire-400"></span>
+  <span class="bg-sapphire-500"></span>
+  <span class="bg-sapphire-600"></span>
+  <span class="bg-sapphire-700"></span>
+  <span class="bg-sapphire-800"></span>
+  <span class="bg-sapphire-900"></span>
+  <span class="bg-sapphire-950"></span>
+
+  <!-- blue -->
+  <span class="bg-blue"></span>
+  <span class="bg-blue-50"></span>
+  <span class="bg-blue-100"></span>
+  <span class="bg-blue-200"></span>
+  <span class="bg-blue-300"></span>
+  <span class="bg-blue-400"></span>
+  <span class="bg-blue-500"></span>
+  <span class="bg-blue-600"></span>
+  <span class="bg-blue-700"></span>
+  <span class="bg-blue-800"></span>
+  <span class="bg-blue-900"></span>
+  <span class="bg-blue-950"></span>
+
+  <!-- lavender -->
+  <span class="bg-lavender"></span>
+  <span class="bg-lavender-50"></span>
+  <span class="bg-lavender-100"></span>
+  <span class="bg-lavender-200"></span>
+  <span class="bg-lavender-300"></span>
+  <span class="bg-lavender-400"></span>
+  <span class="bg-lavender-500"></span>
+  <span class="bg-lavender-600"></span>
+  <span class="bg-lavender-700"></span>
+  <span class="bg-lavender-800"></span>
+  <span class="bg-lavender-900"></span>
+  <span class="bg-lavender-950"></span>
+
+  <!-- mauve -->
+  <span class="bg-mauve"></span>
+  <span class="bg-mauve-50"></span>
+  <span class="bg-mauve-100"></span>
+  <span class="bg-mauve-200"></span>
+  <span class="bg-mauve-300"></span>
+  <span class="bg-mauve-400"></span>
+  <span class="bg-mauve-500"></span>
+  <span class="bg-mauve-600"></span>
+  <span class="bg-mauve-700"></span>
+  <span class="bg-mauve-800"></span>
+  <span class="bg-mauve-900"></span>
+  <span class="bg-mauve-950"></span>
+
+  <!-- pink -->
+  <span class="bg-pink"></span>
+  <span class="bg-pink-50"></span>
+  <span class="bg-pink-100"></span>
+  <span class="bg-pink-200"></span>
+  <span class="bg-pink-300"></span>
+  <span class="bg-pink-400"></span>
+  <span class="bg-pink-500"></span>
+  <span class="bg-pink-600"></span>
+  <span class="bg-pink-700"></span>
+  <span class="bg-pink-800"></span>
+  <span class="bg-pink-900"></span>
+  <span class="bg-pink-950"></span>
+
+  <!-- flamingo -->
+  <span class="bg-flamingo"></span>
+  <span class="bg-flamingo-50"></span>
+  <span class="bg-flamingo-100"></span>
+  <span class="bg-flamingo-200"></span>
+  <span class="bg-flamingo-300"></span>
+  <span class="bg-flamingo-400"></span>
+  <span class="bg-flamingo-500"></span>
+  <span class="bg-flamingo-600"></span>
+  <span class="bg-flamingo-700"></span>
+  <span class="bg-flamingo-800"></span>
+  <span class="bg-flamingo-900"></span>
+  <span class="bg-flamingo-950"></span>
+
+  <!-- rosewater -->
+  <span class="bg-rosewater"></span>
+  <span class="bg-rosewater-50"></span>
+  <span class="bg-rosewater-100"></span>
+  <span class="bg-rosewater-200"></span>
+  <span class="bg-rosewater-300"></span>
+  <span class="bg-rosewater-400"></span>
+  <span class="bg-rosewater-500"></span>
+  <span class="bg-rosewater-600"></span>
+  <span class="bg-rosewater-700"></span>
+  <span class="bg-rosewater-800"></span>
+  <span class="bg-rosewater-900"></span>
+  <span class="bg-rosewater-950"></span>
+
+  <!-- slate -->
+  <span class="bg-slate"></span>
+  <span class="bg-slate-50"></span>
+  <span class="bg-slate-100"></span>
+  <span class="bg-slate-200"></span>
+  <span class="bg-slate-300"></span>
+  <span class="bg-slate-400"></span>
+  <span class="bg-slate-500"></span>
+  <span class="bg-slate-600"></span>
+  <span class="bg-slate-700"></span>
+  <span class="bg-slate-800"></span>
+  <span class="bg-slate-900"></span>
+  <span class="bg-slate-950"></span>
+
+  <!-- gray -->
+  <span class="bg-gray"></span>
+  <span class="bg-gray-50"></span>
+  <span class="bg-gray-100"></span>
+  <span class="bg-gray-200"></span>
+  <span class="bg-gray-300"></span>
+  <span class="bg-gray-400"></span>
+  <span class="bg-gray-500"></span>
+  <span class="bg-gray-600"></span>
+  <span class="bg-gray-700"></span>
+  <span class="bg-gray-800"></span>
+  <span class="bg-gray-900"></span>
+  <span class="bg-gray-950"></span>
+
+  <!-- zinc -->
+  <span class="bg-zinc"></span>
+  <span class="bg-zinc-50"></span>
+  <span class="bg-zinc-100"></span>
+  <span class="bg-zinc-200"></span>
+  <span class="bg-zinc-300"></span>
+  <span class="bg-zinc-400"></span>
+  <span class="bg-zinc-500"></span>
+  <span class="bg-zinc-600"></span>
+  <span class="bg-zinc-700"></span>
+  <span class="bg-zinc-800"></span>
+  <span class="bg-zinc-900"></span>
+  <span class="bg-zinc-950"></span>
+
+  <!-- neutral -->
+  <span class="bg-neutral"></span>
+  <span class="bg-neutral-50"></span>
+  <span class="bg-neutral-100"></span>
+  <span class="bg-neutral-200"></span>
+  <span class="bg-neutral-300"></span>
+  <span class="bg-neutral-400"></span>
+  <span class="bg-neutral-500"></span>
+  <span class="bg-neutral-600"></span>
+  <span class="bg-neutral-700"></span>
+  <span class="bg-neutral-800"></span>
+  <span class="bg-neutral-900"></span>
+  <span class="bg-neutral-950"></span>
+
+  <!-- stone -->
+  <span class="bg-stone"></span>
+  <span class="bg-stone-50"></span>
+  <span class="bg-stone-100"></span>
+  <span class="bg-stone-200"></span>
+  <span class="bg-stone-300"></span>
+  <span class="bg-stone-400"></span>
+  <span class="bg-stone-500"></span>
+  <span class="bg-stone-600"></span>
+  <span class="bg-stone-700"></span>
+  <span class="bg-stone-800"></span>
+  <span class="bg-stone-900"></span>
+  <span class="bg-stone-950"></span>
+</div>
+
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const colorButtons = document.querySelectorAll('button[data-color]');
