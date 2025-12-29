@@ -1,0 +1,80 @@
+---
+import Button from './Button.astro';
+import { cn } from '~/utils/styles';
+import type { ButtonProps } from '~/types/button.types';
+
+type Props = ButtonProps;
+
+const {
+  size = 'md',
+  variant = 'solid',
+  intent = 'primary',
+  icon = 'heroicons:sun',
+  shape = 'rounded',
+  width = 'auto',
+  class: className = '',
+  ...rest
+} = Astro.props;
+---
+
+<Button
+  size={size}
+  variant={variant}
+  intent={intent}
+  shape={shape}
+  icon={icon}
+  width={width}
+  class={cn('theme-toggle-button', className)}
+  {...rest}
+/>
+
+<script>
+  interface WindowWithThemeToggle extends Window {
+    __themeToggleInitialized?: boolean;
+  }
+
+  function initThemeToggle() {
+    const win = window as WindowWithThemeToggle;
+    if (win.__themeToggleInitialized) return;
+    win.__themeToggleInitialized = true;
+
+    const buttons = document.querySelectorAll('.theme-toggle-button');
+    if (!buttons.length) return;
+
+    function getCurrentTheme(): 'light' | 'dark' {
+      return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    }
+
+    function updateAriaLabel(button: Element, theme: 'light' | 'dark') {
+      button.setAttribute(
+        'aria-label',
+        theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+      );
+    }
+
+    function toggleTheme() {
+      const current = getCurrentTheme();
+      const next = current === 'dark' ? 'light' : 'dark';
+
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+
+      buttons.forEach((btn) => updateAriaLabel(btn, next));
+
+      document.dispatchEvent(new CustomEvent('theme-change', { detail: { theme: next } }));
+    }
+
+    const currentTheme = getCurrentTheme();
+    buttons.forEach((button) => {
+      updateAriaLabel(button, currentTheme);
+      button.addEventListener('click', toggleTheme);
+    });
+  }
+
+  initThemeToggle();
+
+  document.addEventListener('astro:after-swap', () => {
+    (window as WindowWithThemeToggle).__themeToggleInitialized = false;
+    initThemeToggle();
+  });
+</script>

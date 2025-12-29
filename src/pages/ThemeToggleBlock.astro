@@ -1,0 +1,120 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '~/components/blocks/composite/Container.astro';
+import Headline from '~/components/blocks/composite/Headline.astro';
+import ThemeToggle from '~/components/blocks/primitives/ThemeToggle.astro';
+
+const metadata = {
+  title: {
+    default: 'Theme Toggle Block',
+  },
+  description: 'Theme toggle component for switching between light and dark modes',
+};
+---
+
+<Layout metadata={metadata}>
+  <Container
+    htmlTag="section"
+    containerWidthType="full"
+    content={{ widthType: 'boxed' }}
+    spacing={{ margin: 'my-8', padding: 'p-6' }}
+  >
+    <Headline
+      title="Theme Toggle Block"
+      subtitle="Toggle between light and dark themes with persistent localStorage support"
+      align="center"
+    />
+
+    <!-- Basic Theme Toggle -->
+    <Container spacing={{ margin: 'mt-12 mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">Basic Toggle</h2>
+      <div class="flex flex-wrap gap-4">
+        <ThemeToggle />
+      </div>
+    </Container>
+
+    <!-- Sizes -->
+    <Container spacing={{ margin: 'mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">Sizes</h2>
+      <div class="flex flex-wrap items-center gap-4">
+        <ThemeToggle size="xs" />
+        <ThemeToggle size="sm" />
+        <ThemeToggle size="md" />
+        <ThemeToggle size="lg" />
+        <ThemeToggle size="xl" />
+      </div>
+    </Container>
+
+    <!-- Variants -->
+    <Container spacing={{ margin: 'mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">Variants</h2>
+      <div class="flex flex-wrap gap-4">
+        <ThemeToggle variant="solid" />
+        <ThemeToggle variant="outline" />
+        <ThemeToggle variant="ghost" />
+      </div>
+    </Container>
+
+    <!-- Intents -->
+    <Container spacing={{ margin: 'mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">Intent Colors</h2>
+      <div class="flex flex-wrap gap-4">
+        <ThemeToggle intent="primary" variant="solid" />
+        <ThemeToggle intent="secondary" variant="solid" />
+        <ThemeToggle intent="accent" variant="solid" />
+        <ThemeToggle intent="neutral" variant="outline" />
+      </div>
+    </Container>
+
+    <!-- Shapes -->
+    <Container spacing={{ margin: 'mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">Shapes</h2>
+      <div class="flex flex-wrap gap-4">
+        <ThemeToggle shape="rounded" />
+        <ThemeToggle shape="square" />
+        <ThemeToggle shape="pill" />
+      </div>
+    </Container>
+
+    <!-- Custom Icons (using different heroicons) -->
+    <Container spacing={{ margin: 'mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">Custom Configuration</h2>
+      <div class="flex flex-wrap gap-4">
+        <ThemeToggle icon="heroicons:moon" variant="solid" intent="primary" size="lg" />
+        <ThemeToggle
+          icon="heroicons:light-bulb"
+          variant="outline"
+          intent="accent"
+          size="lg"
+          shape="pill"
+        />
+      </div>
+    </Container>
+
+    <!-- Demo Content -->
+    <Container spacing={{ margin: 'mt-16 mb-8' }}>
+      <h2 class="text-2xl font-bold mb-4">Theme Demo Content</h2>
+      <div class="space-y-4">
+        <p class="text-normal">
+          This is normal text that adapts to the theme. Toggle the theme to see it change!
+        </p>
+        <p class="text-muted">This is muted text with lower contrast.</p>
+        <p class="text-emphasis">This is emphasized text with higher contrast.</p>
+        <div class="bg-surface p-4 rounded-md">
+          <p class="text-normal">Content on a surface background</p>
+        </div>
+        <div class="bg-elevated p-4 rounded-md">
+          <p class="text-normal">Content on an elevated background</p>
+        </div>
+      </div>
+    </Container>
+  </Container>
+</Layout>
+
+<script>
+  // Show theme change feedback
+  document.addEventListener('theme-change', (e: Event) => {
+    const customEvent = e as CustomEvent<{ theme: string }>;
+    console.log('Theme changed to:', customEvent.detail.theme);
+  });
+</script>

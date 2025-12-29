@@ -1,7 +1,7 @@
 ---
 import '~/styles/global.css';
 
-import { I18N } from 'site-config';
+import { I18N, METADATA } from 'site-config';
 
 import type { MetaData } from '~/types/metadata.types';
 import CommonMeta from '~/components/htmlheader/CommonMeta.astro';
@@ -24,6 +24,9 @@ const currentLang =
 
 const htmlLang = currentLang.code;
 const htmlDir = currentLang.direction;
+
+// Get color scheme from config
+const colorScheme = METADATA.theme?.colorScheme || 'light dark';
 ---
 
 <!doctype html>
@@ -34,6 +37,44 @@ const htmlDir = currentLang.direction;
     <Metadata {...metadata} />
     <SiteVerification />
     <Analytics />
+
+    <!-- Initialize theme before page renders to prevent FOUC -->
+    <script is:inline define:vars={{ colorScheme }}>
+      (function () {
+        // Parse color scheme config to determine behavior
+        // Values: "normal", "light", "dark", "light dark", "dark light", "only light", "only dark"
+        const scheme = colorScheme;
+
+        if (scheme === 'only light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          localStorage.setItem('theme', 'light');
+          return;
+        }
+        if (scheme === 'only dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+          return;
+        }
+
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'light' || storedTheme === 'dark') {
+          document.documentElement.setAttribute('data-theme', storedTheme);
+          return;
+        }
+
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        let theme;
+
+        if (scheme === 'dark light') {
+          theme = prefersDark ? 'dark' : 'light';
+        } else {
+          theme = prefersDark ? 'dark' : 'light';
+        }
+
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+      })();
+    </script>
   </head>
   <body>
     <slot />
