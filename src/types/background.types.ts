@@ -12,6 +12,5 @@ export interface BackgroundProps {
   video?: string;
   attachment?: BackgroundAttachment;
   class?: string;
-  isDark?: boolean;
   overlayClass?: string;
 }

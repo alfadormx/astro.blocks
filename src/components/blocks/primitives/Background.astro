@@ -6,14 +6,7 @@ import { cn } from '~/utils/styles';
 
 type Props = BackgroundProps;
 
-const {
-  image,
-  video,
-  attachment = 'scroll',
-  class: className = '',
-  isDark = false,
-  overlayClass,
-} = Astro.props;
+const { image, video, attachment = 'scroll', class: className = '', overlayClass } = Astro.props;
 
 // Resolve image path (supports ~/assets/, public URLs, and external URLs)
 let resolvedImageUrl = '';
@@ -44,8 +37,8 @@ if (resolvedImageUrl) {
   bgStyle = `background-image:url('${resolvedImageUrl}');`;
 }
 
-// Overlay class for dark theme or custom overlay
-const overlay = overlayClass || (isDark ? 'bg-surface-light' : '');
+// Overlay class for custom overlay
+const overlay = overlayClass ?? '';
 ---
 
 {
