@@ -14,6 +14,7 @@ export type ContainerTag =
   | 'nav'
   | 'a';
 
+export type ContainerAir = 'none' | 'normal';
 export type ContainerWidthType = 'full' | 'boxed' | 'custom';
 export type ContentWidthType = 'full' | 'boxed';
 export type OverflowType = 'visible' | 'hidden' | 'auto';
@@ -21,6 +22,7 @@ export type OverflowType = 'visible' | 'hidden' | 'auto';
 export interface ContentConfig {
   class?: string;
   boxWidth?: string; // Tailwind class for inner max-width
+  air?: ContainerAir;
   widthType?: ContentWidthType;
   spacing?: SpacingConfig;
   border?: BorderConfig;

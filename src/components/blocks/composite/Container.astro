@@ -7,6 +7,7 @@ type Props = ContainerProps;
 
 const props = Astro.props;
 const ContainerTag = props.htmlTag ?? 'section';
+const containerAir = props.content?.air ?? 'normal';
 const containerWidthType = props.containerWidthType ?? 'full';
 const contentWidthType = props.content?.widthType ?? 'boxed';
 const contentBoxWidth = props.content?.boxWidth ?? 'max-w-[var(--container-max-width)]';
@@ -30,7 +31,8 @@ const containerClass = cn(
   widthClass,
   minHeightClass,
   overflow && `overflow-${overflow}`,
-  props.spacing?.padding ?? 'px-4 py-12 md:px-6 md:py-16 lg-py-20',
+  props.spacing?.padding ??
+    (containerAir === 'normal' ? 'px-4 py-12 md:px-6 md:py-16 lg-py-20' : ''),
   props.spacing?.margin,
   props.spacing?.gap,
   props.border?.width,
@@ -48,7 +50,7 @@ const contentClass = cn(
   containerWidthType === 'full' &&
     contentWidthType === 'boxed' && [contentBoxWidth, 'mx-auto', minHeightClass],
   containerWidthType === 'full' && contentWidthType === 'full' && 'w-full',
-  props.content?.spacing?.padding ?? 'p-6',
+  props.content?.spacing?.padding ?? (containerAir === 'normal' ? 'p-6' : ''),
   props.content?.spacing?.margin,
   props.content?.spacing?.gap,
   props.content?.border?.width,
