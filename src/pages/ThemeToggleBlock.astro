@@ -26,7 +26,10 @@ const metadata = {
     />
 
     <!-- Basic Theme Toggle -->
-    <Container spacing={{ margin: 'mt-12 mb-8' }}>
+    <Container
+      spacing={{ padding: '', margin: 'mt-12 mb-8' }}
+      content={{ spacing: { padding: '' } }}
+    >
       <h2 class="text-2xl font-bold mb-4">Basic Toggle</h2>
       <div class="flex flex-wrap gap-4">
         <ThemeToggle />
@@ -34,7 +37,7 @@ const metadata = {
     </Container>
 
     <!-- Sizes -->
-    <Container spacing={{ margin: 'mb-8' }}>
+    <Container spacing={{ padding: '', margin: 'mb-8' }} content={{ spacing: { padding: '' } }}>
       <h2 class="text-2xl font-bold mb-4">Sizes</h2>
       <div class="flex flex-wrap items-center gap-4">
         <ThemeToggle size="xs" />
@@ -46,7 +49,7 @@ const metadata = {
     </Container>
 
     <!-- Variants -->
-    <Container spacing={{ margin: 'mb-8' }}>
+    <Container spacing={{ padding: '', margin: 'mb-8' }} content={{ spacing: { padding: '' } }}>
       <h2 class="text-2xl font-bold mb-4">Variants</h2>
       <div class="flex flex-wrap gap-4">
         <ThemeToggle variant="solid" />
@@ -56,7 +59,7 @@ const metadata = {
     </Container>
 
     <!-- Intents -->
-    <Container spacing={{ margin: 'mb-8' }}>
+    <Container spacing={{ padding: '', margin: 'mb-8' }} content={{ spacing: { padding: '' } }}>
       <h2 class="text-2xl font-bold mb-4">Intent Colors</h2>
       <div class="flex flex-wrap gap-4">
         <ThemeToggle intent="primary" variant="solid" />
@@ -67,7 +70,7 @@ const metadata = {
     </Container>
 
     <!-- Shapes -->
-    <Container spacing={{ margin: 'mb-8' }}>
+    <Container spacing={{ padding: '', margin: 'mb-8' }} content={{ spacing: { padding: '' } }}>
       <h2 class="text-2xl font-bold mb-4">Shapes</h2>
       <div class="flex flex-wrap gap-4">
         <ThemeToggle shape="rounded" />
@@ -77,7 +80,7 @@ const metadata = {
     </Container>
 
     <!-- Custom Icons (using different heroicons) -->
-    <Container spacing={{ margin: 'mb-8' }}>
+    <Container spacing={{ padding: '', margin: 'mb-8' }} content={{ spacing: { padding: '' } }}>
       <h2 class="text-2xl font-bold mb-4">Custom Configuration</h2>
       <div class="flex flex-wrap gap-4">
         <ThemeToggle icon="heroicons:moon" variant="solid" intent="primary" size="lg" />
@@ -92,7 +95,7 @@ const metadata = {
     </Container>
 
     <!-- Demo Content -->
-    <Container spacing={{ margin: 'mt-16 mb-8' }}>
+    <Container spacing={{ padding: '', margin: 'mb-8' }} content={{ spacing: { padding: '' } }}>
       <h2 class="text-2xl font-bold mb-4">Theme Demo Content</h2>
       <div class="space-y-4">
         <p class="text-normal">
