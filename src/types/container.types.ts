@@ -1,4 +1,6 @@
 import type { BackgroundConfig } from './background.types';
+import type { SpacingConfig } from './spacing.types';
+import type { BorderConfig } from './border.types';
 
 export type ContainerTag =
   | 'div'
@@ -28,17 +30,6 @@ export interface ContentConfig {
   border?: BorderConfig;
 }
 
-export interface SpacingConfig {
-  padding?: string; // e.g., "p-8" or "px-4 py-8"
-  margin?: string; // e.g., "mx-auto mb-8"
-  gap?: string; // e.g., "gap-4"
-}
-
-export interface BorderConfig {
-  width?: string; // e.g., "border" or "border-2" or "border-t-2"
-  color?: string; // e.g., "border-gray-200"
-  radius?: string; // e.g., "rounded-lg"
-}
 export interface LayoutConfig {
   type?: 'flex' | 'grid';
   class?: string; // e.g., "flex-row gap-4 items-center" or "grid-cols-3 gap-6"
