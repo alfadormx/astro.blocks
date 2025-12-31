@@ -23,8 +23,6 @@ const { container = {}, headline = {}, actions = [] } = Astro.props;
 
 const mergedContainer = merge({}, defaultContainer, container);
 const mergedHeadline = merge({}, defaultHeadline, headline);
-
-console.log('CallToAction - mergedContainer:', mergedContainer);
 ---
 
 <Container {...mergedContainer}>
