@@ -35,10 +35,10 @@ const metadata = {
         <Button label="Click Here" />
         <Button
           label="Subscribe Now"
-          icon="heroicons:arrow-top-right-on-square"
+          icon={{ name: 'heroicons:arrow-top-right-on-square' }}
           iconPosition="right"
         />
-        <Button icon="heroicons:plus" />
+        <Button icon={{ name: 'heroicons:plus' }} />
       </div>
     </Container>
 
@@ -99,17 +99,17 @@ const metadata = {
     <Container spacing={{ padding: '', margin: 'mb-8' }} content={{ spacing: { padding: '' } }}>
       <h2 class="text-2xl font-bold mb-4">With Icons</h2>
       <div class="flex flex-wrap gap-4">
-        <Button label="Left Icon" icon="heroicons:arrow-left" iconPosition="left" />
-        <Button label="Right Icon" icon="heroicons:arrow-right" iconPosition="right" />
+        <Button label="Left Icon" icon={{ name: 'heroicons:arrow-left' }} iconPosition="left" />
+        <Button label="Right Icon" icon={{ name: 'heroicons:arrow-right' }} iconPosition="right" />
         <Button
           label="Download"
-          icon="heroicons:arrow-down-tray"
+          icon={{ name: 'heroicons:arrow-down-tray' }}
           iconPosition="left"
           intent="success"
         />
         <Button
           label="External Link"
-          icon="heroicons:arrow-top-right-on-square"
+          icon={{ name: 'heroicons:arrow-top-right-on-square' }}
           iconPosition="right"
           intent="secondary"
         />
@@ -120,17 +120,17 @@ const metadata = {
     <Container spacing={{ padding: '', margin: 'mb-8' }} content={{ spacing: { padding: '' } }}>
       <h2 class="text-2xl font-bold mb-4">Icon Only</h2>
       <div class="flex flex-wrap items-center gap-4">
-        <Button icon="heroicons:plus" size="xs" />
-        <Button icon="heroicons:plus" size="sm" />
-        <Button icon="heroicons:plus" size="md" />
-        <Button icon="heroicons:plus" size="lg" />
-        <Button icon="heroicons:plus" size="xl" />
+        <Button icon={{ name: 'heroicons:plus' }} size="xs" />
+        <Button icon={{ name: 'heroicons:plus' }} size="sm" />
+        <Button icon={{ name: 'heroicons:plus' }} size="md" />
+        <Button icon={{ name: 'heroicons:plus' }} size="lg" />
+        <Button icon={{ name: 'heroicons:plus' }} size="xl" />
       </div>
       <div class="flex flex-wrap gap-4 mt-4">
-        <Button icon="heroicons:pencil" variant="outline" />
-        <Button icon="heroicons:trash" variant="outline" intent="error" />
-        <Button icon="heroicons:check" variant="ghost" intent="success" />
-        <Button icon="heroicons:x-mark" variant="ghost" intent="error" />
+        <Button icon={{ name: 'heroicons:pencil' }} variant="outline" />
+        <Button icon={{ name: 'heroicons:trash' }} variant="outline" intent="error" />
+        <Button icon={{ name: 'heroicons:check' }} variant="ghost" intent="success" />
+        <Button icon={{ name: 'heroicons:x-mark' }} variant="ghost" intent="error" />
       </div>
     </Container>
 
@@ -141,14 +141,32 @@ const metadata = {
         <Button
           label="Subscribe Now"
           subtitle="Get access to Premium Features for FREE for a year!"
-          icon="heroicons:arrow-top-right-on-square"
+          icon={{ name: 'heroicons:arrow-top-right-on-square' }}
           iconPosition="right"
           size="lg"
         />
         <Button
           label="Start Free Trial"
           subtitle="No credit card required"
-          icon="heroicons:rocket-launch"
+          icon={{ name: 'heroicons:rocket-launch' }}
+          iconPosition="left"
+          size="lg"
+          intent="accent"
+        />
+      </div>
+    </Container>
+
+    <!-- Customized icon -->
+    <Container spacing={{ padding: '', margin: 'mb-8' }} content={{ spacing: { padding: '' } }}>
+      <h2 class="text-2xl font-bold mb-4">Customized icon</h2>
+      <div class="flex flex-wrap gap-4">
+        <Button
+          label="Start Free Trial"
+          subtitle="No credit card required"
+          icon={{
+            name: 'heroicons:rocket-launch',
+            class: 'p-1 rounded-md bg-background text-accent ',
+          }}
           iconPosition="left"
           size="lg"
           intent="accent"
@@ -165,9 +183,9 @@ const metadata = {
         <Button label="Pill" shape="pill" />
       </div>
       <div class="flex flex-wrap items-center gap-4 mt-4">
-        <Button icon="heroicons:plus" shape="rounded" />
-        <Button icon="heroicons:plus" shape="square" />
-        <Button icon="heroicons:plus" shape="pill" />
+        <Button icon={{ name: 'heroicons:plus' }} shape="rounded" />
+        <Button icon={{ name: 'heroicons:plus' }} shape="square" />
+        <Button icon={{ name: 'heroicons:plus' }} shape="pill" />
       </div>
     </Container>
 
@@ -199,7 +217,7 @@ const metadata = {
           label="External Link"
           href="https://astro.build"
           target="_blank"
-          icon="heroicons:arrow-top-right-on-square"
+          icon={{ name: 'heroicons:arrow-top-right-on-square' }}
           iconPosition="right"
         />
       </div>

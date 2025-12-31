@@ -23,11 +23,10 @@ const {
   class: className = '',
   labelClass = '',
   subtitleClass = '',
-  iconClass = '',
 } = Astro.props;
 
 // Determine if this is an icon-only button
-const isIconOnly = icon && !label && !subtitle;
+const isIconOnly = icon && icon.name && !label && !subtitle;
 
 // Determine if this is a promotional button (has subtitle)
 const hasSubtitle = !!subtitle;
@@ -142,7 +141,7 @@ const finalLabelClass = cn(hasSubtitle && 'font-semibold', labelClass);
 const finalSubtitleClass = cn('text-xs opacity-90', subtitleClass);
 
 // Icon wrapper classes
-const finalIconClass = cn(iconClass);
+const finalIconClass = cn(icon?.class);
 
 // Render as link or button
 const Tag = href ? 'a' : 'button';
@@ -153,8 +152,12 @@ const tagProps = href
 
 <Tag class={buttonClass} {...tagProps}>
   {
-    icon && iconPosition === 'left' && (
-      <Icon name={icon} class={cn(iconSizeClass, finalIconClass)} />
+    icon && icon.name && iconPosition === 'left' && (
+      <Icon
+        name={icon.name}
+        class={cn(iconSizeClass, finalIconClass)}
+        aria-label={icon.ariaLabel}
+      />
     )
   }
 
@@ -168,8 +171,12 @@ const tagProps = href
   }
 
   {
-    icon && iconPosition === 'right' && (
-      <Icon name={icon} class={cn(iconSizeClass, finalIconClass)} />
+    icon && icon.name && iconPosition === 'right' && (
+      <Icon
+        name={icon.name}
+        class={cn(iconSizeClass, finalIconClass)}
+        aria-label={icon.ariaLabel}
+      />
     )
   }
 

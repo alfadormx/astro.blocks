@@ -9,12 +9,12 @@ const {
   size = 'md',
   variant = 'solid',
   intent = 'primary',
-  icon = 'heroicons:sun',
+  icon = { name: 'heroicons:sun' },
   shape = 'rounded',
   width = 'auto',
   class: className = '',
   ...rest
-} = Astro.props;
+} = Astro.props as Props;
 ---
 
 <Button
