@@ -1,0 +1,63 @@
+---
+import type { ItemProps } from '~/types/item.types';
+import { cn } from '~/utils/styles';
+import { Icon } from 'astro-icon/components';
+import Button from '../primitives/Button.astro';
+
+type Props = ItemProps;
+
+const {
+  icon,
+  title,
+  content,
+  actions = [],
+  layout = 'vertical',
+  background,
+  spacing,
+  border,
+  class: className = '',
+} = Astro.props;
+
+const rootClass = cn(
+  background?.class,
+  spacing?.padding,
+  border?.width,
+  border?.color,
+  border?.radius,
+  'flex',
+  layout === 'horizontal'
+    ? 'flex-row items-start gap-6'
+    : 'flex-col items-center text-center gap-4',
+  className
+);
+
+const iconFinalClass = cn('text-normal size-10 shrink-0', icon.class);
+const titleFinalClass = cn('text-normal font-bold text-xl mb-1');
+const contentFinalClass = cn('text-normal mb-2');
+---
+
+<div class={rootClass}>
+  {
+    icon && icon.name && (
+      <Icon name={icon.name} class={iconFinalClass} aria-label={icon.ariaLabel} />
+    )
+  }
+  <div
+    class={cn(
+      'flex flex-col',
+      layout === 'horizontal' ? 'items-start text-left' : 'items-center text-center'
+    )}
+  >
+    <div class={titleFinalClass}>{title}</div>
+    <div class={contentFinalClass}>{content}</div>
+    {
+      actions.length > 0 && (
+        <div class="flex flex-wrap gap-2 mt-2">
+          {actions.map((action) => (
+            <Button {...action} />
+          ))}
+        </div>
+      )
+    }
+  </div>
+</div>
