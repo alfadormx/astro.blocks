@@ -1,5 +1,5 @@
 export interface IconConfig {
-  name: string;
+  name?: string;
   class?: string;
   ariaLabel?: string;
 }
