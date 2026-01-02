@@ -12,12 +12,6 @@ const metadata = {
 
 <Layout metadata={metadata}>
   <CallToAction
-    container={{
-      content: {
-        border: { width: 'border', color: 'border-border-emphasis border-dotted' },
-      },
-      border: { width: 'border', color: 'border-border' },
-    }}
     headline={{
       tagline: 'Call to Action',
       title: 'Astro + Tailwind CSS',
@@ -28,7 +22,7 @@ const metadata = {
     actions={[
       {
         label: 'Get template',
-        icon: 'heroicons:arrow-down-tray',
+        icon: { name: 'heroicons:arrow-down-tray' },
         intent: 'primary',
         size: 'lg',
         variant: 'solid',
@@ -36,7 +30,7 @@ const metadata = {
       },
       {
         label: 'Subscribe Now',
-        icon: 'heroicons:arrow-top-right-on-square',
+        icon: { name: 'heroicons:arrow-top-right-on-square' },
         intent: 'secondary',
         size: 'lg',
         variant: 'solid',
