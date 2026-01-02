@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '~/components/blocks/composite/Container.astro';
+import Headline from '~/components/blocks/composite/Headline.astro';
+import Content from '~/components/blocks/composite/Content.astro';
+
+const metadata = {
+  title: {
+    default: 'Content Block Demo',
+  },
+  description: 'Demo page for the Content composite block',
+};
+---
+
+<Layout metadata={metadata}>
+  <Container>
+    <Headline
+      title="Content Block Demo"
+      subtitle="Showcase of the Content composite block with image, content, action, and items"
+      align="center"
+    />
+    <Content
+      headline={{
+        tagline: 'Content Block',
+        title: 'Formula Blueprint: Fun Meets Functionality!',
+        subtitle:
+          'The template is a free, customizable and production-ready template for Astro 5.0 + Tailwind CSS.',
+      }}
+      image={{
+        src: 'https://images.pexels.com/photos/34533069/pexels-photo-34533069.jpeg',
+        alt: 'Demo image',
+      }}
+      action={{
+        label: 'Get the template',
+        icon: { name: 'heroicons:arrow-down-tray' },
+        intent: 'primary',
+      }}
+      items={[
+        {
+          icon: { name: 'heroicons:sparkles', class: 'text-accent' },
+          title: 'Composable',
+          content: 'Blocks can be combined in any way.',
+        },
+        {
+          icon: { name: 'heroicons:bolt', class: 'text-success' },
+          title: 'Fast',
+          content: 'Astro delivers lightning-fast sites.',
+        },
+        {
+          icon: { name: 'heroicons:star', class: 'text-warning' },
+          title: 'Flexible',
+          content: 'Customize every aspect of your UI.',
+        },
+      ]}
+    >
+      <h3 class="text-2xl font-bold tracking-tight sm:text-3xl mb-2">
+        Building on modern foundations
+      </h3>
+      Gain a competitive advantage by incorporating industry leading practices
+    </Content>
+  </Container>
+</Layout>

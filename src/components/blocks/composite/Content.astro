@@ -1,0 +1,76 @@
+---
+import Container from './Container.astro';
+import Headline from './Headline.astro';
+import TwoColumnContainer from '../layouts/TwoColumnContainer.astro';
+import Image from '../primitives/Image.astro';
+import Button from '../primitives/Button.astro';
+import ItemsGrid from './ItemsGrid.astro';
+import merge from 'lodash.merge';
+import type { ContentProps } from '~/types/content.types';
+import type { ContainerProps } from '~/types/container.types';
+import type { HeadlineProps } from '~/types/headline.types';
+
+type Props = ContentProps;
+
+const {
+  container = {},
+  headline = {},
+  image,
+  action,
+  items = [],
+  imageOnLeft = false,
+  reverseOnMobile = false,
+} = Astro.props;
+
+const defaultContainer = {} as ContainerProps;
+
+const defaultHeadline = {
+  class: 'mb-8 md:mb-12',
+} as HeadlineProps;
+
+const defaultTwoColumnConfig = {
+  htmlTag: 'div',
+  content: { air: 'none' },
+  responsive: true,
+  reverseOnMobile: reverseOnMobile,
+} as const;
+
+const defaultItemsGridConfig = {
+  columns: 1,
+  defaultItemConfig: {
+    layout: 'horizontal',
+  },
+  class: 'gap-y-4 md:gap-y-8 mt-8',
+} as const;
+
+const defaultImage = {
+  class: 'rounded-lg shadow',
+  width: 500,
+  height: 500,
+  widths: [400, 768],
+  sizes: '(max-width: 768px) 100vw, 432px',
+  layout: 'responsive',
+};
+
+const mergedContainer = merge({}, defaultContainer, container);
+const mergedHeadline = merge({}, defaultHeadline, headline);
+const mergedImage = merge({}, defaultImage, image);
+---
+
+<Container {...mergedContainer}>
+  <Headline {...mergedHeadline} />
+  <TwoColumnContainer {...defaultTwoColumnConfig}>
+    <div slot={imageOnLeft ? 'column2' : 'column1'}>
+      <div class="mb-6">
+        <slot />
+      </div>
+      <div class="mb-6">
+        {action && <Button {...action} />}
+      </div>
+      {items.length > 0 && <ItemsGrid items={items} {...defaultItemsGridConfig} />}
+    </div>
+    <div slot={imageOnLeft ? 'column1' : 'column2'}>
+      <Image {...mergedImage} />
+    </div>
+  </TwoColumnContainer>
+</Container>
