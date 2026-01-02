@@ -17,6 +17,7 @@ export default defineConfig({
         mdi: ['*'],
         lucide: ['*'],
         tabler: ['*'],
+        'flat-color-icons': ['*'],
       },
     }),
   ],

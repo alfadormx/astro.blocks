@@ -21,6 +21,7 @@
     "@iconify-json/lucide": "^1.2.82",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify-json/tabler": "^1.2.25",
+    "@iconify-json/flat-color-icons": "^1.2.1",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.6",
     "astro-icon": "^1.1.5",
