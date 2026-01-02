@@ -1,0 +1,36 @@
+---
+import Container from './Container.astro';
+import Headline from './Headline.astro';
+import ItemsGrid from './ItemsGrid.astro';
+import { cn } from '~/utils/styles';
+import merge from 'lodash.merge';
+import type { FAQProps } from '~/types/faq.types';
+import type { ContainerProps } from '~/types/container.types';
+import type { HeadlineProps } from '~/types/headline.types';
+import type { ItemsGridProps } from '~/types/itemsgrid.types';
+
+type Props = FAQProps;
+
+const defaultContainer = {} as ContainerProps;
+const defaultHeadline = {} as HeadlineProps;
+const defaultItemsGrid = {
+  columns: 2,
+  defaultItemConfig: {
+    layout: 'horizontal',
+    icon: { name: 'heroicons:chevron-right', class: 'text-accent' },
+  },
+} as Partial<ItemsGridProps>;
+
+const { container = {}, headline = {}, itemsGrid = {}, items = [] } = Astro.props;
+
+const mergedContainer = merge({}, defaultContainer, container);
+const mergedHeadline = merge({}, defaultHeadline, headline);
+const mergedItemsGrid = merge({}, defaultItemsGrid, itemsGrid, { items });
+---
+
+<Container {...mergedContainer}>
+  <Headline {...mergedHeadline} />
+  <div class={cn('mt-6')}>
+    <ItemsGrid {...mergedItemsGrid} />
+  </div>
+</Container>
