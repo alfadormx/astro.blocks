@@ -1,0 +1,156 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '~/components/blocks/composite/Container.astro';
+import Headline from '~/components/blocks/composite/Headline.astro';
+import ItemsContent from '~/components/blocks/composite/ItemsContent.astro';
+
+const metadata = {
+  title: {
+    default: 'FAQ Block Demo',
+  },
+  description: 'Demo page for the FAQ composite block',
+};
+---
+
+<Layout metadata={metadata}>
+  <Container spacing={{ margin: 'my-8', padding: 'p-6' }}>
+    <Headline
+      title="ItemsContent Block Demo "
+      subtitle="This is an example of the ItemsContent composite block, which combines a headline with a grid of items."
+      align="center"
+    />
+    <ItemsContent
+      headline={{
+        tagline: 'FAQ',
+        title: 'Frequently Asked Questions',
+        subtitle: 'Answers to common questions about Astro and this design system.',
+      }}
+      itemsGrid={{
+        defaultItemConfig: {
+          layout: 'horizontal',
+          icon: { name: 'heroicons:chevron-right', class: 'text-accent' },
+        },
+        items: [
+          {
+            title: 'What is Astro?',
+            content: 'Astro is a modern static site builder that delivers lightning-fast websites.',
+          },
+          {
+            title: 'Is Astro fast?',
+            content: 'Yes! Astro ships zero JavaScript by default and only loads what you need.',
+          },
+          {
+            title: 'Can I use React/Vue/Svelte?',
+            content: 'Astro supports many popular frameworks for building UI components.',
+          },
+          {
+            title: 'Is Astro open source?',
+            content: 'Absolutely! Astro is open source and has a growing community.',
+          },
+        ],
+      }}
+    />
+    <ItemsContent
+      headline={{
+        tagline: 'Features',
+        title: 'Main Features of this block',
+        subtitle: 'This block can be reused to display different sets of items with a headline.',
+      }}
+      itemsGrid={{
+        columns: 3,
+        defaultItemConfig: {
+          icon: { class: 'bg-accent text-background p-2 rounded-full' },
+          layout: 'horizontal',
+        },
+        items: [
+          {
+            icon: { name: 'heroicons:check-circle' },
+            title: 'Modern and Professional Design',
+            content:
+              'This block features a clean and modern design that fits well with various website styles.',
+          },
+          {
+            icon: { name: 'heroicons:device-phone-mobile' },
+            title: 'Responsive and Mobile-Friendly',
+            content:
+              'This block is designed to be fully responsive and works well on all devices, including mobile phones and tablets.',
+          },
+          {
+            icon: { name: 'heroicons:adjustments-horizontal' },
+            title: 'Customizability',
+            content: 'This block can be easily customized to fit your specific needs and branding.',
+          },
+          {
+            icon: { name: 'heroicons:sparkles' },
+            title: 'Fast and Lightweight',
+            content:
+              'This block is optimized for performance, ensuring fast load times and a smooth user experience.',
+          },
+          {
+            icon: { name: 'heroicons:bolt' },
+            title: 'Easy Integration',
+            content:
+              'This block can be easily integrated into existing Astro projects with minimal effort.',
+          },
+          {
+            icon: { name: 'heroicons:shield-check' },
+            title: 'Accessible Design',
+            content:
+              'This block follows best practices for accessibility, ensuring that all users can access and interact with the content.',
+          },
+        ],
+      }}
+    />
+    <ItemsContent
+      headline={{
+        tagline: 'Features',
+        title: 'Main Features of this block',
+        subtitle: 'This block can be reused to display different sets of items with a headline.',
+      }}
+      itemsGrid={{
+        columns: 3,
+        defaultItemConfig: {
+          layout: 'vertical',
+          background: { class: 'bg-elevated rounded-md shadow-xl p-3' },
+        },
+        items: [
+          {
+            icon: { name: 'flat-color-icons:checkmark' },
+            title: 'Modern and Professional Design',
+            content:
+              'This block features a clean and modern design that fits well with various website styles.',
+          },
+          {
+            icon: { name: 'flat-color-icons:iphone' },
+            title: 'Responsive and Mobile-Friendly',
+            content:
+              'This block is designed to be fully responsive and works well on all devices, including mobile phones and tablets.',
+          },
+          {
+            icon: { name: 'flat-color-icons:settings' },
+            title: 'Customizability',
+            content: 'This block can be easily customized to fit your specific needs and branding.',
+          },
+          {
+            icon: { name: 'flat-color-icons:light-at-the-end-of-tunnel' },
+            title: 'Fast and Lightweight',
+            content:
+              'This block is optimized for performance, ensuring fast load times and a smooth user experience.',
+          },
+          {
+            icon: { name: 'flat-color-icons:flash-on' },
+            title: 'Easy Integration',
+            content:
+              'This block can be easily integrated into existing Astro projects with minimal effort.',
+          },
+          {
+            icon: { name: 'flat-color-icons:medium-priority' },
+            title: 'Accessible Design',
+            content:
+              'This block follows best practices for accessibility, ensuring that all users can access and interact with the content.',
+          },
+        ],
+      }}
+    />
+  </Container>
+</Layout>

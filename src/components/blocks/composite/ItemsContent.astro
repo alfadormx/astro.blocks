@@ -4,12 +4,12 @@ import Headline from './Headline.astro';
 import ItemsGrid from './ItemsGrid.astro';
 import { cn } from '~/utils/styles';
 import merge from 'lodash.merge';
-import type { FAQProps } from '~/types/faq.types';
+import type { ItemsContentProps } from '~/types/itemscontent.types';
 import type { ContainerProps } from '~/types/container.types';
 import type { HeadlineProps } from '~/types/headline.types';
 import type { ItemsGridProps } from '~/types/itemsgrid.types';
 
-type Props = FAQProps;
+type Props = ItemsContentProps;
 
 const { container, headline, itemsGrid } = Astro.props;
 
