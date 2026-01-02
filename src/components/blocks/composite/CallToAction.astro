@@ -7,6 +7,11 @@ import merge from 'lodash.merge';
 import type { ContainerProps } from '~/types/container.types';
 import type { HeadlineProps } from '~/types/headline.types';
 import type { ButtonProps } from '~/types/button.types';
+import type { CallToActionProps } from '~/types/calltoaction.types';
+
+type Props = CallToActionProps;
+
+const { container = {}, headline = {}, actions = [] } = Astro.props;
 
 const defaultContainer = {
   content: {
@@ -16,8 +21,6 @@ const defaultContainer = {
 } as ContainerProps;
 
 const defaultHeadline = {} as HeadlineProps;
-
-const { container = {}, headline = {}, actions = [] } = Astro.props;
 
 const mergedContainer = merge({}, defaultContainer, container);
 const mergedHeadline = merge({}, defaultHeadline, headline);
