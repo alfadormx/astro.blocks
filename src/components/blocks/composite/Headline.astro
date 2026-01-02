@@ -15,23 +15,23 @@ const {
   align = 'left',
 } = Astro.props;
 
-const alignmentClass = {
+const defaultAlignmentClass = {
   left: 'text-left',
   center: 'text-center',
   right: 'text-right',
 }[align];
 
-const finalTaglineClass = cn(
+const mergedTaglineClass = cn(
   'text-secondary text-sm font-semibold uppercase tracking-wider',
   taglineClass
 );
 
-const finalTitleClass = cn(
+const mergedTitleClass = cn(
   'text-normal font-title text-4xl md:text-5xl font-bold mt-2',
   titleClass
 );
 
-const finalSubtitleClass = cn(
+const mergedSubtitleClass = cn(
   'text-muted text-lg mt-4 max-w-3xl',
   align === 'center' && 'mx-auto',
   align === 'right' && 'ml-auto',
@@ -39,8 +39,8 @@ const finalSubtitleClass = cn(
 );
 ---
 
-<div class:list={['space-y-2', alignmentClass, className]}>
-  {tagline && <p class={finalTaglineClass}>{tagline}</p>}
-  <h1 class={finalTitleClass}>{title}</h1>
-  {subtitle && <p class={finalSubtitleClass}>{subtitle}</p>}
+<div class:list={['space-y-2', defaultAlignmentClass, className]}>
+  {tagline && <p class={mergedTaglineClass}>{tagline}</p>}
+  <h1 class={mergedTitleClass}>{title}</h1>
+  {subtitle && <p class={mergedSubtitleClass}>{subtitle}</p>}
 </div>

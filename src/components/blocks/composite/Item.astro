@@ -18,7 +18,7 @@ const {
   class: className = '',
 } = Astro.props;
 
-const rootClass = cn(
+const defaultRootClass = cn(
   background?.class,
   spacing?.padding,
   border?.width,
@@ -31,15 +31,15 @@ const rootClass = cn(
   className
 );
 
-const iconFinalClass = cn('text-normal size-10 shrink-0', icon?.class);
-const titleFinalClass = cn('text-normal font-bold text-xl mb-1');
-const contentFinalClass = cn('text-normal mb-2');
+const mergedIconClass = cn('text-normal size-10 shrink-0', icon?.class);
+const mergedTitleClass = cn('text-normal font-bold text-xl mb-1');
+const mergedContentClass = cn('text-normal mb-2');
 ---
 
-<div class={rootClass}>
+<div class={defaultRootClass}>
   {
     icon && icon.name && (
-      <Icon name={icon.name} class={iconFinalClass} aria-label={icon.ariaLabel} />
+      <Icon name={icon.name} class={mergedIconClass} aria-label={icon.ariaLabel} />
     )
   }
   <div
@@ -48,8 +48,8 @@ const contentFinalClass = cn('text-normal mb-2');
       layout === 'horizontal' ? 'items-start text-left' : 'items-center text-center'
     )}
   >
-    <div class={titleFinalClass}>{title}</div>
-    <div class={contentFinalClass}>{content}</div>
+    <div class={mergedTitleClass}>{title}</div>
+    <div class={mergedContentClass}>{content}</div>
     {
       actions.length > 0 && (
         <div class="flex flex-wrap gap-2 mt-2">

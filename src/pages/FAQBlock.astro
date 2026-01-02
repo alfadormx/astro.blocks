@@ -10,46 +10,43 @@ const metadata = {
   },
   description: 'Demo page for the FAQ composite block',
 };
-
-const faqItems = [
-  {
-    title: 'What is Astro?',
-    content: 'Astro is a modern static site builder that delivers lightning-fast websites.',
-  },
-  {
-    title: 'Is Astro fast?',
-    content: 'Yes! Astro ships zero JavaScript by default and only loads what you need.',
-  },
-  {
-    title: 'Can I use React/Vue/Svelte?',
-    content: 'Astro supports many popular frameworks for building UI components.',
-  },
-  {
-    title: 'Is Astro open source?',
-    content: 'Absolutely! Astro is open source and has a growing community.',
-  },
-];
 ---
 
 <Layout metadata={metadata}>
-  <Container
-    htmlTag="section"
-    containerWidthType="full"
-    content={{ widthType: 'boxed' }}
-    spacing={{ margin: 'my-8', padding: 'p-6' }}
-  >
+  <Container spacing={{ margin: 'my-8', padding: 'p-6' }}>
     <Headline
       title="FAQ Block Demo"
       subtitle="Showcase of the FAQ composite block with various questions and answers"
-      align="center"
     />
     <FAQ
       headline={{
         title: 'Frequently Asked Questions',
         subtitle: 'Answers to common questions about Astro and this design system.',
-        align: 'center',
       }}
-      items={faqItems}
+      itemsGrid={{
+        defaultItemConfig: {
+          layout: 'horizontal',
+          icon: { name: 'heroicons:chevron-right', class: 'text-accent' },
+        },
+        items: [
+          {
+            title: 'What is Astro?',
+            content: 'Astro is a modern static site builder that delivers lightning-fast websites.',
+          },
+          {
+            title: 'Is Astro fast?',
+            content: 'Yes! Astro ships zero JavaScript by default and only loads what you need.',
+          },
+          {
+            title: 'Can I use React/Vue/Svelte?',
+            content: 'Astro supports many popular frameworks for building UI components.',
+          },
+          {
+            title: 'Is Astro open source?',
+            content: 'Absolutely! Astro is open source and has a growing community.',
+          },
+        ],
+      }}
     />
   </Container>
 </Layout>

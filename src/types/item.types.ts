@@ -9,7 +9,7 @@ export type ItemLayout = 'vertical' | 'horizontal';
 export type ItemBackgroundConfig = Omit<BackgroundConfig, 'image' | 'video' | 'attachment'>;
 
 export interface ItemProps {
-  icon: IconConfig;
+  icon?: IconConfig;
   title: string;
   content: string;
   actions?: ButtonProps[];

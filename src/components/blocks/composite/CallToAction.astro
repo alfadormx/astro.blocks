@@ -11,7 +11,7 @@ import type { CallToActionProps } from '~/types/calltoaction.types';
 
 type Props = CallToActionProps;
 
-const { container = {}, headline = {}, actions = [] } = Astro.props;
+const { container, headline, actions } = Astro.props;
 
 const defaultContainer = {
   content: {

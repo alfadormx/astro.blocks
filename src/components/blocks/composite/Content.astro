@@ -7,14 +7,16 @@ import Button from '../primitives/Button.astro';
 import ItemsGrid from './ItemsGrid.astro';
 import merge from 'lodash.merge';
 import type { ContentProps } from '~/types/content.types';
-import type { ContainerProps } from '~/types/container.types';
+import type { ContainerProps, TwoColumnContainerProps } from '~/types/container.types';
 import type { HeadlineProps } from '~/types/headline.types';
+import type { ImageProps } from '~/utils/images-optimization';
+import type { ItemsGridProps } from '~/types/itemsgrid.types';
 
 type Props = ContentProps;
 
 const {
-  container = {},
-  headline = {},
+  container,
+  headline,
   image,
   action,
   items = [],
@@ -33,7 +35,7 @@ const defaultTwoColumnConfig = {
   content: { air: 'none' },
   responsive: true,
   reverseOnMobile: reverseOnMobile,
-} as const;
+} as TwoColumnContainerProps;
 
 const defaultItemsGridConfig = {
   columns: 1,
@@ -41,7 +43,7 @@ const defaultItemsGridConfig = {
     layout: 'horizontal',
   },
   class: 'gap-y-4 md:gap-y-8 mt-8',
-} as const;
+} as ItemsGridProps;
 
 const defaultImage = {
   class: 'rounded-lg shadow',
@@ -50,7 +52,7 @@ const defaultImage = {
   widths: [400, 768],
   sizes: '(max-width: 768px) 100vw, 432px',
   layout: 'responsive',
-};
+} as ImageProps;
 
 const mergedContainer = merge({}, defaultContainer, container);
 const mergedHeadline = merge({}, defaultHeadline, headline);
@@ -67,7 +69,7 @@ const mergedImage = merge({}, defaultImage, image);
       <div class="mb-6">
         {action && <Button {...action} />}
       </div>
-      {items.length > 0 && <ItemsGrid items={items} {...defaultItemsGridConfig} />}
+      {items.length > 0 && <ItemsGrid {...defaultItemsGridConfig} />}
     </div>
     <div slot={imageOnLeft ? 'column1' : 'column2'}>
       <Image {...mergedImage} />

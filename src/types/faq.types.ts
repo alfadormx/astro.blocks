@@ -6,5 +6,4 @@ export interface FAQProps {
   container?: Partial<ContainerProps>;
   headline?: Partial<HeadlineProps>;
   itemsGrid?: Partial<ItemsGridProps>;
-  items?: ItemsGridProps['items'];
 }

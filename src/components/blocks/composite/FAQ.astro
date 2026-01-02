@@ -11,7 +11,7 @@ import type { ItemsGridProps } from '~/types/itemsgrid.types';
 
 type Props = FAQProps;
 
-const { container = {}, headline = {}, itemsGrid = {}, items = [] } = Astro.props;
+const { container, headline, itemsGrid } = Astro.props;
 
 const defaultContainer = {} as ContainerProps;
 
@@ -21,13 +21,12 @@ const defaultItemsGrid = {
   columns: 2,
   defaultItemConfig: {
     layout: 'horizontal',
-    icon: { name: 'heroicons:chevron-right', class: 'text-accent' },
   },
-} as Partial<ItemsGridProps>;
+} as ItemsGridProps;
 
 const mergedContainer = merge({}, defaultContainer, container);
 const mergedHeadline = merge({}, defaultHeadline, headline);
-const mergedItemsGrid = merge({}, defaultItemsGrid, itemsGrid, { items });
+const mergedItemsGrid = merge({}, defaultItemsGrid, itemsGrid);
 ---
 
 <Container {...mergedContainer}>
