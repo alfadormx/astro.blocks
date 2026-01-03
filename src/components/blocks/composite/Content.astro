@@ -57,6 +57,10 @@ const defaultImage = {
 const mergedContainer = merge({}, defaultContainer, container);
 const mergedHeadline = merge({}, defaultHeadline, headline);
 const mergedImage = merge({}, defaultImage, image);
+
+const mergedItemsGrid = merge({}, defaultItemsGridConfig, {
+  items: items,
+});
 ---
 
 <Container {...mergedContainer}>
@@ -69,7 +73,7 @@ const mergedImage = merge({}, defaultImage, image);
       <div class="mb-6">
         {action && <Button {...action} />}
       </div>
-      {items.length > 0 && <ItemsGrid {...defaultItemsGridConfig} />}
+      {items.length > 0 && <ItemsGrid {...mergedItemsGrid} />}
     </div>
     <div slot={imageOnLeft ? 'column1' : 'column2'}>
       <Image {...mergedImage} />
