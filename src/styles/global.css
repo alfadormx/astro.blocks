@@ -110,7 +110,9 @@
   ol:last-child {
     margin-bottom: 0;
   }
+}
 
+@layer components {
   .subtitle {
     font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem); /* 18px → 22px */
     line-height: 1.5;
