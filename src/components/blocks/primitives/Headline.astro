@@ -21,25 +21,26 @@ const defaultAlignmentClass = {
   right: 'text-right',
 }[align];
 
+const defaultClass = 'headline mt-8 mb-12 space-y-2';
+
+const mergedClass = cn(defaultClass, defaultAlignmentClass, className);
+
 const mergedTaglineClass = cn(
   'text-secondary text-sm font-semibold uppercase tracking-wider',
   taglineClass
 );
 
-const mergedTitleClass = cn(
-  'text-normal font-title text-4xl md:text-5xl font-bold mt-2',
-  titleClass
-);
+const mergedTitleClass = cn('text-normal font-title', titleClass);
 
 const mergedSubtitleClass = cn(
-  'text-muted text-lg mt-4 max-w-3xl',
+  'text-muted subtitle max-w-3xl',
   align === 'center' && 'mx-auto',
   align === 'right' && 'ml-auto',
   subtitleClass
 );
 ---
 
-<div class:list={['space-y-2', defaultAlignmentClass, className]}>
+<div class={mergedClass}>
   {tagline && <p class={mergedTaglineClass}>{tagline}</p>}
   <h1 class={mergedTitleClass}>{title}</h1>
   {subtitle && <p class={mergedSubtitleClass}>{subtitle}</p>}

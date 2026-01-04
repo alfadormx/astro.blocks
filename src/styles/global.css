@@ -110,6 +110,15 @@
   ol:last-child {
     margin-bottom: 0;
   }
+
+  .subtitle {
+    font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem); /* 18px → 22px */
+    line-height: 1.5;
+  }
+
+  .headline:first-child {
+    margin-top: 0;
+  }
 }
 
 @theme inline {
