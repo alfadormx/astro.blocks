@@ -2,7 +2,6 @@
 import Container from '../layout/Container.astro';
 import Headline from '../primitives/Headline.astro';
 import ItemsGrid from './ItemsGrid.astro';
-import { cn } from '~/utils/styles';
 import merge from 'lodash.merge';
 import type { ItemsContentProps } from '~/types/itemscontent.types';
 import type { ContainerProps } from '~/types/container.types';
@@ -31,7 +30,5 @@ const mergedItemsGrid = merge({}, defaultItemsGrid, itemsGrid);
 
 <Container {...mergedContainer}>
   <Headline {...mergedHeadline} />
-  <div class={cn('mt-6')}>
-    <ItemsGrid {...mergedItemsGrid} />
-  </div>
+  <ItemsGrid {...mergedItemsGrid} />
 </Container>

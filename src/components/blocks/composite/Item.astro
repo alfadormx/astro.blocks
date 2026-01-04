@@ -26,14 +26,14 @@ const defaultRootClass = cn(
   border?.radius,
   'flex',
   layout === 'horizontal'
-    ? 'flex-row items-start gap-6'
-    : 'flex-col items-center text-center gap-4',
+    ? 'flex-row items-start gap-4 md:gap-6 lg:gap-8'
+    : 'flex-col items-center text-center gap-3 md:gap-4 lg:gap-6',
   className
 );
 
-const mergedIconClass = cn('text-normal size-10 shrink-0', icon?.class);
-const mergedTitleClass = cn('text-normal font-bold text-xl mb-1');
-const mergedContentClass = cn('text-normal mb-2');
+const mergedIconClass = cn('size-8 md:size-10 lg:size-12 shrink-0', icon?.class);
+const mergedTitleClass = cn('font-bold text-lg md:text-xl lg:text-2xl mb-1 md:mb-2');
+const mergedContentClass = cn('mb-2 md:mb-3');
 ---
 
 <div class={defaultRootClass}>
@@ -52,7 +52,7 @@ const mergedContentClass = cn('text-normal mb-2');
     <div class={mergedContentClass}>{content}</div>
     {
       actions.length > 0 && (
-        <div class="flex flex-wrap gap-2 mt-2">
+        <div class="flex flex-wrap gap-2 md:gap-3 mt-2 md:mt-3">
           {actions.map((action) => (
             <Button {...action} />
           ))}
