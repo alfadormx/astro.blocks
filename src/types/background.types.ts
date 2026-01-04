@@ -7,3 +7,8 @@ export interface BackgroundProps {
   class?: string;
   overlayClass?: string;
 }
+
+export type SimpleBackgroundProps = Omit<
+  BackgroundProps,
+  'image' | 'video' | 'attachment' | 'overlayClass'
+>;
