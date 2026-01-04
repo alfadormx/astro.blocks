@@ -1,6 +1,6 @@
 ---
 import merge from 'lodash.merge';
-import Container from '~/components/blocks/composite/Container.astro';
+import Container from './Container.astro';
 import type { ContainerProps, SidebarContainerProps } from '~/types/container.types';
 import { cn } from '~/utils/styles';
 
@@ -14,10 +14,9 @@ const {
   ...containerProps
 } = Astro.props;
 
-// Build grid classes - use 3fr/1fr for 3/4 and 1/4 split (accounts for gap)
 const layoutClass = cn(
   gridClass ||
-    (responsive ? `grid-cols-1 ${breakpoint}grid-cols-[3fr_1fr]` : 'grid-cols-[3fr_1fr]'),
+    (responsive ? `grid-cols-1 ${breakpoint}grid-cols-[1fr_3fr]` : 'grid-cols-[1fr_3fr]'),
   gap
 );
 
@@ -33,9 +32,9 @@ const mergedContainerProps = merge({}, defaultContainer, containerProps);
 
 <Container {...mergedContainerProps}>
   <div>
-    <slot name="main" />
+    <slot name="sidebar" />
   </div>
   <div>
-    <slot name="sidebar" />
+    <slot name="main" />
   </div>
 </Container>
