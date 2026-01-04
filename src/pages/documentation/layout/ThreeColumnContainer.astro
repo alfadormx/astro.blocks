@@ -35,15 +35,15 @@ var metadata = {
     border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="column1" class="bg-blue text-white p-6 rounded text-center">
+    <div slot="left" class="bg-blue text-white p-6 rounded text-center">
       <h3>Column 1</h3>
       <p>First column content.</p>
     </div>
-    <div slot="column2" class="bg-green text-white p-6 rounded text-center">
+    <div slot="center" class="bg-green text-white p-6 rounded text-center">
       <h3>Column 2</h3>
       <p>Second column content.</p>
     </div>
-    <div slot="column3" class="bg-mauve text-white p-6 rounded text-center">
+    <div slot="right" class="bg-mauve text-white p-6 rounded text-center">
       <h3>Column 3</h3>
       <p>Third column content.</p>
     </div>
@@ -61,17 +61,17 @@ var metadata = {
     gap="gap-8"
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="column1" class="text-center">
+    <div slot="left" class="text-center">
       <div class="text-5xl mb-4">🚀</div>
       <h3>Fast Performance</h3>
       <p class="text-gray-600">Lightning-fast load times and optimized performance.</p>
     </div>
-    <div slot="column2" class="text-center">
+    <div slot="center" class="text-center">
       <div class="text-5xl mb-4">🔒</div>
       <h3>Secure</h3>
       <p class="text-gray-600">Enterprise-grade security for your peace of mind.</p>
     </div>
-    <div slot="column3" class="text-center">
+    <div slot="right" class="text-center">
       <div class="text-5xl mb-4">💡</div>
       <h3>Easy to Use</h3>
       <p class="text-gray-600">Intuitive interface that anyone can master.</p>
@@ -90,15 +90,15 @@ var metadata = {
     border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="column1" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
+    <div slot="left" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
       <h3>Service 1</h3>
       <p>Premium quality service with attention to detail.</p>
     </div>
-    <div slot="column2" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
+    <div slot="center" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
       <h3>Service 2</h3>
       <p>Expert support available 24/7 for your needs.</p>
     </div>
-    <div slot="column3" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
+    <div slot="right" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
       <h3>Service 3</h3>
       <p>Flexible plans tailored to your requirements.</p>
     </div>
@@ -116,15 +116,15 @@ var metadata = {
     responsive={true}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="column1" class="bg-peach text-white p-6 rounded text-center">
+    <div slot="left" class="bg-peach text-white p-6 rounded text-center">
       <h3>Mobile Friendly</h3>
       <p>Stacks vertically on small screens.</p>
     </div>
-    <div slot="column2" class="bg-red text-white p-6 rounded text-center">
+    <div slot="center" class="bg-red text-white p-6 rounded text-center">
       <h3>Tablet Ready</h3>
       <p>Responsive by default.</p>
     </div>
-    <div slot="column3" class="bg-pink text-white p-6 rounded text-center">
+    <div slot="right" class="bg-pink text-white p-6 rounded text-center">
       <h3>Desktop Optimized</h3>
       <p>Three columns on larger screens.</p>
     </div>
@@ -144,19 +144,19 @@ var metadata = {
     gap="gap-8"
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="column1" class="text-center">
+    <div slot="left" class="text-center">
       <div class="w-32 h-32 bg-blue rounded-full mx-auto mb-4"></div>
       <h3 class="text-xl font-bold mb-1">John Doe</h3>
       <p class="text-gray-600 mb-2">CEO & Founder</p>
       <p class="text-sm">Leading the company with vision and passion.</p>
     </div>
-    <div slot="column2" class="text-center">
+    <div slot="center" class="text-center">
       <div class="w-32 h-32 bg-green rounded-full mx-auto mb-4"></div>
       <h3 class="text-xl font-bold mb-1">Jane Smith</h3>
       <p class="text-gray-600 mb-2">CTO</p>
       <p class="text-sm">Building innovative technical solutions.</p>
     </div>
-    <div slot="column3" class="text-center">
+    <div slot="right" class="text-center">
       <div class="w-32 h-32 bg-mauve rounded-full mx-auto mb-4"></div>
       <h3 class="text-xl font-bold mb-1">Mike Johnson</h3>
       <p class="text-gray-600 mb-2">Lead Designer</p>
@@ -176,7 +176,7 @@ var metadata = {
     gap="gap-6"
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="column1" class="border-2 border-gray-300 rounded-lg p-6">
+    <div slot="left" class="border-2 border-gray-300 rounded-lg p-6">
       <h3>Basic</h3>
       <div class="text-3xl font-bold mb-4">$9<span class="text-lg text-gray-600">/mo</span></div>
       <ul>
@@ -197,7 +197,7 @@ var metadata = {
         Get Started
       </button>
     </div>
-    <div slot="column2" class="border-2 border-blue rounded-lg p-6 shadow-lg transform scale-105">
+    <div slot="center" class="border-2 border-blue rounded-lg p-6 shadow-lg transform scale-105">
       <div class="text-xs bg-blue text-white px-2 py-1 rounded inline-block mb-2">POPULAR</div>
       <h3>Pro</h3>
       <div class="text-3xl font-bold mb-4">$29<span class="text-lg text-gray-600">/mo</span></div>
@@ -219,7 +219,7 @@ var metadata = {
         Get Started
       </button>
     </div>
-    <div slot="column3" class="border-2 border-gray-300 rounded-lg p-6">
+    <div slot="right" class="border-2 border-gray-300 rounded-lg p-6">
       <h3>Enterprise</h3>
       <div class="text-3xl font-bold mb-4">$99<span class="text-lg text-gray-600">/mo</span></div>
       <ul>

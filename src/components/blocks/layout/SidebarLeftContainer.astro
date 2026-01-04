@@ -10,14 +10,34 @@ const {
   gap = 'gap-6',
   responsive = false,
   breakpoint = 'md:',
-  gridClass,
+  sidebar,
+  mainContent,
   ...containerProps
 } = Astro.props;
 
 const layoutClass = cn(
-  gridClass ||
-    (responsive ? `grid-cols-1 ${breakpoint}grid-cols-[1fr_3fr]` : 'grid-cols-[1fr_3fr]'),
+  responsive ? `grid-cols-1 ${breakpoint}grid-cols-[1fr_3fr]` : 'grid-cols-[1fr_3fr]',
   gap
+);
+
+const sidebarClass = cn(
+  sidebar?.background?.class,
+  sidebar?.spacing?.padding,
+  sidebar?.spacing?.margin,
+  sidebar?.border?.width,
+  sidebar?.border?.color,
+  sidebar?.border?.radius,
+  sidebar?.class
+);
+
+const mainContentClass = cn(
+  mainContent?.background?.class,
+  mainContent?.spacing?.padding,
+  mainContent?.spacing?.margin,
+  mainContent?.border?.width,
+  mainContent?.border?.color,
+  mainContent?.border?.radius,
+  mainContent?.class
 );
 
 const defaultContainer = {
@@ -31,10 +51,10 @@ const mergedContainerProps = merge({}, defaultContainer, containerProps);
 ---
 
 <Container {...mergedContainerProps}>
-  <div>
+  <div class={sidebarClass}>
     <slot name="sidebar" />
   </div>
-  <div>
+  <div class={mainContentClass}>
     <slot name="main" />
   </div>
 </Container>

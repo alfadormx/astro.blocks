@@ -10,14 +10,43 @@ const {
   gap = 'gap-6',
   responsive = false,
   breakpoint = 'md:',
-  gridClass,
+  leftColumn,
+  centerColumn,
+  rightColumn,
   ...containerProps
 } = Astro.props;
 
 // Build grid classes
-const layoutClass = cn(
-  gridClass || (responsive ? `grid-cols-1 ${breakpoint}grid-cols-3` : 'grid-cols-3'),
-  gap
+const layoutClass = cn(responsive ? `grid-cols-1 ${breakpoint}grid-cols-3` : 'grid-cols-3', gap);
+
+const leftColumnClass = cn(
+  leftColumn?.background?.class,
+  leftColumn?.spacing?.padding,
+  leftColumn?.spacing?.margin,
+  leftColumn?.border?.width,
+  leftColumn?.border?.color,
+  leftColumn?.border?.radius,
+  leftColumn?.class
+);
+
+const centerColumnClass = cn(
+  centerColumn?.background?.class,
+  centerColumn?.spacing?.padding,
+  centerColumn?.spacing?.margin,
+  centerColumn?.border?.width,
+  centerColumn?.border?.color,
+  centerColumn?.border?.radius,
+  centerColumn?.class
+);
+
+const rightColumnClass = cn(
+  rightColumn?.background?.class,
+  rightColumn?.spacing?.padding,
+  rightColumn?.spacing?.margin,
+  rightColumn?.border?.width,
+  rightColumn?.border?.color,
+  rightColumn?.border?.radius,
+  rightColumn?.class
 );
 
 const defaultContainer = {
@@ -31,7 +60,13 @@ const mergedContainerProps = merge({}, defaultContainer, containerProps);
 ---
 
 <Container {...mergedContainerProps}>
-  <slot name="column1" />
-  <slot name="column2" />
-  <slot name="column3" />
+  <div class={leftColumnClass}>
+    <slot name="left" />
+  </div>
+  <div class={centerColumnClass}>
+    <slot name="center" />
+  </div>
+  <div class={rightColumnClass}>
+    <slot name="right" />
+  </div>
 </Container>
