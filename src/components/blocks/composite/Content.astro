@@ -27,7 +27,7 @@ const {
 const defaultContainer = {} as ContainerProps;
 
 const defaultHeadline = {
-  class: 'mb-8 md:mb-12',
+  class: 'mb-6 md:mb-8 lg:mb-12',
 } as HeadlineProps;
 
 const defaultTwoColumnConfig = {
@@ -39,10 +39,11 @@ const defaultTwoColumnConfig = {
 
 const defaultItemsGridConfig = {
   columns: 1,
+  gap: 'normal',
   defaultItemConfig: {
     layout: 'horizontal',
   },
-  class: 'gap-y-4 md:gap-y-8 mt-8',
+  class: 'mt-6 md:mt-8',
 } as ItemsGridProps;
 
 const defaultImage = {
@@ -66,16 +67,16 @@ const mergedItemsGrid = merge({}, defaultItemsGridConfig, {
 <Container {...mergedContainer}>
   <Headline {...mergedHeadline} />
   <TwoColumnContainer {...defaultTwoColumnConfig}>
-    <div slot={imageOnLeft ? 'column2' : 'column1'}>
-      <div class="mb-6">
+    <div slot={imageOnLeft ? 'right' : 'left'}>
+      <div class="mb-4 md:mb-6">
         <slot />
       </div>
-      <div class="mb-6">
+      <div class="mb-4 md:mb-6">
         {action && <Button {...action} />}
       </div>
       {items.length > 0 && <ItemsGrid {...mergedItemsGrid} />}
     </div>
-    <div slot={imageOnLeft ? 'column1' : 'column2'}>
+    <div slot={imageOnLeft ? 'left' : 'right'}>
       <Image {...mergedImage} />
     </div>
   </TwoColumnContainer>
