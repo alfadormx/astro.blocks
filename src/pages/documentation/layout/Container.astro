@@ -17,19 +17,19 @@ var metadata = {
     subtitle: 'A flexible container component with layout and background options.',
   }}
 >
-  <p class="mb-8">
+  <p>
     The ContainerBlock block provides flexible layout control with support for various width
     configurations and rich background options.
   </p>
 
   <!-- Section 1: ContainerBlock & Content Width -->
-  <h2 class="text-3xl font-bold mt-12 mb-4">ContainerBlock & Content Width</h2>
-  <p class="mb-4">
+  <h2>ContainerBlock & Content Width</h2>
+  <p>
     Control how your container and content are sized using <code>containerWidthType</code> and the <code
       >content</code
     > object.
   </p>
-  <ul class="mb-8 list-disc list-inside">
+  <ul class="list-disc list-inside">
     <li><b>containerWidthType</b>: Controls the outer container (background/section) width.</li>
     <li>
       <b>content.widthType</b>: Controls the inner content width (only when containerWidthType is <code
@@ -43,9 +43,7 @@ var metadata = {
     </li>
   </ul>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">
-    1. Full-bleed background, boxed content (default max-width)
-  </h3>
+  <h3>1. Full-bleed background, boxed content (default max-width)</h3>
   <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
@@ -59,9 +57,7 @@ var metadata = {
     <p class="text-center py-8">Full-width container, boxed content (default max-width).</p>
   </ContainerBlock>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">
-    2. Full-bleed background, boxed content (custom 50% width)
-  </h3>
+  <h3>2. Full-bleed background, boxed content (custom 50% width)</h3>
   <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
@@ -76,7 +72,7 @@ var metadata = {
     <p class="text-center py-8">Full-width container, boxed content at <b>50%</b> width.</p>
   </ContainerBlock>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">3. Full-bleed background, full-width content</h3>
+  <h3>3. Full-bleed background, full-width content</h3>
   <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
@@ -90,7 +86,7 @@ var metadata = {
     <p class="text-center py-8">Full-width container, full-width content.</p>
   </ContainerBlock>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">4. Boxed container (background and content boxed)</h3>
+  <h3>4. Boxed container (background and content boxed)</h3>
   <ContainerBlock
     htmlTag="section"
     containerWidthType="boxed"
@@ -101,9 +97,7 @@ var metadata = {
     <p class="text-center py-8">Boxed container (background and content boxed).</p>
   </ContainerBlock>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">
-    5. Custom container width (background and content custom)
-  </h3>
+  <h3>5. Custom container width (background and content custom)</h3>
   <ContainerBlock
     htmlTag="section"
     containerWidthType="custom"
@@ -118,14 +112,14 @@ var metadata = {
   </ContainerBlock>
 
   <!-- Section 2: Backgrounds -->
-  <h2 class="text-3xl font-bold mt-12 mb-4">Backgrounds</h2>
-  <p class="mb-8">
+  <h2>Backgrounds</h2>
+  <p>
     Add visual richness with background images, videos, colors, or gradients using the <code
       >background</code
     > prop object.
   </p>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">1. Background Image (with parallax effect)</h3>
+  <h3>1. Background Image (with parallax effect)</h3>
   <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
@@ -147,7 +141,7 @@ var metadata = {
     </p>
   </ContainerBlock>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">2. Background Video</h3>
+  <h3>2. Background Video</h3>
   <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
@@ -166,7 +160,7 @@ var metadata = {
     </p>
   </ContainerBlock>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">3. Background Color</h3>
+  <h3>3. Background Color</h3>
   <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
@@ -185,7 +179,7 @@ var metadata = {
     </p>
   </ContainerBlock>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">4. Background Gradient</h3>
+  <h3>4. Background Gradient</h3>
   <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
@@ -205,12 +199,12 @@ var metadata = {
   </ContainerBlock>
 
   <!-- Section 3: Layout -->
-  <h2 class="text-3xl font-bold mt-12 mb-4">Layout</h2>
-  <p class="mb-8">
+  <h2>Layout</h2>
+  <p>
     Control how child elements are arranged using the <code>layout</code> prop with Flexbox or Grid.
   </p>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">1. Flex Row (Horizontal)</h3>
+  <h3>1. Flex Row (Horizontal)</h3>
   <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
@@ -228,7 +222,7 @@ var metadata = {
     <div class="bg-mauve text-white p-4 rounded">Item 3</div>
   </ContainerBlock>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">2. Flex Column (Vertical)</h3>
+  <h3>2. Flex Column (Vertical)</h3>
   <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
@@ -246,7 +240,7 @@ var metadata = {
     <div class="bg-mauve text-white p-4 rounded">Item 3</div>
   </ContainerBlock>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">3. Grid - 2 Columns</h3>
+  <h3>3. Grid - 2 Columns</h3>
   <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
@@ -265,7 +259,7 @@ var metadata = {
     <div class="bg-peach text-white p-6 rounded">Column 4</div>
   </ContainerBlock>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">4. Grid - 3 Columns</h3>
+  <h3>4. Grid - 3 Columns</h3>
   <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
@@ -286,9 +280,7 @@ var metadata = {
     <div class="bg-red text-white p-4 rounded text-center">6</div>
   </ContainerBlock>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">
-    5. Responsive Grid (2 cols mobile, 4 cols desktop)
-  </h3>
+  <h3>5. Responsive Grid (2 cols mobile, 4 cols desktop)</h3>
   <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
@@ -311,7 +303,7 @@ var metadata = {
     <div class="bg-yellow text-white p-4 rounded text-center">8</div>
   </ContainerBlock>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">6. Min Height with Default Alignment (Top)</h3>
+  <h3>6. Min Height with Default Alignment (Top)</h3>
   <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
@@ -330,7 +322,7 @@ var metadata = {
     <div class="bg-mauve text-white p-4 rounded text-center">Item 3</div>
   </ContainerBlock>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">7. Min Height with Vertical Center</h3>
+  <h3>7. Min Height with Vertical Center</h3>
   <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
@@ -349,7 +341,7 @@ var metadata = {
     <div class="bg-mauve text-white p-4 rounded text-center">Item 3</div>
   </ContainerBlock>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">8. Min Height with Full Center (Both Axes)</h3>
+  <h3>8. Min Height with Full Center (Both Axes)</h3>
   <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
