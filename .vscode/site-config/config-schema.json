@@ -43,8 +43,7 @@
           "type": "object",
           "properties": {
             "default": { "type": "string" },
-            "template": { "type": "string" },
-            "separator": { "type": "string" }
+            "template": { "type": "string" }
           },
           "required": ["default", "template"]
         },

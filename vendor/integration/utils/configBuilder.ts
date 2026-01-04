@@ -20,7 +20,6 @@ export interface MetaDataConfig extends Omit<MetaData, 'title'> {
   title?: {
     default: string;
     template: string;
-    separator?: string;
   };
 }
 

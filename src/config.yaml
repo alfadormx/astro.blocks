@@ -25,7 +25,6 @@ metadata:
   title:
     default: 'Astro Blocks'
     template: '%s | Astro Blocks'
-    separator: '|'
   description: 'Modern, accessible Astro Blocks for building amazing web experiences.'
   author: 'Your Name'
   keywords: ['astro', 'components', 'blocks', 'web', 'design']
