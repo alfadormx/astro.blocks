@@ -1,4 +1,4 @@
-import type { BackgroundConfig } from './background.types';
+import type { BackgroundProps } from './background.types';
 import type { SpacingConfig } from './spacing.types';
 import type { BorderConfig } from './border.types';
 
@@ -42,7 +42,7 @@ export interface ContainerItem {
 }
 
 export interface ContainerProps {
-  background?: BackgroundConfig;
+  background?: BackgroundProps;
   content?: ContentConfig;
   spacing?: SpacingConfig;
   border?: BorderConfig;
