@@ -1,4 +1,4 @@
-import type { BackgroundProps } from './background.types';
+import type { BackgroundProps, SimpleBackgroundProps } from './background.types';
 import type { SpacingConfig } from './spacing.types';
 import type { BorderConfig } from './border.types';
 
@@ -64,17 +64,37 @@ export interface GridLayoutProps extends Omit<ContainerProps, 'layout' | 'items'
   responsive?: boolean;
   /** Responsive breakpoint (default: 'md:' - use 'sm:', 'lg:', etc.) */
   breakpoint?: string;
-  /** Custom grid classes (overrides default) */
-  gridClass?: string;
+}
+
+export interface CellProps {
+  background?: SimpleBackgroundProps;
+  spacing?: SpacingConfig;
+  border?: BorderConfig;
+  class?: string;
 }
 
 export interface TwoColumnContainerProps extends GridLayoutProps {
   /** Reverse order on mobile (default: false) */
   reverseOnMobile?: boolean;
+
+  leftColumn?: CellProps;
+  rightColumn?: CellProps;
 }
 
-export type ThreeColumnContainerProps = GridLayoutProps;
+export interface ThreeColumnContainerProps extends GridLayoutProps {
+  leftColumn?: CellProps;
+  centerColumn?: CellProps;
+  rightColumn?: CellProps;
+}
 
-export type FourColumnContainerProps = GridLayoutProps;
+export interface FourColumnContainerProps extends GridLayoutProps {
+  leftColumn?: CellProps;
+  centerLeftColumn?: CellProps;
+  centerRightColumn?: CellProps;
+  rightColumn?: CellProps;
+}
 
-export type SidebarContainerProps = GridLayoutProps;
+export interface SidebarContainerProps extends GridLayoutProps {
+  sidebar?: CellProps;
+  mainContent?: CellProps;
+}

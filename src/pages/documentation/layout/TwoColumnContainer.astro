@@ -35,11 +35,11 @@ var metadata = {
     border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="column1" class="bg-blue text-white p-6 rounded">
+    <div slot="left" class="bg-blue text-white p-6 rounded">
       <h3>Column 1</h3>
       <p>This is the first column with some content.</p>
     </div>
-    <div slot="column2" class="bg-green text-white p-6 rounded">
+    <div slot="right" class="bg-green text-white p-6 rounded">
       <h3>Column 2</h3>
       <p>This is the second column with some content.</p>
     </div>
@@ -60,11 +60,11 @@ var metadata = {
     border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="column1" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
+    <div slot="left" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
       <h3>Left Content</h3>
       <p>Content over a background image with glassmorphism effect.</p>
     </div>
-    <div slot="column2" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
+    <div slot="right" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
       <h3>Right Content</h3>
       <p>Both columns have semi-transparent backgrounds.</p>
     </div>
@@ -83,11 +83,11 @@ var metadata = {
     gap="gap-8"
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="column1" class="bg-white p-6 rounded shadow-lg">
+    <div slot="left" class="bg-white p-6 rounded shadow-lg">
       <h3>Feature 1</h3>
       <p>Larger gap between columns (gap-8).</p>
     </div>
-    <div slot="column2" class="bg-white p-6 rounded shadow-lg">
+    <div slot="right" class="bg-white p-6 rounded shadow-lg">
       <h3>Feature 2</h3>
       <p>With gradient background.</p>
     </div>
@@ -105,11 +105,11 @@ var metadata = {
     responsive={true}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="column1" class="bg-peach text-white p-6 rounded">
+    <div slot="left" class="bg-peach text-white p-6 rounded">
       <h3>Column 1</h3>
       <p>This layout stacks vertically on mobile, side-by-side on desktop.</p>
     </div>
-    <div slot="column2" class="bg-red text-white p-6 rounded">
+    <div slot="right" class="bg-red text-white p-6 rounded">
       <h3>Column 2</h3>
       <p>Set responsive=true for mobile-friendly layouts.</p>
     </div>
@@ -128,11 +128,11 @@ var metadata = {
     reverseOnMobile={true}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="column1" class="bg-mauve text-white p-6 rounded">
+    <div slot="left" class="bg-mauve text-white p-6 rounded">
       <h3>Image/Visual (Column 1)</h3>
       <p>On desktop, this appears on the left. On mobile, it appears SECOND (below).</p>
     </div>
-    <div slot="column2" class="bg-cyan text-white p-6 rounded">
+    <div slot="right" class="bg-cyan text-white p-6 rounded">
       <h3>Content (Column 2)</h3>
       <p>On desktop, this appears on the right. On mobile, it appears FIRST (on top).</p>
       <p class="mt-2 text-sm">Perfect for showing content before images on mobile!</p>
@@ -152,14 +152,14 @@ var metadata = {
     border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="column1">
+    <div slot="left">
       <img
         src="https://images.pexels.com/photos/1170686/pexels-photo-1170686.jpeg?auto=compress&cs=tinysrgb&w=600"
         alt="Sample"
         class="w-full h-full object-cover rounded"
       />
     </div>
-    <div slot="column2" class="flex flex-col justify-center">
+    <div slot="right" class="flex flex-col justify-center">
       <h3 class="text-2xl font-bold mb-4">About Our Product</h3>
       <p class="mb-4">
         This is a common pattern for landing pages - image on one side, content on the other.
@@ -182,7 +182,7 @@ var metadata = {
     border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="column1" class="space-y-4">
+    <div slot="left" class="space-y-4">
       <h3 class="text-xl font-bold mb-4">Free Plan</h3>
       <div class="flex items-start gap-2">
         <span class="text-green-600">✓</span>
@@ -201,7 +201,7 @@ var metadata = {
         <span>Priority support</span>
       </div>
     </div>
-    <div slot="column2" class="space-y-4">
+    <div slot="right" class="space-y-4">
       <h3 class="text-xl font-bold mb-4">Pro Plan</h3>
       <div class="flex items-start gap-2">
         <span class="text-green-600">✓</span>
