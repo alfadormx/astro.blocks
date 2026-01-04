@@ -28,7 +28,7 @@ const mergedHeadline = merge({}, defaultHeadline, headline);
 
 <Container {...mergedContainer}>
   <Headline {...mergedHeadline} />
-  <div class={cn('flex flex-col md:flex-row gap-4 justify-center mt-6')}>
+  <div class={cn('flex flex-col md:flex-row gap-4 justify-center')}>
     {actions.map((action: ButtonProps) => <Button {...action} />)}
   </div>
 </Container>
