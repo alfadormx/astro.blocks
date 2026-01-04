@@ -84,9 +84,9 @@ const shades = [
     subtitle: 'Showcase of the Theme Toggle primitive block with various configurations',
   }}
 >
-  <h2 class="text-3xl font-bold mt-12 mb-4">Theme Colors</h2>
+  <h2>Theme Colors</h2>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">Semantic Colors</h3>
+  <h3>Semantic Colors</h3>
 
   <div class="grid grid-cols-12 gap-4">
     <div class="col-span-12 grid grid-cols-12 gap-4 font-medium">
@@ -153,7 +153,7 @@ const shades = [
       data-color={colorMap['base']}></button>
   </div>
 
-  <h3 class="text-xl font-semibold mt-8 mb-2">Spectrum Colors</h3>
+  <h3>Spectrum Colors</h3>
   <div class="grid grid-cols-13 gap-4">
     <div>&nbsp;</div>
     <div>base</div>
@@ -172,7 +172,7 @@ const shades = [
     {
       spectrumColors.map((color) => (
         <>
-          <p class="font-medium capitalize">{color}</p>
+          <p class="capitalize">{color}</p>
           {shades.map((shade) => {
             const colorKey = `${color}${shade}`;
             const attrs = getColorAttrs(colorKey);
