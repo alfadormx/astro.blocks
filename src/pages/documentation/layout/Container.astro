@@ -45,7 +45,6 @@ var metadata = {
 
   <h3>1. Full-bleed background, boxed content (default max-width)</h3>
   <ContainerBlock
-    htmlTag="section"
     containerWidthType="full"
     content={{
       widthType: 'boxed',
@@ -59,7 +58,6 @@ var metadata = {
 
   <h3>2. Full-bleed background, boxed content (custom 50% width)</h3>
   <ContainerBlock
-    htmlTag="section"
     containerWidthType="full"
     content={{
       widthType: 'boxed',
@@ -74,7 +72,6 @@ var metadata = {
 
   <h3>3. Full-bleed background, full-width content</h3>
   <ContainerBlock
-    htmlTag="section"
     containerWidthType="full"
     content={{
       widthType: 'full',
@@ -88,7 +85,6 @@ var metadata = {
 
   <h3>4. Boxed container (background and content boxed)</h3>
   <ContainerBlock
-    htmlTag="section"
     containerWidthType="boxed"
     content={{ border: { width: 'border', color: 'border-border-emphasis border-dotted' } }}
     border={{ width: 'border', color: 'border-border' }}
@@ -99,7 +95,6 @@ var metadata = {
 
   <h3>5. Custom container width (background and content custom)</h3>
   <ContainerBlock
-    htmlTag="section"
     containerWidthType="custom"
     width="w-3/4"
     content={{ border: { width: 'border', color: 'border-border-emphasis border-dotted' } }}
@@ -121,7 +116,6 @@ var metadata = {
 
   <h3>1. Background Image (with parallax effect)</h3>
   <ContainerBlock
-    htmlTag="section"
     containerWidthType="full"
     minHeight="min-h-64"
     background={{
@@ -143,7 +137,6 @@ var metadata = {
 
   <h3>2. Background Video</h3>
   <ContainerBlock
-    htmlTag="section"
     containerWidthType="full"
     minHeight="min-h-64"
     background={{ video: 'https://www.pexels.com/download/video/2646392/' }}
@@ -162,7 +155,6 @@ var metadata = {
 
   <h3>3. Background Color</h3>
   <ContainerBlock
-    htmlTag="section"
     containerWidthType="full"
     minHeight="min-h-64"
     background={{ class: 'bg-mauve-600' }}
@@ -181,7 +173,6 @@ var metadata = {
 
   <h3>4. Background Gradient</h3>
   <ContainerBlock
-    htmlTag="section"
     containerWidthType="full"
     minHeight="min-h-64"
     background={{ class: 'bg-gradient-to-r from-peach via-pink to-red' }}
@@ -206,7 +197,6 @@ var metadata = {
 
   <h3>1. Flex Row (Horizontal)</h3>
   <ContainerBlock
-    htmlTag="section"
     containerWidthType="full"
     layout={{ type: 'flex', class: 'flex-row gap-4 items-center justify-between' }}
     content={{
@@ -224,7 +214,6 @@ var metadata = {
 
   <h3>2. Flex Column (Vertical)</h3>
   <ContainerBlock
-    htmlTag="section"
     containerWidthType="full"
     layout={{ type: 'flex', class: 'flex-col gap-4 items-stretch' }}
     content={{
@@ -242,7 +231,6 @@ var metadata = {
 
   <h3>3. Grid - 2 Columns</h3>
   <ContainerBlock
-    htmlTag="section"
     containerWidthType="full"
     layout={{ type: 'grid', class: 'grid-cols-2 gap-6' }}
     content={{
@@ -261,7 +249,6 @@ var metadata = {
 
   <h3>4. Grid - 3 Columns</h3>
   <ContainerBlock
-    htmlTag="section"
     containerWidthType="full"
     layout={{ type: 'grid', class: 'grid-cols-3 gap-4' }}
     content={{
@@ -282,7 +269,6 @@ var metadata = {
 
   <h3>5. Responsive Grid (2 cols mobile, 4 cols desktop)</h3>
   <ContainerBlock
-    htmlTag="section"
     containerWidthType="full"
     layout={{ type: 'grid', class: 'grid-cols-2 md:grid-cols-4 gap-4' }}
     content={{
@@ -305,7 +291,6 @@ var metadata = {
 
   <h3>6. Min Height with Default Alignment (Top)</h3>
   <ContainerBlock
-    htmlTag="section"
     containerWidthType="full"
     minHeight="min-h-96"
     layout={{ type: 'flex', class: 'flex-row gap-4 items-start' }}
@@ -324,7 +309,6 @@ var metadata = {
 
   <h3>7. Min Height with Vertical Center</h3>
   <ContainerBlock
-    htmlTag="section"
     containerWidthType="full"
     minHeight="min-h-96"
     layout={{ type: 'flex', class: 'flex-row gap-4 items-center' }}
@@ -343,7 +327,6 @@ var metadata = {
 
   <h3>8. Min Height with Full Center (Both Axes)</h3>
   <ContainerBlock
-    htmlTag="section"
     containerWidthType="full"
     minHeight="min-h-96"
     layout={{ type: 'flex', class: 'flex-col gap-4 justify-center items-center' }}

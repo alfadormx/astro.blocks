@@ -24,6 +24,13 @@ const layoutClass = props.layout?.class ?? '';
 
 const hasBackground = !!props.background || Astro.slots.has('background');
 
+const airSettings = {
+  none: '',
+  tight: 'px-4 py-8 md:px-6 md:py-12 lg:px-8 lg:py-16',
+  normal: 'px-4 py-12 md:px-8 md:py-16 lg:px-12 lg:py-20',
+  loose: 'px-6 py-16 md:px-12 md:py-24 lg:px-16 lg:py-32',
+};
+
 const containerClass = cn(
   hasBackground && 'relative',
   containerWidthType === 'boxed' && 'mx-auto max-w-[var(--container-max-width)]',
@@ -31,8 +38,7 @@ const containerClass = cn(
   widthClass,
   minHeightClass,
   overflow && `overflow-${overflow}`,
-  props.spacing?.padding ??
-    (containerAir === 'normal' ? 'px-4 py-12 md:px-6 md:py-16 lg-py-20' : ''),
+  cn(airSettings[containerAir], props.spacing?.padding),
   props.spacing?.margin,
   props.spacing?.gap,
   props.border?.width,
@@ -50,7 +56,7 @@ const contentClass = cn(
   containerWidthType === 'full' &&
     contentWidthType === 'boxed' && [contentBoxWidth, 'mx-auto', minHeightClass],
   containerWidthType === 'full' && contentWidthType === 'full' && 'w-full',
-  props.content?.spacing?.padding ?? (containerAir === 'normal' ? 'p-6' : ''),
+  props.content?.spacing?.padding,
   props.content?.spacing?.margin,
   props.content?.spacing?.gap,
   props.content?.border?.width,

@@ -16,7 +16,7 @@ export type ContainerTag =
   | 'nav'
   | 'a';
 
-export type ContainerAir = 'none' | 'normal';
+export type ContainerAir = 'none' | 'tight' | 'normal' | 'loose';
 export type ContainerWidthType = 'full' | 'boxed' | 'custom';
 export type ContentWidthType = 'full' | 'boxed';
 export type OverflowType = 'visible' | 'hidden' | 'auto';
