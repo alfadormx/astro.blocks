@@ -1,17 +1,22 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import SidebarRightContainer from '~/components/blocks/layouts/SidebarRightContainer.astro';
+import Layout from '~/layouts/DocumentationLayout.astro';
+import SidebarRightContainerBlock from '~/components/blocks/layouts/SidebarRightContainer.astro';
 
 var metadata = {
   title: {
-    default: 'SidebarRightContainer - Blocks Demo',
+    default: 'SidebarRightContainer',
   },
-  description: 'Sidebar Right Container Block - 75% main content left, 25% sidebar right',
 };
 ---
 
-<Layout metadata={metadata}>
-  <h1 class="text-2xl font-bold mb-6">Sidebar Right Container Block</h1>
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Sidebar Right Container',
+    subtitle: 'Showcase of the SidebarRightContainer layout block with various configurations',
+  }}
+>
   <p class="mb-8">
     A pre-built layout wrapper with main content on the left (3/4 width) and a sidebar on the right
     (1/4 width). Perfect for supplementary information, quick actions, or metadata.
@@ -20,7 +25,7 @@ var metadata = {
   <h2 class="text-3xl font-bold mt-12 mb-4">Basic Examples</h2>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">1. Basic Sidebar Layout</h3>
-  <SidebarRightContainer
+  <SidebarRightContainerBlock
     htmlTag="section"
     containerWidthType="full"
     content={{
@@ -39,10 +44,10 @@ var metadata = {
       <h3 class="text-xl font-bold mb-4">Sidebar</h3>
       <p>1/4 width sidebar content</p>
     </div>
-  </SidebarRightContainer>
+  </SidebarRightContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">2. Content with Quick Actions</h3>
-  <SidebarRightContainer
+  <SidebarRightContainerBlock
     htmlTag="section"
     containerWidthType="full"
     content={{
@@ -91,10 +96,10 @@ var metadata = {
         </button>
       </nav>
     </div>
-  </SidebarRightContainer>
+  </SidebarRightContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">3. Content with Metadata Sidebar</h3>
-  <SidebarRightContainer
+  <SidebarRightContainerBlock
     htmlTag="section"
     containerWidthType="full"
     content={{
@@ -153,10 +158,10 @@ var metadata = {
         </div>
       </div>
     </div>
-  </SidebarRightContainer>
+  </SidebarRightContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">4. With Background Gradient</h3>
-  <SidebarRightContainer
+  <SidebarRightContainerBlock
     htmlTag="section"
     containerWidthType="full"
     background={{ class: 'bg-gradient-to-r from-cyan to-blue' }}
@@ -194,10 +199,10 @@ var metadata = {
         <li><a href="#" class="text-cyan hover:underline">Contact Sales</a></li>
       </ul>
     </div>
-  </SidebarRightContainer>
+  </SidebarRightContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">5. Responsive (Stacks on Mobile)</h3>
-  <SidebarRightContainer
+  <SidebarRightContainerBlock
     htmlTag="section"
     containerWidthType="full"
     content={{
@@ -217,12 +222,12 @@ var metadata = {
       <h3 class="text-lg font-bold mb-2">Sidebar</h3>
       <p class="text-sm">This sidebar appears below on mobile devices.</p>
     </div>
-  </SidebarRightContainer>
+  </SidebarRightContainerBlock>
 
   <h2 class="text-3xl font-bold mt-12 mb-4">Practical Use Cases</h2>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">6. Documentation Page</h3>
-  <SidebarRightContainer
+  <SidebarRightContainerBlock
     htmlTag="section"
     containerWidthType="full"
     content={{
@@ -278,5 +283,5 @@ var metadata = {
         </p>
       </div>
     </div>
-  </SidebarRightContainer>
+  </SidebarRightContainerBlock>
 </Layout>

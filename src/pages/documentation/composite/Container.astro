@@ -1,24 +1,29 @@
 ---
-import Container from '~/components/blocks/composite/Container.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from '~/layouts/DocumentationLayout.astro';
+import ContainerBlock from '~/components/blocks/composite/Container.astro';
 
 var metadata = {
   title: {
-    default: 'Home',
+    default: 'Container',
   },
-  description: 'Welcome to Astro Blocks - Modern components for the web',
 };
 ---
 
-<Layout metadata={metadata}>
-  <h1 class="text-2xl font-bold mb-6">Container Block Documentation & Examples</h1>
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Container',
+    subtitle: 'A flexible container component with layout and background options.',
+  }}
+>
   <p class="mb-8">
-    The Container block provides flexible layout control with support for various width
+    The ContainerBlock block provides flexible layout control with support for various width
     configurations and rich background options.
   </p>
 
-  <!-- Section 1: Container & Content Width -->
-  <h2 class="text-3xl font-bold mt-12 mb-4">Container & Content Width</h2>
+  <!-- Section 1: ContainerBlock & Content Width -->
+  <h2 class="text-3xl font-bold mt-12 mb-4">ContainerBlock & Content Width</h2>
   <p class="mb-4">
     Control how your container and content are sized using <code>containerWidthType</code> and the <code
       >content</code
@@ -41,7 +46,7 @@ var metadata = {
   <h3 class="text-xl font-semibold mt-8 mb-2">
     1. Full-bleed background, boxed content (default max-width)
   </h3>
-  <Container
+  <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
     content={{
@@ -52,12 +57,12 @@ var metadata = {
     spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8">Full-width container, boxed content (default max-width).</p>
-  </Container>
+  </ContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">
     2. Full-bleed background, boxed content (custom 50% width)
   </h3>
-  <Container
+  <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
     content={{
@@ -69,10 +74,10 @@ var metadata = {
     spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8">Full-width container, boxed content at <b>50%</b> width.</p>
-  </Container>
+  </ContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">3. Full-bleed background, full-width content</h3>
-  <Container
+  <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
     content={{
@@ -83,10 +88,10 @@ var metadata = {
     spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8">Full-width container, full-width content.</p>
-  </Container>
+  </ContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">4. Boxed container (background and content boxed)</h3>
-  <Container
+  <ContainerBlock
     htmlTag="section"
     containerWidthType="boxed"
     content={{ border: { width: 'border', color: 'border-border-emphasis border-dotted' } }}
@@ -94,12 +99,12 @@ var metadata = {
     spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8">Boxed container (background and content boxed).</p>
-  </Container>
+  </ContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">
     5. Custom container width (background and content custom)
   </h3>
-  <Container
+  <ContainerBlock
     htmlTag="section"
     containerWidthType="custom"
     width="w-3/4"
@@ -110,7 +115,7 @@ var metadata = {
     <p class="text-center py-8">
       Custom container width (background and content custom, e.g., 75%).
     </p>
-  </Container>
+  </ContainerBlock>
 
   <!-- Section 2: Backgrounds -->
   <h2 class="text-3xl font-bold mt-12 mb-4">Backgrounds</h2>
@@ -121,12 +126,12 @@ var metadata = {
   </p>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">1. Background Image (with parallax effect)</h3>
-  <Container
+  <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
     minHeight="min-h-64"
     background={{
-      image: 'https://images.pexels.com/photos/32838840/pexels-photo-32838840.jpeg',
+      image: 'https://images.pexels.com/photos/370799/pexels-photo-370799.jpeg',
       attachment: 'fixed',
     }}
     content={{
@@ -140,14 +145,14 @@ var metadata = {
     <p class="text-center py-8 rounded bg-surface/80">
       Full-width container with a <b>fixed</b> background image (parallax effect).
     </p>
-  </Container>
+  </ContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">2. Background Video</h3>
-  <Container
+  <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
     minHeight="min-h-64"
-    background={{ video: 'https://www.pexels.com/download/video/1918465/' }}
+    background={{ video: 'https://www.pexels.com/download/video/2646392/' }}
     content={{
       widthType: 'boxed',
       spacing: { padding: 'py-12' },
@@ -157,16 +162,16 @@ var metadata = {
     spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8 rounded bg-surface/80">
-      Container with a looping <b>background video</b>.
+      ContainerBlock with a looping <b>background video</b>.
     </p>
-  </Container>
+  </ContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">3. Background Color</h3>
-  <Container
+  <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
     minHeight="min-h-64"
-    background={{ class: 'bg-blue-600' }}
+    background={{ class: 'bg-mauve-600' }}
     content={{
       widthType: 'boxed',
       spacing: { padding: 'py-12' },
@@ -176,16 +181,16 @@ var metadata = {
     spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8 rounded bg-surface/80">
-      Container with a solid <b>background color</b> (Tailwind: bg-blue-600).
+      ContainerBlock with a solid <b>background color</b> (Tailwind: bg-blue-600).
     </p>
-  </Container>
+  </ContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">4. Background Gradient</h3>
-  <Container
+  <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
     minHeight="min-h-64"
-    background={{ class: 'bg-gradient-to-r from-mauve via-pink to-red' }}
+    background={{ class: 'bg-gradient-to-r from-peach via-pink to-red' }}
     content={{
       widthType: 'boxed',
       spacing: { padding: 'py-12' },
@@ -195,9 +200,9 @@ var metadata = {
     spacing={{ margin: 'mb-8' }}
   >
     <p class="text-center py-8 rounded bg-surface/80">
-      Container with a <b>gradient background</b> (Tailwind gradient utilities).
+      ContainerBlock with a <b>gradient background</b> (Tailwind gradient utilities).
     </p>
-  </Container>
+  </ContainerBlock>
 
   <!-- Section 3: Layout -->
   <h2 class="text-3xl font-bold mt-12 mb-4">Layout</h2>
@@ -206,7 +211,7 @@ var metadata = {
   </p>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">1. Flex Row (Horizontal)</h3>
-  <Container
+  <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
     layout={{ type: 'flex', class: 'flex-row gap-4 items-center justify-between' }}
@@ -221,10 +226,10 @@ var metadata = {
     <div class="bg-blue text-white p-4 rounded">Item 1</div>
     <div class="bg-green text-white p-4 rounded">Item 2</div>
     <div class="bg-mauve text-white p-4 rounded">Item 3</div>
-  </Container>
+  </ContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">2. Flex Column (Vertical)</h3>
-  <Container
+  <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
     layout={{ type: 'flex', class: 'flex-col gap-4 items-stretch' }}
@@ -239,10 +244,10 @@ var metadata = {
     <div class="bg-blue text-white p-4 rounded">Item 1</div>
     <div class="bg-green text-white p-4 rounded">Item 2</div>
     <div class="bg-mauve text-white p-4 rounded">Item 3</div>
-  </Container>
+  </ContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">3. Grid - 2 Columns</h3>
-  <Container
+  <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
     layout={{ type: 'grid', class: 'grid-cols-2 gap-6' }}
@@ -258,10 +263,10 @@ var metadata = {
     <div class="bg-green text-white p-6 rounded">Column 2</div>
     <div class="bg-mauve text-white p-6 rounded">Column 3</div>
     <div class="bg-peach text-white p-6 rounded">Column 4</div>
-  </Container>
+  </ContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">4. Grid - 3 Columns</h3>
-  <Container
+  <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
     layout={{ type: 'grid', class: 'grid-cols-3 gap-4' }}
@@ -279,12 +284,12 @@ var metadata = {
     <div class="bg-peach text-white p-4 rounded text-center">4</div>
     <div class="bg-pink text-white p-4 rounded text-center">5</div>
     <div class="bg-red text-white p-4 rounded text-center">6</div>
-  </Container>
+  </ContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">
     5. Responsive Grid (2 cols mobile, 4 cols desktop)
   </h3>
-  <Container
+  <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
     layout={{ type: 'grid', class: 'grid-cols-2 md:grid-cols-4 gap-4' }}
@@ -304,10 +309,10 @@ var metadata = {
     <div class="bg-red text-white p-4 rounded text-center">6</div>
     <div class="bg-cyan text-white p-4 rounded text-center">7</div>
     <div class="bg-yellow text-white p-4 rounded text-center">8</div>
-  </Container>
+  </ContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">6. Min Height with Default Alignment (Top)</h3>
-  <Container
+  <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
     minHeight="min-h-96"
@@ -323,10 +328,10 @@ var metadata = {
     <div class="bg-blue text-white p-4 rounded text-center">Item 1</div>
     <div class="bg-green text-white p-4 rounded text-center">Item 2</div>
     <div class="bg-mauve text-white p-4 rounded text-center">Item 3</div>
-  </Container>
+  </ContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">7. Min Height with Vertical Center</h3>
-  <Container
+  <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
     minHeight="min-h-96"
@@ -342,10 +347,10 @@ var metadata = {
     <div class="bg-blue text-white p-4 rounded text-center">Item 1</div>
     <div class="bg-green text-white p-4 rounded text-center">Item 2</div>
     <div class="bg-mauve text-white p-4 rounded text-center">Item 3</div>
-  </Container>
+  </ContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">8. Min Height with Full Center (Both Axes)</h3>
-  <Container
+  <ContainerBlock
     htmlTag="section"
     containerWidthType="full"
     minHeight="min-h-96"
@@ -361,5 +366,5 @@ var metadata = {
     <div class="bg-blue text-white p-4 rounded text-center">Item 1</div>
     <div class="bg-green text-white p-4 rounded text-center">Item 2</div>
     <div class="bg-mauve text-white p-4 rounded text-center">Item 3</div>
-  </Container>
+  </ContainerBlock>
 </Layout>

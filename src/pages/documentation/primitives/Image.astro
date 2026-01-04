@@ -1,0 +1,137 @@
+---
+import Layout from '~/layouts/DocumentationLayout.astro';
+import ImageBlock from '~/components/blocks/primitives/Image.astro';
+
+const metadata = {
+  title: {
+    default: 'Image',
+  },
+};
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitives',
+    title: 'Image',
+    subtitle: 'Showcase of the Image primitive block with various configurations',
+  }}
+>
+  <p class="mb-8">
+    Demonstrating responsive image optimization with srcset, lazy loading, and multiple layout
+    modes.
+  </p>
+
+  <!-- Example 1: Constrained Layout (default) -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">1. Constrained Layout (Default)</h3>
+  <p class="mb-4">
+    Image scales down to fit container but never exceeds its natural size. Perfect for content
+    images.
+  </p>
+  <div class="border border-dashed border-gray/80 p-8">
+    <ImageBlock
+      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
+      alt="Mountain landscape"
+      width={800}
+      height={600}
+      layout="constrained"
+    />
+  </div>
+
+  <!-- Example 2: Full Width Layout -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">2. Full Width Layout</h3>
+  <p class="mb-4">Image always spans 100% of container width. Ideal for hero images and banners.</p>
+  <div class="border border-dashed border-gray/80 p-8">
+    <ImageBlock
+      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
+      alt="Mountain range"
+      width={1200}
+      height={400}
+      layout="fullWidth"
+    />
+  </div>
+
+  <!-- Example 3: Fixed Layout -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">3. Fixed Layout</h3>
+  <p class="mb-4">
+    Image maintains exact dimensions regardless of screen size. Good for thumbnails and avatars.
+  </p>
+  <div class="border border-dashed border-gray/80 p-8">
+    <ImageBlock
+      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
+      alt="Portrait"
+      width={200}
+      height={200}
+      layout="fixed"
+    />
+  </div>
+
+  <!-- Example 4: Responsive Layout -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">4. Responsive Layout</h3>
+  <p class="mb-4">Width is 100%, height scales automatically. Maintains aspect ratio perfectly.</p>
+  <div class="border border-dashed border-gray/80 p-8 max-w-2xl">
+    <ImageBlock
+      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
+      alt="Landscape"
+      width={1000}
+      height={667}
+      layout="responsive"
+    />
+  </div>
+
+  <!-- Example 5: Contained Layout -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">5. Contained Layout</h3>
+  <p class="mb-4">
+    Image fits within container using object-fit: contain. No cropping, maintains full visibility.
+  </p>
+  <div class="border border-dashed border-gray/80 p-8 h-96 bg-gray/10">
+    <ImageBlock
+      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
+      alt="Portrait orientation"
+      width={600}
+      height={900}
+      layout="contained"
+    />
+  </div>
+
+  <!-- Example 6: Cover Layout -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">6. Cover Layout</h3>
+  <p class="mb-4">Image covers container completely using object-fit: cover. May crop to fit.</p>
+  <div class="border border-dashed border-gray/80 p-8 h-96 bg-gray/10">
+    <ImageBlock
+      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
+      alt="Wide landscape"
+      width={1200}
+      height={800}
+      layout="cover"
+    />
+  </div>
+
+  <!-- Example 7: Aspect Ratio Control -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">7. Custom Aspect Ratio</h3>
+  <p class="mb-4">Force specific aspect ratio (16:9) regardless of source image dimensions.</p>
+  <div class="border border-dashed border-gray/80 p-8 max-w-4xl">
+    <ImageBlock
+      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
+      alt="Forced 16:9 ratio"
+      width={1200}
+      aspectRatio="16:9"
+      layout="responsive"
+    />
+  </div>
+
+  <!-- Example 8: Eager Loading -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">8. Eager Loading (Above Fold)</h3>
+  <p class="mb-4">Load immediately without lazy loading. Use for hero images and LCP elements.</p>
+  <div class="border border-dashed border-gray/80 p-8">
+    <ImageBlock
+      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
+      alt="Hero image"
+      width={1200}
+      height={600}
+      layout="fullWidth"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
+</Layout>

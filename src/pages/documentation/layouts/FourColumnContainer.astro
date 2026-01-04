@@ -1,17 +1,22 @@
 ---
-import FourColumnContainer from '~/components/blocks/layouts/FourColumnContainer.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from '~/layouts/DocumentationLayout.astro';
+import FourColumnContainerBlock from '~/components/blocks/layouts/FourColumnContainer.astro';
 
 var metadata = {
   title: {
     default: 'Four Column Container',
   },
-  description: 'Four Column Container Block - Equal 1/4 split layout',
 };
 ---
 
-<Layout metadata={metadata}>
-  <h1 class="text-2xl font-bold mb-6">Four Column Container Block</h1>
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Four Column Container',
+    subtitle: 'Showcase of the FourColumnContainer layout block with various configurations',
+  }}
+>
   <p class="mb-8">
     A pre-built layout wrapper for four equal columns. Perfect for feature grids, card layouts, or
     icon showcases.
@@ -20,8 +25,7 @@ var metadata = {
   <h2 class="text-3xl font-bold mt-12 mb-4">Basic Examples</h2>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">1. Basic Four Column Layout</h3>
-  <FourColumnContainer
-    htmlTag="section"
+  <FourColumnContainerBlock
     containerWidthType="full"
     content={{
       widthType: 'boxed',
@@ -47,11 +51,10 @@ var metadata = {
       <h3 class="text-xl font-bold mb-2">Column 4</h3>
       <p>Fourth column</p>
     </div>
-  </FourColumnContainer>
+  </FourColumnContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">2. Feature Icons</h3>
-  <FourColumnContainer
-    htmlTag="section"
+  <FourColumnContainerBlock
     containerWidthType="full"
     content={{
       widthType: 'boxed',
@@ -82,11 +85,10 @@ var metadata = {
       <h3 class="text-lg font-bold mb-2">Global</h3>
       <p class="text-sm">Worldwide coverage</p>
     </div>
-  </FourColumnContainer>
+  </FourColumnContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">3. With Background Color</h3>
-  <FourColumnContainer
-    htmlTag="section"
+  <FourColumnContainerBlock
     containerWidthType="full"
     background={{ class: 'bg-gray-300' }}
     content={{
@@ -113,11 +115,10 @@ var metadata = {
       <h3 class="text-lg font-bold mb-2">Step 4</h3>
       <p class="text-sm">Deploy & scale</p>
     </div>
-  </FourColumnContainer>
+  </FourColumnContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">4. Responsive (Stacks on Mobile)</h3>
-  <FourColumnContainer
-    htmlTag="section"
+  <FourColumnContainerBlock
     containerWidthType="full"
     content={{
       widthType: 'boxed',
@@ -140,13 +141,12 @@ var metadata = {
     <div slot="column4" class="bg-green text-white p-6 rounded text-center">
       <h3 class="text-lg font-bold">4K</h3>
     </div>
-  </FourColumnContainer>
+  </FourColumnContainerBlock>
 
   <h2 class="text-3xl font-bold mt-12 mb-4">Practical Use Cases</h2>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">5. Statistics Dashboard</h3>
-  <FourColumnContainer
-    htmlTag="section"
+  <FourColumnContainerBlock
     containerWidthType="full"
     content={{
       widthType: 'boxed',
@@ -173,11 +173,10 @@ var metadata = {
       <div class="text-3xl font-bold text-orange-600 mb-2">150+</div>
       <p class="text-gray-600">Countries</p>
     </div>
-  </FourColumnContainer>
+  </FourColumnContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">6. Product Features</h3>
-  <FourColumnContainer
-    htmlTag="section"
+  <FourColumnContainerBlock
     containerWidthType="full"
     content={{
       widthType: 'boxed',
@@ -224,11 +223,10 @@ var metadata = {
       <h3 class="text-lg font-bold mb-2">Easy Setup</h3>
       <p class="text-sm text-gray-600">Get started in minutes with simple configuration.</p>
     </div>
-  </FourColumnContainer>
+  </FourColumnContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">7. Image Gallery</h3>
-  <FourColumnContainer
-    htmlTag="section"
+  <FourColumnContainerBlock
     containerWidthType="full"
     content={{
       widthType: 'boxed',
@@ -267,5 +265,5 @@ var metadata = {
         class="w-full h-48 object-cover rounded"
       />
     </div>
-  </FourColumnContainer>
+  </FourColumnContainerBlock>
 </Layout>

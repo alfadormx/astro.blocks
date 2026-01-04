@@ -1,7 +1,8 @@
 ---
+import merge from 'lodash.merge';
 import Container from '~/components/blocks/composite/Container.astro';
-import type { FourColumnContainerProps } from '~/types/container.types';
 import { cn } from '~/utils/styles';
+import type { ContainerProps, FourColumnContainerProps } from '~/types/container.types';
 
 type Props = FourColumnContainerProps;
 
@@ -18,15 +19,18 @@ const layoutClass = cn(
   gridClass || (responsive ? `grid-cols-1 ${breakpoint}grid-cols-4` : 'grid-cols-4'),
   gap
 );
+
+const defaultContainer = {
+  htmlTag: 'div',
+  content: { air: 'none', widthType: 'full' },
+  layout: { type: 'grid', class: layoutClass },
+  printDebug: true,
+} as ContainerProps;
+
+const mergedContainerProps = merge({}, defaultContainer, containerProps);
 ---
 
-<Container
-  {...containerProps}
-  layout={{
-    type: 'grid',
-    class: layoutClass,
-  }}
->
+<Container {...mergedContainerProps}>
   <slot name="column1" />
   <slot name="column2" />
   <slot name="column3" />

@@ -1,0 +1,96 @@
+---
+import Layout from '~/layouts/DocumentationLayout.astro';
+import ItemsGridBlock from '~/components/blocks/composite/ItemsGrid.astro';
+
+const metadata = {
+  title: {
+    default: 'Items Grid and Item',
+  },
+};
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Items Grid and Item',
+    subtitle: 'Showcase of the ItemsGrid composite block with various Item configurations',
+  }}
+>
+  <h3 class="text-xl font-semibold mt-8 mb-2">1. Basic grid (no defaultItemConfig)</h3>
+  <ItemsGridBlock
+    columns={3}
+    class="mt-12"
+    items={[
+      {
+        icon: { name: 'heroicons:sun' },
+        title: 'No customization',
+        content: 'Icon configuration is default.',
+      },
+      {
+        icon: {
+          name: 'heroicons:sparkles',
+          class: 'bg-accent text-background p-2 rounded-full',
+        },
+        title: 'Icon customization',
+        content: 'Icon as been given a background, padding and rounded corners.',
+      },
+      {
+        icon: { name: 'heroicons:bolt', class: 'text-success' },
+        title: 'Vertical Layout with action',
+        content: 'You shall see a button below.',
+        actions: [{ label: 'Learn More', intent: 'success' }],
+      },
+      {
+        icon: { name: 'heroicons:sun' },
+        title: 'No customization',
+        content: 'Icon configuration is default.',
+        layout: 'horizontal',
+      },
+      {
+        icon: {
+          name: 'heroicons:sparkles',
+          class: 'bg-accent text-background p-2 rounded-full',
+        },
+        title: 'Icon customization',
+        content: 'Icon as been given a background, padding and rounded corners.',
+        layout: 'horizontal',
+      },
+      {
+        icon: { name: 'heroicons:bolt', class: 'text-success' },
+        title: 'Horizontal Layout with action',
+        content: 'You shall see a button below.',
+        actions: [{ label: 'Learn More', intent: 'success' }],
+        layout: 'horizontal',
+      },
+    ]}
+  />
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">2. Grid with default layout and action</h3>
+  <ItemsGridBlock
+    columns={2}
+    class="mt-16"
+    defaultItemConfig={{
+      layout: 'horizontal',
+      actions: [{ label: 'Default Action', intent: 'accent' }],
+    }}
+    items={[
+      {
+        icon: { name: 'heroicons:star' },
+        title: 'Default layout & action',
+        content: 'This item uses the default horizontal layout and action.',
+      },
+      {
+        icon: { name: 'heroicons:fire', class: 'text-error' },
+        title: 'Override action',
+        content: 'This item overrides the default action.',
+        actions: [{ label: 'Custom Action', intent: 'error' }],
+      },
+      {
+        icon: { name: 'heroicons:moon' },
+        title: 'Default layout & action',
+        content: 'This item uses the default horizontal layout and action.',
+      },
+    ]}
+  />
+</Layout>
