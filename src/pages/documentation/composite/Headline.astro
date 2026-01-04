@@ -1,0 +1,94 @@
+---
+import Layout from '~/layouts/DocumentationLayout.astro';
+import HeadlineBlock from '~/components/blocks/composite/Headline.astro';
+
+var metadata = {
+  title: {
+    default: 'Headline',
+  },
+};
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Headline',
+    subtitle: 'A flexible headline component with tagline, title, and subtitle support.',
+  }}
+>
+  <p class="mb-8">A flexible headline component with tagline, title, and subtitle support.</p>
+
+  <!-- Example 1: Complete Headline (Left Aligned) -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">1. Complete Headline (Left Aligned)</h3>
+  <HeadlineBlock
+    tagline="COMPONENTS"
+    title="Astro + Tailwind CSS Components"
+    subtitle="A collection of reusable components for building modern websites with Astro and Tailwind CSS."
+    align="left"
+  />
+
+  <!-- Example 2: Center Aligned -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">2. Center Aligned</h3>
+  <HeadlineBlock
+    tagline="WELCOME"
+    title="Build Amazing Websites"
+    subtitle="Create stunning, fast, and accessible web experiences with modern tools and best practices."
+    align="center"
+  />
+
+  <!-- Example 3: Right Aligned -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">3. Right Aligned</h3>
+  <HeadlineBlock
+    tagline="GET STARTED"
+    title="Ready to Launch?"
+    subtitle="Everything you need to build and deploy your next project."
+    align="right"
+  />
+
+  <!-- Example 4: Title Only -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">4. Title Only</h3>
+  <HeadlineBlock title="Simple Headline Without Extras" />
+
+  <!-- Example 5: Title + Subtitle (No Tagline) -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">5. Title + Subtitle (No Tagline)</h3>
+  <HeadlineBlock
+    title="Focus on What Matters"
+    subtitle="Build products that users love without worrying about the technical details."
+  />
+
+  <!-- Example 6: Custom Styling -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">6. Custom Styling</h3>
+  <HeadlineBlock
+    tagline="PREMIUM"
+    title="Customized Design"
+    subtitle="Override default styles with your own classes for complete control."
+    taglineClass="text-xs font-bold uppercase tracking-widest text-blue-600"
+    titleClass="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600"
+    subtitleClass="text-xl mt-6 max-w-2xl"
+    align="center"
+  />
+
+  <!-- Example 7: Dark Background -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">7. Dark Background</h3>
+  <HeadlineBlock
+    tagline="INNOVATION"
+    title="Built for the Future"
+    subtitle="Next-generation tools for next-generation developers."
+    taglineClass="text-sm font-semibold uppercase tracking-wider text-blue-400"
+    titleClass="text-4xl md:text-5xl font-bold text-white mt-2"
+    subtitleClass="text-lg text-gray-300 mt-4 max-w-3xl"
+    align="center"
+  />
+
+  <!-- Example 8: Compact Version -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">8. Compact Version</h3>
+  <HeadlineBlock
+    tagline="NEW"
+    title="Quick Announcement"
+    subtitle="Short and sweet message for your users."
+    taglineClass="text-xs font-bold uppercase text-green-600"
+    titleClass="text-2xl font-bold text-gray-900"
+    subtitleClass="text-base text-gray-600 mt-2"
+  />
+</Layout>

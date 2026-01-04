@@ -3,18 +3,22 @@ import '~/styles/global.css';
 
 import { I18N, METADATA } from 'site-config';
 
-import type { MetaData } from '~/types/metadata.types';
 import CommonMeta from '~/components/htmlheader/CommonMeta.astro';
 import Favicons from '~/components/htmlheader/Favicons.astro';
 import Analytics from '~/components/htmlheader/Analytics.astro';
 import Metadata from '~/components/htmlheader/Metadata.astro';
 import SiteVerification from '~/components/htmlheader/SiteVerification.astro';
+import Container from '~/components/blocks/composite/Container.astro';
+import merge from 'lodash.merge';
+import type { MetaData } from '~/types/metadata.types';
+import type { ContainerProps } from '~/types/container.types';
 export type Props = {
   langCode?: string;
   metadata?: Partial<MetaData>;
+  topmostContainer?: Partial<ContainerProps>;
 };
 
-const { metadata, langCode } = Astro.props;
+const { langCode, metadata, topmostContainer } = Astro.props;
 
 // Find the language configuration
 const currentLang =
@@ -27,6 +31,13 @@ const htmlDir = currentLang.direction;
 
 // Get color scheme from config
 const colorScheme = METADATA.theme?.colorScheme || 'light dark';
+
+const defaultTopmostContainer = {
+  htmlTag: 'div',
+  content: { air: 'none', widthType: 'full' },
+} as ContainerProps;
+
+const mergedTopmostContainer = merge({}, defaultTopmostContainer, topmostContainer);
 ---
 
 <!doctype html>
@@ -77,6 +88,8 @@ const colorScheme = METADATA.theme?.colorScheme || 'light dark';
     </script>
   </head>
   <body>
-    <slot />
+    <Container {...mergedTopmostContainer}>
+      <slot />
+    </Container>
   </body>
 </html>

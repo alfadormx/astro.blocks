@@ -1,0 +1,175 @@
+---
+import Layout from '~/layouts/DocumentationLayout.astro';
+import ButtonBlock from '~/components/blocks/primitives/Button.astro';
+
+const metadata = {
+  title: {
+    default: 'Button',
+  },
+};
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitives',
+    title: 'Button',
+    subtitle: 'Showcase of the Button primitive block with various configurations',
+  }}
+>
+  <h3 class="text-xl font-semibold mt-8 mb-2">Basic Buttons</h3>
+  <div class="flex flex-wrap gap-4">
+    <ButtonBlock label="Click Here" />
+    <ButtonBlock
+      label="Subscribe Now"
+      icon={{ name: 'heroicons:arrow-top-right-on-square' }}
+      iconPosition="right"
+    />
+    <ButtonBlock icon={{ name: 'heroicons:plus' }} />
+  </div>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">Sizes</h3>
+  <div class="flex flex-wrap items-center gap-4">
+    <ButtonBlock label="Extra Small" size="xs" />
+    <ButtonBlock label="Small" size="sm" />
+    <ButtonBlock label="Medium" size="md" />
+    <ButtonBlock label="Large" size="lg" />
+    <ButtonBlock label="Extra Large" size="xl" />
+  </div>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">Variants</h3>
+  <div class="flex flex-wrap gap-4">
+    <ButtonBlock label="Solid" variant="solid" />
+    <ButtonBlock label="Outline" variant="outline" />
+    <ButtonBlock label="Ghost" variant="ghost" />
+    <ButtonBlock label="Link" variant="link" />
+  </div>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">Intent Colors (Solid)</h3>
+  <div class="flex flex-wrap gap-4">
+    <ButtonBlock label="Primary" intent="primary" />
+    <ButtonBlock label="Secondary" intent="secondary" />
+    <ButtonBlock label="Tertiary" intent="tertiary" />
+    <ButtonBlock label="Accent" intent="accent" />
+    <ButtonBlock label="Success" intent="success" />
+    <ButtonBlock label="Warning" intent="warning" />
+    <ButtonBlock label="Error" intent="error" />
+    <ButtonBlock label="Neutral" intent="neutral" />
+  </div>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">Intent Colors (Outline)</h3>
+  <div class="flex flex-wrap gap-4">
+    <ButtonBlock label="Primary" variant="outline" intent="primary" />
+    <ButtonBlock label="Secondary" variant="outline" intent="secondary" />
+    <ButtonBlock label="Tertiary" variant="outline" intent="tertiary" />
+    <ButtonBlock label="Accent" variant="outline" intent="accent" />
+    <ButtonBlock label="Success" variant="outline" intent="success" />
+    <ButtonBlock label="Warning" variant="outline" intent="warning" />
+    <ButtonBlock label="Error" variant="outline" intent="error" />
+    <ButtonBlock label="Neutral" variant="outline" intent="neutral" />
+  </div>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">With Icons</h3>
+  <div class="flex flex-wrap gap-4">
+    <ButtonBlock label="Left Icon" icon={{ name: 'heroicons:arrow-left' }} iconPosition="left" />
+    <ButtonBlock label="Right Icon" icon={{ name: 'heroicons:arrow-right' }} iconPosition="right" />
+    <ButtonBlock
+      label="Download"
+      icon={{ name: 'heroicons:arrow-down-tray' }}
+      iconPosition="left"
+      intent="success"
+    />
+    <ButtonBlock
+      label="External Link"
+      icon={{ name: 'heroicons:arrow-top-right-on-square' }}
+      iconPosition="right"
+      intent="secondary"
+    />
+  </div>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">Icon Only</h3>
+  <div class="flex flex-wrap items-center gap-4">
+    <ButtonBlock icon={{ name: 'heroicons:plus' }} size="xs" />
+    <ButtonBlock icon={{ name: 'heroicons:plus' }} size="sm" />
+    <ButtonBlock icon={{ name: 'heroicons:plus' }} size="md" />
+    <ButtonBlock icon={{ name: 'heroicons:plus' }} size="lg" />
+    <ButtonBlock icon={{ name: 'heroicons:plus' }} size="xl" />
+  </div>
+  <div class="flex flex-wrap gap-4 mt-4">
+    <ButtonBlock icon={{ name: 'heroicons:pencil' }} variant="outline" />
+    <ButtonBlock icon={{ name: 'heroicons:trash' }} variant="outline" intent="error" />
+    <ButtonBlock icon={{ name: 'heroicons:check' }} variant="ghost" intent="success" />
+    <ButtonBlock icon={{ name: 'heroicons:x-mark' }} variant="ghost" intent="error" />
+  </div>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">Promotional Buttons (with Subtitle)</h3>
+  <div class="flex flex-wrap gap-4">
+    <ButtonBlock
+      label="Subscribe Now"
+      subtitle="Get access to Premium Features for FREE for a year!"
+      icon={{ name: 'heroicons:arrow-top-right-on-square' }}
+      iconPosition="right"
+      size="lg"
+    />
+    <ButtonBlock
+      label="Start Free Trial"
+      subtitle="No credit card required"
+      icon={{ name: 'heroicons:rocket-launch' }}
+      iconPosition="left"
+      size="lg"
+      intent="accent"
+    />
+  </div>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">Customized icon</h3>
+  <div class="flex flex-wrap gap-4">
+    <ButtonBlock
+      label="Start Free Trial"
+      subtitle="No credit card required"
+      icon={{
+        name: 'heroicons:rocket-launch',
+        class: 'p-1 rounded-md bg-background text-accent ',
+      }}
+      iconPosition="left"
+      size="lg"
+      intent="accent"
+    />
+  </div>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">Shapes</h3>
+  <div class="flex flex-wrap gap-4">
+    <ButtonBlock label="Rounded" shape="rounded" />
+    <ButtonBlock label="Square" shape="square" />
+    <ButtonBlock label="Pill" shape="pill" />
+  </div>
+  <div class="flex flex-wrap items-center gap-4 mt-4">
+    <ButtonBlock icon={{ name: 'heroicons:plus' }} shape="rounded" />
+    <ButtonBlock icon={{ name: 'heroicons:plus' }} shape="square" />
+    <ButtonBlock icon={{ name: 'heroicons:plus' }} shape="pill" />
+  </div>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">Width Options</h3>
+  <div class="space-y-4">
+    <ButtonBlock label="Auto Width (Default)" width="auto" />
+    <ButtonBlock label="Full Width" width="full" />
+  </div>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">States</h3>
+  <div class="flex flex-wrap gap-4">
+    <ButtonBlock label="Normal" />
+    <ButtonBlock label="Disabled" disabled />
+    <ButtonBlock label="Disabled Outline" variant="outline" disabled />
+  </div>
+
+  <h3 class="text-xl font-semibold mt-8 mb-2">As Links</h3>
+  <div class="flex flex-wrap gap-4">
+    <ButtonBlock label="Internal Link" href="/colors" />
+    <ButtonBlock
+      label="External Link"
+      href="https://astro.build"
+      target="_blank"
+      icon={{ name: 'heroicons:arrow-top-right-on-square' }}
+      iconPosition="right"
+    />
+  </div>
+</Layout>

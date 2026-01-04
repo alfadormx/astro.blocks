@@ -1,0 +1,100 @@
+---
+import Layout from '~/layouts/DocumentationLayout.astro';
+import ThemeToggleBlock from '~/components/blocks/primitives/ThemeToggle.astro';
+
+const metadata = {
+  title: {
+    default: 'Theme Toggle',
+  },
+};
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitives',
+    title: 'Theme Toggle',
+    subtitle: 'Showcase of the Theme Toggle primitive block with various configurations',
+  }}
+>
+  <!-- Basic Theme Toggle -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">Basic Toggle</h3>
+  <div class="flex flex-wrap gap-4">
+    <ThemeToggleBlock />
+  </div>
+
+  <!-- Sizes -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">Sizes</h3>
+  <div class="flex flex-wrap items-center gap-4">
+    <ThemeToggleBlock size="xs" />
+    <ThemeToggleBlock size="sm" />
+    <ThemeToggleBlock size="md" />
+    <ThemeToggleBlock size="lg" />
+    <ThemeToggleBlock size="xl" />
+  </div>
+
+  <!-- Variants -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">Variants</h3>
+  <div class="flex flex-wrap gap-4">
+    <ThemeToggleBlock variant="solid" />
+    <ThemeToggleBlock variant="outline" />
+    <ThemeToggleBlock variant="ghost" />
+  </div>
+
+  <!-- Intents -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">Intent Colors</h3>
+  <div class="flex flex-wrap gap-4">
+    <ThemeToggleBlock intent="primary" variant="solid" />
+    <ThemeToggleBlock intent="secondary" variant="solid" />
+    <ThemeToggleBlock intent="accent" variant="solid" />
+    <ThemeToggleBlock intent="neutral" variant="outline" />
+  </div>
+
+  <!-- Shapes -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">Shapes</h3>
+  <div class="flex flex-wrap gap-4">
+    <ThemeToggleBlock shape="rounded" />
+    <ThemeToggleBlock shape="square" />
+    <ThemeToggleBlock shape="pill" />
+  </div>
+
+  <!-- Custom Icons (using different heroicons) -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">Custom Configuration</h3>
+  <div class="flex flex-wrap gap-4">
+    <ThemeToggleBlock
+      icon={{ name: 'heroicons:moon' }}
+      variant="solid"
+      intent="primary"
+      size="lg"
+    />
+    <ThemeToggleBlock
+      icon={{ name: 'heroicons:light-bulb' }}
+      variant="outline"
+      intent="accent"
+      size="lg"
+      shape="pill"
+    />
+  </div>
+
+  <!-- Demo Content -->
+  <h3 class="text-xl font-semibold mt-8 mb-2">Theme Demo Content</h3>
+  <div class="space-y-4">
+    <p>This is normal text that adapts to the theme. Toggle the theme to see it change!</p>
+    <p class="text-muted">This is muted text with lower contrast.</p>
+    <p class="text-emphasis">This is emphasized text with higher contrast.</p>
+    <div class="bg-surface p-4 rounded-md">
+      <p>Content on a surface background</p>
+    </div>
+    <div class="bg-elevated p-4 rounded-md">
+      <p>Content on an elevated background</p>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // Show theme change feedback
+  document.addEventListener('theme-change', (e: Event) => {
+    const customEvent = e as CustomEvent<{ theme: string }>;
+    console.log('Theme changed to:', customEvent.detail.theme);
+  });
+</script>

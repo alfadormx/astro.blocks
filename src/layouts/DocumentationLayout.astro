@@ -1,0 +1,57 @@
+---
+import Layout from './Layout.astro';
+import SidebarLeftContainer from '~/components/blocks/layouts/SidebarLeftContainer.astro';
+import merge from 'lodash.merge';
+import type { MetaData } from '~/types/metadata.types';
+import type { ContainerProps } from '~/types/container.types';
+import type { HeadlineProps } from '~/types/headline.types';
+import Headline from '~/components/blocks/composite/Headline.astro';
+
+export type Props = {
+  langCode?: string;
+  metadata?: Partial<MetaData>;
+  topmostContainer?: Partial<ContainerProps>;
+  headline?: Partial<HeadlineProps>;
+};
+
+const { langCode, metadata, topmostContainer, headline } = Astro.props;
+
+const defaultMetadata = {
+  title: {
+    template: '%s | AstroBlocks Documentation',
+  },
+  description:
+    'AstroBlocks is a modern and accessible collection of components and layouts for Astro.',
+  author: 'alFadorMX',
+  keywords: [
+    'astro',
+    'astroblocks',
+    'components',
+    'layouts',
+    'ui',
+    'design system',
+    'accessible',
+    'modern',
+  ],
+};
+
+const defaultTopmostContainer = {
+  content: { widthType: 'boxed' },
+} as ContainerProps;
+
+const defaultHeadline = { class: 'mt-8 mb-16' } as HeadlineProps;
+
+const mergedMetadata = merge({}, defaultMetadata, metadata) as Partial<MetaData>;
+const mergedTopmostContainer = merge({}, defaultTopmostContainer, topmostContainer);
+const mergedHeadline = merge({}, defaultHeadline, headline);
+---
+
+<Layout langCode={langCode} metadata={mergedMetadata} topmostContainer={mergedTopmostContainer}>
+  <Headline {...mergedHeadline} />
+  <SidebarLeftContainer>
+    <div slot="sidebar"></div>
+    <div slot="main">
+      <slot />
+    </div>
+  </SidebarLeftContainer>
+</Layout>

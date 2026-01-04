@@ -1,6 +1,7 @@
 ---
+import merge from 'lodash.merge';
 import Container from '~/components/blocks/composite/Container.astro';
-import type { SidebarContainerProps } from '~/types/container.types';
+import type { ContainerProps, SidebarContainerProps } from '~/types/container.types';
 import { cn } from '~/utils/styles';
 
 type Props = SidebarContainerProps;
@@ -19,15 +20,18 @@ const layoutClass = cn(
     (responsive ? `grid-cols-1 ${breakpoint}grid-cols-[3fr_1fr]` : 'grid-cols-[3fr_1fr]'),
   gap
 );
+
+const defaultContainer = {
+  htmlTag: 'div',
+  content: { air: 'none', widthType: 'full' },
+  layout: { type: 'grid', class: layoutClass },
+  printDebug: true,
+} as ContainerProps;
+
+const mergedContainerProps = merge({}, defaultContainer, containerProps);
 ---
 
-<Container
-  {...containerProps}
-  layout={{
-    type: 'grid',
-    class: layoutClass,
-  }}
->
+<Container {...mergedContainerProps}>
   <div>
     <slot name="main" />
   </div>

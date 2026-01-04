@@ -1,17 +1,23 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import CallToAction from '~/components/blocks/composite/CallToAction.astro';
+import Layout from '~/layouts/DocumentationLayout.astro';
+import CallToActionBlock from '~/components/blocks/composite/CallToAction.astro';
 
 const metadata = {
   title: {
-    default: 'Call To Action Block',
+    default: 'Call To Action',
   },
-  description: 'Demo of the CallToAction composite block',
 };
 ---
 
-<Layout metadata={metadata}>
-  <CallToAction
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Call To Action',
+    subtitle: 'Showcase of the CallToAction composite block with various configurations',
+  }}
+>
+  <CallToActionBlock
     headline={{
       tagline: 'Call to Action',
       title: 'Astro + Tailwind CSS',

@@ -1,17 +1,22 @@
 ---
-import SidebarLeftContainer from '~/components/blocks/layouts/SidebarLeftContainer.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from '~/layouts/DocumentationLayout.astro';
+import SidebarLeftContainerBlock from '~/components/blocks/layouts/SidebarLeftContainer.astro';
 
 var metadata = {
   title: {
     default: 'Sidebar Left Container',
   },
-  description: 'Sidebar Left Container Block - 1/3 sidebar left, 2/3 main content right',
 };
 ---
 
-<Layout metadata={metadata}>
-  <h1 class="text-2xl font-bold mb-6">Sidebar Left Container Block</h1>
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Sidebar Left Container',
+    subtitle: 'Showcase of the SidebarLeftContainer layout block with various configurations',
+  }}
+>
   <p class="mb-8">
     A pre-built layout wrapper with a sidebar on the left (1/3 width) and main content on the right
     (2/3 width). Perfect for navigation, filters, or supplementary content.
@@ -20,7 +25,7 @@ var metadata = {
   <h2 class="text-3xl font-bold mt-12 mb-4">Basic Examples</h2>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">1. Basic Sidebar Layout</h3>
-  <SidebarLeftContainer
+  <SidebarLeftContainerBlock
     htmlTag="section"
     containerWidthType="full"
     content={{
@@ -39,10 +44,10 @@ var metadata = {
       <h3 class="text-xl font-bold mb-4">Main Content</h3>
       <p>2/3 width main content area</p>
     </div>
-  </SidebarLeftContainer>
+  </SidebarLeftContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">2. Navigation Sidebar</h3>
-  <SidebarLeftContainer
+  <SidebarLeftContainerBlock
     htmlTag="section"
     containerWidthType="full"
     content={{
@@ -54,12 +59,12 @@ var metadata = {
     spacing={{ margin: 'mb-8' }}
   >
     <div slot="sidebar" class="bg-blue p-6 rounded">
-      <h3 class="text-lg font-bold mb-4">Navigation</h3>
+      <h3 class="text-lg font-bold text-white mb-4">Navigation</h3>
       <nav class="space-y-2">
         <a href="#" class="block py-2 px-3 bg-white text-blue rounded">Dashboard</a>
-        <a href="#" class="block py-2 px-3 hover:bg-gray rounded">Projects</a>
-        <a href="#" class="block py-2 px-3 hover:bg-gray rounded">Team</a>
-        <a href="#" class="block py-2 px-3 hover:bg-gray rounded">Settings</a>
+        <a href="#" class="block py-2 px-3 text-white hover:bg-gray rounded">Projects</a>
+        <a href="#" class="block py-2 px-3 text-white hover:bg-gray rounded">Team</a>
+        <a href="#" class="block py-2 px-3 text-white hover:bg-gray rounded">Settings</a>
       </nav>
     </div>
     <div slot="main" class="bg-white p-6 rounded border border-gray-300">
@@ -70,19 +75,19 @@ var metadata = {
       </p>
       <div class="grid grid-cols-2 gap-4 mt-6">
         <div class="bg-blue p-4 rounded">
-          <div class="text-2xl font-bold text-blue">24</div>
-          <div class="text-sm text-gray">Active Projects</div>
+          <div class="text-2xl font-bold text-white">24</div>
+          <div class="text-sm text-white">Active Projects</div>
         </div>
         <div class="bg-green p-4 rounded">
-          <div class="text-2xl font-bold text-green">156</div>
-          <div class="text-sm text-gray">Completed Tasks</div>
+          <div class="text-2xl font-bold text-white">156</div>
+          <div class="text-sm text-white">Completed Tasks</div>
         </div>
       </div>
     </div>
-  </SidebarLeftContainer>
+  </SidebarLeftContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">3. Filter Sidebar</h3>
-  <SidebarLeftContainer
+  <SidebarLeftContainerBlock
     htmlTag="section"
     containerWidthType="full"
     content={{
@@ -145,10 +150,10 @@ var metadata = {
         <div class="text-xl font-bold text-blue">$129.99</div>
       </div>
     </div>
-  </SidebarLeftContainer>
+  </SidebarLeftContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">4. With Background Gradient</h3>
-  <SidebarLeftContainer
+  <SidebarLeftContainerBlock
     htmlTag="section"
     containerWidthType="full"
     background={{ class: 'bg-gradient-to-r from-purple to-pink' }}
@@ -182,10 +187,10 @@ var metadata = {
         Get Started
       </button>
     </div>
-  </SidebarLeftContainer>
+  </SidebarLeftContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">5. Responsive (Stacks on Mobile)</h3>
-  <SidebarLeftContainer
+  <SidebarLeftContainerBlock
     htmlTag="section"
     containerWidthType="full"
     content={{
@@ -197,7 +202,7 @@ var metadata = {
     responsive={true}
     spacing={{ margin: 'mb-8' }}
   >
-    <div slot="sidebar" class="bg-orange text-white p-6 rounded">
+    <div slot="sidebar" class="bg-peach text-white p-6 rounded">
       <h3 class="text-lg font-bold mb-2">Sidebar</h3>
       <p class="text-sm">This sidebar stacks on top on mobile devices.</p>
     </div>
@@ -205,12 +210,12 @@ var metadata = {
       <h3 class="text-lg font-bold mb-2">Main Content</h3>
       <p class="text-sm">Main content appears below sidebar on mobile.</p>
     </div>
-  </SidebarLeftContainer>
+  </SidebarLeftContainerBlock>
 
   <h2 class="text-3xl font-bold mt-12 mb-4">Practical Use Cases</h2>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">6. Blog Layout</h3>
-  <SidebarLeftContainer
+  <SidebarLeftContainerBlock
     htmlTag="section"
     containerWidthType="full"
     content={{
@@ -269,5 +274,5 @@ var metadata = {
         laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.
       </p>
     </div>
-  </SidebarLeftContainer>
+  </SidebarLeftContainerBlock>
 </Layout>

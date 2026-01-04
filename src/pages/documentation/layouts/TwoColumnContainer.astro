@@ -1,17 +1,22 @@
 ---
-import TwoColumnContainer from '~/components/blocks/layouts/TwoColumnContainer.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from '~/layouts/DocumentationLayout.astro';
+import TwoColumnContainerBlock from '~/components/blocks/layouts/TwoColumnContainer.astro';
 
 var metadata = {
   title: {
     default: 'Two Column Container',
   },
-  description: 'Two Column Container Block - Equal 50/50 split layout',
 };
 ---
 
-<Layout metadata={metadata}>
-  <h1 class="text-2xl font-bold mb-6">Two Column Container Block</h1>
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Two Column Container',
+    subtitle: 'Showcase of the TwoColumnContainer layout block with various configurations',
+  }}
+>
   <p class="mb-8">
     A pre-built layout wrapper for two equal columns. Responsive by default (stacks on mobile,
     side-by-side on desktop).
@@ -20,8 +25,7 @@ var metadata = {
   <h2 class="text-3xl font-bold mt-12 mb-4">Basic Examples</h2>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">1. Basic Two Column Layout</h3>
-  <TwoColumnContainer
-    htmlTag="section"
+  <TwoColumnContainerBlock
     containerWidthType="full"
     content={{
       widthType: 'boxed',
@@ -39,15 +43,13 @@ var metadata = {
       <h3 class="text-xl font-bold mb-2">Column 2</h3>
       <p>This is the second column with some content.</p>
     </div>
-  </TwoColumnContainer>
+  </TwoColumnContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">2. With Background Image</h3>
-  <TwoColumnContainer
-    htmlTag="section"
+  <TwoColumnContainerBlock
     containerWidthType="full"
     background={{
-      image: 'https://images.pexels.com/photos/1629236/pexels-photo-1629236.jpeg',
-      attachment: 'fixed',
+      image: 'https://images.pexels.com/photos/370799/pexels-photo-370799.jpeg',
       class: 'bg-cover bg-center',
     }}
     content={{
@@ -66,11 +68,10 @@ var metadata = {
       <h3 class="text-xl font-bold mb-2">Right Content</h3>
       <p>Both columns have semi-transparent backgrounds.</p>
     </div>
-  </TwoColumnContainer>
+  </TwoColumnContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">3. With Background Color & Custom Gap</h3>
-  <TwoColumnContainer
-    htmlTag="section"
+  <TwoColumnContainerBlock
     containerWidthType="full"
     background={{ class: 'bg-gradient-to-r from-purple to-pink' }}
     content={{
@@ -90,11 +91,10 @@ var metadata = {
       <h3 class="text-xl font-bold mb-2 text-pink-600">Feature 2</h3>
       <p>With gradient background.</p>
     </div>
-  </TwoColumnContainer>
+  </TwoColumnContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">4. Responsive (Stacks on Mobile)</h3>
-  <TwoColumnContainer
-    htmlTag="section"
+  <TwoColumnContainerBlock
     containerWidthType="full"
     content={{
       widthType: 'boxed',
@@ -113,11 +113,10 @@ var metadata = {
       <h3 class="text-xl font-bold mb-2">Column 2</h3>
       <p>Set responsive=true for mobile-friendly layouts.</p>
     </div>
-  </TwoColumnContainer>
+  </TwoColumnContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">5. Reverse Order on Mobile</h3>
-  <TwoColumnContainer
-    htmlTag="section"
+  <TwoColumnContainerBlock
     containerWidthType="full"
     content={{
       widthType: 'boxed',
@@ -138,13 +137,12 @@ var metadata = {
       <p>On desktop, this appears on the right. On mobile, it appears FIRST (on top).</p>
       <p class="mt-2 text-sm">Perfect for showing content before images on mobile!</p>
     </div>
-  </TwoColumnContainer>
+  </TwoColumnContainerBlock>
 
   <h2 class="text-3xl font-bold mt-12 mb-4">Practical Use Cases</h2>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">6. Image + Text</h3>
-  <TwoColumnContainer
-    htmlTag="section"
+  <TwoColumnContainerBlock
     containerWidthType="full"
     content={{
       widthType: 'boxed',
@@ -171,11 +169,10 @@ var metadata = {
         Learn More
       </button>
     </div>
-  </TwoColumnContainer>
+  </TwoColumnContainerBlock>
 
   <h3 class="text-xl font-semibold mt-8 mb-2">7. Feature Comparison</h3>
-  <TwoColumnContainer
-    htmlTag="section"
+  <TwoColumnContainerBlock
     containerWidthType="full"
     content={{
       widthType: 'boxed',
@@ -223,5 +220,5 @@ var metadata = {
         <span>Priority support</span>
       </div>
     </div>
-  </TwoColumnContainer>
+  </TwoColumnContainerBlock>
 </Layout>
