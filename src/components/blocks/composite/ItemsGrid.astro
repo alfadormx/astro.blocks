@@ -1,5 +1,6 @@
 ---
 import type { ItemsGridProps } from '~/types/itemsgrid.types';
+import type { ItemProps } from '~/types/item.types';
 import { cn } from '~/utils/styles';
 import Item from './Item.astro';
 import merge from 'lodash.merge';
@@ -9,10 +10,17 @@ type Props = ItemsGridProps;
 const {
   items = [],
   columns = 3,
-  gap = 'gap-8 md:gap-y-12',
+  gap = 'normal' as 'none' | 'tight' | 'normal' | 'loose',
   class: className = '',
   defaultItemConfig = {},
 } = Astro.props;
+
+const gapSettings = {
+  none: '',
+  tight: 'gap-3 md:gap-4 lg:gap-6',
+  normal: 'gap-4 md:gap-6 lg:gap-8',
+  loose: 'gap-6 md:gap-8 lg:gap-12',
+} as const;
 
 const baseGridClass = 'grid mx-auto';
 let columnsClass = '';
@@ -25,12 +33,17 @@ if (columns === 4) {
   columnsClass = 'sm:grid-cols-2';
 }
 
-const gridClass = cn(baseGridClass, columnsClass, gap, className);
+const gridClass = cn(
+  baseGridClass,
+  columnsClass,
+  gapSettings[gap as keyof typeof gapSettings],
+  className
+);
 ---
 
 <div class={gridClass}>
   {
-    items.map((item) => {
+    items.map((item: ItemProps) => {
       const mergedItem = merge({}, defaultItemConfig, item);
       return <Item {...mergedItem} />;
     })
