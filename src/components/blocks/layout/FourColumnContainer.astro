@@ -7,7 +7,7 @@ import type { ContainerProps, FourColumnContainerProps } from '~/types/container
 type Props = FourColumnContainerProps;
 
 const {
-  gap = 'gap-6',
+  gap = 'normal',
   responsive = false,
   breakpoint = 'md:',
   leftColumn,
@@ -17,8 +17,18 @@ const {
   ...containerProps
 } = Astro.props;
 
+const gapSettings = {
+  none: '',
+  tight: 'gap-3 md:gap-4 lg:gap-6',
+  normal: 'gap-4 md:gap-6 lg:gap-8',
+  loose: 'gap-6 md:gap-8 lg:gap-12',
+};
+
 // Build grid classes
-const layoutClass = cn(responsive ? `grid-cols-1 ${breakpoint}grid-cols-4` : 'grid-cols-4', gap);
+const layoutClass = cn(
+  responsive ? `grid-cols-1 ${breakpoint}grid-cols-4` : 'grid-cols-4',
+  gapSettings[gap]
+);
 
 const leftColumnClass = cn(
   leftColumn?.background?.class,

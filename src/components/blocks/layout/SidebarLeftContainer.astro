@@ -7,7 +7,7 @@ import { cn } from '~/utils/styles';
 type Props = SidebarContainerProps;
 
 const {
-  gap = 'gap-6',
+  gap = 'normal',
   responsive = false,
   breakpoint = 'md:',
   sidebar,
@@ -15,9 +15,16 @@ const {
   ...containerProps
 } = Astro.props;
 
+const gapSettings = {
+  none: '',
+  tight: 'gap-3 md:gap-4 lg:gap-6',
+  normal: 'gap-4 md:gap-6 lg:gap-8',
+  loose: 'gap-6 md:gap-8 lg:gap-12',
+};
+
 const layoutClass = cn(
   responsive ? `grid-cols-1 ${breakpoint}grid-cols-[1fr_3fr]` : 'grid-cols-[1fr_3fr]',
-  gap
+  gapSettings[gap]
 );
 
 const sidebarClass = cn(

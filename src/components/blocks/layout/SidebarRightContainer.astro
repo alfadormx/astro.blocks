@@ -7,7 +7,7 @@ import { cn } from '~/utils/styles';
 type Props = SidebarContainerProps;
 
 const {
-  gap = 'gap-6',
+  gap = 'normal',
   responsive = false,
   breakpoint = 'md:',
   sidebar,
@@ -15,10 +15,16 @@ const {
   ...containerProps
 } = Astro.props;
 
-// Build grid classes - use 3fr/1fr for 3/4 and 1/4 split (accounts for gap)
+const gapSettings = {
+  none: '',
+  tight: 'gap-3 md:gap-4 lg:gap-6',
+  normal: 'gap-4 md:gap-6 lg:gap-8',
+  loose: 'gap-6 md:gap-8 lg:gap-12',
+};
+
 const layoutClass = cn(
   responsive ? `grid-cols-1 ${breakpoint}grid-cols-[3fr_1fr]` : 'grid-cols-[3fr_1fr]',
-  gap
+  gapSettings[gap]
 );
 
 const sidebarClass = cn(

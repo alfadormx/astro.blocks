@@ -186,3 +186,5 @@
 @source inline('{md:,}grid-cols-[75%_25%]');
 @source inline('{md:,}grid-cols-[3fr_1fr]');
 @source inline('{sm:,md:,lg:,xl:,}order-{1,2}');
+@source inline('gap-{3,4,6,8,12}');
+@source inline('{md:,lg:,}gap-{3,4,6,8,12}');
