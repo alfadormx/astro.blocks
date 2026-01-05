@@ -121,6 +121,14 @@
   .headline:first-child {
     margin-top: 0;
   }
+
+  .nav-tree-icon {
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .nav-tree-icon-expanded {
+    transform: rotate(90deg);
+  }
 }
 
 @theme inline {

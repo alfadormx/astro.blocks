@@ -27,4 +27,5 @@ export interface ButtonProps {
   labelClass?: string;
   subtitleClass?: string;
   iconClass?: string;
+  children?: ButtonProps[];
 }

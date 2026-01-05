@@ -1,0 +1,275 @@
+---
+import Layout from '~/layouts/DocumentationLayout.astro';
+import NavigationTreeBlock from '~/components/blocks/composite/NavigationTree.astro';
+import type { ButtonProps } from '~/types/button.types';
+
+const metadata = {
+  title: {
+    default: 'NavigationTree',
+  },
+};
+
+const basicNavItems: ButtonProps[] = [
+  {
+    label: 'Getting Started',
+    href: '/documentation',
+  },
+  {
+    label: 'Components',
+    href: '/documentation/components',
+  },
+  {
+    label: 'About',
+    href: '/about',
+  },
+];
+
+const nestedNavItems: ButtonProps[] = [
+  {
+    label: 'Getting Started',
+    href: '/documentation',
+    children: [
+      { label: 'Installation', href: '/documentation/installation' },
+      { label: 'Configuration', href: '/documentation/configuration' },
+      { label: 'Quick Start', href: '/documentation/quick-start' },
+    ],
+  },
+  {
+    label: 'Components',
+    href: '/documentation/components',
+    children: [
+      { label: 'Buttons', href: '/documentation/components/buttons' },
+      { label: 'Forms', href: '/documentation/components/forms' },
+      { label: 'Cards', href: '/documentation/components/cards' },
+    ],
+  },
+  {
+    label: 'Composite',
+    href: '/documentation/composite',
+    children: [{ label: 'Content', href: '/documentation/composite/NavigationTree' }],
+  },
+  {
+    label: 'Layout',
+    href: '/documentation/layout',
+    children: [
+      { label: 'Grid System', href: '/documentation/layout/grid' },
+      { label: 'Containers', href: '/documentation/layout/containers' },
+    ],
+  },
+];
+
+const deeplyNestedNavItems: ButtonProps[] = [
+  {
+    label: 'Documentation',
+    href: '/documentation',
+    children: [
+      {
+        label: 'Base',
+        href: '/documentation/base',
+        children: [
+          { label: 'Colors', href: '/documentation/base/Colors' },
+          { label: 'Typography', href: '/documentation/base/Typography' },
+        ],
+      },
+      {
+        label: 'Composite',
+        href: '/documentation/composite',
+        children: [
+          { label: 'CallToAction', href: '/documentation/composite/CallToAction' },
+          { label: 'Content', href: '/documentation/composite/Content' },
+          { label: 'ItemsContent', href: '/documentation/composite/ItemsContent' },
+          { label: 'NavigationTree', href: '/documentation/composite/NavigationTree' },
+        ],
+      },
+      {
+        label: 'Primitives',
+        href: '/documentation/primitives',
+        children: [
+          { label: 'Button', href: '/documentation/primitives/Button' },
+          { label: 'Headline', href: '/documentation/primitives/Headline' },
+          { label: 'Image', href: '/documentation/primitives/Image' },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'Resources',
+    href: '/resources',
+    children: [
+      {
+        label: 'Guides',
+        href: '/resources/guides',
+        children: [
+          { label: 'Quick Start', href: '/resources/guides/quick-start' },
+          { label: 'Best Practices', href: '/resources/guides/best-practices' },
+          { label: 'Migration Guide', href: '/resources/guides/migration' },
+        ],
+      },
+      {
+        label: 'Examples',
+        href: '/resources/examples',
+        children: [
+          { label: 'Dashboard', href: '/resources/examples/dashboard' },
+          { label: 'Landing Page', href: '/resources/examples/landing' },
+          { label: 'Blog', href: '/resources/examples/blog' },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'Community',
+    href: '/community',
+    children: [
+      {
+        label: 'Forum',
+        href: '/community/forum',
+        children: [
+          { label: 'General Discussion', href: '/community/forum/general' },
+          { label: 'Help & Support', href: '/community/forum/support' },
+          { label: 'Showcase', href: '/community/forum/showcase' },
+        ],
+      },
+      { label: 'GitHub', href: 'https://github.com' },
+      { label: 'Discord', href: 'https://discord.com' },
+    ],
+  },
+  {
+    label: 'About',
+    href: '/about',
+    children: [
+      { label: 'Team', href: '/about/team' },
+      { label: 'Changelog', href: '/about/changelog' },
+      { label: 'License', href: '/about/license' },
+    ],
+  },
+];
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'NavigationTree',
+    subtitle: 'Recursive navigation component with collapsible tree structure',
+  }}
+>
+  <h3>Basic Navigation (No Nesting)</h3>
+  <div class="border border-border rounded-lg p-6 max-w-xs">
+    <NavigationTreeBlock items={basicNavItems} />
+  </div>
+
+  <h3>Expansion Strategies</h3>
+
+  <h4>Always Expanded</h4>
+  <p>All children visible at all times</p>
+  <div class="border border-border rounded-lg p-6 max-w-md">
+    <NavigationTreeBlock items={deeplyNestedNavItems} expansionStrategy="always" />
+  </div>
+
+  <h4>Active Only (Default)</h4>
+  <p>Only shows children of active items</p>
+  <div class="border border-border rounded-lg p-6 max-w-md">
+    <NavigationTreeBlock
+      items={deeplyNestedNavItems}
+      expansionStrategy="active-only"
+      currentPath="/documentation/composite/Content"
+    />
+  </div>
+
+  <h4>First Level Only</h4>
+  <p>Shows only root-level items, no children</p>
+  <div class="border border-border rounded-lg p-6 max-w-md">
+    <NavigationTreeBlock items={deeplyNestedNavItems} expansionStrategy="first-level" />
+  </div>
+
+  <h4>Depth Limited (maxDepth=1)</h4>
+  <p>Expands children up to specified depth</p>
+  <div class="border border-border rounded-lg p-6 max-w-md">
+    <NavigationTreeBlock items={deeplyNestedNavItems} expansionStrategy="depth" maxDepth={1} />
+  </div>
+
+  <h4>Toggleable (Interactive)</h4>
+  <p class="text-subtle mb-4">
+    Click parent items to expand/collapse children. Active path auto-expanded.
+  </p>
+  <div class="border border-border rounded-lg p-6 max-w-md">
+    <NavigationTreeBlock
+      items={deeplyNestedNavItems}
+      expansionStrategy="toggleable"
+      currentPath="/documentation/composite/ItemsGrid"
+    />
+  </div>
+
+  <h3>Toggle Modes</h3>
+
+  <h4>Button Toggle (Default, Mobile-Friendly)</h4>
+  <p class="text-subtle mb-4">
+    Entire button toggles children. Good for touch devices with larger tap targets.
+  </p>
+  <div class="border border-border rounded-lg p-6 max-w-md">
+    <NavigationTreeBlock
+      items={deeplyNestedNavItems}
+      expansionStrategy="toggleable"
+      toggleMode="button"
+      currentPath="/documentation/composite/ItemsGrid"
+    />
+  </div>
+
+  <h4>Icon Toggle Only</h4>
+  <p class="text-subtle mb-4">
+    Only icon toggles children, button navigates to href. Provides separate controls for navigation
+    and expansion.
+  </p>
+  <div class="border border-border rounded-lg p-6 max-w-md">
+    <NavigationTreeBlock
+      items={deeplyNestedNavItems}
+      expansionStrategy="toggleable"
+      toggleMode="icon"
+      currentPath="/documentation/composite/ItemsGrid"
+    />
+  </div>
+
+  <h3>Custom Configuration</h3>
+
+  <h4>Custom Icons</h4>
+  <div class="border border-border rounded-lg p-6 max-w-xs">
+    <NavigationTreeBlock
+      items={nestedNavItems}
+      expansionStrategy="always"
+      iconName="heroicons:chevron-right"
+      rotateIconOnExpand={true}
+    />
+  </div>
+
+  <h4>Custom Button Styling</h4>
+  <div class="border border-border rounded-lg p-6 max-w-xs">
+    <NavigationTreeBlock
+      items={nestedNavItems}
+      expansionStrategy="always"
+      defaultButtonConfig={{
+        variant: 'outline',
+        intent: 'tertiary',
+        size: 'sm',
+        width: 'full',
+      }}
+      defaultActiveButtonConfig={{
+        variant: 'solid',
+        intent: 'accent',
+        size: 'sm',
+        width: 'full',
+      }}
+    />
+  </div>
+
+  <h3>Current Path Detection</h3>
+  <p>
+    Current path: <code class="bg-surface px-2 py-1 rounded text-sm">{Astro.url.pathname}</code>
+  </p>
+  <div class="border border-border rounded-lg p-6 max-w-xs">
+    <NavigationTreeBlock items={nestedNavItems} expansionStrategy="active-only" />
+  </div>
+
+  <h3>Data Structure Example</h3>
+  <pre
+    class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{JSON.stringify(nestedNavItems, null, 2)}</code></pre>
+</Layout>

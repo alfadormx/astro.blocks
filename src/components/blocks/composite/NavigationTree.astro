@@ -1,0 +1,241 @@
+---
+import type { ButtonProps } from '~/types/button.types';
+import Button from '~/components/blocks/primitives/Button.astro';
+import type { NavigationTreeProps } from '~/types/navigationtree.types';
+
+type Props = NavigationTreeProps;
+
+const {
+  items,
+  currentPath = Astro.url.pathname,
+  level = 0,
+  class: className = '',
+  iconName = 'mdi:chevron-right',
+  rotateIconOnExpand = true,
+  defaultButtonConfig = {
+    variant: 'ghost',
+    intent: 'neutral',
+    size: 'sm',
+    width: 'full',
+    iconPosition: 'left',
+  },
+  defaultActiveButtonConfig = {
+    variant: 'solid',
+    intent: 'primary',
+    size: 'sm',
+    width: 'full',
+    iconPosition: 'left',
+  },
+  expansionStrategy = 'active-only',
+  maxDepth = Infinity,
+  toggleMode = 'button',
+} = Astro.props;
+
+// Normalize paths for comparison (remove trailing slashes)
+const normalizePath = (path: string) => path.replace(/\/$/, '') || '/';
+const normalizedCurrentPath = normalizePath(currentPath);
+
+// Check if current item or any child is active
+const isActiveOrHasActiveChild = (item: ButtonProps): boolean => {
+  if (item.href && normalizePath(item.href) === normalizedCurrentPath) {
+    return true;
+  }
+  if (item.children) {
+    return item.children.some((child) => isActiveOrHasActiveChild(child));
+  }
+  return false;
+};
+
+// Calculate indentation based on level using predefined classes
+const indentMap = ['pl-0', 'pl-4', 'pl-8', 'pl-12', 'pl-16', 'pl-20', 'pl-24'];
+const indentClass = indentMap[Math.min(level, indentMap.length - 1)] || 'pl-0';
+
+// Determine if children should be shown based on expansion strategy
+const shouldShowChildren = (
+  item: ButtonProps,
+  isActive: boolean,
+  hasActiveChild: boolean
+): boolean => {
+  const hasChildren = item.children && item.children.length > 0;
+  if (!hasChildren) return false;
+
+  switch (expansionStrategy) {
+    case 'always':
+      return true;
+    case 'active-only':
+      return isActive || hasActiveChild;
+    case 'first-level':
+      return false;
+    case 'depth':
+      return level < maxDepth;
+    case 'active-siblings':
+      return isActive || hasActiveChild;
+    case 'toggleable':
+      // Will require JS implementation
+      return isActive || hasActiveChild;
+    default:
+      return isActive || hasActiveChild;
+  }
+};
+---
+
+<nav class={className} data-navigation-tree data-expansion-strategy={expansionStrategy}>
+  <ul class="list-none m-0 p-0 space-y-1">
+    {
+      items.map((item) => {
+        const isActive = item.href ? normalizePath(item.href) === normalizedCurrentPath : false;
+        const hasActiveChild = item.children
+          ? item.children.some((child) => isActiveOrHasActiveChild(child))
+          : false;
+        const hasChildren = item.children && item.children.length > 0;
+        const isExpanded = shouldShowChildren(item, isActive, hasActiveChild);
+
+        return (
+          <li data-nav-item data-has-children={hasChildren} data-expanded={isExpanded}>
+            <div class={indentClass}>
+              <Button
+                {...(isActive ? defaultActiveButtonConfig : defaultButtonConfig)}
+                {...item}
+                href={
+                  hasChildren && expansionStrategy === 'toggleable' && toggleMode === 'button'
+                    ? undefined
+                    : item.href
+                }
+                variant={
+                  item.variant ||
+                  (isActive ? defaultActiveButtonConfig.variant : defaultButtonConfig.variant)
+                }
+                intent={
+                  item.intent ||
+                  (isActive ? defaultActiveButtonConfig.intent : defaultButtonConfig.intent)
+                }
+                size={
+                  item.size ||
+                  (isActive ? defaultActiveButtonConfig.size : defaultButtonConfig.size)
+                }
+                width={
+                  item.width ||
+                  (isActive ? defaultActiveButtonConfig.width : defaultButtonConfig.width)
+                }
+                class={`justify-start ${hasChildren && expansionStrategy === 'toggleable' && toggleMode === 'button' ? 'data-nav-toggle' : ''} ${item.class || ''} ${isActive ? 'font-semibold' : ''}`}
+                icon={
+                  hasChildren
+                    ? {
+                        name: iconName,
+                        class: `nav-tree-icon ${isExpanded && rotateIconOnExpand ? 'nav-tree-icon-expanded' : ''} ${expansionStrategy === 'toggleable' && toggleMode === 'icon' ? 'data-nav-icon-toggle cursor-pointer' : ''}`,
+                        ...item.icon,
+                      }
+                    : item.icon
+                }
+                iconPosition={
+                  item.iconPosition ||
+                  (isActive
+                    ? defaultActiveButtonConfig.iconPosition
+                    : defaultButtonConfig.iconPosition)
+                }
+              />
+            </div>
+
+            {hasChildren && (
+              <div class="data-nav-children" style={isExpanded ? '' : 'display: none;'}>
+                <Astro.self
+                  items={item.children!}
+                  currentPath={currentPath}
+                  level={level + 1}
+                  iconName={iconName}
+                  rotateIconOnExpand={rotateIconOnExpand}
+                  toggleMode={toggleMode}
+                  defaultButtonConfig={defaultButtonConfig}
+                  defaultActiveButtonConfig={defaultActiveButtonConfig}
+                  expansionStrategy={expansionStrategy}
+                  maxDepth={maxDepth}
+                />
+              </div>
+            )}
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>
+
+<script>
+  interface WindowWithNavTreeToggle extends Window {
+    __navTreeToggleInitialized?: boolean;
+  }
+
+  function initNavigationTree() {
+    const win = window as WindowWithNavTreeToggle;
+    if (win.__navTreeToggleInitialized) return;
+    win.__navTreeToggleInitialized = true;
+
+    const navTrees = document.querySelectorAll('[data-navigation-tree]');
+    if (!navTrees.length) return;
+
+    navTrees.forEach((navTree) => {
+      const strategy = navTree.getAttribute('data-expansion-strategy');
+      if (strategy !== 'toggleable') return;
+
+      navTree.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+
+        // Check if icon-only toggle mode
+        const iconToggle = target.closest('.data-nav-icon-toggle');
+        const buttonToggle = target.closest('.data-nav-toggle');
+
+        // Determine which toggle handler to use
+        const toggleElement = iconToggle || buttonToggle;
+
+        if (!toggleElement) return;
+
+        // If clicking icon in icon-only mode, prevent default and toggle
+        if (iconToggle) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        // If clicking button in button mode, prevent default and toggle
+        else if (buttonToggle) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+
+        const listItem = toggleElement.closest('[data-nav-item]');
+
+        if (!listItem) return;
+
+        const hasChildren = listItem.getAttribute('data-has-children') === 'true';
+
+        if (!hasChildren) return;
+
+        const isExpanded = listItem.getAttribute('data-expanded') === 'true';
+        const newExpandedState = !isExpanded;
+
+        listItem.setAttribute('data-expanded', String(newExpandedState));
+
+        const childrenContainer = listItem.querySelector(':scope > .data-nav-children');
+
+        if (childrenContainer) {
+          (childrenContainer as HTMLElement).style.display = newExpandedState ? 'block' : 'none';
+        }
+
+        // Toggle icon rotation class - find icon in the button
+        const button = listItem.querySelector('button');
+        const icon = button?.querySelector('.nav-tree-icon');
+        if (icon) {
+          if (newExpandedState) {
+            icon.classList.add('nav-tree-icon-expanded');
+          } else {
+            icon.classList.remove('nav-tree-icon-expanded');
+          }
+        }
+      });
+    });
+  }
+
+  initNavigationTree();
+
+  document.addEventListener('astro:after-swap', () => {
+    (window as WindowWithNavTreeToggle).__navTreeToggleInitialized = false;
+    initNavigationTree();
+  });
+</script>
