@@ -6,6 +6,8 @@ import type { MetaData } from '~/types/metadata.types';
 import type { ContainerProps } from '~/types/container.types';
 import type { HeadlineProps } from '~/types/headline.types';
 import Headline from '~/components/blocks/primitives/Headline.astro';
+import NavigationTree from '~/components/blocks/composite/NavigationTree.astro';
+import { documentationNavigation } from '~/pages/documentation/navigation';
 
 export type Props = {
   langCode?: string;
@@ -50,7 +52,9 @@ const mergedHeadline = merge({}, defaultHeadline, headline);
 <Layout langCode={langCode} metadata={mergedMetadata} topmostContainer={mergedTopmostContainer}>
   <Headline {...mergedHeadline} />
   <SidebarLeftContainer>
-    <div slot="sidebar"></div>
+    <div slot="sidebar">
+      <NavigationTree items={documentationNavigation} expansionStrategy="always" />
+    </div>
     <div slot="main">
       <slot />
     </div>
