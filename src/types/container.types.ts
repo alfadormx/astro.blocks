@@ -49,7 +49,7 @@ export interface ContainerProps {
   layout?: LayoutConfig;
   overflow?: OverflowType;
   htmlTag?: ContainerTag;
-  containerClass?: string;
+  class?: string;
   containerWidthType?: ContainerWidthType;
   width?: string; // Tailwind class or CSS value
   minHeight?: string; // Tailwind class or CSS value
