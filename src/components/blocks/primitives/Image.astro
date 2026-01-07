@@ -51,15 +51,4 @@ if (
 }
 ---
 
-{
-  !image ? (
-    <Fragment />
-  ) : (
-    <img
-      src={image.src}
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-      {...image.attributes}
-    />
-  )
-}
+{!image ? <Fragment /> : <img src={image.src} referrerpolicy="no-referrer" {...image.attributes} />}
