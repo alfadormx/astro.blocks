@@ -17,11 +17,11 @@
   },
   "dependencies": {
     "@astrolib/analytics": "^0.6.1",
+    "@iconify-json/flat-color-icons": "^1.2.1",
     "@iconify-json/heroicons": "^1.2.3",
     "@iconify-json/lucide": "^1.2.82",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify-json/tabler": "^1.2.25",
-    "@iconify-json/flat-color-icons": "^1.2.1",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.6",
     "astro-icon": "^1.1.5",
@@ -29,6 +29,7 @@
     "clsx": "^2.1.1",
     "js-yaml": "^4.1.1",
     "lodash.merge": "^4.6.2",
+    "plyr": "^3.8.4",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18",
     "unpic": "^4.2.2"

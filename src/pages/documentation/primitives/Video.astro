@@ -1,0 +1,188 @@
+---
+import Layout from '~/layouts/DocumentationLayout.astro';
+import VideoBlock from '~/components/blocks/primitives/Video.astro';
+
+const metadata = {
+  title: {
+    default: 'Video',
+  },
+};
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitives',
+    title: 'Video',
+    subtitle: 'Showcase of the Video primitive block with Plyr integration',
+  }}
+>
+  <p>
+    Demonstrating video playback with Plyr for HTML5 videos, YouTube, and Vimeo embeds. Includes
+    aspect ratio options and floating player behavior.
+  </p>
+
+  <!-- Example 1: HTML5 Video (16:9) -->
+  <h3>1. HTML5 Video (Default Aspect)</h3>
+  <p>
+    Standard video player with 16:9 aspect ratio. Supports all modern video formats with full
+    controls.
+  </p>
+  <div class="border border-dashed border-gray/80 p-8">
+    <VideoBlock
+      source={{
+        type: 'video',
+        sources: [
+          {
+            src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4',
+            type: 'video/mp4',
+            size: 576,
+          },
+          {
+            src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4',
+            type: 'video/mp4',
+            size: 720,
+          },
+        ],
+      }}
+    />
+  </div>
+
+  <!-- Example 2: YouTube Embed -->
+  <h3>2. YouTube Embed</h3>
+  <p>Embed YouTube videos with Plyr's enhanced controls and consistent UI.</p>
+  <div class="border border-dashed border-gray/80 p-8">
+    <VideoBlock
+      source={{
+        type: 'video',
+        sources: [
+          {
+            src: 'bTqVqk7FSmY',
+            provider: 'youtube',
+          },
+        ],
+      }}
+    />
+  </div>
+
+  <!-- Example 3: Vimeo Embed -->
+  <h3>3. Vimeo Embed</h3>
+  <p>Embed Vimeo videos with full Plyr functionality.</p>
+  <div class="border border-dashed border-gray/80 p-8">
+    <VideoBlock
+      source={{
+        type: 'video',
+        sources: [
+          {
+            src: '76979871',
+            provider: 'vimeo',
+          },
+        ],
+      }}
+    />
+  </div>
+
+  <!-- Example 4: Square Aspect Ratio -->
+  <h3>4. Square Aspect Ratio (1:1)</h3>
+  <p>Perfect for social media-style videos or profile content.</p>
+  <div class="border border-dashed border-gray/80 p-8 max-w-lg mx-auto">
+    <VideoBlock
+      aspectRatio="square"
+      source={{
+        type: 'video',
+        sources: [
+          {
+            src: 'bTqVqk7FSmY',
+            provider: 'youtube',
+          },
+        ],
+      }}
+    />
+  </div>
+
+  <!-- Example 5: Portrait Aspect Ratio -->
+  <h3>5. Portrait Aspect Ratio (9:16)</h3>
+  <p>Optimized for mobile-first vertical videos.</p>
+  <div class="border border-dashed border-gray/80 p-8 max-w-md mx-auto">
+    <VideoBlock
+      aspectRatio="portrait"
+      source={{
+        type: 'video',
+        sources: [
+          {
+            src: 'bTqVqk7FSmY',
+            provider: 'youtube',
+          },
+        ],
+      }}
+    />
+  </div>
+
+  <!-- Example 6: Cinema Aspect Ratio -->
+  <h3>6. Cinema Aspect Ratio (21:9)</h3>
+  <p>Ultra-wide cinematic format for immersive content.</p>
+  <div class="border border-dashed border-gray/80 p-8">
+    <VideoBlock
+      aspectRatio="cinema"
+      source={{
+        type: 'video',
+        sources: [
+          {
+            src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4',
+            type: 'video/mp4',
+          },
+        ],
+      }}
+    />
+  </div>
+
+  <!-- Example 7: Floating Player -->
+  <h3>7. Floating Player Behavior</h3>
+  <p>
+    Video follows you as you scroll down the page. Try scrolling past this video to see it float in
+    the corner. Click the arrow button to dismiss it.
+  </p>
+  <div class="border border-dashed border-gray/80 p-8">
+    <VideoBlock
+      isFloating={true}
+      source={{
+        type: 'video',
+        sources: [
+          {
+            src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4',
+            type: 'video/mp4',
+          },
+        ],
+      }}
+    />
+  </div>
+
+  <!-- Spacer for floating demo -->
+  <div class="h-screen flex items-center justify-center border border-dashed border-gray/80">
+    <p class="text-xl text-muted">Scroll up to see the floating player appear</p>
+  </div>
+
+  <!-- Custom Plyr Options -->
+  <h3>8. Custom Plyr Options</h3>
+  <p>Configure Plyr with custom controls, quality settings, and more.</p>
+  <div class="border border-dashed border-gray/80 p-8">
+    <VideoBlock
+      source={{
+        type: 'video',
+        sources: [
+          {
+            src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4',
+            type: 'video/mp4',
+          },
+        ],
+      }}
+      options={{
+        controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
+        autoplay: false,
+        muted: false,
+        clickToPlay: true,
+        keyboard: { focused: true, global: false },
+      }}
+    />
+  </div>
+</Layout>

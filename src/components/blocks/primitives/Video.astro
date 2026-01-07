@@ -1,0 +1,156 @@
+---
+import type { VideoProps } from '~/types/video.types';
+import { cn } from '~/utils/styles';
+import Button from './Button.astro';
+import merge from 'lodash.merge';
+import type { ButtonProps } from '~/types/button.types';
+
+type Props = VideoProps;
+
+const {
+  source,
+  options = {},
+  aspectRatio = 'video',
+  isFloating = false,
+  crossorigin = 'anonymous',
+  pipButtonConfig,
+  class: className = '',
+} = Astro.props;
+
+// Map aspect ratios to Tailwind classes
+const aspectRatioClasses = {
+  video: 'aspect-video', // 16:9
+  square: 'aspect-square', // 1:1
+  portrait: 'aspect-[9/16]', // 9:16
+  cinema: 'aspect-[21/9]', // 21:9
+} as const;
+
+// Map aspect ratios to Plyr ratio format
+const plyrRatios = {
+  video: '16:9',
+  square: '1:1',
+  portrait: '9:16',
+  cinema: '21:9',
+} as const;
+
+// Default Plyr options
+const defaultOptions = {
+  controls: [
+    'play-large',
+    'play',
+    'progress',
+    'current-time',
+    'mute',
+    'volume',
+    'settings',
+    'pip',
+    'fullscreen',
+  ],
+  ratio: plyrRatios[aspectRatio],
+  ...options,
+};
+
+const videoGroupId = isFloating ? 'video-group' : undefined;
+const pipCloseBtnId = isFloating ? 'pip-close' : undefined;
+
+const defaultWrapperClass = 'w-full relative bg-elevated';
+const defaultVideoGroupClass = 'w-full relative overflow-hidden bg-elevated';
+
+const pipButtonDefaultConfig = {
+  id: pipCloseBtnId,
+  icon: { name: 'heroicons:arrow-up-left' },
+  size: 'sm',
+  class: 'absolute z-10 top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity hidden',
+} as ButtonProps;
+
+const mergedPipButtonConfig = merge({}, pipButtonDefaultConfig, pipButtonConfig, {
+  class: cn(pipButtonDefaultConfig?.class, pipButtonConfig?.class),
+});
+
+const mergedWrapperClass = cn(defaultWrapperClass, aspectRatioClasses[aspectRatio], className);
+
+const mergedVideoGroupClass = cn(
+  defaultVideoGroupClass,
+  aspectRatioClasses[aspectRatio],
+  isFloating && 'group'
+);
+---
+
+<div class={mergedWrapperClass}>
+  <div id={videoGroupId} class={mergedVideoGroupClass}>
+    {isFloating && <Button {...mergedPipButtonConfig} />}
+    <video
+      class="plyr"
+      data-plyr-config={JSON.stringify(defaultOptions)}
+      data-plyr-source={JSON.stringify(source)}
+      crossorigin={crossorigin}></video>
+  </div>
+</div>
+
+<script>
+  // @ts-expect-error - Plyr types are included in the package
+  import Plyr from 'plyr';
+  import 'plyr/dist/plyr.css';
+
+  const plyrEls = document.querySelectorAll('.plyr');
+  // @ts-expect-error - Plyr types
+  Plyr.setup(plyrEls).forEach((player, i) => {
+    const plyrEl = plyrEls[i] as HTMLElement;
+    player.source = JSON.parse(plyrEl.dataset.plyrSource ?? '{}');
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const videoGroup = document.getElementById('video-group');
+    const pipCloseBtn = document.getElementById('pip-close');
+
+    let userClosedFloatingPlayer = false;
+
+    if (!videoGroup) return;
+
+    const videoRect = videoGroup.getBoundingClientRect();
+    const videoTop = videoRect.top + window.scrollY;
+    const videoBottom = videoTop + videoRect.height / 3;
+
+    function updateFloatingState() {
+      if (!videoGroup) return;
+
+      const currentRect = videoGroup.getBoundingClientRect();
+      const isVideoFullyVisible =
+        currentRect.top >= 0 &&
+        currentRect.bottom <= window.innerHeight &&
+        currentRect.top < window.innerHeight / 2;
+
+      if (isVideoFullyVisible) {
+        userClosedFloatingPlayer = false;
+      }
+
+      const shouldFloat = window.scrollY > videoBottom && !userClosedFloatingPlayer;
+
+      if (shouldFloat) {
+        videoGroup.classList.add('floating-player');
+        if (pipCloseBtn) {
+          pipCloseBtn.classList.remove('hidden');
+          pipCloseBtn.classList.add('inline-flex');
+        }
+      } else {
+        videoGroup.classList.remove('floating-player');
+        if (pipCloseBtn) {
+          pipCloseBtn.classList.add('hidden');
+        }
+      }
+    }
+
+    if (pipCloseBtn && videoGroup) {
+      pipCloseBtn.addEventListener('click', () => {
+        videoGroup.classList.remove('floating-player');
+        pipCloseBtn.classList.add('hidden');
+
+        userClosedFloatingPlayer = true;
+      });
+    }
+
+    window.addEventListener('scroll', updateFloatingState);
+
+    updateFloatingState();
+  });
+</script>
