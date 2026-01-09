@@ -12,6 +12,7 @@ const {
   icon,
   iconPosition = 'left',
   iconSize,
+  align,
   href,
   target = '_self',
   size = 'md',
@@ -109,6 +110,16 @@ const intentClasses = {
 // Width classes
 const widthClasses = width === 'full' ? 'w-full' : '';
 
+// Alignment wrapper (optional)
+const alignClass =
+  align === 'center'
+    ? 'flex justify-center'
+    : align === 'right'
+      ? 'flex justify-end'
+      : align === 'left'
+        ? 'flex justify-start'
+        : '';
+
 // Layout classes for content arrangement
 const layoutClasses = cn(hasSubtitle ? 'flex-col gap-1' : 'flex-row gap-2', isIconOnly && 'p-0');
 
@@ -150,35 +161,37 @@ const tagProps = href
   : { id, type: 'button' as const, disabled };
 ---
 
-<Tag class={buttonClass} {...tagProps}>
-  {
-    icon && icon.name && iconPosition === 'left' && (
-      <Icon
-        name={icon.name}
-        class={cn(iconSizeClass, finalIconClass)}
-        aria-label={icon.ariaLabel}
-      />
-    )
-  }
+<div class={align ? alignClass : ''}>
+  <Tag class={buttonClass} {...tagProps}>
+    {
+      icon && icon.name && iconPosition === 'left' && (
+        <Icon
+          name={icon.name}
+          class={cn(iconSizeClass, finalIconClass)}
+          aria-label={icon.ariaLabel}
+        />
+      )
+    }
 
-  {
-    (label || subtitle) && (
-      <span class={cn('flex flex-col', hasSubtitle && 'items-start')}>
-        {label && <span class={finalLabelClass}>{label}</span>}
-        {subtitle && <span class={finalSubtitleClass}>{subtitle}</span>}
-      </span>
-    )
-  }
+    {
+      (label || subtitle) && (
+        <span class={cn('flex flex-col', hasSubtitle && 'items-start')}>
+          {label && <span class={finalLabelClass}>{label}</span>}
+          {subtitle && <span class={finalSubtitleClass}>{subtitle}</span>}
+        </span>
+      )
+    }
 
-  {
-    icon && icon.name && iconPosition === 'right' && (
-      <Icon
-        name={icon.name}
-        class={cn(iconSizeClass, finalIconClass)}
-        aria-label={icon.ariaLabel}
-      />
-    )
-  }
+    {
+      icon && icon.name && iconPosition === 'right' && (
+        <Icon
+          name={icon.name}
+          class={cn(iconSizeClass, finalIconClass)}
+          aria-label={icon.ariaLabel}
+        />
+      )
+    }
 
-  {Astro.slots.has('default') && <slot />}
-</Tag>
+    {Astro.slots.has('default') && <slot />}
+  </Tag>
+</div>

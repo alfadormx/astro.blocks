@@ -10,5 +10,6 @@ export interface VideoProps {
   isFloating?: boolean;
   crossorigin?: 'anonymous' | 'use-credentials';
   class?: string;
+  align?: 'left' | 'center' | 'right';
   pipButtonConfig?: ButtonProps;
 }

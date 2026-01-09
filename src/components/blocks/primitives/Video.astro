@@ -15,7 +15,17 @@ const {
   crossorigin = 'anonymous',
   pipButtonConfig,
   class: className = '',
+  align,
 } = Astro.props;
+
+const alignClass =
+  align === 'center'
+    ? 'flex justify-center'
+    : align === 'right'
+      ? 'flex justify-end'
+      : align === 'left'
+        ? 'flex justify-start'
+        : '';
 
 // Map aspect ratios to Tailwind classes
 const aspectRatioClasses = {
@@ -76,24 +86,24 @@ const mergedVideoGroupClass = cn(
 );
 ---
 
-<div class={mergedWrapperClass}>
-  <div id={videoGroupId} class={mergedVideoGroupClass}>
-    {isFloating && <Button {...mergedPipButtonConfig} />}
-    <video
-      class="plyr"
-      data-plyr-config={JSON.stringify(defaultOptions)}
-      data-plyr-source={JSON.stringify(source)}
-      crossorigin={crossorigin}></video>
+<div class={align ? alignClass : ''}>
+  <div class={mergedWrapperClass}>
+    <div id={videoGroupId} class={mergedVideoGroupClass}>
+      {isFloating && <Button {...mergedPipButtonConfig} />}
+      <video
+        class="plyr"
+        data-plyr-config={JSON.stringify(defaultOptions)}
+        data-plyr-source={JSON.stringify(source)}
+        crossorigin={crossorigin}></video>
+    </div>
   </div>
 </div>
 
 <script>
-  // @ts-expect-error - Plyr types are included in the package
   import Plyr from 'plyr';
   import 'plyr/dist/plyr.css';
 
   const plyrEls = document.querySelectorAll('.plyr');
-  // @ts-expect-error - Plyr types
   Plyr.setup(plyrEls).forEach((player, i) => {
     const plyrEl = plyrEls[i] as HTMLElement;
     player.source = JSON.parse(plyrEl.dataset.plyrSource ?? '{}');
