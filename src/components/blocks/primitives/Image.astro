@@ -16,6 +16,16 @@ type ImageType = {
 
 const props = Astro.props;
 
+const align = props.align;
+const alignClass =
+  align === 'center'
+    ? 'flex justify-center'
+    : align === 'right'
+      ? 'flex justify-end'
+      : align === 'left'
+        ? 'flex justify-start'
+        : '';
+
 if (props.alt === undefined || props.alt === null) {
   throw new Error('Image component requires an alt attribute for accessibility');
 }
@@ -51,4 +61,12 @@ if (
 }
 ---
 
-{!image ? <Fragment /> : <img src={image.src} referrerpolicy="no-referrer" {...image.attributes} />}
+{
+  !image ? (
+    <Fragment />
+  ) : (
+    <div class={alignClass}>
+      <img src={image.src} referrerpolicy="no-referrer" {...image.attributes} />
+    </div>
+  )
+}
