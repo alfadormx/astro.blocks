@@ -16,6 +16,12 @@ const {
   spacing,
   border,
   class: className = '',
+  contentClass,
+  showConnector = false,
+  showConnectorLeft = false,
+  showConnectorRight = false,
+  connectorStyle = 'solid',
+  connectorClass = '',
 } = Astro.props;
 
 const defaultRootClass = cn(
@@ -34,18 +40,66 @@ const defaultRootClass = cn(
 const mergedIconClass = cn('size-8 md:size-10 lg:size-12 shrink-0', icon?.class);
 const mergedTitleClass = cn('font-bold text-lg md:text-xl lg:text-2xl mb-1 md:mb-2');
 const mergedContentClass = cn('mb-2 md:mb-3');
+
+const connectorClasses = {
+  solid: 'border-solid',
+  dashed: 'border-dashed',
+  dotted: 'border-dotted',
+} as const;
+
+const connectorFinalClass = cn(
+  'w-0.5 h-full border-l border-border',
+  connectorClasses[connectorStyle as keyof typeof connectorClasses],
+  connectorClass
+);
+
+const horizontalConnectorClass = cn(
+  'h-0.5 border-t',
+  connectorClasses[connectorStyle as keyof typeof connectorClasses]
+);
+
+const horizontalConnectorLeftClass = cn(
+  horizontalConnectorClass,
+  showConnectorLeft ? 'border-border' : 'border-transparent'
+);
+
+const horizontalConnectorRightClass = cn(
+  horizontalConnectorClass,
+  showConnectorRight ? 'border-border' : 'border-transparent'
+);
 ---
 
 <div class={defaultRootClass}>
   {
-    icon && icon.name && (
-      <Icon name={icon.name} class={mergedIconClass} aria-label={icon.ariaLabel} />
+    layout === 'horizontal' && icon && icon.name && (
+      <div class="flex flex-col items-center self-stretch">
+        <Icon name={icon.name} class={mergedIconClass} aria-label={icon.ariaLabel} />
+        {showConnector && <div class={connectorFinalClass} />}
+      </div>
     )
+  }
+  {
+    layout === 'vertical' &&
+      icon &&
+      icon.name &&
+      (showConnectorLeft || showConnectorRight ? (
+        <div class="grid grid-cols-[1fr_auto_1fr] items-center w-full">
+          <div class={horizontalConnectorLeftClass} />
+          <Icon name={icon.name} class={mergedIconClass} aria-label={icon.ariaLabel} />
+          <div class={horizontalConnectorRightClass} />
+        </div>
+      ) : (
+        <div class="flex flex-col items-center self-stretch">
+          <Icon name={icon.name} class={mergedIconClass} aria-label={icon.ariaLabel} />
+          {showConnector && <div class={connectorFinalClass} />}
+        </div>
+      ))
   }
   <div
     class={cn(
       'flex flex-col',
-      layout === 'horizontal' ? 'items-start text-left' : 'items-center text-center'
+      layout === 'horizontal' ? 'items-start text-left' : 'items-center text-center',
+      contentClass
     )}
   >
     <div class={mergedTitleClass}>{title}</div>

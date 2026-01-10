@@ -15,6 +15,11 @@ export const documentationNavigation: ButtonProps[] = [
       { label: 'Content', href: '/documentation/composite/Content' },
       { label: 'ItemsContent', href: '/documentation/composite/ItemsContent' },
       { label: 'ItemsGrid', href: '/documentation/composite/ItemsGrid' },
+      { label: 'ItemsTimeline', href: '/documentation/composite/ItemsTimeline' },
+      {
+        label: 'ItemsTimelineHorizontal',
+        href: '/documentation/composite/ItemsTimelineHorizontal',
+      },
       { label: 'NavigationTree', href: '/documentation/composite/NavigationTree' },
     ],
   },

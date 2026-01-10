@@ -16,4 +16,10 @@ export interface ItemProps {
   spacing?: SpacingConfig;
   border?: BorderConfig;
   class?: string;
+  contentClass?: string;
+  showConnector?: boolean;
+  showConnectorLeft?: boolean;
+  showConnectorRight?: boolean;
+  connectorStyle?: 'solid' | 'dashed' | 'dotted';
+  connectorClass?: string;
 }
