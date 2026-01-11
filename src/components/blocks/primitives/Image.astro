@@ -26,6 +26,12 @@ const alignClass =
         ? 'flex justify-start'
         : '';
 
+// For contained and cover layouts, wrapper needs full dimensions
+const wrapperClass =
+  props.layout === 'contained' || props.layout === 'cover'
+    ? `${alignClass} w-full h-full`
+    : alignClass;
+
 if (props.alt === undefined || props.alt === null) {
   throw new Error('Image component requires an alt attribute for accessibility');
 }
@@ -65,7 +71,7 @@ if (
   !image ? (
     <Fragment />
   ) : (
-    <div class={alignClass}>
+    <div class={wrapperClass}>
       <img src={image.src} referrerpolicy="no-referrer" {...image.attributes} />
     </div>
   )
