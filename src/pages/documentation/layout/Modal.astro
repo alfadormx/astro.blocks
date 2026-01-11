@@ -1,0 +1,336 @@
+---
+import Layout from '~/layouts/DocumentationLayout.astro';
+import ModalBlock from '~/components/blocks/layout/Modal.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
+
+var metadata = {
+  title: {
+    default: 'Container',
+  },
+};
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Layout',
+    title: 'Modal',
+    subtitle: 'Showcase of the Modal layout block with various configurations',
+  }}
+>
+  <p>Modal dialog component with backdrop, multiple sizes, positions, and flexible content.</p>
+
+  <!-- Example 1: Basic Center Modal -->
+  <h3>Basic Center Modal</h3>
+  <p class="mb-4">Default modal centered on screen with close button.</p>
+  <div class="p-8 bg-muted rounded-lg">
+    <Button
+      data-modal-trigger="modal-basic"
+      label="Open Modal"
+      icon={{ name: 'heroicons:information-circle' }}
+    />
+    <ModalBlock id="modal-basic">
+      <div class="p-6">
+        <h3>Modal Title</h3>
+        <p class="text-muted-foreground mb-4">
+          This is a basic modal with default settings. Click the backdrop, press ESC, or click the
+          close button to dismiss.
+        </p>
+        <Button data-modal-close label="Close" />
+      </div>
+    </ModalBlock>
+  </div>
+
+  <!-- Example 2: Sizes -->
+  <h3>Modal Sizes</h3>
+  <p class="mb-4">Available sizes: sm, md (default), lg, xl, full.</p>
+  <div class="p-8 bg-muted rounded-lg flex flex-wrap gap-4">
+    <Button data-modal-trigger="modal-sm" size="sm" label="Small" />
+    <Button data-modal-trigger="modal-md" size="sm" label="Medium" />
+    <Button data-modal-trigger="modal-lg" size="sm" label="Large" />
+    <Button data-modal-trigger="modal-xl" size="sm" label="Extra Large" />
+    <Button data-modal-trigger="modal-full" size="sm" label="Full Screen" />
+    <ModalBlock id="modal-sm" size="sm">
+      <div class="p-6">
+        <h3>Small Modal</h3>
+        <p class="text-sm text-muted-foreground">Compact modal for simple messages.</p>
+      </div>
+    </ModalBlock>
+
+    <ModalBlock id="modal-md" size="md">
+      <div class="p-6">
+        <h3>Medium Modal</h3>
+        <p class="text-muted-foreground">Default size for most use cases.</p>
+      </div>
+    </ModalBlock>
+
+    <ModalBlock id="modal-lg" size="lg">
+      <div class="p-6">
+        <h3>Large Modal</h3>
+        <p class="text-muted-foreground">More space for complex content or forms.</p>
+      </div>
+    </ModalBlock>
+
+    <ModalBlock id="modal-xl" size="xl">
+      <div class="p-6">
+        <h3>Extra Large Modal</h3>
+        <p class="text-muted-foreground">Maximum width for detailed content.</p>
+      </div>
+    </ModalBlock>
+
+    <ModalBlock id="modal-full" size="full">
+      <div class="p-8">
+        <h3>Full Screen Modal</h3>
+        <p class="text-muted-foreground">
+          Takes up the entire viewport, ideal for immersive experiences.
+        </p>
+      </div>
+    </ModalBlock>
+  </div>
+
+  <!-- Example 3: Positions -->
+  <h3>Modal Positions</h3>
+  <p class="mb-4">Control where the modal appears on screen.</p>
+  <div class="p-8 bg-muted rounded-lg flex flex-wrap gap-4">
+    <Button data-modal-trigger="modal-center" size="sm" label="Center" />
+    <Button data-modal-trigger="modal-top" size="sm" label="Top" />
+    <Button data-modal-trigger="modal-bottom" size="sm" label="Bottom" />
+    <Button data-modal-trigger="modal-left" size="sm" label="Left" />
+    <Button data-modal-trigger="modal-right" size="sm" label="Right" />
+    <ModalBlock id="modal-center" position="center" size="sm">
+      <div class="p-6">
+        <h3>Center Position</h3>
+        <p class="text-sm text-muted-foreground">Default centered position.</p>
+      </div>
+    </ModalBlock>
+
+    <ModalBlock id="modal-top" position="top" size="sm">
+      <div class="p-6">
+        <h3>Top Position</h3>
+        <p class="text-sm text-muted-foreground">Appears at the top of the screen.</p>
+      </div>
+    </ModalBlock>
+
+    <ModalBlock id="modal-bottom" position="bottom" size="sm">
+      <div class="p-6">
+        <h3>Bottom Position</h3>
+        <p class="text-sm text-muted-foreground">Appears at the bottom of the screen.</p>
+      </div>
+    </ModalBlock>
+
+    <ModalBlock id="modal-left" position="left" size="sm">
+      <div class="p-6">
+        <h3>Left Position</h3>
+        <p class="text-sm text-muted-foreground">Slides in from the left side.</p>
+      </div>
+    </ModalBlock>
+
+    <ModalBlock id="modal-right" position="right" size="sm">
+      <div class="p-6">
+        <h3>Right Position</h3>
+        <p class="text-sm text-muted-foreground">Slides in from the right side.</p>
+      </div>
+    </ModalBlock>
+  </div>
+
+  <!-- Example 4: Behavior Options -->
+  <h3>Behavior Options</h3>
+  <p class="mb-4">Control close behaviors and close button visibility.</p>
+  <div class="p-8 bg-muted rounded-lg flex flex-wrap gap-4">
+    <Button data-modal-trigger="modal-no-backdrop" size="sm" label="No Backdrop Close" />
+    <Button data-modal-trigger="modal-no-escape" size="sm" label="No ESC Close" />
+    <Button data-modal-trigger="modal-no-close-btn" size="sm" label="No Close Button" />
+
+    <ModalBlock id="modal-no-backdrop" closeOnBackdrop={false} size="sm">
+      <div class="p-6">
+        <h3>Persistent Modal</h3>
+        <p class="text-sm text-muted-foreground mb-4">
+          Clicking the backdrop won't close this modal. Use the button or ESC key.
+        </p>
+        <Button data-modal-close size="sm" label="Close" />
+      </div>
+    </ModalBlock>
+
+    <ModalBlock id="modal-no-escape" closeOnEscape={false} size="sm">
+      <div class="p-6">
+        <h3>No ESC Close</h3>
+        <p class="text-sm text-muted-foreground mb-4">
+          ESC key won't close this modal. Use the button or click backdrop.
+        </p>
+        <Button data-modal-close size="sm" label="Close" />
+      </div>
+    </ModalBlock>
+
+    <ModalBlock id="modal-no-close-btn" showCloseButton={false} size="sm">
+      <div class="p-6">
+        <h3>No Close Button</h3>
+        <p class="text-sm text-muted-foreground mb-4">
+          No automatic close button. Provide your own close mechanism.
+        </p>
+        <Button data-modal-close size="sm" label="Custom Close Button" />
+      </div>
+    </ModalBlock>
+  </div>
+
+  <!-- Example 5: Complex Content -->
+  <h3>Complex Content</h3>
+  <p class="mb-4">Modal can contain any content including forms, images, or nested components.</p>
+  <div class="p-8 bg-muted rounded-lg">
+    <Button
+      data-modal-trigger="modal-complex"
+      icon={{ name: 'heroicons:document-text' }}
+      label="Open Form Modal"
+    />
+    <ModalBlock id="modal-complex" size="lg">
+      <div class="p-6">
+        <h3>Contact Form</h3>
+        <form class="space-y-4">
+          <div>
+            <label for="name" class="block text-sm font-medium mb-2">Name</label>
+            <input
+              type="text"
+              id="name"
+              class="w-full px-3 py-2 border border-border rounded-md bg-background"
+              placeholder="Enter your name"
+            />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium mb-2">Email</label>
+            <input
+              type="email"
+              id="email"
+              class="w-full px-3 py-2 border border-border rounded-md bg-background"
+              placeholder="Enter your email"
+            />
+          </div>
+          <div>
+            <label for="message" class="block text-sm font-medium mb-2">Message</label>
+            <textarea
+              id="message"
+              rows="4"
+              class="w-full px-3 py-2 border border-border rounded-md bg-background"
+              placeholder="Enter your message"></textarea>
+          </div>
+          <div class="flex gap-2 pt-4">
+            <Button icon={{ name: 'heroicons:paper-airplane' }} label="Send Message" />
+            <Button data-modal-close variant="outline" label="Cancel" />
+          </div>
+        </form>
+      </div>
+    </ModalBlock>
+  </div>
+
+  <!-- Example 6: Custom Styling -->
+  <h3>Custom Styling</h3>
+  <p class="mb-4">Customize modal and backdrop appearance with custom classes.</p>
+  <div class="p-8 bg-muted rounded-lg">
+    <Button data-modal-trigger="modal-custom" variant="outline" label="Open Custom Modal" />
+    <ModalBlock
+      id="modal-custom"
+      size="md"
+      backdropClass="bg-gradient-to-br from-blue-500/20 to-purple-500/20"
+      class="border-2 border-primary bg-linear-to-br from-background to-muted"
+    >
+      <div class="p-6">
+        <h3>Custom Styled Modal</h3>
+        <p class="text-muted-foreground mb-4">
+          This modal has custom backdrop and content styling applied through class props.
+        </p>
+        <Button data-modal-close label="Close" />
+      </div>
+    </ModalBlock>
+  </div>
+
+  <!-- API Reference -->
+  <h3>API Reference</h3>
+  <div class="overflow-x-auto">
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="border-b border-border">
+          <th class="py-2 px-4">Prop</th>
+          <th class="py-2 px-4">Type</th>
+          <th class="py-2 px-4">Default</th>
+          <th class="py-2 px-4">Description</th>
+        </tr>
+      </thead>
+      <tbody class="text-sm">
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">id</td>
+          <td class="py-2 px-4">string</td>
+          <td class="py-2 px-4">auto-generated</td>
+          <td class="py-2 px-4">Unique identifier for the modal</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">open</td>
+          <td class="py-2 px-4">boolean</td>
+          <td class="py-2 px-4">false</td>
+          <td class="py-2 px-4">Initial open state</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">size</td>
+          <td class="py-2 px-4">'sm' | 'md' | 'lg' | 'xl' | 'full'</td>
+          <td class="py-2 px-4">'md'</td>
+          <td class="py-2 px-4">Modal width size</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">position</td>
+          <td class="py-2 px-4">'center' | 'top' | 'bottom' | 'left' | 'right'</td>
+          <td class="py-2 px-4">'center'</td>
+          <td class="py-2 px-4">Position on screen</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">closeOnBackdrop</td>
+          <td class="py-2 px-4">boolean</td>
+          <td class="py-2 px-4">true</td>
+          <td class="py-2 px-4">Close when clicking backdrop</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">closeOnEscape</td>
+          <td class="py-2 px-4">boolean</td>
+          <td class="py-2 px-4">true</td>
+          <td class="py-2 px-4">Close when pressing ESC key</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">showCloseButton</td>
+          <td class="py-2 px-4">boolean</td>
+          <td class="py-2 px-4">true</td>
+          <td class="py-2 px-4">Show X close button in top-right</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">backdropClass</td>
+          <td class="py-2 px-4">string</td>
+          <td class="py-2 px-4">''</td>
+          <td class="py-2 px-4">Custom classes for backdrop</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">class</td>
+          <td class="py-2 px-4">string</td>
+          <td class="py-2 px-4">''</td>
+          <td class="py-2 px-4">Custom classes for modal content</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Usage -->
+  <h3>Usage</h3>
+  <div class="space-y-4">
+    <div>
+      <h3>Trigger Modal</h3>
+      <p class="text-sm text-muted-foreground mb-2">
+        Use <code class="px-1 py-0.5 bg-muted rounded">data-modal-trigger</code> attribute with modal
+        ID:
+      </p>
+      <pre
+        class="bg-muted p-4 rounded-lg overflow-x-auto"><code>&lt;Button data-modal-trigger="my-modal"&gt;Open&lt;/Button&gt;</code></pre>
+    </div>
+    <div>
+      <h3>Close Modal</h3>
+      <p class="text-sm text-muted-foreground mb-2">
+        Use <code class="px-1 py-0.5 bg-muted rounded">data-modal-close</code> attribute on any element:
+      </p>
+      <pre
+        class="bg-muted p-4 rounded-lg overflow-x-auto"><code>&lt;Button data-modal-close&gt;Close&lt;/Button&gt;</code></pre>
+    </div>
+  </div>
+</Layout>
