@@ -26,152 +26,142 @@ const metadata = {
   <!-- Example 1: Horizontal Timeline (Default) -->
   <h3>1. Horizontal Timeline (Default)</h3>
   <p>Classic horizontal timeline with solid connectors and normal spacing.</p>
-  <div class="border border-dashed border-gray/80 p-8">
-    <ItemsTimelineHorizontalBlock
-      items={[
-        {
-          icon: { name: 'heroicons:clipboard-document-list', class: 'text-primary' },
-          title: 'Planning',
-          content: 'Define goals and requirements.',
-        },
-        {
-          icon: { name: 'heroicons:wrench-screwdriver', class: 'text-secondary' },
-          title: 'Building',
-          content: 'Develop and test features.',
-        },
-        {
-          icon: { name: 'heroicons:eye', class: 'text-accent' },
-          title: 'Review',
-          content: 'Quality assurance checks.',
-        },
-        {
-          icon: { name: 'heroicons:check-badge', class: 'text-success' },
-          title: 'Complete',
-          content: 'Ready for deployment.',
-        },
-      ]}
-    />
-  </div>
+  <ItemsTimelineHorizontalBlock
+    items={[
+      {
+        icon: { name: 'heroicons:clipboard-document-list', class: 'text-primary' },
+        title: 'Planning',
+        content: 'Define goals and requirements.',
+      },
+      {
+        icon: { name: 'heroicons:wrench-screwdriver', class: 'text-secondary' },
+        title: 'Building',
+        content: 'Develop and test features.',
+      },
+      {
+        icon: { name: 'heroicons:eye', class: 'text-accent' },
+        title: 'Review',
+        content: 'Quality assurance checks.',
+      },
+      {
+        icon: { name: 'heroicons:check-badge', class: 'text-success' },
+        title: 'Complete',
+        content: 'Ready for deployment.',
+      },
+    ]}
+  />
 
   <!-- Example 2: Tight Spacing -->
   <h3>2. Horizontal Timeline - Tight Spacing</h3>
   <p>Compact horizontal timeline with reduced spacing between items.</p>
-  <div class="border border-dashed border-gray/80 p-8">
-    <ItemsTimelineHorizontalBlock
-      air="tight"
-      items={[
-        {
-          icon: { name: 'heroicons:user-plus', class: 'text-primary' },
-          title: 'Sign Up',
-          content: 'Create account.',
-        },
-        {
-          icon: { name: 'heroicons:envelope', class: 'text-secondary' },
-          title: 'Verify',
-          content: 'Check email.',
-        },
-        {
-          icon: { name: 'heroicons:cog-6-tooth', class: 'text-accent' },
-          title: 'Setup',
-          content: 'Configure profile.',
-        },
-        {
-          icon: { name: 'heroicons:rocket-launch', class: 'text-success' },
-          title: 'Launch',
-          content: 'Start using.',
-        },
-      ]}
-    />
-  </div>
+  <ItemsTimelineHorizontalBlock
+    air="tight"
+    items={[
+      {
+        icon: { name: 'heroicons:user-plus', class: 'text-primary' },
+        title: 'Sign Up',
+        content: 'Create account.',
+      },
+      {
+        icon: { name: 'heroicons:envelope', class: 'text-secondary' },
+        title: 'Verify',
+        content: 'Check email.',
+      },
+      {
+        icon: { name: 'heroicons:cog-6-tooth', class: 'text-accent' },
+        title: 'Setup',
+        content: 'Configure profile.',
+      },
+      {
+        icon: { name: 'heroicons:rocket-launch', class: 'text-success' },
+        title: 'Launch',
+        content: 'Start using.',
+      },
+    ]}
+  />
 
   <!-- Example 3: Dashed Connectors -->
   <h3>3. Horizontal Timeline - Dashed Connectors</h3>
   <p>Timeline with dashed connector lines for a different visual style.</p>
-  <div class="border border-dashed border-gray/80 p-8">
-    <ItemsTimelineHorizontalBlock
-      connectorStyle="dashed"
-      items={[
-        {
-          icon: { name: 'heroicons:light-bulb', class: 'text-warning' },
-          title: 'Ideation',
-          content: 'Brainstorm concepts.',
-        },
-        {
-          icon: { name: 'heroicons:pencil', class: 'text-info' },
-          title: 'Planning',
-          content: 'Create roadmaps.',
-        },
-        {
-          icon: { name: 'heroicons:code-bracket', class: 'text-primary' },
-          title: 'Development',
-          content: 'Build product.',
-        },
-        {
-          icon: { name: 'heroicons:paper-airplane', class: 'text-success' },
-          title: 'Launch',
-          content: 'Go live!',
-        },
-      ]}
-    />
-  </div>
+  <ItemsTimelineHorizontalBlock
+    connectorStyle="dashed"
+    items={[
+      {
+        icon: { name: 'heroicons:light-bulb', class: 'text-warning' },
+        title: 'Ideation',
+        content: 'Brainstorm concepts.',
+      },
+      {
+        icon: { name: 'heroicons:pencil', class: 'text-info' },
+        title: 'Planning',
+        content: 'Create roadmaps.',
+      },
+      {
+        icon: { name: 'heroicons:code-bracket', class: 'text-primary' },
+        title: 'Development',
+        content: 'Build product.',
+      },
+      {
+        icon: { name: 'heroicons:paper-airplane', class: 'text-success' },
+        title: 'Launch',
+        content: 'Go live!',
+      },
+    ]}
+  />
 
   <!-- Example 4: With Actions -->
   <h3>4. Horizontal Timeline with Actions</h3>
   <p>Timeline items can include action buttons.</p>
-  <div class="border border-dashed border-gray/80 p-8">
-    <ItemsTimelineHorizontalBlock
-      air="loose"
-      items={[
-        {
-          icon: { name: 'heroicons:book-open', class: 'text-primary' },
-          title: 'Learn',
-          content: 'Get familiar with basics.',
-          actions: [{ label: 'Tutorial', intent: 'primary' }],
-        },
-        {
-          icon: { name: 'heroicons:beaker', class: 'text-accent' },
-          title: 'Practice',
-          content: 'Hands-on exercises.',
-          actions: [{ label: 'Examples', intent: 'accent' }],
-        },
-        {
-          icon: { name: 'heroicons:trophy', class: 'text-warning' },
-          title: 'Master',
-          content: 'Advanced techniques.',
-          actions: [{ label: 'Guide', intent: 'secondary' }],
-        },
-      ]}
-    />
-  </div>
+  <ItemsTimelineHorizontalBlock
+    air="loose"
+    items={[
+      {
+        icon: { name: 'heroicons:book-open', class: 'text-primary' },
+        title: 'Learn',
+        content: 'Get familiar with basics.',
+        actions: [{ label: 'Tutorial', intent: 'primary' }],
+      },
+      {
+        icon: { name: 'heroicons:beaker', class: 'text-accent' },
+        title: 'Practice',
+        content: 'Hands-on exercises.',
+        actions: [{ label: 'Examples', intent: 'accent' }],
+      },
+      {
+        icon: { name: 'heroicons:trophy', class: 'text-warning' },
+        title: 'Master',
+        content: 'Advanced techniques.',
+        actions: [{ label: 'Guide', intent: 'secondary' }],
+      },
+    ]}
+  />
 
   <!-- Example 5: Dotted Connectors -->
   <h3>5. Horizontal Timeline - Dotted Connectors</h3>
   <p>Timeline with dotted connector style for subtle visual effect.</p>
-  <div class="border border-dashed border-gray/80 p-8">
-    <ItemsTimelineHorizontalBlock
-      connectorStyle="dotted"
-      items={[
-        {
-          icon: { name: 'heroicons:calendar', class: 'text-info' },
-          title: 'Q1 2024',
-          content: 'Core features.',
-        },
-        {
-          icon: { name: 'heroicons:calendar', class: 'text-info' },
-          title: 'Q2 2024',
-          content: 'Mobile app.',
-        },
-        {
-          icon: { name: 'heroicons:calendar', class: 'text-info' },
-          title: 'Q3 2024',
-          content: 'Analytics.',
-        },
-        {
-          icon: { name: 'heroicons:calendar', class: 'text-info' },
-          title: 'Q4 2024',
-          content: 'Enterprise.',
-        },
-      ]}
-    />
-  </div>
+  <ItemsTimelineHorizontalBlock
+    connectorStyle="dotted"
+    items={[
+      {
+        icon: { name: 'heroicons:calendar', class: 'text-info' },
+        title: 'Q1 2024',
+        content: 'Core features.',
+      },
+      {
+        icon: { name: 'heroicons:calendar', class: 'text-info' },
+        title: 'Q2 2024',
+        content: 'Mobile app.',
+      },
+      {
+        icon: { name: 'heroicons:calendar', class: 'text-info' },
+        title: 'Q3 2024',
+        content: 'Analytics.',
+      },
+      {
+        icon: { name: 'heroicons:calendar', class: 'text-info' },
+        title: 'Q4 2024',
+        content: 'Enterprise.',
+      },
+    ]}
+  />
 </Layout>

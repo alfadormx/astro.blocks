@@ -25,151 +25,141 @@ const metadata = {
   <!-- Example 1: Vertical Timeline (Default) -->
   <h3>1. Vertical Timeline (Default)</h3>
   <p>Classic vertical timeline with solid connectors and normal spacing.</p>
-  <div class="border border-dashed border-gray/80 p-8">
-    <ItemsTimelineBlock
-      items={[
-        {
-          icon: { name: 'heroicons:arrow-down-tray', class: 'text-primary' },
-          title: 'Step 1: Download',
-          content:
-            "Kickstart with GitHub! Either fork the Super template or simply click 'Use this template'. Your canvas awaits, ready for your digital masterpiece.",
-        },
-        {
-          icon: { name: 'heroicons:pencil-square', class: 'text-secondary' },
-          title: 'Step 2: Add content',
-          content:
-            "Pour your vision into it. Add images, text, and all that jazz to breathe life into your digital space. Remember, it's the content that tells your story.",
-        },
-        {
-          icon: { name: 'heroicons:paint-brush', class: 'text-accent' },
-          title: 'Step 3: Customize styles',
-          content:
-            'Give it your personal touch. Tailor colors, fonts, and layouts until it feels just right. Your unique flair, amplified by Super!',
-        },
-        {
-          icon: { name: 'heroicons:check-circle', class: 'text-success' },
-          title: 'Ready!',
-          content: 'Your site is live and ready to share with the world. Time to celebrate!',
-        },
-      ]}
-    />
-  </div>
+  <ItemsTimelineBlock
+    items={[
+      {
+        icon: { name: 'heroicons:arrow-down-tray', class: 'text-primary' },
+        title: 'Step 1: Download',
+        content:
+          "Kickstart with GitHub! Either fork the Super template or simply click 'Use this template'. Your canvas awaits, ready for your digital masterpiece.",
+      },
+      {
+        icon: { name: 'heroicons:pencil-square', class: 'text-secondary' },
+        title: 'Step 2: Add content',
+        content:
+          "Pour your vision into it. Add images, text, and all that jazz to breathe life into your digital space. Remember, it's the content that tells your story.",
+      },
+      {
+        icon: { name: 'heroicons:paint-brush', class: 'text-accent' },
+        title: 'Step 3: Customize styles',
+        content:
+          'Give it your personal touch. Tailor colors, fonts, and layouts until it feels just right. Your unique flair, amplified by Super!',
+      },
+      {
+        icon: { name: 'heroicons:check-circle', class: 'text-success' },
+        title: 'Ready!',
+        content: 'Your site is live and ready to share with the world. Time to celebrate!',
+      },
+    ]}
+  />
 
   <!-- Example 2: Vertical Timeline with Tight Spacing -->
   <h3>2. Vertical Timeline - Tight Spacing</h3>
   <p>Compact timeline with reduced spacing between items.</p>
-  <div class="border border-dashed border-gray/80 p-8">
-    <ItemsTimelineBlock
-      air="tight"
-      items={[
-        {
-          icon: { name: 'heroicons:user-plus', class: 'text-primary' },
-          title: 'Sign Up',
-          content: 'Create your account in seconds.',
-        },
-        {
-          icon: { name: 'heroicons:envelope', class: 'text-secondary' },
-          title: 'Verify Email',
-          content: 'Check your inbox for verification link.',
-        },
-        {
-          icon: { name: 'heroicons:cog-6-tooth', class: 'text-accent' },
-          title: 'Setup Profile',
-          content: 'Customize your profile and preferences.',
-        },
-        {
-          icon: { name: 'heroicons:rocket-launch', class: 'text-success' },
-          title: 'Get Started',
-          content: 'Start using all features immediately.',
-        },
-      ]}
-    />
-  </div>
+  <ItemsTimelineBlock
+    air="tight"
+    items={[
+      {
+        icon: { name: 'heroicons:user-plus', class: 'text-primary' },
+        title: 'Sign Up',
+        content: 'Create your account in seconds.',
+      },
+      {
+        icon: { name: 'heroicons:envelope', class: 'text-secondary' },
+        title: 'Verify Email',
+        content: 'Check your inbox for verification link.',
+      },
+      {
+        icon: { name: 'heroicons:cog-6-tooth', class: 'text-accent' },
+        title: 'Setup Profile',
+        content: 'Customize your profile and preferences.',
+      },
+      {
+        icon: { name: 'heroicons:rocket-launch', class: 'text-success' },
+        title: 'Get Started',
+        content: 'Start using all features immediately.',
+      },
+    ]}
+  />
 
   <!-- Example 3: Vertical Timeline with Dashed Connectors -->
   <h3>3. Vertical Timeline - Dashed Connectors</h3>
   <p>Timeline with dashed connector lines for a different visual style.</p>
-  <div class="border border-dashed border-gray/80 p-8">
-    <ItemsTimelineBlock
-      connectorStyle="dashed"
-      items={[
-        {
-          icon: { name: 'heroicons:light-bulb', class: 'text-warning' },
-          title: 'Ideation',
-          content: 'Brainstorm and conceptualize your project vision.',
-        },
-        {
-          icon: { name: 'heroicons:pencil', class: 'text-info' },
-          title: 'Planning',
-          content: 'Create detailed roadmaps and specifications.',
-        },
-        {
-          icon: { name: 'heroicons:code-bracket', class: 'text-primary' },
-          title: 'Development',
-          content: 'Build and iterate on your product.',
-        },
-        {
-          icon: { name: 'heroicons:paper-airplane', class: 'text-success' },
-          title: 'Launch',
-          content: 'Deploy to production and go live!',
-        },
-      ]}
-    />
-  </div>
+  <ItemsTimelineBlock
+    connectorStyle="dashed"
+    items={[
+      {
+        icon: { name: 'heroicons:light-bulb', class: 'text-warning' },
+        title: 'Ideation',
+        content: 'Brainstorm and conceptualize your project vision.',
+      },
+      {
+        icon: { name: 'heroicons:pencil', class: 'text-info' },
+        title: 'Planning',
+        content: 'Create detailed roadmaps and specifications.',
+      },
+      {
+        icon: { name: 'heroicons:code-bracket', class: 'text-primary' },
+        title: 'Development',
+        content: 'Build and iterate on your product.',
+      },
+      {
+        icon: { name: 'heroicons:paper-airplane', class: 'text-success' },
+        title: 'Launch',
+        content: 'Deploy to production and go live!',
+      },
+    ]}
+  />
 
   <!-- Example 4: Vertical Timeline with Actions -->
   <h3>4. Vertical Timeline with Actions</h3>
   <p>Timeline items can include action buttons.</p>
-  <div class="border border-dashed border-gray/80 p-8">
-    <ItemsTimelineBlock
-      air="loose"
-      items={[
-        {
-          icon: { name: 'heroicons:book-open', class: 'text-primary' },
-          title: 'Learn the Basics',
-          content: 'Get familiar with fundamental concepts and core features.',
-          actions: [{ label: 'Start Tutorial', intent: 'primary' }],
-        },
-        {
-          icon: { name: 'heroicons:beaker', class: 'text-accent' },
-          title: 'Practice',
-          content: 'Apply your knowledge through hands-on exercises and examples.',
-          actions: [{ label: 'View Examples', intent: 'accent' }],
-        },
-        {
-          icon: { name: 'heroicons:trophy', class: 'text-warning' },
-          title: 'Master',
-          content: 'Become proficient through advanced techniques and patterns.',
-          actions: [{ label: 'Advanced Guide', intent: 'secondary' }],
-        },
-      ]}
-    />
-  </div>
+  <ItemsTimelineBlock
+    air="loose"
+    items={[
+      {
+        icon: { name: 'heroicons:book-open', class: 'text-primary' },
+        title: 'Learn the Basics',
+        content: 'Get familiar with fundamental concepts and core features.',
+        actions: [{ label: 'Start Tutorial', intent: 'primary' }],
+      },
+      {
+        icon: { name: 'heroicons:beaker', class: 'text-accent' },
+        title: 'Practice',
+        content: 'Apply your knowledge through hands-on exercises and examples.',
+        actions: [{ label: 'View Examples', intent: 'accent' }],
+      },
+      {
+        icon: { name: 'heroicons:trophy', class: 'text-warning' },
+        title: 'Master',
+        content: 'Become proficient through advanced techniques and patterns.',
+        actions: [{ label: 'Advanced Guide', intent: 'secondary' }],
+      },
+    ]}
+  />
 
   <!-- Example 5: Dotted Connectors -->
   <h3>5. Dotted Connectors</h3>
   <p>Timeline with dotted connector style for subtle visual effect.</p>
-  <div class="border border-dashed border-gray/80 p-8">
-    <ItemsTimelineBlock
-      connectorStyle="dotted"
-      air="loose"
-      items={[
-        {
-          icon: { name: 'heroicons:calendar', class: 'text-info' },
-          title: 'Q1 2024',
-          content: 'Initial release with core features.',
-        },
-        {
-          icon: { name: 'heroicons:calendar', class: 'text-info' },
-          title: 'Q2 2024',
-          content: 'Mobile app launch and API improvements.',
-        },
-        {
-          icon: { name: 'heroicons:calendar', class: 'text-info' },
-          title: 'Q3 2024',
-          content: 'Advanced analytics and integrations.',
-        },
-      ]}
-    />
-  </div>
+  <ItemsTimelineBlock
+    connectorStyle="dotted"
+    air="loose"
+    items={[
+      {
+        icon: { name: 'heroicons:calendar', class: 'text-info' },
+        title: 'Q1 2024',
+        content: 'Initial release with core features.',
+      },
+      {
+        icon: { name: 'heroicons:calendar', class: 'text-info' },
+        title: 'Q2 2024',
+        content: 'Mobile app launch and API improvements.',
+      },
+      {
+        icon: { name: 'heroicons:calendar', class: 'text-info' },
+        title: 'Q3 2024',
+        content: 'Advanced analytics and integrations.',
+      },
+    ]}
+  />
 </Layout>
