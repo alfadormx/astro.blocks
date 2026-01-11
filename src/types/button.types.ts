@@ -1,6 +1,7 @@
+import type { HTMLAttributes } from 'astro/types';
 import type { IconConfig } from './icon.types';
 
-export interface ButtonProps {
+export interface ButtonProps extends Omit<HTMLAttributes<'button'>, 'class'> {
   id?: string;
   label?: string;
   subtitle?: string;

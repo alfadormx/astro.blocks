@@ -24,6 +24,7 @@ const {
   class: className = '',
   labelClass = '',
   subtitleClass = '',
+  ...attrs
 } = Astro.props;
 
 // Determine if this is an icon-only button
@@ -157,8 +158,8 @@ const finalIconClass = cn(icon?.class);
 // Render as link or button
 const Tag = href ? 'a' : 'button';
 const tagProps = href
-  ? { id, href, target, rel: target === '_blank' ? 'noopener noreferrer' : undefined }
-  : { id, type: 'button' as const, disabled };
+  ? { id, href, target, rel: target === '_blank' ? 'noopener noreferrer' : undefined, ...attrs }
+  : { id, type: 'button' as const, disabled, ...attrs };
 ---
 
 <div class={align ? alignClass : ''}>
