@@ -27,11 +27,12 @@ export const documentationNavigation: ButtonProps[] = [
     label: 'Layout',
     children: [
       { label: 'Container', href: '/documentation/layout/Container' },
-      { label: 'TwoColumnContainer', href: '/documentation/layout/TwoColumnContainer' },
-      { label: 'ThreeColumnContainer', href: '/documentation/layout/ThreeColumnContainer' },
       { label: 'FourColumnContainer', href: '/documentation/layout/FourColumnContainer' },
+      { label: 'Modal', href: '/documentation/layout/Modal' },
       { label: 'SidebarLeftContainer', href: '/documentation/layout/SidebarLeftContainer' },
       { label: 'SidebarRightContainer', href: '/documentation/layout/SidebarRightContainer' },
+      { label: 'ThreeColumnContainer', href: '/documentation/layout/ThreeColumnContainer' },
+      { label: 'TwoColumnContainer', href: '/documentation/layout/TwoColumnContainer' },
     ],
   },
   {

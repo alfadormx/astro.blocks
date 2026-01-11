@@ -1,0 +1,157 @@
+---
+import type { ModalProps } from '~/types/modal.types';
+import { cn } from '~/utils/styles';
+import merge from 'lodash.merge';
+import Button from '../primitives/Button.astro';
+
+type Props = ModalProps;
+
+const {
+  id = `modal-${Math.random().toString(36).slice(2, 11)}`,
+  open = false,
+  size = 'md',
+  position = 'center',
+  closeOnBackdrop = true,
+  closeOnEscape = true,
+  showCloseButton = true,
+  backdropClass = '',
+  class: className = '',
+  closeButtonConfig = {},
+  ...attrs
+} = Astro.props;
+
+const sizeClasses = {
+  sm: 'max-w-sm',
+  md: 'max-w-md',
+  lg: 'max-w-lg',
+  xl: 'max-w-xl',
+  full: 'w-full h-full max-w-none',
+} as const;
+
+const positionClasses = {
+  center: 'items-center justify-center',
+  top: 'items-start justify-center pt-20',
+  bottom: 'items-end justify-center pb-20',
+  left: 'items-center justify-start pl-0',
+  right: 'items-center justify-end pr-0',
+} as const;
+
+const defaultBackdropClass = 'fixed inset-0 bg-surface/75 backdrop-blur-sm z-50';
+const defaultModalClass = cn(
+  'relative bg-base rounded-sm shadow-xl',
+  'w-full mx-4',
+  sizeClasses[size],
+  size !== 'full' && 'max-h-[90vh] overflow-auto'
+);
+
+const defaultCloseButton = {
+  icon: { name: 'heroicons:x-mark' },
+  variant: 'ghost',
+  intent: 'neutral',
+  size: 'sm',
+};
+
+const backdropFinalClass = cn(
+  defaultBackdropClass,
+  'flex',
+  positionClasses[position],
+  backdropClass
+);
+
+const modalFinalClass = cn(defaultModalClass, className);
+const mergedCloseButtonConfig = merge({}, defaultCloseButton, closeButtonConfig);
+---
+
+<div
+  id={id}
+  class={backdropFinalClass}
+  data-modal
+  data-close-on-backdrop={closeOnBackdrop}
+  data-close-on-escape={closeOnEscape}
+  style={open ? 'display: flex;' : 'display: none;'}
+  {...attrs}
+>
+  <div class={modalFinalClass} role="dialog" aria-modal="true" data-modal-content>
+    {
+      showCloseButton && (
+        <div class="absolute top-4 right-4 z-10">
+          <Button {...mergedCloseButtonConfig} aria-label="Close modal" data-modal-close />
+        </div>
+      )
+    }
+    <slot />
+  </div>
+</div>
+
+<script>
+  interface WindowWithModalInit extends Window {
+    __modalInitialized?: boolean;
+  }
+
+  function initModal() {
+    const win = window as WindowWithModalInit;
+    if (win.__modalInitialized) {
+      return;
+    }
+    win.__modalInitialized = true;
+
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+
+      // Close button clicked
+      if (target.closest('[data-modal-close]')) {
+        const modal = target.closest('[data-modal]');
+        if (modal) {
+          (modal as HTMLElement).style.display = 'none';
+        }
+      }
+
+      // Backdrop clicked (not modal content)
+      if (target.hasAttribute('data-modal')) {
+        const modal = target as HTMLElement;
+        const closeOnBackdrop = modal.getAttribute('data-close-on-backdrop') === 'true';
+        if (closeOnBackdrop) {
+          modal.style.display = 'none';
+        }
+      }
+    });
+
+    // ESC key to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const modals = document.querySelectorAll('[data-modal]');
+        modals.forEach((modal) => {
+          const closeOnEscape = modal.getAttribute('data-close-on-escape') === 'true';
+          const isVisible = (modal as HTMLElement).style.display !== 'none';
+          if (closeOnEscape && isVisible) {
+            (modal as HTMLElement).style.display = 'none';
+          }
+        });
+      }
+    });
+
+    // Trigger buttons (data-modal-trigger="modal-id")
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const trigger = target.closest('[data-modal-trigger]');
+      if (trigger) {
+        const modalId = trigger.getAttribute('data-modal-trigger');
+        if (modalId) {
+          const modal = document.getElementById(modalId);
+          if (modal) {
+            (modal as HTMLElement).style.display = 'flex';
+          } else {
+            console.warn('[Modal] Modal not found with id:', modalId);
+          }
+        }
+      }
+    });
+  }
+
+  initModal();
+
+  document.addEventListener('astro:after-swap', () => {
+    (window as WindowWithModalInit).__modalInitialized = false;
+    initModal();
+  });
+</script>
