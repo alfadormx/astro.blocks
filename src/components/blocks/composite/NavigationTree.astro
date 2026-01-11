@@ -96,11 +96,7 @@ const shouldShowChildren = (
               <Button
                 {...(isActive ? defaultActiveButtonConfig : defaultButtonConfig)}
                 {...item}
-                href={
-                  hasChildren && expansionStrategy === 'toggleable' && toggleMode === 'button'
-                    ? undefined
-                    : item.href
-                }
+                href={hasChildren && toggleMode === 'button' ? undefined : item.href}
                 variant={
                   item.variant ||
                   (isActive ? defaultActiveButtonConfig.variant : defaultButtonConfig.variant)
@@ -117,12 +113,12 @@ const shouldShowChildren = (
                   item.width ||
                   (isActive ? defaultActiveButtonConfig.width : defaultButtonConfig.width)
                 }
-                class={`justify-start ${hasChildren && expansionStrategy === 'toggleable' && toggleMode === 'button' ? 'data-nav-toggle' : ''} ${item.class || ''} ${isActive ? 'font-semibold' : ''}`}
+                class={`justify-start ${hasChildren && toggleMode === 'button' ? 'data-nav-toggle' : ''} ${item.class || ''} ${isActive ? 'font-semibold' : ''}`}
                 icon={
                   hasChildren
                     ? {
                         name: iconName,
-                        class: `nav-tree-icon ${isExpanded && rotateIconOnExpand ? 'nav-tree-icon-expanded' : ''} ${expansionStrategy === 'toggleable' && toggleMode === 'icon' ? 'data-nav-icon-toggle cursor-pointer' : ''}`,
+                        class: `nav-tree-icon ${isExpanded && rotateIconOnExpand ? 'nav-tree-icon-expanded' : ''} ${toggleMode === 'icon' ? 'data-nav-icon-toggle cursor-pointer' : ''}`,
                         ...item.icon,
                       }
                     : item.icon
@@ -173,9 +169,6 @@ const shouldShowChildren = (
     if (!navTrees.length) return;
 
     navTrees.forEach((navTree) => {
-      const strategy = navTree.getAttribute('data-expansion-strategy');
-      if (strategy !== 'toggleable') return;
-
       navTree.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
 
