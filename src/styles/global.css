@@ -133,6 +133,14 @@
   .nav-tree-icon-expanded {
     transform: rotate(90deg);
   }
+
+  [data-nav-item]:hover > [data-nav-dropdown] {
+    display: block;
+  }
+
+  [data-nav-dropdown]:not(.hidden) {
+    display: block;
+  }
 }
 
 @theme inline {

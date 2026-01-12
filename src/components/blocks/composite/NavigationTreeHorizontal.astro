@@ -1,0 +1,160 @@
+---
+import type { NavigationTreeHorizontalProps } from '~/types/navigationtreehorizontal.types';
+import type { ButtonProps } from '~/types/button.types';
+import { cn } from '~/utils/styles';
+import Button from '../primitives/Button.astro';
+import merge from 'lodash.merge';
+
+type Props = NavigationTreeHorizontalProps;
+
+const {
+  items = [],
+  trigger = 'hover',
+  dropdownPosition = 'left',
+  class: className = '',
+  itemClass = '',
+  dropdownClass = '',
+  defaultItemConfig = {},
+  ...attrs
+} = Astro.props;
+
+const defaultNavClass = 'flex flex-row items-center gap-1';
+const navClass = cn(defaultNavClass, className);
+
+const dropdownPositionClasses = {
+  left: 'left-0',
+  center: 'left-1/2 -translate-x-1/2',
+  right: 'right-0',
+} as const;
+
+const defaultDropdownClass = cn(
+  'absolute top-full pt-2 min-w-50',
+  'bg-base border border-border rounded-sm shadow-lg',
+  'pb-2 z-50',
+  'hidden group-hover:block',
+  dropdownPositionClasses[dropdownPosition],
+  dropdownClass
+);
+
+const defaultItemButtonConfig = {
+  variant: 'ghost',
+  intent: 'neutral',
+  size: 'sm',
+} as const;
+---
+
+<nav class={navClass} {...attrs}>
+  {
+    items.map((item: ButtonProps) => {
+      const hasChildren = item.children && item.children.length > 0;
+      const mergedItemConfig = merge({}, defaultItemButtonConfig, defaultItemConfig, item);
+
+      // For items with children, remove href to prevent navigation
+      if (hasChildren && trigger === 'click') {
+        mergedItemConfig.href = undefined;
+      }
+
+      return (
+        <div class={cn('relative group', itemClass)} data-nav-item>
+          <Button
+            {...mergedItemConfig}
+            class={cn(mergedItemConfig.class, hasChildren && 'data-nav-parent')}
+            icon={
+              hasChildren
+                ? {
+                    name: 'heroicons:chevron-down',
+                    ...mergedItemConfig.icon,
+                  }
+                : mergedItemConfig.icon
+            }
+            iconPosition="right"
+          />
+
+          {hasChildren && (
+            <div class={defaultDropdownClass} data-nav-dropdown>
+              {item.children!.map((child: ButtonProps) => {
+                const mergedChildConfig = merge(
+                  {},
+                  {
+                    variant: 'ghost',
+                    intent: 'neutral',
+                    size: 'sm',
+                    width: 'full',
+                    class: 'justify-start',
+                  },
+                  defaultItemConfig,
+                  child
+                );
+
+                return (
+                  <Button {...mergedChildConfig} class={cn('px-4 py-2', mergedChildConfig.class)} />
+                );
+              })}
+            </div>
+          )}
+        </div>
+      );
+    })
+  }
+</nav>
+
+<script>
+  interface WindowWithNavInit extends Window {
+    __navHorizontalInitialized?: boolean;
+  }
+
+  function initNavigationTreeHorizontal() {
+    const win = window as WindowWithNavInit;
+    if (win.__navHorizontalInitialized) return;
+    win.__navHorizontalInitialized = true;
+
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const parentButton = target.closest('[data-nav-parent]');
+
+      if (parentButton) {
+        const navItem = parentButton.closest('[data-nav-item]');
+        if (navItem) {
+          const dropdown = navItem.querySelector('[data-nav-dropdown]') as HTMLElement;
+          if (dropdown) {
+            const isHidden = dropdown.classList.contains('hidden');
+
+            document.querySelectorAll('[data-nav-dropdown]').forEach((d) => {
+              if (d !== dropdown) {
+                d.classList.add('hidden');
+              }
+            });
+
+            if (isHidden) {
+              dropdown.classList.remove('hidden');
+            } else {
+              dropdown.classList.add('hidden');
+            }
+          }
+        }
+      } else {
+        const navItem = target.closest('[data-nav-item]');
+        if (!navItem) {
+          document.querySelectorAll('[data-nav-dropdown]').forEach((d) => {
+            d.classList.add('hidden');
+          });
+        }
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('[data-nav-dropdown]').forEach((d) => {
+          d.classList.add('hidden');
+        });
+      }
+    });
+  }
+
+  initNavigationTreeHorizontal();
+
+  document.addEventListener('astro:after-swap', () => {
+    (window as WindowWithNavInit).__navHorizontalInitialized = false;
+    initNavigationTreeHorizontal();
+  });
+</script>

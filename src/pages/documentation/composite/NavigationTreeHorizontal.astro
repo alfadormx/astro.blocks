@@ -1,0 +1,231 @@
+---
+import Layout from '~/layouts/DocumentationLayout.astro';
+import NavigationTreeHorizontalBlock from '~/components/blocks/composite/NavigationTreeHorizontal.astro';
+
+var metadata = {
+  title: {
+    default: 'NavigationTreeHorizontal',
+  },
+};
+
+const basicItems = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+];
+
+const itemsWithDropdowns = [
+  { label: 'Home', href: '/' },
+  {
+    label: 'Products',
+    children: [
+      { label: 'Product 1', href: '/products/1' },
+      { label: 'Product 2', href: '/products/2' },
+      { label: 'Product 3', href: '/products/3' },
+    ],
+  },
+  {
+    label: 'Services',
+    children: [
+      { label: 'Consulting', href: '/services/consulting' },
+      { label: 'Development', href: '/services/development' },
+      { label: 'Design', href: '/services/design' },
+    ],
+  },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+];
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'NavigationTreeHorizontal',
+    subtitle: 'Horizontal navigation menu with dropdown support',
+  }}
+>
+  <p>
+    Horizontal navigation component with dropdown menus for items with children. Supports hover and
+    click trigger modes.
+  </p>
+
+  <!-- Example 1: Basic Menu -->
+  <h3>Basic Horizontal Menu</h3>
+  <p>Simple horizontal navigation without dropdowns.</p>
+  <div class="border border-border rounded-lg p-6">
+    <NavigationTreeHorizontalBlock items={basicItems} />
+  </div>
+
+  <!-- Example 2: Hover Dropdowns -->
+  <h3>Hover Dropdowns (Default)</h3>
+  <p>Dropdown menus appear on hover.</p>
+  <div class="border border-border rounded-lg p-6">
+    <NavigationTreeHorizontalBlock items={itemsWithDropdowns} trigger="hover" />
+  </div>
+
+  <!-- Example 3: Click Dropdowns -->
+  <h3>Click Dropdowns</h3>
+  <p>Dropdown menus appear on click. Click outside or press ESC to close.</p>
+  <div class="border border-border rounded-lg p-6">
+    <NavigationTreeHorizontalBlock items={itemsWithDropdowns} trigger="click" />
+  </div>
+
+  <!-- Example 4: Dropdown Position -->
+  <h3>Dropdown Position</h3>
+  <p>Control dropdown alignment: left (default), center, or right.</p>
+  <div class="space-y-6">
+    <div>
+      <h4>Left Aligned</h4>
+      <div class="border border-border rounded-lg p-6">
+        <NavigationTreeHorizontalBlock items={itemsWithDropdowns} dropdownPosition="left" />
+      </div>
+    </div>
+    <div>
+      <h4>Center Aligned</h4>
+      <div class="border border-border rounded-lg p-6">
+        <NavigationTreeHorizontalBlock items={itemsWithDropdowns} dropdownPosition="center" />
+      </div>
+    </div>
+    <div>
+      <h4>Right Aligned</h4>
+      <div class="border border-border rounded-lg p-6">
+        <NavigationTreeHorizontalBlock items={itemsWithDropdowns} dropdownPosition="right" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Example 5: Custom Styling -->
+  <h3>Custom Styling</h3>
+  <p>Customize appearance with default item configuration and custom classes.</p>
+  <div class="border border-border rounded-lg p-6">
+    <NavigationTreeHorizontalBlock
+      items={itemsWithDropdowns}
+      defaultItemConfig={{
+        variant: 'outline',
+        intent: 'primary',
+        size: 'md',
+      }}
+      class="gap-3"
+      dropdownClass="bg-background border-primary rounded-none space-y-1"
+    />
+  </div>
+
+  <!-- Example 6: Different Variants -->
+  <h3>Button Variants</h3>
+  <p>Use different button variants for the navigation items.</p>
+  <div>
+    <h4>Ghost (Default)</h4>
+    <div class="border border-border rounded-lg p-6">
+      <NavigationTreeHorizontalBlock
+        items={itemsWithDropdowns}
+        defaultItemConfig={{ variant: 'ghost' }}
+      />
+    </div>
+  </div>
+  <div>
+    <h4>Solid</h4>
+    <div class="border border-border rounded-lg p-6">
+      <NavigationTreeHorizontalBlock
+        items={itemsWithDropdowns}
+        defaultItemConfig={{ variant: 'solid', intent: 'primary' }}
+      />
+    </div>
+  </div>
+  <div>
+    <h4>Outline</h4>
+    <div class="border border-border rounded-lg p-6">
+      <NavigationTreeHorizontalBlock
+        items={itemsWithDropdowns}
+        defaultItemConfig={{ variant: 'outline', intent: 'accent' }}
+      />
+    </div>
+  </div>
+
+  <!-- API Reference -->
+  <h3>API Reference</h3>
+  <div class="overflow-x-auto">
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="border-b border-border">
+          <th class="py-2 px-4">Prop</th>
+          <th class="py-2 px-4">Type</th>
+          <th class="py-2 px-4">Default</th>
+          <th class="py-2 px-4">Description</th>
+        </tr>
+      </thead>
+      <tbody class="text-sm">
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">items</td>
+          <td class="py-2 px-4">ButtonProps[]</td>
+          <td class="py-2 px-4">[]</td>
+          <td class="py-2 px-4">Navigation items with optional children</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">trigger</td>
+          <td class="py-2 px-4">'hover' | 'click'</td>
+          <td class="py-2 px-4">'hover'</td>
+          <td class="py-2 px-4">How dropdowns are triggered</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">dropdownPosition</td>
+          <td class="py-2 px-4">'left' | 'center' | 'right'</td>
+          <td class="py-2 px-4">'left'</td>
+          <td class="py-2 px-4">Dropdown alignment relative to parent</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">class</td>
+          <td class="py-2 px-4">string</td>
+          <td class="py-2 px-4">''</td>
+          <td class="py-2 px-4">Custom classes for nav container</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">itemClass</td>
+          <td class="py-2 px-4">string</td>
+          <td class="py-2 px-4">''</td>
+          <td class="py-2 px-4">Custom classes for each nav item wrapper</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">dropdownClass</td>
+          <td class="py-2 px-4">string</td>
+          <td class="py-2 px-4">''</td>
+          <td class="py-2 px-4">Custom classes for dropdown containers</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">defaultItemConfig</td>
+          <td class="py-2 px-4">Partial&lt;ButtonProps&gt;</td>
+          <td class="py-2 px-4">{}</td>
+          <td class="py-2 px-4">Default configuration for all buttons</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Usage Notes -->
+  <h3>Usage Notes</h3>
+  <div class="space-y-4 text-sm">
+    <div>
+      <h4 class="font-semibold mb-2">Structure</h4>
+      <p class="text-muted-foreground">
+        Each item in the <code class="px-1 py-0.5 bg-muted rounded">items</code> array follows the ButtonProps
+        interface. Items with a <code class="px-1 py-0.5 bg-muted rounded">children</code>
+        array will render as dropdown menus.
+      </p>
+    </div>
+    <div>
+      <h4 class="font-semibold mb-2">Trigger Modes</h4>
+      <p class="text-muted-foreground">
+        <strong>Hover:</strong> Dropdowns appear on mouse hover (best for desktop).<br />
+        <strong>Click:</strong> Dropdowns appear on click and close when clicking outside or pressing
+        ESC (better for touch devices).
+      </p>
+    </div>
+    <div>
+      <h4 class="font-semibold mb-2">Depth Limitation</h4>
+      <p class="text-muted-foreground">
+        This component is designed for 1-2 levels (parent → children). For deeply nested navigation,
+        use the vertical NavigationTree component instead.
+      </p>
+    </div>
+  </div>
+</Layout>
