@@ -12,7 +12,7 @@ const {
   connectorStyle = 'solid',
   air = 'normal',
   class: className = '',
-  defaultItemConfig = {},
+  defaultItemConfig,
 } = Astro.props;
 
 // Spacing applied as margin-right on entire item wrapper (except last)
@@ -32,7 +32,12 @@ const timelineClass = cn(defaultTimelineClass, className);
 <div class={timelineClass}>
   {
     items.map((item: ItemProps, index: number) => {
-      const mergedItem = merge({}, defaultItemConfig, { contentClass: spacingSettings[air] }, item);
+      const mergedItem = merge(
+        {},
+        defaultItemConfig || {},
+        { contentClass: spacingSettings[air] },
+        item
+      );
       // const mergedItem = merge({}, defaultItemConfig, item);
       const isLast = index === items.length - 1;
       const isFirst = index === 0;

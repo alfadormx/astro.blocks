@@ -12,7 +12,7 @@ const {
   connectorStyle = 'solid',
   air = 'normal',
   class: className = '',
-  defaultItemConfig = {},
+  defaultItemConfig,
 } = Astro.props;
 
 const spacingSettings = {
@@ -31,7 +31,12 @@ const timelineClass = cn(defaultTimelineClass, className);
 <div class={timelineClass}>
   {
     items.map((item: ItemProps, index: number) => {
-      const mergedItem = merge({}, defaultItemConfig, { contentClass: spacingSettings[air] }, item);
+      const mergedItem = merge(
+        {},
+        defaultItemConfig || {},
+        { contentClass: spacingSettings[air] },
+        item
+      );
       const isLast = index === items.length - 1;
 
       return (

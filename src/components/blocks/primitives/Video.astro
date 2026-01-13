@@ -9,7 +9,7 @@ type Props = VideoProps;
 
 const {
   source,
-  options = {},
+  options,
   aspectRatio = 'video',
   isFloating = false,
   crossorigin = 'anonymous',
@@ -57,7 +57,7 @@ const defaultOptions = {
     'fullscreen',
   ],
   ratio: plyrRatios[aspectRatio],
-  ...options,
+  ...(options || {}),
 };
 
 const videoGroupId = isFloating ? 'video-group' : undefined;

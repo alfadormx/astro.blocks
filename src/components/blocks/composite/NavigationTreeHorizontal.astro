@@ -14,7 +14,7 @@ const {
   class: className = '',
   itemClass = '',
   dropdownClass = '',
-  defaultItemConfig = {},
+  defaultItemConfig,
   ...attrs
 } = Astro.props;
 
@@ -47,7 +47,7 @@ const defaultItemButtonConfig = {
   {
     items.map((item: ButtonProps) => {
       const hasChildren = item.children && item.children.length > 0;
-      const mergedItemConfig = merge({}, defaultItemButtonConfig, defaultItemConfig, item);
+      const mergedItemConfig = merge({}, defaultItemButtonConfig, defaultItemConfig || {}, item);
 
       // For items with children, remove href to prevent navigation
       if (hasChildren && trigger === 'click') {

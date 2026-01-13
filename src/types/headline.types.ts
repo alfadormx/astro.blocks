@@ -1,6 +1,6 @@
 export interface HeadlineProps {
   tagline?: string;
-  title: string;
+  title?: string;
   subtitle?: string;
   taglineClass?: string;
   titleClass?: string;

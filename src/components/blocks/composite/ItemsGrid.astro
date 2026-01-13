@@ -12,7 +12,7 @@ const {
   columns = 3,
   air = 'normal' as 'none' | 'tight' | 'normal' | 'loose',
   class: className = '',
-  defaultItemConfig = {},
+  defaultItemConfig,
 } = Astro.props;
 
 const airSettings = {
@@ -44,7 +44,7 @@ const gridClass = cn(
 <div class={gridClass}>
   {
     items.map((item: ItemProps) => {
-      const mergedItem = merge({}, defaultItemConfig, item);
+      const mergedItem = merge({}, defaultItemConfig || {}, item);
       return <Item {...mergedItem} />;
     })
   }
