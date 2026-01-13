@@ -1,0 +1,94 @@
+---
+import type { HeaderProps } from '~/types/header.types';
+import { cn } from '~/utils/styles';
+import Container from '../layout/Container.astro';
+import Image from '../primitives/Image.astro';
+import NavigationTreeHorizontal from './NavigationTreeHorizontal.astro';
+import ThemeToggle from '../primitives/ThemeToggle.astro';
+import Button from '../primitives/Button.astro';
+import merge from 'lodash.merge';
+
+type Props = HeaderProps;
+
+const {
+  isSticky = false,
+  showThemeToggle = false,
+  breakpoint = 'md',
+  navigationAlign = 'center',
+  actionsAir = 'normal',
+  container,
+  logo,
+  navigationTreeHorizontal,
+  themeToggle,
+  actions = [],
+  class: className = '',
+  ...attrs
+} = Astro.props;
+
+const breakpointClasses = {
+  sm: 'hidden sm:flex',
+  md: 'hidden md:flex',
+  lg: 'hidden lg:flex',
+} as const;
+
+const navigationAlignClasses = {
+  left: 'justify-start',
+  center: 'justify-center',
+  right: 'justify-end',
+} as const;
+
+const actionsAirClasses = {
+  none: 'gap-0',
+  tight: 'gap-2',
+  normal: 'gap-4',
+  loose: 'gap-6',
+} as const;
+
+const defaultContainerConfig = {
+  tag: 'nav',
+  content: { air: 'normal' },
+};
+
+const mergedContainerConfig = merge({}, defaultContainerConfig, container);
+
+const stickyClasses = isSticky ? 'sticky top-0 z-40' : '';
+
+const headerLayoutClass = cn('flex items-center gap-4', className);
+---
+
+<div class={stickyClasses}>
+  <Container {...mergedContainerConfig} {...attrs}>
+    <div class={headerLayoutClass}>
+      <!-- Left Section: Logo -->
+      {
+        logo?.src && (
+          <div class="shrink-0">
+            <Image {...logo} />
+          </div>
+        )
+      }
+
+      <!-- Center Section: Navigation (hidden on mobile) -->
+      {
+        navigationTreeHorizontal?.items && (
+          <div
+            class={cn(
+              'grow',
+              breakpointClasses[breakpoint],
+              navigationAlignClasses[navigationAlign]
+            )}
+          >
+            <NavigationTreeHorizontal {...navigationTreeHorizontal} />
+          </div>
+        )
+      }
+
+      <!-- Right Section: Theme Toggle + Actions -->
+      <div class={cn('flex items-center shrink-0', actionsAirClasses[actionsAir])}>
+        {showThemeToggle && <ThemeToggle {...themeToggle} />}
+
+        {actions.map((action) => <Button {...action} />)}
+      </div>
+    </div>
+  </Container>
+</div>

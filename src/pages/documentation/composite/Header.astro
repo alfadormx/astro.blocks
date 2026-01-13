@@ -1,0 +1,444 @@
+---
+import Layout from '~/layouts/DocumentationLayout.astro';
+import HeaderBlock from '~/components/blocks/composite/Header.astro';
+import ModalBlock from '~/components/blocks/layout/Modal.astro';
+import NavigationTree from '~/components/blocks/composite/NavigationTree.astro';
+
+var metadata = {
+  title: {
+    default: 'Header',
+  },
+};
+
+const basicNavItems = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Services', href: '/services' },
+  { label: 'Contact', href: '/contact' },
+];
+
+const navItemsWithDropdowns = [
+  { label: 'Home', href: '/' },
+  {
+    label: 'Products',
+    children: [
+      { label: 'Product 1', href: '/products/1' },
+      { label: 'Product 2', href: '/products/2' },
+      { label: 'Product 3', href: '/products/3' },
+    ],
+  },
+  {
+    label: 'Services',
+    children: [
+      { label: 'Consulting', href: '/services/consulting' },
+      { label: 'Development', href: '/services/development' },
+      { label: 'Design', href: '/services/design' },
+    ],
+  },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+];
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Header',
+    subtitle: 'Site header with logo, navigation, and actions',
+  }}
+>
+  <p>
+    Header component combining logo, horizontal navigation menu, theme toggle, and action buttons.
+    Responsive design with mobile menu support.
+  </p>
+
+  <!-- Example 1: Basic Header -->
+  <h3>Basic Header</h3>
+  <p>Simple header with logo and navigation.</p>
+  <div class="border border-border rounded-lg overflow-hidden">
+    <HeaderBlock
+      logo={{
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+        alt: 'Logo',
+        width: 48,
+        height: 48,
+      }}
+      navigationTreeHorizontal={{ items: basicNavItems }}
+    />
+  </div>
+
+  <!-- Example 2: With Theme Toggle -->
+  <h3>With Theme Toggle</h3>
+  <p>Header with theme toggle button.</p>
+  <div class="border border-border rounded-lg overflow-hidden">
+    <HeaderBlock
+      showThemeToggle
+      logo={{
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+        alt: 'Logo',
+        width: 48,
+        height: 48,
+      }}
+      navigationTreeHorizontal={{ items: basicNavItems }}
+      themeToggle={{ size: 'md' }}
+    />
+  </div>
+
+  <!-- Example 3: With Mobile Menu -->
+  <h3>With Mobile Menu</h3>
+  <p>Header with hamburger menu for mobile (resize browser to see).</p>
+  <div class="border border-border rounded-lg overflow-hidden">
+    <HeaderBlock
+      showThemeToggle
+      logo={{
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+        alt: 'Logo',
+        width: 48,
+        height: 48,
+      }}
+      navigationTreeHorizontal={{ items: navItemsWithDropdowns }}
+      actions={[
+        {
+          'data-modal-trigger': 'mobile-menu-basic',
+          icon: { name: 'heroicons:bars-3' },
+          variant: 'ghost',
+          intent: 'neutral',
+          class: 'md:hidden',
+        },
+      ]}
+    />
+  </div>
+
+  <ModalBlock id="mobile-menu-basic" position="left" size="sm">
+    <div class="p-4">
+      <h3>Menu</h3>
+      <NavigationTree items={navItemsWithDropdowns} />
+    </div>
+  </ModalBlock>
+
+  <!-- Example 4: Sticky Header -->
+  <h3>Sticky Header</h3>
+  <p>Header that sticks to top on scroll (scroll down to see effect).</p>
+  <div class="border border-border rounded-lg overflow-hidden h-96 overflow-y-scroll">
+    <HeaderBlock
+      isSticky
+      showThemeToggle
+      logo={{
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+        alt: 'Logo',
+        width: 48,
+        height: 48,
+      }}
+      navigationTreeHorizontal={{ items: basicNavItems }}
+      container={{
+        background: { class: 'bg-background/90 backdrop-blur-sm' },
+        border: { width: 'border-b', color: 'border-border' },
+      }}
+    />
+    <div class="p-8">
+      <p>Scroll down to see the sticky header in action...</p>
+      <div class="h-200 flex items-center justify-center">
+        <p class="text-muted">Content area</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Example 5: Navigation Alignment -->
+  <h3>Navigation Alignment</h3>
+  <p>Control how navigation is aligned within the center section.</p>
+  <div class="space-y-6">
+    <div>
+      <h4>Left Aligned</h4>
+      <div class="border border-border rounded-lg overflow-hidden">
+        <HeaderBlock
+          navigationAlign="left"
+          logo={{
+            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+            alt: 'Logo',
+            width: 48,
+            height: 48,
+          }}
+          navigationTreeHorizontal={{ items: basicNavItems }}
+        />
+      </div>
+    </div>
+    <div>
+      <h4>Center Aligned (Default)</h4>
+      <div class="border border-border rounded-lg overflow-hidden">
+        <HeaderBlock
+          navigationAlign="center"
+          logo={{
+            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+            alt: 'Logo',
+            width: 48,
+            height: 48,
+          }}
+          navigationTreeHorizontal={{ items: basicNavItems }}
+        />
+      </div>
+    </div>
+    <div>
+      <h4>Right Aligned</h4>
+      <div class="border border-border rounded-lg overflow-hidden">
+        <HeaderBlock
+          navigationAlign="right"
+          logo={{
+            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+            alt: 'Logo',
+            width: 48,
+            height: 48,
+          }}
+          navigationTreeHorizontal={{ items: basicNavItems }}
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Example 6: Actions Air (Spacing) -->
+  <h3>Actions Spacing</h3>
+  <p>Control spacing between theme toggle and action buttons.</p>
+  <div class="space-y-6">
+    <div>
+      <h4>Tight</h4>
+      <div class="border border-border rounded-lg overflow-hidden">
+        <HeaderBlock
+          showThemeToggle
+          actionsAir="tight"
+          logo={{
+            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+            alt: 'Logo',
+            width: 48,
+            height: 48,
+          }}
+          navigationTreeHorizontal={{ items: basicNavItems }}
+          actions={[
+            { label: 'Login', variant: 'outline', size: 'sm' },
+            { label: 'Sign Up', variant: 'solid', size: 'sm' },
+          ]}
+        />
+      </div>
+    </div>
+    <div>
+      <h4>Normal (Default)</h4>
+      <div class="border border-border rounded-lg overflow-hidden">
+        <HeaderBlock
+          showThemeToggle
+          actionsAir="normal"
+          logo={{
+            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+            alt: 'Logo',
+            width: 48,
+            height: 48,
+          }}
+          navigationTreeHorizontal={{ items: basicNavItems }}
+          actions={[
+            { label: 'Login', variant: 'outline', size: 'sm' },
+            { label: 'Sign Up', variant: 'solid', size: 'sm' },
+          ]}
+        />
+      </div>
+    </div>
+    <div>
+      <h4>Loose</h4>
+      <div class="border border-border rounded-lg overflow-hidden">
+        <HeaderBlock
+          showThemeToggle
+          actionsAir="loose"
+          logo={{
+            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+            alt: 'Logo',
+            width: 48,
+            height: 48,
+          }}
+          navigationTreeHorizontal={{ items: basicNavItems }}
+          actions={[
+            { label: 'Login', variant: 'outline', size: 'sm' },
+            { label: 'Sign Up', variant: 'solid', size: 'sm' },
+          ]}
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Example 7: Custom Styling -->
+  <h3>Custom Styling</h3>
+  <p>Customize container styling with background, borders, and padding.</p>
+  <div class="border border-border rounded-lg overflow-hidden">
+    <HeaderBlock
+      showThemeToggle
+      logo={{
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+        alt: 'Logo',
+        width: 48,
+        height: 48,
+      }}
+      navigationTreeHorizontal={{ items: basicNavItems }}
+      container={{
+        background: { class: 'bg-accent/10 backdrop-blur-sm' },
+        border: { width: 'border-b', color: 'border-primary' },
+        content: { air: 'loose' },
+      }}
+      actions={[{ label: 'Get Started', variant: 'solid', intent: 'primary', size: 'sm' }]}
+    />
+  </div>
+
+  <!-- Example 8: Different Breakpoints -->
+  <h3>Responsive Breakpoints</h3>
+  <p>Control when navigation switches to mobile mode.</p>
+  <div class="space-y-6">
+    <div>
+      <h4>Small (sm) - hides navigation on mobile only</h4>
+      <div class="border border-border rounded-lg overflow-hidden">
+        <HeaderBlock
+          breakpoint="sm"
+          logo={{
+            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+            alt: 'Logo',
+            width: 48,
+            height: 48,
+          }}
+          navigationTreeHorizontal={{ items: basicNavItems }}
+          actions={[
+            {
+              'data-modal-trigger': 'mobile-menu-sm',
+              icon: { name: 'heroicons:bars-3' },
+              variant: 'ghost',
+              class: 'sm:hidden',
+            },
+          ]}
+        />
+      </div>
+    </div>
+    <div>
+      <h4>Large (lg) - shows navigation longer before switching</h4>
+      <div class="border border-border rounded-lg overflow-hidden">
+        <HeaderBlock
+          breakpoint="lg"
+          logo={{
+            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+            alt: 'Logo',
+            width: 48,
+            height: 48,
+          }}
+          navigationTreeHorizontal={{ items: basicNavItems }}
+          actions={[
+            {
+              'data-modal-trigger': 'mobile-menu-lg',
+              icon: { name: 'heroicons:bars-3' },
+              variant: 'ghost',
+              class: 'lg:hidden',
+            },
+          ]}
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- API Reference -->
+  <h3>API Reference</h3>
+  <div class="overflow-x-auto">
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="border-b border-border">
+          <th class="py-2 px-4">Prop</th>
+          <th class="py-2 px-4">Type</th>
+          <th class="py-2 px-4">Default</th>
+          <th class="py-2 px-4">Description</th>
+        </tr>
+      </thead>
+      <tbody class="text-sm">
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">isSticky</td>
+          <td class="py-2 px-4">boolean</td>
+          <td class="py-2 px-4">false</td>
+          <td class="py-2 px-4">Makes header stick to top on scroll</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">showThemeToggle</td>
+          <td class="py-2 px-4">boolean</td>
+          <td class="py-2 px-4">false</td>
+          <td class="py-2 px-4">Show theme toggle button</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">breakpoint</td>
+          <td class="py-2 px-4">'sm' | 'md' | 'lg'</td>
+          <td class="py-2 px-4">'md'</td>
+          <td class="py-2 px-4">When to hide navigation and show mobile menu</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">navigationAlign</td>
+          <td class="py-2 px-4">'left' | 'center' | 'right'</td>
+          <td class="py-2 px-4">'center'</td>
+          <td class="py-2 px-4">Alignment of navigation within center section</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">actionsAir</td>
+          <td class="py-2 px-4">'none' | 'tight' | 'normal' | 'loose'</td>
+          <td class="py-2 px-4">'normal'</td>
+          <td class="py-2 px-4">Spacing between theme toggle and action buttons</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">container</td>
+          <td class="py-2 px-4">ContainerProps</td>
+          <td class="py-2 px-4">{}</td>
+          <td class="py-2 px-4">Container styling configuration</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">logo</td>
+          <td class="py-2 px-4">ImageProps</td>
+          <td class="py-2 px-4">{}</td>
+          <td class="py-2 px-4">Logo image configuration</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">navigationTreeHorizontal</td>
+          <td class="py-2 px-4">NavigationTreeHorizontalProps</td>
+          <td class="py-2 px-4">{}</td>
+          <td class="py-2 px-4">Navigation menu configuration</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">themeToggle</td>
+          <td class="py-2 px-4">object</td>
+          <td class="py-2 px-4">{}</td>
+          <td class="py-2 px-4">Theme toggle configuration overrides</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">actions</td>
+          <td class="py-2 px-4">ButtonProps[]</td>
+          <td class="py-2 px-4">[]</td>
+          <td class="py-2 px-4">Action buttons for right section</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Usage Notes -->
+  <h3>Usage Notes</h3>
+  <div class="space-y-4 text-sm">
+    <div>
+      <h4 class="font-semibold mb-2">Mobile Menu Pattern</h4>
+      <p class="text-muted-foreground">
+        The Header provides the layout and hamburger button, but the mobile menu Modal is placed
+        separately. Connect them using <code class="px-1 py-0.5 bg-muted rounded"
+          >data-modal-trigger</code
+        > attribute on the hamburger button.
+      </p>
+    </div>
+    <div>
+      <h4 class="font-semibold mb-2">Sticky Positioning</h4>
+      <p class="text-muted-foreground">
+        When <code class="px-1 py-0.5 bg-muted rounded">isSticky</code> is enabled, consider adding a
+        semi-transparent background with opacity to maintain readability over content.
+      </p>
+    </div>
+    <div>
+      <h4 class="font-semibold mb-2">Responsive Behavior</h4>
+      <p class="text-muted-foreground">
+        The <code class="px-1 py-0.5 bg-muted rounded">breakpoint</code> prop controls when navigation
+        switches to mobile. Make sure your hamburger button's visibility classes match (e.g., <code
+          class="px-1 py-0.5 bg-muted rounded">md:hidden</code
+        > for breakpoint="md").
+      </p>
+    </div>
+  </div>
+</Layout>

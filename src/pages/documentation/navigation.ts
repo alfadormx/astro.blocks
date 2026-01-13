@@ -13,6 +13,7 @@ export const documentationNavigation: ButtonProps[] = [
     children: [
       { label: 'CallToAction', href: '/documentation/composite/CallToAction' },
       { label: 'Content', href: '/documentation/composite/Content' },
+      { label: 'Header', href: '/documentation/composite/Header' },
       { label: 'ItemsContent', href: '/documentation/composite/ItemsContent' },
       { label: 'ItemsGrid', href: '/documentation/composite/ItemsGrid' },
       { label: 'ItemsTimeline', href: '/documentation/composite/ItemsTimeline' },
