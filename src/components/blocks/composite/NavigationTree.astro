@@ -5,6 +5,10 @@ import type { NavigationTreeProps } from '~/types/navigationtree.types';
 
 type Props = NavigationTreeProps;
 
+// Configuration: Indentation classes for nested levels
+const indentMap = ['pl-0', 'pl-4', 'pl-8', 'pl-12', 'pl-16', 'pl-20', 'pl-24'];
+
+// Extract props
 const {
   items,
   currentPath = Astro.url.pathname,
@@ -31,7 +35,7 @@ const {
   toggleMode = 'button',
 } = Astro.props;
 
-// Normalize paths for comparison (remove trailing slashes)
+// Utility functions
 const normalizePath = (path: string) => path.replace(/\/$/, '') || '/';
 const normalizedCurrentPath = normalizePath(currentPath);
 
@@ -47,7 +51,6 @@ const isActiveOrHasActiveChild = (item: ButtonProps): boolean => {
 };
 
 // Calculate indentation based on level using predefined classes
-const indentMap = ['pl-0', 'pl-4', 'pl-8', 'pl-12', 'pl-16', 'pl-20', 'pl-24'];
 const indentClass = indentMap[Math.min(level, indentMap.length - 1)] || 'pl-0';
 
 // Determine if children should be shown based on expansion strategy

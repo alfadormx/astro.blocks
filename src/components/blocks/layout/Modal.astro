@@ -6,6 +6,33 @@ import Button from '../primitives/Button.astro';
 
 type Props = ModalProps;
 
+// Configuration: Size classes
+const sizeClasses = {
+  sm: 'max-w-sm',
+  md: 'max-w-md',
+  lg: 'max-w-lg',
+  xl: 'max-w-xl',
+  full: 'w-full h-full max-w-none',
+} as const;
+
+// Configuration: Position classes
+const positionClasses = {
+  center: 'items-center justify-center',
+  top: 'items-start justify-center pt-20',
+  bottom: 'items-end justify-center pb-20',
+  left: 'items-center justify-start pl-0',
+  right: 'items-center justify-end pr-0',
+} as const;
+
+// Configuration: Default close button
+const defaultCloseButton = {
+  icon: { name: 'heroicons:x-mark' },
+  variant: 'ghost',
+  intent: 'neutral',
+  size: 'sm',
+};
+
+// Extract props
 const {
   id = `modal-${Math.random().toString(36).slice(2, 11)}`,
   open = false,
@@ -20,22 +47,7 @@ const {
   ...attrs
 } = Astro.props;
 
-const sizeClasses = {
-  sm: 'max-w-sm',
-  md: 'max-w-md',
-  lg: 'max-w-lg',
-  xl: 'max-w-xl',
-  full: 'w-full h-full max-w-none',
-} as const;
-
-const positionClasses = {
-  center: 'items-center justify-center',
-  top: 'items-start justify-center pt-20',
-  bottom: 'items-end justify-center pb-20',
-  left: 'items-center justify-start pl-0',
-  right: 'items-center justify-end pr-0',
-} as const;
-
+// Build classes
 const defaultBackdropClass = 'fixed inset-0 bg-surface/75 backdrop-blur-sm z-50';
 const defaultModalClass = cn(
   'relative bg-base rounded-sm shadow-xl',
@@ -43,13 +55,6 @@ const defaultModalClass = cn(
   sizeClasses[size],
   size !== 'full' && 'max-h-[90vh] overflow-auto'
 );
-
-const defaultCloseButton = {
-  icon: { name: 'heroicons:x-mark' },
-  variant: 'ghost',
-  intent: 'neutral',
-  size: 'sm',
-};
 
 const backdropFinalClass = cn(
   defaultBackdropClass,

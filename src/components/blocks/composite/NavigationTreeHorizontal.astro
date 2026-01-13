@@ -7,6 +7,21 @@ import merge from 'lodash.merge';
 
 type Props = NavigationTreeHorizontalProps;
 
+// Configuration: Dropdown position classes
+const dropdownPositionClasses = {
+  left: 'left-0',
+  center: 'left-1/2 -translate-x-1/2',
+  right: 'right-0',
+} as const;
+
+// Configuration: Default button config for nav items
+const defaultItemButtonConfig = {
+  variant: 'ghost',
+  intent: 'neutral',
+  size: 'sm',
+} as const;
+
+// Extract props
 const {
   items = [],
   trigger = 'hover',
@@ -18,14 +33,9 @@ const {
   ...attrs
 } = Astro.props;
 
+// Build classes
 const defaultNavClass = 'flex flex-row items-center gap-1';
 const navClass = cn(defaultNavClass, className);
-
-const dropdownPositionClasses = {
-  left: 'left-0',
-  center: 'left-1/2 -translate-x-1/2',
-  right: 'right-0',
-} as const;
 
 const defaultDropdownClass = cn(
   'absolute top-full pt-2 min-w-50',
@@ -35,12 +45,6 @@ const defaultDropdownClass = cn(
   dropdownPositionClasses[dropdownPosition],
   dropdownClass
 );
-
-const defaultItemButtonConfig = {
-  variant: 'ghost',
-  intent: 'neutral',
-  size: 'sm',
-} as const;
 ---
 
 <nav class={navClass} {...attrs}>

@@ -6,6 +6,14 @@ import Button from '../primitives/Button.astro';
 
 type Props = ItemProps;
 
+// Configuration: Connector styles
+const connectorClasses = {
+  solid: 'border-solid',
+  dashed: 'border-dashed',
+  dotted: 'border-dotted',
+} as const;
+
+// Extract props
 const {
   icon,
   title,
@@ -24,6 +32,7 @@ const {
   connectorClass = '',
 } = Astro.props;
 
+// Build classes
 const defaultRootClass = cn(
   background?.class,
   spacing?.padding,
@@ -40,12 +49,6 @@ const defaultRootClass = cn(
 const mergedIconClass = cn('size-8 md:size-10 lg:size-12 shrink-0', icon?.class);
 const mergedTitleClass = cn('font-bold text-lg md:text-xl lg:text-2xl mb-1 md:mb-2');
 const mergedContentClass = cn('mb-2 md:mb-3');
-
-const connectorClasses = {
-  solid: 'border-solid',
-  dashed: 'border-dashed',
-  dotted: 'border-dotted',
-} as const;
 
 const connectorFinalClass = cn(
   'w-0.5 h-full border-l border-border',

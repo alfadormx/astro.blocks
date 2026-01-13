@@ -14,24 +14,10 @@ type ImageType = {
   attributes: HTMLAttributes<'img'>;
 };
 
+// Extract props
 const props = Astro.props;
 
-const align = props.align;
-const alignClass =
-  align === 'center'
-    ? 'flex justify-center'
-    : align === 'right'
-      ? 'flex justify-end'
-      : align === 'left'
-        ? 'flex justify-start'
-        : '';
-
-// For contained and cover layouts, wrapper needs full dimensions
-const wrapperClass =
-  props.layout === 'contained' || props.layout === 'cover'
-    ? `${alignClass} w-full h-full`
-    : alignClass;
-
+// Validate required props
 if (props.alt === undefined || props.alt === null) {
   throw new Error('Image component requires an alt attribute for accessibility');
 }
@@ -47,6 +33,23 @@ if (typeof props.height === 'string') {
 if (!props.loading) {
   props.loading = 'lazy';
 }
+
+// Build alignment class
+const align = props.align;
+const alignClass =
+  align === 'center'
+    ? 'flex justify-center'
+    : align === 'right'
+      ? 'flex justify-end'
+      : align === 'left'
+        ? 'flex justify-start'
+        : '';
+
+// For contained and cover layouts, wrapper needs full dimensions
+const wrapperClass =
+  props.layout === 'contained' || props.layout === 'cover'
+    ? `${alignClass} w-full h-full`
+    : alignClass;
 
 if (!props.decoding) {
   props.decoding = 'async';
