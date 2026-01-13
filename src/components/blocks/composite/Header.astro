@@ -1,6 +1,7 @@
 ---
 import type { HeaderProps } from '~/types/header.types';
 import { cn } from '~/utils/styles';
+import { SITE } from 'site-config';
 import Container from '../layout/Container.astro';
 import Image from '../primitives/Image.astro';
 import NavigationTreeHorizontal from './NavigationTreeHorizontal.astro';
@@ -17,7 +18,7 @@ const {
   navigationAlign = 'center',
   actionsAir = 'normal',
   container,
-  logo,
+  logoButton,
   navigationTreeHorizontal,
   themeToggle,
   actions = [],
@@ -49,7 +50,17 @@ const defaultContainerConfig = {
   content: { air: 'normal' },
 };
 
+const defaultLogoButtonConfig = {
+  href: '/',
+  variant: 'link' as const,
+  intent: 'neutral' as const,
+  label: logoButton?.image?.src ? undefined : SITE.name,
+  labelClass: 'text-xl font-bold',
+  class: 'shrink-0 p-0 hover:no-underline',
+};
+
 const mergedContainerConfig = merge({}, defaultContainerConfig, container);
+const mergedLogoButtonConfig = merge({}, defaultLogoButtonConfig, logoButton);
 
 const stickyClasses = isSticky ? 'sticky top-0 z-40' : '';
 
@@ -61,10 +72,17 @@ const headerLayoutClass = cn('flex items-center gap-4', className);
     <div class={headerLayoutClass}>
       <!-- Left Section: Logo -->
       {
-        logo?.src && (
-          <div class="shrink-0 w-auto h-12 max-w-48">
-            <Image {...logo} />
-          </div>
+        (mergedLogoButtonConfig.image?.src || mergedLogoButtonConfig.label) && (
+          <Button {...mergedLogoButtonConfig}>
+            {mergedLogoButtonConfig.image?.src && (
+              <div class="w-auto h-12 max-w-48">
+                <Image
+                  {...mergedLogoButtonConfig.image}
+                  alt={mergedLogoButtonConfig.image.alt || SITE.name}
+                />
+              </div>
+            )}
+          </Button>
         )
       }
 

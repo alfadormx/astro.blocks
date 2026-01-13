@@ -8,6 +8,10 @@ export type HeaderBreakpoint = 'sm' | 'md' | 'lg';
 export type HeaderNavigationAlign = 'left' | 'center' | 'right';
 export type HeaderActionsAir = 'none' | 'tight' | 'normal' | 'loose';
 
+export interface LogoButtonProps extends Partial<ButtonProps> {
+  image?: ImageProps;
+}
+
 export interface HeaderProps extends Omit<HTMLAttributes<'nav'>, 'class'> {
   isSticky?: boolean;
   showThemeToggle?: boolean;
@@ -15,7 +19,7 @@ export interface HeaderProps extends Omit<HTMLAttributes<'nav'>, 'class'> {
   navigationAlign?: HeaderNavigationAlign;
   actionsAir?: HeaderActionsAir;
   container?: ContainerProps;
-  logo?: ImageProps;
+  logoButton?: LogoButtonProps;
   navigationTreeHorizontal?: NavigationTreeHorizontalProps;
   themeToggle?: ButtonProps;
   actions?: ButtonProps[];

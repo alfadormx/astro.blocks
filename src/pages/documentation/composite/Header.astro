@@ -58,44 +58,87 @@ const navItemsWithDropdowns = [
   <p>Simple header with logo and navigation.</p>
   <div class="border border-border rounded-lg overflow-hidden">
     <HeaderBlock
-      logo={{
-        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-        alt: 'Logo',
-        width: 48,
-        height: 48,
+      logoButton={{
+        image: {
+          src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+          alt: 'Logo',
+          width: 48,
+          height: 48,
+        },
       }}
       navigationTreeHorizontal={{ items: basicNavItems }}
     />
   </div>
 
-  <!-- Example 2: With Theme Toggle -->
+  <!-- Example 2: Text Logo -->
+  <h3>Text Logo</h3>
+  <p>
+    Header with text logo instead of image. Defaults to SITE.name from config if not provided. Logo
+    is rendered as a Button, so you can use all Button props for styling.
+  </p>
+  <div class="space-y-6">
+    <div>
+      <h4>Using SITE.name (default)</h4>
+      <div class="border border-border rounded-lg overflow-hidden">
+        <HeaderBlock navigationTreeHorizontal={{ items: basicNavItems }} />
+      </div>
+    </div>
+    <div>
+      <h4>Custom text</h4>
+      <div class="border border-border rounded-lg overflow-hidden">
+        <HeaderBlock
+          logoButton={{ label: 'My Brand' }}
+          navigationTreeHorizontal={{ items: basicNavItems }}
+        />
+      </div>
+    </div>
+    <div>
+      <h4>Custom styling with logoButton</h4>
+      <div class="border border-border rounded-lg overflow-hidden">
+        <HeaderBlock
+          logoButton={{
+            label: 'Styled Brand',
+            labelClass: '!text-2xl !font-extrabold !text-primary',
+            class: 'hover:scale-105 transition-transform',
+          }}
+          navigationTreeHorizontal={{ items: basicNavItems }}
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Example 3: With Theme Toggle -->
   <h3>With Theme Toggle</h3>
   <p>Header with theme toggle button.</p>
   <div class="border border-border rounded-lg overflow-hidden">
     <HeaderBlock
       showThemeToggle
-      logo={{
-        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-        alt: 'Logo',
-        width: 48,
-        height: 48,
+      logoButton={{
+        image: {
+          src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+          alt: 'Logo',
+          width: 48,
+          height: 48,
+        },
       }}
       navigationTreeHorizontal={{ items: basicNavItems }}
       themeToggle={{ size: 'md' }}
     />
   </div>
 
-  <!-- Example 3: With Mobile Menu -->
+  <!-- Example 4: With Mobile Menu -->
   <h3>With Mobile Menu</h3>
   <p>Header with hamburger menu for mobile (resize browser to see).</p>
   <div class="border border-border rounded-lg overflow-hidden">
     <HeaderBlock
       showThemeToggle
-      logo={{
-        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-        alt: 'Logo',
-        width: 48,
-        height: 48,
+      logoButton={{
+        image: {
+          src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+          alt: 'Logo',
+          width: 48,
+          height: 48,
+        },
       }}
       navigationTreeHorizontal={{ items: navItemsWithDropdowns }}
       actions={[
@@ -117,18 +160,20 @@ const navItemsWithDropdowns = [
     </div>
   </ModalBlock>
 
-  <!-- Example 4: Sticky Header -->
+  <!-- Example 5: Sticky Header -->
   <h3>Sticky Header</h3>
   <p>Header that sticks to top on scroll (scroll down to see effect).</p>
   <div class="border border-border rounded-lg overflow-hidden h-96 overflow-y-scroll">
     <HeaderBlock
       isSticky
       showThemeToggle
-      logo={{
-        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-        alt: 'Logo',
-        width: 48,
-        height: 48,
+      logoButton={{
+        image: {
+          src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+          alt: 'Logo',
+          width: 48,
+          height: 48,
+        },
       }}
       navigationTreeHorizontal={{ items: basicNavItems }}
       container={{
@@ -144,7 +189,7 @@ const navItemsWithDropdowns = [
     </div>
   </div>
 
-  <!-- Example 5: Navigation Alignment -->
+  <!-- Example 6: Navigation Alignment -->
   <h3>Navigation Alignment</h3>
   <p>Control how navigation is aligned within the center section.</p>
   <div class="space-y-6">
@@ -153,11 +198,13 @@ const navItemsWithDropdowns = [
       <div class="border border-border rounded-lg overflow-hidden">
         <HeaderBlock
           navigationAlign="left"
-          logo={{
-            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-            alt: 'Logo',
-            width: 48,
-            height: 48,
+          logoButton={{
+            image: {
+              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+              alt: 'Logo',
+              width: 48,
+              height: 48,
+            },
           }}
           navigationTreeHorizontal={{ items: basicNavItems }}
         />
@@ -168,11 +215,13 @@ const navItemsWithDropdowns = [
       <div class="border border-border rounded-lg overflow-hidden">
         <HeaderBlock
           navigationAlign="center"
-          logo={{
-            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-            alt: 'Logo',
-            width: 48,
-            height: 48,
+          logoButton={{
+            image: {
+              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+              alt: 'Logo',
+              width: 48,
+              height: 48,
+            },
           }}
           navigationTreeHorizontal={{ items: basicNavItems }}
         />
@@ -183,11 +232,13 @@ const navItemsWithDropdowns = [
       <div class="border border-border rounded-lg overflow-hidden">
         <HeaderBlock
           navigationAlign="right"
-          logo={{
-            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-            alt: 'Logo',
-            width: 48,
-            height: 48,
+          logoButton={{
+            image: {
+              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+              alt: 'Logo',
+              width: 48,
+              height: 48,
+            },
           }}
           navigationTreeHorizontal={{ items: basicNavItems }}
         />
@@ -195,7 +246,7 @@ const navItemsWithDropdowns = [
     </div>
   </div>
 
-  <!-- Example 6: Actions Air (Spacing) -->
+  <!-- Example 7: Actions Air (Spacing) -->
   <h3>Actions Spacing</h3>
   <p>Control spacing between theme toggle and action buttons.</p>
   <div class="space-y-6">
@@ -205,11 +256,13 @@ const navItemsWithDropdowns = [
         <HeaderBlock
           showThemeToggle
           actionsAir="tight"
-          logo={{
-            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-            alt: 'Logo',
-            width: 48,
-            height: 48,
+          logoButton={{
+            image: {
+              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+              alt: 'Logo',
+              width: 48,
+              height: 48,
+            },
           }}
           navigationTreeHorizontal={{ items: basicNavItems }}
           actions={[
@@ -225,11 +278,13 @@ const navItemsWithDropdowns = [
         <HeaderBlock
           showThemeToggle
           actionsAir="normal"
-          logo={{
-            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-            alt: 'Logo',
-            width: 48,
-            height: 48,
+          logoButton={{
+            image: {
+              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+              alt: 'Logo',
+              width: 48,
+              height: 48,
+            },
           }}
           navigationTreeHorizontal={{ items: basicNavItems }}
           actions={[
@@ -245,11 +300,13 @@ const navItemsWithDropdowns = [
         <HeaderBlock
           showThemeToggle
           actionsAir="loose"
-          logo={{
-            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-            alt: 'Logo',
-            width: 48,
-            height: 48,
+          logoButton={{
+            image: {
+              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+              alt: 'Logo',
+              width: 48,
+              height: 48,
+            },
           }}
           navigationTreeHorizontal={{ items: basicNavItems }}
           actions={[
@@ -261,17 +318,19 @@ const navItemsWithDropdowns = [
     </div>
   </div>
 
-  <!-- Example 7: Custom Styling -->
+  <!-- Example 8: Custom Styling -->
   <h3>Custom Styling</h3>
   <p>Customize container styling with background, borders, and padding.</p>
   <div class="border border-border rounded-lg overflow-hidden">
     <HeaderBlock
       showThemeToggle
-      logo={{
-        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-        alt: 'Logo',
-        width: 48,
-        height: 48,
+      logoButton={{
+        image: {
+          src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+          alt: 'Logo',
+          width: 48,
+          height: 48,
+        },
       }}
       navigationTreeHorizontal={{ items: basicNavItems }}
       container={{
@@ -283,7 +342,7 @@ const navItemsWithDropdowns = [
     />
   </div>
 
-  <!-- Example 8: Different Breakpoints -->
+  <!-- Example 9: Different Breakpoints -->
   <h3>Responsive Breakpoints</h3>
   <p>Control when navigation switches to mobile mode.</p>
   <div class="space-y-6">
@@ -292,11 +351,13 @@ const navItemsWithDropdowns = [
       <div class="border border-border rounded-lg overflow-hidden">
         <HeaderBlock
           breakpoint="sm"
-          logo={{
-            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-            alt: 'Logo',
-            width: 48,
-            height: 48,
+          logoButton={{
+            image: {
+              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+              alt: 'Logo',
+              width: 48,
+              height: 48,
+            },
           }}
           navigationTreeHorizontal={{ items: basicNavItems }}
           actions={[
@@ -315,11 +376,13 @@ const navItemsWithDropdowns = [
       <div class="border border-border rounded-lg overflow-hidden">
         <HeaderBlock
           breakpoint="lg"
-          logo={{
-            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-            alt: 'Logo',
-            width: 48,
-            height: 48,
+          logoButton={{
+            image: {
+              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+              alt: 'Logo',
+              width: 48,
+              height: 48,
+            },
           }}
           navigationTreeHorizontal={{ items: basicNavItems }}
           actions={[
@@ -385,10 +448,10 @@ const navItemsWithDropdowns = [
           <td class="py-2 px-4">Container styling configuration</td>
         </tr>
         <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">logo</td>
-          <td class="py-2 px-4">ImageProps</td>
+          <td class="py-2 px-4 font-mono">logoButton</td>
+          <td class="py-2 px-4">LogoButtonProps</td>
           <td class="py-2 px-4">{}</td>
-          <td class="py-2 px-4">Logo image configuration</td>
+          <td class="py-2 px-4">Logo button configuration (text or image with all Button props)</td>
         </tr>
         <tr class="border-b border-border/50">
           <td class="py-2 px-4 font-mono">navigationTreeHorizontal</td>
