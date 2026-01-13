@@ -58,8 +58,8 @@ export interface ContainerProps {
 }
 
 export interface GridLayoutProps extends Omit<ContainerProps, 'layout' | 'items'> {
-  /** Gap between columns/sections - responsive sizing (default: 'normal') */
-  gap?: 'none' | 'tight' | 'normal' | 'loose';
+  /** Air (spacing) between columns/sections - responsive sizing (default: 'normal') */
+  air?: 'none' | 'tight' | 'normal' | 'loose';
   /** Responsive behavior (default: false - always side-by-side) */
   responsive?: boolean;
   /** Responsive breakpoint (default: 'md:' - use 'sm:', 'lg:', etc.) */

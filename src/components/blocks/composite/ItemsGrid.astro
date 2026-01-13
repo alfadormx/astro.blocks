@@ -10,12 +10,12 @@ type Props = ItemsGridProps;
 const {
   items = [],
   columns = 3,
-  gap = 'normal' as 'none' | 'tight' | 'normal' | 'loose',
+  air = 'normal' as 'none' | 'tight' | 'normal' | 'loose',
   class: className = '',
   defaultItemConfig = {},
 } = Astro.props;
 
-const gapSettings = {
+const airSettings = {
   none: '',
   tight: 'gap-3 md:gap-4 lg:gap-6',
   normal: 'gap-4 md:gap-6 lg:gap-8',
@@ -36,7 +36,7 @@ if (columns === 4) {
 const gridClass = cn(
   baseGridClass,
   columnsClass,
-  gapSettings[gap as keyof typeof gapSettings],
+  airSettings[air as keyof typeof airSettings],
   className
 );
 ---
