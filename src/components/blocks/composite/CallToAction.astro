@@ -5,7 +5,6 @@ import Button from '../primitives/Button.astro';
 import { cn } from '~/utils/styles';
 import merge from 'lodash.merge';
 import type { ContainerProps } from '~/types/container.types';
-import type { HeadlineProps } from '~/types/headline.types';
 import type { ButtonProps } from '~/types/button.types';
 import type { CallToActionProps } from '~/types/calltoaction.types';
 
@@ -13,21 +12,18 @@ type Props = CallToActionProps;
 
 const { container, headline, actions } = Astro.props;
 
-const defaultContainer = {
+const defaultContainer: Partial<ContainerProps> = {
   content: {
     boxWidth: 'w-full max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl',
     class: 'bg-elevated rounded-md shadow-xl overflow-hidden',
   },
-} as ContainerProps;
-
-const defaultHeadline = {} as HeadlineProps;
+};
 
 const mergedContainer = merge({}, defaultContainer, container);
-const mergedHeadline = merge({}, defaultHeadline, headline);
 ---
 
 <Container {...mergedContainer}>
-  <Headline {...mergedHeadline} />
+  <Headline {...headline} />
   <div class={cn('flex flex-col md:flex-row gap-4 justify-center mb-8')}>
     {actions.map((action: ButtonProps) => <Button {...action} />)}
   </div>

@@ -16,7 +16,7 @@ const {
   showCloseButton = true,
   backdropClass = '',
   class: className = '',
-  closeButtonConfig = {},
+  closeButtonConfig,
   ...attrs
 } = Astro.props;
 
@@ -59,7 +59,7 @@ const backdropFinalClass = cn(
 );
 
 const modalFinalClass = cn(defaultModalClass, className);
-const mergedCloseButtonConfig = merge({}, defaultCloseButton, closeButtonConfig);
+const mergedCloseButtonConfig = merge({}, defaultCloseButton, closeButtonConfig || {});
 ---
 
 <div

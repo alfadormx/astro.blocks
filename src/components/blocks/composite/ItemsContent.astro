@@ -4,24 +4,23 @@ import Headline from '../primitives/Headline.astro';
 import ItemsGrid from './ItemsGrid.astro';
 import merge from 'lodash.merge';
 import type { ItemsContentProps } from '~/types/itemscontent.types';
-import type { ContainerProps } from '~/types/container.types';
-import type { HeadlineProps } from '~/types/headline.types';
 import type { ItemsGridProps } from '~/types/itemsgrid.types';
 
 type Props = ItemsContentProps;
 
 const { container, headline, itemsGrid } = Astro.props;
 
-const defaultContainer = {} as ContainerProps;
+const defaultContainer = {};
 
-const defaultHeadline = {} as HeadlineProps;
+const defaultHeadline = {};
 
-const defaultItemsGrid = {
+const defaultItemsGrid: Partial<ItemsGridProps> = {
   columns: 2,
+  items: [],
   defaultItemConfig: {
     layout: 'horizontal',
   },
-} as ItemsGridProps;
+};
 
 const mergedContainer = merge({}, defaultContainer, container);
 const mergedHeadline = merge({}, defaultHeadline, headline);

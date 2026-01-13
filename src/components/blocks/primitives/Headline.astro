@@ -42,6 +42,6 @@ const mergedSubtitleClass = cn(
 
 <div class={mergedClass}>
   {tagline && <p class={mergedTaglineClass}>{tagline}</p>}
-  <h1 class={mergedTitleClass}>{title}</h1>
+  {title && <h1 class={mergedTitleClass}>{title}</h1>}
   {subtitle && <p class={mergedSubtitleClass}>{subtitle}</p>}
 </div>
