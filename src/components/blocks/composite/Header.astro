@@ -47,7 +47,8 @@ const actionsAirClasses = {
 
 const defaultContainerConfig = {
   tag: 'nav',
-  content: { air: 'normal' },
+  content: { air: 'none' },
+  spacing: { padding: 'py-3 px-4 md:py-4 md:px-6 lg:px-8' },
 };
 
 const defaultLogoButtonConfig = {
@@ -64,7 +65,11 @@ const mergedLogoButtonConfig = merge({}, defaultLogoButtonConfig, logoButton);
 
 const stickyClasses = isSticky ? 'sticky top-0 z-40' : '';
 
-const headerLayoutClass = cn('flex items-center gap-4', className);
+const headerLayoutClass = cn(
+  'flex items-center gap-4',
+  !navigationTreeHorizontal?.items && 'justify-between',
+  className
+);
 ---
 
 <div class={stickyClasses}>
