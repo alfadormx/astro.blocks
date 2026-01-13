@@ -1,0 +1,133 @@
+---
+import '~/styles/global.css';
+
+import { I18N, METADATA } from 'site-config';
+
+import CommonMeta from '~/components/htmlheader/CommonMeta.astro';
+import Favicons from '~/components/htmlheader/Favicons.astro';
+import Analytics from '~/components/htmlheader/Analytics.astro';
+import Metadata from '~/components/htmlheader/Metadata.astro';
+import SiteVerification from '~/components/htmlheader/SiteVerification.astro';
+import Container from '~/components/blocks/layout/Container.astro';
+import SidebarLeftContainer from '~/components/blocks/layout/SidebarLeftContainer.astro';
+import merge from 'lodash.merge';
+import type { MetaData } from '~/types/metadata.types';
+import type { ContainerProps } from '~/types/container.types';
+import type { HeadlineProps } from '~/types/headline.types';
+import Headline from '~/components/blocks/primitives/Headline.astro';
+import NavigationTree from '~/components/blocks/composite/NavigationTree.astro';
+import { documentationNavigation } from '../navigation';
+import Header from '~/components/blocks/composite/Header.astro';
+
+export type Props = {
+  langCode?: string;
+  metadata?: Partial<MetaData>;
+  topmostContainer?: Partial<ContainerProps>;
+  headline?: Partial<HeadlineProps>;
+};
+
+const { langCode, metadata, topmostContainer, headline } = Astro.props;
+
+const currentLang =
+  I18N.languages.find((lang: (typeof I18N.languages)[number]) => lang.code === langCode) ||
+  I18N.languages.find((lang: (typeof I18N.languages)[number]) => lang.code === I18N.default) ||
+  I18N.languages[0];
+
+const htmlLang = currentLang.code;
+const htmlDir = currentLang.direction;
+
+const colorScheme = METADATA.theme?.colorScheme || 'light dark';
+
+const defaultMetadata = {
+  title: {
+    template: '%s | AstroBlocks Documentation',
+  },
+  description:
+    'AstroBlocks is a modern and accessible collection of components and layouts for Astro.',
+  author: 'alFadorMX',
+  keywords: [
+    'astro',
+    'astroblocks',
+    'components',
+    'layouts',
+    'ui',
+    'design system',
+    'accessible',
+    'modern',
+  ],
+};
+
+const defaultTopmostContainer = {
+  spacing: { padding: 'pb-16' },
+  content: { widthType: 'boxed' },
+} as ContainerProps;
+
+const defaultHeadline = {} as HeadlineProps;
+
+const mergedMetadata = merge({}, defaultMetadata, metadata) as Partial<MetaData>;
+const mergedTopmostContainer = merge({}, defaultTopmostContainer, topmostContainer);
+const mergedHeadline = merge({}, defaultHeadline, headline);
+---
+
+<!doctype html>
+<html lang={htmlLang} dir={htmlDir}>
+  <head>
+    <CommonMeta />
+    <Favicons />
+    <Metadata {...mergedMetadata} />
+    <SiteVerification />
+    <Analytics />
+
+    <!-- Initialize theme before page renders to prevent FOUC -->
+    <script is:inline define:vars={{ colorScheme }}>
+      (function () {
+        // Parse color scheme config to determine behavior
+        // Values: "normal", "light", "dark", "light dark", "dark light", "only light", "only dark"
+        const scheme = colorScheme;
+
+        if (scheme === 'only light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          localStorage.setItem('theme', 'light');
+          return;
+        }
+        if (scheme === 'only dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+          return;
+        }
+
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'light' || storedTheme === 'dark') {
+          document.documentElement.setAttribute('data-theme', storedTheme);
+          return;
+        }
+
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        let theme;
+
+        if (scheme === 'dark light') {
+          theme = prefersDark ? 'dark' : 'light';
+        } else {
+          theme = prefersDark ? 'dark' : 'light';
+        }
+
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+      })();
+    </script>
+  </head>
+  <body>
+    <Container {...mergedTopmostContainer}>
+      <Header showThemeToggle />
+      <Headline {...mergedHeadline} />
+      <SidebarLeftContainer>
+        <div slot="sidebar">
+          <NavigationTree items={documentationNavigation} expansionStrategy="always" />
+        </div>
+        <div slot="main">
+          <slot />
+        </div>
+      </SidebarLeftContainer>
+    </Container>
+  </body>
+</html>
