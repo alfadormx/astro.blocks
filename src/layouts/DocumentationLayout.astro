@@ -8,6 +8,7 @@ import type { HeadlineProps } from '~/types/headline.types';
 import Headline from '~/components/blocks/primitives/Headline.astro';
 import NavigationTree from '~/components/blocks/composite/NavigationTree.astro';
 import { documentationNavigation } from '~/pages/documentation/navigation';
+import Header from '~/components/blocks/composite/Header.astro';
 
 export type Props = {
   langCode?: string;
@@ -50,6 +51,7 @@ const mergedHeadline = merge({}, defaultHeadline, headline);
 ---
 
 <Layout langCode={langCode} metadata={mergedMetadata} topmostContainer={mergedTopmostContainer}>
+  <Header showThemeToggle />
   <Headline {...mergedHeadline} />
   <SidebarLeftContainer>
     <div slot="sidebar">
