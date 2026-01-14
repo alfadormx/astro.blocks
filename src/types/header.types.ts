@@ -14,6 +14,7 @@ export interface LogoButtonProps extends Partial<ButtonProps> {
 
 export interface HeaderProps extends Omit<HTMLAttributes<'nav'>, 'class'> {
   isSticky?: boolean;
+  isFloating?: boolean;
   showThemeToggle?: boolean;
   breakpoint?: HeaderBreakpoint;
   navigationAlign?: HeaderNavigationAlign;

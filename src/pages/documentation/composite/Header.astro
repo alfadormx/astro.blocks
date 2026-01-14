@@ -177,11 +177,11 @@ const navItemsWithDropdowns = [
       }}
       navigationTreeHorizontal={{ items: basicNavItems }}
       container={{
-        background: { class: 'bg-background/90 backdrop-blur-sm' },
+        background: { class: 'bg-background/10 backdrop-blur-sm' },
         border: { width: 'border-b', color: 'border-border' },
       }}
     />
-    <div class="p-8">
+    <div class="p-8 bg-surface2/50">
       <p>Scroll down to see the sticky header in action...</p>
       <div class="h-200 flex items-center justify-center">
         <p class="text-muted">Content area</p>
@@ -189,7 +189,25 @@ const navItemsWithDropdowns = [
     </div>
   </div>
 
-  <!-- Example 6: Navigation Alignment -->
+  <!-- Example 6: Floating Header -->
+  <h3>Floating Header</h3>
+  <p>
+    Header floats above page content using fixed positioning. Best used on full pages with hero
+    sections or full-page layouts.
+  </p>
+  <p class="text-sm text-muted mb-4">
+    Note: <code class="px-1 py-0.5 bg-muted rounded">isFloating</code> uses fixed positioning relative
+    to the viewport, making it float above all content and stay visible during scroll. Cannot be demonstrated
+    in a scrollable container.
+  </p>
+  <div class="border border-border rounded-lg overflow-hidden p-4 bg-muted/30">
+    <code class="text-sm">
+      &lt;Header isFloating showThemeToggle navigationTreeHorizontal=&#123;&#123; items &#125;&#125;
+      /&gt;
+    </code>
+  </div>
+
+  <!-- Example 7: Navigation Alignment -->
   <h3>Navigation Alignment</h3>
   <p>Control how navigation is aligned within the center section.</p>
   <div class="space-y-6">
@@ -246,7 +264,7 @@ const navItemsWithDropdowns = [
     </div>
   </div>
 
-  <!-- Example 7: Actions Air (Spacing) -->
+  <!-- Example 8: Actions Spacing -->
   <h3>Actions Spacing</h3>
   <p>Control spacing between theme toggle and action buttons.</p>
   <div class="space-y-6">
@@ -318,7 +336,7 @@ const navItemsWithDropdowns = [
     </div>
   </div>
 
-  <!-- Example 8: Custom Styling -->
+  <!-- Example 9: Custom Styling -->
   <h3>Custom Styling</h3>
   <p>Customize container styling with background, borders, and padding.</p>
   <div class="border border-border rounded-lg overflow-hidden">
@@ -342,7 +360,7 @@ const navItemsWithDropdowns = [
     />
   </div>
 
-  <!-- Example 9: Different Breakpoints -->
+  <!-- Example 10: Different Breakpoints -->
   <h3>Responsive Breakpoints</h3>
   <p>Control when navigation switches to mobile mode.</p>
   <div class="space-y-6">
@@ -416,6 +434,12 @@ const navItemsWithDropdowns = [
           <td class="py-2 px-4">boolean</td>
           <td class="py-2 px-4">false</td>
           <td class="py-2 px-4">Makes header stick to top on scroll</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">isFloating</td>
+          <td class="py-2 px-4">boolean</td>
+          <td class="py-2 px-4">false</td>
+          <td class="py-2 px-4">Floats header above page content (absolute positioning)</td>
         </tr>
         <tr class="border-b border-border/50">
           <td class="py-2 px-4 font-mono">showThemeToggle</td>
