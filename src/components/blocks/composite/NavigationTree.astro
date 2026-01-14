@@ -2,6 +2,7 @@
 import type { ButtonProps } from '~/types/button.types';
 import Button from '~/components/blocks/primitives/Button.astro';
 import type { NavigationTreeProps } from '~/types/navigationtree.types';
+import merge from 'lodash.merge';
 
 type Props = NavigationTreeProps;
 
@@ -16,24 +17,33 @@ const {
   class: className = '',
   iconName = 'mdi:chevron-right',
   rotateIconOnExpand = true,
-  defaultButtonConfig = {
-    variant: 'ghost',
-    intent: 'neutral',
-    size: 'sm',
-    width: 'full',
-    iconPosition: 'left',
-  },
-  defaultActiveButtonConfig = {
-    variant: 'solid',
-    intent: 'primary',
-    size: 'sm',
-    width: 'full',
-    iconPosition: 'left',
-  },
+  defaultItemConfig,
+  defaultActiveItemConfig,
   expansionStrategy = 'active-only',
   maxDepth = Infinity,
   toggleMode = 'button',
 } = Astro.props;
+
+const defaultItemButtonConfig = {
+  variant: 'ghost',
+  intent: 'neutral',
+  width: 'full',
+  iconPosition: 'left',
+};
+
+const defaultActiveItemButtonConfig = {
+  variant: 'solid',
+  intent: 'primary',
+  width: 'full',
+  iconPosition: 'left',
+};
+
+const mergedDefaultItemConfig = merge({}, defaultItemButtonConfig, defaultItemConfig || {});
+const mergedDefaultActiveItemConfig = merge(
+  {},
+  defaultActiveItemButtonConfig,
+  defaultActiveItemConfig || {}
+);
 
 // Utility functions
 const normalizePath = (path: string) => path.replace(/\/$/, '') || '/';
@@ -97,24 +107,26 @@ const shouldShowChildren = (
           <li data-nav-item data-has-children={hasChildren} data-expanded={isExpanded}>
             <div class={indentClass}>
               <Button
-                {...(isActive ? defaultActiveButtonConfig : defaultButtonConfig)}
+                {...(isActive ? mergedDefaultActiveItemConfig : mergedDefaultItemConfig)}
                 {...item}
                 href={hasChildren && toggleMode === 'button' ? undefined : item.href}
                 variant={
                   item.variant ||
-                  (isActive ? defaultActiveButtonConfig.variant : defaultButtonConfig.variant)
+                  (isActive
+                    ? mergedDefaultActiveItemConfig.variant
+                    : mergedDefaultItemConfig.variant)
                 }
                 intent={
                   item.intent ||
-                  (isActive ? defaultActiveButtonConfig.intent : defaultButtonConfig.intent)
+                  (isActive ? mergedDefaultActiveItemConfig.intent : mergedDefaultItemConfig.intent)
                 }
                 size={
                   item.size ||
-                  (isActive ? defaultActiveButtonConfig.size : defaultButtonConfig.size)
+                  (isActive ? mergedDefaultActiveItemConfig.size : mergedDefaultItemConfig.size)
                 }
                 width={
                   item.width ||
-                  (isActive ? defaultActiveButtonConfig.width : defaultButtonConfig.width)
+                  (isActive ? mergedDefaultActiveItemConfig.width : mergedDefaultItemConfig.width)
                 }
                 class={`justify-start ${hasChildren && toggleMode === 'button' ? 'data-nav-toggle' : ''} ${item.class || ''} ${isActive ? 'font-semibold' : ''}`}
                 icon={
@@ -129,8 +141,8 @@ const shouldShowChildren = (
                 iconPosition={
                   item.iconPosition ||
                   (isActive
-                    ? defaultActiveButtonConfig.iconPosition
-                    : defaultButtonConfig.iconPosition)
+                    ? mergedDefaultActiveItemConfig.iconPosition
+                    : mergedDefaultItemConfig.iconPosition)
                 }
               />
             </div>
@@ -144,8 +156,8 @@ const shouldShowChildren = (
                   iconName={iconName}
                   rotateIconOnExpand={rotateIconOnExpand}
                   toggleMode={toggleMode}
-                  defaultButtonConfig={defaultButtonConfig}
-                  defaultActiveButtonConfig={defaultActiveButtonConfig}
+                  defaultItemConfig={mergedDefaultItemConfig}
+                  defaultActiveItemConfig={mergedDefaultActiveItemConfig}
                   expansionStrategy={expansionStrategy}
                   maxDepth={maxDepth}
                 />
