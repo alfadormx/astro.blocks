@@ -64,11 +64,10 @@ const defaultLogoButtonConfig = {
 const mergedContainerConfig = merge({}, defaultContainerConfig, container);
 const mergedLogoButtonConfig = merge({}, defaultLogoButtonConfig, logoButton);
 
-const positionClasses = isFloating
-  ? 'fixed top-0 left-0 right-0 z-50'
-  : isSticky
-    ? 'sticky top-0 z-40'
-    : '';
+const positionClasses = cn(
+  'group',
+  isFloating ? 'fixed top-0 left-0 right-0 z-50' : isSticky ? 'sticky top-0 z-40' : ''
+);
 
 const justifyClasses = navigationTreeHorizontal?.items
   ? `justify-between ${breakpoint}:justify-normal`
@@ -77,7 +76,7 @@ const justifyClasses = navigationTreeHorizontal?.items
 const headerLayoutClass = cn('flex items-center gap-4', justifyClasses, className);
 ---
 
-<div class={positionClasses}>
+<div class={positionClasses} data-header>
   <Container {...mergedContainerConfig} {...attrs}>
     <div class={headerLayoutClass}>
       <!-- Left Section: Logo -->
@@ -120,3 +119,26 @@ const headerLayoutClass = cn('flex items-center gap-4', justifyClasses, classNam
     </div>
   </Container>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const header = document.querySelector('[data-header]') as HTMLElement;
+    if (!header) return;
+
+    const handleScroll = () => {
+      const headerHeight = header.offsetHeight;
+
+      if (window.scrollY > headerHeight) {
+        header.setAttribute('data-scrolled', 'true');
+      } else {
+        header.removeAttribute('data-scrolled');
+      }
+    };
+
+    // Initial check
+    handleScroll();
+
+    // Listen to scroll
+    window.addEventListener('scroll', handleScroll, { passive: true });
+  });
+</script>
