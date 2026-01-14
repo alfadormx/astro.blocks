@@ -65,11 +65,11 @@ const mergedLogoButtonConfig = merge({}, defaultLogoButtonConfig, logoButton);
 
 const stickyClasses = isSticky ? 'sticky top-0 z-40' : '';
 
-const headerLayoutClass = cn(
-  'flex items-center gap-4',
-  !navigationTreeHorizontal?.items && 'justify-between',
-  className
-);
+const justifyClasses = navigationTreeHorizontal?.items
+  ? `justify-between ${breakpoint}:justify-normal`
+  : 'justify-between';
+
+const headerLayoutClass = cn('flex items-center gap-4', justifyClasses, className);
 ---
 
 <div class={stickyClasses}>
