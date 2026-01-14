@@ -20,8 +20,8 @@ export interface NavigationTreeProps {
   iconName?: string;
   rotateIconOnExpand?: boolean;
   toggleMode?: ToggleMode;
-  defaultButtonConfig?: Partial<ButtonProps>;
-  defaultActiveButtonConfig?: Partial<ButtonProps>;
+  defaultItemConfig?: Partial<ButtonProps>;
+  defaultActiveItemConfig?: Partial<ButtonProps>;
   expansionStrategy?: ExpansionStrategy;
   maxDepth?: number;
 }
