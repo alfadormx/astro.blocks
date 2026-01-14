@@ -1,0 +1,117 @@
+---
+import type { VectorProps } from '~/types/vector.types';
+import { cn } from '~/utils/styles';
+import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+
+type Props = VectorProps;
+
+const {
+  src,
+  layout = 'responsive',
+  width,
+  height,
+  align,
+  class: className = '',
+  ariaLabel,
+  preserveColors = false,
+  ...attrs
+} = Astro.props;
+
+// Read SVG content
+let svgContent: string = '';
+
+try {
+  if (typeof src === 'string') {
+    if (src.trim().startsWith('<')) {
+      // Already raw SVG string (may start with <?xml or <svg)
+      svgContent = src;
+    } else if (src.startsWith('http://') || src.startsWith('https://')) {
+      // External URL - fetch SVG content
+      const response = await fetch(src);
+      if (response.ok) {
+        svgContent = await response.text();
+      } else {
+        console.error(`Vector component: Failed to fetch SVG from ${src}`, response.statusText);
+      }
+    } else {
+      // File path string - resolve relative to project
+      const filePath = src.startsWith('/')
+        ? fileURLToPath(new URL(`../../../..${src}`, import.meta.url))
+        : fileURLToPath(new URL(src, import.meta.url));
+      svgContent = await readFile(filePath, 'utf-8');
+    }
+  } else if (src && typeof src === 'object' && 'src' in src) {
+    // ImageMetadata from Vite import - need to fetch the actual file
+    // The src property is the processed output path, we need the source
+    // Use fetch to get the content from the dev server or built file
+    const response = await fetch(src.src);
+    if (response.ok) {
+      svgContent = await response.text();
+    } else {
+      console.error(`Vector component: Failed to fetch SVG from ImageMetadata`, src.src);
+    }
+  }
+} catch (error) {
+  console.error('Vector component: Failed to read SVG file', error);
+}
+
+// Process SVG content - only handle colors and essential attributes
+if (svgContent) {
+  // Replace fill/stroke colors with currentColor (unless preserveColors is true)
+  if (!preserveColors) {
+    svgContent = svgContent.replace(/fill="(?!none")[^"]*"/g, 'fill="currentColor"');
+    svgContent = svgContent.replace(/stroke="(?!none")[^"]*"/g, 'stroke="currentColor"');
+    svgContent = svgContent.replace(/fill:\s*#[0-9a-fA-F]{3,8}/g, 'fill: currentColor');
+    svgContent = svgContent.replace(/stroke:\s*#[0-9a-fA-F]{3,8}/g, 'stroke: currentColor');
+  }
+
+  // Remove width/height attributes to allow CSS control (this is necessary)
+  svgContent = svgContent.replace(/\s*width="[^"]*"/gi, '');
+  svgContent = svgContent.replace(/\s*height="[^"]*"/gi, '');
+
+  // Add aria-label if provided
+  if (ariaLabel) {
+    svgContent = svgContent.replace('<svg', `<svg aria-label="${ariaLabel}" role="img"`);
+  }
+}
+
+// Build wrapper classes based on layout
+const wrapperClasses = cn(
+  'vector-wrapper',
+  // Layout classes
+  {
+    responsive: 'w-full h-full flex items-center justify-center',
+    fixed: 'inline-flex',
+    intrinsic: 'inline-flex',
+    fill: 'w-full h-full flex',
+  }[layout],
+  // Alignment (only for non-fill layouts)
+  layout !== 'fill' && align === 'center' && 'justify-center',
+  layout !== 'fill' && align === 'right' && 'justify-end',
+  layout !== 'fill' && align === 'left' && 'justify-start',
+  className
+);
+
+// Build inline styles
+const wrapperStyle =
+  layout === 'fixed' && (width || height)
+    ? `width: ${typeof width === 'number' ? `${width}px` : width || 'auto'}; height: ${typeof height === 'number' ? `${height}px` : height || 'auto'};`
+    : '';
+---
+
+{
+  !svgContent ? (
+    <Fragment />
+  ) : (
+    <div class={wrapperClasses} style={wrapperStyle} {...attrs} set:html={svgContent} />
+  )
+}
+
+<style>
+  .vector-wrapper :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>

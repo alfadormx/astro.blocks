@@ -47,6 +47,7 @@ export const documentationNavigation: ButtonProps[] = [
       { label: 'Headline', href: '/documentation/primitives/Headline' },
       { label: 'Image', href: '/documentation/primitives/Image' },
       { label: 'ThemeToggle', href: '/documentation/primitives/ThemeToggle' },
+      { label: 'Vector', href: '/documentation/primitives/Vector' },
       { label: 'Video', href: '/documentation/primitives/Video' },
     ],
   },

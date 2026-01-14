@@ -1,0 +1,155 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import VectorBlock from '~/components/blocks/primitives/Vector.astro';
+
+const metadata = {
+  title: {
+    default: 'Vector',
+  },
+};
+
+const demoSvg = 'https://www.svgrepo.com/show/513167/basketball.svg';
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitives',
+    title: 'Vector',
+    subtitle: 'Display SVG graphics inline with color inheritance support',
+  }}
+>
+  <p>
+    The Vector component renders SVG files inline, allowing them to inherit colors from CSS text
+    color classes. Perfect for logos, icons, and illustrations that need to adapt to different color
+    schemes.
+  </p>
+
+  <!-- Example 1: Responsive Layout (Default) -->
+  <h3>1. Responsive Layout (Default)</h3>
+  <p>SVG scales to fit container width and inherits text color via currentColor.</p>
+  <div class="border border-dashed border-gray/80 p-8">
+    <div class="w-64 text-primary">
+      <VectorBlock src={demoSvg} ariaLabel="Compass icon" />
+    </div>
+  </div>
+
+  <!-- Example 2: Color Inheritance -->
+  <h3>2. Color Inheritance</h3>
+  <p>The Vector component uses currentColor to inherit from text color classes.</p>
+  <div class="border border-dashed border-gray/80 p-8 flex gap-6">
+    <div class="w-32 text-primary">
+      <VectorBlock src={demoSvg} ariaLabel="Primary compass" />
+    </div>
+    <div class="w-32 text-secondary">
+      <VectorBlock src={demoSvg} ariaLabel="Secondary compass" />
+    </div>
+    <div class="w-32 text-accent">
+      <VectorBlock src={demoSvg} ariaLabel="Accent compass" />
+    </div>
+    <div class="w-32 text-error">
+      <VectorBlock src={demoSvg} ariaLabel="Error compass" />
+    </div>
+  </div>
+
+  <!-- Example 3: Fixed Size -->
+  <h3>3. Fixed Size</h3>
+  <p>Use fixed layout with explicit width and height for precise dimensions.</p>
+  <div class="border border-dashed border-gray/80 p-8 flex gap-6 items-center">
+    <div class="text-primary">
+      <VectorBlock
+        src={demoSvg}
+        layout="fixed"
+        width={128}
+        height={128}
+        ariaLabel="Large compass"
+      />
+    </div>
+    <div class="text-secondary">
+      <VectorBlock src={demoSvg} layout="fixed" width={64} height={64} ariaLabel="Medium compass" />
+    </div>
+    <div class="text-accent">
+      <VectorBlock src={demoSvg} layout="fixed" width={32} height={32} ariaLabel="Small compass" />
+    </div>
+  </div>
+
+  <!-- Example 4: Alignment -->
+  <h3>4. Alignment</h3>
+  <p>Control horizontal alignment with the align prop: left, center, or right.</p>
+  <div class="border border-dashed border-gray/80 p-8 space-y-4">
+    <div class="text-primary">
+      <VectorBlock
+        src={demoSvg}
+        layout="fixed"
+        width={100}
+        height={100}
+        align="left"
+        ariaLabel="Left aligned"
+      />
+    </div>
+    <div class="text-secondary">
+      <VectorBlock
+        src={demoSvg}
+        layout="fixed"
+        width={100}
+        height={100}
+        align="center"
+        ariaLabel="Center aligned"
+      />
+    </div>
+    <div class="text-accent">
+      <VectorBlock
+        src={demoSvg}
+        layout="fixed"
+        width={100}
+        height={100}
+        align="right"
+        ariaLabel="Right aligned"
+      />
+    </div>
+  </div>
+
+  <!-- Example 5: Fill Layout -->
+  <h3>5. Fill Layout</h3>
+  <p>SVG fills the entire container dimensions. Useful for background graphics.</p>
+  <div class="border border-dashed border-gray/80 p-8 h-64 bg-gray/10">
+    <div class="text-primary/20 h-full">
+      <VectorBlock src={demoSvg} layout="fill" ariaLabel="Background compass" />
+    </div>
+  </div>
+
+  <!-- Example 6: Preserve Original Colors -->
+  <h3>6. Preserve Original Colors</h3>
+  <p>Use preserveColors to keep the SVG's original colors instead of applying currentColor.</p>
+  <div class="border border-dashed border-gray/80 p-8 flex gap-12">
+    <div class="w-32">
+      <div class="text-primary">
+        <VectorBlock src={demoSvg} ariaLabel="With currentColor" />
+      </div>
+      <p class="text-xs mt-2 text-center">With currentColor</p>
+    </div>
+    <div class="w-32">
+      <VectorBlock src={demoSvg} preserveColors ariaLabel="Original colors" />
+      <p class="text-xs mt-2 text-center">Original colors</p>
+    </div>
+  </div>
+
+  <!-- Example 7: Custom Classes -->
+  <h3>7. Custom Classes</h3>
+  <p>Add custom Tailwind classes for additional styling like opacity, filters, and transforms.</p>
+  <div class="border border-dashed border-gray/80 p-8 flex gap-6">
+    <div class="w-32 text-primary">
+      <VectorBlock src={demoSvg} class="opacity-50" ariaLabel="Semi-transparent" />
+    </div>
+    <div class="w-32 text-secondary">
+      <VectorBlock src={demoSvg} class="rotate-45" ariaLabel="Rotated 45 degrees" />
+    </div>
+    <div class="w-32 text-accent">
+      <VectorBlock
+        src={demoSvg}
+        class="scale-110 hover:scale-125 transition-transform"
+        ariaLabel="Scalable"
+      />
+    </div>
+  </div>
+</Layout>
