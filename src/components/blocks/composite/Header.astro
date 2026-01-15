@@ -4,6 +4,7 @@ import { cn } from '~/utils/styles';
 import { SITE } from 'site-config';
 import Container from '../layout/Container.astro';
 import Image from '../primitives/Image.astro';
+import Vector from '../primitives/Vector.astro';
 import NavigationTreeHorizontal from './NavigationTreeHorizontal.astro';
 import ThemeToggle from '../primitives/ThemeToggle.astro';
 import Button from '../primitives/Button.astro';
@@ -56,7 +57,7 @@ const defaultLogoButtonConfig = {
   href: '/',
   variant: 'link' as const,
   intent: 'neutral' as const,
-  label: logoButton?.image?.src ? undefined : SITE.name,
+  label: logoButton?.vector?.src || logoButton?.image?.src ? undefined : SITE.name,
   labelClass: 'text-xl font-bold',
   class: 'shrink-0 p-0 hover:no-underline',
 };
@@ -81,16 +82,26 @@ const headerLayoutClass = cn('flex items-center gap-4', justifyClasses, classNam
     <div class={headerLayoutClass}>
       <!-- Left Section: Logo -->
       {
-        (mergedLogoButtonConfig.image?.src || mergedLogoButtonConfig.label) && (
+        (mergedLogoButtonConfig.vector?.src ||
+          mergedLogoButtonConfig.image?.src ||
+          mergedLogoButtonConfig.label) && (
           <Button {...mergedLogoButtonConfig}>
-            {mergedLogoButtonConfig.image?.src && (
+            {mergedLogoButtonConfig.vector?.src ? (
+              <div class="w-auto h-12 max-w-48">
+                <Vector
+                  {...mergedLogoButtonConfig.vector}
+                  class={cn('w-full h-full', mergedLogoButtonConfig.vector.class)}
+                  ariaLabel={mergedLogoButtonConfig.vector.ariaLabel || SITE.name}
+                />
+              </div>
+            ) : mergedLogoButtonConfig.image?.src ? (
               <div class="w-auto h-12 max-w-48">
                 <Image
                   {...mergedLogoButtonConfig.image}
                   alt={mergedLogoButtonConfig.image.alt || SITE.name}
                 />
               </div>
-            )}
+            ) : null}
           </Button>
         )
       }

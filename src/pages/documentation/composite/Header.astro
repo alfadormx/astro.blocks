@@ -190,7 +190,7 @@ const navItemsWithDropdowns = [
   </div>
 
   <!-- Example 6: Floating Header -->
-  <h3>Floating Header</h3>
+  <h3>6. Floating Header</h3>
   <p>
     Header floats above page content using fixed positioning. Best used on full pages with hero
     sections or full-page layouts.
@@ -207,8 +207,27 @@ const navItemsWithDropdowns = [
     </code>
   </div>
 
-  <!-- Example 7: Navigation Alignment -->
-  <h3>Navigation Alignment</h3>
+  <!-- Example 7: Vector Logo with Color Inheritance -->
+  <h3>7. Vector Logo with Color Inheritance</h3>
+  <p>
+    Use Vector component for SVG logos that can inherit colors via text classes. Perfect for logos
+    that adapt to themes or scroll states.
+  </p>
+  <div class="border border-border rounded-lg overflow-hidden">
+    <HeaderBlock
+      logoButton={{
+        vector: {
+          src: 'https://www.svgrepo.com/show/530609/compass.svg',
+        },
+        class: 'text-primary hover:text-accent transition-colors duration-300',
+      }}
+      navigationTreeHorizontal={{ items: basicNavItems }}
+      showThemeToggle
+    />
+  </div>
+
+  <!-- Example 8: Navigation Alignment -->
+  <h3>8. Navigation Alignment</h3>
   <p>Control how navigation is aligned within the center section.</p>
   <div class="space-y-6">
     <div>
@@ -475,7 +494,10 @@ const navItemsWithDropdowns = [
           <td class="py-2 px-4 font-mono">logoButton</td>
           <td class="py-2 px-4">LogoButtonProps</td>
           <td class="py-2 px-4">{}</td>
-          <td class="py-2 px-4">Logo button configuration (text or image with all Button props)</td>
+          <td class="py-2 px-4"
+            >Logo configuration with vector (SVG inline), image, or text label. Vector takes
+            priority over image.</td
+          >
         </tr>
         <tr class="border-b border-border/50">
           <td class="py-2 px-4 font-mono">navigationTreeHorizontal</td>
