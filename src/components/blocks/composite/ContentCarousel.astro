@@ -1,0 +1,789 @@
+---
+import type { ContentCarouselProps, AutoplayConfig } from '~/types/contentcarousel.types';
+import Button from '../primitives/Button.astro';
+import Image from '../primitives/Image.astro';
+import { cn } from '~/utils/styles';
+import merge from 'lodash.merge';
+
+type Props = ContentCarouselProps;
+
+const {
+  items = [],
+  initialIndex = 0,
+  itemClass = 'basis-full',
+  controlsPosition = 'inside',
+  showIndicators = true,
+  showControls = true,
+  draggable = true,
+  loop = false,
+  autoplay = false,
+  snapFallback = 'transform',
+  ariaLabel,
+  debug = false,
+  prevButtonConfig,
+  nextButtonConfig,
+  // indicatorButtonConfig,
+  pauseButtonConfig,
+  class: className = '',
+  ...attrs
+} = Astro.props;
+
+const hasSlot = Astro.slots && Astro.slots.default;
+const uid = `carousel-${Math.random().toString(36).slice(2, 9)}`;
+
+// Parse autoplay config
+const autoplayConfig: AutoplayConfig = (() => {
+  if (typeof autoplay === 'number')
+    return { enabled: true, delay: autoplay, pauseOnHover: true, pauseOnInteraction: true };
+  if (typeof autoplay === 'boolean')
+    return { enabled: autoplay, delay: 4000, pauseOnHover: true, pauseOnInteraction: true };
+  if (autoplay && typeof autoplay === 'object')
+    return {
+      enabled: true,
+      delay: 4000,
+      pauseOnHover: true,
+      pauseOnInteraction: true,
+      ...autoplay,
+    };
+  return { enabled: false, delay: 4000, pauseOnHover: true, pauseOnInteraction: true };
+})();
+
+// Button configs
+const defaultPrevButtonConfig = {
+  icon: { name: 'heroicons:chevron-left' },
+  variant: 'solid' as const,
+  intent: 'neutral' as const,
+  size: 'sm' as const,
+  shape: 'pill' as const,
+  class: 'carousel-prev-btn',
+  'aria-label': 'Previous slide',
+};
+
+const defaultNextButtonConfig = {
+  icon: { name: 'heroicons:chevron-right' },
+  variant: 'solid' as const,
+  intent: 'neutral' as const,
+  size: 'sm' as const,
+  shape: 'pill' as const,
+  class: 'carousel-next-btn',
+  'aria-label': 'Next slide',
+};
+
+const defaultPauseButtonConfig = {
+  variant: 'solid' as const,
+  intent: 'neutral' as const,
+  size: 'sm' as const,
+  class: 'carousel-pause-btn',
+};
+
+const mergedPrevButtonConfig = merge({}, defaultPrevButtonConfig, prevButtonConfig);
+const mergedNextButtonConfig = merge({}, defaultNextButtonConfig, nextButtonConfig);
+const mergedPauseButtonConfig = merge({}, defaultPauseButtonConfig, pauseButtonConfig);
+
+const carouselClass = cn(
+  'content-carousel relative',
+  controlsPosition === 'outside' && 'flex flex-col gap-4',
+  className
+);
+---
+
+<div
+  id={uid}
+  class={carouselClass}
+  data-carousel
+  data-loop={String(loop)}
+  data-draggable={String(draggable)}
+  data-snap-fallback={snapFallback}
+  data-autoplay-enabled={String(autoplayConfig.enabled)}
+  data-autoplay-delay={String(autoplayConfig.delay)}
+  data-autoplay-pause-hover={String(autoplayConfig.pauseOnHover)}
+  data-autoplay-pause-interaction={String(autoplayConfig.pauseOnInteraction)}
+  data-initial-index={String(initialIndex)}
+  data-debug={String(debug)}
+  role="region"
+  aria-roledescription="carousel"
+  aria-label={ariaLabel || 'Content carousel'}
+  {...attrs}
+>
+  <!-- Carousel viewport and track -->
+  <div
+    class={cn(
+      'carousel-viewport overflow-hidden relative touch-none',
+      controlsPosition === 'inside' && 'group'
+    )}
+  >
+    <div
+      class="carousel-track flex transition-transform duration-300 ease-out will-change-transform"
+      data-carousel-track
+    >
+      {
+        hasSlot ? (
+          <slot />
+        ) : (
+          items.map((item, index) => (
+            <div
+              class={cn('carousel-item flex-none', itemClass, item.class)}
+              data-carousel-slide
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`Slide ${index + 1} of ${items.length}`}
+            >
+              <Image
+                layout="fullWidth"
+                aspectRatio={16 / 9}
+                {...item}
+                class="w-full h-auto object-cover"
+              />
+            </div>
+          ))
+        )
+      }
+    </div>
+
+    <!-- Controls (inside) -->
+    {
+      showControls && controlsPosition === 'inside' && (
+        <div class="carousel-controls absolute inset-0 pointer-events-none flex items-center justify-between px-3 opacity-0 group-hover:opacity-100 transition-opacity">
+          <Button
+            {...mergedPrevButtonConfig}
+            class={cn(mergedPrevButtonConfig.class, 'pointer-events-auto')}
+            data-carousel-prev
+          />
+          <Button
+            {...mergedNextButtonConfig}
+            class={cn(mergedNextButtonConfig.class, 'pointer-events-auto')}
+            data-carousel-next
+          />
+        </div>
+      )
+    }
+
+    <!-- Indicators (inside) -->
+    {
+      showIndicators && controlsPosition === 'inside' && (
+        <div
+          class="carousel-indicators absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2"
+          role="tablist"
+          data-carousel-indicators
+        />
+      )
+    }
+
+    <!-- Autoplay pause/resume (inside) -->
+    {
+      autoplayConfig.enabled && controlsPosition === 'inside' && (
+        <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+          <Button
+            {...mergedPauseButtonConfig}
+            icon={{ name: 'heroicons:pause' }}
+            data-carousel-pause
+            aria-label="Pause autoplay"
+          />
+        </div>
+      )
+    }
+  </div>
+
+  <!-- Controls (outside) -->
+  {
+    controlsPosition === 'outside' && (
+      <div class="carousel-controls-outside flex items-center justify-between gap-4">
+        {showControls && (
+          <div class="flex gap-2">
+            <Button {...mergedPrevButtonConfig} data-carousel-prev />
+            <Button {...mergedNextButtonConfig} data-carousel-next />
+          </div>
+        )}
+        {showIndicators && (
+          <div
+            class="carousel-indicators flex gap-2 flex-1 justify-center"
+            role="tablist"
+            data-carousel-indicators
+          />
+        )}
+        {autoplayConfig.enabled && (
+          <Button
+            {...mergedPauseButtonConfig}
+            icon={{ name: 'heroicons:pause' }}
+            data-carousel-pause
+            aria-label="Pause autoplay"
+          />
+        )}
+      </div>
+    )
+  }
+
+  <!-- Screen reader announcer -->
+  <div class="sr-only" aria-live="polite" aria-atomic="true" data-carousel-announcer></div>
+
+  <!-- Debug overlay -->
+  {
+    debug && (
+      <div
+        data-carousel-debug
+        class="absolute top-2 left-2 bg-black/80 text-white text-xs font-mono p-3 rounded z-50 pointer-events-none"
+      >
+        <div>
+          Index: <span data-debug-index>0</span>
+        </div>
+        <div>
+          Dragging: <span data-debug-dragging>false</span>
+        </div>
+        <div>
+          StartX: <span data-debug-startx>0</span>
+        </div>
+        <div>
+          CurrentX: <span data-debug-currentx>0</span>
+        </div>
+        <div>
+          DeltaX: <span data-debug-dx>0</span>
+        </div>
+        <div>
+          Velocity: <span data-debug-velocity>0</span>
+        </div>
+        <div>
+          Threshold: <span data-debug-threshold>0</span>
+        </div>
+      </div>
+    )
+  }
+</div>
+
+<script>
+  interface CarouselInstance {
+    root: HTMLElement;
+    track: HTMLElement;
+    slides: HTMLElement[];
+    realSlides: HTMLElement[];
+    currentIndex: number;
+    isLoop: boolean;
+    isDraggable: boolean;
+    snapFallback: string;
+    autoplayEnabled: boolean;
+    autoplayDelay: number;
+    autoplayPauseHover: boolean;
+    autoplayPauseInteraction: boolean;
+    autoplayTimer: number | null;
+    isAutoplayPaused: boolean;
+    isDragging: boolean;
+    startX: number;
+    currentX: number;
+    startTime: number;
+    prevBtn: HTMLElement | null;
+    nextBtn: HTMLElement | null;
+    pauseBtn: HTMLElement | null;
+    indicatorsContainer: HTMLElement | null;
+    announcer: HTMLElement | null;
+    cleanup: () => void;
+  }
+
+  const instances = new WeakMap<HTMLElement, CarouselInstance>();
+
+  function initCarousel(root: HTMLElement) {
+    if (instances.has(root)) return;
+
+    const track = root.querySelector('[data-carousel-track]') as HTMLElement;
+    if (!track) return;
+
+    const viewport = track.parentElement!;
+    const isLoop = root.dataset.loop === 'true';
+    const isDraggable = root.dataset.draggable === 'true';
+    const snapFallback = root.dataset.snapFallback || 'transform';
+    const autoplayEnabled = root.dataset.autoplayEnabled === 'true';
+    const autoplayDelay = parseInt(root.dataset.autoplayDelay || '4000', 10);
+    const autoplayPauseHover = root.dataset.autoplayPauseHover === 'true';
+    const autoplayPauseInteraction = root.dataset.autoplayPauseInteraction === 'true';
+    const initialIndex = parseInt(root.dataset.initialIndex || '0', 10);
+    const isDebug = root.dataset.debug === 'true';
+
+    const realSlides = Array.from(track.querySelectorAll('.carousel-item')) as HTMLElement[];
+    const slideCount = realSlides.length;
+
+    if (slideCount === 0) return;
+
+    // Clone slides for loop
+    let slides = realSlides;
+    if (isLoop && slideCount > 1) {
+      // Clone all slides before and after to support multiple visible slides
+      realSlides.forEach((slide) => {
+        const cloneAfter = slide.cloneNode(true) as HTMLElement;
+        cloneAfter.setAttribute('data-carousel-clone', 'after');
+        cloneAfter.removeAttribute('data-carousel-slide');
+        track.appendChild(cloneAfter);
+      });
+
+      realSlides.forEach((slide) => {
+        const cloneBefore = slide.cloneNode(true) as HTMLElement;
+        cloneBefore.setAttribute('data-carousel-clone', 'before');
+        cloneBefore.removeAttribute('data-carousel-slide');
+        track.insertBefore(cloneBefore, track.firstChild);
+      });
+
+      slides = Array.from(track.children) as HTMLElement[];
+    }
+
+    const instance: CarouselInstance = {
+      root,
+      track,
+      slides,
+      realSlides,
+      currentIndex: isLoop ? initialIndex + slideCount : initialIndex,
+      isLoop,
+      isDraggable,
+      snapFallback,
+      autoplayEnabled,
+      autoplayDelay,
+      autoplayPauseHover,
+      autoplayPauseInteraction,
+      autoplayTimer: null,
+      isAutoplayPaused: false,
+      isDragging: false,
+      startX: 0,
+      currentX: 0,
+      startTime: 0,
+      prevBtn: root.querySelector('[data-carousel-prev]'),
+      nextBtn: root.querySelector('[data-carousel-next]'),
+      pauseBtn: root.querySelector('[data-carousel-pause]'),
+      indicatorsContainer: root.querySelector('[data-carousel-indicators]'),
+      announcer: root.querySelector('[data-carousel-announcer]'),
+      cleanup: () => {},
+    };
+
+    // RTL support
+    const isRTL = document.dir === 'rtl' || getComputedStyle(root).direction === 'rtl';
+    const rtlMultiplier = isRTL ? -1 : 1;
+
+    // Debug helpers
+    const debugOverlay = isDebug ? root.querySelector('[data-carousel-debug]') : null;
+    function updateDebug() {
+      if (!debugOverlay) return;
+      const realIndex = isLoop
+        ? (instance.currentIndex - slideCount) % slideCount
+        : instance.currentIndex;
+      const dx = (instance.currentX - instance.startX) * rtlMultiplier;
+      const dt = Date.now() - instance.startTime;
+      const velocity = dt > 0 ? Math.abs(dx) / dt : 0;
+      const threshold = viewport.clientWidth * 0.25;
+
+      debugOverlay.querySelector('[data-debug-index]')!.textContent = String(realIndex);
+      debugOverlay.querySelector('[data-debug-dragging]')!.textContent = String(
+        instance.isDragging
+      );
+      debugOverlay.querySelector('[data-debug-startx]')!.textContent = instance.startX.toFixed(0);
+      debugOverlay.querySelector('[data-debug-currentx]')!.textContent =
+        instance.currentX.toFixed(0);
+      debugOverlay.querySelector('[data-debug-dx]')!.textContent = dx.toFixed(0);
+      debugOverlay.querySelector('[data-debug-velocity]')!.textContent = velocity.toFixed(3);
+      debugOverlay.querySelector('[data-debug-threshold]')!.textContent = threshold.toFixed(0);
+    }
+
+    // Set position
+    function setPosition(instant = false) {
+      // Calculate actual slide width (supports fractional basis like basis-1/3)
+      const firstSlide = slides[0] as HTMLElement;
+      const slideWidth = firstSlide ? firstSlide.offsetWidth : viewport.clientWidth;
+      const offset = -instance.currentIndex * slideWidth * rtlMultiplier;
+      track.style.transitionDuration = instant ? '0ms' : '';
+      track.style.transform = `translateX(${offset}px)`;
+
+      if (isDebug) {
+        console.log('🎯 setPosition:', {
+          currentIndex: instance.currentIndex,
+          slideWidth,
+          offset,
+          instant,
+        });
+      }
+    }
+
+    // Update controls
+    function updateControls() {
+      const realIndex = isLoop
+        ? (instance.currentIndex - slideCount) % slideCount
+        : instance.currentIndex;
+
+      if (isDebug) {
+        console.log('[Carousel] UpdateControls', {
+          currentIndex: instance.currentIndex,
+          realIndex,
+          isLoop,
+          slideCount,
+        });
+      }
+
+      if (instance.prevBtn) {
+        instance.prevBtn.style.visibility = !isLoop && instance.currentIndex === 0 ? 'hidden' : '';
+        instance.prevBtn.setAttribute(
+          'aria-disabled',
+          (!isLoop && instance.currentIndex === 0).toString()
+        );
+      }
+
+      if (instance.nextBtn) {
+        const isAtEnd = isLoop ? false : instance.currentIndex === slideCount - 1;
+        instance.nextBtn.style.visibility = isAtEnd ? 'hidden' : '';
+        instance.nextBtn.setAttribute('aria-disabled', isAtEnd.toString());
+      }
+
+      // Update indicators
+      if (instance.indicatorsContainer) {
+        Array.from(instance.indicatorsContainer.children).forEach((btn, i) => {
+          const isActive = i === realIndex;
+          btn.setAttribute('aria-selected', isActive.toString());
+          btn.classList.toggle('bg-primary', isActive);
+          btn.classList.toggle('bg-surface2', !isActive);
+        });
+      }
+
+      // Announce
+      if (instance.announcer) {
+        instance.announcer.textContent = `Slide ${realIndex + 1} of ${slideCount}`;
+      }
+
+      // Emit custom event
+      root.dispatchEvent(
+        new CustomEvent('carousel:change', {
+          detail: { index: realIndex, total: slideCount },
+        })
+      );
+    }
+
+    // Build indicators
+    function buildIndicators() {
+      if (!instance.indicatorsContainer) return;
+      instance.indicatorsContainer.innerHTML = '';
+      realSlides.forEach((_, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'w-3 h-3 rounded-full transition-colors';
+        btn.setAttribute('role', 'tab');
+        btn.setAttribute('aria-label', `Go to slide ${i + 1}`);
+        btn.addEventListener('click', () => goTo(i));
+        instance.indicatorsContainer!.appendChild(btn);
+      });
+    }
+
+    // Navigation
+    function goTo(index: number) {
+      if (isDebug)
+        console.log('[Carousel] GoTo', {
+          index,
+          isLoop,
+          targetIndex: isLoop ? index + slideCount : index,
+        });
+      const targetIndex = isLoop ? index + slideCount : index;
+      instance.currentIndex = Math.max(0, Math.min(targetIndex, slides.length - 1));
+      setPosition();
+      updateControls();
+      if (autoplayEnabled && autoplayPauseInteraction) {
+        stopAutoplay();
+        if (!instance.isAutoplayPaused) {
+          startAutoplay();
+        }
+      }
+    }
+
+    function prev() {
+      if (isDebug)
+        console.log('[Carousel] Prev clicked', {
+          currentIndex: instance.currentIndex,
+          slideCount,
+          isLoop,
+        });
+      if (isLoop) {
+        instance.currentIndex--;
+        setPosition();
+        checkClone();
+      } else if (instance.currentIndex > 0) {
+        instance.currentIndex--;
+        setPosition();
+      }
+      updateControls();
+      if (autoplayEnabled && autoplayPauseInteraction) {
+        stopAutoplay();
+        setTimeout(() => startAutoplay(), 1000);
+      }
+    }
+
+    function next() {
+      if (isDebug)
+        console.log('[Carousel] Next clicked', {
+          currentIndex: instance.currentIndex,
+          slideCount,
+          isLoop,
+        });
+      if (isLoop) {
+        instance.currentIndex++;
+        setPosition();
+        checkClone();
+      } else if (instance.currentIndex < slideCount - 1) {
+        instance.currentIndex++;
+        setPosition();
+      }
+      updateControls();
+      if (autoplayEnabled && autoplayPauseInteraction) {
+        stopAutoplay();
+        setTimeout(() => startAutoplay(), 1000);
+      }
+    }
+
+    // Check for clone and jump
+    function checkClone() {
+      if (!isLoop) return;
+
+      track.addEventListener(
+        'transitionend',
+        () => {
+          // Jump from before-clones to real slides
+          if (instance.currentIndex < slideCount) {
+            instance.currentIndex = instance.currentIndex + slideCount;
+            setPosition(true);
+            updateControls();
+          }
+          // Jump from after-clones to real slides
+          else if (instance.currentIndex >= slideCount * 2) {
+            instance.currentIndex = instance.currentIndex - slideCount;
+            setPosition(true);
+            updateControls();
+          }
+        },
+        { once: true }
+      );
+    }
+
+    // Autoplay
+    function startAutoplay() {
+      stopAutoplay();
+      if (!autoplayEnabled) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      if (isDebug) console.log('[Carousel] Starting autoplay', { delay: autoplayDelay });
+      instance.autoplayTimer = window.setInterval(() => {
+        if (isDebug) console.log('[Carousel] Autoplay tick');
+        next();
+      }, autoplayDelay);
+    }
+
+    function stopAutoplay() {
+      if (instance.autoplayTimer !== null) {
+        if (isDebug) console.log('[Carousel] Stopping autoplay');
+        clearInterval(instance.autoplayTimer);
+        instance.autoplayTimer = null;
+      }
+    }
+
+    function toggleAutoplay() {
+      instance.isAutoplayPaused = !instance.isAutoplayPaused;
+      if (instance.isAutoplayPaused) {
+        stopAutoplay();
+        if (instance.pauseBtn) {
+          const icon = instance.pauseBtn.querySelector('svg');
+          if (icon) icon.setAttribute('data-icon', 'heroicons:play');
+          instance.pauseBtn.setAttribute('aria-label', 'Resume autoplay');
+        }
+      } else {
+        startAutoplay();
+        if (instance.pauseBtn) {
+          const icon = instance.pauseBtn.querySelector('svg');
+          if (icon) icon.setAttribute('data-icon', 'heroicons:pause');
+          instance.pauseBtn.setAttribute('aria-label', 'Pause autoplay');
+        }
+      }
+    }
+
+    // Drag handling
+    const dragThreshold = 10;
+    let hasMoved = false;
+
+    function onPointerDown(e: PointerEvent) {
+      const target = e.target as HTMLElement;
+      const isInteractive = target.closest('button, a, [role="button"]');
+
+      if (isDebug && isInteractive) {
+        console.log('[Carousel] PointerDown on interactive element, ignoring', target);
+      }
+
+      if (!isDraggable || instance.startX !== 0 || isInteractive) return;
+      instance.isDragging = false;
+      hasMoved = false;
+      instance.startX = e.clientX;
+      instance.currentX = e.clientX;
+      instance.startTime = Date.now();
+      track.style.cursor = 'grabbing';
+      viewport.setPointerCapture(e.pointerId);
+      if (autoplayEnabled && autoplayPauseInteraction) stopAutoplay();
+      updateDebug();
+      if (isDebug) console.log('[Carousel] PointerDown', { x: e.clientX, pointerId: e.pointerId });
+    }
+
+    function onPointerMove(e: PointerEvent) {
+      if (instance.startX === 0) return;
+      instance.currentX = e.clientX;
+      const dx = (instance.currentX - instance.startX) * rtlMultiplier;
+
+      if (isDebug && Math.abs(dx) > 5) {
+        console.log('[Carousel] PointerMove', {
+          currentX: e.clientX,
+          dx,
+          threshold: dragThreshold,
+        });
+      }
+
+      if (Math.abs(dx) > dragThreshold) {
+        instance.isDragging = true;
+        hasMoved = true;
+      }
+
+      if (instance.isDragging) {
+        const slideWidth = viewport.clientWidth;
+        const baseOffset = -instance.currentIndex * slideWidth * rtlMultiplier;
+        track.style.transitionDuration = '0ms';
+        track.style.transform = `translateX(${baseOffset + dx}px)`;
+      }
+
+      updateDebug();
+    }
+
+    function onPointerUp(e: PointerEvent) {
+      if (instance.startX === 0) return;
+
+      const dx = (instance.currentX - instance.startX) * rtlMultiplier;
+      const dt = Date.now() - instance.startTime;
+      const velocity = Math.abs(dx) / dt;
+
+      if (isDebug) {
+        console.log('[Carousel] PointerUp', {
+          dx,
+          dt,
+          velocity,
+          threshold: viewport.clientWidth * 0.25,
+          isDragging: instance.isDragging,
+          pointerId: e.pointerId,
+        });
+      }
+
+      track.style.cursor = '';
+      if (viewport.hasPointerCapture(e.pointerId)) {
+        viewport.releasePointerCapture(e.pointerId);
+      }
+
+      if (instance.isDragging) {
+        const threshold = viewport.clientWidth * 0.25;
+        if (Math.abs(dx) > threshold || velocity > 0.5) {
+          if (dx > 0) prev();
+          else next();
+        } else {
+          setPosition();
+        }
+      }
+
+      instance.startX = 0;
+      instance.currentX = 0;
+
+      // Restore autoplay after brief delay
+      if (autoplayEnabled && !instance.isAutoplayPaused) {
+        setTimeout(() => startAutoplay(), 1000);
+      }
+
+      // Reset dragging flag after a short delay to allow click suppression
+      setTimeout(() => {
+        instance.isDragging = false;
+      }, 50);
+    }
+
+    function onClick(e: Event) {
+      const target = e.target as HTMLElement;
+      const isButton = target.closest('button');
+
+      if (hasMoved && !isButton) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+      }
+      hasMoved = false;
+    }
+
+    // Keyboard
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.target !== root && root.contains(e.target as Node)) {
+        // Allow navigation within slides
+        return;
+      }
+
+      switch (e.key) {
+        case 'ArrowLeft':
+          e.preventDefault();
+          if (isRTL) next();
+          else prev();
+          break;
+        case 'ArrowRight':
+          e.preventDefault();
+          if (isRTL) prev();
+          else next();
+          break;
+        case 'Home':
+          e.preventDefault();
+          goTo(0);
+          break;
+        case 'End':
+          e.preventDefault();
+          goTo(slideCount - 1);
+          break;
+      }
+    }
+
+    // Bind events
+    if (instance.prevBtn) {
+      instance.prevBtn.addEventListener('click', prev);
+      if (isDebug) console.log('[Carousel] Prev button bound', instance.prevBtn);
+    }
+    if (instance.nextBtn) {
+      instance.nextBtn.addEventListener('click', next);
+      if (isDebug) console.log('[Carousel] Next button bound', instance.nextBtn);
+    }
+    if (instance.pauseBtn) instance.pauseBtn.addEventListener('click', toggleAutoplay);
+
+    viewport.addEventListener('pointerdown', onPointerDown);
+    viewport.addEventListener('pointermove', onPointerMove);
+    viewport.addEventListener('pointerup', onPointerUp);
+    viewport.addEventListener('click', onClick, true);
+
+    root.addEventListener('keydown', onKeyDown);
+
+    if (autoplayEnabled && autoplayPauseHover) {
+      root.addEventListener('mouseenter', stopAutoplay);
+      root.addEventListener('mouseleave', () => {
+        if (!instance.isAutoplayPaused) startAutoplay();
+      });
+    }
+
+    // Window resize
+    const resizeObserver = new ResizeObserver(() => {
+      setPosition(true);
+    });
+    resizeObserver.observe(viewport);
+
+    // Initialize
+    buildIndicators();
+    setPosition(true);
+    updateControls();
+    if (autoplayEnabled) startAutoplay();
+
+    // Cleanup
+    instance.cleanup = () => {
+      stopAutoplay();
+      resizeObserver.disconnect();
+      viewport.removeEventListener('pointermove', onPointerMove);
+      viewport.removeEventListener('pointerup', onPointerUp);
+    };
+
+    instances.set(root, instance);
+  }
+
+  // Auto-init
+  document.querySelectorAll('[data-carousel]').forEach((el) => initCarousel(el as HTMLElement));
+
+  // Astro page transitions
+  document.addEventListener('astro:after-swap', () => {
+    document.querySelectorAll('[data-carousel]').forEach((el) => initCarousel(el as HTMLElement));
+  });
+</script>

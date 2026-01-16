@@ -1,0 +1,199 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import ContentCarouselBlock from '~/components/blocks/composite/ContentCarousel.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
+import Image from '~/components/blocks/primitives/Image.astro';
+
+const metadata = {
+  title: {
+    default: 'ContentCarousel',
+  },
+};
+
+const sampleImages = [
+  {
+    src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop',
+    alt: 'Mountain landscape',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=crop',
+    alt: 'Forest path',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=crop',
+    alt: 'Ocean waves',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&h=600&fit=crop',
+    alt: 'Desert dunes',
+  },
+];
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Content Carousel',
+    subtitle:
+      'A flexible carousel component supporting images, custom content blocks, drag navigation, autoplay, and responsive sizing',
+  }}
+>
+  <section class="mb-16">
+    <h2>Basic Usage (Items Prop)</h2>
+    <p class="mb-4">
+      Pass an array of items to quickly create an image carousel. Each item uses the Image block and
+      supports all ImageProps (src, alt, width, height, aspectRatio, layout, etc.).
+    </p>
+    <div class="border border-border rounded-lg overflow-hidden">
+      <ContentCarouselBlock items={sampleImages} />
+    </div>
+  </section>
+
+  <section class="mb-16">
+    <h2>Slot Children with Interactive Blocks</h2>
+    <p class="mb-4">
+      Use the default slot to include any custom content, including interactive components. The
+      carousel intelligently distinguishes between drag gestures and clicks.
+    </p>
+    <div class="border border-border rounded-lg overflow-hidden">
+      <ContentCarouselBlock itemClass="basis-full">
+        <div
+          class="carousel-item flex-none basis-full p-8 bg-surface flex flex-col items-center justify-center gap-4"
+        >
+          <Image
+            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop"
+            alt="Mountain"
+            width={400}
+            height={300}
+            class="rounded-lg"
+          />
+          <h3 class="text-xl font-bold">Slide with Image Block</h3>
+          <Button
+            href="https://unsplash.com"
+            target="_blank"
+            label="View on Unsplash"
+            icon={{ name: 'heroicons:arrow-top-right-on-square' }}
+            intent="primary"
+          />
+        </div>
+
+        <div
+          class="carousel-item flex-none basis-full p-8 bg-elevated flex flex-col items-center justify-center gap-4"
+        >
+          <h3 class="text-xl font-bold">Interactive Content</h3>
+          <p class="text-center max-w-md">
+            Clicking buttons works seamlessly — drag to navigate, click to interact. The carousel
+            uses a movement threshold to distinguish between the two.
+          </p>
+          <div class="flex gap-3">
+            <Button label="Action 1" icon={{ name: 'heroicons:star' }} intent="primary" />
+            <Button label="Action 2" icon={{ name: 'heroicons:heart' }} intent="secondary" />
+          </div>
+        </div>
+
+        <div
+          class="carousel-item flex-none basis-full p-8 bg-surface flex flex-col items-center justify-center gap-4"
+        >
+          <h3 class="text-xl font-bold">Third Slide</h3>
+          <p class="text-center max-w-md">
+            You can place any Astro component here — Images, Videos, Buttons, even nested layouts or
+            other composite blocks.
+          </p>
+        </div>
+      </ContentCarouselBlock>
+    </div>
+  </section>
+
+  <section class="mb-16">
+    <h2>Autoplay & Responsive Sizing</h2>
+    <p class="mb-4">
+      Enable autoplay with configurable delay and pause behavior. Use <code>itemClass</code> with Tailwind
+      basis utilities for responsive layouts (e.g., one slide on mobile, multiple on desktop).
+    </p>
+    <div class="border border-border rounded-lg overflow-hidden">
+      <ContentCarouselBlock
+        items={sampleImages}
+        autoplay={{ enabled: true, delay: 3000, pauseOnHover: true }}
+        loop={true}
+        itemClass="basis-full md:basis-1/2 lg:basis-1/3"
+      />
+    </div>
+  </section>
+
+  <section class="mb-16">
+    <h2>Outside Controls</h2>
+    <p class="mb-4">
+      Position controls and indicators outside the carousel for a cleaner content area.
+    </p>
+    <div class="border border-border rounded-lg p-4">
+      <ContentCarouselBlock items={sampleImages.slice(0, 3)} controlsPosition="outside" />
+    </div>
+  </section>
+
+  <section class="mb-16">
+    <h2>Loop Mode</h2>
+    <p class="mb-4">
+      Enable <code>loop</code> for continuous infinite scrolling using cloned-slide technique for seamless
+      transitions.
+    </p>
+    <div class="border border-border rounded-lg overflow-hidden">
+      <ContentCarouselBlock items={sampleImages.slice(0, 3)} loop={true} />
+    </div>
+  </section>
+
+  <section class="mb-16">
+    <h2>Usage Notes</h2>
+    <div class="bg-surface p-6 rounded-lg">
+      <h3 class="font-semibold mb-3">Props</h3>
+      <ul class="list-disc list-inside space-y-2 text-sm">
+        <li>
+          <code>items</code>: Array of CarouselItem objects (optional if using slot)
+        </li>
+        <li>
+          <code>itemClass</code>: Tailwind classes for slide sizing (default: <code>basis-full</code
+          >)
+        </li>
+        <li>
+          <code>controlsPosition</code>: <code>'inside'</code> (overlay) or <code>'outside'</code> (adjacent)
+        </li>
+        <li>
+          <code>showIndicators</code>, <code>showControls</code>: Toggle navigation elements
+        </li>
+        <li>
+          <code>draggable</code>: Enable/disable pointer drag navigation (default: <code>true</code
+          >)
+        </li>
+        <li>
+          <code>loop</code>: Enable infinite looping (default: <code>false</code>)
+        </li>
+        <li>
+          <code>autoplay</code>: Boolean, number (delay in ms), or config object
+        </li>
+        <li>
+          <code>snapFallback</code>: <code>'transform'</code> (default) or <code>'scroll-snap'</code
+          >
+        </li>
+      </ul>
+
+      <h3 class="font-semibold mt-6 mb-3">Accessibility</h3>
+      <ul class="list-disc list-inside space-y-2 text-sm">
+        <li>Keyboard navigation: Left/Right arrows, Home/End</li>
+        <li>Screen reader announcements for slide changes</li>
+        <li>ARIA labels and roles for carousel structure</li>
+        <li>Respects <code>prefers-reduced-motion</code> for autoplay</li>
+        <li>Focusable indicators and controls</li>
+      </ul>
+
+      <h3 class="font-semibold mt-6 mb-3">Responsive Sizing</h3>
+      <p class="text-sm mb-2">
+        Use Tailwind's <code>basis-*</code> utilities in <code>itemClass</code> for responsive layouts:
+      </p>
+      <ul class="list-disc list-inside space-y-1 text-sm">
+        <li><code>basis-full</code>: One slide at a time (default)</li>
+        <li><code>basis-1/2 md:basis-1/3</code>: Two slides on mobile, three on tablet+</li>
+        <li><code>basis-full sm:basis-1/2 lg:basis-1/4</code>: Progressively show more slides</li>
+      </ul>
+    </div>
+  </section>
+</Layout>
