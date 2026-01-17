@@ -92,5 +92,7 @@ const mergedTopmostContainer = merge({}, defaultTopmostContainer, topmostContain
     <Container {...mergedTopmostContainer}>
       <slot />
     </Container>
+    <!-- modal portal root: server-rendered root for portals (falls back to body append) -->
+    <div id="modal-portal-root" class="z-9999"></div>
   </body>
 </html>
