@@ -108,12 +108,12 @@ const carouselClass = cn(
   <!-- Carousel viewport and track -->
   <div
     class={cn(
-      'carousel-viewport overflow-hidden relative touch-none',
+      'carousel-viewport overflow-hidden relative touch-none w-full box-border',
       controlsPosition === 'inside' && 'group'
     )}
   >
     <div
-      class="carousel-track flex transition-transform duration-300 ease-out will-change-transform"
+      class="carousel-track flex w-full flex-nowrap transition-transform duration-300 ease-out will-change-transform"
       data-carousel-track
     >
       {
@@ -122,7 +122,7 @@ const carouselClass = cn(
         ) : (
           items.map((item, index) => (
             <div
-              class={cn('carousel-item flex-none', itemClass, item.class)}
+              class={cn('carousel-item', itemClass, item.class)}
               data-carousel-slide
               role="group"
               aria-roledescription="slide"
@@ -381,7 +381,9 @@ const carouselClass = cn(
     function setPosition(instant = false) {
       // Calculate actual slide width (supports fractional basis like basis-1/3)
       const firstSlide = slides[0] as HTMLElement;
-      const slideWidth = firstSlide ? firstSlide.offsetWidth : viewport.clientWidth;
+      const slideWidth = firstSlide
+        ? firstSlide.getBoundingClientRect().width
+        : viewport.clientWidth;
       const offset = -instance.currentIndex * slideWidth * rtlMultiplier;
       track.style.transitionDuration = instant ? '0ms' : '';
       track.style.transform = `translateX(${offset}px)`;

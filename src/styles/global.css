@@ -142,49 +142,71 @@
     display: block;
   }
 
-  /* ContentCarousel styles */
+  /* ContentCarousel styles (consolidated and scoped) */
+
   .content-carousel {
+    display: block;
     position: relative;
-  }
-
-  .carousel-viewport {
-    overflow: hidden;
+    contain: layout inline-size;
     width: 100%;
-    touch-action: pan-y;
-  }
-
-  .carousel-track {
-    display: flex;
-    will-change: transform;
-    transition-property: transform;
-  }
-
-  .carousel-track.is-dragging {
-    transition-duration: 0ms;
-  }
-
-  .carousel-item {
-    flex-shrink: 0;
+    max-width: 100%;
+    min-width: 0;
     box-sizing: border-box;
   }
 
-  .carousel-controls {
+  .content-carousel .carousel-viewport {
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    min-width: 0;
+    contain: layout inline-size;
+  }
+
+  .content-carousel .carousel-track {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+    min-width: 0;
+    transition-property: transform;
+  }
+
+  .content-carousel .carousel-track.is-dragging {
+    transition-duration: 0ms;
+  }
+
+  .content-carousel .carousel-item {
+    box-sizing: border-box;
+    flex-shrink: 0;
+    min-width: 0;
+  }
+
+  .content-carousel .carousel-track > .carousel-item,
+  .content-carousel .carousel-track > * {
+    box-sizing: border-box;
+    flex-shrink: 0;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .content-carousel .carousel-controls {
     pointer-events: none;
   }
 
-  .carousel-controls > * {
+  .content-carousel .carousel-controls > * {
     pointer-events: auto;
   }
 
-  .carousel-indicators button {
+  .content-carousel .carousel-indicators button {
     transition: all 0.2s ease;
   }
 
-  .carousel-indicator-btn {
+  .content-carousel .carousel-indicator-btn {
     opacity: 0.7;
   }
 
-  .carousel-indicator-btn[aria-selected='true'] {
+  .content-carousel .carousel-indicator-btn[aria-selected='true'] {
     opacity: 1;
   }
 }
