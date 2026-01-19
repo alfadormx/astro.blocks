@@ -2,6 +2,7 @@
 import Layout from '../_layouts/Layout.astro';
 import ContentCarouselBlock from '~/components/blocks/composite/ContentCarousel.astro';
 import Button from '~/components/blocks/primitives/Button.astro';
+import ContentCarouselItem from '~/components/blocks/primitives/ContentCarouselItem.astro';
 import Image from '~/components/blocks/primitives/Image.astro';
 
 const metadata = {
@@ -58,9 +59,7 @@ const sampleImages = [
     </p>
     <div class="border border-border rounded-lg overflow-hidden">
       <ContentCarouselBlock>
-        <div
-          class="carousel-item basis-full p-8 bg-surface flex flex-col items-center justify-center gap-4"
-        >
+        <ContentCarouselItem basis="basis-full" background={{ class: 'bg-surface' }}>
           <Image
             src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop"
             alt="Mountain"
@@ -76,11 +75,8 @@ const sampleImages = [
             icon={{ name: 'heroicons:arrow-top-right-on-square' }}
             intent="primary"
           />
-        </div>
-
-        <div
-          class="carousel-item basis-full p-8 bg-elevated flex flex-col items-center justify-center gap-4"
-        >
+        </ContentCarouselItem>
+        <ContentCarouselItem basis="basis-full" background={{ class: 'bg-surface' }}>
           <h3 class="text-xl font-bold">Interactive Content</h3>
           <p class="text-center max-w-md">
             Clicking buttons works seamlessly — drag to navigate, click to interact. The carousel
@@ -90,17 +86,14 @@ const sampleImages = [
             <Button label="Action 1" icon={{ name: 'heroicons:star' }} intent="primary" />
             <Button label="Action 2" icon={{ name: 'heroicons:heart' }} intent="secondary" />
           </div>
-        </div>
-
-        <div
-          class="carousel-item basis-full p-8 bg-surface flex flex-col items-center justify-center gap-4"
-        >
+        </ContentCarouselItem>
+        <ContentCarouselItem basis="basis-full" background={{ class: 'bg-surface' }}>
           <h3 class="text-xl font-bold">Third Slide</h3>
           <p class="text-center max-w-md">
             You can place any Astro component here — Images, Videos, Buttons, even nested layouts or
             other composite blocks.
           </p>
-        </div>
+        </ContentCarouselItem>
       </ContentCarouselBlock>
     </div>
   </section>
