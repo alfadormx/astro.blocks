@@ -1,6 +1,7 @@
 import type { HTMLAttributes } from 'astro/types';
 import type { ButtonProps } from './button.types';
 import type { ImageProps } from '~/utils/images-optimization';
+import type { ContainerProps } from './container.types';
 
 export type CarouselItem = Partial<ImageProps> & {
   id?: string;
@@ -32,4 +33,8 @@ export interface ContentCarouselProps extends Omit<HTMLAttributes<'div'>, 'class
   indicatorButtonConfig?: Partial<ButtonProps>;
   pauseButtonConfig?: Partial<ButtonProps>;
   class?: string;
+}
+
+export interface ContentCarouselItemProps extends ContainerProps {
+  basis?: string;
 }

@@ -1,0 +1,26 @@
+---
+import Container from '~/components/blocks/layout/Container.astro';
+import merge from 'lodash.merge';
+import type { ContentCarouselItemProps } from '~/types/contentcarousel.types';
+import type { ContainerProps } from '~/types/container.types';
+import { cn } from '~/utils/styles';
+
+type Props = ContentCarouselItemProps;
+
+const props = Astro.props;
+
+const { basis: basisClass, ...rest } = props;
+
+const defaultContainer = {
+  htmlTag: 'div',
+  layout: { type: 'flex', class: 'flex-col items-center justify-center' },
+} as ContainerProps;
+
+const mergedClass = cn('carousel-item', basisClass ?? 'basis-full', rest.class);
+
+const mergedContainer = merge({}, defaultContainer, rest, { class: mergedClass });
+---
+
+<Container {...mergedContainer}>
+  <slot />
+</Container>
