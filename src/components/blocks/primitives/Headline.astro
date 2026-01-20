@@ -13,6 +13,7 @@ const {
   subtitleClass = '',
   class: className = '',
   align = 'left',
+  anchorId,
 } = Astro.props;
 
 const defaultAlignmentClass = {
@@ -41,6 +42,7 @@ const mergedSubtitleClass = cn(
 ---
 
 <div class={mergedClass}>
+  {anchorId ? <a id={anchorId} /> : null}
   {tagline && <p class={mergedTaglineClass}>{tagline}</p>}
   {title && <h1 class={mergedTitleClass}>{title}</h1>}
   {subtitle && <p class={mergedSubtitleClass}>{subtitle}</p>}

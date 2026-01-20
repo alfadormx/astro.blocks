@@ -8,6 +8,10 @@
     @apply bg-accent text-background;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-normal font-body min-h-screen antialiased tracking-tight;
     font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem); /* 16px → 18px */
