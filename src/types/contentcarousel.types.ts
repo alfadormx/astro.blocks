@@ -32,6 +32,7 @@ export interface ContentCarouselProps extends Omit<HTMLAttributes<'div'>, 'class
   nextButtonConfig?: Partial<ButtonProps>;
   indicatorButtonConfig?: Partial<ButtonProps>;
   pauseButtonConfig?: Partial<ButtonProps>;
+  playButtonConfig?: Partial<ButtonProps>;
   class?: string;
 }
 

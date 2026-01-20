@@ -25,6 +25,7 @@ const {
   nextButtonConfig,
   indicatorButtonConfig,
   pauseButtonConfig,
+  playButtonConfig,
   class: className = '',
   ...attrs
 } = Astro.props;
@@ -88,6 +89,10 @@ const defaultPauseButtonConfig = {
   'aria-label': 'Pause autoplay',
 } as ButtonProps;
 
+const defaultPlayButtonConfig = {
+  icon: { name: 'heroicons:play' },
+} as ButtonProps;
+
 const defaultIndicatorButtonConfig = {
   variant: 'solid',
   intent: 'neutral',
@@ -99,6 +104,13 @@ const defaultIndicatorButtonConfig = {
 const mergedPrevButtonConfig = merge({}, defaultPrevButtonConfig, prevButtonConfig);
 const mergedNextButtonConfig = merge({}, defaultNextButtonConfig, nextButtonConfig);
 const mergedPauseButtonConfig = merge({}, defaultPauseButtonConfig, pauseButtonConfig);
+const mergedPlayButtonConfig = merge(
+  {},
+  defaultPauseButtonConfig,
+  defaultPlayButtonConfig,
+  playButtonConfig,
+  { class: 'hidden!' }
+);
 const mergedIndicatorButtonConfig = merge({}, defaultIndicatorButtonConfig, indicatorButtonConfig);
 
 const carouselClass = cn(
@@ -209,6 +221,7 @@ const carouselClass = cn(
       autoplayConfig.enabled && controlsPosition === 'inside' && (
         <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
           <Button {...mergedPauseButtonConfig} data-carousel-pause />
+          <Button {...mergedPlayButtonConfig} data-carousel-play />
         </div>
       )
     }
@@ -252,6 +265,7 @@ const carouselClass = cn(
           </div>
         )}
         {autoplayConfig.enabled && <Button {...mergedPauseButtonConfig} data-carousel-pause />}
+        {autoplayConfig.enabled && <Button {...mergedPlayButtonConfig} data-carousel-play />}
       </div>
     )
   }
@@ -315,6 +329,7 @@ const carouselClass = cn(
     prevBtn: HTMLElement | null;
     nextBtn: HTMLElement | null;
     pauseBtn: HTMLElement | null;
+    playBtn: HTMLElement | null;
     indicatorsContainer: HTMLElement | null;
     announcer: HTMLElement | null;
     cleanup: () => void;
@@ -391,6 +406,7 @@ const carouselClass = cn(
       prevBtn: root.querySelector('[data-carousel-prev]'),
       nextBtn: root.querySelector('[data-carousel-next]'),
       pauseBtn: root.querySelector('[data-carousel-pause]'),
+      playBtn: root.querySelector('[data-carousel-play]'),
       indicatorsContainer: root.querySelector('[data-carousel-indicators]'),
       announcer: root.querySelector('[data-carousel-announcer]'),
       cleanup: () => {},
@@ -643,18 +659,14 @@ const carouselClass = cn(
       instance.isAutoplayPaused = !instance.isAutoplayPaused;
       if (instance.isAutoplayPaused) {
         stopAutoplay();
-        if (instance.pauseBtn) {
-          const icon = instance.pauseBtn.querySelector('svg');
-          if (icon) icon.setAttribute('data-icon', 'heroicons:play');
-          instance.pauseBtn.setAttribute('aria-label', 'Resume autoplay');
-        }
+        if (instance.pauseBtn) instance.pauseBtn.classList.add('hidden!');
+        if (instance.playBtn) instance.playBtn.classList.remove('hidden!');
+        if (instance.playBtn) instance.playBtn.setAttribute('aria-label', 'Resume autoplay');
       } else {
         startAutoplay();
-        if (instance.pauseBtn) {
-          const icon = instance.pauseBtn.querySelector('svg');
-          if (icon) icon.setAttribute('data-icon', 'heroicons:pause');
-          instance.pauseBtn.setAttribute('aria-label', 'Pause autoplay');
-        }
+        if (instance.playBtn) instance.playBtn.classList.add('hidden!');
+        if (instance.pauseBtn) instance.pauseBtn.classList.remove('hidden!');
+        if (instance.pauseBtn) instance.pauseBtn.setAttribute('aria-label', 'Pause autoplay');
       }
     }
 
@@ -808,6 +820,7 @@ const carouselClass = cn(
       if (isDebug) console.log('[Carousel] Next button bound', instance.nextBtn);
     }
     if (instance.pauseBtn) instance.pauseBtn.addEventListener('click', toggleAutoplay);
+    if (instance.playBtn) instance.playBtn.addEventListener('click', toggleAutoplay);
 
     viewport.addEventListener('click', onClick, true);
     if (instance.isDraggable) {
@@ -852,6 +865,7 @@ const carouselClass = cn(
       if (instance.prevBtn) instance.prevBtn.removeEventListener('click', prev);
       if (instance.nextBtn) instance.nextBtn.removeEventListener('click', next);
       if (instance.pauseBtn) instance.pauseBtn.removeEventListener('click', toggleAutoplay);
+      if (instance.playBtn) instance.playBtn.removeEventListener('click', toggleAutoplay);
       root.removeEventListener('keydown', onKeyDown);
     };
 
