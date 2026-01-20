@@ -7,4 +7,5 @@ export interface HeadlineProps {
   subtitleClass?: string;
   class?: string;
   align?: 'left' | 'center' | 'right';
+  anchorId?: string;
 }
