@@ -330,7 +330,11 @@ const carouselClass = cn(
 
     const viewport = track.parentElement!;
     const isLoop = root.dataset.loop === 'true';
-    const isDraggable = root.dataset.draggable === 'true';
+    const prefersCoarsePointer =
+      window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    const hasTouch =
+      'ontouchstart' in window || navigator.maxTouchPoints > 0 || prefersCoarsePointer;
+    const isDraggable = root.dataset.draggable === 'true' && hasTouch;
     const snapFallback = root.dataset.snapFallback || 'transform';
     const autoplayEnabled = root.dataset.autoplayEnabled === 'true';
     const autoplayDelay = parseInt(root.dataset.autoplayDelay || '4000', 10);
@@ -805,10 +809,14 @@ const carouselClass = cn(
     }
     if (instance.pauseBtn) instance.pauseBtn.addEventListener('click', toggleAutoplay);
 
-    viewport.addEventListener('pointerdown', onPointerDown);
-    viewport.addEventListener('pointermove', onPointerMove);
-    viewport.addEventListener('pointerup', onPointerUp);
     viewport.addEventListener('click', onClick, true);
+    if (instance.isDraggable) {
+      viewport.addEventListener('pointerdown', onPointerDown);
+      viewport.addEventListener('pointermove', onPointerMove);
+      viewport.addEventListener('pointerup', onPointerUp);
+
+      viewport.style.touchAction = 'pan-y';
+    }
 
     root.addEventListener('keydown', onKeyDown);
 
@@ -835,8 +843,16 @@ const carouselClass = cn(
     instance.cleanup = () => {
       stopAutoplay();
       resizeObserver.disconnect();
-      viewport.removeEventListener('pointermove', onPointerMove);
-      viewport.removeEventListener('pointerup', onPointerUp);
+      if (instance.isDraggable) {
+        viewport.removeEventListener('pointerdown', onPointerDown);
+        viewport.removeEventListener('pointermove', onPointerMove);
+        viewport.removeEventListener('pointerup', onPointerUp);
+      }
+
+      if (instance.prevBtn) instance.prevBtn.removeEventListener('click', prev);
+      if (instance.nextBtn) instance.nextBtn.removeEventListener('click', next);
+      if (instance.pauseBtn) instance.pauseBtn.removeEventListener('click', toggleAutoplay);
+      root.removeEventListener('keydown', onKeyDown);
     };
 
     instances.set(root, instance);
