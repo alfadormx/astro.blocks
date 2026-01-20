@@ -47,7 +47,12 @@ const sampleImages = [
       supports all ImageProps (src, alt, width, height, aspectRatio, layout, etc.).
     </p>
     <div class="border border-border rounded-lg overflow-hidden">
-      <ContentCarouselBlock items={sampleImages} />
+      <ContentCarouselBlock
+        items={sampleImages}
+        autoplay={{ enabled: true, delay: 3000, pauseOnHover: true }}
+        loop
+        debug
+      />
     </div>
   </section>
 
