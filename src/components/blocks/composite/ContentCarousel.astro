@@ -344,6 +344,8 @@ const carouselClass = cn(
     if (!track) return;
 
     const viewport = track.parentElement!;
+    // track active pointers so multi-touch (pinch) is allowed
+    let activePointers = 0;
     const isLoop = root.dataset.loop === 'true';
     const prefersCoarsePointer =
       window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
@@ -675,6 +677,7 @@ const carouselClass = cn(
     let hasMoved = false;
 
     function onPointerDown(e: PointerEvent) {
+      activePointers++;
       const target = e.target as HTMLElement;
       const isInteractive = target.closest('button, a, [role="button"]');
 
@@ -682,7 +685,23 @@ const carouselClass = cn(
         console.log('[Carousel] PointerDown on interactive element, ignoring', target);
       }
 
-      if (!isDraggable || instance.startX !== 0 || isInteractive) return;
+      // If more than one pointer is active, don't initiate dragging (allow pinch/zoom)
+      if (activePointers > 1) {
+        // Ensure we don't capture pointer when multitouch
+        try {
+          if (viewport.hasPointerCapture && viewport.hasPointerCapture(e.pointerId))
+            viewport.releasePointerCapture(e.pointerId);
+        } catch {
+          /* empty */
+        }
+        return;
+      }
+
+      if (!isDraggable || instance.startX !== 0 || isInteractive) {
+        activePointers = Math.max(0, activePointers - 1);
+        return;
+      }
+
       instance.isDragging = false;
       hasMoved = false;
       instance.startX = e.clientX;
@@ -692,10 +711,17 @@ const carouselClass = cn(
       viewport.setPointerCapture(e.pointerId);
       if (autoplayEnabled && autoplayPauseInteraction) stopAutoplay();
       updateDebug();
-      if (isDebug) console.log('[Carousel] PointerDown', { x: e.clientX, pointerId: e.pointerId });
+      if (isDebug)
+        console.log('[Carousel] PointerDown', {
+          x: e.clientX,
+          pointerId: e.pointerId,
+          activePointers,
+        });
     }
 
     function onPointerMove(e: PointerEvent) {
+      // Only handle move when a single pointer is active (ignore multitouch gestures)
+      if (activePointers !== 1) return;
       if (instance.startX === 0) return;
       instance.currentX = e.clientX;
       const dx = (instance.currentX - instance.startX) * rtlMultiplier;
@@ -724,6 +750,11 @@ const carouselClass = cn(
     }
 
     function onPointerUp(e: PointerEvent) {
+      // If there were multiple pointers, decrement counter and ignore
+      if (activePointers > 1) {
+        activePointers = Math.max(0, activePointers - 1);
+        return;
+      }
       if (instance.startX === 0) return;
 
       const dx = (instance.currentX - instance.startX) * rtlMultiplier;
@@ -758,6 +789,7 @@ const carouselClass = cn(
 
       instance.startX = 0;
       instance.currentX = 0;
+      activePointers = Math.max(0, activePointers - 1);
 
       // Restore autoplay after brief delay
       if (autoplayEnabled && !instance.isAutoplayPaused) {
@@ -827,8 +859,10 @@ const carouselClass = cn(
       viewport.addEventListener('pointerdown', onPointerDown);
       viewport.addEventListener('pointermove', onPointerMove);
       viewport.addEventListener('pointerup', onPointerUp);
+      viewport.addEventListener('pointercancel', onPointerUp);
 
-      viewport.style.touchAction = 'pan-y';
+      // allow vertical pan and pinch-zoom where supported; don't fully disable browser gestures
+      viewport.style.touchAction = viewport.style.touchAction || 'pan-y pinch-zoom';
     }
 
     root.addEventListener('keydown', onKeyDown);
