@@ -92,7 +92,7 @@ const defaultIndicatorButtonConfig = {
   variant: 'solid',
   intent: 'neutral',
   size: 'xs',
-  class: 'carousel-indicator-btn p-0 w-3 h-3 rounded-full transition-colors',
+  class: 'carousel-indicator-btn p-0 w-2 h-2 rounded-full transition-colors',
   'aria-label': 'Go to slide',
 } as ButtonProps;
 
@@ -514,7 +514,7 @@ const carouselClass = cn(
       // Create indicators on the client using configured class
       instance.indicatorsContainer.innerHTML = '';
       const indicatorClass =
-        root.dataset.indicatorClass || 'w-3 h-3 rounded-full transition-colors';
+        root.dataset.indicatorClass || 'w-2 h-2 rounded-full transition-colors';
       for (let i = 0; i < realSlides.length; i++) {
         const btn = document.createElement('button');
         btn.type = 'button';
