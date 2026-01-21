@@ -222,7 +222,7 @@
   --font-body: 'Quicksand', sans-serif;
   --font-quote: 'Sacramento', cursive;
 
-  --container-max-width: 1200px;
+  --container-max-width: 1280px;
 
   /* intent-based colors */
   --color-primary: var(--color-blue);
