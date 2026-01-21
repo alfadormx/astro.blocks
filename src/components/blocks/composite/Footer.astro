@@ -1,0 +1,110 @@
+---
+import merge from 'lodash.merge';
+import Container from '~/components/blocks/layout/Container.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
+import Logo from '~/components/blocks/primitives/Logo.astro';
+import type { ButtonProps } from '~/types/button.types';
+import type { ContainerProps } from '~/types/container.types';
+import type { FooterProps } from '~/types/footer.types';
+import { cn } from '~/utils/styles';
+
+type Props = FooterProps;
+
+const {
+  container,
+  disclaimer,
+  disclaimerClass,
+  logo,
+  footnote,
+  footnoteClass,
+  socialActions,
+  defaultSocialActionsConfig,
+  secondaryActions,
+  defaultSecondaryActionsConfig,
+} = Astro.props;
+
+const defaultDisclaimerClass = 'text-xs text-subtle';
+const defaultFootnoteClass = 'text-sm mr-4 text-subtle';
+
+const baseContainerConfig = {
+  htmlTag: 'footer',
+} as ContainerProps;
+
+const baseSocialIconConfig = {
+  size: 'sm',
+  variant: 'ghost',
+  intent: 'neutral',
+  shape: 'rounded',
+  width: 'auto',
+} as ButtonProps;
+
+const baseSecondaryActionsConfig = {
+  variant: 'link',
+  intent: 'neutral',
+  class: 'p-0',
+  size: 'sm',
+} as ButtonProps;
+
+const mergedDisclaimerClass = cn(defaultDisclaimerClass, disclaimerClass);
+const mergedFootnoteClass = cn(defaultFootnoteClass, footnoteClass);
+
+const mergedContainerConfig = merge({}, baseContainerConfig, container);
+---
+
+<Container {...mergedContainerConfig}>
+  <div class="grid grid-cols-12 gap-4 gap-y-8 sm:gap-8 py-8 md:py-12">
+    <div class="col-span-12 md:col-span-4">
+      <div class="mb-2">
+        <Logo {...logo} />
+      </div>
+      {
+        secondaryActions && secondaryActions.length > 0 && (
+          <div class="flex flex-row gap-1">
+            {secondaryActions.map((actionConfig, index) => {
+              const mergedSecondaryActionConfig = merge(
+                {},
+                baseSecondaryActionsConfig,
+                defaultSecondaryActionsConfig,
+                actionConfig
+              );
+              return (
+                <>
+                  {index !== 0 ? ' · ' : ''}
+                  <Button {...mergedSecondaryActionConfig} />
+                </>
+              );
+            })}
+          </div>
+        )
+      }
+    </div>
+  </div>
+  {
+    disclaimer && (
+      <div class={mergedDisclaimerClass}>
+        <Fragment set:html={disclaimer} />
+      </div>
+    )
+  }
+  <div class="md:flex md:items-center md:justify-between py-6 md:py-8">
+    {
+      socialActions && socialActions.length > 0 && (
+        <div class="md:order-1 flex flex-row gap-1">
+          {socialActions.map((iconConfig) => {
+            const mergedIconConfig = merge(
+              {},
+              baseSocialIconConfig,
+              defaultSocialActionsConfig,
+              iconConfig
+            );
+            return <Button {...mergedIconConfig} />;
+          })}
+        </div>
+      )
+    }
+
+    <div class={mergedFootnoteClass}>
+      <Fragment set:html={footnote} />
+    </div>
+  </div>
+</Container>
