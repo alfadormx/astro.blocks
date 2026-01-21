@@ -9,6 +9,8 @@ import NavigationTreeHorizontal from './NavigationTreeHorizontal.astro';
 import ThemeToggle from '~/components/blocks/primitives/ThemeToggle.astro';
 import Button from '~/components/blocks/primitives/Button.astro';
 import merge from 'lodash.merge';
+import type { ButtonProps } from '~/types/button.types';
+import type { ContainerProps } from '~/types/container.types';
 
 type Props = HeaderProps;
 
@@ -51,7 +53,7 @@ const defaultContainerConfig = {
   htmlTag: 'header',
   content: { air: 'none' },
   spacing: { padding: 'py-3 px-4 md:py-4 md:px-6 lg:px-8' },
-};
+} as ContainerProps;
 
 const defaultLogoButtonConfig = {
   href: '/',
@@ -60,7 +62,14 @@ const defaultLogoButtonConfig = {
   label: logoButton?.vector?.src || logoButton?.image?.src ? undefined : SITE.name,
   labelClass: 'text-xl font-bold',
   class: 'shrink-0 p-0 hover:no-underline',
-};
+} as ButtonProps;
+
+const baseActionsConfig = {
+  variant: 'ghost',
+  intent: 'neutral',
+  shape: 'rounded',
+  width: 'auto',
+} as ButtonProps;
 
 const mergedContainerConfig = merge({}, defaultContainerConfig, container);
 const mergedLogoButtonConfig = merge({}, defaultLogoButtonConfig, logoButton);
@@ -128,9 +137,10 @@ const headerLayoutClass = cn('flex items-center gap-4', justifyClasses, classNam
         {
           actions && actions.length > 0 && (
             <div class="flex flex-row gap-1">
-              {actions.map((action) => (
-                <Button {...action} />
-              ))}
+              {actions.map((action) => {
+                const mergedAction = merge({}, baseActionsConfig, action);
+                return <Button {...mergedAction} />;
+              })}
             </div>
           )
         }
