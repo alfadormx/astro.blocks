@@ -1,0 +1,364 @@
+---
+import Header from '~/components/blocks/composite/Header.astro';
+import Layout from '~/layouts/Layout.astro';
+import Container from '~/components/blocks/layout/Container.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
+import Modal from '~/components/blocks/layout/Modal.astro';
+import NavigationTree from '~/components/blocks/composite/NavigationTree.astro';
+import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
+import Image from '~/components/blocks/primitives/Image.astro';
+import Vector from '~/components/blocks/primitives/Vector.astro';
+import ItemsTimeline from '~/components/blocks/composite/ItemsTimeline.astro';
+import Content from '~/components/blocks/composite/Content.astro';
+import type { ButtonProps } from '~/types/button.types';
+import logo from '~/assets/images/logo.svg?raw';
+import CallToAction from '~/components/blocks/composite/CallToAction.astro';
+import ContentCarousel from '~/components/blocks/composite/ContentCarousel.astro';
+import ItemsGrid from '~/components/blocks/composite/ItemsGrid.astro';
+import Footer from '~/components/blocks/composite/Footer.astro';
+
+const navigationItems: ButtonProps[] = [
+  { label: 'Derriere le design', href: '#derriere-le-design' },
+  { label: 'Joaillerie sur mesure', href: '#joaillerie-sur-mesure' },
+  { label: 'Conception numérique & Fabrication', href: '#conception-numerique-fabrication' },
+  { label: 'Gallerie', href: '#gallerie' },
+  { label: 'Contactez-moi', href: '#contactez-moi' },
+];
+---
+
+<Layout>
+  <Header
+    isFloating
+    container={{
+      content: { boxWidth: 'full' },
+      background: {
+        class:
+          'transition-[background-color,backdrop-filter] duration-300 ease-in-out group-data-[scrolled]:bg-background/70 group-data-[scrolled]:backdrop-blur-sm',
+      },
+    }}
+    logo={{
+      vector: {
+        src: logo,
+      },
+      class:
+        'text-background hover:text-background transition-colors duration-300 group-data-[scrolled]:text-normal',
+    }}
+    navigationTreeHorizontal={{
+      items: navigationItems,
+      defaultItemConfig: {
+        variant: 'link',
+        class:
+          'text-background hover:text-background group-data-[scrolled]:text-normal group-data-[scrolled]:hover:text-normal',
+      },
+    }}
+    actionsAir="tight"
+    actions={[
+      {
+        'data-modal-trigger': 'mobile-menu',
+        icon: { name: 'heroicons:bars-3' },
+        variant: 'link',
+        class:
+          'md:hidden text-background hover:text-background group-data-[scrolled]:text-normal group-data-[scrolled]:hover:text-normal',
+      },
+    ]}
+  />
+
+  <Container
+    minHeight="min-h-screen"
+    layout={{ type: 'flex', class: 'flex-col justify-center items-center' }}
+    background={{
+      video: 'https://www.pexels.com/download/video/1575769/',
+    }}
+    content={{
+      air: 'none',
+    }}
+  >
+    <Vector src={logo} class="text-background" />
+    <Headline
+      subtitle="Chaque bijou est une histoire. La vôtre"
+      subtitleClass="text-background border-t-2 border-background"
+      align="center"
+    />
+  </Container>
+
+  <TwoColumnContainer
+    htmlTag="section"
+    responsive
+    content={{
+      widthType: 'boxed',
+      air: 'normal',
+    }}
+  >
+    <div slot="left">
+      <Headline anchorId="derriere-le-design" title="Derriere le design" />
+      <p>
+        Sofía Moreno, ce n'est pas qu'une marque — c'est une aventure faite de résilience, de
+        créativité et de liens profonds.
+      </p>
+      <p>
+        Née au Mexique, façonnée en Italie, épanouie à Paris, Sofía crée des pièces sur mesure et
+        des collections capsules qui célèbrent les femmes inspirantes et leurs parcours singuliers.
+      </p>
+
+      <p>
+        Chaque bijou porte une histoire — parfois audacieuse, parfois discrète, mais toujours pleine
+        de sens.
+      </p>
+      <p>
+        Avec la technologie comme alliée et l'émotion comme moteur, ses créations vibrent avec
+        celles qui les portent.
+      </p>
+      <p>
+        Envie de co-créer votre bijou ou de découvrir une collection qui vous parle&nbsp;? Bienvenue
+        dans un univers où le bijou devient un hommage.
+      </p>
+      <p>Gain a competitive advantage by incorporating industry leading practices</p>
+    </div>
+    <div slot="right">
+      <Image
+        src="~/assets/images/me-smoreno.jpeg"
+        alt="Sofia Moreno"
+        layout="responsive"
+        class="rounded-lg shadow"
+      />
+    </div>
+  </TwoColumnContainer>
+
+  <Content
+    container={{
+      background: {
+        image: 'https://images.pexels.com/photos/1470171/pexels-photo-1470171.jpeg',
+        attachment: 'fixed',
+        overlayClass: 'bg-background/30 backdrop-blur-xl',
+      },
+    }}
+    imageOnLeft
+    headline={{
+      anchorId: 'joaillerie-sur-mesure',
+      tagline: 'Particuliers',
+      title: 'Joaillerie sur mesure',
+    }}
+    image={{
+      src: '~/assets/images/me-studio.png',
+      alt: 'Demo image',
+      class: 'rounded-lg shadow',
+    }}
+  >
+    <ItemsTimeline
+      defaultItemConfig={{
+        icon: { class: 'bg-accent text-background p-2 rounded-full' },
+      }}
+      items={[
+        {
+          icon: { name: 'tabler:number-1' },
+          title: 'Soumettez votre brief',
+          content:
+            'Envoyez-moi le brief du projet : objectifs, contraintes, volumes et délais. Je prends connaissance des besoins techniques et commerciaux pour préparer la suite.',
+          actions: [
+            {
+              label: 'Remplir le formulaire',
+              href: '/',
+              intent: 'primary',
+            },
+          ],
+        },
+        {
+          icon: { name: 'tabler:number-2' },
+          title: 'Atelier technique & spécifications',
+          content:
+            'Je propose un atelier de cadrage (visio ou sur site) pour définir les spécifications techniques, choix matériaux, tolérances et contraintes de production. Nous établissons un cahier des charges précis.',
+          actions: [
+            {
+              label: 'Prendre rendez-vous',
+              href: '/',
+              intent: 'primary',
+            },
+          ],
+        },
+        {
+          icon: { name: 'tabler:number-3' },
+          title: 'Prototype numérique & validation',
+          content:
+            "Je conçois les prototypes numériques (CAO, rendu 3D) et, si nécessaire, un prototype physique. Nous testons et ajustons jusqu'à la validation technique et esthétique.",
+        },
+        {
+          icon: { name: 'tabler:number-4' },
+          title: 'Production, contrôle qualité & livraison',
+          content:
+            "Mon atelier pilote la production (fabrication, finitions), effectue le contrôle qualité et coordonne la logistique pour la livraison ou l'intégration. J'assure le suivi et la documentation.",
+        },
+      ]}
+    />
+  </Content>
+
+  <ContentCarousel
+    loop
+    autoplay={{ enabled: true, delay: 3000, pauseOnHover: true }}
+    itemClass="basis-full md:basis-1/2 lg:basis-1/3"
+    items={[
+      {
+        src: '~/assets/images/one.png',
+        alt: 'Bespoke jewelry 1',
+        layout: 'constrained',
+      },
+      {
+        src: '~/assets/images/two.png',
+        alt: 'Bespoke jewelry 2',
+        layout: 'constrained',
+      },
+      {
+        src: '~/assets/images/three.png',
+        alt: 'Bespoke jewelry 3',
+        layout: 'constrained',
+      },
+      {
+        src: '~/assets/images/four.png',
+        alt: 'Bespoke jewelry 4',
+        layout: 'constrained',
+      },
+    ]}
+  />
+
+  <Container>
+    <Content
+      container={{
+        content: { air: 'none' },
+      }}
+      headline={{
+        anchorId: 'conception-numerique-fabrication',
+        tagline: 'Entreprises',
+        title: 'Conception numérique & Fabrication',
+      }}
+      image={{
+        src: '~/assets/images/me-entreprises.png',
+        alt: 'Demo image',
+        class: 'rounded-lg shadow',
+      }}
+    >
+      <ItemsGrid
+        columns={1}
+        defaultItemConfig={{
+          icon: { class: 'bg-accent text-background p-2 rounded-full' },
+        }}
+        items={[
+          {
+            icon: { name: 'tabler:cube' },
+            title: '3D Modeling & CAD',
+            content:
+              'High-fidelity 3D models and CAD files for visualization, prototyping, and manufacturing. Deliverables can include STEP/IGES files and photorealistic renders to support production.',
+          },
+          {
+            icon: { name: 'tabler:automation' },
+            title: 'Concept Design & Engineering',
+            content:
+              'Concept sketches, technical design and engineering to align aesthetics with manufacturability and cost targets. We iterate until the design meets both visual and production requirements.',
+          },
+          {
+            icon: { name: 'tabler:assembly' },
+            title: 'Prototype Support & Production Prep',
+            content:
+              'Prototype reviews, adjustments and production-ready documentation (drawings, tolerances, BOM) to streamline fabrication and quality control.',
+          },
+        ]}
+      />
+    </Content>
+  </Container>
+
+  <Container
+    background={{
+      image: 'https://images.pexels.com/photos/1470171/pexels-photo-1470171.jpeg',
+      attachment: 'fixed',
+      overlayClass: 'bg-background/30 backdrop-blur-xl',
+    }}
+  >
+    <Headline anchorId="gallerie" tagline="Gallerie" title="Découvrez mes créations" />
+  </Container>
+  <ContentCarousel
+    loop
+    autoplay={{ enabled: true, delay: 3000, pauseOnHover: true }}
+    itemClass="basis-full md:basis-1/2 lg:basis-1/3"
+    items={[
+      {
+        src: '~/assets/images/one.png',
+        alt: 'Bespoke jewelry 1',
+        layout: 'constrained',
+      },
+      {
+        src: '~/assets/images/two.png',
+        alt: 'Bespoke jewelry 2',
+        layout: 'constrained',
+      },
+      {
+        src: '~/assets/images/three.png',
+        alt: 'Bespoke jewelry 3',
+        layout: 'constrained',
+      },
+      {
+        src: '~/assets/images/four.png',
+        alt: 'Bespoke jewelry 4',
+        layout: 'constrained',
+      },
+    ]}
+  />
+
+  <CallToAction
+    headline={{
+      anchorId: 'contactez-moi',
+      tagline: 'Vous souhaitez en savoir plus ?',
+      title: "Contactez-moi dès aujourd'hui !",
+    }}
+    actions={[
+      {
+        label: 'Contactez-moi',
+        icon: { name: 'tabler:brand-whatsapp' },
+        intent: 'primary',
+        size: 'lg',
+        variant: 'solid',
+        shape: 'pill',
+      },
+    ]}
+  />
+
+  <Modal
+    id="mobile-menu"
+    size="full"
+    class="bg-transparent rounded-none shadow-none flex items-center align-middle"
+  >
+    <NavigationTree items={navigationItems} defaultItemConfig={{ variant: 'link', size: 'xl' }} />
+  </Modal>
+
+  <Footer
+    container={{
+      background: {
+        class: 'bg-surface',
+      },
+      border: {
+        width: 'border-t',
+        color: 'border-elevated',
+      },
+    }}
+    logo={{
+      vector: {
+        src: logo,
+      },
+      class: 'text-normal hover:text-normal',
+    }}
+    secondaryActions={[
+      {
+        label: 'Terms',
+        href: '#',
+      },
+      {
+        label: 'Privacy Policy',
+        href: '#',
+      },
+    ]}
+    socialActions={[
+      { icon: { name: 'tabler:brand-facebook-filled' }, href: '#' },
+      { icon: { name: 'tabler:brand-instagram-filled' }, href: '#' },
+      { icon: { name: 'tabler:brand-x-filled' }, href: '#' },
+    ]}
+    disclaimer="Les créations présentées illustrent mon travail et parfois des collaborations. Chaque projet sur mesure est unique : résultats, délais et finitions varient selon le cahier des charges, les matériaux et votre implication. En commandant, vous acceptez la singularité et les éventuels ajustements du processus de conception et de fabrication."
+    footnote="© 2026 <strong>Sofía Moreno</strong>. Tous droits réservés."
+  />
+</Layout>
