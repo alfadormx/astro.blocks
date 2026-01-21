@@ -1,0 +1,45 @@
+---
+import { SITE } from 'site-config';
+import type { ButtonProps } from '~/types/button.types';
+import type { LogoProps } from '~/types/logo.types';
+import merge from 'lodash.merge';
+import Button from '~/components/blocks/primitives/Button.astro';
+import Vector from '~/components/blocks/primitives/Vector.astro';
+import Image from '~/components/blocks/primitives/Image.astro';
+import { cn } from '~/utils/styles';
+
+type Props = LogoProps;
+
+const { vector, image } = Astro.props;
+
+const defaultLogoConfig = {
+  href: '/',
+  variant: 'link' as const,
+  intent: 'neutral' as const,
+  label: vector?.src || image?.src ? undefined : SITE.name,
+  labelClass: 'text-xl font-bold',
+  class: 'shrink-0 p-0 hover:no-underline',
+} as ButtonProps;
+
+const mergedLogoConfig = merge({}, defaultLogoConfig, Astro.props);
+---
+
+{
+  (mergedLogoConfig.vector?.src || mergedLogoConfig.image?.src || mergedLogoConfig.label) && (
+    <Button {...mergedLogoConfig}>
+      {mergedLogoConfig.vector?.src ? (
+        <div class="w-auto h-12 max-w-48">
+          <Vector
+            {...mergedLogoConfig.vector}
+            class={cn('w-full h-full', mergedLogoConfig.vector.class)}
+            ariaLabel={mergedLogoConfig.vector.ariaLabel || SITE.name}
+          />
+        </div>
+      ) : mergedLogoConfig.image?.src ? (
+        <div class="w-auto h-12 max-w-48">
+          <Image {...mergedLogoConfig.image} alt={mergedLogoConfig.image.alt || SITE.name} />
+        </div>
+      ) : null}
+    </Button>
+  )
+}

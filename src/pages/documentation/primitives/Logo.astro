@@ -1,0 +1,60 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import LogoBlock from '~/components/blocks/primitives/Logo.astro';
+
+const metadata = {
+  title: {
+    default: 'Logo',
+  },
+};
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitives',
+    title: 'Logo',
+    subtitle:
+      'Usage examples for the Logo primitive — supports vector or image sources and optional label.',
+  }}
+>
+  <p>
+    The `Logo` primitive wraps a link/button around either a vector or an image and an optional
+    label.
+  </p>
+
+  <h3>Default (Label)</h3>
+  <div class="flex items-center gap-4">
+    <LogoBlock />
+  </div>
+
+  <h3>Vector (SVG)</h3>
+  <div class="flex items-center gap-4">
+    <LogoBlock
+      vector={{
+        src: 'https://www.svgrepo.com/show/513167/basketball.svg',
+        ariaLabel: 'Basketball',
+        class: 'w-6 h-6',
+      }}
+      href="/"
+    />
+  </div>
+
+  <h3>Label Only (Text)</h3>
+  <div class="flex items-center gap-4">
+    <LogoBlock label="Simple Text Logo" labelClass="text-lg font-semibold" />
+  </div>
+
+  <h3>Custom Classes</h3>
+  <div class="flex items-center gap-4">
+    <LogoBlock
+      label="Styled"
+      class="p-2"
+      vector={{
+        src: 'https://www.svgrepo.com/show/513167/basketball.svg',
+        ariaLabel: 'Basketball',
+      }}
+      labelClass="text-xl font-bold"
+    />
+  </div>
+</Layout>
