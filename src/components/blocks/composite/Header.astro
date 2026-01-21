@@ -1,16 +1,14 @@
 ---
 import type { HeaderProps } from '~/types/header.types';
 import { cn } from '~/utils/styles';
-import { SITE } from 'site-config';
 import Container from '~/components/blocks/layout/Container.astro';
-import Image from '~/components/blocks/primitives/Image.astro';
-import Vector from '~/components/blocks/primitives/Vector.astro';
 import NavigationTreeHorizontal from './NavigationTreeHorizontal.astro';
 import ThemeToggle from '~/components/blocks/primitives/ThemeToggle.astro';
 import Button from '~/components/blocks/primitives/Button.astro';
 import merge from 'lodash.merge';
 import type { ButtonProps } from '~/types/button.types';
 import type { ContainerProps } from '~/types/container.types';
+import Logo from '~/components/blocks/primitives/Logo.astro';
 
 type Props = HeaderProps;
 
@@ -22,7 +20,7 @@ const {
   navigationAlign = 'center',
   actionsAir = 'normal',
   container,
-  logoButton,
+  logo,
   navigationTreeHorizontal,
   themeToggle,
   actions = [],
@@ -55,15 +53,6 @@ const defaultContainerConfig = {
   spacing: { padding: 'py-3 px-4 md:py-4 md:px-6 lg:px-8' },
 } as ContainerProps;
 
-const defaultLogoButtonConfig = {
-  href: '/',
-  variant: 'link' as const,
-  intent: 'neutral' as const,
-  label: logoButton?.vector?.src || logoButton?.image?.src ? undefined : SITE.name,
-  labelClass: 'text-xl font-bold',
-  class: 'shrink-0 p-0 hover:no-underline',
-} as ButtonProps;
-
 const baseActionsConfig = {
   variant: 'ghost',
   intent: 'neutral',
@@ -72,7 +61,6 @@ const baseActionsConfig = {
 } as ButtonProps;
 
 const mergedContainerConfig = merge({}, defaultContainerConfig, container);
-const mergedLogoButtonConfig = merge({}, defaultLogoButtonConfig, logoButton);
 
 const positionClasses = cn(
   'group',
@@ -90,30 +78,7 @@ const headerLayoutClass = cn('flex items-center gap-4', justifyClasses, classNam
   <Container {...mergedContainerConfig} {...attrs}>
     <div class={headerLayoutClass}>
       <!-- Left Section: Logo -->
-      {
-        (mergedLogoButtonConfig.vector?.src ||
-          mergedLogoButtonConfig.image?.src ||
-          mergedLogoButtonConfig.label) && (
-          <Button {...mergedLogoButtonConfig}>
-            {mergedLogoButtonConfig.vector?.src ? (
-              <div class="w-auto h-12 max-w-48">
-                <Vector
-                  {...mergedLogoButtonConfig.vector}
-                  class={cn('w-full h-full', mergedLogoButtonConfig.vector.class)}
-                  ariaLabel={mergedLogoButtonConfig.vector.ariaLabel || SITE.name}
-                />
-              </div>
-            ) : mergedLogoButtonConfig.image?.src ? (
-              <div class="w-auto h-12 max-w-48">
-                <Image
-                  {...mergedLogoButtonConfig.image}
-                  alt={mergedLogoButtonConfig.image.alt || SITE.name}
-                />
-              </div>
-            ) : null}
-          </Button>
-        )
-      }
+      <Logo {...logo} />
 
       <!-- Center Section: Navigation (hidden on mobile) -->
       {
