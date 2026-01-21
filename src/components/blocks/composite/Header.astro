@@ -125,7 +125,15 @@ const headerLayoutClass = cn('flex items-center gap-4', justifyClasses, classNam
       <div class={cn('flex items-center shrink-0', actionsAirClasses[actionsAir])}>
         {showThemeToggle && <ThemeToggle {...themeToggle} />}
 
-        {actions.map((action) => <Button {...action} />)}
+        {
+          actions && actions.length > 0 && (
+            <div class="flex flex-row gap-1">
+              {actions.map((action) => (
+                <Button {...action} />
+              ))}
+            </div>
+          )
+        }
       </div>
     </div>
   </Container>
