@@ -2,12 +2,12 @@
 import type { HeaderProps } from '~/types/header.types';
 import { cn } from '~/utils/styles';
 import { SITE } from 'site-config';
-import Container from '../layout/Container.astro';
-import Image from '../primitives/Image.astro';
-import Vector from '../primitives/Vector.astro';
+import Container from '~/components/blocks/layout/Container.astro';
+import Image from '~/components/blocks/primitives/Image.astro';
+import Vector from '~/components/blocks/primitives/Vector.astro';
 import NavigationTreeHorizontal from './NavigationTreeHorizontal.astro';
-import ThemeToggle from '../primitives/ThemeToggle.astro';
-import Button from '../primitives/Button.astro';
+import ThemeToggle from '~/components/blocks/primitives/ThemeToggle.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
 import merge from 'lodash.merge';
 
 type Props = HeaderProps;
