@@ -3,7 +3,7 @@ import type { ItemsTimelineHorizontalProps } from '~/types/itemstimelinehorizont
 import type { ItemProps } from '~/types/item.types';
 import { cn } from '~/utils/styles';
 import Item from '~/components/blocks/composite/Item.astro';
-import merge from 'lodash.merge';
+import { mergeConfigs } from '~/utils/mergeConfigs';
 
 type Props = ItemsTimelineHorizontalProps;
 
@@ -32,13 +32,12 @@ const timelineClass = cn(defaultTimelineClass, className);
 <div class={timelineClass}>
   {
     items.map((item: ItemProps, index: number) => {
-      const mergedItem = merge(
+      const mergedItem = mergeConfigs(
         {},
         defaultItemConfig || {},
         { contentClass: spacingSettings[air] },
         item
       );
-      // const mergedItem = merge({}, defaultItemConfig, item);
       const isLast = index === items.length - 1;
       const isFirst = index === 0;
 

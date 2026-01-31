@@ -1,9 +1,9 @@
 ---
 import Container from '~/components/blocks/layout/Container.astro';
-import merge from 'lodash.merge';
 import type { ContentCarouselItemProps } from '~/types/contentcarousel.types';
 import type { ContainerProps } from '~/types/container.types';
 import { cn } from '~/utils/styles';
+import { mergeConfigs } from '~/utils/mergeConfigs';
 
 type Props = ContentCarouselItemProps;
 
@@ -18,7 +18,7 @@ const defaultContainer = {
 
 const mergedClass = cn('carousel-item', basisClass ?? 'basis-full', rest.class);
 
-const mergedContainer = merge({}, defaultContainer, rest, { class: mergedClass });
+const mergedContainer = mergeConfigs({}, defaultContainer, rest, { class: mergedClass });
 ---
 
 <Container {...mergedContainer}>

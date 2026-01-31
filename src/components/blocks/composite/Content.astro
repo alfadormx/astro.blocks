@@ -5,11 +5,11 @@ import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.as
 import Image from '~/components/blocks/primitives/Image.astro';
 import Button from '~/components/blocks/primitives/Button.astro';
 import ItemsGrid from '~/components/blocks/composite/ItemsGrid.astro';
-import merge from 'lodash.merge';
 import type { ContentProps } from '~/types/content.types';
 import type { TwoColumnContainerProps } from '~/types/container.types';
 import type { ImageProps } from '~/utils/images-optimization';
 import type { ItemsGridProps } from '~/types/itemsgrid.types';
+import { mergeConfigs } from '~/utils/mergeConfigs';
 
 type Props = ContentProps;
 
@@ -57,11 +57,11 @@ const defaultImage: Partial<ImageProps> = {
   alt: '',
 };
 
-const mergedContainer = merge({}, defaultContainer, container);
-const mergedHeadline = merge({}, defaultHeadline, headline);
-const mergedImage = merge({}, defaultImage, image);
+const mergedContainer = mergeConfigs({}, defaultContainer, container);
+const mergedHeadline = mergeConfigs({}, defaultHeadline, headline);
+const mergedImage = mergeConfigs({}, defaultImage, image);
 
-const mergedItemsGrid = merge({}, defaultItemsGridConfig, {
+const mergedItemsGrid = mergeConfigs({}, defaultItemsGridConfig, {
   items: items,
 });
 ---

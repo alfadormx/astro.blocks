@@ -10,7 +10,6 @@ import Metadata from '~/components/htmlheader/Metadata.astro';
 import SiteVerification from '~/components/htmlheader/SiteVerification.astro';
 import Container from '~/components/blocks/layout/Container.astro';
 import SidebarLeftContainer from '~/components/blocks/layout/SidebarLeftContainer.astro';
-import merge from 'lodash.merge';
 import type { MetaData } from '~/types/metadata.types';
 import type { ContainerProps } from '~/types/container.types';
 import type { HeadlineProps } from '~/types/headline.types';
@@ -18,6 +17,8 @@ import Headline from '~/components/blocks/primitives/Headline.astro';
 import NavigationTree from '~/components/blocks/composite/NavigationTree.astro';
 import { documentationNavigation } from '../navigation';
 import Header from '~/components/blocks/composite/Header.astro';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import merge from 'lodash.merge';
 
 export type Props = {
   langCode?: string;
@@ -64,9 +65,9 @@ const defaultTopmostContainer = {
 
 const defaultHeadline = {} as HeadlineProps;
 
-const mergedMetadata = merge({}, defaultMetadata, metadata) as Partial<MetaData>;
-const mergedTopmostContainer = merge({}, defaultTopmostContainer, topmostContainer);
-const mergedHeadline = merge({}, defaultHeadline, headline);
+const mergedMetadata = merge({}, defaultMetadata, metadata);
+const mergedTopmostContainer = mergeConfigs({}, defaultTopmostContainer, topmostContainer);
+const mergedHeadline = mergeConfigs({}, defaultHeadline, headline);
 ---
 
 <!doctype html>

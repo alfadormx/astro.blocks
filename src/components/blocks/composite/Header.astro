@@ -5,10 +5,10 @@ import Container from '~/components/blocks/layout/Container.astro';
 import NavigationTreeHorizontal from './NavigationTreeHorizontal.astro';
 import ThemeToggle from '~/components/blocks/primitives/ThemeToggle.astro';
 import Button from '~/components/blocks/primitives/Button.astro';
-import merge from 'lodash.merge';
 import type { ButtonProps } from '~/types/button.types';
 import type { ContainerProps } from '~/types/container.types';
 import Logo from '~/components/blocks/primitives/Logo.astro';
+import { mergeConfigs } from '~/utils/mergeConfigs';
 
 type Props = HeaderProps;
 
@@ -53,14 +53,14 @@ const defaultContainerConfig = {
   spacing: { padding: 'py-3 px-4 md:py-4 md:px-6 lg:px-8' },
 } as ContainerProps;
 
-const baseActionsConfig = {
+const baseActionsConfig: Partial<ButtonProps> = {
   variant: 'ghost',
   intent: 'neutral',
   shape: 'rounded',
   width: 'auto',
-} as ButtonProps;
+};
 
-const mergedContainerConfig = merge({}, defaultContainerConfig, container);
+const mergedContainerConfig = mergeConfigs({}, defaultContainerConfig, container);
 
 const positionClasses = cn(
   'group',
@@ -103,7 +103,7 @@ const headerLayoutClass = cn('flex items-center gap-4', justifyClasses, classNam
           actions && actions.length > 0 && (
             <div class="flex flex-row gap-1">
               {actions.map((action) => {
-                const mergedAction = merge({}, baseActionsConfig, action);
+                const mergedAction = mergeConfigs({}, baseActionsConfig, action);
                 return <Button {...mergedAction} />;
               })}
             </div>

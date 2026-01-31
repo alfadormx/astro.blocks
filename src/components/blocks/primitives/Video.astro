@@ -2,8 +2,8 @@
 import type { VideoProps } from '~/types/video.types';
 import { cn } from '~/utils/styles';
 import Button from './Button.astro';
-import merge from 'lodash.merge';
 import type { ButtonProps } from '~/types/button.types';
+import { mergeConfigs } from '~/utils/mergeConfigs';
 
 type Props = VideoProps;
 
@@ -68,14 +68,14 @@ const pipCloseBtnId = isFloating ? 'pip-close' : undefined;
 const defaultWrapperClass = 'w-full relative bg-elevated';
 const defaultVideoGroupClass = 'w-full relative overflow-hidden bg-elevated';
 
-const pipButtonDefaultConfig = {
+const pipButtonDefaultConfig: Partial<ButtonProps> = {
   id: pipCloseBtnId,
   icon: { name: 'heroicons:arrow-up-left' },
   size: 'sm',
   class: 'absolute z-10 top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity hidden',
-} as ButtonProps;
+};
 
-const mergedPipButtonConfig = merge({}, pipButtonDefaultConfig, pipButtonConfig, {
+const mergedPipButtonConfig = mergeConfigs({}, pipButtonDefaultConfig, pipButtonConfig, {
   class: cn(pipButtonDefaultConfig?.class, pipButtonConfig?.class),
 });
 

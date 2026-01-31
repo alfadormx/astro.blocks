@@ -1,27 +1,26 @@
 ---
 import { SITE } from 'site-config';
-import type { ButtonProps } from '~/types/button.types';
 import type { LogoProps } from '~/types/logo.types';
-import merge from 'lodash.merge';
 import Button from '~/components/blocks/primitives/Button.astro';
 import Vector from '~/components/blocks/primitives/Vector.astro';
 import Image from '~/components/blocks/primitives/Image.astro';
 import { cn } from '~/utils/styles';
+import { mergeConfigs } from '~/utils/mergeConfigs';
 
 type Props = LogoProps;
 
 const { vector, image } = Astro.props;
 
-const defaultLogoConfig = {
+const defaultLogoConfig: Partial<LogoProps> = {
   href: '/',
-  variant: 'link' as const,
-  intent: 'neutral' as const,
+  variant: 'link',
+  intent: 'neutral',
   label: vector?.src || image?.src ? undefined : SITE.name,
   labelClass: 'text-xl font-bold',
   class: 'shrink-0 p-0 hover:no-underline',
-} as ButtonProps;
+};
 
-const mergedLogoConfig = merge({}, defaultLogoConfig, Astro.props);
+const mergedLogoConfig = mergeConfigs({}, defaultLogoConfig, Astro.props);
 ---
 
 {
