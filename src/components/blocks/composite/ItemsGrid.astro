@@ -3,7 +3,7 @@ import type { ItemsGridProps } from '~/types/itemsgrid.types';
 import type { ItemProps } from '~/types/item.types';
 import { cn } from '~/utils/styles';
 import Item from '~/components/blocks/composite/Item.astro';
-import merge from 'lodash.merge';
+import { mergeConfigs } from '~/utils/mergeConfigs';
 
 type Props = ItemsGridProps;
 
@@ -44,7 +44,7 @@ const gridClass = cn(
 <div class={gridClass}>
   {
     items.map((item: ItemProps) => {
-      const mergedItem = merge({}, defaultItemConfig || {}, item);
+      const mergedItem = mergeConfigs({}, defaultItemConfig || {}, item);
       return <Item {...mergedItem} />;
     })
   }

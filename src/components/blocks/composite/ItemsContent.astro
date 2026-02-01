@@ -2,9 +2,9 @@
 import Container from '~/components/blocks/layout/Container.astro';
 import Headline from '~/components/blocks/primitives/Headline.astro';
 import ItemsGrid from '~/components/blocks/composite/ItemsGrid.astro';
-import merge from 'lodash.merge';
 import type { ItemsContentProps } from '~/types/itemscontent.types';
 import type { ItemsGridProps } from '~/types/itemsgrid.types';
+import { mergeConfigs } from '~/utils/mergeConfigs';
 
 type Props = ItemsContentProps;
 
@@ -22,9 +22,9 @@ const defaultItemsGrid: Partial<ItemsGridProps> = {
   },
 };
 
-const mergedContainer = merge({}, defaultContainer, container);
-const mergedHeadline = merge({}, defaultHeadline, headline);
-const mergedItemsGrid = merge({}, defaultItemsGrid, itemsGrid);
+const mergedContainer = mergeConfigs({}, defaultContainer, container);
+const mergedHeadline = mergeConfigs({}, defaultHeadline, headline);
+const mergedItemsGrid = mergeConfigs({}, defaultItemsGrid, itemsGrid);
 ---
 
 <Container {...mergedContainer}>

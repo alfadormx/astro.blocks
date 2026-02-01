@@ -3,7 +3,7 @@ import type { ItemsTimelineProps } from '~/types/itemstimeline.types';
 import type { ItemProps } from '~/types/item.types';
 import { cn } from '~/utils/styles';
 import Item from '~/components/blocks/composite/Item.astro';
-import merge from 'lodash.merge';
+import { mergeConfigs } from '~/utils/mergeConfigs';
 
 type Props = ItemsTimelineProps;
 
@@ -31,7 +31,7 @@ const timelineClass = cn(defaultTimelineClass, className);
 <div class={timelineClass}>
   {
     items.map((item: ItemProps, index: number) => {
-      const mergedItem = merge(
+      const mergedItem = mergeConfigs(
         {},
         defaultItemConfig || {},
         { contentClass: spacingSettings[air] },

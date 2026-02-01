@@ -2,7 +2,7 @@
 import type { ButtonProps } from '~/types/button.types';
 import Button from '~/components/blocks/primitives/Button.astro';
 import type { NavigationTreeProps } from '~/types/navigationtree.types';
-import merge from 'lodash.merge';
+import { mergeConfigs } from '~/utils/mergeConfigs';
 
 type Props = NavigationTreeProps;
 
@@ -24,25 +24,25 @@ const {
   toggleMode = 'button',
 } = Astro.props;
 
-const defaultItemButtonConfig = {
+const defaultItemButtonConfig: Partial<ButtonProps> = {
   variant: 'ghost',
   intent: 'neutral',
   width: 'full',
   iconPosition: 'left',
 };
 
-const defaultActiveItemButtonConfig = {
+const defaultActiveItemButtonConfig: Partial<ButtonProps> = {
   variant: 'solid',
   intent: 'primary',
   width: 'full',
   iconPosition: 'left',
 };
 
-const mergedDefaultItemConfig = merge({}, defaultItemButtonConfig, defaultItemConfig || {});
-const mergedDefaultActiveItemConfig = merge(
+const mergedDefaultItemConfig = mergeConfigs({}, defaultItemButtonConfig, defaultItemConfig);
+const mergedDefaultActiveItemConfig = mergeConfigs(
   {},
   defaultActiveItemButtonConfig,
-  defaultActiveItemConfig || {}
+  defaultActiveItemConfig
 );
 
 // Utility functions

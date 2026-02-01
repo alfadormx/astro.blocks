@@ -216,6 +216,13 @@
   }
 }
 
+@layer utilities {
+  .header-transitions * {
+    @apply transition-colors duration-300 ease-in-out;
+    transition-property: color, background-color, width, transform, backdrop-filter;
+  }
+}
+
 @theme inline {
   --font-title: 'Kodchasan', sans-serif;
   --font-subtitle: 'Quicksand', sans-serif;

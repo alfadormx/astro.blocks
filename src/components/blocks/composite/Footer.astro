@@ -1,11 +1,11 @@
 ---
-import merge from 'lodash.merge';
 import Container from '~/components/blocks/layout/Container.astro';
 import Button from '~/components/blocks/primitives/Button.astro';
 import Logo from '~/components/blocks/primitives/Logo.astro';
 import type { ButtonProps } from '~/types/button.types';
 import type { ContainerProps } from '~/types/container.types';
 import type { FooterProps } from '~/types/footer.types';
+import { mergeConfigs } from '~/utils/mergeConfigs';
 import { cn } from '~/utils/styles';
 
 type Props = FooterProps;
@@ -26,29 +26,29 @@ const {
 const defaultDisclaimerClass = 'text-xs text-subtle';
 const defaultFootnoteClass = 'text-sm mr-4 text-subtle';
 
-const baseContainerConfig = {
+const baseContainerConfig: ContainerProps = {
   htmlTag: 'footer',
-} as ContainerProps;
+};
 
-const baseSocialIconConfig = {
+const baseSocialIconConfig: Partial<ButtonProps> = {
   size: 'sm',
   variant: 'ghost',
   intent: 'neutral',
   shape: 'rounded',
   width: 'auto',
-} as ButtonProps;
+};
 
-const baseSecondaryActionsConfig = {
+const baseSecondaryActionsConfig: Partial<ButtonProps> = {
   variant: 'link',
   intent: 'neutral',
   class: 'p-0',
   size: 'sm',
-} as ButtonProps;
+};
 
 const mergedDisclaimerClass = cn(defaultDisclaimerClass, disclaimerClass);
 const mergedFootnoteClass = cn(defaultFootnoteClass, footnoteClass);
 
-const mergedContainerConfig = merge({}, baseContainerConfig, container);
+const mergedContainerConfig = mergeConfigs({}, baseContainerConfig, container);
 ---
 
 <Container {...mergedContainerConfig}>
@@ -61,7 +61,7 @@ const mergedContainerConfig = merge({}, baseContainerConfig, container);
         secondaryActions && secondaryActions.length > 0 && (
           <div class="flex flex-row gap-1">
             {secondaryActions.map((actionConfig, index) => {
-              const mergedSecondaryActionConfig = merge(
+              const mergedSecondaryActionConfig = mergeConfigs(
                 {},
                 baseSecondaryActionsConfig,
                 defaultSecondaryActionsConfig,
@@ -91,7 +91,7 @@ const mergedContainerConfig = merge({}, baseContainerConfig, container);
       socialActions && socialActions.length > 0 && (
         <div class="md:order-1 flex flex-row gap-1">
           {socialActions.map((iconConfig) => {
-            const mergedIconConfig = merge(
+            const mergedIconConfig = mergeConfigs(
               {},
               baseSocialIconConfig,
               defaultSocialActionsConfig,

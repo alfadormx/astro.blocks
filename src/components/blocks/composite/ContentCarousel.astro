@@ -3,8 +3,8 @@ import type { ContentCarouselProps, AutoplayConfig } from '~/types/contentcarous
 import Button from '~/components/blocks/primitives/Button.astro';
 import Image from '~/components/blocks/primitives/Image.astro';
 import { cn } from '~/utils/styles';
-import merge from 'lodash.merge';
 import type { ButtonProps } from '~/types/button.types';
+import { mergeConfigs } from '~/utils/mergeConfigs';
 
 type Props = ContentCarouselProps;
 
@@ -60,7 +60,7 @@ const autoplayConfig: AutoplayConfig = (() => {
 })();
 
 // Button configs
-const defaultPrevButtonConfig = {
+const defaultPrevButtonConfig: Partial<ButtonProps> = {
   icon: { name: 'heroicons:chevron-left' },
   variant: 'solid',
   intent: 'neutral',
@@ -68,9 +68,9 @@ const defaultPrevButtonConfig = {
   shape: 'pill',
   class: 'carousel-prev-btn',
   'aria-label': 'Previous slide',
-} as ButtonProps;
+};
 
-const defaultNextButtonConfig = {
+const defaultNextButtonConfig: Partial<ButtonProps> = {
   icon: { name: 'heroicons:chevron-right' },
   variant: 'solid',
   intent: 'neutral',
@@ -78,40 +78,44 @@ const defaultNextButtonConfig = {
   shape: 'pill',
   class: 'carousel-next-btn',
   'aria-label': 'Next slide',
-} as ButtonProps;
+};
 
-const defaultPauseButtonConfig = {
+const defaultPauseButtonConfig: Partial<ButtonProps> = {
   icon: { name: 'heroicons:pause' },
   variant: 'solid',
   intent: 'neutral',
   size: 'sm',
   class: 'carousel-pause-btn',
   'aria-label': 'Pause autoplay',
-} as ButtonProps;
+};
 
-const defaultPlayButtonConfig = {
+const defaultPlayButtonConfig: Partial<ButtonProps> = {
   icon: { name: 'heroicons:play' },
-} as ButtonProps;
+};
 
-const defaultIndicatorButtonConfig = {
+const defaultIndicatorButtonConfig: Partial<ButtonProps> = {
   variant: 'solid',
   intent: 'neutral',
   size: 'xs',
   class: 'carousel-indicator-btn p-0 w-2 h-2 rounded-full transition-colors',
   'aria-label': 'Go to slide',
-} as ButtonProps;
+};
 
-const mergedPrevButtonConfig = merge({}, defaultPrevButtonConfig, prevButtonConfig);
-const mergedNextButtonConfig = merge({}, defaultNextButtonConfig, nextButtonConfig);
-const mergedPauseButtonConfig = merge({}, defaultPauseButtonConfig, pauseButtonConfig);
-const mergedPlayButtonConfig = merge(
+const mergedPrevButtonConfig = mergeConfigs({}, defaultPrevButtonConfig, prevButtonConfig);
+const mergedNextButtonConfig = mergeConfigs({}, defaultNextButtonConfig, nextButtonConfig);
+const mergedPauseButtonConfig = mergeConfigs({}, defaultPauseButtonConfig, pauseButtonConfig);
+const mergedPlayButtonConfig = mergeConfigs(
   {},
   defaultPauseButtonConfig,
   defaultPlayButtonConfig,
   playButtonConfig,
   { class: 'hidden!' }
 );
-const mergedIndicatorButtonConfig = merge({}, defaultIndicatorButtonConfig, indicatorButtonConfig);
+const mergedIndicatorButtonConfig = mergeConfigs(
+  {},
+  defaultIndicatorButtonConfig,
+  indicatorButtonConfig
+);
 
 const carouselClass = cn(
   'content-carousel relative',

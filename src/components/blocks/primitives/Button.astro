@@ -162,7 +162,7 @@ const tagProps = href
   : { id, type: 'button' as const, disabled, ...attrs };
 ---
 
-<div class={align ? alignClass : ''}>
+<div class={align ? alignClass : 'contents'}>
   <Tag class={buttonClass} {...tagProps}>
     {
       icon && icon.name && iconPosition === 'left' && (

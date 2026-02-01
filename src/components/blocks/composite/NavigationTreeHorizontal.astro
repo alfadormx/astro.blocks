@@ -3,7 +3,7 @@ import type { NavigationTreeHorizontalProps } from '~/types/navigationtreehorizo
 import type { ButtonProps } from '~/types/button.types';
 import { cn } from '~/utils/styles';
 import Button from '~/components/blocks/primitives/Button.astro';
-import merge from 'lodash.merge';
+import { mergeConfigs } from '~/utils/mergeConfigs';
 
 type Props = NavigationTreeHorizontalProps;
 
@@ -15,10 +15,10 @@ const dropdownPositionClasses = {
 } as const;
 
 // Configuration: Default button config for nav items
-const defaultItemButtonConfig = {
+const defaultItemButtonConfig: Partial<ButtonProps> = {
   variant: 'ghost',
   intent: 'neutral',
-} as const;
+};
 
 // Extract props
 const {
@@ -31,6 +31,14 @@ const {
   defaultItemConfig,
   ...attrs
 } = Astro.props;
+
+const defaultChildButtonConfig: Partial<ButtonProps> = {
+  variant: 'ghost',
+  intent: 'neutral',
+  size: 'sm',
+  width: 'full',
+  class: 'justify-start px-4 py-2',
+};
 
 // Build classes
 const defaultNavClass = 'flex flex-row items-center gap-1';
@@ -50,7 +58,12 @@ const defaultDropdownClass = cn(
   {
     items.map((item: ButtonProps) => {
       const hasChildren = item.children && item.children.length > 0;
-      const mergedItemConfig = merge({}, defaultItemButtonConfig, defaultItemConfig || {}, item);
+      const mergedItemConfig = mergeConfigs(
+        {},
+        defaultItemButtonConfig,
+        defaultItemConfig || {},
+        item
+      );
 
       // For items with children, remove href to prevent navigation
       if (hasChildren && trigger === 'click') {
@@ -76,22 +89,14 @@ const defaultDropdownClass = cn(
           {hasChildren && (
             <div class={defaultDropdownClass} data-nav-dropdown>
               {item.children!.map((child: ButtonProps) => {
-                const mergedChildConfig = merge(
+                const mergedChildConfig = mergeConfigs(
                   {},
-                  {
-                    variant: 'ghost',
-                    intent: 'neutral',
-                    size: 'sm',
-                    width: 'full',
-                    class: 'justify-start',
-                  },
+                  defaultChildButtonConfig,
                   defaultItemConfig,
                   child
                 );
 
-                return (
-                  <Button {...mergedChildConfig} class={cn('px-4 py-2', mergedChildConfig.class)} />
-                );
+                return <Button {...mergedChildConfig} />;
               })}
             </div>
           )}

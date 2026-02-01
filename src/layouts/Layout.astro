@@ -9,9 +9,9 @@ import Analytics from '~/components/htmlheader/Analytics.astro';
 import Metadata from '~/components/htmlheader/Metadata.astro';
 import SiteVerification from '~/components/htmlheader/SiteVerification.astro';
 import Container from '~/components/blocks/layout/Container.astro';
-import merge from 'lodash.merge';
 import type { MetaData } from '~/types/metadata.types';
 import type { ContainerProps } from '~/types/container.types';
+import { mergeConfigs } from '~/utils/mergeConfigs';
 
 export type Props = {
   langCode?: string;
@@ -38,7 +38,7 @@ const defaultTopmostContainer = {
   content: { air: 'none', widthType: 'full' },
 } as ContainerProps;
 
-const mergedTopmostContainer = merge({}, defaultTopmostContainer, topmostContainer);
+const mergedTopmostContainer = mergeConfigs({}, defaultTopmostContainer, topmostContainer);
 ---
 
 <!doctype html>

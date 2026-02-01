@@ -1,8 +1,9 @@
 ---
 import type { ModalProps } from '~/types/modal.types';
 import { cn } from '~/utils/styles';
-import merge from 'lodash.merge';
 import Button from '~/components/blocks/primitives/Button.astro';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import type { ButtonProps } from '~/types/button.types';
 
 type Props = ModalProps;
 
@@ -25,7 +26,7 @@ const positionClasses = {
 } as const;
 
 // Configuration: Default close button
-const defaultCloseButton = {
+const defaultCloseButton: Partial<ButtonProps> = {
   icon: { name: 'heroicons:x-mark' },
   variant: 'solid',
   intent: 'neutral',
@@ -64,7 +65,7 @@ const backdropFinalClass = cn(
 );
 
 const modalFinalClass = cn(defaultModalClass, className);
-const mergedCloseButtonConfig = merge({}, defaultCloseButton, closeButtonConfig || {});
+const mergedCloseButtonConfig = mergeConfigs({}, defaultCloseButton, closeButtonConfig);
 ---
 
 <div

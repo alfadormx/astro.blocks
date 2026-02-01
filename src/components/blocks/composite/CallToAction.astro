@@ -3,10 +3,10 @@ import Container from '~/components/blocks/layout/Container.astro';
 import Headline from '~/components/blocks/primitives/Headline.astro';
 import Button from '~/components/blocks/primitives/Button.astro';
 import { cn } from '~/utils/styles';
-import merge from 'lodash.merge';
 import type { ContainerProps } from '~/types/container.types';
 import type { ButtonProps } from '~/types/button.types';
 import type { CallToActionProps } from '~/types/calltoaction.types';
+import { mergeConfigs } from '~/utils/mergeConfigs';
 
 type Props = CallToActionProps;
 
@@ -19,7 +19,7 @@ const defaultContainer: Partial<ContainerProps> = {
   },
 };
 
-const mergedContainer = merge({}, defaultContainer, container);
+const mergedContainer = mergeConfigs({}, defaultContainer, container);
 ---
 
 <Container {...mergedContainer}>
