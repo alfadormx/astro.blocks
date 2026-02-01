@@ -43,24 +43,6 @@ const navigationItems: ButtonProps[] = [
       class:
         'text-background hover:text-background transition-colors duration-300 group-data-[scrolled]:text-normal',
     }}
-    navigationTreeHorizontal={{
-      items: navigationItems,
-      defaultItemConfig: {
-        variant: 'link',
-        class:
-          'text-background hover:text-background group-data-[scrolled]:text-normal group-data-[scrolled]:hover:text-normal',
-      },
-    }}
-    actionsAir="tight"
-    actions={[
-      {
-        'data-modal-trigger': 'mobile-menu',
-        icon: { name: 'heroicons:bars-3' },
-        variant: 'link',
-        class:
-          'md:hidden text-background hover:text-background group-data-[scrolled]:text-normal group-data-[scrolled]:hover:text-normal',
-      },
-    ]}
   />
 
   <Container
