@@ -16,29 +16,18 @@ const {
   isSticky = false,
   isFloating = false,
   showThemeToggle = false,
-  breakpoint = 'md',
-  navigationAlign = 'center',
   actionsAir = 'normal',
   container,
   logo,
-  navigationTreeHorizontal,
+  navigationLeft,
+  navigationRight,
   themeToggle,
-  actions = [],
+  actionsLeft = [],
+  actionsRight = [],
+  defaultActionsConfig,
   class: className = '',
   ...attrs
 } = Astro.props;
-
-const breakpointClasses = {
-  sm: 'hidden sm:flex',
-  md: 'hidden md:flex',
-  lg: 'hidden lg:flex',
-} as const;
-
-const navigationAlignClasses = {
-  left: 'justify-start',
-  center: 'justify-center',
-  right: 'justify-end',
-} as const;
 
 const actionsAirClasses = {
   none: 'gap-0',
@@ -62,48 +51,67 @@ const baseActionsConfig: Partial<ButtonProps> = {
 
 const mergedContainerConfig = mergeConfigs({}, defaultContainerConfig, container);
 
-const positionClasses = cn(
-  'group',
+const topClasses = cn(
+  'group header-transitions',
   isFloating ? 'fixed top-0 left-0 right-0 z-50' : isSticky ? 'sticky top-0 z-40' : ''
 );
 
-const justifyClasses = navigationTreeHorizontal?.items
-  ? `justify-between ${breakpoint}:justify-normal`
-  : 'justify-between';
-
-const headerLayoutClass = cn('flex items-center gap-4', justifyClasses, className);
+const headerLayoutClass = cn('relative flex items-center justify-between', className);
 ---
 
-<div class={positionClasses} data-header>
+<div class={topClasses} data-header>
   <Container {...mergedContainerConfig} {...attrs}>
     <div class={headerLayoutClass}>
-      <!-- Left Section: Logo -->
-      <Logo {...logo} />
+      <!-- Left Zone: navigationLeft + actionsLeft -->
+      <div class="flex items-center gap-2">
+        {
+          actionsLeft && actionsLeft.length > 0 && (
+            <div class={cn('flex flex-row gap-1', actionsAirClasses[actionsAir])}>
+              {actionsLeft.map((action) => {
+                const mergedAction = mergeConfigs(
+                  {},
+                  baseActionsConfig,
+                  defaultActionsConfig,
+                  action
+                );
+                return <Button {...mergedAction} />;
+              })}
+            </div>
+          )
+        }
 
-      <!-- Center Section: Navigation (hidden on mobile) -->
-      {
-        navigationTreeHorizontal?.items && (
-          <div
-            class={cn(
-              'grow',
-              breakpointClasses[breakpoint],
-              navigationAlignClasses[navigationAlign]
-            )}
-          >
-            <NavigationTreeHorizontal {...navigationTreeHorizontal} />
-          </div>
-        )
-      }
+        {navigationLeft?.items && <NavigationTreeHorizontal {...navigationLeft} />}
+      </div>
 
-      <!-- Right Section: Theme Toggle + Actions -->
-      <div class={cn('flex items-center shrink-0', actionsAirClasses[actionsAir])}>
+      <!-- Center spacer: invisible but occupies flow so header retains height -->
+      <div
+        aria-hidden="true"
+        class="opacity-0 flex items-center justify-center pointer-events-none"
+      >
+        <Logo {...logo} />
+      </div>
+
+      <!-- Center Zone: Logo (always visually centered) -->
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+        <Logo {...logo} />
+      </div>
+
+      <!-- Right Zone: navigationRight + actionsRight + theme toggle -->
+      <div class="flex items-center gap-2">
+        {navigationRight?.items && <NavigationTreeHorizontal {...navigationRight} />}
+
         {showThemeToggle && <ThemeToggle {...themeToggle} />}
 
         {
-          actions && actions.length > 0 && (
-            <div class="flex flex-row gap-1">
-              {actions.map((action) => {
-                const mergedAction = mergeConfigs({}, baseActionsConfig, action);
+          actionsRight && actionsRight.length > 0 && (
+            <div class={cn('flex flex-row gap-1', actionsAirClasses[actionsAir])}>
+              {actionsRight.map((action) => {
+                const mergedAction = mergeConfigs(
+                  {},
+                  baseActionsConfig,
+                  defaultActionsConfig,
+                  action
+                );
                 return <Button {...mergedAction} />;
               })}
             </div>
@@ -115,24 +123,33 @@ const headerLayoutClass = cn('flex items-center gap-4', justifyClasses, classNam
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const header = document.querySelector('[data-header]') as HTMLElement;
-    if (!header) return;
+  (function () {
+    const initHeaderScroll = () => {
+      const header = document.querySelector('[data-header]');
+      if (!header) return;
+      if (window.__headerScrollInitialized) return;
 
-    const handleScroll = () => {
-      const headerHeight = header.offsetHeight;
+      const handleScroll = () => {
+        const headerHeight = (header as HTMLElement).offsetHeight;
+        if (window.scrollY > headerHeight) {
+          header.setAttribute('data-scrolled', 'true');
+        } else {
+          header.removeAttribute('data-scrolled');
+        }
+      };
 
-      if (window.scrollY > headerHeight) {
-        header.setAttribute('data-scrolled', 'true');
-      } else {
-        header.removeAttribute('data-scrolled');
-      }
+      // Initial check
+      handleScroll();
+
+      // Listen to scroll
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      window.__headerScrollInitialized = true;
     };
 
-    // Initial check
-    handleScroll();
-
-    // Listen to scroll
-    window.addEventListener('scroll', handleScroll, { passive: true });
-  });
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHeaderScroll);
+    } else {
+      initHeaderScroll();
+    }
+  })();
 </script>

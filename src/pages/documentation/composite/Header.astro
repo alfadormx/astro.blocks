@@ -13,8 +13,6 @@ var metadata = {
 const basicNavItems = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
-  { label: 'Services', href: '/services' },
-  { label: 'Contact', href: '/contact' },
 ];
 
 const navItemsWithDropdowns = [
@@ -35,8 +33,6 @@ const navItemsWithDropdowns = [
       { label: 'Design', href: '/services/design' },
     ],
   },
-  { label: 'About', href: '/about' },
-  { label: 'Contact', href: '/contact' },
 ];
 ---
 
@@ -50,7 +46,6 @@ const navItemsWithDropdowns = [
 >
   <p>
     Header component combining logo, horizontal navigation menu, theme toggle, and action buttons.
-    Responsive design with mobile menu support.
   </p>
 
   <!-- Example 1: Basic Header -->
@@ -58,7 +53,7 @@ const navItemsWithDropdowns = [
   <p>Simple header with logo and navigation.</p>
   <div class="border border-border rounded-lg overflow-hidden">
     <HeaderBlock
-      logoButton={{
+      logo={{
         image: {
           src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
           alt: 'Logo',
@@ -66,7 +61,7 @@ const navItemsWithDropdowns = [
           height: 48,
         },
       }}
-      navigationTreeHorizontal={{ items: basicNavItems }}
+      navigationRight={{ items: basicNavItems }}
     />
   </div>
 
@@ -80,28 +75,25 @@ const navItemsWithDropdowns = [
     <div>
       <h4>Using SITE.name (default)</h4>
       <div class="border border-border rounded-lg overflow-hidden">
-        <HeaderBlock navigationTreeHorizontal={{ items: basicNavItems }} />
+        <HeaderBlock navigationRight={{ items: basicNavItems }} />
       </div>
     </div>
     <div>
       <h4>Custom text</h4>
       <div class="border border-border rounded-lg overflow-hidden">
-        <HeaderBlock
-          logoButton={{ label: 'My Brand' }}
-          navigationTreeHorizontal={{ items: basicNavItems }}
-        />
+        <HeaderBlock logo={{ label: 'My Brand' }} navigationRight={{ items: basicNavItems }} />
       </div>
     </div>
     <div>
-      <h4>Custom styling with logoButton</h4>
+      <h4>Custom styling with logo</h4>
       <div class="border border-border rounded-lg overflow-hidden">
         <HeaderBlock
-          logoButton={{
+          logo={{
             label: 'Styled Brand',
             labelClass: '!text-2xl !font-extrabold !text-primary',
             class: 'hover:scale-105 transition-transform',
           }}
-          navigationTreeHorizontal={{ items: basicNavItems }}
+          navigationRight={{ items: basicNavItems }}
         />
       </div>
     </div>
@@ -113,7 +105,7 @@ const navItemsWithDropdowns = [
   <div class="border border-border rounded-lg overflow-hidden">
     <HeaderBlock
       showThemeToggle
-      logoButton={{
+      logo={{
         image: {
           src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
           alt: 'Logo',
@@ -121,7 +113,7 @@ const navItemsWithDropdowns = [
           height: 48,
         },
       }}
-      navigationTreeHorizontal={{ items: basicNavItems }}
+      navigationRight={{ items: basicNavItems }}
       themeToggle={{ size: 'md' }}
     />
   </div>
@@ -131,8 +123,7 @@ const navItemsWithDropdowns = [
   <p>Header with hamburger menu for mobile (resize browser to see).</p>
   <div class="border border-border rounded-lg overflow-hidden">
     <HeaderBlock
-      showThemeToggle
-      logoButton={{
+      logo={{
         image: {
           src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
           alt: 'Logo',
@@ -140,14 +131,13 @@ const navItemsWithDropdowns = [
           height: 48,
         },
       }}
-      navigationTreeHorizontal={{ items: navItemsWithDropdowns }}
-      actions={[
+      actionsLeft={[
         {
           'data-modal-trigger': 'mobile-menu-basic',
           icon: { name: 'heroicons:bars-3' },
           variant: 'ghost',
           intent: 'neutral',
-          class: 'md:hidden',
+          class: 'lg:hidden',
         },
       ]}
     />
@@ -160,14 +150,90 @@ const navItemsWithDropdowns = [
     </div>
   </ModalBlock>
 
-  <!-- Example 5: Sticky Header -->
-  <h3>Sticky Header</h3>
-  <p>Header that sticks to top on scroll (scroll down to see effect).</p>
-  <div class="border border-border rounded-lg overflow-hidden h-96 overflow-y-scroll">
+  <!-- Example: Actions Spacing -->
+  <h3>Actions Spacing</h3>
+  <p>
+    Control spacing between theme toggle and action buttons using the <code
+      class="px-1 py-0.5 bg-muted rounded">actionsAir</code
+    > prop.
+  </p>
+  <div class="space-y-6">
+    <div>
+      <h4>Tight</h4>
+      <div class="border border-border rounded-lg overflow-hidden">
+        <HeaderBlock
+          showThemeToggle
+          actionsAir="tight"
+          logo={{
+            image: {
+              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+              alt: 'Logo',
+              width: 48,
+              height: 48,
+            },
+          }}
+          navigationRight={{ items: basicNavItems }}
+          actionsRight={[
+            { label: 'Login', variant: 'outline', size: 'sm' },
+            { label: 'Sign Up', variant: 'solid', size: 'sm' },
+          ]}
+        />
+      </div>
+    </div>
+    <div>
+      <h4>Normal (Default)</h4>
+      <div class="border border-border rounded-lg overflow-hidden">
+        <HeaderBlock
+          showThemeToggle
+          actionsAir="normal"
+          logo={{
+            image: {
+              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+              alt: 'Logo',
+              width: 48,
+              height: 48,
+            },
+          }}
+          navigationRight={{ items: basicNavItems }}
+          actionsRight={[
+            { label: 'Login', variant: 'outline', size: 'sm' },
+            { label: 'Sign Up', variant: 'solid', size: 'sm' },
+          ]}
+        />
+      </div>
+    </div>
+    <div>
+      <h4>Loose</h4>
+      <div class="border border-border rounded-lg overflow-hidden">
+        <HeaderBlock
+          showThemeToggle
+          actionsAir="loose"
+          logo={{
+            image: {
+              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+              alt: 'Logo',
+              width: 48,
+              height: 48,
+            },
+          }}
+          navigationRight={{ items: basicNavItems }}
+          actionsRight={[
+            { label: 'Login', variant: 'outline', size: 'sm' },
+            { label: 'Sign Up', variant: 'solid', size: 'sm' },
+          ]}
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Example: Left-side Navigation & Actions -->
+  <h3>Left-side Navigation & Actions</h3>
+  <p>
+    Demonstrates `navigationLeft` and `actionsLeft` to place navigation and actions on the left.
+  </p>
+  <div class="border border-border rounded-lg overflow-hidden">
     <HeaderBlock
-      isSticky
-      showThemeToggle
-      logoButton={{
+      logo={{
         image: {
           src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
           alt: 'Logo',
@@ -175,7 +241,30 @@ const navItemsWithDropdowns = [
           height: 48,
         },
       }}
-      navigationTreeHorizontal={{ items: basicNavItems }}
+      navigationLeft={{ items: basicNavItems }}
+      navigationRight={{ items: basicNavItems }}
+      actionsLeft={[{ label: 'Docs', variant: 'solid', size: 'sm' }]}
+      actionsRight={[{ label: 'Sign In', variant: 'solid', size: 'sm' }]}
+      showThemeToggle
+    />
+  </div>
+
+  <!-- Example 5: Sticky Header -->
+  <h3>Sticky Header</h3>
+  <p>Header that sticks to top on scroll (scroll down to see effect).</p>
+  <div class="border border-border rounded-lg overflow-hidden h-96 overflow-y-scroll">
+    <HeaderBlock
+      isSticky
+      showThemeToggle
+      logo={{
+        image: {
+          src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+          alt: 'Logo',
+          width: 48,
+          height: 48,
+        },
+      }}
+      navigationRight={{ items: basicNavItems }}
       container={{
         background: { class: 'bg-background/10 backdrop-blur-sm' },
         border: { width: 'border-b', color: 'border-border' },
@@ -202,8 +291,7 @@ const navItemsWithDropdowns = [
   </p>
   <div class="border border-border rounded-lg overflow-hidden p-4 bg-muted/30">
     <code class="text-sm">
-      &lt;Header isFloating showThemeToggle navigationTreeHorizontal=&#123;&#123; items &#125;&#125;
-      /&gt;
+      &lt;Header isFloating showThemeToggle navigationRight=&#123;&#123; items &#125;&#125; /&gt;
     </code>
   </div>
 
@@ -215,144 +303,15 @@ const navItemsWithDropdowns = [
   </p>
   <div class="border border-border rounded-lg overflow-hidden">
     <HeaderBlock
-      logoButton={{
+      logo={{
         vector: {
           src: 'https://www.svgrepo.com/show/530609/compass.svg',
         },
         class: 'text-primary hover:text-accent transition-colors duration-300',
       }}
-      navigationTreeHorizontal={{ items: basicNavItems }}
+      navigationRight={{ items: basicNavItems }}
       showThemeToggle
     />
-  </div>
-
-  <!-- Example 8: Navigation Alignment -->
-  <h3>8. Navigation Alignment</h3>
-  <p>Control how navigation is aligned within the center section.</p>
-  <div class="space-y-6">
-    <div>
-      <h4>Left Aligned</h4>
-      <div class="border border-border rounded-lg overflow-hidden">
-        <HeaderBlock
-          navigationAlign="left"
-          logoButton={{
-            image: {
-              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-              alt: 'Logo',
-              width: 48,
-              height: 48,
-            },
-          }}
-          navigationTreeHorizontal={{ items: basicNavItems }}
-        />
-      </div>
-    </div>
-    <div>
-      <h4>Center Aligned (Default)</h4>
-      <div class="border border-border rounded-lg overflow-hidden">
-        <HeaderBlock
-          navigationAlign="center"
-          logoButton={{
-            image: {
-              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-              alt: 'Logo',
-              width: 48,
-              height: 48,
-            },
-          }}
-          navigationTreeHorizontal={{ items: basicNavItems }}
-        />
-      </div>
-    </div>
-    <div>
-      <h4>Right Aligned</h4>
-      <div class="border border-border rounded-lg overflow-hidden">
-        <HeaderBlock
-          navigationAlign="right"
-          logoButton={{
-            image: {
-              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-              alt: 'Logo',
-              width: 48,
-              height: 48,
-            },
-          }}
-          navigationTreeHorizontal={{ items: basicNavItems }}
-        />
-      </div>
-    </div>
-  </div>
-
-  <!-- Example 8: Actions Spacing -->
-  <h3>Actions Spacing</h3>
-  <p>Control spacing between theme toggle and action buttons.</p>
-  <div class="space-y-6">
-    <div>
-      <h4>Tight</h4>
-      <div class="border border-border rounded-lg overflow-hidden">
-        <HeaderBlock
-          showThemeToggle
-          actionsAir="tight"
-          logoButton={{
-            image: {
-              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-              alt: 'Logo',
-              width: 48,
-              height: 48,
-            },
-          }}
-          navigationTreeHorizontal={{ items: basicNavItems }}
-          actions={[
-            { label: 'Login', variant: 'outline', size: 'sm' },
-            { label: 'Sign Up', variant: 'solid', size: 'sm' },
-          ]}
-        />
-      </div>
-    </div>
-    <div>
-      <h4>Normal (Default)</h4>
-      <div class="border border-border rounded-lg overflow-hidden">
-        <HeaderBlock
-          showThemeToggle
-          actionsAir="normal"
-          logoButton={{
-            image: {
-              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-              alt: 'Logo',
-              width: 48,
-              height: 48,
-            },
-          }}
-          navigationTreeHorizontal={{ items: basicNavItems }}
-          actions={[
-            { label: 'Login', variant: 'outline', size: 'sm' },
-            { label: 'Sign Up', variant: 'solid', size: 'sm' },
-          ]}
-        />
-      </div>
-    </div>
-    <div>
-      <h4>Loose</h4>
-      <div class="border border-border rounded-lg overflow-hidden">
-        <HeaderBlock
-          showThemeToggle
-          actionsAir="loose"
-          logoButton={{
-            image: {
-              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-              alt: 'Logo',
-              width: 48,
-              height: 48,
-            },
-          }}
-          navigationTreeHorizontal={{ items: basicNavItems }}
-          actions={[
-            { label: 'Login', variant: 'outline', size: 'sm' },
-            { label: 'Sign Up', variant: 'solid', size: 'sm' },
-          ]}
-        />
-      </div>
-    </div>
   </div>
 
   <!-- Example 9: Custom Styling -->
@@ -361,7 +320,7 @@ const navItemsWithDropdowns = [
   <div class="border border-border rounded-lg overflow-hidden">
     <HeaderBlock
       showThemeToggle
-      logoButton={{
+      logo={{
         image: {
           src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
           alt: 'Logo',
@@ -369,70 +328,14 @@ const navItemsWithDropdowns = [
           height: 48,
         },
       }}
-      navigationTreeHorizontal={{ items: basicNavItems }}
+      navigationRight={{ items: basicNavItems }}
       container={{
         background: { class: 'bg-accent/10 backdrop-blur-sm' },
         border: { width: 'border-b', color: 'border-primary' },
         content: { air: 'loose' },
       }}
-      actions={[{ label: 'Get Started', variant: 'solid', intent: 'primary', size: 'sm' }]}
+      actionsRight={[{ label: 'Get Started', variant: 'solid', intent: 'primary', size: 'sm' }]}
     />
-  </div>
-
-  <!-- Example 10: Different Breakpoints -->
-  <h3>Responsive Breakpoints</h3>
-  <p>Control when navigation switches to mobile mode.</p>
-  <div class="space-y-6">
-    <div>
-      <h4>Small (sm) - hides navigation on mobile only</h4>
-      <div class="border border-border rounded-lg overflow-hidden">
-        <HeaderBlock
-          breakpoint="sm"
-          logoButton={{
-            image: {
-              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-              alt: 'Logo',
-              width: 48,
-              height: 48,
-            },
-          }}
-          navigationTreeHorizontal={{ items: basicNavItems }}
-          actions={[
-            {
-              'data-modal-trigger': 'mobile-menu-sm',
-              icon: { name: 'heroicons:bars-3' },
-              variant: 'ghost',
-              class: 'sm:hidden',
-            },
-          ]}
-        />
-      </div>
-    </div>
-    <div>
-      <h4>Large (lg) - shows navigation longer before switching</h4>
-      <div class="border border-border rounded-lg overflow-hidden">
-        <HeaderBlock
-          breakpoint="lg"
-          logoButton={{
-            image: {
-              src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-              alt: 'Logo',
-              width: 48,
-              height: 48,
-            },
-          }}
-          navigationTreeHorizontal={{ items: basicNavItems }}
-          actions={[
-            {
-              'data-modal-trigger': 'mobile-menu-lg',
-              icon: { name: 'heroicons:bars-3' },
-              variant: 'ghost',
-              class: 'lg:hidden',
-            },
-          ]}
-        />
-      </div>
-    </div>
   </div>
 
   <!-- API Reference -->
@@ -466,18 +369,7 @@ const navItemsWithDropdowns = [
           <td class="py-2 px-4">false</td>
           <td class="py-2 px-4">Show theme toggle button</td>
         </tr>
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">breakpoint</td>
-          <td class="py-2 px-4">'sm' | 'md' | 'lg'</td>
-          <td class="py-2 px-4">'md'</td>
-          <td class="py-2 px-4">When to hide navigation and show mobile menu</td>
-        </tr>
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">navigationAlign</td>
-          <td class="py-2 px-4">'left' | 'center' | 'right'</td>
-          <td class="py-2 px-4">'center'</td>
-          <td class="py-2 px-4">Alignment of navigation within center section</td>
-        </tr>
+
         <tr class="border-b border-border/50">
           <td class="py-2 px-4 font-mono">actionsAir</td>
           <td class="py-2 px-4">'none' | 'tight' | 'normal' | 'loose'</td>
@@ -491,7 +383,7 @@ const navItemsWithDropdowns = [
           <td class="py-2 px-4">Container styling configuration</td>
         </tr>
         <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">logoButton</td>
+          <td class="py-2 px-4 font-mono">logo</td>
           <td class="py-2 px-4">LogoButtonProps</td>
           <td class="py-2 px-4">{}</td>
           <td class="py-2 px-4"
@@ -500,10 +392,16 @@ const navItemsWithDropdowns = [
           >
         </tr>
         <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">navigationTreeHorizontal</td>
+          <td class="py-2 px-4 font-mono">navigationRight</td>
           <td class="py-2 px-4">NavigationTreeHorizontalProps</td>
           <td class="py-2 px-4">{}</td>
-          <td class="py-2 px-4">Navigation menu configuration</td>
+          <td class="py-2 px-4">Navigation menu configuration for the right side</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">navigationLeft</td>
+          <td class="py-2 px-4">NavigationTreeHorizontalProps</td>
+          <td class="py-2 px-4">{}</td>
+          <td class="py-2 px-4">Navigation menu configuration for the left side</td>
         </tr>
         <tr class="border-b border-border/50">
           <td class="py-2 px-4 font-mono">themeToggle</td>
@@ -512,7 +410,13 @@ const navItemsWithDropdowns = [
           <td class="py-2 px-4">Theme toggle configuration overrides</td>
         </tr>
         <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">actions</td>
+          <td class="py-2 px-4 font-mono">actionsLeft</td>
+          <td class="py-2 px-4">ButtonProps[]</td>
+          <td class="py-2 px-4">[]</td>
+          <td class="py-2 px-4">Action buttons for left section</td>
+        </tr>
+        <tr class="border-b border-border/50">
+          <td class="py-2 px-4 font-mono">actionsRight</td>
           <td class="py-2 px-4">ButtonProps[]</td>
           <td class="py-2 px-4">[]</td>
           <td class="py-2 px-4">Action buttons for right section</td>
@@ -538,15 +442,6 @@ const navItemsWithDropdowns = [
       <p class="text-muted-foreground">
         When <code class="px-1 py-0.5 bg-muted rounded">isSticky</code> is enabled, consider adding a
         semi-transparent background with opacity to maintain readability over content.
-      </p>
-    </div>
-    <div>
-      <h4 class="font-semibold mb-2">Responsive Behavior</h4>
-      <p class="text-muted-foreground">
-        The <code class="px-1 py-0.5 bg-muted rounded">breakpoint</code> prop controls when navigation
-        switches to mobile. Make sure your hamburger button's visibility classes match (e.g., <code
-          class="px-1 py-0.5 bg-muted rounded">md:hidden</code
-        > for breakpoint="md").
       </p>
     </div>
   </div>
