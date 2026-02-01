@@ -3,9 +3,9 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --host",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "astro preview --host",
     "astro": "astro",
     "check": "pnpm run check:astro && pnpm run check:lint && pnpm run check:prettier",
     "check:astro": "astro check",
