@@ -1,6 +1,4 @@
 @theme {
-  --color-*: initial;
-
   --color-text: oklch(43.55% 0.043 279.32);
   --color-subtext0: oklch(54.71% 0.0344 279.07);
   --color-subtext1: oklch(49.2% 0.0385 279.29);
@@ -305,8 +303,6 @@
 }
 
 [data-theme='dark'] {
-  --color-*: initial;
-
   --color-text: oklch(87.87% 0.0426 272.26);
   --color-subtext0: oklch(75.1% 0.0396 273.92);
   --color-subtext1: oklch(81.68% 0.0404 272.85);

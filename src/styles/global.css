@@ -3,6 +3,61 @@
 @import 'tailwindcss';
 @import './colors.css';
 
+@theme inline {
+  --font-title: 'Kodchasan', sans-serif;
+  --font-subtitle: 'Quicksand', sans-serif;
+  --font-body: 'Quicksand', sans-serif;
+  --font-quote: 'Sacramento', cursive;
+
+  --container-max-width: 1280px;
+
+  /* intent-based colors */
+  --color-primary: var(--color-blue);
+  --color-primary-hover: var(--color-blue-600);
+  --color-secondary: var(--color-sky);
+  --color-secondary-hover: var(--color-sky-600);
+  --color-tertiary: var(--color-slate);
+  --color-tertiary-hover: var(--color-slate-600);
+  --color-accent: var(--color-peach);
+  --color-accent-hover: var(--color-peach-600);
+
+  /* content colors */
+  --color-normal: var(--color-text);
+  --color-muted: var(--color-subtext0);
+  --color-emphasis: var(--color-subtext1);
+
+  /* status colors */
+  --color-success: var(--color-green);
+  --color-success-hover: var(--color-green-600);
+  --color-warning: var(--color-yellow);
+  --color-warning-hover: var(--color-yellow-600);
+  --color-error: var(--color-red);
+  --color-error-hover: var(--color-red-600);
+  --color-info: var(--color-cyan);
+  --color-info-hover: var(--color-cyan-600);
+
+  /* surface colors */
+  --color-background: var(--color-base);
+  --color-surface: var(--color-mantle);
+  --color-elevated: var(--color-crust);
+
+  /* border colors */
+  --color-border: var(--color-surface2);
+  --color-border-emphasis: var(--color-overlay0);
+
+  /* interactive states */
+  --color-interactive: var(--color-primary);
+  --color-interactive-hover: var(--color-blue-600);
+
+  /* link colors */
+  --color-link: var(--color-primary);
+  --color-link-hover: var(--color-primary);
+
+  /* Code/syntax */
+  --color-code: var(--color-lavender);
+  --color-code-bg: var(--color-surface0);
+}
+
 @layer base {
   ::selection {
     @apply bg-accent text-background;
@@ -221,61 +276,6 @@
     @apply transition-colors duration-300 ease-in-out;
     transition-property: color, background-color, width, transform, backdrop-filter;
   }
-}
-
-@theme inline {
-  --font-title: 'Kodchasan', sans-serif;
-  --font-subtitle: 'Quicksand', sans-serif;
-  --font-body: 'Quicksand', sans-serif;
-  --font-quote: 'Sacramento', cursive;
-
-  --container-max-width: 1280px;
-
-  /* intent-based colors */
-  --color-primary: var(--color-blue);
-  --color-primary-hover: var(--color-blue-600);
-  --color-secondary: var(--color-sky);
-  --color-secondary-hover: var(--color-sky-600);
-  --color-tertiary: var(--color-slate);
-  --color-tertiary-hover: var(--color-slate-600);
-  --color-accent: var(--color-peach);
-  --color-accent-hover: var(--color-peach-600);
-
-  /* content colors */
-  --color-normal: var(--color-text);
-  --color-muted: var(--color-subtext0);
-  --color-emphasis: var(--color-subtext1);
-
-  /* status colors */
-  --color-success: var(--color-green);
-  --color-success-hover: var(--color-green-600);
-  --color-warning: var(--color-yellow);
-  --color-warning-hover: var(--color-yellow-600);
-  --color-error: var(--color-red);
-  --color-error-hover: var(--color-red-600);
-  --color-info: var(--color-cyan);
-  --color-info-hover: var(--color-cyan-600);
-
-  /* surface colors */
-  --color-background: var(--color-base);
-  --color-surface: var(--color-mantle);
-  --color-elevated: var(--color-crust);
-
-  /* border colors */
-  --color-border: var(--color-surface2);
-  --color-border-emphasis: var(--color-overlay0);
-
-  /* interactive states */
-  --color-interactive: var(--color-primary);
-  --color-interactive-hover: var(--color-blue-600);
-
-  /* link colors */
-  --color-link: var(--color-primary);
-  --color-link-hover: var(--color-primary);
-
-  /* Code/syntax */
-  --color-code: var(--color-lavender);
-  --color-code-bg: var(--color-surface0);
 }
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
