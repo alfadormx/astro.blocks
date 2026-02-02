@@ -6,542 +6,419 @@ var metadata = {
     default: 'Colors',
   },
 };
-
-// Read colors.css and extract OKLCH values
-import { readFileSync } from 'fs';
-import { join } from 'path';
-
-const projectRoot = process.cwd();
-const colorsPath = join(projectRoot, 'src', 'styles', 'colors.css');
-let colorsContent = '';
-try {
-  colorsContent = readFileSync(colorsPath, 'utf-8');
-} catch {
-  colorsContent = '';
-}
-
-// Extract all color definitions
-const colorMap: Record<string, string> = {};
-const colorRegex = /--color-([^:]+):\s*(oklch\([^)]+\))/g;
-let match;
-while ((match = colorRegex.exec(colorsContent)) !== null) {
-  colorMap[match[1]] = match[2];
-}
-
-// Helper to create color button attributes
-const getColorAttrs = (colorKey: string) => {
-  const oklchValue = colorMap[colorKey] || '';
-  return {
-    title: oklchValue,
-    'data-color': oklchValue,
-  };
-};
-
-// Spectrum colors in order
-const spectrumColors = [
-  'red',
-  'maroon',
-  'peach',
-  'yellow',
-  'lime',
-  'green',
-  'emerald',
-  'teal',
-  'cyan',
-  'sky',
-  'sapphire',
-  'blue',
-  'lavender',
-  'mauve',
-  'pink',
-  'flamingo',
-  'rosewater',
-  'slate',
-  'gray',
-  'zinc',
-  'neutral',
-  'stone',
-];
-
-const shades = [
-  '',
-  '-50',
-  '-100',
-  '-200',
-  '-300',
-  '-400',
-  '-500',
-  '-600',
-  '-700',
-  '-800',
-  '-900',
-  '-950',
-];
 ---
 
 <Layout
   metadata={metadata}
   headline={{
     tagline: 'Primitives',
-    title: 'Theme Toggle',
-    subtitle: 'Showcase of the Theme Toggle primitive block with various configurations',
+    title: 'Colors',
+    subtitle: 'Color palette documentation',
   }}
 >
+  <style>
+    button.color-btn {
+      width: 4rem;
+      height: 4rem;
+      border: 1px solid black;
+    }
+    button.color-btn:hover {
+      opacity: 0.8;
+    }
+  </style>
+
   <h2>Theme Colors</h2>
 
   <h3>Semantic Colors</h3>
 
   <div class="grid grid-cols-12 gap-4">
-    <div class="col-span-12 grid grid-cols-12 gap-4 font-medium">
-      <div class="text-center">text</div>
-      <div class="text-center">subtext1</div>
-      <div class="text-center">subtext0</div>
-      <div class="text-center">overlay2</div>
-      <div class="text-center">overlay1</div>
-      <div class="text-center">overlay0</div>
-      <div class="text-center">surface2</div>
-      <div class="text-center">surface1</div>
-      <div class="text-center">surface0</div>
-      <div class="text-center">crust</div>
-      <div class="text-center">mantle</div>
-      <div class="text-center">base</div>
-    </div>
-    <button
-      class="bg-text w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
-      title={colorMap['text']}
-      data-color={colorMap['text']}></button>
-    <button
-      class="bg-subtext1 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
-      title={colorMap['subtext1']}
-      data-color={colorMap['subtext1']}></button>
-    <button
-      class="bg-subtext0 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
-      title={colorMap['subtext0']}
-      data-color={colorMap['subtext0']}></button>
-    <button
-      class="bg-overlay2 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
-      title={colorMap['overlay2']}
-      data-color={colorMap['overlay2']}></button>
-    <button
-      class="bg-overlay1 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
-      title={colorMap['overlay1']}
-      data-color={colorMap['overlay1']}></button>
-    <button
-      class="bg-overlay0 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
-      title={colorMap['overlay0']}
-      data-color={colorMap['overlay0']}></button>
-    <button
-      class="bg-surface2 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
-      title={colorMap['surface2']}
-      data-color={colorMap['surface2']}></button>
-    <button
-      class="bg-surface1 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
-      title={colorMap['surface1']}
-      data-color={colorMap['surface1']}></button>
-    <button
-      class="bg-surface0 w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
-      title={colorMap['surface0']}
-      data-color={colorMap['surface0']}></button>
-    <button
-      class="bg-crust w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
-      title={colorMap['crust']}
-      data-color={colorMap['crust']}></button>
-    <button
-      class="bg-mantle w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
-      title={colorMap['mantle']}
-      data-color={colorMap['mantle']}></button>
-    <button
-      class="bg-base w-full rounded-sm h-20 border-2 border-black cursor-pointer hover:opacity-80 transition-opacity"
-      title={colorMap['base']}
-      data-color={colorMap['base']}></button>
+    <div class="text-center font-medium">text</div>
+    <div class="text-center font-medium">subtext1</div>
+    <div class="text-center font-medium">subtext0</div>
+    <div class="text-center font-medium">overlay2</div>
+    <div class="text-center font-medium">overlay1</div>
+    <div class="text-center font-medium">overlay0</div>
+    <div class="text-center font-medium">surface2</div>
+    <div class="text-center font-medium">surface1</div>
+    <div class="text-center font-medium">surface0</div>
+    <div class="text-center font-medium">crust</div>
+    <div class="text-center font-medium">mantle</div>
+    <div class="text-center font-medium">base</div>
+
+    <button class="color-btn bg-text"></button>
+    <button class="color-btn bg-subtext1"></button>
+    <button class="color-btn bg-subtext0"></button>
+    <button class="color-btn bg-overlay2"></button>
+    <button class="color-btn bg-overlay1"></button>
+    <button class="color-btn bg-overlay0"></button>
+    <button class="color-btn bg-surface2"></button>
+    <button class="color-btn bg-surface1"></button>
+    <button class="color-btn bg-surface0"></button>
+    <button class="color-btn bg-crust"></button>
+    <button class="color-btn bg-mantle"></button>
+    <button class="color-btn bg-base"></button>
+
+    <div class="text-center font-medium">black</div>
+    <div class="text-center font-medium">white</div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <button class="color-btn bg-black"></button>
+    <button class="color-btn bg-white"></button>
   </div>
 
   <h3>Spectrum Colors</h3>
   <div class="grid grid-cols-13 gap-4">
     <div>&nbsp;</div>
-    <div>base</div>
-    <div>50</div>
-    <div>100</div>
-    <div>200</div>
-    <div>300</div>
-    <div>400</div>
-    <div>500</div>
-    <div>600</div>
-    <div>700</div>
-    <div>800</div>
-    <div>900</div>
-    <div>950</div>
+    <div class="text-center">base</div>
+    <div class="text-center">50</div>
+    <div class="text-center">100</div>
+    <div class="text-center">200</div>
+    <div class="text-center">300</div>
+    <div class="text-center">400</div>
+    <div class="text-center">500</div>
+    <div class="text-center">600</div>
+    <div class="text-center">700</div>
+    <div class="text-center">800</div>
+    <div class="text-center">900</div>
+    <div class="text-center">950</div>
 
-    {
-      spectrumColors.map((color) => (
-        <>
-          <p class="capitalize">{color}</p>
-          {shades.map((shade) => {
-            const colorKey = `${color}${shade}`;
-            const attrs = getColorAttrs(colorKey);
-            return (
-              <button
-                class={`bg-${colorKey} w-full rounded-sm border-2 border-black cursor-pointer hover:opacity-80 transition-all`}
-                title={attrs.title}
-                data-color={attrs['data-color']}
-              />
-            );
-          })}
-        </>
-      ))
-    }
+    <!-- Red -->
+    <p class="capitalize">Red</p>
+    <button class="color-btn bg-red"></button>
+    <button class="color-btn bg-red-50"></button>
+    <button class="color-btn bg-red-100"></button>
+    <button class="color-btn bg-red-200"></button>
+    <button class="color-btn bg-red-300"></button>
+    <button class="color-btn bg-red-400"></button>
+    <button class="color-btn bg-red-500"></button>
+    <button class="color-btn bg-red-600"></button>
+    <button class="color-btn bg-red-700"></button>
+    <button class="color-btn bg-red-800"></button>
+    <button class="color-btn bg-red-900"></button>
+    <button class="color-btn bg-red-950"></button>
+
+    <!-- Maroon -->
+    <p class="capitalize">Maroon</p>
+    <button class="color-btn bg-maroon"></button>
+    <button class="color-btn bg-maroon-50"></button>
+    <button class="color-btn bg-maroon-100"></button>
+    <button class="color-btn bg-maroon-200"></button>
+    <button class="color-btn bg-maroon-300"></button>
+    <button class="color-btn bg-maroon-400"></button>
+    <button class="color-btn bg-maroon-500"></button>
+    <button class="color-btn bg-maroon-600"></button>
+    <button class="color-btn bg-maroon-700"></button>
+    <button class="color-btn bg-maroon-800"></button>
+    <button class="color-btn bg-maroon-900"></button>
+    <button class="color-btn bg-maroon-950"></button>
+
+    <!-- Peach -->
+    <p class="capitalize">Peach</p>
+    <button class="color-btn bg-peach"></button>
+    <button class="color-btn bg-peach-50"></button>
+    <button class="color-btn bg-peach-100"></button>
+    <button class="color-btn bg-peach-200"></button>
+    <button class="color-btn bg-peach-300"></button>
+    <button class="color-btn bg-peach-400"></button>
+    <button class="color-btn bg-peach-500"></button>
+    <button class="color-btn bg-peach-600"></button>
+    <button class="color-btn bg-peach-700"></button>
+    <button class="color-btn bg-peach-800"></button>
+    <button class="color-btn bg-peach-900"></button>
+    <button class="color-btn bg-peach-950"></button>
+
+    <!-- Yellow -->
+    <p class="capitalize">Yellow</p>
+    <button class="color-btn bg-yellow"></button>
+    <button class="color-btn bg-yellow-50"></button>
+    <button class="color-btn bg-yellow-100"></button>
+    <button class="color-btn bg-yellow-200"></button>
+    <button class="color-btn bg-yellow-300"></button>
+    <button class="color-btn bg-yellow-400"></button>
+    <button class="color-btn bg-yellow-500"></button>
+    <button class="color-btn bg-yellow-600"></button>
+    <button class="color-btn bg-yellow-700"></button>
+    <button class="color-btn bg-yellow-800"></button>
+    <button class="color-btn bg-yellow-900"></button>
+    <button class="color-btn bg-yellow-950"></button>
+
+    <!-- Lime -->
+    <p class="capitalize">Lime</p>
+    <button class="color-btn bg-lime"></button>
+    <button class="color-btn bg-lime-50"></button>
+    <button class="color-btn bg-lime-100"></button>
+    <button class="color-btn bg-lime-200"></button>
+    <button class="color-btn bg-lime-300"></button>
+    <button class="color-btn bg-lime-400"></button>
+    <button class="color-btn bg-lime-500"></button>
+    <button class="color-btn bg-lime-600"></button>
+    <button class="color-btn bg-lime-700"></button>
+    <button class="color-btn bg-lime-800"></button>
+    <button class="color-btn bg-lime-900"></button>
+    <button class="color-btn bg-lime-950"></button>
+
+    <!-- Green -->
+    <p class="capitalize">Green</p>
+    <button class="color-btn bg-green"></button>
+    <button class="color-btn bg-green-50"></button>
+    <button class="color-btn bg-green-100"></button>
+    <button class="color-btn bg-green-200"></button>
+    <button class="color-btn bg-green-300"></button>
+    <button class="color-btn bg-green-400"></button>
+    <button class="color-btn bg-green-500"></button>
+    <button class="color-btn bg-green-600"></button>
+    <button class="color-btn bg-green-700"></button>
+    <button class="color-btn bg-green-800"></button>
+    <button class="color-btn bg-green-900"></button>
+    <button class="color-btn bg-green-950"></button>
+
+    <!-- Emerald -->
+    <p class="capitalize">Emerald</p>
+    <button class="color-btn bg-emerald"></button>
+    <button class="color-btn bg-emerald-50"></button>
+    <button class="color-btn bg-emerald-100"></button>
+    <button class="color-btn bg-emerald-200"></button>
+    <button class="color-btn bg-emerald-300"></button>
+    <button class="color-btn bg-emerald-400"></button>
+    <button class="color-btn bg-emerald-500"></button>
+    <button class="color-btn bg-emerald-600"></button>
+    <button class="color-btn bg-emerald-700"></button>
+    <button class="color-btn bg-emerald-800"></button>
+    <button class="color-btn bg-emerald-900"></button>
+    <button class="color-btn bg-emerald-950"></button>
+
+    <!-- Teal -->
+    <p class="capitalize">Teal</p>
+    <button class="color-btn bg-teal"></button>
+    <button class="color-btn bg-teal-50"></button>
+    <button class="color-btn bg-teal-100"></button>
+    <button class="color-btn bg-teal-200"></button>
+    <button class="color-btn bg-teal-300"></button>
+    <button class="color-btn bg-teal-400"></button>
+    <button class="color-btn bg-teal-500"></button>
+    <button class="color-btn bg-teal-600"></button>
+    <button class="color-btn bg-teal-700"></button>
+    <button class="color-btn bg-teal-800"></button>
+    <button class="color-btn bg-teal-900"></button>
+    <button class="color-btn bg-teal-950"></button>
+
+    <!-- Cyan -->
+    <p class="capitalize">Cyan</p>
+    <button class="color-btn bg-cyan"></button>
+    <button class="color-btn bg-cyan-50"></button>
+    <button class="color-btn bg-cyan-100"></button>
+    <button class="color-btn bg-cyan-200"></button>
+    <button class="color-btn bg-cyan-300"></button>
+    <button class="color-btn bg-cyan-400"></button>
+    <button class="color-btn bg-cyan-500"></button>
+    <button class="color-btn bg-cyan-600"></button>
+    <button class="color-btn bg-cyan-700"></button>
+    <button class="color-btn bg-cyan-800"></button>
+    <button class="color-btn bg-cyan-900"></button>
+    <button class="color-btn bg-cyan-950"></button>
+
+    <!-- Sky -->
+    <p class="capitalize">Sky</p>
+    <button class="color-btn bg-sky"></button>
+    <button class="color-btn bg-sky-50"></button>
+    <button class="color-btn bg-sky-100"></button>
+    <button class="color-btn bg-sky-200"></button>
+    <button class="color-btn bg-sky-300"></button>
+    <button class="color-btn bg-sky-400"></button>
+    <button class="color-btn bg-sky-500"></button>
+    <button class="color-btn bg-sky-600"></button>
+    <button class="color-btn bg-sky-700"></button>
+    <button class="color-btn bg-sky-800"></button>
+    <button class="color-btn bg-sky-900"></button>
+    <button class="color-btn bg-sky-950"></button>
+
+    <!-- Sapphire -->
+    <p class="capitalize">Sapphire</p>
+    <button class="color-btn bg-sapphire"></button>
+    <button class="color-btn bg-sapphire-50"></button>
+    <button class="color-btn bg-sapphire-100"></button>
+    <button class="color-btn bg-sapphire-200"></button>
+    <button class="color-btn bg-sapphire-300"></button>
+    <button class="color-btn bg-sapphire-400"></button>
+    <button class="color-btn bg-sapphire-500"></button>
+    <button class="color-btn bg-sapphire-600"></button>
+    <button class="color-btn bg-sapphire-700"></button>
+    <button class="color-btn bg-sapphire-800"></button>
+    <button class="color-btn bg-sapphire-900"></button>
+    <button class="color-btn bg-sapphire-950"></button>
+
+    <!-- Blue -->
+    <p class="capitalize">Blue</p>
+    <button class="color-btn bg-blue"></button>
+    <button class="color-btn bg-blue-50"></button>
+    <button class="color-btn bg-blue-100"></button>
+    <button class="color-btn bg-blue-200"></button>
+    <button class="color-btn bg-blue-300"></button>
+    <button class="color-btn bg-blue-400"></button>
+    <button class="color-btn bg-blue-500"></button>
+    <button class="color-btn bg-blue-600"></button>
+    <button class="color-btn bg-blue-700"></button>
+    <button class="color-btn bg-blue-800"></button>
+    <button class="color-btn bg-blue-900"></button>
+    <button class="color-btn bg-blue-950"></button>
+
+    <!-- Lavender -->
+    <p class="capitalize">Lavender</p>
+    <button class="color-btn bg-lavender"></button>
+    <button class="color-btn bg-lavender-50"></button>
+    <button class="color-btn bg-lavender-100"></button>
+    <button class="color-btn bg-lavender-200"></button>
+    <button class="color-btn bg-lavender-300"></button>
+    <button class="color-btn bg-lavender-400"></button>
+    <button class="color-btn bg-lavender-500"></button>
+    <button class="color-btn bg-lavender-600"></button>
+    <button class="color-btn bg-lavender-700"></button>
+    <button class="color-btn bg-lavender-800"></button>
+    <button class="color-btn bg-lavender-900"></button>
+    <button class="color-btn bg-lavender-950"></button>
+
+    <!-- Mauve -->
+    <p class="capitalize">Mauve</p>
+    <button class="color-btn bg-mauve"></button>
+    <button class="color-btn bg-mauve-50"></button>
+    <button class="color-btn bg-mauve-100"></button>
+    <button class="color-btn bg-mauve-200"></button>
+    <button class="color-btn bg-mauve-300"></button>
+    <button class="color-btn bg-mauve-400"></button>
+    <button class="color-btn bg-mauve-500"></button>
+    <button class="color-btn bg-mauve-600"></button>
+    <button class="color-btn bg-mauve-700"></button>
+    <button class="color-btn bg-mauve-800"></button>
+    <button class="color-btn bg-mauve-900"></button>
+    <button class="color-btn bg-mauve-950"></button>
+
+    <!-- Pink -->
+    <p class="capitalize">Pink</p>
+    <button class="color-btn bg-pink"></button>
+    <button class="color-btn bg-pink-50"></button>
+    <button class="color-btn bg-pink-100"></button>
+    <button class="color-btn bg-pink-200"></button>
+    <button class="color-btn bg-pink-300"></button>
+    <button class="color-btn bg-pink-400"></button>
+    <button class="color-btn bg-pink-500"></button>
+    <button class="color-btn bg-pink-600"></button>
+    <button class="color-btn bg-pink-700"></button>
+    <button class="color-btn bg-pink-800"></button>
+    <button class="color-btn bg-pink-900"></button>
+    <button class="color-btn bg-pink-950"></button>
+
+    <!-- Flamingo -->
+    <p class="capitalize">Flamingo</p>
+    <button class="color-btn bg-flamingo"></button>
+    <button class="color-btn bg-flamingo-50"></button>
+    <button class="color-btn bg-flamingo-100"></button>
+    <button class="color-btn bg-flamingo-200"></button>
+    <button class="color-btn bg-flamingo-300"></button>
+    <button class="color-btn bg-flamingo-400"></button>
+    <button class="color-btn bg-flamingo-500"></button>
+    <button class="color-btn bg-flamingo-600"></button>
+    <button class="color-btn bg-flamingo-700"></button>
+    <button class="color-btn bg-flamingo-800"></button>
+    <button class="color-btn bg-flamingo-900"></button>
+    <button class="color-btn bg-flamingo-950"></button>
+
+    <!-- Rosewater -->
+    <p class="capitalize">Rosewater</p>
+    <button class="color-btn bg-rosewater"></button>
+    <button class="color-btn bg-rosewater-50"></button>
+    <button class="color-btn bg-rosewater-100"></button>
+    <button class="color-btn bg-rosewater-200"></button>
+    <button class="color-btn bg-rosewater-300"></button>
+    <button class="color-btn bg-rosewater-400"></button>
+    <button class="color-btn bg-rosewater-500"></button>
+    <button class="color-btn bg-rosewater-600"></button>
+    <button class="color-btn bg-rosewater-700"></button>
+    <button class="color-btn bg-rosewater-800"></button>
+    <button class="color-btn bg-rosewater-900"></button>
+    <button class="color-btn bg-rosewater-950"></button>
+
+    <!-- Slate -->
+    <p class="capitalize">Slate</p>
+    <button class="color-btn bg-slate"></button>
+    <button class="color-btn bg-slate-50"></button>
+    <button class="color-btn bg-slate-100"></button>
+    <button class="color-btn bg-slate-200"></button>
+    <button class="color-btn bg-slate-300"></button>
+    <button class="color-btn bg-slate-400"></button>
+    <button class="color-btn bg-slate-500"></button>
+    <button class="color-btn bg-slate-600"></button>
+    <button class="color-btn bg-slate-700"></button>
+    <button class="color-btn bg-slate-800"></button>
+    <button class="color-btn bg-slate-900"></button>
+    <button class="color-btn bg-slate-950"></button>
+
+    <!-- Gray -->
+    <p class="capitalize">Gray</p>
+    <button class="color-btn bg-gray"></button>
+    <button class="color-btn bg-gray-50"></button>
+    <button class="color-btn bg-gray-100"></button>
+    <button class="color-btn bg-gray-200"></button>
+    <button class="color-btn bg-gray-300"></button>
+    <button class="color-btn bg-gray-400"></button>
+    <button class="color-btn bg-gray-500"></button>
+    <button class="color-btn bg-gray-600"></button>
+    <button class="color-btn bg-gray-700"></button>
+    <button class="color-btn bg-gray-800"></button>
+    <button class="color-btn bg-gray-900"></button>
+    <button class="color-btn bg-gray-950"></button>
+
+    <!-- Zinc -->
+    <p class="capitalize">Zinc</p>
+    <button class="color-btn bg-zinc"></button>
+    <button class="color-btn bg-zinc-50"></button>
+    <button class="color-btn bg-zinc-100"></button>
+    <button class="color-btn bg-zinc-200"></button>
+    <button class="color-btn bg-zinc-300"></button>
+    <button class="color-btn bg-zinc-400"></button>
+    <button class="color-btn bg-zinc-500"></button>
+    <button class="color-btn bg-zinc-600"></button>
+    <button class="color-btn bg-zinc-700"></button>
+    <button class="color-btn bg-zinc-800"></button>
+    <button class="color-btn bg-zinc-900"></button>
+    <button class="color-btn bg-zinc-950"></button>
+
+    <!-- Neutral -->
+    <p class="capitalize">Neutral</p>
+    <button class="color-btn bg-neutral"></button>
+    <button class="color-btn bg-neutral-50"></button>
+    <button class="color-btn bg-neutral-100"></button>
+    <button class="color-btn bg-neutral-200"></button>
+    <button class="color-btn bg-neutral-300"></button>
+    <button class="color-btn bg-neutral-400"></button>
+    <button class="color-btn bg-neutral-500"></button>
+    <button class="color-btn bg-neutral-600"></button>
+    <button class="color-btn bg-neutral-700"></button>
+    <button class="color-btn bg-neutral-800"></button>
+    <button class="color-btn bg-neutral-900"></button>
+    <button class="color-btn bg-neutral-950"></button>
+
+    <!-- Stone -->
+    <p class="capitalize">Stone</p>
+    <button class="color-btn bg-stone"></button>
+    <button class="color-btn bg-stone-50"></button>
+    <button class="color-btn bg-stone-100"></button>
+    <button class="color-btn bg-stone-200"></button>
+    <button class="color-btn bg-stone-300"></button>
+    <button class="color-btn bg-stone-400"></button>
+    <button class="color-btn bg-stone-500"></button>
+    <button class="color-btn bg-stone-600"></button>
+    <button class="color-btn bg-stone-700"></button>
+    <button class="color-btn bg-stone-800"></button>
+    <button class="color-btn bg-stone-900"></button>
+    <button class="color-btn bg-stone-950"></button>
   </div>
-
-  <!-- Hidden safelist so Tailwind detects all bg- classes used dynamically -->
-  <div style="display:none" aria-hidden="true">
-    <!-- semantic colors -->
-    <span class="bg-text"></span>
-    <span class="bg-subtext1"></span>
-    <span class="bg-subtext0"></span>
-    <span class="bg-overlay2"></span>
-    <span class="bg-overlay1"></span>
-    <span class="bg-overlay0"></span>
-    <span class="bg-surface2"></span>
-    <span class="bg-surface1"></span>
-    <span class="bg-surface0"></span>
-    <span class="bg-crust"></span>
-    <span class="bg-mantle"></span>
-    <span class="bg-base"></span>
-
-    <!-- spectrum colors (base + shades) -->
-    <!-- red -->
-    <span class="bg-red"></span>
-    <span class="bg-red-50"></span>
-    <span class="bg-red-100"></span>
-    <span class="bg-red-200"></span>
-    <span class="bg-red-300"></span>
-    <span class="bg-red-400"></span>
-    <span class="bg-red-500"></span>
-    <span class="bg-red-600"></span>
-    <span class="bg-red-700"></span>
-    <span class="bg-red-800"></span>
-    <span class="bg-red-900"></span>
-    <span class="bg-red-950"></span>
-
-    <!-- maroon -->
-    <span class="bg-maroon"></span>
-    <span class="bg-maroon-50"></span>
-    <span class="bg-maroon-100"></span>
-    <span class="bg-maroon-200"></span>
-    <span class="bg-maroon-300"></span>
-    <span class="bg-maroon-400"></span>
-    <span class="bg-maroon-500"></span>
-    <span class="bg-maroon-600"></span>
-    <span class="bg-maroon-700"></span>
-    <span class="bg-maroon-800"></span>
-    <span class="bg-maroon-900"></span>
-    <span class="bg-maroon-950"></span>
-
-    <!-- peach -->
-    <span class="bg-peach"></span>
-    <span class="bg-peach-50"></span>
-    <span class="bg-peach-100"></span>
-    <span class="bg-peach-200"></span>
-    <span class="bg-peach-300"></span>
-    <span class="bg-peach-400"></span>
-    <span class="bg-peach-500"></span>
-    <span class="bg-peach-600"></span>
-    <span class="bg-peach-700"></span>
-    <span class="bg-peach-800"></span>
-    <span class="bg-peach-900"></span>
-    <span class="bg-peach-950"></span>
-
-    <!-- yellow -->
-    <span class="bg-yellow"></span>
-    <span class="bg-yellow-50"></span>
-    <span class="bg-yellow-100"></span>
-    <span class="bg-yellow-200"></span>
-    <span class="bg-yellow-300"></span>
-    <span class="bg-yellow-400"></span>
-    <span class="bg-yellow-500"></span>
-    <span class="bg-yellow-600"></span>
-    <span class="bg-yellow-700"></span>
-    <span class="bg-yellow-800"></span>
-    <span class="bg-yellow-900"></span>
-    <span class="bg-yellow-950"></span>
-
-    <!-- lime -->
-    <span class="bg-lime"></span>
-    <span class="bg-lime-50"></span>
-    <span class="bg-lime-100"></span>
-    <span class="bg-lime-200"></span>
-    <span class="bg-lime-300"></span>
-    <span class="bg-lime-400"></span>
-    <span class="bg-lime-500"></span>
-    <span class="bg-lime-600"></span>
-    <span class="bg-lime-700"></span>
-    <span class="bg-lime-800"></span>
-    <span class="bg-lime-900"></span>
-    <span class="bg-lime-950"></span>
-
-    <!-- green -->
-    <span class="bg-green"></span>
-    <span class="bg-green-50"></span>
-    <span class="bg-green-100"></span>
-    <span class="bg-green-200"></span>
-    <span class="bg-green-300"></span>
-    <span class="bg-green-400"></span>
-    <span class="bg-green-500"></span>
-    <span class="bg-green-600"></span>
-    <span class="bg-green-700"></span>
-    <span class="bg-green-800"></span>
-    <span class="bg-green-900"></span>
-    <span class="bg-green-950"></span>
-
-    <!-- emerald -->
-    <span class="bg-emerald"></span>
-    <span class="bg-emerald-50"></span>
-    <span class="bg-emerald-100"></span>
-    <span class="bg-emerald-200"></span>
-    <span class="bg-emerald-300"></span>
-    <span class="bg-emerald-400"></span>
-    <span class="bg-emerald-500"></span>
-    <span class="bg-emerald-600"></span>
-    <span class="bg-emerald-700"></span>
-    <span class="bg-emerald-800"></span>
-    <span class="bg-emerald-900"></span>
-    <span class="bg-emerald-950"></span>
-
-    <!-- teal -->
-    <span class="bg-teal"></span>
-    <span class="bg-teal-50"></span>
-    <span class="bg-teal-100"></span>
-    <span class="bg-teal-200"></span>
-    <span class="bg-teal-300"></span>
-    <span class="bg-teal-400"></span>
-    <span class="bg-teal-500"></span>
-    <span class="bg-teal-600"></span>
-    <span class="bg-teal-700"></span>
-    <span class="bg-teal-800"></span>
-    <span class="bg-teal-900"></span>
-    <span class="bg-teal-950"></span>
-
-    <!-- cyan -->
-    <span class="bg-cyan"></span>
-    <span class="bg-cyan-50"></span>
-    <span class="bg-cyan-100"></span>
-    <span class="bg-cyan-200"></span>
-    <span class="bg-cyan-300"></span>
-    <span class="bg-cyan-400"></span>
-    <span class="bg-cyan-500"></span>
-    <span class="bg-cyan-600"></span>
-    <span class="bg-cyan-700"></span>
-    <span class="bg-cyan-800"></span>
-    <span class="bg-cyan-900"></span>
-    <span class="bg-cyan-950"></span>
-
-    <!-- sky -->
-    <span class="bg-sky"></span>
-    <span class="bg-sky-50"></span>
-    <span class="bg-sky-100"></span>
-    <span class="bg-sky-200"></span>
-    <span class="bg-sky-300"></span>
-    <span class="bg-sky-400"></span>
-    <span class="bg-sky-500"></span>
-    <span class="bg-sky-600"></span>
-    <span class="bg-sky-700"></span>
-    <span class="bg-sky-800"></span>
-    <span class="bg-sky-900"></span>
-    <span class="bg-sky-950"></span>
-
-    <!-- sapphire -->
-    <span class="bg-sapphire"></span>
-    <span class="bg-sapphire-50"></span>
-    <span class="bg-sapphire-100"></span>
-    <span class="bg-sapphire-200"></span>
-    <span class="bg-sapphire-300"></span>
-    <span class="bg-sapphire-400"></span>
-    <span class="bg-sapphire-500"></span>
-    <span class="bg-sapphire-600"></span>
-    <span class="bg-sapphire-700"></span>
-    <span class="bg-sapphire-800"></span>
-    <span class="bg-sapphire-900"></span>
-    <span class="bg-sapphire-950"></span>
-
-    <!-- blue -->
-    <span class="bg-blue"></span>
-    <span class="bg-blue-50"></span>
-    <span class="bg-blue-100"></span>
-    <span class="bg-blue-200"></span>
-    <span class="bg-blue-300"></span>
-    <span class="bg-blue-400"></span>
-    <span class="bg-blue-500"></span>
-    <span class="bg-blue-600"></span>
-    <span class="bg-blue-700"></span>
-    <span class="bg-blue-800"></span>
-    <span class="bg-blue-900"></span>
-    <span class="bg-blue-950"></span>
-
-    <!-- lavender -->
-    <span class="bg-lavender"></span>
-    <span class="bg-lavender-50"></span>
-    <span class="bg-lavender-100"></span>
-    <span class="bg-lavender-200"></span>
-    <span class="bg-lavender-300"></span>
-    <span class="bg-lavender-400"></span>
-    <span class="bg-lavender-500"></span>
-    <span class="bg-lavender-600"></span>
-    <span class="bg-lavender-700"></span>
-    <span class="bg-lavender-800"></span>
-    <span class="bg-lavender-900"></span>
-    <span class="bg-lavender-950"></span>
-
-    <!-- mauve -->
-    <span class="bg-mauve"></span>
-    <span class="bg-mauve-50"></span>
-    <span class="bg-mauve-100"></span>
-    <span class="bg-mauve-200"></span>
-    <span class="bg-mauve-300"></span>
-    <span class="bg-mauve-400"></span>
-    <span class="bg-mauve-500"></span>
-    <span class="bg-mauve-600"></span>
-    <span class="bg-mauve-700"></span>
-    <span class="bg-mauve-800"></span>
-    <span class="bg-mauve-900"></span>
-    <span class="bg-mauve-950"></span>
-
-    <!-- pink -->
-    <span class="bg-pink"></span>
-    <span class="bg-pink-50"></span>
-    <span class="bg-pink-100"></span>
-    <span class="bg-pink-200"></span>
-    <span class="bg-pink-300"></span>
-    <span class="bg-pink-400"></span>
-    <span class="bg-pink-500"></span>
-    <span class="bg-pink-600"></span>
-    <span class="bg-pink-700"></span>
-    <span class="bg-pink-800"></span>
-    <span class="bg-pink-900"></span>
-    <span class="bg-pink-950"></span>
-
-    <!-- flamingo -->
-    <span class="bg-flamingo"></span>
-    <span class="bg-flamingo-50"></span>
-    <span class="bg-flamingo-100"></span>
-    <span class="bg-flamingo-200"></span>
-    <span class="bg-flamingo-300"></span>
-    <span class="bg-flamingo-400"></span>
-    <span class="bg-flamingo-500"></span>
-    <span class="bg-flamingo-600"></span>
-    <span class="bg-flamingo-700"></span>
-    <span class="bg-flamingo-800"></span>
-    <span class="bg-flamingo-900"></span>
-    <span class="bg-flamingo-950"></span>
-
-    <!-- rosewater -->
-    <span class="bg-rosewater"></span>
-    <span class="bg-rosewater-50"></span>
-    <span class="bg-rosewater-100"></span>
-    <span class="bg-rosewater-200"></span>
-    <span class="bg-rosewater-300"></span>
-    <span class="bg-rosewater-400"></span>
-    <span class="bg-rosewater-500"></span>
-    <span class="bg-rosewater-600"></span>
-    <span class="bg-rosewater-700"></span>
-    <span class="bg-rosewater-800"></span>
-    <span class="bg-rosewater-900"></span>
-    <span class="bg-rosewater-950"></span>
-
-    <!-- slate -->
-    <span class="bg-slate"></span>
-    <span class="bg-slate-50"></span>
-    <span class="bg-slate-100"></span>
-    <span class="bg-slate-200"></span>
-    <span class="bg-slate-300"></span>
-    <span class="bg-slate-400"></span>
-    <span class="bg-slate-500"></span>
-    <span class="bg-slate-600"></span>
-    <span class="bg-slate-700"></span>
-    <span class="bg-slate-800"></span>
-    <span class="bg-slate-900"></span>
-    <span class="bg-slate-950"></span>
-
-    <!-- gray -->
-    <span class="bg-gray"></span>
-    <span class="bg-gray-50"></span>
-    <span class="bg-gray-100"></span>
-    <span class="bg-gray-200"></span>
-    <span class="bg-gray-300"></span>
-    <span class="bg-gray-400"></span>
-    <span class="bg-gray-500"></span>
-    <span class="bg-gray-600"></span>
-    <span class="bg-gray-700"></span>
-    <span class="bg-gray-800"></span>
-    <span class="bg-gray-900"></span>
-    <span class="bg-gray-950"></span>
-
-    <!-- zinc -->
-    <span class="bg-zinc"></span>
-    <span class="bg-zinc-50"></span>
-    <span class="bg-zinc-100"></span>
-    <span class="bg-zinc-200"></span>
-    <span class="bg-zinc-300"></span>
-    <span class="bg-zinc-400"></span>
-    <span class="bg-zinc-500"></span>
-    <span class="bg-zinc-600"></span>
-    <span class="bg-zinc-700"></span>
-    <span class="bg-zinc-800"></span>
-    <span class="bg-zinc-900"></span>
-    <span class="bg-zinc-950"></span>
-
-    <!-- neutral -->
-    <span class="bg-neutral"></span>
-    <span class="bg-neutral-50"></span>
-    <span class="bg-neutral-100"></span>
-    <span class="bg-neutral-200"></span>
-    <span class="bg-neutral-300"></span>
-    <span class="bg-neutral-400"></span>
-    <span class="bg-neutral-500"></span>
-    <span class="bg-neutral-600"></span>
-    <span class="bg-neutral-700"></span>
-    <span class="bg-neutral-800"></span>
-    <span class="bg-neutral-900"></span>
-    <span class="bg-neutral-950"></span>
-
-    <!-- stone -->
-    <span class="bg-stone"></span>
-    <span class="bg-stone-50"></span>
-    <span class="bg-stone-100"></span>
-    <span class="bg-stone-200"></span>
-    <span class="bg-stone-300"></span>
-    <span class="bg-stone-400"></span>
-    <span class="bg-stone-500"></span>
-    <span class="bg-stone-600"></span>
-    <span class="bg-stone-700"></span>
-    <span class="bg-stone-800"></span>
-    <span class="bg-stone-900"></span>
-    <span class="bg-stone-950"></span>
-  </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const colorButtons = document.querySelectorAll('button[data-color]');
-
-      colorButtons.forEach((button) => {
-        button.addEventListener('click', async () => {
-          const colorValue = button.getAttribute('data-color');
-          if (colorValue && button instanceof HTMLButtonElement) {
-            try {
-              await navigator.clipboard.writeText(colorValue);
-              // Visual feedback
-              const originalTitle = button.title;
-              button.title = 'Copied!';
-              button.style.transform = 'scale(0.95)';
-              setTimeout(() => {
-                button.title = originalTitle;
-                button.style.transform = 'scale(1)';
-              }, 300);
-            } catch (err) {
-              console.error('Failed to copy:', err);
-            }
-          }
-        });
-      });
-    });
-  </script>
 </Layout>
