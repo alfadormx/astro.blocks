@@ -1,6 +1,8 @@
 ---
 import type { VectorProps } from '~/types/vector.types';
 import { cn } from '~/utils/styles';
+import { promises as fs } from 'node:fs';
+import path from 'node:path';
 
 type Props = VectorProps;
 
@@ -19,28 +21,75 @@ const {
 // Read SVG content
 let svgContent: string = '';
 
+const stripQueryHash = (p: string) => p.split('?')[0].split('#')[0];
+
 try {
   if (typeof src === 'string') {
-    if (src.trim().startsWith('<')) {
+    const trimmed = src.trim();
+
+    if (trimmed.startsWith('<')) {
       // Already raw SVG string (may start with <?xml or <svg)
-      svgContent = src;
+      svgContent = trimmed;
+    } else if (trimmed.startsWith('/') && !trimmed.startsWith('//')) {
+      // Root-relative path: prefer reading from `public/` during build/SSR
+      const cleanPath = stripQueryHash(trimmed).replace(/^\//, '');
+      try {
+        svgContent = await fs.readFile(path.join(process.cwd(), 'public', cleanPath), 'utf-8');
+      } catch (fsErr) {
+        console.debug('Vector component: public fs read failed', fsErr);
+        // If reading from disk fails (e.g. in dev), fallback to HTTP fetch
+        try {
+          const fetchUrl = new URL(trimmed, Astro.url).href;
+          const response = await fetch(fetchUrl);
+          if (response.ok) {
+            svgContent = await response.text();
+          } else {
+            console.error(
+              `Vector component: Failed to fetch SVG from ${fetchUrl}`,
+              response.statusText
+            );
+          }
+        } catch (fetchErr) {
+          console.error(`Vector component: Failed to load public SVG ${trimmed}`, fetchErr);
+        }
+      }
     } else {
-      // URL (external, public folder, or relative path)
-      const fetchUrl = new URL(src, Astro.url).href;
+      // External URL or relative path - resolve against the current page URL and fetch
+      const fetchUrl = new URL(trimmed, Astro.url).href;
       const response = await fetch(fetchUrl);
       if (response.ok) {
         svgContent = await response.text();
       } else {
-        console.error(`Vector component: Failed to fetch SVG from ${src}`, response.statusText);
+        console.error(`Vector component: Failed to fetch SVG from ${trimmed}`, response.statusText);
       }
     }
   } else if (src && typeof src === 'object' && 'src' in src) {
-    // ImageMetadata from Vite import - fetch from processed output path
-    const response = await fetch(src.src);
-    if (response.ok) {
-      svgContent = await response.text();
+    // ImageMetadata from Vite import - try filesystem read for root-relative processed paths,
+    // otherwise fetch the processed output path
+    const metadataSrc = String((src as { src?: string }).src || '');
+    if (metadataSrc.startsWith('/') && !metadataSrc.startsWith('//')) {
+      const cleanPath = stripQueryHash(metadataSrc).replace(/^\//, '');
+      try {
+        svgContent = await fs.readFile(path.join(process.cwd(), 'public', cleanPath), 'utf-8');
+      } catch (fsErr) {
+        console.debug('Vector component: ImageMetadata fs read failed', fsErr);
+        try {
+          const response = await fetch(metadataSrc);
+          if (response.ok) svgContent = await response.text();
+          else
+            console.error(`Vector component: Failed to fetch SVG from ImageMetadata`, metadataSrc);
+        } catch (err) {
+          console.error('Vector component: Failed to load SVG from ImageMetadata', err);
+        }
+      }
     } else {
-      console.error(`Vector component: Failed to fetch SVG from ImageMetadata`, src.src);
+      try {
+        const response = await fetch(metadataSrc);
+        if (response.ok) svgContent = await response.text();
+        else console.error(`Vector component: Failed to fetch SVG from ImageMetadata`, metadataSrc);
+      } catch (err) {
+        console.error('Vector component: Failed to load SVG from ImageMetadata', err);
+      }
     }
   }
 } catch (error) {
