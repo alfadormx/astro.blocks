@@ -1,8 +1,6 @@
 ---
 import type { VectorProps } from '~/types/vector.types';
 import { cn } from '~/utils/styles';
-import { readFile } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
 
 type Props = VectorProps;
 
@@ -26,25 +24,18 @@ try {
     if (src.trim().startsWith('<')) {
       // Already raw SVG string (may start with <?xml or <svg)
       svgContent = src;
-    } else if (src.startsWith('http://') || src.startsWith('https://')) {
-      // External URL - fetch SVG content
-      const response = await fetch(src);
+    } else {
+      // URL (external, public folder, or relative path)
+      const fetchUrl = new URL(src, Astro.url).href;
+      const response = await fetch(fetchUrl);
       if (response.ok) {
         svgContent = await response.text();
       } else {
         console.error(`Vector component: Failed to fetch SVG from ${src}`, response.statusText);
       }
-    } else {
-      // File path string - resolve relative to project
-      const filePath = src.startsWith('/')
-        ? fileURLToPath(new URL(`../../../..${src}`, import.meta.url))
-        : fileURLToPath(new URL(src, import.meta.url));
-      svgContent = await readFile(filePath, 'utf-8');
     }
   } else if (src && typeof src === 'object' && 'src' in src) {
-    // ImageMetadata from Vite import - need to fetch the actual file
-    // The src property is the processed output path, we need the source
-    // Use fetch to get the content from the dev server or built file
+    // ImageMetadata from Vite import - fetch from processed output path
     const response = await fetch(src.src);
     if (response.ok) {
       svgContent = await response.text();
@@ -53,7 +44,7 @@ try {
     }
   }
 } catch (error) {
-  console.error('Vector component: Failed to read SVG file', error);
+  console.error('Vector component: Failed to load SVG', error);
 }
 
 // Process SVG content - only handle colors and essential attributes
