@@ -19,7 +19,8 @@ const metadata = {
 >
   <p>
     Demonstrating video playback with Plyr for HTML5 videos, YouTube, and Vimeo embeds. Includes
-    aspect ratio options and floating player behavior.
+    aspect ratio options, floating player behavior, autoplay support, and control visibility
+    customization.
   </p>
 
   <!-- Example 1: HTML5 Video (16:9) -->
@@ -182,6 +183,30 @@ const metadata = {
         muted: false,
         clickToPlay: true,
         keyboard: { focused: true, global: false },
+      }}
+    />
+  </div>
+
+  <!-- Example 9: Autoplay with Hidden Controls -->
+  <h3>9. Autoplay with Hidden Controls</h3>
+  <p>
+    Video starts playing automatically with no controls visible. Autoplay automatically enables
+    muting to comply with browser autoplay policies. Use the `muted` prop to override this behavior
+    if desired. Looping is also enabled in this example to allow continuous playback.
+  </p>
+  <div class="border border-dashed border-gray/80 p-8">
+    <VideoBlock
+      autoplay
+      hideControls
+      loop
+      source={{
+        type: 'video',
+        sources: [
+          {
+            src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4',
+            type: 'video/mp4',
+          },
+        ],
       }}
     />
   </div>

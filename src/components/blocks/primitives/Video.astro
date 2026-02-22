@@ -1,5 +1,6 @@
 ---
 import type { VideoProps } from '~/types/video.types';
+import type { Options } from 'plyr';
 import { cn } from '~/utils/styles';
 import Button from './Button.astro';
 import type { ButtonProps } from '~/types/button.types';
@@ -30,6 +31,10 @@ const {
   aspectRatio = 'video',
   isFloating = false,
   crossorigin = 'anonymous',
+  autoplay,
+  muted,
+  hideControls,
+  loop,
   pipButtonConfig,
   class: className = '',
   align,
@@ -45,7 +50,29 @@ const alignClass =
         ? 'flex justify-start'
         : '';
 
-// Default Plyr options
+// Build convenience options from props
+const convenienceOptions: Partial<Options> = {};
+
+if (hideControls) {
+  convenienceOptions.controls = [];
+}
+
+if (autoplay) {
+  convenienceOptions.autoplay = true;
+}
+
+// Set muted: use explicit value, or default to true if autoplay is enabled
+if (muted !== undefined) {
+  convenienceOptions.muted = muted;
+} else if (autoplay) {
+  convenienceOptions.muted = true;
+}
+
+if (loop) {
+  convenienceOptions.loop = { active: true };
+}
+
+// Default Plyr options (merged priority: defaults < convenience props < user options)
 const defaultOptions = {
   controls: [
     'play-large',
@@ -59,6 +86,7 @@ const defaultOptions = {
     'fullscreen',
   ],
   ratio: plyrRatios[aspectRatio],
+  ...convenienceOptions,
   ...(options || {}),
 };
 
@@ -106,7 +134,7 @@ const mergedVideoGroupClass = cn(
   import 'plyr/dist/plyr.css';
 
   const plyrEls = document.querySelectorAll('.plyr');
-  Plyr.setup(plyrEls).forEach((player, i) => {
+  Plyr.setup(plyrEls).forEach((player: Plyr, i: number) => {
     const plyrEl = plyrEls[i] as HTMLElement;
     player.source = JSON.parse(plyrEl.dataset.plyrSource ?? '{}');
   });

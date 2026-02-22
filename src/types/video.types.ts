@@ -9,6 +9,10 @@ export interface VideoProps {
   aspectRatio?: AspectRatio;
   isFloating?: boolean;
   crossorigin?: 'anonymous' | 'use-credentials';
+  autoplay?: boolean;
+  muted?: boolean;
+  hideControls?: boolean;
+  loop?: boolean;
   class?: string;
   align?: 'left' | 'center' | 'right';
   pipButtonConfig?: ButtonProps;
