@@ -67,14 +67,11 @@ const mergedItemsGrid = mergeConfigs({}, defaultItemsGridConfig, {
   items: items,
 });
 
-const mergedContentSlotClass = cn(
-  {
-    'mb-4 md:mb-6': items.length > 0 || action,
-  },
-  contentSlotClass
-);
+const contentSpacerClass = cn({
+  'mb-4 md:mb-6': items.length > 0 || action,
+});
 
-const mergedActionsSlotClass = cn({
+const actionsSpacerClass = cn({
   'mb-4 md:mb-6': items.length > 0,
 });
 ---
@@ -82,13 +79,13 @@ const mergedActionsSlotClass = cn({
 <Container {...mergedContainer}>
   <Headline {...mergedHeadline} />
   <TwoColumnContainer {...defaultTwoColumnConfig}>
-    <div slot={imageOnLeft ? 'right' : 'left'}>
-      <div class={mergedContentSlotClass}>
+    <div class={contentSlotClass} slot={imageOnLeft ? 'right' : 'left'}>
+      <div class={contentSpacerClass}>
         <slot />
       </div>
       {
         action && (
-          <div class={mergedActionsSlotClass}>
+          <div class={actionsSpacerClass}>
             <Button {...action} />
           </div>
         )
