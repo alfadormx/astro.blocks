@@ -13,4 +13,5 @@ export interface ContentProps {
   items?: ItemsGridProps['items'];
   imageOnLeft?: boolean;
   reverseOnMobile?: boolean;
+  contentSlotClass?: string;
 }

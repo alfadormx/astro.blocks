@@ -10,6 +10,7 @@ import type { TwoColumnContainerProps } from '~/types/container.types';
 import type { ImageProps } from '~/utils/images-optimization';
 import type { ItemsGridProps } from '~/types/itemsgrid.types';
 import { mergeConfigs } from '~/utils/mergeConfigs';
+import { cn } from '~/utils/styles';
 
 type Props = ContentProps;
 
@@ -21,6 +22,7 @@ const {
   items = [],
   imageOnLeft = false,
   reverseOnMobile = false,
+  contentSlotClass,
 } = Astro.props;
 
 const defaultContainer = {};
@@ -64,18 +66,31 @@ const mergedImage = mergeConfigs({}, defaultImage, image);
 const mergedItemsGrid = mergeConfigs({}, defaultItemsGridConfig, {
   items: items,
 });
+
+const mergedContentSlotClass = cn({
+  'mb-4 md:mb-6': items.length > 0 || action,
+  contentSlotClass,
+});
+
+const mergedActionsSlotClass = cn({
+  'mb-4 md:mb-6': items.length > 0,
+});
 ---
 
 <Container {...mergedContainer}>
   <Headline {...mergedHeadline} />
   <TwoColumnContainer {...defaultTwoColumnConfig}>
     <div slot={imageOnLeft ? 'right' : 'left'}>
-      <div class="mb-4 md:mb-6">
+      <div class={mergedContentSlotClass}>
         <slot />
       </div>
-      <div class="mb-4 md:mb-6">
-        {action && <Button {...action} />}
-      </div>
+      {
+        action && (
+          <div class={mergedActionsSlotClass}>
+            <Button {...action} />
+          </div>
+        )
+      }
       {items.length > 0 && <ItemsGrid {...mergedItemsGrid} />}
     </div>
     <div slot={imageOnLeft ? 'left' : 'right'}>
