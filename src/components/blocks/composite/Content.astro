@@ -67,10 +67,12 @@ const mergedItemsGrid = mergeConfigs({}, defaultItemsGridConfig, {
   items: items,
 });
 
-const mergedContentSlotClass = cn({
-  'mb-4 md:mb-6': items.length > 0 || action,
-  contentSlotClass,
-});
+const mergedContentSlotClass = cn(
+  {
+    'mb-4 md:mb-6': items.length > 0 || action,
+  },
+  contentSlotClass
+);
 
 const mergedActionsSlotClass = cn({
   'mb-4 md:mb-6': items.length > 0,
