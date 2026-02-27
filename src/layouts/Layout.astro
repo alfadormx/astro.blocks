@@ -12,6 +12,11 @@ import Container from '~/components/blocks/layout/Container.astro';
 import type { MetaData } from '~/types/metadata.types';
 import type { ContainerProps } from '~/types/container.types';
 import { mergeConfigs } from '~/utils/mergeConfigs';
+import Header from '~/components/blocks/composite/Header.astro';
+
+import type { ButtonProps } from '~/types/button.types';
+import Modal from '~/components/blocks/layout/Modal.astro';
+import NavigationTree from '~/components/blocks/composite/NavigationTree.astro';
 
 export type Props = {
   langCode?: string;
@@ -39,10 +44,21 @@ const defaultTopmostContainer = {
 } as ContainerProps;
 
 const mergedTopmostContainer = mergeConfigs({}, defaultTopmostContainer, topmostContainer);
+
+const navigationItems: ButtonProps[] = [
+  { label: 'Caractéristiques', href: '#caracteristiques' },
+  { label: 'Détail du prix', href: '#prix' },
+  { label: 'Photos', href: '#photos' },
+  { label: 'Plan & Surface', href: '#plan' },
+  { label: 'Carte', href: '#carte' },
+  { label: 'Visite & Candidature', href: '#candidature' },
+  { label: 'FAQ', href: '#faq' },
+  { label: 'Contact', href: '#contact' },
+];
 ---
 
 <!doctype html>
-<html lang={htmlLang} dir={htmlDir}>
+<html lang={htmlLang} dir={htmlDir} style="--scroll-padding-top: 6rem;">
   <head>
     <CommonMeta />
     <Favicons />
@@ -90,8 +106,50 @@ const mergedTopmostContainer = mergeConfigs({}, defaultTopmostContainer, topmost
   </head>
   <body>
     <Container {...mergedTopmostContainer}>
+      <Header
+        isFloating
+        container={{
+          content: { boxWidth: 'full' },
+          background: {
+            class: 'bg-background/70 backdrop-blur-sm',
+          },
+        }}
+        defaultActionsConfig={{
+          variant: 'link',
+          class: 'text-normal hover:text-normal',
+        }}
+        logo={{ label: '' }}
+        navigationRight={{
+          class: 'hidden lg:flex',
+          defaultItemConfig: {
+            variant: 'link',
+            class: 'text-center text-normal font-bold hover:text-normal',
+          },
+          items: navigationItems,
+        }}
+        actionsRight={[
+          {
+            'data-modal-trigger': 'mobile-menu',
+            class: 'lg:hidden text-normal hover:text-normal',
+            icon: { name: 'heroicons:bars-3' },
+          },
+        ]}
+      />
+
       <slot />
+
+      <Modal
+        id="mobile-menu"
+        size="full"
+        class="bg-transparent rounded-none shadow-none flex items-center align-middle"
+      >
+        <NavigationTree
+          items={navigationItems}
+          defaultItemConfig={{ variant: 'link', size: 'xl', 'data-modal-close': '' }}
+        />
+      </Modal>
     </Container>
+
     <!-- modal portal root: server-rendered root for portals (falls back to body append) -->
     <div id="modal-portal-root" class="z-9999"></div>
   </body>

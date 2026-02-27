@@ -1,0 +1,617 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import Container from '~/components/blocks/layout/Container.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
+import Image from '~/components/blocks/primitives/Image.astro';
+import ContentCarousel from '~/components/blocks/composite/ContentCarousel.astro';
+import ContentCarouselItem from '~/components/blocks/primitives/ContentCarouselItem.astro';
+import ItemsGrid from '~/components/blocks/composite/ItemsGrid.astro';
+import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
+import Map from '~/components/blocks/primitives/Map.astro';
+import CallToAction from '~/components/blocks/composite/CallToAction.astro';
+
+const carouselItemBasis = 'basis-full md:basis-1/2 lg:basis-1/2';
+const carouselItemLabelClass =
+  'absolute bottom-2 left-2 m-0 px-3 py-1 bg-background/90 text-normal';
+---
+
+<Layout>
+  <!-- Hero Section -->
+  <Container
+    minHeight="h-[50vh]"
+    background={{
+      image: '/images/hero.jpg',
+    }}
+    content={{
+      widthType: 'full',
+    }}
+    layout={{ type: 'flex', class: 'items-center justify-center' }}
+  />
+
+  <!-- Title Section -->
+  <Container
+    htmlTag="div"
+    spacing={{ margin: '-mt-30', padding: 'px-4 py-0 md:px-6 md:py-0 lg:px-8 lg:py-0' }}
+    content={{
+      air: 'tight',
+      widthType: 'boxed',
+      class: 'bg-background rounded-lg shadow-lg',
+      spacing: { padding: 'p-3 md:p-6' },
+    }}
+  >
+    <Headline
+      tagline="Location"
+      title="Duplex meublé"
+      subtitle="3 Pièces, 66 m² · Meudon 92360 · Quartier Meudon-la-Forêt"
+      class="mt-0"
+    />
+    <p>
+      <span class="text-3xl font-bold">1500 €</span>&nbsp;&nbsp;&nbsp;(charges incluses – provision
+      sur charges)
+    </p>
+  </Container>
+
+  <!-- Caractéristiques -->
+  <Container>
+    <Headline anchorId="caracteristiques" title="Caractéristiques" />
+    <h2>Les informations clés</h2>
+    <ItemsGrid
+      columns={2}
+      defaultItemConfig={{
+        layout: 'horizontal',
+      }}
+      items={[
+        {
+          icon: { name: 'tabler:bolt' },
+          title: 'Classe énergie',
+          content: 'A',
+        },
+        {
+          icon: { name: 'tabler:leaf' },
+          title: 'GES',
+          content: 'B',
+        },
+        {
+          icon: { name: 'tabler:building' },
+          title: 'Type de bien',
+          content: 'Appartement',
+        },
+        {
+          icon: { name: 'tabler:armchair' },
+          title: 'Ce bien est :',
+          content: 'Meublé',
+        },
+        {
+          icon: { name: 'tabler:ruler-measure' },
+          title: 'Surface habitable :',
+          content: '66 m²',
+        },
+        {
+          icon: { name: 'tabler:door' },
+          title: 'Nombre de pièces :',
+          content: '3',
+        },
+        {
+          icon: { name: 'tabler:bed' },
+          title: 'Nombre de chambres :',
+          content: '2',
+        },
+        {
+          icon: { name: 'tabler:bath' },
+          title: 'Nombre de salles de bain :',
+          content: '2',
+        },
+        {
+          icon: { name: 'tabler:list-check' },
+          title: 'Caractéristiques :',
+          content:
+            'Construction récente, Plusieurs toilettes, Cuisine équipée, Cuisine ouverte, Baignoire, Interphone, Avec garage ou place de parking',
+        },
+        {
+          icon: { name: 'tabler:building-community' },
+          title: 'Type de chauffage :',
+          content: 'Collectif',
+        },
+        {
+          icon: { name: 'tabler:flame' },
+          title: 'Mode de chauffage :',
+          content: 'Gaz',
+        },
+        {
+          icon: { name: 'tabler:stairs' },
+          title: 'Étage du bien :',
+          content: '0',
+        },
+        {
+          icon: { name: 'tabler:building' },
+          title: "Nombre d'étages dans l'immeuble :",
+          content: '9',
+        },
+        {
+          icon: { name: 'tabler:elevator' },
+          title: 'Ascenseur :',
+          content: 'Oui',
+        },
+        {
+          icon: { name: 'tabler:compass' },
+          title: 'Exposition :',
+          content: 'Nord',
+        },
+        {
+          icon: { name: 'tabler:trees' },
+          title: 'Extérieur :',
+          content: 'Terrase',
+        },
+        {
+          icon: { name: 'tabler:car' },
+          title: 'Places de parking :',
+          content: '1',
+        },
+        {
+          icon: { name: 'tabler:calendar-event' },
+          title: 'Année de construction :',
+          content: '2020',
+        },
+        {
+          icon: { name: 'tabler:calendar-plus' },
+          title: 'Disponible à partir de :',
+          content: 'Avril 2026',
+        },
+        {
+          icon: { name: 'tabler:receipt' },
+          title: 'Charges incluses :',
+          content: 'Oui',
+        },
+      ]}
+    />
+
+    <h2>L'appartement</h2>
+    <p>Appartement meublé - Duplex 66,5 m² - Meudon-la-Forêt (Écoquartier Simone Veil)</p>
+    <p>
+      <strong>Loyer :</strong> 1500 € / mois CC (charges incluses - provision sur charges) <br />
+      <strong>Dépôt de garantie :</strong> 2 mois <br />
+      <strong>DPE :</strong> A - <strong>GES :</strong> B
+    </p>
+    <p>
+      Situé dans l'écoquartier de la Place Simone Veil, au sein de la résidence récente Évidence, ce
+      duplex meublé de 66,5 m² en rez-de-jardin offre un cadre de vie moderne, calme et très
+      fonctionnel.
+    </p>
+
+    <p><strong>Disposition :</strong></p>
+    <p>
+      <strong>Rez-de-chaussée :</strong>
+      <ul>
+        <li>Séjour lumineux avec accès direct au jardin de la résidence</li>
+        <li>Cuisine américaine entièrement équipée</li>
+        <li>Salle d'eau avec douche à l'italienne</li>
+        <li>Nombreux rangements</li>
+      </ul>
+    </p>
+
+    <p>
+      <strong>Étage :</strong>
+      <ul>
+        <li>
+          Deux chambres, dont une aménagée avec lit superposé et espace bureau, adaptée à un enfant
+          ou à un usage de télétravail
+        </li>
+        <li>Buanderie séparée</li>
+        <li>WC indépendant</li>
+        <li>Salle de bain avec baignoire</li>
+      </ul>
+    </p>
+
+    <p>
+      <strong>Atouts supplémentaires :</strong>
+      <ul>
+        <li>Place de parking incluse</li>
+        <li>Commerces au pied de l'immeuble : mini-super, boulangerie, centre sportif</li>
+        <li>
+          À proximité immédiate : IKEA, centre commercial Vélizy 2, transports et espaces verts
+        </li>
+      </ul>
+    </p>
+  </Container>
+
+  <!-- Détail du prix -->
+  <Container>
+    <Headline anchorId="prix" title="Détail du prix" />
+
+    <div class="flex flex-col gap-6">
+      <div class="border border-border p-4 flex flex-col rounded-lg lg:w-2/3">
+        <div class="flex-col">
+          <div class="flex justify-between font-bold">
+            <span>Loyer (charges comprises)</span>
+            <span>1 500&nbsp;€ par mois</span>
+          </div>
+          <div class="flex justify-between text-muted">
+            <span>Loyer hors charges</span>
+            <span class="font-bold">1 330&nbsp;€ / mois</span>
+          </div>
+          <div class="flex justify-between text-muted">
+            <span>Charges locatives</span>
+            <span class="font-bold">170&nbsp;€ / mois</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="border border-border p-4 flex flex-col rounded-lg lg:w-2/3">
+        <div class="flex-col">
+          <div class="flex justify-between font-bold">
+            <span>Autres frais</span>
+            <span>&nbsp;</span>
+          </div>
+          <div class="flex justify-between text-muted">
+            <span>Dépôt de garantie</span>
+            <span class="font-bold">2 660&nbsp;€</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Container>
+
+  <!-- Photos -->
+  <Container>
+    <Headline anchorId="photos" title="Photos" />
+
+    <h2>Photos du sejour, cuisine et rangements</h2>
+    <div class="w-screen relative left-1/2 -translate-x-1/2 overflow-x-clip">
+      <ContentCarousel loop>
+        <!-- cuisine -->
+        <ContentCarouselItem content={{ air: 'none' }} basis={carouselItemBasis}>
+          <div class="relative w-full">
+            <Image
+              src="~/assets/images/rdc_cuisine.jpg"
+              alt="Cuisine américaine équipée"
+              layout="responsive"
+            />
+            <p class={carouselItemLabelClass}>Cuisine américaine équipée</p>
+          </div>
+        </ContentCarouselItem>
+        <!-- salon -->
+        <ContentCarouselItem content={{ air: 'none' }} basis={carouselItemBasis}>
+          <div class="relative w-full">
+            <Image
+              src="~/assets/images/rdc_salon.jpg"
+              alt="Séjour lumineux avec accès direct à la terrasse et au jardin"
+              layout="responsive"
+            />
+            <p class={carouselItemLabelClass}>
+              Séjour lumineux avec accès direct à la terrasse et au jardin
+            </p>
+          </div>
+        </ContentCarouselItem>
+        <!-- rangement -->
+        <ContentCarouselItem content={{ air: 'none' }} basis={carouselItemBasis}>
+          <div class="relative w-full">
+            <Image
+              src="~/assets/images/rdc_rangement.jpg"
+              alt="Rangements du rez-de-chaussée"
+              layout="responsive"
+            />
+            <p class={carouselItemLabelClass}>Rangements du rez-de-chaussée</p>
+          </div>
+        </ContentCarouselItem>
+      </ContentCarousel>
+    </div>
+
+    <h2>Photos des chambres</h2>
+    <div class="w-screen relative left-1/2 -translate-x-1/2 overflow-x-clip">
+      <ContentCarousel loop>
+        <!-- chprincipale_1 -->
+        <ContentCarouselItem content={{ air: 'none' }} basis={carouselItemBasis}>
+          <div class="relative w-full">
+            <Image
+              src="~/assets/images/etg_chprincipale_1.jpg"
+              alt="Chambre principale de l'étage"
+              layout="responsive"
+            />
+            <p class={carouselItemLabelClass}>Chambre principale de l'étage</p>
+          </div>
+        </ContentCarouselItem>
+        <!-- chprincipale_2 -->
+        <ContentCarouselItem content={{ air: 'none' }} basis={carouselItemBasis}>
+          <div class="relative w-full">
+            <Image
+              src="~/assets/images/etg_chprincipale_2.jpg"
+              alt="Chambre principale de l'étage (vue 2)"
+              layout="responsive"
+            />
+            <p class={carouselItemLabelClass}>Chambre principale de l'étage (vue 2)</p>
+          </div>
+        </ContentCarouselItem>
+        <!-- chprincipale_vue -->
+        <ContentCarouselItem content={{ air: 'none' }} basis={carouselItemBasis}>
+          <div class="relative w-full">
+            <Image
+              src="~/assets/images/etg_chprincipale_vue.jpg"
+              alt="Vue sur le jardin depuis la chambre principale de l'étage"
+              layout="responsive"
+            />
+            <p class={carouselItemLabelClass}>
+              Vue sur le jardin depuis la chambre principale de l'étage
+            </p>
+          </div>
+        </ContentCarouselItem>
+        <!-- chenfant_1 -->
+        <ContentCarouselItem content={{ air: 'none' }} basis={carouselItemBasis}>
+          <div class="relative w-full">
+            <Image
+              src="~/assets/images/etg_chenfant_1.jpg"
+              alt="Chambre de l'étage avec lit superposé"
+              layout="responsive"
+            />
+            <p class={carouselItemLabelClass}>Chambre de l'étage avec lit superposé</p>
+          </div>
+        </ContentCarouselItem>
+        <!-- chenfant_2 -->
+        <ContentCarouselItem content={{ air: 'none' }} basis={carouselItemBasis}>
+          <div class="relative w-full">
+            <Image
+              src="~/assets/images/etg_chenfant_2.jpg"
+              alt="Chambre de l'étage avec lit superposé"
+              layout="responsive"
+            />
+            <p class={carouselItemLabelClass}>Chambre de l'étage avec lit superposé (vue 2)</p>
+          </div>
+        </ContentCarouselItem>
+        <!-- chenfant_vue -->
+        <ContentCarouselItem content={{ air: 'none' }} basis={carouselItemBasis}>
+          <div class="relative w-full">
+            <Image
+              src="~/assets/images/etg_chenfant_vue.jpg"
+              alt="Vue sur le jardin depuis la chambre de l'étage avec lit superposé"
+              layout="responsive"
+            />
+            <p class={carouselItemLabelClass}>
+              Vue sur le jardin depuis la chambre de l'étage avec lit superposé
+            </p>
+          </div>
+        </ContentCarouselItem>
+      </ContentCarousel>
+    </div>
+
+    <h2>Photos des salles de bain et buanderie</h2>
+    <div class="w-screen relative left-1/2 -translate-x-1/2 overflow-x-clip">
+      <ContentCarousel loop>
+        <!-- rdc_sdb -->
+        <ContentCarouselItem content={{ air: 'none' }} basis={carouselItemBasis}>
+          <div class="relative w-full">
+            <Image
+              src="~/assets/images/rdc_salledebain.jpg"
+              alt="Salle d'eau avec douche à l'italienne du rez-de-chaussée"
+              layout="responsive"
+            />
+            <p class={carouselItemLabelClass}>
+              Salle d'eau avec douche à l'italienne du rez-de-chaussée
+            </p>
+          </div>
+        </ContentCarouselItem>
+        <!-- etg_sdb_2 -->
+        <ContentCarouselItem content={{ air: 'none' }} basis={carouselItemBasis}>
+          <div class="relative w-full">
+            <Image
+              src="~/assets/images/etg_salledebain.jpg"
+              alt=" Salle de bain avec baignoire de l'étage"
+              layout="responsive"
+            />
+            <p class={carouselItemLabelClass}>Salle de bain avec baignoire de l'étage</p>
+          </div>
+        </ContentCarouselItem>
+        <!-- wv -->
+        <ContentCarouselItem content={{ air: 'none' }} basis={carouselItemBasis}>
+          <div class="relative w-full">
+            <Image src="~/assets/images/etg_wc.jpg" alt="WC de l'étage" layout="responsive" />
+            <p class={carouselItemLabelClass}>WC de l'étage</p>
+          </div>
+        </ContentCarouselItem>
+        <!-- bouanderie -->
+        <ContentCarouselItem content={{ air: 'none' }} basis={carouselItemBasis}>
+          <div class="relative w-full">
+            <Image
+              src="~/assets/images/etg_bouanderie.jpg"
+              alt="Buanderie de l'étage"
+              layout="responsive"
+            />
+            <p class={carouselItemLabelClass}>Buanderie de l'étage</p>
+          </div>
+        </ContentCarouselItem>
+      </ContentCarousel>
+    </div>
+  </Container>
+
+  <!-- Plan & Surface -->
+  <Container>
+    <Headline anchorId="plan" title="Plan & Surface" />
+    <TwoColumnContainer
+      htmlTag="div"
+      responsive
+      content={{
+        air: 'none',
+      }}
+    >
+      <div slot="left">
+        <h2>Rez-de-chaussée</h2>
+        <Image
+          src="~/assets/images/rdc_plan.jpg"
+          alt="Plan de l'appartement - Rez-de-chaussée"
+          layout="responsive"
+          class="w-full h-auto"
+        />
+      </div>
+      <div slot="right">
+        <h2>Étage</h2>
+        <Image
+          src="~/assets/images/etg_plan.jpg"
+          alt="Plan de l'appartement - Étage"
+          layout="responsive"
+          class="w-full h-auto"
+        />
+      </div>
+    </TwoColumnContainer>
+  </Container>
+
+  <!-- Carte -->
+  <Container>
+    <Headline anchorId="carte" title="Carte" />
+    <p>
+      Situé dans l'écoquartier de la Place Simone Veil à Meudon-la-Forêt, au sein de la résidence
+      récente Évidence, ce duplex meublé de 66,5 m² en rez-de-jardin offre un cadre de vie moderne,
+      calme et très fonctionnel.
+    </p>
+    <div class="w-screen relative left-1/2 -translate-x-1/2 overflow-x-clip">
+      <Map lat={48.782727} lon={2.227875} zoom={20} />
+    </div>
+    <h2>À proximité</h2>
+    <ItemsGrid
+      columns={3}
+      defaultItemConfig={{
+        layout: 'horizontal',
+      }}
+      items={[
+        {
+          icon: { name: 'tabler:building-store' },
+          title: "Commerces au pied de l'immeuble",
+          content: 'Mini-super (Super U), boulangerie, centre sportif UPCA',
+        },
+        {
+          icon: { name: 'tabler:trees' },
+          title: 'Espaces verts à proximité',
+          content: 'Forêt Domaniale Meudon',
+        },
+        {
+          icon: { name: 'tabler:bus' },
+          title: 'Transports en commun',
+          content: 'Tramway Ligne 6 (Meudon-la-Forêt, Georges Millandy), lignes de bus (179, 291)',
+        },
+        {
+          icon: { name: 'tabler:walk' },
+          title: 'À pied',
+          content: 'IKEA Velizy, centre commercial Vélizy 2, écoles, crèches',
+        },
+      ]}
+    />
+  </Container>
+
+  <Container>
+    <Headline anchorId="candidature" title="Visite & Candidature" />
+    <p>
+      Merci <a href="#contact">d'envoyer un dossier complet par email</a> (pièce d'identité, justificatifs
+      de ressources et de situation professionnelle). <br />
+      Une sélection des dossiers sera effectuée avant l'organisation d'une première ronde de visites.
+      <br />
+      <strong>Un garant pourra être demandé selon la solidité du dossier.</strong>
+    </p>
+    <p>
+      Pour constituer un dossier complet, veuillez vous référer aux informations disponibles sur
+      <a
+        href="https://www.service-public.fr/particuliers/vosdroits/F1169"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        service-public.fr — Dossier de location (section Locataire)
+      </a>.
+    </p>
+  </Container>
+
+  <Container>
+    <Headline anchorId="faq" title="FAQ" />
+    <p>
+      Des questions supplémentaires ? <a href="#contact"
+        >N'hésitez pas à nous contacter par email !</a
+      >
+    </p>
+    <ItemsGrid
+      columns={3}
+      defaultItemConfig={{
+        layout: 'horizontal',
+      }}
+      items={[
+        {
+          icon: { name: 'tabler:home-search' },
+          title: 'Puis-je visiter le bien avant de postuler ?',
+          content:
+            'Des visites seront organisées pour une sélection de dossiers complets. Merci de nous envoyer votre dossier de candidature par email pour être considéré.e.',
+        },
+        {
+          icon: { name: 'tabler:checklist' },
+          title: 'Quels sont les critères de sélection des dossiers ?',
+          content:
+            'Nous recherchons des locataires sérieux, avec des ressources stables et suffisantes pour couvrir le loyer. Un garant pourra être demandé selon la solidité du dossier.',
+        },
+        {
+          icon: { name: 'tabler:calendar-check' },
+          title: 'Le logement est-il disponible immédiatement ?',
+          content:
+            "Le logement sera disponible à partir d'avril 2026. Nous acceptons les candidatures dès maintenant pour permettre aux futurs locataires de préparer leur dossier en amont.",
+        },
+        {
+          icon: { name: 'tabler:coin-off' },
+          title: "Y a-t-il des frais d'agence ?",
+          content:
+            "Non, il n'y a pas de frais d'agence. Vous pouvez postuler directement en envoyant votre dossier complet par email.",
+        },
+        {
+          icon: { name: 'tabler:armchair' },
+          title: 'Le logement est-il meublé ?',
+          content:
+            'Oui, le logement est entièrement meublé et équipé, prêt à accueillir ses futurs locataires.',
+        },
+        {
+          icon: { name: 'tabler:car' },
+          title: 'Y a-t-il une place de parking incluse ?',
+          content:
+            'Oui, une place de parking est incluse avec le logement, offrant un confort supplémentaire pour les locataires.',
+        },
+        {
+          icon: { name: 'tabler:pig-money' },
+          title: 'Quel est le montant du dépôt de garantie ?',
+          content:
+            'Le dépôt de garantie est de deux mois de loyer hors charges, conformément à la réglementation pour les locations meublées. Il est dû à la signature du bail.',
+        },
+        {
+          icon: { name: 'tabler:file-invoice' },
+          title: 'Les charges sont-elles incluses dans le loyer ?',
+          content:
+            "Oui, le loyer de 1500 € est charges comprises. Il s'agit d'une provision mensuelle couvrant les charges de copropriété. Une régularisation annuelle peut être effectuée si nécessaire.",
+        },
+        {
+          icon: { name: 'tabler:contract' },
+          title: 'Quelle est la durée du bail pour ce logement ?',
+          content:
+            "Le bail meublé est conclu pour une durée d'un an, renouvelable automatiquement. Les conditions de résiliation suivent la réglementation en vigueur.",
+        },
+        {
+          icon: { name: 'tabler:shield-check' },
+          title: "L'assurance habitation est-elle obligatoire ?",
+          content:
+            'Oui, une assurance habitation couvrant au minimum les risques locatifs est obligatoire. Une attestation devra être fournie à l’entrée dans les lieux.',
+        },
+      ]}
+    />
+  </Container>
+
+  <Container>
+    <CallToAction
+      headline={{
+        anchorId: 'contact',
+        title: 'Désirez-vous candidater ou poser une question ?',
+      }}
+      actions={[
+        {
+          label: 'Envoyer dossier de candidature',
+          icon: { name: 'tabler:file' },
+          intent: 'primary',
+          href: 'mailto:meudonlaforet.location@outlook.fr?subject=Dossier%20de%20candidature%20%E2%80%93%20Duplex%20Meudon-la-For%C3%AAt',
+        },
+        {
+          label: 'Poser une question',
+          icon: { name: 'tabler:question-mark' },
+          intent: 'secondary',
+          href: 'mailto:meudonlaforet.location@outlook.fr?subject=Question%20%E2%80%93%20Duplex%20Meudon-la-For%C3%AAt',
+        },
+      ]}
+    />
+  </Container>
+</Layout>
