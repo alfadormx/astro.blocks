@@ -1,43 +1,69 @@
 # yaml-language-server: $schema=../.vscode/site-config/config-schema.json
 
 site:
-  name: 'Astro Blocks'
-  site: 'https://astrocomponents.dev'
+  name: 'Duplex meublé 66,5 m² - Meudon-la-Forêt'
+  site: 'https://meudonlaforet.alfador.mx'
   base: '/'
   trailingSlash: false
   googleSiteVerificationId: 'some-verification-id'
 
 i18n:
-  default: 'en'
+  default: 'fr'
   languages:
-    - code: 'en'
-      locale: 'en-US'
+    - code: 'fr'
+      locale: 'fr-FR'
       basePath: '/'
       direction: 'ltr'
-      label: 'English'
-    - code: 'es'
-      locale: 'es-ES'
-      basePath: '/es'
-      direction: 'ltr'
-      label: 'Español'
+      label: 'Français'
 
 metadata:
   title:
-    default: 'Astro Blocks'
-    template: '%s | Astro Blocks'
-  description: 'Modern, accessible Astro Blocks for building amazing web experiences.'
-  author: 'Your Name'
-  keywords: ['astro', 'components', 'blocks', 'web', 'design']
+    default: 'Duplex meublé 66,5 m²'
+    template: '%s | Meudon-la-Forêt'
+  description: 'Duplex meublé 66,5 m² — 2 chambres, 2 salles de bain, jardin, parking — Loyer 1500 €/mois CC.'
+  author: 'alfadormx'
+  keywords:
+    [
+      'duplex meublé',
+      '66,5 m²',
+      'Meudon-la-Forêt',
+      'Écoquartier Simone Veil',
+      'écoquartier',
+      '2 chambres',
+      '2 salles de bain',
+      'rez-de-jardin',
+      'jardin',
+      'parking inclus',
+      'location meublée',
+      'loyer 1500 €/mois',
+      'dépôt 2 mois',
+      'cuisine américaine équipée',
+      'salle d’eau douche à l’italienne',
+      'buanderie',
+      'WC indépendant',
+      'rangements',
+      'DPE A',
+      'GES B',
+      'proche IKEA',
+      'Vélizy 2',
+      'commerces de proximité',
+      'transports',
+      'espaces verts',
+      'résidence récente',
+      'non-fumeur',
+      'dossier de candidature',
+      'garant possible',
+    ]
   charset: 'UTF-8'
   robots:
     index: true
     follow: true
-  canonical: 'https://astrocomponents.dev' # Base, will be extended per page
+  canonical: 'https://meudonlaforet.alfador.mx'
 
   # Theme
   theme:
     color: '#FFFFFF'
-    colorScheme: 'light dark' # Values: "normal", "light", "dark", "light dark", "dark light", "only light", "only dark"
+    colorScheme: 'only light' # Values: "normal", "light", "dark", "light dark", "dark light", "only light", "only dark"
 
   # Favicons and icons
   icons:
@@ -50,38 +76,26 @@ metadata:
 
   # Open Graph
   openGraph:
-    site_name: 'Astro Blocks'
-    locale: 'en_US'
-    localeAlternate: ['es_ES']
+    site_name: 'Duplex meublé 66,5 m² - Meudon-la-Forêt'
+    locale: 'fr-FR'
     type: 'website'
-    description: 'Build modern web experiences with accessible Astro Blocks'
+    description: 'Duplex meublé 66,5 m² — 2 chambres, 2 salles de bain, jardin, parking — Loyer 1500 €/mois CC.'
     images:
       - url: '/og-image.png'
         width: 1200
         height: 630
-        alt: 'Astro Blocks'
+        alt: 'Duplex meublé 66,5 m² - Meudon-la-Forêt'
         type: 'image/png'
 
   # Twitter
   twitter:
-    handle: '@yourhandle'
-    site: '@yourhandle'
+    handle: '@alfadormx'
+    site: '@alfadormx'
     cardType: 'summary_large_image'
-    title: 'Astro Blocks'
-    description: 'Modern, accessible Astro Blocks for building amazing web experiences.'
+    title: 'Duplex meublé 66,5 m² - Meudon-la-Forêt'
+    description: 'Duplex meublé 66,5 m² — 2 chambres, 2 salles de bain, jardin, parking — Loyer 1500 €/mois CC.'
     image: '/twitter-image.png'
-    imageAlt: 'Astro Blocks Preview'
-
-  # Per-language overrides (consistent with i18n structure)
-  localized:
-    es:
-      title:
-        default: 'Componentes Astro'
-        template: '%s | Componentes Astro'
-      description: 'Componentes Astro modernos y accesibles para crear experiencias web increíbles.'
-      openGraph:
-        site_name: 'Componentes Astro'
-        locale: 'es_ES'
+    imageAlt: 'Duplex meublé 66,5 m² - Meudon-la-Forêt'
 
 analytics:
   vendors:
