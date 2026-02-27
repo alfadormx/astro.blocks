@@ -1,0 +1,81 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import MapBlock from '~/components/blocks/primitives/Map.astro';
+
+const metadata = {
+  title: {
+    default: 'Map',
+  },
+};
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitives',
+    title: 'Map',
+    subtitle: 'Interactive Leaflet map powered by OpenStreetMap — no API key required',
+  }}
+>
+  <p>
+    The Map component renders a fully interactive map using <a
+      href="https://leafletjs.com"
+      target="_blank"
+      rel="noopener noreferrer">Leaflet.js</a
+    > and OpenStreetMap tiles. No API key is ever required. Supports markers with optional popup labels,
+    three free tile layers, and fully configurable dimensions.
+  </p>
+
+  <!-- Example 1: Default marker -->
+  <h3>1. Default — Marker at location (Paris)</h3>
+  <p>
+    Provide <code>lat</code> and <code>lon</code>. A marker is placed at the given coordinates by
+    default. <code>zoom</code> defaults to <code>13</code>.
+  </p>
+  <div class="border border-dashed border-gray/80 p-8">
+    <MapBlock lat={48.8566} lon={2.3522} />
+  </div>
+
+  <!-- Example 2: Marker with popup label -->
+  <h3>2. Marker with popup label</h3>
+  <p>
+    Add <code>markerTitle</code> to display a popup label on the marker when the map loads.
+  </p>
+  <div class="border border-dashed border-gray/80 p-8">
+    <MapBlock lat={48.8584} lon={2.2945} zoom={15} markerTitle="Eiffel Tower" />
+  </div>
+
+  <!-- Example 3: Humanitarian layer -->
+  <h3>3. Humanitarian tile layer</h3>
+  <p>
+    Use <code>layer="humanitarian"</code> for a high-contrast tile style provided by the HOT (Humanitarian
+    OpenStreetMap Team).
+  </p>
+  <div class="border border-dashed border-gray/80 p-8">
+    <MapBlock
+      lat={48.8566}
+      lon={2.3522}
+      zoom={13}
+      layer="humanitarian"
+      markerTitle="Paris"
+      height="350px"
+    />
+  </div>
+
+  <!-- Example 4: Topographic layer, no marker -->
+  <h3>4. Topographic layer — no marker</h3>
+  <p>
+    Use <code>layer="topo"</code> for terrain elevation rendering. Set
+    <code>showMarker={false}</code> for a pin-free area view.
+  </p>
+  <div class="border border-dashed border-gray/80 p-8">
+    <MapBlock lat={45.9} lon={6.9} zoom={10} layer="topo" showMarker={false} height="450px" />
+  </div>
+
+  <!-- Example 5: Wide area overview -->
+  <h3>5. Wide area overview</h3>
+  <p>Low zoom level to show a country or region rather than a specific location.</p>
+  <div class="border border-dashed border-gray/80 p-8">
+    <MapBlock lat={46.6} lon={2.5} zoom={5} showMarker={false} height="400px" />
+  </div>
+</Layout>
