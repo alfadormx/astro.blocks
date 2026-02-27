@@ -1,0 +1,103 @@
+---
+import type { MapProps } from '~/types/map.types';
+import { cn } from '~/utils/styles';
+
+type Props = MapProps;
+
+const {
+  lat,
+  lon,
+  zoom = 13,
+  layer = 'mapnik',
+  showMarker = true,
+  markerTitle,
+  height = '400px',
+  width = '100%',
+  title = 'OpenStreetMap',
+  class: className = '',
+} = Astro.props;
+
+const mapConfig = JSON.stringify({ lat, lon, zoom, layer, showMarker, markerTitle });
+const externalUrl = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=${zoom}/${lat}/${lon}`;
+---
+
+<div class={cn('w-full', className)}>
+  <div
+    class="leaflet-map-block"
+    data-map-config={mapConfig}
+    style={`height: ${height}; width: ${width};`}
+    role="application"
+    aria-label={title}
+  >
+  </div>
+  <small class="block mt-1 text-xs text-right">
+    &copy;
+    <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer"
+      >OpenStreetMap</a
+    > contributors &mdash;
+    <a href={externalUrl} target="_blank" rel="noopener noreferrer">View larger map &rarr;</a>
+  </small>
+</div>
+
+<script>
+  import L from 'leaflet';
+  import 'leaflet/dist/leaflet.css';
+
+  // Fix default marker icon paths broken by Vite's asset bundling.
+  // Must delete _getIconUrl first so mergeOptions actually takes effect.
+  import iconUrl from 'leaflet/dist/images/marker-icon.png?url';
+  import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png?url';
+  import shadowUrl from 'leaflet/dist/images/marker-shadow.png?url';
+
+  delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)['_getIconUrl'];
+  L.Icon.Default.mergeOptions({ iconUrl, iconRetinaUrl, shadowUrl });
+
+  type MapConfig = {
+    lat: number;
+    lon: number;
+    zoom: number;
+    layer: string;
+    showMarker: boolean;
+    markerTitle?: string;
+  };
+
+  const tileUrls: Record<string, string> = {
+    mapnik: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    humanitarian: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+    topo: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+  };
+
+  const tileSubdomains: Record<string, string> = {
+    mapnik: 'abc',
+    humanitarian: 'ab',
+    topo: 'abc',
+  };
+
+  const tileAttributions: Record<string, string> = {
+    mapnik:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    humanitarian:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles by <a href="https://hot.openstreetmap.org/" target="_blank">HOT</a>',
+    topo: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://opentopomap.org">OpenTopoMap</a>',
+  };
+
+  document.querySelectorAll<HTMLElement>('.leaflet-map-block').forEach((el) => {
+    const config: MapConfig = JSON.parse(el.dataset.mapConfig ?? '{}');
+    const { lat, lon, zoom, layer, showMarker, markerTitle } = config;
+
+    const map = L.map(el).setView([lat, lon], zoom);
+
+    L.tileLayer(tileUrls[layer] ?? tileUrls.mapnik, {
+      attribution: tileAttributions[layer] ?? tileAttributions.mapnik,
+      subdomains: tileSubdomains[layer] ?? 'abc',
+      maxZoom: 19,
+    }).addTo(map);
+
+    if (showMarker) {
+      const marker = L.marker([lat, lon]).addTo(map);
+      if (markerTitle) {
+        marker.bindPopup(markerTitle).openPopup();
+      }
+    }
+  });
+</script>
