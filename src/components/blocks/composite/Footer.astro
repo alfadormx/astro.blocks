@@ -98,7 +98,7 @@ const languageToggleAlignmentClass = {
       </div>
     )
   }
-  <div class="md:flex md:items-center md:justify-between py-6 md:py-8">
+  <div class="md:flex md:items-center md:justify-between pt-6 pb-0 md:pt-8 md:pb-2">
     {
       socialActions && socialActions.length > 0 && (
         <div class="md:order-1 flex flex-row gap-1">
@@ -119,10 +119,14 @@ const languageToggleAlignmentClass = {
       <Fragment set:html={footnote} />
     </div>
   </div>
+
   {
     showLanguageToggle && (
       <div class={`flex ${languageToggleAlignmentClass} py-4`}>
-        <LanguageToggle {...languageToggleConfig} />
+        <LanguageToggle
+          {...languageToggleConfig}
+          defaultButtonConfig={{ variant: 'link', class: 'p-0' }}
+        />
       </div>
     )
   }
