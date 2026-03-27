@@ -2,7 +2,7 @@
 import type { LanguageToggleProps } from '~/types/languagetoggle.types';
 import type { ButtonProps } from '~/types/button.types';
 import Button from './Button.astro';
-import { I18N } from 'site-config';
+import { I18N, SITE } from 'site-config';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 
 // Type for a single language from i18n config
@@ -84,10 +84,23 @@ const buildLanguageUrl = (langCode: string, langBasePath: string) => {
   }
 
   // Build the new URL with the target language's basePath
-  const newPath =
+  let newPath =
     langBasePath === '/'
       ? pathWithoutLang
       : `${langBasePath}${pathWithoutLang === '/' ? '' : pathWithoutLang}`;
+
+  // Handle trailing slash based on site config
+  if (SITE.trailingSlash) {
+    // Add trailing slash if not present (except for paths with file extensions)
+    if (!newPath.endsWith('/') && !newPath.includes('.')) {
+      newPath += '/';
+    }
+  } else {
+    // Remove trailing slash if present (except for root path)
+    if (newPath.endsWith('/') && newPath.length > 1) {
+      newPath = newPath.slice(0, -1);
+    }
+  }
 
   return newPath;
 };
