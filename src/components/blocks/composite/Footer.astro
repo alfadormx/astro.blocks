@@ -2,6 +2,7 @@
 import Container from '~/components/blocks/layout/Container.astro';
 import Button from '~/components/blocks/primitives/Button.astro';
 import Logo from '~/components/blocks/primitives/Logo.astro';
+import LanguageToggle from '~/components/blocks/primitives/LanguageToggle.astro';
 import type { ButtonProps } from '~/types/button.types';
 import type { ContainerProps } from '~/types/container.types';
 import type { FooterProps } from '~/types/footer.types';
@@ -21,6 +22,9 @@ const {
   defaultSocialActionsConfig,
   secondaryActions,
   defaultSecondaryActionsConfig,
+  showLanguageToggle = false,
+  languageToggleAlign = 'center',
+  languageToggleConfig,
 } = Astro.props;
 
 const defaultDisclaimerClass = 'text-xs text-subtle';
@@ -50,6 +54,13 @@ const mergedDisclaimerClass = cn(defaultDisclaimerClass, disclaimerClass);
 const mergedFootnoteClass = cn(defaultFootnoteClass, footnoteClass);
 
 const mergedContainerConfig = mergeConfigs({}, baseContainerConfig, container);
+
+// Language toggle alignment classes
+const languageToggleAlignmentClass = {
+  left: 'justify-start',
+  center: 'justify-center',
+  right: 'justify-end',
+}[languageToggleAlign];
 ---
 
 <Container {...mergedContainerConfig}>
@@ -108,4 +119,11 @@ const mergedContainerConfig = mergeConfigs({}, baseContainerConfig, container);
       <Fragment set:html={footnote} />
     </div>
   </div>
+  {
+    showLanguageToggle && (
+      <div class={`flex ${languageToggleAlignmentClass} py-4`}>
+        <LanguageToggle {...languageToggleConfig} />
+      </div>
+    )
+  }
 </Container>
