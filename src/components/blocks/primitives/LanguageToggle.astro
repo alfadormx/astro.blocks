@@ -23,8 +23,7 @@ const {
   activeButtonConfig,
   inactiveButtonConfig,
   class: className,
-  buttonClass,
-  gap = 'gap-2',
+  gap = 'gap-4',
   ...rest
 } = Astro.props;
 
@@ -114,7 +113,6 @@ const containerClasses = ['language-toggle-container', 'flex', orientationClasse
           {...buttonConfig}
           href={languageUrl}
           label={showLabels ? lang.label : lang.code.toUpperCase()}
-          class={buttonClass}
           aria-current={isActive ? 'page' : undefined}
         />
       );

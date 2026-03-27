@@ -37,11 +37,6 @@ export interface LanguageToggleProps extends Omit<HTMLAttributes<'div'>, 'class'
   class?: string;
 
   /**
-   * CSS class for individual language buttons
-   */
-  buttonClass?: string;
-
-  /**
    * Gap between language buttons (Tailwind class)
    * @default 'gap-2'
    */
