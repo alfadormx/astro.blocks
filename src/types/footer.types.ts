@@ -2,6 +2,7 @@ import type { HTMLAttributes } from 'astro/types';
 import type { ContainerProps } from './container.types';
 import type { ButtonProps } from './button.types';
 import type { LogoProps } from './logo.types';
+import type { LanguageToggleProps } from './languagetoggle.types';
 
 export interface FooterProps extends Omit<HTMLAttributes<'nav'>, 'class'> {
   container?: ContainerProps;
@@ -14,4 +15,7 @@ export interface FooterProps extends Omit<HTMLAttributes<'nav'>, 'class'> {
   defaultSocialActionsConfig?: Partial<ButtonProps>;
   secondaryActions?: ButtonProps[];
   defaultSecondaryActionsConfig?: Partial<ButtonProps>;
+  showLanguageToggle?: boolean;
+  languageToggleAlign?: 'left' | 'center' | 'right';
+  languageToggleConfig?: LanguageToggleProps;
 }
