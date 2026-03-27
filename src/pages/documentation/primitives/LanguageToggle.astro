@@ -1,0 +1,224 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import LanguageToggleBlock from '~/components/blocks/primitives/LanguageToggle.astro';
+
+const metadata = {
+  title: {
+    default: 'Language Toggle',
+  },
+};
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitives',
+    title: 'Language Toggle',
+    subtitle:
+      'Showcase of the Language Toggle primitive block with various configurations for multi-language site navigation',
+  }}
+>
+  <!-- Info Notice -->
+  <div
+    class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-8"
+  >
+    <p class="text-sm text-blue-800 dark:text-blue-200">
+      <strong>Note:</strong> The Language Toggle component displays all languages configured in the
+      <code class="px-1 py-0.5 bg-blue-100 dark:bg-blue-900 rounded">i18n.languages</code> array in <code
+        class="px-1 py-0.5 bg-blue-100 dark:bg-blue-900 rounded">src/config.yaml</code
+      >. Add more languages to the configuration to see additional options in the toggle.
+    </p>
+  </div>
+
+  <!-- Basic Language Toggle -->
+  <h3>Basic Toggle</h3>
+  <div class="flex flex-wrap gap-4 mb-8">
+    <LanguageToggleBlock />
+  </div>
+
+  <!-- Sizes -->
+  <h3>Sizes</h3>
+  <div class="flex flex-col gap-6 mb-8">
+    <div class="flex items-center gap-4">
+      <span class="w-12 text-sm text-gray-600 dark:text-gray-400">xs</span>
+      <LanguageToggleBlock defaultButtonConfig={{ size: 'xs' }} />
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="w-12 text-sm text-gray-600 dark:text-gray-400">sm</span>
+      <LanguageToggleBlock defaultButtonConfig={{ size: 'sm' }} />
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="w-12 text-sm text-gray-600 dark:text-gray-400">md</span>
+      <LanguageToggleBlock defaultButtonConfig={{ size: 'md' }} />
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="w-12 text-sm text-gray-600 dark:text-gray-400">lg</span>
+      <LanguageToggleBlock defaultButtonConfig={{ size: 'lg' }} />
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="w-12 text-sm text-gray-600 dark:text-gray-400">xl</span>
+      <LanguageToggleBlock defaultButtonConfig={{ size: 'xl' }} />
+    </div>
+  </div>
+
+  <!-- Variants -->
+  <h3>Variants</h3>
+  <div class="flex flex-col gap-6 mb-8">
+    <div class="flex items-center gap-4">
+      <span class="w-20 text-sm text-gray-600 dark:text-gray-400">solid</span>
+      <LanguageToggleBlock defaultButtonConfig={{ variant: 'solid' }} />
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="w-20 text-sm text-gray-600 dark:text-gray-400">outline</span>
+      <LanguageToggleBlock defaultButtonConfig={{ variant: 'outline' }} />
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="w-20 text-sm text-gray-600 dark:text-gray-400">ghost</span>
+      <LanguageToggleBlock defaultButtonConfig={{ variant: 'ghost' }} />
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="w-20 text-sm text-gray-600 dark:text-gray-400">link</span>
+      <LanguageToggleBlock defaultButtonConfig={{ variant: 'link' }} />
+    </div>
+  </div>
+
+  <!-- Intent Colors -->
+  <h3>Intent Colors (Active vs Inactive)</h3>
+  <div class="flex flex-col gap-6 mb-8">
+    <div class="flex items-center gap-4">
+      <span class="w-32 text-sm text-gray-600 dark:text-gray-400">primary/neutral</span>
+      <LanguageToggleBlock
+        activeButtonConfig={{ intent: 'primary' }}
+        inactiveButtonConfig={{ intent: 'neutral' }}
+      />
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="w-32 text-sm text-gray-600 dark:text-gray-400">accent/secondary</span>
+      <LanguageToggleBlock
+        activeButtonConfig={{ intent: 'accent' }}
+        inactiveButtonConfig={{ intent: 'secondary' }}
+      />
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="w-32 text-sm text-gray-600 dark:text-gray-400">success/neutral</span>
+      <LanguageToggleBlock
+        defaultButtonConfig={{ variant: 'outline' }}
+        activeButtonConfig={{ intent: 'success' }}
+        inactiveButtonConfig={{ intent: 'neutral' }}
+      />
+    </div>
+  </div>
+
+  <!-- Shapes -->
+  <h3>Shapes</h3>
+  <div class="flex flex-col gap-6 mb-8">
+    <div class="flex items-center gap-4">
+      <span class="w-20 text-sm text-gray-600 dark:text-gray-400">rounded</span>
+      <LanguageToggleBlock defaultButtonConfig={{ shape: 'rounded' }} />
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="w-20 text-sm text-gray-600 dark:text-gray-400">square</span>
+      <LanguageToggleBlock defaultButtonConfig={{ shape: 'square' }} />
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="w-20 text-sm text-gray-600 dark:text-gray-400">pill</span>
+      <LanguageToggleBlock defaultButtonConfig={{ shape: 'pill' }} />
+    </div>
+  </div>
+
+  <!-- Orientation -->
+  <h3>Orientation</h3>
+  <div class="flex flex-col gap-6 mb-8">
+    <div>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Horizontal (default)</p>
+      <LanguageToggleBlock orientation="horizontal" />
+    </div>
+    <div>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Vertical</p>
+      <LanguageToggleBlock orientation="vertical" />
+    </div>
+  </div>
+
+  <!-- Label Display -->
+  <h3>Label Display</h3>
+  <div class="flex flex-col gap-6 mb-8">
+    <div>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Full labels (default)</p>
+      <LanguageToggleBlock showLabels={true} />
+    </div>
+    <div>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Language codes only</p>
+      <LanguageToggleBlock showLabels={false} />
+    </div>
+  </div>
+
+  <!-- Custom Configuration -->
+  <h3>Custom Configuration</h3>
+  <div class="flex flex-col gap-6 mb-8">
+    <div>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Large pills with accent colors</p>
+      <LanguageToggleBlock
+        defaultButtonConfig={{ size: 'lg', variant: 'solid', shape: 'pill' }}
+        activeButtonConfig={{ intent: 'accent' }}
+        inactiveButtonConfig={{ intent: 'secondary' }}
+        gap="gap-4"
+      />
+    </div>
+    <div>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Small outline vertical stack</p>
+      <LanguageToggleBlock
+        defaultButtonConfig={{ size: 'sm', variant: 'outline' }}
+        activeButtonConfig={{ intent: 'primary' }}
+        inactiveButtonConfig={{ intent: 'neutral' }}
+        orientation="vertical"
+        gap="gap-1"
+      />
+    </div>
+    <div>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Link style with codes only</p>
+      <LanguageToggleBlock
+        defaultButtonConfig={{ variant: 'link', size: 'lg' }}
+        showLabels={false}
+        gap="gap-6"
+      />
+    </div>
+  </div>
+
+  <!-- Demo Content -->
+  <h3>Usage in Context</h3>
+  <div class="space-y-4">
+    <p class="text-sm text-gray-600 dark:text-gray-400">
+      The Language Toggle component automatically detects the current language from the URL path and
+      highlights the active language button. Click on a language button to navigate to that language
+      version of the current page.
+    </p>
+    <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg">
+      <div class="flex items-center justify-between mb-4">
+        <h4 class="text-lg font-semibold">Header Example</h4>
+        <LanguageToggleBlock
+          defaultButtonConfig={{ size: 'sm', variant: 'outline', shape: 'pill' }}
+        />
+      </div>
+      <p class="text-gray-600 dark:text-gray-400">
+        This is a typical header layout with the language toggle positioned at the top right.
+      </p>
+    </div>
+  </div>
+
+  <!-- Current Language Info -->
+  <h3>Current Language Detection</h3>
+  <div
+    class="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-6"
+  >
+    <p class="text-sm text-purple-900 dark:text-purple-200">
+      <strong>Current URL:</strong>
+      <code class="px-2 py-1 bg-purple-100 dark:bg-purple-900 rounded">{Astro.url.pathname}</code>
+    </p>
+    <p class="text-sm text-purple-900 dark:text-purple-200 mt-2">
+      The component uses the pathname to determine which language button should be marked as active
+      (using <code class="px-2 py-1 bg-purple-100 dark:bg-purple-900 rounded"
+        >aria-current="page"</code
+      >).
+    </p>
+  </div>
+</Layout>

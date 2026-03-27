@@ -1,0 +1,123 @@
+---
+import type { LanguageToggleProps } from '~/types/languagetoggle.types';
+import type { ButtonProps } from '~/types/button.types';
+import Button from './Button.astro';
+import { I18N } from 'site-config';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+
+// Type for a single language from i18n config
+type I18NLanguage = {
+  code: string;
+  locale: string;
+  basePath: string;
+  direction: 'ltr' | 'rtl';
+  label: string;
+};
+
+export type Props = LanguageToggleProps;
+
+const {
+  orientation = 'horizontal',
+  showLabels = true,
+  defaultButtonConfig,
+  activeButtonConfig,
+  inactiveButtonConfig,
+  class: className,
+  buttonClass,
+  gap = 'gap-2',
+  ...rest
+} = Astro.props;
+
+// Default button configurations following NavigationTree pattern
+const defaultInactiveButtonConfig: Partial<ButtonProps> = {
+  variant: 'solid',
+  intent: 'neutral',
+  size: 'md',
+  shape: 'rounded',
+  width: 'auto',
+};
+
+const defaultActiveButtonConfig: Partial<ButtonProps> = {
+  variant: 'solid',
+  intent: 'primary',
+  size: 'md',
+  shape: 'rounded',
+  width: 'auto',
+};
+
+// Merge configs: defaults < component defaults < user defaults < specific active/inactive config
+const mergedInactiveButtonConfig = mergeConfigs(
+  {},
+  defaultInactiveButtonConfig,
+  defaultButtonConfig,
+  inactiveButtonConfig
+);
+
+const mergedActiveButtonConfig = mergeConfigs(
+  {},
+  defaultActiveButtonConfig,
+  defaultButtonConfig,
+  activeButtonConfig
+);
+
+// Get current pathname
+const currentPath = Astro.url.pathname;
+
+// Determine current language by matching basePath
+const currentLang =
+  I18N.languages.find((lang: I18NLanguage) => {
+    // Exact match for root path
+    if (lang.basePath === '/' && currentPath === '/') return true;
+    // Check if path starts with the basePath (and it's not just '/')
+    if (lang.basePath !== '/' && currentPath.startsWith(lang.basePath)) return true;
+    return false;
+  }) ||
+  I18N.languages.find((lang: I18NLanguage) => lang.code === I18N.default) ||
+  I18N.languages[0];
+
+// Function to build language URL
+const buildLanguageUrl = (langCode: string, langBasePath: string) => {
+  // Get the path without the current language's basePath
+  let pathWithoutLang = currentPath;
+
+  if (currentLang.basePath !== '/') {
+    pathWithoutLang = currentPath.replace(new RegExp(`^${currentLang.basePath}`), '/');
+  }
+
+  // Build the new URL with the target language's basePath
+  const newPath =
+    langBasePath === '/'
+      ? pathWithoutLang
+      : `${langBasePath}${pathWithoutLang === '/' ? '' : pathWithoutLang}`;
+
+  return newPath;
+};
+
+// Container orientation classes
+const orientationClasses = orientation === 'vertical' ? 'flex-col' : 'flex-row';
+
+// Container classes
+const containerClasses = ['language-toggle-container', 'flex', orientationClasses, gap, className]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<div class={containerClasses} {...rest}>
+  {
+    I18N.languages.map((lang: I18NLanguage) => {
+      const isActive = currentLang.code === lang.code;
+      const languageUrl = buildLanguageUrl(lang.code, lang.basePath);
+      const buttonConfig = isActive ? mergedActiveButtonConfig : mergedInactiveButtonConfig;
+
+      return (
+        <Button
+          {...buttonConfig}
+          href={languageUrl}
+          label={showLabels ? lang.label : lang.code.toUpperCase()}
+          class={buttonClass}
+          aria-current={isActive ? 'page' : undefined}
+        />
+      );
+    })
+  }
+</div>
