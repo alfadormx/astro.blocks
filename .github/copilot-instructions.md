@@ -123,3 +123,83 @@ Icons come from `astro-icon` with Iconify icon sets: `heroicons`, `mdi`, `lucide
 ### Code Style
 
 Prettier config: single quotes, semicolons, 2-space indent, 100-char print width. ESLint enforces TypeScript strict rules; unused variables prefixed with `_` are allowed.
+
+## Composite Component Patterns
+
+Composite components follow a consistent composition model:
+
+**`defaultXConfig` prop** — every composite that renders child components exposes a `defaultXConfig` prop (e.g., `defaultItemConfig`, `defaultActionsConfig`, `defaultButtonConfig`) that provides a base config merged with each child's own props via `mergeConfigs()`. This lets callers style all children at once without touching each one individually.
+
+```astro
+<!-- ItemsGrid: defaultItemConfig applies to every Item -->
+<ItemsGrid
+  items={[...]}
+  defaultItemConfig={{ layout: 'horizontal', border: { width: 'border' } }}
+/>
+```
+
+**Internal defaults + caller overrides** — components define their own `defaultXConfig` object internally, then merge in the order: `internal defaults → defaultXConfig prop → per-item config`. Later values win for scalar fields; class keys are merged via `cn()`.
+
+**`container` prop** — most composite components (Header, Footer, Content, ItemsContent, CallToAction, etc.) accept a `container?: Partial<ContainerProps>` prop that is merged with their internal default container config, allowing full layout customisation without wrapper elements.
+
+**Composite component quick reference:**
+
+| Component | Key props |
+|---|---|
+| `Header` | `logo`, `navigationLeft/Right`, `actionsLeft/Right`, `isSticky`, `isFloating`, `showThemeToggle` |
+| `Footer` | `logo`, `disclaimer`, `footnote`, `socialActions`, `secondaryActions`, `showLanguageToggle` |
+| `Content` | `headline`, `image`, `action`, `items`, `imageOnLeft`, `reverseOnMobile` |
+| `CallToAction` | `headline`, `actions` |
+| `ItemsContent` | `headline`, `itemsGrid` |
+| `ItemsGrid` | `items`, `columns` (1-4), `air`, `defaultItemConfig` |
+| `ItemsTimeline` | `items`, `defaultItemConfig` — vertical timeline with connectors |
+| `ItemsTimelineHorizontal` | `items`, `defaultItemConfig` — horizontal timeline |
+| `NavigationTree` | `items` (nested `ButtonProps[]`), `expansionStrategy`, `toggleMode`, `maxDepth` |
+| `NavigationTreeHorizontal` | same as `NavigationTree` but horizontal, used inside `Header` |
+
+**`Item`** is the shared leaf for all `Items*` components. It supports `icon`, `title`, `content`, `actions`, `layout` (`vertical`/`horizontal`), and connector props (`showConnector`, `connectorStyle`).
+
+**`Headline`** is the standard section header primitive with `tagline`, `title`, `subtitle`, and `align`. Always use it instead of raw headings inside blocks.
+
+## i18n / Multi-Language Setup
+
+Languages are configured in `src/config.yaml` under `i18n`:
+
+```yaml
+i18n:
+  default: 'en'
+  languages:
+    - code: 'en'
+      locale: 'en-US'
+      basePath: '/'
+      direction: 'ltr'
+      label: 'English'
+    - code: 'es'
+      locale: 'es-ES'
+      basePath: '/es'
+      direction: 'ltr'
+      label: 'Español'
+```
+
+- `basePath` is the URL prefix for that language (`/` for default, `/es` for Spanish, etc.)
+- The `I18N` object from `site-config` exposes `I18N.default` and `I18N.languages[]`
+- `Layout.astro` resolves `lang` and `dir` on `<html>` from the `langCode` prop matched against `I18N.languages`
+- **`LanguageToggle`** reads `Astro.url.pathname` at runtime to detect the current language by `basePath` matching and rewrites URLs by swapping `basePath` prefixes. It respects `SITE.trailingSlash`.
+- Per-language metadata overrides live under `metadata.localized.<code>` in `config.yaml` and are merged in `configBuilder.ts`
+- Pass `langCode` to `<Layout>` on every page to set the correct `<html lang>` attribute
+
+## vendor/integration Internals
+
+`vendor/integration/` is a local custom Astro integration (not an npm package). It runs at build/dev time and:
+
+1. **`loadConfig.ts`** — reads `src/config.yaml` (or a custom path) using `js-yaml`
+2. **`configBuilder.ts`** — normalises the raw YAML into typed `SITE`, `I18N`, `METADATA`, `ANALYTICS` objects with defaults applied via `lodash.merge`
+3. **`index.ts` (integration)** — registers a Vite virtual module `site-config` that exports those four objects as JSON, making them importable anywhere without filesystem access. Also watches `config.yaml` for HMR and injects the sitemap URL into `robots.txt` on build (only when `@astrojs/sitemap` is present).
+
+The virtual module ID is `site-config` (no `@` prefix). Always import from it — never import `config.yaml` or `configBuilder.ts` directly in components:
+
+```ts
+import { SITE, I18N, METADATA, ANALYTICS } from 'site-config';
+```
+
+Types for the virtual module are declared in `vendor/integration/types.d.ts`.
