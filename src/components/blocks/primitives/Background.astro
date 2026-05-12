@@ -54,16 +54,16 @@ const overlay = overlayClass ?? '';
       >
         <source src={video} type="video/mp4" />
       </video>
-      {overlay && <div class:list={['absolute inset-0', overlay]} />}
+      {overlay && <div class={cn('absolute inset-0', overlay)} />}
       <slot />
     </div>
   ) : resolvedImageUrl ? (
     <div class={bgClass} style={bgStyle}>
-      {overlay && <div class:list={['absolute inset-0', overlay]} />}
+      {overlay && <div class={cn('absolute inset-0', overlay)} />}
       <slot />
     </div>
   ) : (
-    <div class:list={[bgClass, overlay]}>
+    <div class={cn(bgClass, overlay)}>
       <slot />
     </div>
   )
