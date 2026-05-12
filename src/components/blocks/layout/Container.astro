@@ -13,25 +13,33 @@ const airSettings = {
   loose: 'px-6 py-16 md:px-12 md:py-24 lg:px-16 lg:py-32',
 };
 
-// Extract props
-const props = Astro.props;
-const ContainerTag = props.htmlTag ?? 'section';
-const containerAir = props.content?.air ?? 'normal';
-const containerWidthType = props.containerWidthType ?? 'full';
-const contentWidthType = props.content?.widthType ?? 'boxed';
-const contentBoxWidth = props.content?.boxWidth ?? 'max-w-[var(--container-max-width)]';
-const widthClass = props.width ?? '';
-const minHeightClass = props.minHeight ?? '';
-const items = props.items ?? [];
-const equalHeight = props.equalHeight ?? false;
-const overflow = props.overflow ?? undefined;
-const containerClassName = props.class ?? '';
-const contentClassName = props.content?.class ?? '';
+const {
+  htmlTag: ContainerTag = 'section',
+  containerWidthType = 'full',
+  class: className = '',
+  background,
+  spacing,
+  border,
+  layout,
+  items = [],
+  width: widthClass = '',
+  minHeight: minHeightClass = '',
+  equalHeight = false,
+  overflow,
+  content: {
+    widthType: contentWidthType = 'boxed',
+    boxWidth: contentBoxWidth = 'max-w-[var(--container-max-width)]',
+    air: containerAir = 'normal',
+    class: contentClassName = '',
+    spacing: contentSpacing,
+    border: contentBorder,
+  } = {},
+} = Astro.props;
 
-const layoutType = props.layout?.type ?? '';
-const layoutClass = props.layout?.class ?? '';
+const layoutType = layout?.type ?? '';
+const layoutClass = layout?.class ?? '';
 
-const hasBackground = !!props.background || Astro.slots.has('background');
+const hasBackground = !!background || Astro.slots.has('background');
 
 const containerClass = cn(
   hasBackground && 'relative',
@@ -40,13 +48,13 @@ const containerClass = cn(
   widthClass,
   minHeightClass,
   overflow && `overflow-${overflow}`,
-  cn(airSettings[containerAir], props.spacing?.padding),
-  props.spacing?.margin,
-  props.spacing?.gap,
-  props.border?.width,
-  props.border?.color,
-  props.border?.radius,
-  containerClassName
+  cn(airSettings[containerAir], spacing?.padding),
+  spacing?.margin,
+  spacing?.gap,
+  border?.width,
+  border?.color,
+  border?.radius,
+  className
 );
 
 const containerStyle = hasBackground ? 'position:relative;' : '';
@@ -58,12 +66,12 @@ const contentClass = cn(
   containerWidthType === 'full' &&
     contentWidthType === 'boxed' && [contentBoxWidth, 'mx-auto', minHeightClass],
   containerWidthType === 'full' && contentWidthType === 'full' && 'w-full',
-  props.content?.spacing?.padding,
-  props.content?.spacing?.margin,
-  props.content?.spacing?.gap,
-  props.content?.border?.width,
-  props.content?.border?.color,
-  props.content?.border?.radius,
+  contentSpacing?.padding,
+  contentSpacing?.margin,
+  contentSpacing?.gap,
+  contentBorder?.width,
+  contentBorder?.color,
+  contentBorder?.radius,
   contentClassName,
   equalHeight && 'items-stretch'
 );
@@ -73,13 +81,9 @@ const contentClass = cn(
   {
     Astro.slots.background ? (
       <slot name="background" />
-    ) : props.background ? (
+    ) : background ? (
       <Background
-        image={props.background.image}
-        video={props.background.video}
-        attachment={props.background.attachment}
-        class={props.background.class}
-        overlayClass={props.background.overlayClass}
+        {...background}
       />
     ) : null
   }

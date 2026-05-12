@@ -1,6 +1,7 @@
 import type { ItemProps } from './item.types';
+import type { ConnectorStyle } from './itemstimeline.types';
 
-export type ConnectorStyle = 'solid' | 'dashed' | 'dotted';
+export type { ConnectorStyle } from './itemstimeline.types';
 
 export interface ItemsTimelineHorizontalProps {
   items: ItemProps[];

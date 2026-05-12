@@ -5,7 +5,7 @@ import type { ItemsGridProps } from './itemsgrid.types';
 import type { ImageProps } from '~/utils/images-optimization';
 
 export interface ContentProps {
-  container?: Partial<ContainerProps>;
+  container?: ContainerProps;
   headline?: Partial<HeadlineProps>;
   image?: ImageProps;
   content?: string;

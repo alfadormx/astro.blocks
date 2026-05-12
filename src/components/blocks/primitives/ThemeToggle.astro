@@ -1,9 +1,9 @@
 ---
 import Button from '~/components/blocks/primitives/Button.astro';
 import { cn } from '~/utils/styles';
-import type { ButtonProps } from '~/types/button.types';
+import type { ThemeToggleProps } from '~/types/themetoggle.types';
 
-type Props = ButtonProps;
+type Props = ThemeToggleProps;
 
 const {
   size = 'md',
@@ -14,7 +14,7 @@ const {
   width = 'auto',
   class: className = '',
   ...rest
-} = Astro.props as Props;
+} = Astro.props;
 ---
 
 <Button
