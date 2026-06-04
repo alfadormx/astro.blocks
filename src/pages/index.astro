@@ -1,0 +1,117 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import Header from '~/components/blocks/composite/Header.astro';
+import Footer from '~/components/blocks/composite/Footer.astro';
+import CallToAction from '~/components/blocks/composite/CallToAction.astro';
+import ItemsContent from '~/components/blocks/composite/ItemsContent.astro';
+
+const metadata = { title: { default: 'Astro Blocks' } };
+---
+
+<Layout metadata={metadata}>
+  <Header
+    showThemeToggle={true}
+    actionsRight={[
+      {
+        label: 'Documentation',
+        href: '/documentation',
+        intent: 'primary',
+        variant: 'solid',
+        size: 'sm',
+        shape: 'pill',
+      },
+    ]}
+  />
+
+  <CallToAction
+    headline={{
+      tagline: 'Component Library',
+      title: 'Astro Blocks',
+      subtitle: 'Composable UI components built with Astro and Tailwind CSS. Pick, customize, ship.',
+      align: 'center',
+    }}
+    actions={[
+      {
+        label: 'Browse Documentation',
+        href: '/documentation',
+        intent: 'primary',
+        variant: 'solid',
+        size: 'lg',
+        shape: 'pill',
+        icon: { name: 'heroicons:arrow-right' },
+        iconPosition: 'right',
+      },
+      {
+        label: 'View Source',
+        href: 'https://github.com/alfadormx/astro.blocks',
+        intent: 'secondary',
+        variant: 'outline',
+        size: 'lg',
+        shape: 'pill',
+        icon: { name: 'heroicons:code-bracket' },
+        target: '_blank',
+      },
+    ]}
+  />
+
+  <ItemsContent
+    headline={{
+      tagline: "What's Inside",
+      title: 'Three layers of components',
+      subtitle: 'From atomic primitives to fully assembled sections — everything composable, nothing opinionated.',
+      align: 'center',
+    }}
+    itemsGrid={{
+      columns: 3,
+      air: 'tight',
+      items: [
+        {
+          icon: { name: 'heroicons:squares-2x2' },
+          title: 'Primitives',
+          content:
+            'Atomic building blocks: Button, Headline, Image, Video, Map, Logo, Vector, ThemeToggle, LanguageToggle.',
+          layout: 'vertical',
+        },
+        {
+          icon: { name: 'heroicons:rectangle-stack' },
+          title: 'Composites',
+          content:
+            'Pre-assembled sections: Header, Footer, Content, ItemsGrid, ContentCarousel, NavigationTree and more.',
+          layout: 'vertical',
+        },
+        {
+          icon: { name: 'heroicons:view-columns' },
+          title: 'Layout',
+          content:
+            'Structural containers: Container, TwoColumn, ThreeColumn, FourColumn, Sidebar variants, Modal.',
+          layout: 'vertical',
+        },
+      ],
+    }}
+  />
+
+  <CallToAction
+    headline={{
+      tagline: 'Get Started',
+      title: 'Ready to build?',
+      subtitle: 'Explore the full component reference with live usage examples.',
+      align: 'center',
+    }}
+    actions={[
+      {
+        label: 'Open Documentation',
+        href: '/documentation',
+        intent: 'primary',
+        variant: 'solid',
+        size: 'lg',
+        shape: 'pill',
+        icon: { name: 'heroicons:book-open' },
+      },
+    ]}
+  />
+
+  <Footer
+    showLanguageToggle={true}
+    disclaimer="Astro Blocks — open-source component library. Not for commercial use."
+  />
+</Layout>
