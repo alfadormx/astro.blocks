@@ -1,12 +1,12 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
+import type { ImageProps } from '~/types/image.types';
 import { findImage } from '~/utils/images';
 import {
   getImagesOptimized,
   astroAssetsOptimizer,
   unpicOptimizer,
   isUnpicCompatible,
-  type ImageProps as Props,
 } from '~/utils/images-optimization';
 
 type ImageType = {
@@ -14,28 +14,30 @@ type ImageType = {
   attributes: HTMLAttributes<'img'>;
 };
 
-// Extract props
-const props = Astro.props;
+type Props = ImageProps;
 
-// Validate required props
-if (props.alt === undefined || props.alt === null) {
+const {
+  src,
+  alt,
+  width: rawWidth,
+  height: rawHeight,
+  loading: rawLoading,
+  decoding: rawDecoding,
+  align,
+  layout,
+  ...rest
+} = Astro.props;
+
+if (alt === undefined || alt === null) {
   throw new Error('Image component requires an alt attribute for accessibility');
 }
 
-if (typeof props.width === 'string') {
-  props.width = parseInt(props.width);
-}
-
-if (typeof props.height === 'string') {
-  props.height = parseInt(props.height);
-}
-
-if (!props.loading) {
-  props.loading = 'lazy';
-}
+const width = typeof rawWidth === 'string' ? parseInt(rawWidth) : rawWidth;
+const height = typeof rawHeight === 'string' ? parseInt(rawHeight) : rawHeight;
+const loading = rawLoading ?? 'lazy';
+const decoding = rawDecoding ?? 'async';
 
 // Build alignment class
-const align = props.align;
 const alignClass =
   align === 'center'
     ? 'flex justify-center'
@@ -45,17 +47,12 @@ const alignClass =
         ? 'flex justify-start'
         : '';
 
-// For contained and cover layouts, wrapper needs full dimensions
 const wrapperClass =
-  props.layout === 'contained' || props.layout === 'cover'
-    ? `${alignClass} w-full h-full`
-    : alignClass;
+  layout === 'contained' || layout === 'cover' ? `${alignClass} w-full h-full` : alignClass;
 
-if (!props.decoding) {
-  props.decoding = 'async';
-}
+const imageProps: ImageProps = { ...rest, src, alt, width, height, loading, decoding, align, layout };
 
-const _image = await findImage(props.src);
+const _image = await findImage(src);
 
 let image: ImageType | undefined = undefined;
 
@@ -64,9 +61,9 @@ if (
   (_image.startsWith('http://') || _image.startsWith('https://')) &&
   isUnpicCompatible(_image)
 ) {
-  image = await getImagesOptimized(_image, props, unpicOptimizer);
+  image = await getImagesOptimized(_image, imageProps, unpicOptimizer);
 } else if (_image) {
-  image = await getImagesOptimized(_image, props, astroAssetsOptimizer);
+  image = await getImagesOptimized(_image, imageProps, astroAssetsOptimizer);
 }
 ---
 
