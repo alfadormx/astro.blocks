@@ -1,0 +1,56 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import TabsBlock from '~/components/blocks/composite/Tabs.astro';
+import TabPanelBlock from '~/components/blocks/primitives/TabPanel.astro';
+
+const metadata = { title: { default: 'Tabs' } };
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Tabs',
+    subtitle: 'Tab navigation with configurable tab buttons and panel content.',
+  }}
+>
+  <h3>Horizontal (default)</h3>
+  <TabsBlock
+    items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
+    defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
+    activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+  >
+    <TabPanelBlock slot="panel-0"><p>Overview panel content.</p></TabPanelBlock>
+    <TabPanelBlock slot="panel-1"><p>API panel content.</p></TabPanelBlock>
+    <TabPanelBlock slot="panel-2"><p>Examples panel content.</p></TabPanelBlock>
+  </TabsBlock>
+
+  <h3>Vertical</h3>
+  <TabsBlock
+    items={[{ label: 'Setup' }, { label: 'Config' }, { label: 'Deploy' }]}
+    defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
+    activeTabConfig={{ variant: 'outline', intent: 'primary' }}
+    orientation="vertical"
+  >
+    <TabPanelBlock slot="panel-0"><p>Setup content.</p></TabPanelBlock>
+    <TabPanelBlock slot="panel-1"><p>Config content.</p></TabPanelBlock>
+    <TabPanelBlock slot="panel-2"><p>Deploy content.</p></TabPanelBlock>
+  </TabsBlock>
+
+  <h3>Multiple instances (independence check)</h3>
+  <TabsBlock
+    items={[{ label: 'One' }, { label: 'Two' }]}
+    activeTabConfig={{ variant: 'solid', intent: 'secondary' }}
+  >
+    <TabPanelBlock slot="panel-0"><p>Instance A — Panel One.</p></TabPanelBlock>
+    <TabPanelBlock slot="panel-1"><p>Instance A — Panel Two.</p></TabPanelBlock>
+  </TabsBlock>
+
+  <TabsBlock
+    items={[{ label: 'Alpha' }, { label: 'Beta' }]}
+    activeTabConfig={{ variant: 'solid', intent: 'accent' }}
+  >
+    <TabPanelBlock slot="panel-0"><p>Instance B — Panel Alpha.</p></TabPanelBlock>
+    <TabPanelBlock slot="panel-1"><p>Instance B — Panel Beta.</p></TabPanelBlock>
+  </TabsBlock>
+</Layout>
