@@ -1,0 +1,13 @@
+---
+import type { TabPanelProps } from '~/types/tabpanel.types';
+import { cn } from '~/utils/styles';
+
+type Props = TabPanelProps;
+const { class: className } = Astro.props;
+
+const panelClass = cn(className);
+---
+
+<div class={panelClass}>
+  <slot />
+</div>
