@@ -50,7 +50,17 @@ const alignClass =
 const wrapperClass =
   layout === 'contained' || layout === 'cover' ? `${alignClass} w-full h-full` : alignClass;
 
-const imageProps: ImageProps = { ...rest, src, alt, width, height, loading, decoding, align, layout };
+const imageProps: ImageProps = {
+  ...rest,
+  src,
+  alt,
+  width,
+  height,
+  loading,
+  decoding,
+  align,
+  layout,
+};
 
 const _image = await findImage(src);
 

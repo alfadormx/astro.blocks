@@ -76,10 +76,7 @@ const openGraph = optimizedOpenGraph
 const twitter = merged.twitter
   ? {
       card: (merged.twitter.cardType ?? 'summary_large_image') as
-        | 'summary'
-        | 'summary_large_image'
-        | 'player'
-        | 'app',
+        'summary' | 'summary_large_image' | 'player' | 'app',
       site: merged.twitter.site,
       creator: merged.twitter.handle,
       title: merged.twitter.title,

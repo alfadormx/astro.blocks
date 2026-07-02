@@ -13,14 +13,7 @@ export interface ButtonProps extends Omit<HTMLAttributes<'button'>, 'class'> {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   variant?: 'solid' | 'outline' | 'ghost' | 'link';
   intent?:
-    | 'primary'
-    | 'secondary'
-    | 'tertiary'
-    | 'accent'
-    | 'success'
-    | 'warning'
-    | 'error'
-    | 'neutral';
+    'primary' | 'secondary' | 'tertiary' | 'accent' | 'success' | 'warning' | 'error' | 'neutral';
   shape?: 'rounded' | 'square' | 'pill';
   width?: 'auto' | 'full';
   disabled?: boolean;
