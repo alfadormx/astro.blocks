@@ -1,12 +1,7 @@
 import type { ButtonProps } from './button.types';
 
 export type ExpansionStrategy =
-  | 'always'
-  | 'active-only'
-  | 'first-level'
-  | 'depth'
-  | 'active-siblings'
-  | 'toggleable';
+  'always' | 'active-only' | 'first-level' | 'depth' | 'active-siblings' | 'toggleable';
 
 export type ToggleMode =
   | 'button' // Whole button toggles children (default, mobile-friendly)

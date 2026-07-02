@@ -27,45 +27,109 @@ const defaultContainer: Partial<ContainerProps> = {};
 const mergedContainer = mergeConfigs({}, defaultContainer, container || {});
 
 const tabsWrapperClass = cn(
-  orientation === 'vertical'
-    ? 'grid grid-cols-[auto_1fr]'
-    : 'flex flex-col'
+  orientation === 'vertical' ? 'grid grid-cols-[auto_1fr]' : 'flex flex-col'
 );
 
-const tabListClass = cn(
-  orientation === 'vertical' ? 'flex flex-col' : 'flex flex-row'
-);
+const tabListClass = cn(orientation === 'vertical' ? 'flex flex-col' : 'flex flex-row');
 ---
 
 <Container {...mergedContainer}>
   <div class={tabsWrapperClass} data-tabs-root>
     <div role="tablist" class={tabListClass}>
-      {items.map((item, n) => {
-        const inactiveMerge = mergeConfigs({}, internalTabDefaults, defaultTabConfig || {}, item);
-        const activeMerge = mergeConfigs({}, internalTabDefaults, defaultTabConfig || {}, activeTabConfig || {}, item);
-        return (
-          <span data-tab-index={String(n)}>
-            <span data-tab-button="inactive">
-              <Button {...inactiveMerge} />
+      {
+        items.map((item, n) => {
+          const inactiveMerge = mergeConfigs({}, internalTabDefaults, defaultTabConfig || {}, item);
+          const activeMerge = mergeConfigs(
+            {},
+            internalTabDefaults,
+            defaultTabConfig || {},
+            activeTabConfig || {},
+            item
+          );
+          return (
+            <span data-tab-index={String(n)}>
+              <span data-tab-button="inactive">
+                <Button {...inactiveMerge} />
+              </span>
+              <span data-tab-button="active" hidden>
+                <Button {...activeMerge} />
+              </span>
             </span>
-            <span data-tab-button="active" hidden>
-              <Button {...activeMerge} />
-            </span>
-          </span>
-        );
-      })}
+          );
+        })
+      }
     </div>
     <div>
-      {items.length > 0 && <div data-tab-panel="0"><slot name="panel-0" /></div>}
-      {items.length > 1 && <div data-tab-panel="1" hidden><slot name="panel-1" /></div>}
-      {items.length > 2 && <div data-tab-panel="2" hidden><slot name="panel-2" /></div>}
-      {items.length > 3 && <div data-tab-panel="3" hidden><slot name="panel-3" /></div>}
-      {items.length > 4 && <div data-tab-panel="4" hidden><slot name="panel-4" /></div>}
-      {items.length > 5 && <div data-tab-panel="5" hidden><slot name="panel-5" /></div>}
-      {items.length > 6 && <div data-tab-panel="6" hidden><slot name="panel-6" /></div>}
-      {items.length > 7 && <div data-tab-panel="7" hidden><slot name="panel-7" /></div>}
-      {items.length > 8 && <div data-tab-panel="8" hidden><slot name="panel-8" /></div>}
-      {items.length > 9 && <div data-tab-panel="9" hidden><slot name="panel-9" /></div>}
+      {
+        items.length > 0 && (
+          <div data-tab-panel="0">
+            <slot name="panel-0" />
+          </div>
+        )
+      }
+      {
+        items.length > 1 && (
+          <div data-tab-panel="1" hidden>
+            <slot name="panel-1" />
+          </div>
+        )
+      }
+      {
+        items.length > 2 && (
+          <div data-tab-panel="2" hidden>
+            <slot name="panel-2" />
+          </div>
+        )
+      }
+      {
+        items.length > 3 && (
+          <div data-tab-panel="3" hidden>
+            <slot name="panel-3" />
+          </div>
+        )
+      }
+      {
+        items.length > 4 && (
+          <div data-tab-panel="4" hidden>
+            <slot name="panel-4" />
+          </div>
+        )
+      }
+      {
+        items.length > 5 && (
+          <div data-tab-panel="5" hidden>
+            <slot name="panel-5" />
+          </div>
+        )
+      }
+      {
+        items.length > 6 && (
+          <div data-tab-panel="6" hidden>
+            <slot name="panel-6" />
+          </div>
+        )
+      }
+      {
+        items.length > 7 && (
+          <div data-tab-panel="7" hidden>
+            <slot name="panel-7" />
+          </div>
+        )
+      }
+      {
+        items.length > 8 && (
+          <div data-tab-panel="8" hidden>
+            <slot name="panel-8" />
+          </div>
+        )
+      }
+      {
+        items.length > 9 && (
+          <div data-tab-panel="9" hidden>
+            <slot name="panel-9" />
+          </div>
+        )
+      }
     </div>
   </div>
 </Container>
@@ -103,7 +167,7 @@ const tabListClass = cn(
   }
 
   function initTabs(): void {
-    document.querySelectorAll<HTMLElement>('[data-tabs-root]').forEach(root => {
+    document.querySelectorAll<HTMLElement>('[data-tabs-root]').forEach((root) => {
       if (tabsMap.has(root)) return;
 
       const idPrefix = `tabs-${tabsCounter++}`;

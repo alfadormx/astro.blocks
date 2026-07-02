@@ -46,16 +46,18 @@ Mirrors the component structure (`primitives/`, `composite/`, `layout/`). Each p
 ## Key Conventions
 
 ### Path Alias
+
 `~/` maps to `src/`. Always use `~/` for imports within `src/`.
 
 ### Component Props Pattern
+
 Every component imports its type from `~/types/` and uses `type Props = <Name>Props`:
 
 ```astro
 ---
 import type { ButtonProps } from '~/types/button.types';
 type Props = ButtonProps;
-const { label, variant = 'solid', intent = 'primary', ... } = Astro.props;
+const { label, variant = 'solid', intent = 'primary' } = Astro.props;
 ---
 ```
 
@@ -68,14 +70,14 @@ const { label, variant = 'solid', intent = 'primary', ... } = Astro.props;
 
 Do **not** use raw Tailwind colors (e.g., `text-blue-500`). Use semantic tokens defined in `src/styles/global.css`:
 
-| Token | Usage |
-|---|---|
-| `bg-background`, `bg-surface`, `bg-elevated` | Page/card/raised surfaces |
-| `text-normal`, `text-muted`, `text-emphasis` | Body text hierarchy |
-| `bg-primary`, `text-primary`, `border-primary` | Primary brand color |
-| `bg-secondary`, `bg-tertiary`, `bg-accent` | Secondary/tertiary/accent |
-| `bg-success`, `bg-warning`, `bg-error`, `bg-info` | Status colors |
-| `border-border`, `border-border-emphasis` | Borders |
+| Token                                             | Usage                     |
+| ------------------------------------------------- | ------------------------- |
+| `bg-background`, `bg-surface`, `bg-elevated`      | Page/card/raised surfaces |
+| `text-normal`, `text-muted`, `text-emphasis`      | Body text hierarchy       |
+| `bg-primary`, `text-primary`, `border-primary`    | Primary brand color       |
+| `bg-secondary`, `bg-tertiary`, `bg-accent`        | Secondary/tertiary/accent |
+| `bg-success`, `bg-warning`, `bg-error`, `bg-info` | Status colors             |
+| `border-border`, `border-border-emphasis`         | Borders                   |
 
 The palette is Catppuccin-inspired using oklch values (defined in `src/styles/colors.css`).
 
@@ -96,6 +98,7 @@ Tailwind is configured in `src/styles/global.css` via `@theme` blocks — there 
 ### Fonts
 
 Four CSS font variables are defined in `global.css`:
+
 - `font-title` → Kodchasan
 - `font-subtitle` / `font-body` → Quicksand
 - `font-quote` → Sacramento
@@ -103,6 +106,7 @@ Four CSS font variables are defined in `global.css`:
 ### Images
 
 Use `findImage()` from `~/utils/images` to resolve image paths. It handles:
+
 - `~/assets/images/...` paths (Astro-optimized assets)
 - `/public/...` absolute paths
 - External URLs (with unpic optimization for supported CDNs)
@@ -110,6 +114,7 @@ Use `findImage()` from `~/utils/images` to resolve image paths. It handles:
 ### Container Component
 
 `Container` is the fundamental layout block. Key props:
+
 - `htmlTag` — rendered HTML element (default `section`)
 - `containerWidthType` — `'full'` | `'boxed'` | `'custom'` (outer wrapper)
 - `content.widthType` — `'full'` | `'boxed'` (inner content wrapper)
@@ -133,7 +138,7 @@ Composite components follow a consistent composition model:
 ```astro
 <!-- ItemsGrid: defaultItemConfig applies to every Item -->
 <ItemsGrid
-  items={[...]}
+  items={itemsArray}
   defaultItemConfig={{ layout: 'horizontal', border: { width: 'border' } }}
 />
 ```
@@ -144,18 +149,18 @@ Composite components follow a consistent composition model:
 
 **Composite component quick reference:**
 
-| Component | Key props |
-|---|---|
-| `Header` | `logo`, `navigationLeft/Right`, `actionsLeft/Right`, `isSticky`, `isFloating`, `showThemeToggle` |
-| `Footer` | `logo`, `disclaimer`, `footnote`, `socialActions`, `secondaryActions`, `showLanguageToggle` |
-| `Content` | `headline`, `image`, `action`, `items`, `imageOnLeft`, `reverseOnMobile` |
-| `CallToAction` | `headline`, `actions` |
-| `ItemsContent` | `headline`, `itemsGrid` |
-| `ItemsGrid` | `items`, `columns` (1-4), `air`, `defaultItemConfig` |
-| `ItemsTimeline` | `items`, `defaultItemConfig` — vertical timeline with connectors |
-| `ItemsTimelineHorizontal` | `items`, `defaultItemConfig` — horizontal timeline |
-| `NavigationTree` | `items` (nested `ButtonProps[]`), `expansionStrategy`, `toggleMode`, `maxDepth` |
-| `NavigationTreeHorizontal` | same as `NavigationTree` but horizontal, used inside `Header` |
+| Component                  | Key props                                                                                        |
+| -------------------------- | ------------------------------------------------------------------------------------------------ |
+| `Header`                   | `logo`, `navigationLeft/Right`, `actionsLeft/Right`, `isSticky`, `isFloating`, `showThemeToggle` |
+| `Footer`                   | `logo`, `disclaimer`, `footnote`, `socialActions`, `secondaryActions`, `showLanguageToggle`      |
+| `Content`                  | `headline`, `image`, `action`, `items`, `imageOnLeft`, `reverseOnMobile`                         |
+| `CallToAction`             | `headline`, `actions`                                                                            |
+| `ItemsContent`             | `headline`, `itemsGrid`                                                                          |
+| `ItemsGrid`                | `items`, `columns` (1-4), `air`, `defaultItemConfig`                                             |
+| `ItemsTimeline`            | `items`, `defaultItemConfig` — vertical timeline with connectors                                 |
+| `ItemsTimelineHorizontal`  | `items`, `defaultItemConfig` — horizontal timeline                                               |
+| `NavigationTree`           | `items` (nested `ButtonProps[]`), `expansionStrategy`, `toggleMode`, `maxDepth`                  |
+| `NavigationTreeHorizontal` | same as `NavigationTree` but horizontal, used inside `Header`                                    |
 
 **`Item`** is the shared leaf for all `Items*` components. It supports `icon`, `title`, `content`, `actions`, `layout` (`vertical`/`horizontal`), and connector props (`showConnector`, `connectorStyle`).
 

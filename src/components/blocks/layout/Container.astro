@@ -82,9 +82,7 @@ const contentClass = cn(
     Astro.slots.background ? (
       <slot name="background" />
     ) : background ? (
-      <Background
-        {...background}
-      />
+      <Background {...background} />
     ) : null
   }
   <div class={contentClass}>
