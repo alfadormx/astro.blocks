@@ -1,7 +1,8 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import TabsBlock from '~/components/blocks/composite/Tabs.astro';
-import TabPanelBlock from '~/components/blocks/primitives/TabPanel.astro';
+import TabItemBlock from '~/components/blocks/primitives/TabItem.astro';
+import ContentBlock from '~/components/blocks/composite/Content.astro';
 
 const metadata = { title: { default: 'Tabs' } };
 ---
@@ -20,37 +21,156 @@ const metadata = { title: { default: 'Tabs' } };
     defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
     activeTabConfig={{ variant: 'solid', intent: 'primary' }}
   >
-    <TabPanelBlock slot="panel-0"><p>Overview panel content.</p></TabPanelBlock>
-    <TabPanelBlock slot="panel-1"><p>API panel content.</p></TabPanelBlock>
-    <TabPanelBlock slot="panel-2"><p>Examples panel content.</p></TabPanelBlock>
+    <TabItemBlock slot="panel-0">
+      <ContentBlock
+        container={{
+          background: {
+            image:
+              'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?fit=min&auto=format&w=768&h=768',
+            overlayClass: 'bg-base/60 backdrop-blur-xl',
+            attachment: 'fixed',
+          },
+        }}
+        headline={{
+          tagline: 'Content Block',
+          title: 'Formula Blueprint: Fun Meets Functionality!',
+          subtitle:
+            'The template is a free, customizable and production-ready template for Astro 5.0 + Tailwind CSS.',
+        }}
+        image={{
+          src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=min&auto=format',
+          alt: 'Demo image',
+        }}
+      >
+        <p>Nested inside a TabItem to show richer blocks are supported.</p>
+      </ContentBlock>
+    </TabItemBlock>
+    <TabItemBlock slot="panel-1">
+      <ContentBlock
+        container={{
+          background: {
+            image:
+              'https://images.unsplash.com/photo-1469474968028-56623f02e42e?fit=min&auto=format&w=768&h=768',
+            overlayClass: 'bg-base/60 backdrop-blur-xl',
+            attachment: 'fixed',
+          },
+        }}
+        headline={{
+          tagline: 'Content Block',
+          title: 'Ship Faster with a Documented API',
+          subtitle:
+            'Every block ships with typed props and clear examples so you spend less time guessing.',
+        }}
+        image={{
+          src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=min&auto=format',
+          alt: 'Demo image',
+        }}
+      >
+        <p>Nested inside a TabItem to show richer blocks are supported.</p>
+      </ContentBlock>
+    </TabItemBlock>
+    <TabItemBlock slot="panel-2">
+      <ContentBlock
+        container={{
+          background: {
+            image:
+              'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?fit=min&auto=format&w=768&h=768',
+            overlayClass: 'bg-base/60 backdrop-blur-xl',
+            attachment: 'fixed',
+          },
+        }}
+        headline={{
+          tagline: 'Content Block',
+          title: 'See It In Action',
+          subtitle: 'Explore real compositions built from the same primitives you already know.',
+        }}
+        image={{
+          src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=min&auto=format',
+          alt: 'Demo image',
+        }}
+      >
+        <p>Nested inside a TabItem to show richer blocks are supported.</p>
+      </ContentBlock>
+    </TabItemBlock>
   </TabsBlock>
 
   <h3>Vertical</h3>
   <TabsBlock
-    items={[{ label: 'Setup' }, { label: 'Config' }, { label: 'Deploy' }]}
+    items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
     defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
-    activeTabConfig={{ variant: 'outline', intent: 'primary' }}
+    activeTabConfig={{ variant: 'solid', intent: 'primary' }}
     orientation="vertical"
   >
-    <TabPanelBlock slot="panel-0"><p>Setup content.</p></TabPanelBlock>
-    <TabPanelBlock slot="panel-1"><p>Config content.</p></TabPanelBlock>
-    <TabPanelBlock slot="panel-2"><p>Deploy content.</p></TabPanelBlock>
-  </TabsBlock>
-
-  <h3>Multiple instances (independence check)</h3>
-  <TabsBlock
-    items={[{ label: 'One' }, { label: 'Two' }]}
-    activeTabConfig={{ variant: 'solid', intent: 'secondary' }}
-  >
-    <TabPanelBlock slot="panel-0"><p>Instance A — Panel One.</p></TabPanelBlock>
-    <TabPanelBlock slot="panel-1"><p>Instance A — Panel Two.</p></TabPanelBlock>
-  </TabsBlock>
-
-  <TabsBlock
-    items={[{ label: 'Alpha' }, { label: 'Beta' }]}
-    activeTabConfig={{ variant: 'solid', intent: 'accent' }}
-  >
-    <TabPanelBlock slot="panel-0"><p>Instance B — Panel Alpha.</p></TabPanelBlock>
-    <TabPanelBlock slot="panel-1"><p>Instance B — Panel Beta.</p></TabPanelBlock>
+    <TabItemBlock slot="panel-0">
+      <ContentBlock
+        container={{
+          background: {
+            image:
+              'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?fit=min&auto=format&w=768&h=768',
+            overlayClass: 'bg-base/60 backdrop-blur-xl',
+            attachment: 'fixed',
+          },
+        }}
+        headline={{
+          tagline: 'Content Block',
+          title: 'Formula Blueprint: Fun Meets Functionality!',
+          subtitle:
+            'The template is a free, customizable and production-ready template for Astro 5.0 + Tailwind CSS.',
+        }}
+        image={{
+          src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=min&auto=format',
+          alt: 'Demo image',
+        }}
+      >
+        <p>Nested inside a TabItem to show richer blocks are supported.</p>
+      </ContentBlock>
+    </TabItemBlock>
+    <TabItemBlock slot="panel-1">
+      <ContentBlock
+        container={{
+          background: {
+            image:
+              'https://images.unsplash.com/photo-1469474968028-56623f02e42e?fit=min&auto=format&w=768&h=768',
+            overlayClass: 'bg-base/60 backdrop-blur-xl',
+            attachment: 'fixed',
+          },
+        }}
+        headline={{
+          tagline: 'Content Block',
+          title: 'Ship Faster with a Documented API',
+          subtitle:
+            'Every block ships with typed props and clear examples so you spend less time guessing.',
+        }}
+        image={{
+          src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=min&auto=format',
+          alt: 'Demo image',
+        }}
+      >
+        <p>Nested inside a TabItem to show richer blocks are supported.</p>
+      </ContentBlock>
+    </TabItemBlock>
+    <TabItemBlock slot="panel-2">
+      <ContentBlock
+        container={{
+          background: {
+            image:
+              'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?fit=min&auto=format&w=768&h=768',
+            overlayClass: 'bg-base/60 backdrop-blur-xl',
+            attachment: 'fixed',
+          },
+        }}
+        headline={{
+          tagline: 'Content Block',
+          title: 'See It In Action',
+          subtitle: 'Explore real compositions built from the same primitives you already know.',
+        }}
+        image={{
+          src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=min&auto=format',
+          alt: 'Demo image',
+        }}
+      >
+        <p>Nested inside a TabItem to show richer blocks are supported.</p>
+      </ContentBlock>
+    </TabItemBlock>
   </TabsBlock>
 </Layout>
