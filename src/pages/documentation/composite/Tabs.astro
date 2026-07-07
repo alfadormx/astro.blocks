@@ -20,6 +20,10 @@ const metadata = { title: { default: 'Tabs' } };
     items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
     defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
     activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+    tabList={{
+      spacing: { padding: 'p-2', gap: 'gap-2' },
+      border: { width: 'border', color: 'border-gray-200', radius: 'rounded-lg' },
+    }}
   >
     <TabItemBlock slot="panel-0">
       <ContentBlock
