@@ -15,6 +15,7 @@ const {
   activeTabConfig,
   orientation = 'horizontal',
   container,
+  tabList,
 } = Astro.props;
 
 const internalTabDefaults: Partial<ButtonProps> = {
@@ -30,7 +31,17 @@ const tabsWrapperClass = cn(
   orientation === 'vertical' ? 'grid grid-cols-[auto_1fr]' : 'flex flex-col'
 );
 
-const tabListClass = cn(orientation === 'vertical' ? 'flex flex-col' : 'flex flex-row');
+const tabListClass = cn(
+  orientation === 'vertical' ? 'flex flex-col' : 'flex flex-row',
+  tabList?.background?.class,
+  tabList?.spacing?.padding,
+  tabList?.spacing?.margin,
+  tabList?.spacing?.gap,
+  tabList?.border?.width,
+  tabList?.border?.color,
+  tabList?.border?.radius,
+  tabList?.class
+);
 ---
 
 <Container {...mergedContainer}>
