@@ -1,6 +1,7 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import LanguageToggleBlock from '~/components/blocks/primitives/LanguageToggle.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 const metadata = {
   title: {
@@ -183,6 +184,8 @@ const metadata = {
       />
     </div>
   </div>
+
+  <ApiReferenceTable component="LanguageToggle" category="primitives" />
 
   <!-- Demo Content -->
   <h3>Usage in Context</h3>

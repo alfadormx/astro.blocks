@@ -1,6 +1,7 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import CallToActionBlock from '~/components/blocks/composite/CallToAction.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 const metadata = {
   title: {
@@ -45,4 +46,5 @@ const metadata = {
       },
     ]}
   />
+  <ApiReferenceTable component="CallToAction" category="composite" />
 </Layout>

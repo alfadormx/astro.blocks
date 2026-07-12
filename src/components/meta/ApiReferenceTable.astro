@@ -1,0 +1,46 @@
+---
+import { getPropRows } from '~/utils/apiReference';
+
+interface Props {
+  component: string;
+  category: 'composite' | 'primitives' | 'layout';
+}
+
+const { component, category } = Astro.props;
+const { rows, inheritsFrom } = getPropRows(component, category);
+---
+
+<h3>API Reference</h3>
+{
+  rows.length === 0 && inheritsFrom ? (
+    <p>
+      {component} accepts all <a href={inheritsFrom.href}>{inheritsFrom.label}</a> props — see its
+      API Reference for the full list.
+    </p>
+  ) : (
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="border-b border-border">
+            <th class="py-2 px-4">Prop</th>
+            <th class="py-2 px-4">Type</th>
+            <th class="py-2 px-4">Default</th>
+            <th class="py-2 px-4">Description</th>
+          </tr>
+        </thead>
+        <tbody class="text-sm">
+          {rows.map((row) => (
+            <tr class="border-b border-border/50">
+              <td class="py-2 px-4 font-mono">{row.name}</td>
+              <td class="py-2 px-4">
+                {row.link ? <a href={row.link.href}>{row.type}</a> : row.type}
+              </td>
+              <td class="py-2 px-4">{row.default || '—'}</td>
+              <td class="py-2 px-4">{row.description}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}

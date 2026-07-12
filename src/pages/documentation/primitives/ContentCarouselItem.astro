@@ -1,0 +1,68 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import ContentCarouselBlock from '~/components/blocks/composite/ContentCarousel.astro';
+import ContentCarouselItem from '~/components/blocks/primitives/ContentCarouselItem.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
+import Image from '~/components/blocks/primitives/Image.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+var metadata = {
+  title: {
+    default: 'ContentCarouselItem',
+  },
+};
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitives',
+    title: 'ContentCarouselItem',
+    subtitle: 'A slide wrapper used as default-slot content inside the ContentCarousel block.',
+  }}
+>
+  <p>
+    <code>ContentCarouselItem</code> wraps arbitrary slide content (images, text, buttons, or other blocks)
+    in a <code>Container</code> and tags it with the <code>carousel-item</code> class the
+    <code>ContentCarousel</code> block relies on to detect slides passed via its default slot. It's only
+    needed when slotting custom content — carousels built from the <code>items</code> array prop render
+    their own slides automatically.
+  </p>
+
+  <!-- Example: ContentCarouselItem used as slotted slides inside ContentCarousel -->
+  <h3>Slotted Slides Inside ContentCarousel</h3>
+  <div class="border border-border rounded-lg overflow-hidden">
+    <ContentCarouselBlock>
+      <ContentCarouselItem basis="basis-full" background={{ class: 'bg-surface' }}>
+        <Image
+          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop"
+          alt="Mountain"
+          width={400}
+          height={300}
+          class="rounded-lg"
+        />
+        <h3 class="text-xl font-bold">Slide with Image Block</h3>
+        <Button
+          href="https://unsplash.com"
+          target="_blank"
+          label="View on Unsplash"
+          icon={{ name: 'heroicons:arrow-top-right-on-square' }}
+          intent="primary"
+        />
+      </ContentCarouselItem>
+      <ContentCarouselItem basis="basis-full" background={{ class: 'bg-surface' }}>
+        <h3 class="text-xl font-bold">Interactive Content</h3>
+        <p class="text-center max-w-md">
+          Each <code>ContentCarouselItem</code> can hold any content — text, buttons, or nested blocks
+          — while the carousel handles drag, autoplay, and indicator behavior.
+        </p>
+        <div class="flex gap-3">
+          <Button label="Action 1" icon={{ name: 'heroicons:star' }} intent="primary" />
+          <Button label="Action 2" icon={{ name: 'heroicons:heart' }} intent="secondary" />
+        </div>
+      </ContentCarouselItem>
+    </ContentCarouselBlock>
+  </div>
+
+  <ApiReferenceTable component="ContentCarouselItem" category="primitives" />
+</Layout>

@@ -4,6 +4,7 @@ import ContentCarouselBlock from '~/components/blocks/composite/ContentCarousel.
 import Button from '~/components/blocks/primitives/Button.astro';
 import ContentCarouselItem from '~/components/blocks/primitives/ContentCarouselItem.astro';
 import Image from '~/components/blocks/primitives/Image.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 const metadata = {
   title: {
@@ -139,6 +140,8 @@ const sampleImages = [
       <ContentCarouselBlock items={sampleImages.slice(0, 3)} loop={true} />
     </div>
   </section>
+
+  <ApiReferenceTable component="ContentCarousel" category="composite" />
 
   <section class="mb-16">
     <h2>Usage Notes</h2>

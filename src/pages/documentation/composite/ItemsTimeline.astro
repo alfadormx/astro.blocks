@@ -1,6 +1,7 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import ItemsTimelineBlock from '~/components/blocks/composite/ItemsTimeline.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 const metadata = {
   title: {
@@ -162,4 +163,6 @@ const metadata = {
       },
     ]}
   />
+
+  <ApiReferenceTable component="ItemsTimeline" category="composite" />
 </Layout>

@@ -1,6 +1,7 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import VectorBlock from '~/components/blocks/primitives/Vector.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 const metadata = {
   title: {
@@ -152,4 +153,6 @@ const demoSvg = 'https://www.svgrepo.com/show/513167/basketball.svg';
       />
     </div>
   </div>
+
+  <ApiReferenceTable component="Vector" category="primitives" />
 </Layout>
