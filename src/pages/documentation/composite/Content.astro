@@ -1,6 +1,7 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import ContentBlock from '~/components/blocks/composite/Content.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 const metadata = {
   title: {
@@ -110,4 +111,5 @@ const metadata = {
     <h3>Building on modern foundations</h3>
     Gain a competitive advantage by incorporating industry leading practices
   </ContentBlock>
+  <ApiReferenceTable component="Content" category="composite" />
 </Layout>

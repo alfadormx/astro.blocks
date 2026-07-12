@@ -1,0 +1,115 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import ItemBlock from '~/components/blocks/composite/Item.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+const metadata = {
+  title: {
+    default: 'Item',
+  },
+};
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Item',
+    subtitle:
+      'Single icon/title/content/actions block — the building block behind ItemsGrid, ItemsTimeline, and ItemsTimelineHorizontal',
+  }}
+>
+  <p>
+    Item renders an optional icon, title, content, and action buttons, in either a vertical
+    (stacked, centered) or horizontal (icon-left, text-right) layout. It also supports optional
+    connector lines, used to build timeline UIs.
+  </p>
+
+  <!-- Example 1: Basic Vertical Item -->
+  <h3>1. Basic Vertical Item</h3>
+  <p>Default layout: icon, title, and content stacked and centered.</p>
+  <div class="max-w-sm border border-border rounded-lg p-6">
+    <ItemBlock
+      icon={{ name: 'heroicons:sparkles', class: 'text-accent' }}
+      title="Vertical Layout"
+      content="Icon, title, and content are stacked and centered. This is the default layout."
+      actions={[{ label: 'Learn More', intent: 'accent', size: 'sm' }]}
+    />
+  </div>
+
+  <!-- Example 2: Horizontal Layout -->
+  <h3>2. Horizontal Layout</h3>
+  <p>Icon on the left, title and content left-aligned on the right.</p>
+  <div class="max-w-md border border-border rounded-lg p-6">
+    <ItemBlock
+      icon={{ name: 'heroicons:bolt', class: 'text-success' }}
+      title="Horizontal Layout"
+      content="The icon sits to the left, with the title and content left-aligned beside it."
+      actions={[{ label: 'Learn More', intent: 'success', size: 'sm' }]}
+      layout="horizontal"
+    />
+  </div>
+
+  <!-- Example 3: Connector Lines -->
+  <h3>3. Connector Lines</h3>
+  <p>
+    Connector lines link items together to build timeline UIs. Use <code
+      class="px-1 py-0.5 bg-muted rounded">showConnector</code
+    > on a horizontal item for a vertical connecting line (as used by ItemsTimeline), or <code
+      class="px-1 py-0.5 bg-muted rounded">showConnectorLeft</code
+    >/<code class="px-1 py-0.5 bg-muted rounded">showConnectorRight</code> on a vertical item for a horizontal
+    connecting line (as used by ItemsTimelineHorizontal).
+  </p>
+  <div class="space-y-8">
+    <div>
+      <h4>Vertical connector (horizontal layout)</h4>
+      <div class="max-w-md border border-border rounded-lg p-6">
+        <ItemBlock
+          icon={{ name: 'heroicons:arrow-down-tray', class: 'text-primary' }}
+          title="Step 1: Download"
+          content="Get started by downloading the template."
+          layout="horizontal"
+          showConnector
+        />
+        <ItemBlock
+          icon={{ name: 'heroicons:pencil-square', class: 'text-secondary' }}
+          title="Step 2: Customize"
+          content="Add your own content and styles."
+          layout="horizontal"
+          showConnector
+        />
+        <ItemBlock
+          icon={{ name: 'heroicons:check-circle', class: 'text-success' }}
+          title="Step 3: Done"
+          content="Ship it!"
+          layout="horizontal"
+        />
+      </div>
+    </div>
+    <div>
+      <h4>Horizontal connector (vertical layout)</h4>
+      <div class="border border-border rounded-lg p-6 flex flex-row items-start">
+        <ItemBlock
+          icon={{ name: 'heroicons:user-plus', class: 'text-primary' }}
+          title="Sign Up"
+          content="Create your account."
+        />
+        <ItemBlock
+          icon={{ name: 'heroicons:envelope', class: 'text-secondary' }}
+          title="Verify"
+          content="Confirm your email."
+          showConnectorLeft
+          showConnectorRight
+        />
+        <ItemBlock
+          icon={{ name: 'heroicons:rocket-launch', class: 'text-success' }}
+          title="Launch"
+          content="You're all set."
+          showConnectorLeft
+        />
+      </div>
+    </div>
+  </div>
+
+  <ApiReferenceTable component="Item" category="composite" />
+</Layout>

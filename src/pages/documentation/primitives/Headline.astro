@@ -1,6 +1,7 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import HeadlineBlock from '~/components/blocks/primitives/Headline.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 var metadata = {
   title: {
@@ -91,4 +92,6 @@ var metadata = {
     titleClass="text-2xl font-bold text-gray-900"
     subtitleClass="text-base text-gray-600 mt-2"
   />
+
+  <ApiReferenceTable component="Headline" category="primitives" />
 </Layout>

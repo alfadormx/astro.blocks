@@ -1,0 +1,82 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import FooterBlock from '~/components/blocks/composite/Footer.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+var metadata = {
+  title: {
+    default: 'Footer',
+  },
+};
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Footer',
+    subtitle: 'Site footer with logo, links, disclaimer, social icons, and language toggle',
+  }}
+>
+  <p>
+    Footer component combining a logo, secondary link actions, an optional disclaimer, social icon
+    buttons, a footnote, and an optional language toggle.
+  </p>
+
+  <!-- Example 1: Basic Footer -->
+  <h3>Basic Footer</h3>
+  <p>Simple footer with logo, social icon buttons, and a copyright footnote.</p>
+  <div class="border border-border rounded-lg overflow-hidden">
+    <FooterBlock
+      logo={{
+        image: {
+          src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+          alt: 'Logo',
+          width: 48,
+          height: 48,
+        },
+      }}
+      socialActions={[
+        { icon: { name: 'heroicons:globe-alt' }, href: '#', variant: 'ghost', intent: 'neutral' },
+        {
+          icon: { name: 'heroicons:envelope' },
+          href: '#',
+          variant: 'ghost',
+          intent: 'neutral',
+        },
+      ]}
+      footnote="© 2026 My Brand. All rights reserved."
+    />
+  </div>
+
+  <!-- Example 2: With Secondary Actions, Disclaimer & Language Toggle -->
+  <h3>With Secondary Actions, Disclaimer &amp; Language Toggle</h3>
+  <p>
+    Footer with link-style secondary actions next to the logo, a disclaimer block, and a language
+    toggle row.
+  </p>
+  <div class="border border-border rounded-lg overflow-hidden">
+    <FooterBlock
+      logo={{ label: 'My Brand' }}
+      secondaryActions={[
+        { label: 'Privacy', href: '#', variant: 'link', size: 'sm' },
+        { label: 'Terms', href: '#', variant: 'link', size: 'sm' },
+      ]}
+      disclaimer="Prices and availability are subject to change without notice."
+      socialActions={[
+        { icon: { name: 'heroicons:globe-alt' }, href: '#', variant: 'ghost', intent: 'neutral' },
+        {
+          icon: { name: 'heroicons:chat-bubble-left-right' },
+          href: '#',
+          variant: 'ghost',
+          intent: 'neutral',
+        },
+      ]}
+      footnote="© 2026 My Brand. All rights reserved."
+      showLanguageToggle
+      languageToggleAlign="center"
+    />
+  </div>
+
+  <ApiReferenceTable component="Footer" category="composite" />
+</Layout>

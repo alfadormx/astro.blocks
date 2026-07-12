@@ -1,6 +1,7 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import ButtonBlock from '~/components/blocks/primitives/Button.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 const metadata = {
   title: {
@@ -172,4 +173,6 @@ const metadata = {
       iconPosition="right"
     />
   </div>
+
+  <ApiReferenceTable component="Button" category="primitives" />
 </Layout>

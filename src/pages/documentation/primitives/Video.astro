@@ -1,6 +1,7 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import VideoBlock from '~/components/blocks/primitives/Video.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 const metadata = {
   title: {
@@ -210,4 +211,6 @@ const metadata = {
       }}
     />
   </div>
+
+  <ApiReferenceTable component="Video" category="primitives" />
 </Layout>

@@ -1,6 +1,7 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import LogoBlock from '~/components/blocks/primitives/Logo.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 const metadata = {
   title: {
@@ -57,4 +58,6 @@ const metadata = {
       labelClass="text-xl font-bold"
     />
   </div>
+
+  <ApiReferenceTable component="Logo" category="primitives" />
 </Layout>

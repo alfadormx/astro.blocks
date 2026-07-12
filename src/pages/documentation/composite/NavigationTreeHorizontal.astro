@@ -1,6 +1,7 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import NavigationTreeHorizontalBlock from '~/components/blocks/composite/NavigationTreeHorizontal.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 var metadata = {
   title: {
@@ -142,64 +143,7 @@ const itemsWithDropdowns = [
     </div>
   </div>
 
-  <!-- API Reference -->
-  <h3>API Reference</h3>
-  <div class="overflow-x-auto">
-    <table class="w-full text-left border-collapse">
-      <thead>
-        <tr class="border-b border-border">
-          <th class="py-2 px-4">Prop</th>
-          <th class="py-2 px-4">Type</th>
-          <th class="py-2 px-4">Default</th>
-          <th class="py-2 px-4">Description</th>
-        </tr>
-      </thead>
-      <tbody class="text-sm">
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">items</td>
-          <td class="py-2 px-4">ButtonProps[]</td>
-          <td class="py-2 px-4">[]</td>
-          <td class="py-2 px-4">Navigation items with optional children</td>
-        </tr>
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">trigger</td>
-          <td class="py-2 px-4">'hover' | 'click'</td>
-          <td class="py-2 px-4">'hover'</td>
-          <td class="py-2 px-4">How dropdowns are triggered</td>
-        </tr>
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">dropdownPosition</td>
-          <td class="py-2 px-4">'left' | 'center' | 'right'</td>
-          <td class="py-2 px-4">'left'</td>
-          <td class="py-2 px-4">Dropdown alignment relative to parent</td>
-        </tr>
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">class</td>
-          <td class="py-2 px-4">string</td>
-          <td class="py-2 px-4">''</td>
-          <td class="py-2 px-4">Custom classes for nav container</td>
-        </tr>
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">itemClass</td>
-          <td class="py-2 px-4">string</td>
-          <td class="py-2 px-4">''</td>
-          <td class="py-2 px-4">Custom classes for each nav item wrapper</td>
-        </tr>
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">dropdownClass</td>
-          <td class="py-2 px-4">string</td>
-          <td class="py-2 px-4">''</td>
-          <td class="py-2 px-4">Custom classes for dropdown containers</td>
-        </tr>
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">defaultItemConfig</td>
-          <td class="py-2 px-4">Partial&lt;ButtonProps&gt;</td>
-          <td class="py-2 px-4">{}</td>
-          <td class="py-2 px-4">Default configuration for all buttons</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <ApiReferenceTable component="NavigationTreeHorizontal" category="composite" />
 
   <!-- Usage Notes -->
   <h3>Usage Notes</h3>

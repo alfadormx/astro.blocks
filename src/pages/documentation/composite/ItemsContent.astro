@@ -1,6 +1,7 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import ItemsContentBlock from '~/components/blocks/composite/ItemsContent.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 const metadata = {
   title: {
@@ -155,4 +156,5 @@ const metadata = {
       ],
     }}
   />
+  <ApiReferenceTable component="ItemsContent" category="composite" />
 </Layout>

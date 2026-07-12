@@ -1,6 +1,7 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import ImageBlock from '~/components/blocks/primitives/Image.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 const metadata = {
   title: {
@@ -134,4 +135,6 @@ const metadata = {
       fetchpriority="high"
     />
   </div>
+
+  <ApiReferenceTable component="Image" category="primitives" />
 </Layout>

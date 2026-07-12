@@ -1,0 +1,63 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import BackgroundBlock from '~/components/blocks/primitives/Background.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+var metadata = {
+  title: {
+    default: 'Background',
+  },
+};
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitives',
+    title: 'Background',
+    subtitle:
+      'An absolutely-positioned background layer for images, video, or color, with an optional overlay and slotted content on top.',
+  }}
+>
+  <p>
+    An absolutely-positioned background layer for images, video, or color, with an optional overlay
+    and slotted content on top.
+  </p>
+
+  <!-- Example 1: Image Background with Slotted Content -->
+  <h3>1. Image Background</h3>
+  <div class="relative h-64 border border-border rounded-lg overflow-hidden">
+    <BackgroundBlock
+      image="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=600&fit=crop"
+    >
+      <div class="relative flex h-full items-center justify-center">
+        <h4 class="text-white text-2xl font-bold drop-shadow-lg">Image Background</h4>
+      </div>
+    </BackgroundBlock>
+  </div>
+
+  <!-- Example 2: Color/Class Background -->
+  <h3>2. Color Background</h3>
+  <div class="relative h-64 border border-border rounded-lg overflow-hidden">
+    <BackgroundBlock class="bg-primary">
+      <div class="relative flex h-full items-center justify-center">
+        <h4 class="text-white text-2xl font-bold">Plain Color Background</h4>
+      </div>
+    </BackgroundBlock>
+  </div>
+
+  <!-- Example 3: Image Background with Overlay -->
+  <h3>3. Image Background with Overlay</h3>
+  <div class="relative h-64 border border-border rounded-lg overflow-hidden">
+    <BackgroundBlock
+      image="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200&h=600&fit=crop"
+      overlayClass="bg-black/50"
+    >
+      <div class="relative flex h-full items-center justify-center">
+        <h4 class="text-white text-2xl font-bold">Darkened for Legibility</h4>
+      </div>
+    </BackgroundBlock>
+  </div>
+
+  <ApiReferenceTable component="Background" category="primitives" />
+</Layout>

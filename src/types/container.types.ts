@@ -42,18 +42,31 @@ export interface ContainerItem {
 }
 
 export interface ContainerProps {
+  /** Background image, video, or color/class configuration rendered behind the content */
   background?: BackgroundProps;
+  /** Inner content sizing, spacing, and border configuration */
   content?: ContentConfig;
+  /** Margin/padding configuration applied to the outer container element */
   spacing?: SpacingConfig;
+  /** Border configuration applied to the outer container element */
   border?: BorderConfig;
+  /** Flex or grid layout configuration for arranging child elements */
   layout?: LayoutConfig;
+  /** CSS overflow behavior for the outer container (default: 'visible') */
   overflow?: OverflowType;
+  /** HTML tag rendered for the outer container element (default: 'section') */
   htmlTag?: ContainerTag;
+  /** Custom classes for the outer container element */
   class?: string;
+  /** Outer container width mode: full-bleed, boxed, or a custom width (default: 'full') */
   containerWidthType?: ContainerWidthType;
-  width?: string; // Tailwind class or CSS value
-  minHeight?: string; // Tailwind class or CSS value
+  /** Tailwind class or CSS value for the container's custom width (used when containerWidthType is 'custom') */
+  width?: string;
+  /** Tailwind class or CSS value forcing a minimum height on the container */
+  minHeight?: string;
+  /** Stretches all direct children to equal height (default: false) */
   equalHeight?: boolean;
+  /** Simple content items rendered as direct children when no default slot content is provided */
   items?: ContainerItem[];
 }
 
@@ -67,34 +80,48 @@ export interface GridLayoutProps extends Omit<ContainerProps, 'layout' | 'items'
 }
 
 export interface CellProps {
+  /** Background color/class configuration for the column (image/video not supported) */
   background?: SimpleBackgroundProps;
+  /** Margin/padding configuration applied to the column */
   spacing?: SpacingConfig;
+  /** Border configuration applied to the column */
   border?: BorderConfig;
+  /** Custom classes for the column element */
   class?: string;
 }
 
 export interface TwoColumnContainerProps extends GridLayoutProps {
   /** Reverse order on mobile (default: false) */
   reverseOnMobile?: boolean;
-
+  /** Configuration for the left column */
   leftColumn?: CellProps;
+  /** Configuration for the right column */
   rightColumn?: CellProps;
 }
 
 export interface ThreeColumnContainerProps extends GridLayoutProps {
+  /** Configuration for the left column */
   leftColumn?: CellProps;
+  /** Configuration for the center column */
   centerColumn?: CellProps;
+  /** Configuration for the right column */
   rightColumn?: CellProps;
 }
 
 export interface FourColumnContainerProps extends GridLayoutProps {
+  /** Configuration for the leftmost column */
   leftColumn?: CellProps;
+  /** Configuration for the center-left column */
   centerLeftColumn?: CellProps;
+  /** Configuration for the center-right column */
   centerRightColumn?: CellProps;
+  /** Configuration for the rightmost column */
   rightColumn?: CellProps;
 }
 
 export interface SidebarContainerProps extends GridLayoutProps {
+  /** Configuration for the sidebar column */
   sidebar?: CellProps;
+  /** Configuration for the main content column */
   mainContent?: CellProps;
 }
