@@ -1,6 +1,7 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import ThreeColumnContainerBlock from '~/components/blocks/layout/ThreeColumnContainer.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 var metadata = {
   title: {
@@ -242,4 +243,6 @@ var metadata = {
       </button>
     </div>
   </ThreeColumnContainerBlock>
+
+  <ApiReferenceTable component="ThreeColumnContainer" category="layout" />
 </Layout>

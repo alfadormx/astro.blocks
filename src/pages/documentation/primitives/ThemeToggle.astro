@@ -1,6 +1,7 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import ThemeToggleBlock from '~/components/blocks/primitives/ThemeToggle.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 const metadata = {
   title: {
@@ -89,6 +90,8 @@ const metadata = {
       <p>Content on an elevated background</p>
     </div>
   </div>
+
+  <ApiReferenceTable component="ThemeToggle" category="primitives" />
 </Layout>
 
 <script>

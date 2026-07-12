@@ -3,29 +3,11 @@ import { transformUrl, parseUrl } from 'unpic';
 
 import type { ImageMetadata } from 'astro';
 import type { HTMLAttributes } from 'astro/types';
+import type { ImageProps } from '~/types/image.types';
+
+export type { ImageProps };
 
 type Layout = 'fixed' | 'constrained' | 'fullWidth' | 'cover' | 'responsive' | 'contained';
-
-export interface ImageProps extends Omit<HTMLAttributes<'img'>, 'src'> {
-  src?: string | ImageMetadata | null;
-  width?: string | number | null;
-  height?: string | number | null;
-  alt?: string | null;
-  loading?: 'eager' | 'lazy' | null;
-  decoding?: 'sync' | 'async' | 'auto' | null;
-  style?: string;
-  srcset?: string | null;
-  sizes?: string | null;
-  fetchpriority?: 'high' | 'low' | 'auto' | null;
-
-  layout?: Layout;
-  widths?: number[] | null;
-  aspectRatio?: string | number | null;
-  objectPosition?: string;
-  align?: 'left' | 'center' | 'right';
-
-  format?: string;
-}
 
 export type ImagesOptimizer = (
   image: ImageMetadata | string,

@@ -3,6 +3,7 @@ import Layout from '../_layouts/Layout.astro';
 import TabsBlock from '~/components/blocks/composite/Tabs.astro';
 import TabItemBlock from '~/components/blocks/primitives/TabItem.astro';
 import ContentBlock from '~/components/blocks/composite/Content.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 const metadata = { title: { default: 'Tabs' } };
 ---
@@ -177,4 +178,11 @@ const metadata = { title: { default: 'Tabs' } };
       </ContentBlock>
     </TabItemBlock>
   </TabsBlock>
+
+  <ApiReferenceTable component="Tabs" category="composite" />
+  <p>
+    Panel content is supplied via <a href="/documentation/primitives/TabItem">TabItem</a> blocks placed
+    in matching <code>panel-0</code>, <code>panel-1</code>, ... slots — see the Horizontal/Vertical
+    examples above.
+  </p>
 </Layout>
