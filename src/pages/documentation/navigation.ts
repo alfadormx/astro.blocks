@@ -1,6 +1,7 @@
 import type { ButtonProps } from '~/types/button.types';
 
 export const documentationNavigation: ButtonProps[] = [
+  { label: 'Overview', href: '/documentation' },
   {
     label: 'Base',
     children: [
