@@ -1,12 +1,106 @@
 ---
-import Layout from '~/layouts/Layout.astro';
+import Layout from './_layouts/Layout.astro';
+import ItemsGrid from '~/components/blocks/composite/ItemsGrid.astro';
+import { documentationNavigation } from './navigation';
 
-var metadata = {
+const metadata = {
   title: {
-    default: 'Home',
+    default: 'Components',
   },
-  description: 'Welcome to Astro Blocks - Modern components for the web',
 };
+
+const descriptions: Record<string, string> = {
+  // Groups
+  Base: 'Foundational design tokens the rest of the library is built on.',
+  Composite: 'Higher-level blocks that compose primitives into ready-made sections.',
+  Layout: 'Structural containers that arrange content on the page.',
+  Primitives: 'The smallest building blocks, used directly or inside composites.',
+
+  // Base
+  Colors: 'The semantic color tokens and how they map across light and dark themes.',
+  Typography: 'Heading, body, and inline text scales with their global element styles.',
+
+  // Composite
+  CallToAction: 'A headline paired with action buttons to drive a single conversion.',
+  Content: 'A headline, prose body, and image arranged as an editorial section.',
+  ContentCarousel: 'A horizontally scrollable set of content slides.',
+  Footer: 'A site footer with link columns, social icons, and a legal line.',
+  Header: 'A site header with navigation, logo, and theme controls.',
+  Item: 'A single icon, title, and body unit used by every items block.',
+  ItemsContent: 'A headline above a grid of items, for feature or FAQ sections.',
+  ItemsGrid: 'A responsive grid that renders a list of items in 2, 3, or 4 columns.',
+  ItemsTimeline: 'A vertical sequence of items joined by connector lines.',
+  ItemsTimelineHorizontal: 'A horizontal sequence of items joined by connector lines.',
+  NavigationTree: 'A nested vertical navigation list with expandable groups.',
+  NavigationTreeHorizontal: 'A horizontal navigation bar with dropdown groups.',
+  Tabs: 'A tabbed panel switcher for grouping related content.',
+
+  // Layout
+  Container: 'The outermost section wrapper, controlling width and background.',
+  FourColumnContainer: 'A four-column responsive layout region.',
+  Modal: 'An overlay dialog with a backdrop and dismiss controls.',
+  SidebarLeftContainer: 'A two-region layout with a sidebar on the left.',
+  SidebarRightContainer: 'A two-region layout with a sidebar on the right.',
+  ThreeColumnContainer: 'A three-column responsive layout region.',
+  TwoColumnContainer: 'A two-column responsive layout region.',
+
+  // Primitives
+  Background: 'Color, gradient, image, and video backgrounds for any section.',
+  Button: 'A button or link with sizes, variants, intents, and icon slots.',
+  ContentCarouselItem: 'A single slide within a content carousel.',
+  Headline: 'A tagline, title, and subtitle group with alignment options.',
+  Image: 'An optimized image with sizing, ratio, and fit controls.',
+  LanguageToggle: 'A control for switching between configured site languages.',
+  Logo: 'The site logo, rendered as text, an image, or a vector.',
+  Map: 'An embedded map pinned to a location.',
+  TabItem: 'A single panel within a Tabs block.',
+  ThemeToggle: 'A control for switching between light and dark themes.',
+  Vector: 'An inline SVG icon or illustration.',
+  Video: 'An embedded or self-hosted video player.',
+};
+
+const groups = documentationNavigation.filter((entry) => entry.children?.length);
 ---
 
-<Layout metadata={metadata}> Hello World </Layout>
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Documentation',
+    title: 'Components',
+    subtitle: 'Every block in the library, grouped by type.',
+  }}
+>
+  <p>
+    Browse the full component library below. Each card links to that component's documentation page,
+    with live examples and a generated API reference.
+  </p>
+
+  {
+    groups.map((group) => (
+      <Fragment>
+        <h2>{group.label}</h2>
+        <p>{descriptions[group.label ?? ''] ?? ''}</p>
+        <ItemsGrid
+          columns={3}
+          air="tight"
+          defaultItemConfig={{
+            layout: 'vertical',
+            icon: { name: 'heroicons:cube', class: 'text-accent' },
+          }}
+          items={(group.children ?? []).map((child) => ({
+            title: child.label ?? '',
+            content: descriptions[child.label ?? ''] ?? '',
+            actions: [
+              {
+                label: 'View',
+                href: child.href,
+                variant: 'ghost' as const,
+                intent: 'primary' as const,
+              },
+            ],
+          }))}
+        />
+      </Fragment>
+    ))
+  }
+</Layout>
