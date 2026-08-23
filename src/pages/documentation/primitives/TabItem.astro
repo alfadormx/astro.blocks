@@ -1,0 +1,50 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import TabItemBlock from '~/components/blocks/primitives/TabItem.astro';
+import TabsBlock from '~/components/blocks/composite/Tabs.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+const metadata = {
+  title: {
+    default: 'TabItem',
+  },
+};
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitives',
+    title: 'TabItem',
+    subtitle: 'A simple content panel used to wrap the slotted content of a single Tabs panel.',
+  }}
+>
+  <p>
+    <code>TabItem</code> is a minimal wrapper for the content of a single tab panel. It is not used standalone
+    — it is placed inside a <code>Tabs</code> composite block, assigned to one of the named <code
+      >panel-0</code
+    >, <code>panel-1</code>, etc. slots that <code>Tabs</code>{' '}
+    exposes.
+  </p>
+
+  <!-- Example: TabItem used as Tabs panel content -->
+  <h3>Usage inside Tabs</h3>
+  <TabsBlock
+    items={[{ label: 'Overview' }, { label: 'Details' }]}
+    defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
+    activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+    tabList={{
+      spacing: { padding: 'p-2', gap: 'gap-2' },
+      border: { width: 'border', color: 'border-gray-200', radius: 'rounded-lg' },
+    }}
+  >
+    <TabItemBlock slot="panel-0" class="p-4">
+      <p>This content is rendered inside a `TabItem`, assigned to the `panel-0` slot.</p>
+    </TabItemBlock>
+    <TabItemBlock slot="panel-1" class="p-4">
+      <p>This second panel is assigned to the `panel-1` slot of the same `Tabs` block.</p>
+    </TabItemBlock>
+  </TabsBlock>
+
+  <ApiReferenceTable component="TabItem" category="primitives" />
+</Layout>

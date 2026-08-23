@@ -1,6 +1,7 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import SidebarRightContainerBlock from '~/components/blocks/layout/SidebarRightContainer.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 var metadata = {
   title: {
@@ -284,4 +285,6 @@ var metadata = {
       </div>
     </div>
   </SidebarRightContainerBlock>
+
+  <ApiReferenceTable component="SidebarRightContainer" category="layout" />
 </Layout>

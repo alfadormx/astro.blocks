@@ -2,6 +2,7 @@
 import Container from '~/components/blocks/layout/Container.astro';
 import Button from '~/components/blocks/primitives/Button.astro';
 import Logo from '~/components/blocks/primitives/Logo.astro';
+import LanguageToggle from '~/components/blocks/primitives/LanguageToggle.astro';
 import type { ButtonProps } from '~/types/button.types';
 import type { ContainerProps } from '~/types/container.types';
 import type { FooterProps } from '~/types/footer.types';
@@ -21,6 +22,9 @@ const {
   defaultSocialActionsConfig,
   secondaryActions,
   defaultSecondaryActionsConfig,
+  showLanguageToggle = false,
+  languageToggleAlign = 'center',
+  languageToggleConfig,
 } = Astro.props;
 
 const defaultDisclaimerClass = 'text-xs text-subtle';
@@ -50,6 +54,13 @@ const mergedDisclaimerClass = cn(defaultDisclaimerClass, disclaimerClass);
 const mergedFootnoteClass = cn(defaultFootnoteClass, footnoteClass);
 
 const mergedContainerConfig = mergeConfigs({}, baseContainerConfig, container);
+
+// Language toggle alignment classes
+const languageToggleAlignmentClass = {
+  left: 'justify-start',
+  center: 'justify-center',
+  right: 'justify-end',
+}[languageToggleAlign];
 ---
 
 <Container {...mergedContainerConfig}>
@@ -87,7 +98,7 @@ const mergedContainerConfig = mergeConfigs({}, baseContainerConfig, container);
       </div>
     )
   }
-  <div class="md:flex md:items-center md:justify-between py-6 md:py-8">
+  <div class="md:flex md:items-center md:justify-between pt-6 pb-0 md:pt-8 md:pb-2">
     {
       socialActions && socialActions.length > 0 && (
         <div class="md:order-1 flex flex-row gap-1">
@@ -108,4 +119,15 @@ const mergedContainerConfig = mergeConfigs({}, baseContainerConfig, container);
       <Fragment set:html={footnote} />
     </div>
   </div>
+
+  {
+    showLanguageToggle && (
+      <div class={`flex ${languageToggleAlignmentClass} py-4`}>
+        <LanguageToggle
+          {...languageToggleConfig}
+          defaultButtonConfig={{ variant: 'link', class: 'p-0' }}
+        />
+      </div>
+    )
+  }
 </Container>

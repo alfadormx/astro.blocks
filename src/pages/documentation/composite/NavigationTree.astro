@@ -1,6 +1,7 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import NavigationTreeBlock from '~/components/blocks/composite/NavigationTree.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 import type { ButtonProps } from '~/types/button.types';
 
 const metadata = {
@@ -272,4 +273,6 @@ const deeplyNestedNavItems: ButtonProps[] = [
   <h3>Data Structure Example</h3>
   <pre
     class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{JSON.stringify(nestedNavItems, null, 2)}</code></pre>
+
+  <ApiReferenceTable component="NavigationTree" category="composite" />
 </Layout>

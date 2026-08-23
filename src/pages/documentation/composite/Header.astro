@@ -3,6 +3,7 @@ import Layout from '../_layouts/Layout.astro';
 import HeaderBlock from '~/components/blocks/composite/Header.astro';
 import ModalBlock from '~/components/blocks/layout/Modal.astro';
 import NavigationTree from '~/components/blocks/composite/NavigationTree.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 var metadata = {
   title: {
@@ -338,92 +339,7 @@ const navItemsWithDropdowns = [
     />
   </div>
 
-  <!-- API Reference -->
-  <h3>API Reference</h3>
-  <div class="overflow-x-auto">
-    <table class="w-full text-left border-collapse">
-      <thead>
-        <tr class="border-b border-border">
-          <th class="py-2 px-4">Prop</th>
-          <th class="py-2 px-4">Type</th>
-          <th class="py-2 px-4">Default</th>
-          <th class="py-2 px-4">Description</th>
-        </tr>
-      </thead>
-      <tbody class="text-sm">
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">isSticky</td>
-          <td class="py-2 px-4">boolean</td>
-          <td class="py-2 px-4">false</td>
-          <td class="py-2 px-4">Makes header stick to top on scroll</td>
-        </tr>
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">isFloating</td>
-          <td class="py-2 px-4">boolean</td>
-          <td class="py-2 px-4">false</td>
-          <td class="py-2 px-4">Floats header above page content (absolute positioning)</td>
-        </tr>
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">showThemeToggle</td>
-          <td class="py-2 px-4">boolean</td>
-          <td class="py-2 px-4">false</td>
-          <td class="py-2 px-4">Show theme toggle button</td>
-        </tr>
-
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">actionsAir</td>
-          <td class="py-2 px-4">'none' | 'tight' | 'normal' | 'loose'</td>
-          <td class="py-2 px-4">'normal'</td>
-          <td class="py-2 px-4">Spacing between theme toggle and action buttons</td>
-        </tr>
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">container</td>
-          <td class="py-2 px-4">ContainerProps</td>
-          <td class="py-2 px-4">{}</td>
-          <td class="py-2 px-4">Container styling configuration</td>
-        </tr>
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">logo</td>
-          <td class="py-2 px-4">LogoButtonProps</td>
-          <td class="py-2 px-4">{}</td>
-          <td class="py-2 px-4"
-            >Logo configuration with vector (SVG inline), image, or text label. Vector takes
-            priority over image.</td
-          >
-        </tr>
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">navigationRight</td>
-          <td class="py-2 px-4">NavigationTreeHorizontalProps</td>
-          <td class="py-2 px-4">{}</td>
-          <td class="py-2 px-4">Navigation menu configuration for the right side</td>
-        </tr>
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">navigationLeft</td>
-          <td class="py-2 px-4">NavigationTreeHorizontalProps</td>
-          <td class="py-2 px-4">{}</td>
-          <td class="py-2 px-4">Navigation menu configuration for the left side</td>
-        </tr>
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">themeToggle</td>
-          <td class="py-2 px-4">object</td>
-          <td class="py-2 px-4">{}</td>
-          <td class="py-2 px-4">Theme toggle configuration overrides</td>
-        </tr>
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">actionsLeft</td>
-          <td class="py-2 px-4">ButtonProps[]</td>
-          <td class="py-2 px-4">[]</td>
-          <td class="py-2 px-4">Action buttons for left section</td>
-        </tr>
-        <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">actionsRight</td>
-          <td class="py-2 px-4">ButtonProps[]</td>
-          <td class="py-2 px-4">[]</td>
-          <td class="py-2 px-4">Action buttons for right section</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <ApiReferenceTable component="Header" category="composite" />
 
   <!-- Usage Notes -->
   <h3>Usage Notes</h3>

@@ -1,6 +1,7 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import MapBlock from '~/components/blocks/primitives/Map.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
 const metadata = {
   title: {
@@ -78,4 +79,6 @@ const metadata = {
   <div class="border border-dashed border-gray/80 p-8">
     <MapBlock lat={46.6} lon={2.5} zoom={5} showMarker={false} height="400px" />
   </div>
+
+  <ApiReferenceTable component="Map" category="primitives" />
 </Layout>

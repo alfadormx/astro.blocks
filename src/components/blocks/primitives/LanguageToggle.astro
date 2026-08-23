@@ -2,7 +2,7 @@
 import type { LanguageToggleProps } from '~/types/languagetoggle.types';
 import type { ButtonProps } from '~/types/button.types';
 import Button from './Button.astro';
-import { I18N } from 'site-config';
+import { I18N, SITE } from 'site-config';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 
 // Type for a single language from i18n config
@@ -14,7 +14,7 @@ type I18NLanguage = {
   label: string;
 };
 
-export type Props = LanguageToggleProps;
+type Props = LanguageToggleProps;
 
 const {
   orientation = 'horizontal',
@@ -23,8 +23,7 @@ const {
   activeButtonConfig,
   inactiveButtonConfig,
   class: className,
-  buttonClass,
-  gap = 'gap-2',
+  gap = 'gap-4',
   ...rest
 } = Astro.props;
 
@@ -85,10 +84,23 @@ const buildLanguageUrl = (langCode: string, langBasePath: string) => {
   }
 
   // Build the new URL with the target language's basePath
-  const newPath =
+  let newPath =
     langBasePath === '/'
       ? pathWithoutLang
       : `${langBasePath}${pathWithoutLang === '/' ? '' : pathWithoutLang}`;
+
+  // Handle trailing slash based on site config
+  if (SITE.trailingSlash) {
+    // Add trailing slash if not present (except for paths with file extensions)
+    if (!newPath.endsWith('/') && !newPath.includes('.')) {
+      newPath += '/';
+    }
+  } else {
+    // Remove trailing slash if present (except for root path)
+    if (newPath.endsWith('/') && newPath.length > 1) {
+      newPath = newPath.slice(0, -1);
+    }
+  }
 
   return newPath;
 };
@@ -114,7 +126,6 @@ const containerClasses = ['language-toggle-container', 'flex', orientationClasse
           {...buttonConfig}
           href={languageUrl}
           label={showLabels ? lang.label : lang.code.toUpperCase()}
-          class={buttonClass}
           aria-current={isActive ? 'page' : undefined}
         />
       );
