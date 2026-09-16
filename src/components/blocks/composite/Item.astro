@@ -3,6 +3,7 @@ import type { ItemProps } from '~/types/item.types';
 import { cn } from '~/utils/styles';
 import { Icon } from 'astro-icon/components';
 import Button from '~/components/blocks/primitives/Button.astro';
+import Image from '~/components/blocks/primitives/Image.astro';
 
 type Props = ItemProps;
 
@@ -16,6 +17,7 @@ const connectorClasses = {
 // Extract props
 const {
   icon,
+  image,
   title,
   content,
   actions = [],
@@ -46,9 +48,16 @@ const defaultRootClass = cn(
   className
 );
 
+// Media slot: icon and image are mutually exclusive, image wins
+const hasImage = !!image?.src;
+const hasIcon = !!icon?.name;
+const hasMedia = hasIcon || hasImage;
+
+// Body: rendered only when it has something to hold
+const hasBody = !!title || !!content || actions.length > 0;
+
 const mergedIconClass = cn('size-8 md:size-10 lg:size-12 shrink-0', icon?.class);
-const mergedTitleClass = cn('font-bold text-lg md:text-xl lg:text-2xl mb-1 md:mb-2');
-const mergedContentClass = cn('mb-2 md:mb-3');
+const mergedImageClass = cn('size-8 md:size-10 lg:size-12 shrink-0', image?.class);
 
 const connectorFinalClass = cn(
   'w-0.5 h-full border-l border-border',
@@ -74,47 +83,60 @@ const horizontalConnectorRightClass = cn(
 
 <div class={defaultRootClass}>
   {
-    layout === 'horizontal' && icon && icon.name && (
+    layout === 'horizontal' && hasMedia && (
       <div class="flex flex-col items-center self-stretch">
-        <Icon name={icon.name} class={mergedIconClass} aria-label={icon.ariaLabel} />
+        {hasImage ? (
+          <Image {...image} class={mergedImageClass} />
+        ) : (
+          hasIcon && <Icon name={icon.name} class={mergedIconClass} aria-label={icon.ariaLabel} />
+        )}
         {showConnector && <div class={connectorFinalClass} />}
       </div>
     )
   }
   {
     layout === 'vertical' &&
-      icon &&
-      icon.name &&
+      hasMedia &&
       (showConnectorLeft || showConnectorRight ? (
         <div class="grid grid-cols-[1fr_auto_1fr] items-center w-full">
           <div class={horizontalConnectorLeftClass} />
-          <Icon name={icon.name} class={mergedIconClass} aria-label={icon.ariaLabel} />
+          {hasImage ? (
+            <Image {...image} class={mergedImageClass} />
+          ) : (
+            hasIcon && <Icon name={icon.name} class={mergedIconClass} aria-label={icon.ariaLabel} />
+          )}
           <div class={horizontalConnectorRightClass} />
         </div>
       ) : (
         <div class="flex flex-col items-center self-stretch">
-          <Icon name={icon.name} class={mergedIconClass} aria-label={icon.ariaLabel} />
+          {hasImage ? (
+            <Image {...image} class={mergedImageClass} />
+          ) : (
+            hasIcon && <Icon name={icon.name} class={mergedIconClass} aria-label={icon.ariaLabel} />
+          )}
           {showConnector && <div class={connectorFinalClass} />}
         </div>
       ))
   }
-  <div
-    class={cn(
-      'flex flex-col',
-      layout === 'horizontal' ? 'items-start text-left' : 'items-center text-center',
-      contentClass
-    )}
-  >
-    <div class={mergedTitleClass}>{title}</div>
-    <div class={mergedContentClass}>{content}</div>
-    {
-      actions.length > 0 && (
-        <div class="flex flex-wrap gap-2 md:gap-3 mt-2 md:mt-3">
-          {actions.map((action) => (
-            <Button {...action} />
-          ))}
-        </div>
-      )
-    }
-  </div>
+  {
+    hasBody && (
+      <div
+        class={cn(
+          'flex flex-col',
+          layout === 'horizontal' ? 'items-start text-left' : 'items-center text-center',
+          contentClass
+        )}
+      >
+        {title && <div class="font-bold text-lg md:text-xl lg:text-2xl mb-1 md:mb-2">{title}</div>}
+        {content && <div class="mb-2 md:mb-3">{content}</div>}
+        {actions.length > 0 && (
+          <div class="flex flex-wrap gap-2 md:gap-3 mt-2 md:mt-3">
+            {actions.map((action) => (
+              <Button {...action} />
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
 </div>
