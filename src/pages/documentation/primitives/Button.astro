@@ -38,6 +38,109 @@ const metadata = {
     <ButtonBlock label="Extra Large" size="xl" />
   </div>
 
+  <h3>Vertical Layout</h3>
+  <p>
+    The <code>layout</code> prop stacks the icon or image above the label. It has no literal default:
+    without it, a button resolves to vertical only when a <code>subtitle</code> is set. An explicit value
+    always wins.
+  </p>
+  <div class="flex flex-wrap items-start gap-4">
+    <ButtonBlock
+      layout="vertical"
+      icon={{ name: 'heroicons:cube' }}
+      label="Extra Small"
+      size="xs"
+    />
+    <ButtonBlock layout="vertical" icon={{ name: 'heroicons:cube' }} label="Small" size="sm" />
+    <ButtonBlock layout="vertical" icon={{ name: 'heroicons:cube' }} label="Medium" size="md" />
+    <ButtonBlock layout="vertical" icon={{ name: 'heroicons:cube' }} label="Large" size="lg" />
+    <ButtonBlock
+      layout="vertical"
+      icon={{ name: 'heroicons:cube' }}
+      label="Extra Large"
+      size="xl"
+    />
+  </div>
+
+  <h3>With Images</h3>
+  <p>
+    <code>icon</code> and <code>image</code> occupy the same media slot and are mutually exclusive; when
+    both are supplied the image wins. <code>iconPosition</code> positions whichever medium is present.
+    <code>image.alt</code> is required at runtime — the Image primitive throws without it.
+  </p>
+  <div class="flex flex-wrap items-start gap-4">
+    <ButtonBlock
+      label="Horizontal Image"
+      image={{
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4',
+        alt: 'Mountain landscape',
+        width: 64,
+        height: 64,
+      }}
+    />
+    <ButtonBlock
+      layout="vertical"
+      label="Vertical Image"
+      image={{
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4',
+        alt: 'Mountain landscape',
+        width: 64,
+        height: 64,
+      }}
+    />
+    <ButtonBlock
+      label="Image Right"
+      iconPosition="right"
+      image={{
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4',
+        alt: 'Mountain landscape',
+        width: 64,
+        height: 64,
+      }}
+    />
+    <ButtonBlock
+      image={{
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4',
+        alt: 'Mountain landscape',
+        width: 64,
+        height: 64,
+      }}
+    />
+  </div>
+
+  <h3>Image Sizing</h3>
+  <p>
+    <code>imageSize</code> is a Tailwind class governing the rendered box, while
+    <code>image.width</code> / <code>image.height</code> / <code>image.aspectRatio</code> govern what
+    the optimizer generates. Both are needed — supply dimensions or an <code>aspectRatio</code>, or
+    the optimizer logs an error. Note that <code>image.layout</code> of <code>'cover'</code> or
+    <code>'contained'</code> makes the Image wrapper <code>w-full h-full</code>, which will fill the
+    button.
+  </p>
+  <div class="flex flex-wrap items-start gap-4">
+    <ButtonBlock
+      layout="vertical"
+      label="Default Size"
+      image={{
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4',
+        alt: 'Mountain landscape',
+        width: 96,
+        height: 96,
+      }}
+    />
+    <ButtonBlock
+      layout="vertical"
+      label="Explicit Override"
+      imageSize="size-12"
+      image={{
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4',
+        alt: 'Mountain landscape',
+        width: 96,
+        height: 96,
+      }}
+    />
+  </div>
+
   <h3>Variants</h3>
   <div class="flex flex-wrap gap-4">
     <ButtonBlock label="Solid" variant="solid" />

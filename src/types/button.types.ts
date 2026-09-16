@@ -1,5 +1,6 @@
 import type { HTMLAttributes } from 'astro/types';
 import type { IconConfig } from './icon.types';
+import type { ImageProps } from './image.types';
 
 export interface ButtonProps extends Omit<HTMLAttributes<'button'>, 'class'> {
   /** HTML `id` attribute applied to the rendered `<button>` or `<a>` element. */
@@ -8,12 +9,29 @@ export interface ButtonProps extends Omit<HTMLAttributes<'button'>, 'class'> {
   label?: string;
   /** Secondary text rendered below the label; enables the promotional (subtitle) layout. */
   subtitle?: string;
+  /**
+   * Arrangement of the icon or image relative to the label. No literal default: when
+   * omitted it resolves to 'vertical' if `subtitle` is set, otherwise 'horizontal'.
+   * An explicit value always wins, including 'horizontal' together with `subtitle`.
+   */
+  layout?: 'horizontal' | 'vertical';
   /** Icon configuration (name, class, aria-label) rendered alongside the label. */
   icon?: IconConfig;
-  /** Position of the icon relative to the label (default: 'left'). */
+  /**
+   * Image configuration rendered through the Image primitive, in the same media slot as
+   * `icon`. Mutually exclusive with `icon` — when both are set the image wins. `alt` is
+   * required at runtime; the Image primitive throws without it.
+   */
+  image?: ImageProps;
+  /** Position of the icon or image relative to the label (default: 'left'). */
   iconPosition?: 'left' | 'right';
   /** Explicit icon size class, overriding the size-derived default icon size. */
   iconSize?: string;
+  /**
+   * Explicit image size class, overriding the size-derived default
+   * (xs: 'size-3', sm: 'size-4', md: 'size-5', lg: 'size-6', xl: 'size-7').
+   */
+  imageSize?: string;
   /** URL that, when set, renders the button as an `<a>` element instead of a `<button>`. */
   href?: string;
   /** Anchor `target` attribute used when `href` is set (default: '_self'). */
