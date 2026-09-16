@@ -18,6 +18,14 @@ const metadata = {
     subtitle: 'Showcase of the ItemsGrid composite block with various Item configurations',
   }}
 >
+  <p>
+    ItemsGrid sizes its columns from the width of the element that contains it, not from the
+    viewport. A grid asks for at most <code>columns</code> columns and steps down when its container is
+    too narrow to fit them: two columns from <code>32rem</code>, three from
+    <code>48rem</code>, four from <code>64rem</code>. The same grid therefore renders three columns
+    in a full-width section and one in a sidebar, with no change at the call site.
+  </p>
+
   <h3>1. Basic grid (no defaultItemConfig)</h3>
   <ItemsGridBlock
     columns={3}
@@ -92,6 +100,54 @@ const metadata = {
       },
     ]}
   />
+
+  <h3>3. The same grid in a narrow container</h3>
+  <p>
+    Both grids below are <code>columns={3}</code> with identical items. The second one sits in a
+    <code>max-w-sm</code> wrapper, so it stacks to a single column at any viewport width.
+  </p>
+  <ItemsGridBlock
+    columns={3}
+    items={[
+      {
+        icon: { name: 'heroicons:sun' },
+        title: 'Wide container',
+        content: 'Three columns once the container passes 48rem.',
+      },
+      {
+        icon: { name: 'heroicons:sparkles' },
+        title: 'Wide container',
+        content: 'Three columns once the container passes 48rem.',
+      },
+      {
+        icon: { name: 'heroicons:bolt' },
+        title: 'Wide container',
+        content: 'Three columns once the container passes 48rem.',
+      },
+    ]}
+  />
+  <div class="max-w-sm">
+    <ItemsGridBlock
+      columns={3}
+      items={[
+        {
+          icon: { name: 'heroicons:sun' },
+          title: 'Narrow container',
+          content: 'Same columns, but the container is under 32rem.',
+        },
+        {
+          icon: { name: 'heroicons:sparkles' },
+          title: 'Narrow container',
+          content: 'Same columns, but the container is under 32rem.',
+        },
+        {
+          icon: { name: 'heroicons:bolt' },
+          title: 'Narrow container',
+          content: 'Same columns, but the container is under 32rem.',
+        },
+      ]}
+    />
+  </div>
 
   <ApiReferenceTable component="ItemsGrid" category="composite" />
 </Layout>
