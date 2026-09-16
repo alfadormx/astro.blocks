@@ -13,39 +13,39 @@ const {
   air = 'normal' as 'none' | 'tight' | 'normal' | 'loose',
   class: className = '',
   defaultItemConfig,
-} = Astro.props;
+} = Astro.props as Props;
 
 const airSettings = {
   none: '',
-  tight: 'gap-3 md:gap-4 lg:gap-6',
-  normal: 'gap-4 md:gap-6 lg:gap-8',
-  loose: 'gap-6 md:gap-8 lg:gap-12',
+  tight: 'gap-3 @3xl:gap-4 @5xl:gap-6',
+  normal: 'gap-4 @3xl:gap-6 @5xl:gap-8',
+  loose: 'gap-6 @3xl:gap-8 @5xl:gap-12',
 } as const;
 
 const baseGridClass = 'grid mx-auto';
-let columnsClass = '';
 
-if (columns === 4) {
-  columnsClass = 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2';
-} else if (columns === 3) {
-  columnsClass = 'lg:grid-cols-3 sm:grid-cols-2';
-} else if (columns === 2) {
-  columnsClass = 'sm:grid-cols-2';
-}
+const columnsClasses = {
+  1: 'grid-cols-1',
+  2: 'grid-cols-1 @lg:grid-cols-2',
+  3: 'grid-cols-1 @lg:grid-cols-2 @3xl:grid-cols-3',
+  4: 'grid-cols-1 @lg:grid-cols-2 @3xl:grid-cols-3 @5xl:grid-cols-4',
+} as const;
 
 const gridClass = cn(
   baseGridClass,
-  columnsClass,
+  columnsClasses[columns],
   airSettings[air as keyof typeof airSettings],
   className
 );
 ---
 
-<div class={gridClass}>
-  {
-    items.map((item: ItemProps) => {
-      const mergedItem = mergeConfigs({}, defaultItemConfig || {}, item);
-      return <Item {...mergedItem} />;
-    })
-  }
+<div class="@container">
+  <div class={gridClass}>
+    {
+      items.map((item: ItemProps) => {
+        const mergedItem = mergeConfigs({}, defaultItemConfig || {}, item);
+        return <Item {...mergedItem} />;
+      })
+    }
+  </div>
 </div>
