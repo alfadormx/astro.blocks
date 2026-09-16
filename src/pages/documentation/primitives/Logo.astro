@@ -41,6 +41,24 @@ const metadata = {
     />
   </div>
 
+  <h3>Image (Raster)</h3>
+  <p>
+    Used when <code>vector.src</code> is not set. Supply <code>width</code> and
+    <code>height</code> (or an <code>aspectRatio</code>) so the image optimizer can generate the
+    rendered sources. <code>alt</code> falls back to the site name.
+  </p>
+  <div class="flex items-center gap-4">
+    <LogoBlock
+      image={{
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+        alt: 'Logo',
+        width: 48,
+        height: 48,
+      }}
+      href="/"
+    />
+  </div>
+
   <h3>Label Only (Text)</h3>
   <div class="flex items-center gap-4">
     <LogoBlock label="Simple Text Logo" labelClass="text-lg font-semibold" />
@@ -58,6 +76,20 @@ const metadata = {
       labelClass="text-xl font-bold"
     />
   </div>
+
+  <h3>Notes</h3>
+  <p>
+    <code>vector</code> takes precedence over <code>image</code> — when both have a
+    <code>src</code>, only the vector renders. Setting either one suppresses the default site-name
+    label.
+  </p>
+  <p>
+    Logo renders its <code>vector</code> or <code>image</code> into the Button slot, so neither is forwarded
+    to the Button's own <code>icon</code> / <code>image</code> media slot. Every other prop is passed
+    through to the Button primitive, so <code>variant</code>,
+    <code>intent</code>, <code>size</code>, <code>href</code> and <code>class</code> behave exactly as
+    they do there.
+  </p>
 
   <ApiReferenceTable component="Logo" category="primitives" />
 </Layout>

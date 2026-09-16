@@ -2,6 +2,7 @@
 import type { ButtonProps } from '~/types/button.types';
 import { cn } from '~/utils/styles';
 import { Icon } from 'astro-icon/components';
+import Image from '~/components/blocks/primitives/Image.astro';
 
 type Props = ButtonProps;
 
@@ -9,9 +10,12 @@ const {
   id,
   label,
   subtitle,
+  layout,
   icon,
+  image,
   iconPosition = 'left',
   iconSize,
+  imageSize,
   align,
   href,
   target = '_self',
@@ -24,14 +28,23 @@ const {
   class: className = '',
   labelClass = '',
   subtitleClass = '',
+  iconClass = '',
   ...attrs
 } = Astro.props;
 
-// Determine if this is an icon-only button
-const isIconOnly = icon && icon.name && !label && !subtitle;
+// Media slot: icon and image are mutually exclusive, image wins
+const hasImage = !!image?.src;
+const hasIcon = !!icon?.name;
+
+// Determine if this is a media-only button (icon or image, no text)
+const isMediaOnly = (hasIcon || hasImage) && !label && !subtitle;
 
 // Determine if this is a promotional button (has subtitle)
 const hasSubtitle = !!subtitle;
+
+// Resolve the content arrangement: explicit `layout` wins, otherwise a subtitle implies vertical
+const resolvedLayout = layout ?? (subtitle ? 'vertical' : 'horizontal');
+const isVertical = resolvedLayout === 'vertical';
 
 // Base button classes
 const baseClasses = cn(
@@ -43,17 +56,47 @@ const baseClasses = cn(
 
 // Size classes
 const sizeClasses = {
-  xs: isIconOnly ? 'size-6' : hasSubtitle ? 'px-4 py-3' : 'px-2.5 py-1.5 text-xs',
-  sm: isIconOnly ? 'size-8' : hasSubtitle ? 'px-5 py-4' : 'px-3 py-2 text-sm',
-  md: isIconOnly ? 'size-10' : hasSubtitle ? 'px-6 py-5' : 'px-4 py-2 text-[1rem]',
-  lg: isIconOnly ? 'size-12' : hasSubtitle ? 'px-8 py-6' : 'px-5 py-3 text-lg',
-  xl: isIconOnly ? 'size-14' : hasSubtitle ? 'px-10 py-8' : 'px-6 py-4 text-xl',
+  xs: isMediaOnly
+    ? 'size-6'
+    : hasSubtitle
+      ? 'px-4 py-3'
+      : isVertical
+        ? 'px-4 py-3 text-xs'
+        : 'px-2.5 py-1.5 text-xs',
+  sm: isMediaOnly
+    ? 'size-8'
+    : hasSubtitle
+      ? 'px-5 py-4'
+      : isVertical
+        ? 'px-5 py-4 text-sm'
+        : 'px-3 py-2 text-sm',
+  md: isMediaOnly
+    ? 'size-10'
+    : hasSubtitle
+      ? 'px-6 py-5'
+      : isVertical
+        ? 'px-6 py-5 text-[1rem]'
+        : 'px-4 py-2 text-[1rem]',
+  lg: isMediaOnly
+    ? 'size-12'
+    : hasSubtitle
+      ? 'px-8 py-6'
+      : isVertical
+        ? 'px-8 py-6 text-lg'
+        : 'px-5 py-3 text-lg',
+  xl: isMediaOnly
+    ? 'size-14'
+    : hasSubtitle
+      ? 'px-10 py-8'
+      : isVertical
+        ? 'px-10 py-8 text-xl'
+        : 'px-6 py-4 text-xl',
 }[size];
 
 // Shape classes
 const shapeClasses = {
   rounded: 'rounded-md',
-  square: isIconOnly ? 'rounded-none' : 'rounded-sm',
+  square: isMediaOnly ? 'rounded-none' : 'rounded-sm',
   pill: 'rounded-full',
 }[shape];
 
@@ -122,11 +165,22 @@ const alignClass =
         : '';
 
 // Layout classes for content arrangement
-const layoutClasses = cn(hasSubtitle ? 'flex-col gap-1' : 'flex-row gap-2', isIconOnly && 'p-0');
+const layoutClasses = cn(isVertical ? 'flex-col gap-1' : 'flex-row gap-2', isMediaOnly && 'p-0');
 
 // Icon size classes
 const iconSizeClass =
   iconSize ||
+  {
+    xs: 'size-3',
+    sm: 'size-4',
+    md: 'size-5',
+    lg: 'size-6',
+    xl: 'size-7',
+  }[size];
+
+// Image size classes
+const imageSizeClass =
+  imageSize ||
   {
     xs: 'size-3',
     sm: 'size-4',
@@ -153,7 +207,7 @@ const finalLabelClass = cn(hasSubtitle && 'font-semibold', labelClass);
 const finalSubtitleClass = cn('text-xs opacity-90', subtitleClass);
 
 // Icon wrapper classes
-const finalIconClass = cn(icon?.class);
+const finalIconClass = cn(icon?.class, iconClass);
 
 // Render as link or button
 const Tag = href ? 'a' : 'button';
@@ -165,13 +219,18 @@ const tagProps = href
 <div class={align ? alignClass : 'contents'}>
   <Tag class={buttonClass} {...tagProps}>
     {
-      icon && icon.name && iconPosition === 'left' && (
-        <Icon
-          name={icon.name}
-          class={cn(iconSizeClass, finalIconClass)}
-          aria-label={icon.ariaLabel}
-        />
-      )
+      iconPosition === 'left' &&
+        (hasImage ? (
+          <Image {...image} class={cn(imageSizeClass, image?.class)} />
+        ) : (
+          hasIcon && (
+            <Icon
+              name={icon!.name}
+              class={cn(iconSizeClass, finalIconClass)}
+              aria-label={icon!.ariaLabel}
+            />
+          )
+        ))
     }
 
     {
@@ -184,13 +243,18 @@ const tagProps = href
     }
 
     {
-      icon && icon.name && iconPosition === 'right' && (
-        <Icon
-          name={icon.name}
-          class={cn(iconSizeClass, finalIconClass)}
-          aria-label={icon.ariaLabel}
-        />
-      )
+      iconPosition === 'right' &&
+        (hasImage ? (
+          <Image {...image} class={cn(imageSizeClass, image?.class)} />
+        ) : (
+          hasIcon && (
+            <Icon
+              name={icon!.name}
+              class={cn(iconSizeClass, finalIconClass)}
+              aria-label={icon!.ariaLabel}
+            />
+          )
+        ))
     }
 
     {Astro.slots.has('default') && <slot />}
