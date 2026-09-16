@@ -21,19 +21,23 @@ const defaultLogoConfig: Partial<LogoProps> = {
 };
 
 const mergedLogoConfig = mergeConfigs({}, defaultLogoConfig, Astro.props);
+
+// The logo renders its own vector/image into the Button slot, so keep both out of the
+// Button's own props — Button now owns an `image` prop of its own media slot.
+const { vector: mergedVector, image: mergedImage, ...buttonConfig } = mergedLogoConfig;
 ---
 
 {
-  (mergedLogoConfig.vector?.src || mergedLogoConfig.image?.src || mergedLogoConfig.label) && (
-    <Button {...mergedLogoConfig}>
-      {mergedLogoConfig.vector?.src ? (
+  (mergedVector?.src || mergedImage?.src || buttonConfig.label) && (
+    <Button {...buttonConfig}>
+      {mergedVector?.src ? (
         <Vector
-          {...mergedLogoConfig.vector}
-          class={cn('w-full h-full', mergedLogoConfig.vector.class)}
-          ariaLabel={mergedLogoConfig.vector.ariaLabel || SITE.name}
+          {...mergedVector}
+          class={cn('w-full h-full', mergedVector.class)}
+          ariaLabel={mergedVector.ariaLabel || SITE.name}
         />
-      ) : mergedLogoConfig.image?.src ? (
-        <Image {...mergedLogoConfig.image} alt={mergedLogoConfig.image.alt || SITE.name} />
+      ) : mergedImage?.src ? (
+        <Image {...mergedImage} alt={mergedImage.alt || SITE.name} />
       ) : null}
     </Button>
   )
