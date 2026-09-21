@@ -31,8 +31,37 @@ const tabsWrapperClass = cn(
   orientation === 'vertical' ? 'grid grid-cols-[auto_1fr]' : 'flex flex-col'
 );
 
+const isGrid = tabList?.layout === 'grid';
+
+// Literal class strings only - Tailwind scans source text, so every variant must
+// appear whole in this file. Base is 2 columns: a tab strip's cells are far smaller
+// than ItemsGrid's cards, so its ladder (@lg/@3xl/@5xl) would collapse to one column
+// in the narrow panels this layout exists for.
+const gridColumnClasses = {
+  2: 'grid-cols-2',
+  3: 'grid-cols-2 @sm:grid-cols-3',
+  4: 'grid-cols-2 @sm:grid-cols-3 @md:grid-cols-4',
+} as const;
+
+const layoutClass = isGrid
+  ? cn('grid items-stretch gap-2', gridColumnClasses[tabList?.columns ?? 2])
+  : tabList?.layout === 'row'
+    ? 'flex flex-row'
+    : tabList?.layout === 'column'
+      ? 'flex flex-col'
+      : orientation === 'vertical'
+        ? 'flex flex-col'
+        : 'flex flex-row';
+
+// Grid mode only: the trigger spans are class-free in row/column mode, and Button is
+// inline-flex, so without this the tiles sit ragged inside their tracks.
+const tabTileClass = isGrid ? 'w-full h-full' : undefined;
+
+const TabListWrapper = isGrid ? 'div' : Fragment;
+const tabListWrapperProps = isGrid ? { class: '@container' } : {};
+
 const tabListClass = cn(
-  orientation === 'vertical' ? 'flex flex-col' : 'flex flex-row',
+  layoutClass,
   tabList?.background?.class,
   tabList?.spacing?.padding,
   tabList?.spacing?.margin,
@@ -46,30 +75,37 @@ const tabListClass = cn(
 
 <Container {...mergedContainer}>
   <div class={tabsWrapperClass} data-tabs-root>
-    <div role="tablist" class={tabListClass}>
-      {
-        items.map((item, n) => {
-          const inactiveMerge = mergeConfigs({}, internalTabDefaults, defaultTabConfig || {}, item);
-          const activeMerge = mergeConfigs(
-            {},
-            internalTabDefaults,
-            defaultTabConfig || {},
-            activeTabConfig || {},
-            item
-          );
-          return (
-            <span data-tab-index={String(n)}>
-              <span data-tab-button="inactive">
-                <Button {...inactiveMerge} />
+    <TabListWrapper {...tabListWrapperProps}>
+      <div role="tablist" class={tabListClass}>
+        {
+          items.map((item, n) => {
+            const inactiveMerge = mergeConfigs(
+              {},
+              internalTabDefaults,
+              defaultTabConfig || {},
+              item
+            );
+            const activeMerge = mergeConfigs(
+              {},
+              internalTabDefaults,
+              defaultTabConfig || {},
+              activeTabConfig || {},
+              item
+            );
+            return (
+              <span data-tab-index={String(n)} class={tabTileClass}>
+                <span data-tab-button="inactive" class={tabTileClass}>
+                  <Button {...inactiveMerge} />
+                </span>
+                <span data-tab-button="active" hidden class={tabTileClass}>
+                  <Button {...activeMerge} />
+                </span>
               </span>
-              <span data-tab-button="active" hidden>
-                <Button {...activeMerge} />
-              </span>
-            </span>
-          );
-        })
-      }
-    </div>
+            );
+          })
+        }
+      </div>
+    </TabListWrapper>
     <div>
       {
         items.length > 0 && (
