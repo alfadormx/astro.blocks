@@ -7,10 +7,12 @@
     "build": "astro build",
     "preview": "astro preview --host",
     "astro": "astro",
-    "check": "pnpm run check:astro && pnpm run check:lint && pnpm run check:prettier",
+    "check": "pnpm run check:astro && pnpm run check:lint && pnpm run check:prettier && pnpm run test:unit && pnpm run test:browser",
     "check:astro": "astro check",
     "check:lint": "eslint .",
     "check:prettier": "prettier --check .",
+    "test:unit": "vitest run",
+    "test:browser": "node scripts/test-browser.mjs",
     "fix": "pnpm run fix:eslint && pnpm run fix:prettier",
     "fix:eslint": "eslint . --fix",
     "fix:prettier": "prettier --write ."
@@ -39,6 +41,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.63.0",
     "@types/js-yaml": "^4.0.9",
     "@types/leaflet": "^1.9.22",
     "@types/lodash.merge": "^4.6.9",
@@ -51,6 +54,7 @@
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.67.0"
+    "typescript-eslint": "^8.67.0",
+    "vitest": "^5.0.1"
   }
 }
