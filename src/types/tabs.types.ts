@@ -15,11 +15,15 @@ export interface TabsProps {
   orientation?: 'horizontal' | 'vertical';
   /** Config passed to the wrapping Container block that surrounds the whole Tabs component. */
   container?: Partial<ContainerProps>;
-  /** Styling config for the tablist wrapper (the element with role="tablist"): background, spacing, border, and an extra class name. */
+  /** Styling and arrangement config for the tablist wrapper (the element with role="tablist"): background, spacing, border, an extra class name, plus `layout` (how the triggers are arranged among themselves) and `columns` (grid layout only). */
   tabList?: {
     background?: SimpleBackgroundProps;
     spacing?: SpacingConfig;
     border?: BorderConfig;
     class?: string;
+    /** How the triggers are arranged among themselves; independent of `orientation`. Unset derives from `orientation` ('vertical' -> column, otherwise row). */
+    layout?: 'row' | 'column' | 'grid';
+    /** Number of trigger columns at the widest step; applies only when `layout` is 'grid', ignored otherwise (default: 2). Steps down by container width, never below 2. */
+    columns?: 2 | 3 | 4;
   };
 }
