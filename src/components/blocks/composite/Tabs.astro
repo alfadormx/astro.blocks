@@ -108,74 +108,11 @@ const tabListClass = cn(
     </TabListWrapper>
     <div>
       {
-        items.length > 0 && (
-          <div data-tab-panel="0">
-            <slot name="panel-0" />
+        items.map((_item, n) => (
+          <div data-tab-panel={String(n)} hidden={n !== 0}>
+            <slot name={`panel-${n}`} />
           </div>
-        )
-      }
-      {
-        items.length > 1 && (
-          <div data-tab-panel="1" hidden>
-            <slot name="panel-1" />
-          </div>
-        )
-      }
-      {
-        items.length > 2 && (
-          <div data-tab-panel="2" hidden>
-            <slot name="panel-2" />
-          </div>
-        )
-      }
-      {
-        items.length > 3 && (
-          <div data-tab-panel="3" hidden>
-            <slot name="panel-3" />
-          </div>
-        )
-      }
-      {
-        items.length > 4 && (
-          <div data-tab-panel="4" hidden>
-            <slot name="panel-4" />
-          </div>
-        )
-      }
-      {
-        items.length > 5 && (
-          <div data-tab-panel="5" hidden>
-            <slot name="panel-5" />
-          </div>
-        )
-      }
-      {
-        items.length > 6 && (
-          <div data-tab-panel="6" hidden>
-            <slot name="panel-6" />
-          </div>
-        )
-      }
-      {
-        items.length > 7 && (
-          <div data-tab-panel="7" hidden>
-            <slot name="panel-7" />
-          </div>
-        )
-      }
-      {
-        items.length > 8 && (
-          <div data-tab-panel="8" hidden>
-            <slot name="panel-8" />
-          </div>
-        )
-      }
-      {
-        items.length > 9 && (
-          <div data-tab-panel="9" hidden>
-            <slot name="panel-9" />
-          </div>
-        )
+        ))
       }
     </div>
   </div>
@@ -203,8 +140,14 @@ const tabListClass = cn(
 
       const inactiveBtn = inactiveWrap?.querySelector<HTMLElement>('[role="tab"]');
       const activeBtn = activeWrap?.querySelector<HTMLElement>('[role="tab"]');
-      if (inactiveBtn) inactiveBtn.setAttribute('aria-selected', 'false');
-      if (activeBtn) activeBtn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      if (inactiveBtn) {
+        inactiveBtn.setAttribute('aria-selected', 'false');
+        inactiveBtn.setAttribute('tabindex', '-1');
+      }
+      if (activeBtn) {
+        activeBtn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        activeBtn.setAttribute('tabindex', isActive ? '0' : '-1');
+      }
     });
 
     panels.forEach((panel, i) => {
@@ -233,7 +176,6 @@ const tabListClass = cn(
           btn.id = `${tabId}-${btnIdx === 0 ? 'inactive' : 'active'}`;
           btn.setAttribute('aria-controls', panelId);
           btn.setAttribute('aria-selected', 'false');
-          btn.setAttribute('tabindex', i === 0 ? '0' : '-1');
         });
       });
 
