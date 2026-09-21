@@ -179,6 +179,103 @@ const metadata = { title: { default: 'Tabs' } };
     </TabItemBlock>
   </TabsBlock>
 
+  <h3>Tab list layout: row</h3>
+  <p>
+    <code>tabList.layout</code> is independent of <code>orientation</code>. Here a vertical Tabs
+    keeps its tab list beside the panel, while the triggers themselves run in a row.
+  </p>
+  <TabsBlock
+    items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
+    defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
+    activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+    orientation="vertical"
+    tabList={{ layout: 'row', spacing: { padding: 'p-2', gap: 'gap-2' } }}
+  >
+    <TabItemBlock slot="panel-0">
+      <p>Overview panel content.</p>
+    </TabItemBlock>
+    <TabItemBlock slot="panel-1">
+      <p>API panel content.</p>
+    </TabItemBlock>
+    <TabItemBlock slot="panel-2">
+      <p>Examples panel content.</p>
+    </TabItemBlock>
+  </TabsBlock>
+
+  <h3>Tab list layout: column</h3>
+  <p>The mirror case: a horizontal Tabs whose triggers are stacked in a column above the panel.</p>
+  <TabsBlock
+    items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
+    defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
+    activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+    tabList={{ layout: 'column', spacing: { padding: 'p-2', gap: 'gap-2' } }}
+  >
+    <TabItemBlock slot="panel-0">
+      <p>Overview panel content.</p>
+    </TabItemBlock>
+    <TabItemBlock slot="panel-1">
+      <p>API panel content.</p>
+    </TabItemBlock>
+    <TabItemBlock slot="panel-2">
+      <p>Examples panel content.</p>
+    </TabItemBlock>
+  </TabsBlock>
+
+  <h3>Tab list layout: grid</h3>
+  <p>
+    <code>tabList.layout: 'grid'</code> arranges the triggers as tiles. The column count is read from
+    the width of the tab list's own container, not the viewport, so the same config adapts inside a narrow
+    panel. <code>tabList.columns</code> applies only in this layout, and the count never drops below two
+    columns.
+  </p>
+  <p>
+    Grid is meant for <code>orientation="horizontal"</code>. In <code>orientation="vertical"</code> the
+    tab list sits in an <code>auto</code> grid track, where a size container has no intrinsic width to
+    measure, so the tile grid collapses; use <code>layout: 'row'</code> or <code
+      >layout: 'column'</code
+    >
+    there.
+  </p>
+  <div class="max-w-lg">
+    <TabsBlock
+      items={[
+        { label: 'Overview' },
+        { label: 'API' },
+        { label: 'Examples' },
+        { label: 'Themes' },
+        { label: 'Layout' },
+        { label: 'Tokens' },
+      ]}
+      defaultTabConfig={{
+        variant: 'ghost',
+        intent: 'neutral',
+        layout: 'vertical',
+        icon: { name: 'heroicons:cube' },
+      }}
+      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      tabList={{ layout: 'grid', columns: 3 }}
+    >
+      <TabItemBlock slot="panel-0">
+        <p>Overview panel content.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-1">
+        <p>API panel content.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-2">
+        <p>Examples panel content.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-3">
+        <p>Themes panel content.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-4">
+        <p>Layout panel content.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-5">
+        <p>Tokens panel content.</p>
+      </TabItemBlock>
+    </TabsBlock>
+  </div>
+
   <ApiReferenceTable component="Tabs" category="composite" />
   <p>
     Panel content is supplied via <a href="/documentation/primitives/TabItem">TabItem</a> blocks placed
