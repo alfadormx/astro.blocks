@@ -5,7 +5,7 @@ import type { SpacingConfig } from '~/types/spacing.types';
 import type { BorderConfig } from '~/types/border.types';
 
 export interface TabsProps {
-  /** List of tab entries; each item is a Button config rendered as a tab trigger, and its index maps to a `panel-{n}` slot for content. */
+  /** List of tab entries; each item is a Button config rendered as a tab trigger, and its index maps to a `panel-{n}` slot for content. Any number of tabs is supported — the panel count follows the item count with no upper bound. */
   items: Partial<ButtonProps>[];
   /** Button config merged as the base/default styling for every tab (both inactive and active states) before item-specific overrides. */
   defaultTabConfig?: Partial<ButtonProps>;

@@ -276,6 +276,47 @@ const metadata = { title: { default: 'Tabs' } };
     </TabsBlock>
   </div>
 
+  <h3>Any number of tabs</h3>
+  <p>
+    The panel count follows the item count — there is no cap. Twelve items render twelve triggers
+    and twelve <code>panel-0</code> … <code>panel-11</code> slots, each with its own tabpanel id and ARIA
+    wiring.
+  </p>
+  <div class="max-w-lg">
+    <TabsBlock
+      items={[
+        { label: 'One' },
+        { label: 'Two' },
+        { label: 'Three' },
+        { label: 'Four' },
+        { label: 'Five' },
+        { label: 'Six' },
+        { label: 'Seven' },
+        { label: 'Eight' },
+        { label: 'Nine' },
+        { label: 'Ten' },
+        { label: 'Eleven' },
+        { label: 'Twelve' },
+      ]}
+      defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      tabList={{ layout: 'grid', columns: 4 }}
+    >
+      <TabItemBlock slot="panel-0"><p>Panel one.</p></TabItemBlock>
+      <TabItemBlock slot="panel-1"><p>Panel two.</p></TabItemBlock>
+      <TabItemBlock slot="panel-2"><p>Panel three.</p></TabItemBlock>
+      <TabItemBlock slot="panel-3"><p>Panel four.</p></TabItemBlock>
+      <TabItemBlock slot="panel-4"><p>Panel five.</p></TabItemBlock>
+      <TabItemBlock slot="panel-5"><p>Panel six.</p></TabItemBlock>
+      <TabItemBlock slot="panel-6"><p>Panel seven.</p></TabItemBlock>
+      <TabItemBlock slot="panel-7"><p>Panel eight.</p></TabItemBlock>
+      <TabItemBlock slot="panel-8"><p>Panel nine.</p></TabItemBlock>
+      <TabItemBlock slot="panel-9"><p>Panel ten.</p></TabItemBlock>
+      <TabItemBlock slot="panel-10"><p>Panel eleven.</p></TabItemBlock>
+      <TabItemBlock slot="panel-11"><p>Panel twelve.</p></TabItemBlock>
+    </TabsBlock>
+  </div>
+
   <ApiReferenceTable component="Tabs" category="composite" />
   <p>
     Panel content is supplied via <a href="/documentation/primitives/TabItem">TabItem</a> blocks placed
