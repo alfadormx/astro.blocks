@@ -6,7 +6,9 @@
     "redhat.vscode-yaml",
     "yzhang.markdown-all-in-one",
     "unifiedjs.vscode-mdx",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "vitest.explorer",
+    "ms-playwright.playwright"
   ],
   "unwantedRecommendations": []
 }
