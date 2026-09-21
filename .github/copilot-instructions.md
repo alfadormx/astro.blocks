@@ -7,15 +7,28 @@ pnpm dev          # dev server at localhost:4321
 pnpm build        # production build to ./dist/
 pnpm preview      # preview production build
 
-pnpm check        # astro check + eslint + prettier (full validation)
+pnpm check        # astro check + eslint + prettier + unit + browser (full validation)
 pnpm check:astro  # astro type-check only
 pnpm check:lint   # eslint only
 pnpm check:prettier # prettier check only
 
+pnpm test:unit    # vitest run over tests/unit/
+pnpm test:browser # playwright chromium smoke specs in tests/browser/
+
 pnpm fix          # auto-fix eslint + prettier
 ```
 
-No test suite exists. Use `pnpm check` to validate changes.
+Use `pnpm check` to validate changes. It runs both test layers after `astro check`, ESLint and
+Prettier, so the cheap checks fail first.
+
+- `pnpm test:unit` — Vitest over the environment-free utils in `src/utils` (`mergeConfigs`, `cn`);
+  specs live in `tests/unit/`. No browser or dev server needed.
+- `pnpm test:browser` — Playwright Chromium smoke specs in `tests/browser/`, run against a dev
+  server. Self-skips with a one-line notice (exit code 0) when no Chromium binary is installed;
+  install one with `pnpm exec playwright install chromium`.
+- `tests/browser/tabs.spec.ts` is the worked example later stateful-block tickets follow: stable
+  `data-*` selectors only, ARIA/`hidden` assertions instead of class strings, relationship-based id
+  assertions, and a post-init wait on `[role="tab"]`.
 
 ## Architecture
 
