@@ -49,6 +49,32 @@ export function getSelection(group: string): readonly Selection[] {
   return requireGroup(group).selection;
 }
 
+export function publish(element: Element, selection: readonly Selection[]): void {
+  const root = element.closest(GROUP_SELECTOR);
+  if (!root) {
+    throw new Error('selection: publish called from an element outside any selection group');
+  }
+  if (!roots.has(root)) {
+    throw new Error('selection: publish called from an element that is no longer on the page');
+  }
+  const group = root.getAttribute('data-selection-group')!;
+  const state = requireGroup(group);
+
+  const seen = new Set<string>();
+  const next: Selection[] = [];
+  for (const { code } of selection) {
+    if (code === '') throw new Error(`selection: empty code published to group "${group}"`);
+    if (seen.has(code)) continue;
+    seen.add(code);
+    next.push(Object.freeze({ code }));
+  }
+  if (state.mode === 'single' && next.length > 1) {
+    throw new Error(`selection: ${next.length} entries published to single group "${group}"`);
+  }
+
+  state.selection = Object.freeze(next);
+}
+
 document.addEventListener('astro:after-swap', () => {
   reset();
   scan();
