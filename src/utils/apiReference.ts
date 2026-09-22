@@ -49,6 +49,12 @@ const INTERFACE_NAME_OVERRIDES: Record<string, string> = {
   SidebarRightContainer: 'SidebarContainerProps',
 };
 
+// Types that document an existing block's Props under another name (e.g. an item type that
+// extends ItemProps), resolved after stripWrapper for the row's link.
+const TYPE_LINK_ALIASES: Record<string, string> = {
+  ItemsGridItem: 'ItemProps',
+};
+
 function typesFilePath(componentName: string): string {
   const filename = TYPES_FILE_OVERRIDES[componentName] ?? `${componentName.toLowerCase()}.types.ts`;
   return path.join(SRC_ROOT, 'types', filename);
@@ -186,13 +192,16 @@ export function getPropRows(
   const fields = parseInterfaceFields(typesSourceFile, interfaceName, registry);
   const defaults = parseDefaults(fs.readFileSync(astroFilePath(componentName, category), 'utf-8'));
 
-  const rows = fields.map((field) => ({
-    name: field.name,
-    type: field.type,
-    default: defaults[field.name] ?? '',
-    description: field.description,
-    link: registry[stripWrapper(field.type)],
-  }));
+  const rows = fields.map((field) => {
+    const linkKey = stripWrapper(field.type);
+    return {
+      name: field.name,
+      type: field.type,
+      default: defaults[field.name] ?? '',
+      description: field.description,
+      link: registry[TYPE_LINK_ALIASES[linkKey] ?? linkKey],
+    };
+  });
 
   if (rows.length === 0) {
     const extendsName = findExtendsIdentifier(typesSourceFile, interfaceName);

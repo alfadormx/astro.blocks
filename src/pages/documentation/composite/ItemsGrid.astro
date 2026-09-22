@@ -196,5 +196,91 @@ const metadata = {
     ]}
   />
 
+  <h3 id="itemsgrid-custom-heading">6. Custom selectedItemConfig</h3>
+  <p>
+    <code>selectedItemConfig</code> is merged into every option's selected variant after
+    <code>defaultItemConfig</code> and before the item itself, like <code>activeTabConfig</code> in Tabs.
+    This grid is named by the heading above via <code>labelledBy</code>.
+  </p>
+  <ItemsGridBlock
+    columns={3}
+    selection={{
+      mode: 'single',
+      group: 'itemsgrid-doc-custom',
+      labelledBy: 'itemsgrid-custom-heading',
+    }}
+    defaultItemConfig={{ spacing: { padding: 'p-4' }, border: { radius: 'rounded-lg' } }}
+    selectedItemConfig={{
+      background: { class: 'bg-accent/10' },
+      border: { color: 'border-accent' },
+    }}
+    items={[
+      { code: 'oak', icon: { name: 'heroicons:swatch' }, title: 'Oak', selected: true },
+      { code: 'walnut', icon: { name: 'heroicons:swatch' }, title: 'Walnut' },
+      { code: 'ash', icon: { name: 'heroicons:swatch' }, title: 'Ash' },
+    ]}
+  />
+
+  <h3>7. Listening to selection:change</h3>
+  <p>
+    The grid publishes to the selection runtime; anything on the page can read it with
+    <code>subscribe(group, listener)</code> or a <code>selection:change</code> listener on
+    <code>document</code>. Other publishers to the same group update the grid too — the button below
+    sits outside the grid, in its own element declaring the same group.
+  </p>
+  <ItemsGridBlock
+    columns={3}
+    selection={{ mode: 'single', group: 'itemsgrid-doc-events', label: 'Delivery' }}
+    items={[
+      { code: 'standard', icon: { name: 'heroicons:truck' }, title: 'Standard' },
+      { code: 'express', icon: { name: 'heroicons:bolt' }, title: 'Express' },
+      { code: 'pickup', icon: { name: 'heroicons:building-storefront' }, title: 'Pickup' },
+    ]}
+  />
+  <div
+    data-selection-group="itemsgrid-doc-events"
+    data-selection-mode="single"
+    class="mt-4 flex items-center gap-4"
+  >
+    <button
+      type="button"
+      data-selection-external="pickup"
+      class="px-3 py-1 border border-border rounded"
+    >
+      Select Pickup externally
+    </button>
+    <output data-selection-log class="font-mono text-sm">No change yet</output>
+  </div>
+
+  <h3>Selection props</h3>
+  <p>
+    <code>selection</code> is an <code>ItemsGridSelection</code>: <code>{"{ mode: 'none' }"}</code>
+    (default, a static grid with no roles or script), <code
+      >{"{ mode: 'single', group, label?, labelledBy? }"}</code
+    >, or <code>{"{ mode: 'multiple', group, label?, labelledBy?, min?, max? }"}</code>. One of
+    <code>label</code> / <code>labelledBy</code> is required; <code>labelledBy</code> wins. Items are
+    <code>ItemsGridItem</code>s — Item props plus <code>code</code> (required when selection is enabled,
+    unique within the grid) and <code>selected</code> (initial state). Invalid configurations throw at
+    build time.
+  </p>
+
   <ApiReferenceTable component="ItemsGrid" category="composite" />
 </Layout>
+
+<script>
+  import { publish, subscribe } from '~/utils/selection';
+
+  const GROUP = 'itemsgrid-doc-events';
+
+  function initLog(): void {
+    const log = document.querySelector<HTMLOutputElement>('[data-selection-log]');
+    const button = document.querySelector<HTMLButtonElement>('[data-selection-external]');
+    if (!log || !button) return;
+    subscribe(GROUP, (detail) => (log.textContent = JSON.stringify(detail)));
+    // onclick, not addEventListener: re-running initLog replaces the handler instead of stacking it.
+    button.onclick = () => publish(button, [{ code: button.dataset.selectionExternal! }]);
+  }
+
+  document.addEventListener('astro:after-swap', initLog);
+  initLog();
+</script>
