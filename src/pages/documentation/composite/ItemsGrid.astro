@@ -27,52 +27,54 @@ const metadata = {
   </p>
 
   <h3>1. Basic grid (no defaultItemConfig)</h3>
-  <ItemsGridBlock
-    columns={3}
-    items={[
-      {
-        icon: { name: 'heroicons:sun' },
-        title: 'No customization',
-        content: 'Icon configuration is default.',
-      },
-      {
-        icon: {
-          name: 'heroicons:sparkles',
-          class: 'bg-accent text-background p-2 rounded-full',
+  <div data-doc-section="basic">
+    <ItemsGridBlock
+      columns={3}
+      items={[
+        {
+          icon: { name: 'heroicons:sun' },
+          title: 'No customization',
+          content: 'Icon configuration is default.',
         },
-        title: 'Icon customization',
-        content: 'Icon as been given a background, padding and rounded corners.',
-      },
-      {
-        icon: { name: 'heroicons:bolt', class: 'text-success' },
-        title: 'Vertical Layout with action',
-        content: 'You shall see a button below.',
-        actions: [{ label: 'Learn More', intent: 'success' }],
-      },
-      {
-        icon: { name: 'heroicons:sun' },
-        title: 'No customization',
-        content: 'Icon configuration is default.',
-        layout: 'horizontal',
-      },
-      {
-        icon: {
-          name: 'heroicons:sparkles',
-          class: 'bg-accent text-background p-2 rounded-full',
+        {
+          icon: {
+            name: 'heroicons:sparkles',
+            class: 'bg-accent text-background p-2 rounded-full',
+          },
+          title: 'Icon customization',
+          content: 'Icon as been given a background, padding and rounded corners.',
         },
-        title: 'Icon customization',
-        content: 'Icon as been given a background, padding and rounded corners.',
-        layout: 'horizontal',
-      },
-      {
-        icon: { name: 'heroicons:bolt', class: 'text-success' },
-        title: 'Horizontal Layout with action',
-        content: 'You shall see a button below.',
-        actions: [{ label: 'Learn More', intent: 'success' }],
-        layout: 'horizontal',
-      },
-    ]}
-  />
+        {
+          icon: { name: 'heroicons:bolt', class: 'text-success' },
+          title: 'Vertical Layout with action',
+          content: 'You shall see a button below.',
+          actions: [{ label: 'Learn More', intent: 'success' }],
+        },
+        {
+          icon: { name: 'heroicons:sun' },
+          title: 'No customization',
+          content: 'Icon configuration is default.',
+          layout: 'horizontal',
+        },
+        {
+          icon: {
+            name: 'heroicons:sparkles',
+            class: 'bg-accent text-background p-2 rounded-full',
+          },
+          title: 'Icon customization',
+          content: 'Icon as been given a background, padding and rounded corners.',
+          layout: 'horizontal',
+        },
+        {
+          icon: { name: 'heroicons:bolt', class: 'text-success' },
+          title: 'Horizontal Layout with action',
+          content: 'You shall see a button below.',
+          actions: [{ label: 'Learn More', intent: 'success' }],
+          layout: 'horizontal',
+        },
+      ]}
+    />
+  </div>
 
   <h3>2. Grid with default layout and action</h3>
   <ItemsGridBlock
@@ -148,6 +150,28 @@ const metadata = {
       ]}
     />
   </div>
+
+  <h3>4. Single selection</h3>
+  <p>
+    With <code>{"selection={{ mode: 'single', group, label }}"}</code> every item becomes an option. Each
+    item needs a <code>code</code>, the value published to the group; <code>selected: true</code>
+    marks the option chosen on load. Options cannot carry <code>actions</code>.
+  </p>
+  <ItemsGridBlock
+    columns={3}
+    selection={{ mode: 'single', group: 'itemsgrid-doc-single', label: 'Size' }}
+    items={[
+      { code: 'size-s', icon: { name: 'heroicons:cube' }, title: 'Small', content: '30 × 30 cm' },
+      {
+        code: 'size-m',
+        icon: { name: 'heroicons:cube' },
+        title: 'Medium',
+        content: '45 × 45 cm',
+        selected: true,
+      },
+      { code: 'size-l', icon: { name: 'heroicons:cube' }, title: 'Large', content: '60 × 60 cm' },
+    ]}
+  />
 
   <ApiReferenceTable component="ItemsGrid" category="composite" />
 </Layout>
