@@ -218,4 +218,47 @@ test.describe('ItemsGrid selection', () => {
       }
     });
   });
+
+  test.describe('external publish', () => {
+    const GROUP = 'itemsgrid-doc-events';
+
+    test('another publisher to the group updates the grid', async ({ page }) => {
+      const root = await openGrid(page, GROUP);
+      await expectChecked(root, []);
+      await expect(option(root, 'standard')).toHaveAttribute('tabindex', '0');
+
+      await page.locator('[data-selection-external]').click();
+      await expectChecked(root, ['pickup']);
+      await expect(option(root, 'pickup')).toHaveAttribute('tabindex', '0');
+      await expect(option(root, 'standard')).toHaveAttribute('tabindex', '-1');
+    });
+
+    test('the log shows the published payload', async ({ page }) => {
+      const root = await openGrid(page, GROUP);
+      const log = page.locator('[data-selection-log]');
+
+      await page.locator('[data-selection-external]').click();
+      await expectChecked(root, ['pickup']);
+      expect(JSON.parse((await log.textContent())!)).toEqual({
+        group: GROUP,
+        mode: 'single',
+        selection: [{ code: 'pickup' }],
+      });
+
+      await option(root, 'express').click();
+      await expectChecked(root, ['express']);
+      expect(JSON.parse((await log.textContent())!)).toEqual({
+        group: GROUP,
+        mode: 'single',
+        selection: [{ code: 'express' }],
+      });
+    });
+  });
+
+  test('labelledBy wins over label', async ({ page }) => {
+    const root = await openGrid(page, 'itemsgrid-doc-custom');
+    await expect(root).toHaveAttribute('aria-labelledby', 'itemsgrid-custom-heading');
+    await expect(root).not.toHaveAttribute('aria-label');
+    await expectChecked(root, ['oak']);
+  });
 });
