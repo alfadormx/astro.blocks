@@ -1,0 +1,92 @@
+---
+import type { ItemsGridItem, ItemsGridProps, ItemsGridSelection } from '~/types/itemsgrid.types';
+import type { ItemProps } from '~/types/item.types';
+import Item from '~/components/blocks/composite/Item.astro';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import { validateItemsGridSelection } from '~/utils/itemsGridSelection';
+
+// Internal to ItemsGrid: rendered only when selection is enabled, so pages without a
+// selectable grid never receive this component's script.
+type Props = Pick<ItemsGridProps, 'items' | 'defaultItemConfig' | 'selectedItemConfig'> & {
+  selection: Exclude<ItemsGridSelection, { mode: 'none' }>;
+  gridClass: string;
+};
+
+const { items, defaultItemConfig, selectedItemConfig, selection, gridClass } = Astro.props;
+
+// Border config, not class: Item applies `class` after `border.*`, which would override a
+// consumer's selectedItemConfig.border.
+const internalUnselectedDefaults: Partial<ItemProps> = {
+  class: 'h-full',
+  border: { width: 'border-2', color: 'border-transparent' },
+};
+const internalSelectedDefaults: Partial<ItemProps> = {
+  class: 'h-full',
+  border: { width: 'border-2', color: 'border-primary' },
+};
+
+const options = items.map((item) => ({
+  unselected: mergeConfigs<ItemsGridItem>(
+    {},
+    internalUnselectedDefaults,
+    defaultItemConfig || {},
+    item
+  ),
+  selected: mergeConfigs<ItemsGridItem>(
+    {},
+    internalSelectedDefaults,
+    defaultItemConfig || {},
+    selectedItemConfig || {},
+    item
+  ),
+}));
+
+// The selected merge is a superset of the unselected one (arrays merge by index), so it catches
+// actions leaked from defaultItemConfig or selectedItemConfig.
+validateItemsGridSelection(
+  selection,
+  options.map((option) => option.selected)
+);
+
+// Splits the option fields off so only Item props reach <Item>.
+function splitOption({ code, selected, ...itemProps }: ItemsGridItem) {
+  return { code, selected, itemProps };
+}
+
+const min = selection.mode === 'multiple' ? selection.min : undefined;
+const max = selection.mode === 'multiple' ? selection.max : undefined;
+const optionClass =
+  'h-full rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 [&[role]]:cursor-pointer aria-disabled:opacity-50 aria-disabled:cursor-not-allowed';
+---
+
+<div
+  class={gridClass}
+  data-items-grid-selectable
+  data-selection-group={selection.group}
+  data-selection-mode={selection.mode}
+  data-selection-min={min !== undefined ? String(min) : undefined}
+  data-selection-max={max !== undefined ? String(max) : undefined}
+  data-selection-label={selection.label || undefined}
+  data-selection-labelledby={selection.labelledBy || undefined}
+>
+  {
+    options.map((option) => {
+      const {
+        code,
+        selected: isSelected,
+        itemProps: unselectedItem,
+      } = splitOption(option.unselected);
+      const { itemProps: selectedItem } = splitOption(option.selected);
+      return (
+        <div data-option-code={code} class={optionClass}>
+          <div data-option-variant="unselected" class="h-full" hidden={!!isSelected}>
+            <Item {...unselectedItem} />
+          </div>
+          <div data-option-variant="selected" class="h-full" hidden={!isSelected}>
+            <Item {...selectedItem} />
+          </div>
+        </div>
+      );
+    })
+  }
+</div>
