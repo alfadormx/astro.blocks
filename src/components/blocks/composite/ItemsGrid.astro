@@ -1,8 +1,8 @@
 ---
-import type { ItemsGridProps } from '~/types/itemsgrid.types';
-import type { ItemProps } from '~/types/item.types';
+import type { ItemsGridItem, ItemsGridProps } from '~/types/itemsgrid.types';
 import { cn } from '~/utils/styles';
 import Item from '~/components/blocks/composite/Item.astro';
+import SelectableItemsGrid from '~/components/blocks/composite/SelectableItemsGrid.astro';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 
 type Props = ItemsGridProps;
@@ -13,6 +13,8 @@ const {
   air = 'normal' as 'none' | 'tight' | 'normal' | 'loose',
   class: className = '',
   defaultItemConfig,
+  selection = { mode: 'none' },
+  selectedItemConfig,
 } = Astro.props as Props;
 
 const airSettings = {
@@ -40,12 +42,22 @@ const gridClass = cn(
 ---
 
 <div class="@container">
-  <div class={gridClass}>
-    {
-      items.map((item: ItemProps) => {
-        const mergedItem = mergeConfigs({}, defaultItemConfig || {}, item);
-        return <Item {...mergedItem} />;
-      })
-    }
-  </div>
+  {
+    selection.mode === 'none' ? (
+      <div class={gridClass}>
+        {items.map((item: ItemsGridItem) => {
+          const mergedItem = mergeConfigs({}, defaultItemConfig || {}, item);
+          return <Item {...mergedItem} />;
+        })}
+      </div>
+    ) : (
+      <SelectableItemsGrid
+        items={items}
+        defaultItemConfig={defaultItemConfig}
+        selectedItemConfig={selectedItemConfig}
+        selection={selection}
+        gridClass={gridClass}
+      />
+    )
+  }
 </div>
