@@ -1,6 +1,7 @@
 // @vitest-environment happy-dom
-import { beforeEach, describe, expect, it } from 'vitest';
-import { getSelection, publish } from '~/utils/selection';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import type { SelectionChangeDetail } from '~/types/selection.types';
+import { getSelection, publish, subscribe } from '~/utils/selection';
 
 function swap(html: string): void {
   document.body.innerHTML = html;
@@ -134,5 +135,97 @@ describe('publish', () => {
     publish(el('#a'), [{ code: 'a' }]);
     swap(multiple);
     expect(getSelection('extras')).toEqual([]);
+  });
+});
+
+describe('selection:change', () => {
+  it('fires on document with group, mode and selection', () => {
+    swap(multiple);
+    const seen: SelectionChangeDetail[] = [];
+    const onChange = (e: DocumentEventMap['selection:change']) => seen.push(e.detail);
+    document.addEventListener('selection:change', onChange);
+    publish(el('#a'), [{ code: 'a' }]);
+    document.removeEventListener('selection:change', onChange);
+    expect(seen).toEqual([{ group: 'extras', mode: 'multiple', selection: [{ code: 'a' }] }]);
+  });
+
+  it('types the detail without a cast', () => {
+    swap(multiple);
+    const groups: string[] = [];
+    document.addEventListener('selection:change', (e) => groups.push(e.detail.group), {
+      once: true,
+    });
+    publish(el('#a'), [{ code: 'a' }]);
+    expect(groups).toEqual(['extras']);
+  });
+
+  it('does not fire when the ordered codes are unchanged', () => {
+    swap(multiple);
+    publish(el('#a'), [{ code: 'a' }, { code: 'b' }]);
+    const listener = vi.fn();
+    document.addEventListener('selection:change', listener);
+    publish(el('#b'), [{ code: 'a' }, { code: 'b' }, { code: 'a' }]);
+    document.removeEventListener('selection:change', listener);
+    expect(listener).not.toHaveBeenCalled();
+  });
+
+  it('fires when only the order changes', () => {
+    swap(multiple);
+    publish(el('#a'), [{ code: 'a' }, { code: 'b' }]);
+    const listener = vi.fn();
+    document.addEventListener('selection:change', listener);
+    publish(el('#a'), [{ code: 'b' }, { code: 'a' }]);
+    document.removeEventListener('selection:change', listener);
+    expect(listener).toHaveBeenCalledOnce();
+  });
+});
+
+describe('subscribe', () => {
+  const twoGroups =
+    multiple + '<div data-selection-group="colour" data-selection-mode="single"><i></i></div>';
+
+  it('receives changes for its own group only', () => {
+    swap(twoGroups);
+    const listener = vi.fn();
+    subscribe('extras', listener);
+    publish(el('[data-selection-group="colour"] i'), [{ code: 'red' }]);
+    publish(el('#a'), [{ code: 'a' }]);
+    expect(listener).toHaveBeenCalledOnce();
+    expect(listener).toHaveBeenCalledWith({
+      group: 'extras',
+      mode: 'multiple',
+      selection: [{ code: 'a' }],
+    });
+  });
+
+  it('does not replay the current value on subscribe', () => {
+    swap(multiple);
+    publish(el('#a'), [{ code: 'a' }]);
+    const listener = vi.fn();
+    subscribe('extras', listener);
+    expect(listener).not.toHaveBeenCalled();
+  });
+
+  it('stops after unsubscribe', () => {
+    swap(multiple);
+    const listener = vi.fn();
+    const unsubscribe = subscribe('extras', listener);
+    unsubscribe();
+    publish(el('#a'), [{ code: 'a' }]);
+    expect(listener).not.toHaveBeenCalled();
+  });
+
+  it('drops subscriptions on swap', () => {
+    swap(multiple);
+    const listener = vi.fn();
+    const unsubscribe = subscribe('extras', listener);
+    swap(multiple);
+    publish(el('#a'), [{ code: 'a' }]);
+    expect(listener).not.toHaveBeenCalled();
+    expect(() => unsubscribe()).not.toThrow();
+  });
+
+  it('throws on an undeclared group', () => {
+    expect(() => subscribe('nope', () => {})).toThrow(/not declared/);
   });
 });

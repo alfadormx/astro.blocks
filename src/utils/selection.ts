@@ -1,4 +1,4 @@
-import type { Selection, SelectionMode } from '~/types/selection.types';
+import type { Selection, SelectionChangeDetail, SelectionMode } from '~/types/selection.types';
 
 type GroupState = {
   readonly mode: SelectionMode;
@@ -9,6 +9,7 @@ const GROUP_SELECTOR = '[data-selection-group]';
 
 const groups = new Map<string, GroupState>();
 let roots = new WeakSet<Element>();
+let controller = new AbortController();
 
 function isSelectionMode(value: string | null): value is SelectionMode {
   return value === 'single' || value === 'multiple';
@@ -41,12 +42,18 @@ function scan(): void {
 }
 
 function reset(): void {
+  controller.abort();
+  controller = new AbortController();
   groups.clear();
   roots = new WeakSet();
 }
 
 export function getSelection(group: string): readonly Selection[] {
   return requireGroup(group).selection;
+}
+
+function sameCodes(a: readonly Selection[], b: readonly Selection[]): boolean {
+  return a.length === b.length && a.every((entry, i) => entry.code === b[i].code);
 }
 
 export function publish(element: Element, selection: readonly Selection[]): void {
@@ -72,7 +79,25 @@ export function publish(element: Element, selection: readonly Selection[]): void
     throw new Error(`selection: ${next.length} entries published to single group "${group}"`);
   }
 
+  if (sameCodes(state.selection, next)) return;
   state.selection = Object.freeze(next);
+  document.dispatchEvent(
+    new CustomEvent<SelectionChangeDetail>('selection:change', {
+      detail: { group, mode: state.mode, selection: state.selection },
+    })
+  );
+}
+
+export function subscribe(
+  group: string,
+  listener: (detail: SelectionChangeDetail) => void
+): () => void {
+  requireGroup(group);
+  const handler = (event: CustomEvent<SelectionChangeDetail>): void => {
+    if (event.detail.group === group) listener(event.detail);
+  };
+  document.addEventListener('selection:change', handler, { signal: controller.signal });
+  return () => document.removeEventListener('selection:change', handler);
 }
 
 document.addEventListener('astro:after-swap', () => {
