@@ -122,6 +122,23 @@ const optionClass =
       variant(option, 'selected').hidden = !isChecked;
       option.setAttribute('aria-checked', String(isChecked));
     }
+
+    if (root.dataset.selectionMode === 'multiple') {
+      const max = root.dataset.selectionMax;
+      const checkedCount = options.filter((o) => o.getAttribute('aria-checked') === 'true').length;
+      const atMax = max !== undefined && checkedCount >= Number(max);
+      for (const option of options) {
+        option.setAttribute('tabindex', '0');
+        if (atMax && option.getAttribute('aria-checked') === 'false') {
+          option.setAttribute('aria-disabled', 'true');
+        } else {
+          option.removeAttribute('aria-disabled');
+        }
+      }
+      return;
+    }
+
+    // single: roving tabindex on the checked option, or the first one.
     const tabStop =
       options.find((option) => option.getAttribute('aria-checked') === 'true') ?? options[0];
     for (const option of options) {
@@ -129,8 +146,37 @@ const optionClass =
     }
   }
 
-  function activate(option: HTMLElement): void {
-    publish(option, [{ code: option.dataset.optionCode! }]);
+  function activate(root: HTMLElement, option: HTMLElement): void {
+    const code = option.dataset.optionCode!;
+    if (root.dataset.selectionMode !== 'multiple') {
+      publish(option, [{ code }]);
+      return;
+    }
+    if (option.getAttribute('aria-disabled') === 'true') return;
+
+    const owned = optionsOf(root).map((o) => o.dataset.optionCode!);
+    const ownedSet = new Set(owned);
+    const current = codesOf(root.dataset.selectionGroup!);
+    const checked = new Set(current.filter((c) => ownedSet.has(c)));
+
+    if (checked.has(code)) {
+      const min = Number(root.dataset.selectionMin ?? 0);
+      if (checked.size - 1 < min) return;
+      checked.delete(code);
+    } else {
+      checked.add(code);
+    }
+
+    // Owned codes in DOM order, so the same set always publishes the same payload;
+    // codes from other publishers to this group are kept after them.
+    const next = [
+      ...owned.filter((c) => checked.has(c)),
+      ...current.filter((c) => !ownedSet.has(c)),
+    ];
+    publish(
+      option,
+      next.map((c) => ({ code: c }))
+    );
   }
 
   function onKeyDown(root: HTMLElement, event: KeyboardEvent): void {
@@ -139,9 +185,10 @@ const optionClass =
 
     if (event.key === ' ') {
       event.preventDefault();
-      activate(option);
+      activate(root, option);
       return;
     }
+    if (root.dataset.selectionMode === 'multiple') return;
 
     const step =
       event.key === 'ArrowRight' || event.key === 'ArrowDown'
@@ -153,7 +200,7 @@ const optionClass =
     event.preventDefault();
     const options = optionsOf(root);
     const next = options[(options.indexOf(option) + step + options.length) % options.length];
-    activate(next);
+    activate(root, next);
     next.focus();
   }
 
@@ -162,12 +209,15 @@ const optionClass =
     if (selectionLabelledby) root.setAttribute('aria-labelledby', selectionLabelledby);
     else if (selectionLabel) root.setAttribute('aria-label', selectionLabel);
 
-    root.setAttribute('role', 'radiogroup');
-    for (const option of optionsOf(root)) option.setAttribute('role', 'radio');
+    const multiple = root.dataset.selectionMode === 'multiple';
+    root.setAttribute('role', multiple ? 'group' : 'radiogroup');
+    for (const option of optionsOf(root)) {
+      option.setAttribute('role', multiple ? 'checkbox' : 'radio');
+    }
 
     root.addEventListener('click', (event) => {
       const option = (event.target as HTMLElement).closest<HTMLElement>(OPTION_SELECTOR);
-      if (option && root.contains(option)) activate(option);
+      if (option && root.contains(option)) activate(root, option);
     });
     root.addEventListener('keydown', (event) => onKeyDown(root, event));
   }

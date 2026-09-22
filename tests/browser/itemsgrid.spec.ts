@@ -136,4 +136,86 @@ test.describe('ItemsGrid selection', () => {
       ]);
     });
   });
+
+  test.describe('multiple', () => {
+    const GROUP = 'itemsgrid-doc-multiple';
+    const CODES = ['wifi', 'parking', 'breakfast', 'pool'];
+
+    test('renders the initial state', async ({ page }) => {
+      const root = await openGrid(page, GROUP);
+      await expect(root).toHaveAttribute('role', 'group');
+      await expect(root).toHaveAttribute('aria-label', 'Extras');
+      await expect(root.locator('[role="checkbox"]')).toHaveCount(CODES.length);
+      await expectChecked(root, ['wifi']);
+      for (const code of CODES) {
+        await expect(option(root, code)).toHaveAttribute('tabindex', '0');
+      }
+      await expect(root.locator('[aria-disabled]')).toHaveCount(0);
+    });
+
+    test('refuses a deselect below min', async ({ page }) => {
+      const root = await openGrid(page, GROUP);
+      const events = await collectEvents(page);
+      await option(root, 'wifi').click();
+      await expectChecked(root, ['wifi']);
+      expect(await events()).toEqual([]);
+    });
+
+    test('toggles and publishes in DOM order', async ({ page }) => {
+      const root = await openGrid(page, GROUP);
+      const events = await collectEvents(page);
+
+      await option(root, 'pool').click();
+      await expectChecked(root, ['wifi', 'pool']);
+      await option(root, 'wifi').click();
+      await expectChecked(root, ['pool']);
+      await option(root, 'parking').focus();
+      await page.keyboard.press('Space');
+      await expectChecked(root, ['parking', 'pool']);
+
+      expect((await events()).at(-1)).toEqual({
+        group: GROUP,
+        mode: 'multiple',
+        selection: [{ code: 'parking' }, { code: 'pool' }],
+      });
+    });
+
+    test('disables the remaining options at max', async ({ page }) => {
+      const root = await openGrid(page, GROUP);
+      await option(root, 'pool').click();
+      await option(root, 'wifi').click();
+      await option(root, 'parking').click();
+      await expectChecked(root, ['parking', 'pool']);
+
+      await expect(option(root, 'wifi')).toHaveAttribute('aria-disabled', 'true');
+      await expect(option(root, 'breakfast')).toHaveAttribute('aria-disabled', 'true');
+      await expect(option(root, 'parking')).not.toHaveAttribute('aria-disabled');
+      await expect(option(root, 'pool')).not.toHaveAttribute('aria-disabled');
+
+      // Playwright treats aria-disabled as disabled and would wait forever; force the click.
+      await option(root, 'breakfast').click({ force: true });
+      await expectChecked(root, ['parking', 'pool']);
+
+      await option(root, 'pool').click();
+      await expectChecked(root, ['parking']);
+      await expect(root.locator('[aria-disabled]')).toHaveCount(0);
+    });
+
+    test('arrow keys are inert', async ({ page }) => {
+      const root = await openGrid(page, GROUP);
+      await option(root, 'wifi').focus();
+      await page.keyboard.press('ArrowRight');
+      await expectChecked(root, ['wifi']);
+      await expect(option(root, 'wifi')).toBeFocused();
+    });
+
+    test('Tab visits every option', async ({ page }) => {
+      const root = await openGrid(page, GROUP);
+      await option(root, 'wifi').focus();
+      for (const code of CODES.slice(1)) {
+        await page.keyboard.press('Tab');
+        await expect(option(root, code)).toBeFocused();
+      }
+    });
+  });
 });

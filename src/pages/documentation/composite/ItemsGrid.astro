@@ -173,5 +173,28 @@ const metadata = {
     ]}
   />
 
+  <h3>5. Multiple selection with min/max</h3>
+  <p>
+    <code>mode: 'multiple'</code> turns each option into a checkbox. <code>max</code> disables the remaining
+    options once reached; <code>min</code> refuses a deselect that would drop below it. An initial state
+    below <code>min</code> is allowed — nothing is selected implicitly.
+  </p>
+  <ItemsGridBlock
+    columns={4}
+    selection={{
+      mode: 'multiple',
+      group: 'itemsgrid-doc-multiple',
+      label: 'Extras',
+      min: 1,
+      max: 2,
+    }}
+    items={[
+      { code: 'wifi', icon: { name: 'heroicons:wifi' }, title: 'Wi-Fi', selected: true },
+      { code: 'parking', icon: { name: 'heroicons:truck' }, title: 'Parking' },
+      { code: 'breakfast', icon: { name: 'heroicons:cake' }, title: 'Breakfast' },
+      { code: 'pool', icon: { name: 'heroicons:sun' }, title: 'Pool' },
+    ]}
+  />
+
   <ApiReferenceTable component="ItemsGrid" category="composite" />
 </Layout>
