@@ -90,3 +90,114 @@ const optionClass =
     })
   }
 </div>
+
+<script>
+  import { getSelection, publish, subscribe } from '~/utils/selection';
+
+  const ROOT_SELECTOR = '[data-items-grid-selectable]';
+  const OPTION_SELECTOR = '[data-option-code]';
+
+  // Guards one-time ARIA + listener binding. Runtime state and subscriptions are cleared on
+  // every astro:after-swap, so connect() runs on every init, bound or not.
+  const bound = new WeakSet<HTMLElement>();
+
+  function optionsOf(root: HTMLElement): HTMLElement[] {
+    return Array.from(root.querySelectorAll<HTMLElement>(`:scope > ${OPTION_SELECTOR}`));
+  }
+
+  function variant(option: HTMLElement, name: 'selected' | 'unselected'): HTMLElement {
+    return option.querySelector<HTMLElement>(`:scope > [data-option-variant="${name}"]`)!;
+  }
+
+  function codesOf(group: string): string[] {
+    return getSelection(group).map((entry) => entry.code);
+  }
+
+  function render(root: HTMLElement, codes: readonly string[]): void {
+    const selected = new Set(codes);
+    const options = optionsOf(root);
+    for (const option of options) {
+      const isChecked = selected.has(option.dataset.optionCode!);
+      variant(option, 'unselected').hidden = isChecked;
+      variant(option, 'selected').hidden = !isChecked;
+      option.setAttribute('aria-checked', String(isChecked));
+    }
+    const tabStop =
+      options.find((option) => option.getAttribute('aria-checked') === 'true') ?? options[0];
+    for (const option of options) {
+      option.setAttribute('tabindex', option === tabStop ? '0' : '-1');
+    }
+  }
+
+  function activate(option: HTMLElement): void {
+    publish(option, [{ code: option.dataset.optionCode! }]);
+  }
+
+  function onKeyDown(root: HTMLElement, event: KeyboardEvent): void {
+    const option = (event.target as HTMLElement).closest<HTMLElement>(OPTION_SELECTOR);
+    if (!option || !root.contains(option)) return;
+
+    if (event.key === ' ') {
+      event.preventDefault();
+      activate(option);
+      return;
+    }
+
+    const step =
+      event.key === 'ArrowRight' || event.key === 'ArrowDown'
+        ? 1
+        : event.key === 'ArrowLeft' || event.key === 'ArrowUp'
+          ? -1
+          : 0;
+    if (step === 0) return;
+    event.preventDefault();
+    const options = optionsOf(root);
+    const next = options[(options.indexOf(option) + step + options.length) % options.length];
+    activate(next);
+    next.focus();
+  }
+
+  function bind(root: HTMLElement): void {
+    const { selectionLabel, selectionLabelledby } = root.dataset;
+    if (selectionLabelledby) root.setAttribute('aria-labelledby', selectionLabelledby);
+    else if (selectionLabel) root.setAttribute('aria-label', selectionLabel);
+
+    root.setAttribute('role', 'radiogroup');
+    for (const option of optionsOf(root)) option.setAttribute('role', 'radio');
+
+    root.addEventListener('click', (event) => {
+      const option = (event.target as HTMLElement).closest<HTMLElement>(OPTION_SELECTOR);
+      if (option && root.contains(option)) activate(option);
+    });
+    root.addEventListener('keydown', (event) => onKeyDown(root, event));
+  }
+
+  function connect(root: HTMLElement): void {
+    const group = root.dataset.selectionGroup!;
+    const initial = optionsOf(root)
+      .filter((option) => !variant(option, 'selected').hidden)
+      .map((option) => ({ code: option.dataset.optionCode! }));
+    publish(root, initial);
+    subscribe(group, (detail) =>
+      render(
+        root,
+        detail.selection.map((entry) => entry.code)
+      )
+    );
+    // publish() is silent when nothing changed (e.g. empty initial), so render explicitly.
+    render(root, codesOf(group));
+  }
+
+  function init(): void {
+    document.querySelectorAll<HTMLElement>(ROOT_SELECTOR).forEach((root) => {
+      if (!bound.has(root)) {
+        bind(root);
+        bound.add(root);
+      }
+      connect(root);
+    });
+  }
+
+  document.addEventListener('astro:after-swap', init);
+  init();
+</script>
