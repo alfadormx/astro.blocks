@@ -37,7 +37,7 @@ This is an **Astro component library** — a collection of reusable UI blocks wi
 
 ### Component Layers (`src/components/blocks/`)
 
-- **`primitives/`** — atomic components: `Button`, `Headline`, `Image`, `Logo`, `Map`, `Video`, `Vector`, `Background`, `ThemeToggle`, `LanguageToggle`
+- **`primitives/`** — atomic components: `Button`, `Headline`, `Image`, `Logo`, `Map`, `Video`, `Vector`, `Background`, `ThemeToggle`, `LanguageToggle`, `ToggleGroup`
 - **`composite/`** — composed from primitives: `Header`, `Footer`, `Content`, `CallToAction`, `ItemsGrid`, `ItemsTimeline`, `NavigationTree`, etc.
 - **`layout/`** — structural wrappers: `Container`, `TwoColumnContainer`, `ThreeColumnContainer`, `FourColumnContainer`, `SidebarLeftContainer`, `SidebarRightContainer`, `Modal`
 
@@ -57,6 +57,9 @@ between blocks that don't know about each other.
 - **Read** with `getSelection(group)`; **listen** with `subscribe(group, listener)` (returns an
   unsubscribe function, no replay) or `document.addEventListener('selection:change', …)`, typed
   via `DocumentEventMap`, with detail `{ group, mode, selection }`.
+- **Participants**: the selectable `ItemsGrid` and `ToggleGroup` (always `single`). Both publish
+  their initial codes on connect; `ToggleGroup` skips the publish when nothing is checked, so it
+  never clears another block's initial selection.
 - All state and subscriptions are cleared on `astro:after-swap`; consumers re-subscribe in their
   own after-swap init. Misconfigured markup and invalid publishes throw.
 
