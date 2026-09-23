@@ -1,9 +1,14 @@
 import { describe, expect, it } from 'vitest';
+import type { ModelViewerCameraPreset, ModelViewerMutation } from '~/types/modelviewer.types';
 import { validateModelViewer } from '~/utils/modelViewer';
 
 type ValidatedProps = Parameters<typeof validateModelViewer>[0];
 
 const props: ValidatedProps = { src: '/models/avocado.glb', label: 'Avocado' };
+
+function withMutation(mutation: ModelViewerMutation): ValidatedProps {
+  return { ...props, selections: { finish: { options: { gold: [mutation] } } } };
+}
 
 describe('validateModelViewer', () => {
   const throwCases: Array<{ name: string; input: ValidatedProps; expected: RegExp }> = [
@@ -40,6 +45,100 @@ describe('validateModelViewer', () => {
       expected: /cameraTarget must be three finite numbers/,
     },
     { name: 'negative exposure', input: { ...props, exposure: -0.5 }, expected: /exposure -0.5/ },
+    {
+      name: 'non-hex color',
+      input: withMutation({ type: 'material', material: 'Band', color: 'red' }),
+      expected: /selections\.finish\.options\.gold\[0\] has color "red"; expected #rgb or #rrggbb/,
+    },
+    {
+      name: 'metalness above 1',
+      input: withMutation({ type: 'material', material: 'Band', metalness: 1.5 }),
+      expected: /metalness 1.5; expected a value between 0 and 1/,
+    },
+    {
+      name: 'negative roughness',
+      input: withMutation({ type: 'material', material: 'Band', roughness: -0.1 }),
+      expected: /roughness -0.1/,
+    },
+    {
+      name: 'empty material',
+      input: withMutation({ type: 'material', material: '' }),
+      expected: /needs a non-empty material/,
+    },
+    {
+      name: 'empty use',
+      input: withMutation({ type: 'material', part: 'Band', use: '' }),
+      expected: /needs a non-empty use/,
+    },
+    {
+      name: 'empty part',
+      input: withMutation({ type: 'material', part: ' ', use: 'RoseGold' }),
+      expected: /needs a non-empty part/,
+    },
+    {
+      name: 'visible without parts',
+      input: withMutation({ type: 'visible', parts: [] }),
+      expected: /needs at least one part/,
+    },
+    {
+      name: 'visible with an empty part name',
+      input: withMutation({ type: 'visible', parts: [''] }),
+      expected: /non-empty parts entry/,
+    },
+    {
+      name: 'camera naming an unknown preset',
+      input: { ...props, selections: { engraving: { camera: 'inside' } } },
+      expected: /selections\.engraving\.camera "inside" is not a key of cameraPresets/,
+    },
+    {
+      name: 'short preset position',
+      input: {
+        ...props,
+        cameraPresets: {
+          band: { position: [0, 1] as unknown as [number, number, number], target: [0, 0, 0] },
+        },
+      },
+      expected: /cameraPresets\.band\.position must be three finite numbers/,
+    },
+    {
+      name: 'preset fov of 200',
+      input: {
+        ...props,
+        cameraPresets: { band: { position: [0, 0, 2], target: [0, 0, 0], fov: 200 } },
+      },
+      expected: /cameraPresets\.band has fov 200; expected a value between 0 and 180/,
+    },
+    {
+      name: 'preset without a target',
+      input: {
+        ...props,
+        cameraPresets: {
+          band: { position: [0, 0, 2] } as unknown as ModelViewerCameraPreset,
+        },
+      },
+      expected: /cameraPresets\.band\.target must be three finite numbers; got undefined/,
+    },
+    {
+      name: 'model swap to an .obj',
+      input: withMutation({ type: 'model', src: '/models/ring.obj' }),
+      expected:
+        /selections\.finish\.options\.gold\[0\] "\/models\/ring\.obj" must point to a \.glb or \.gltf file/,
+    },
+    {
+      name: 'model swap without src',
+      input: withMutation({ type: 'model', src: '' }),
+      expected: /needs a non-empty src/,
+    },
+    {
+      name: 'integer-like group key',
+      input: { ...props, selections: { '2': {} } },
+      expected: /selections group "2" must not be an integer-like key/,
+    },
+    {
+      name: 'unknown mutation type',
+      input: withMutation({ type: 'texture' } as unknown as ModelViewerMutation),
+      expected: /has unknown type "texture"/,
+    },
   ];
 
   it.each(throwCases)('throws: $name', ({ input, expected }) => {
@@ -65,6 +164,30 @@ describe('validateModelViewer', () => {
         cameraPosition: [0, 1, 2],
         cameraTarget: [0, 0, 0],
         exposure: 0,
+      })
+    ).not.toThrow();
+  });
+
+  it('accepts valid selections', () => {
+    expect(() =>
+      validateModelViewer({
+        ...props,
+        selections: {
+          finish: {
+            options: {
+              white: [
+                { type: 'material', material: 'Band', color: '#FFF', metalness: 0, roughness: 1 },
+              ],
+              rose: [{ type: 'material', part: 'Band', use: 'RoseGold' }],
+              bold: [{ type: 'model', src: '/models/ring-alt.glb' }],
+              '1': [{ type: 'visible', parts: ['Stone_Small'] }],
+            },
+          },
+          empty: {},
+          '02': {},
+          engraving: { camera: 'band' },
+        },
+        cameraPresets: { band: { position: [0, -1, 2], target: [0, -0.5, 0], fov: 35 } },
       })
     ).not.toThrow();
   });
