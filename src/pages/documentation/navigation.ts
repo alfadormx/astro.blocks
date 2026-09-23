@@ -58,6 +58,7 @@ export const documentationNavigation: ButtonProps[] = [
       { label: 'Map', href: '/documentation/primitives/Map' },
       { label: 'TabItem', href: '/documentation/primitives/TabItem' },
       { label: 'ThemeToggle', href: '/documentation/primitives/ThemeToggle' },
+      { label: 'ToggleGroup', href: '/documentation/primitives/ToggleGroup' },
       { label: 'Vector', href: '/documentation/primitives/Vector' },
       { label: 'Video', href: '/documentation/primitives/Video' },
     ],

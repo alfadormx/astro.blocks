@@ -1,0 +1,63 @@
+---
+import type {
+  ToggleGroupOption,
+  ToggleGroupOptionConfig,
+  ToggleGroupProps,
+} from '~/types/togglegroup.types';
+import { Icon } from 'astro-icon/components';
+import Image from '~/components/blocks/primitives/Image.astro';
+import { cn } from '~/utils/styles';
+import { mediaSizeClass } from '~/utils/buttonStyles';
+
+// Internal to ToggleGroup: the content of one option span, rendered once per state.
+type Props = {
+  option: ToggleGroupOption;
+  config: ToggleGroupOptionConfig;
+  appearance: 'radio' | 'cell';
+  size: NonNullable<ToggleGroupProps['size']>;
+};
+
+const { option, config, appearance, size } = Astro.props;
+
+const { image, icon } = config;
+const hasImage = !!image?.src;
+const hasIcon = !hasImage && !!icon?.name;
+const mediaFirst = option.iconPosition !== 'right';
+// Without a visible label the image is the whole option, so it keeps its own width/height.
+const imageClass = option.hideLabel ? image?.class : cn(mediaSizeClass(size), image?.class);
+---
+
+{
+  appearance === 'radio' && (
+    <span aria-hidden="true" class={config.markerClass} data-option-marker />
+  )
+}
+{
+  mediaFirst &&
+    (hasImage ? (
+      <Image {...image} alt={image!.alt ?? ''} class={imageClass} />
+    ) : (
+      hasIcon && (
+        <Icon
+          name={icon!.name!}
+          class={cn(mediaSizeClass(size), icon!.class)}
+          aria-label={icon!.ariaLabel}
+        />
+      )
+    ))
+}
+<span class={cn(config.labelClass, option.hideLabel && 'sr-only')}>{option.label}</span>
+{
+  !mediaFirst &&
+    (hasImage ? (
+      <Image {...image} alt={image!.alt ?? ''} class={imageClass} />
+    ) : (
+      hasIcon && (
+        <Icon
+          name={icon!.name!}
+          class={cn(mediaSizeClass(size), icon!.class)}
+          aria-label={icon!.ariaLabel}
+        />
+      )
+    ))
+}
