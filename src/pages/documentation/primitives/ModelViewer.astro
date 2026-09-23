@@ -1,9 +1,60 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import ModelViewerBlock from '~/components/blocks/primitives/ModelViewer.astro';
+import TextAreaBlock from '~/components/blocks/primitives/TextArea.astro';
+import ToggleGroupBlock from '~/components/blocks/primitives/ToggleGroup.astro';
 import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import type { ModelViewerProps } from '~/types/modelviewer.types';
 
 const presets = ['studio', 'neutral', 'soft'] as const;
+
+const ringSelections: ModelViewerProps['selections'] = {
+  'modelviewer-doc-model': {
+    options: {
+      classic: [{ type: 'model', src: '/models/ring.glb' }],
+      bold: [{ type: 'model', src: '/models/ring-alt.glb' }],
+    },
+  },
+  'modelviewer-doc-band': {
+    options: {
+      yellow: [{ type: 'material', material: 'Band', color: '#e6b422', roughness: 0.3 }],
+      white: [{ type: 'material', material: 'Band', color: '#e5e4e2', roughness: 0.2 }],
+      rose: [{ type: 'material', part: 'Band', use: 'RoseGold' }],
+    },
+  },
+  'modelviewer-doc-carat': {
+    options: {
+      small: [{ type: 'visible', parts: ['Stone_Small'] }],
+      medium: [{ type: 'visible', parts: ['Stone_Medium'] }],
+      large: [{ type: 'visible', parts: ['Stone_Large'] }],
+    },
+  },
+  'modelviewer-doc-engraving': { camera: 'band' },
+};
+const ringCameraPresets: ModelViewerProps['cameraPresets'] = {
+  band: { position: [0, -0.9, 2.4], target: [0, -0.6, 0], fov: 35 },
+};
+const styleOptions = [
+  { code: 'classic', label: 'Classic' },
+  { code: 'bold', label: 'Bold' },
+];
+const mutationExamples = {
+  edit: { type: 'material', material: 'Band', color: '#e5e4e2', metalness: 1, roughness: 0.2 },
+  swap: { type: 'material', part: 'Band', use: 'RoseGold' },
+  visible: { type: 'visible', parts: ['Stone_Medium'] },
+  model: { type: 'model', src: '/models/ring-alt.glb' },
+};
+const example = (value: unknown) => JSON.stringify(value, null, 2);
+const bandOptions = [
+  { code: 'yellow', label: 'Yellow gold' },
+  { code: 'white', label: 'White gold' },
+  { code: 'rose', label: 'Rose gold' },
+];
+const caratOptions = [
+  { code: 'small', label: 'Small' },
+  { code: 'medium', label: 'Medium', selected: true },
+  { code: 'large', label: 'Large' },
+];
 
 const metadata = {
   title: {
@@ -86,6 +137,133 @@ const metadata = {
     }
   </div>
 
+  <h3>Configurator</h3>
+  <p>
+    Pair the viewer with selection blocks such as ToggleGroup and TextArea to build a product
+    configurator. Pick a style to load another model file, a band finish to recolour the ring, and a
+    carat to switch which stone is shown. Typing an engraving moves the camera to the band once.
+  </p>
+  <div
+    data-doc-section="configurator"
+    class="grid gap-6 border border-dashed border-gray/80 p-8 md:grid-cols-[2fr_1fr]"
+  >
+    <ModelViewerBlock
+      src="/models/ring.glb"
+      label="A configurable ring"
+      selections={ringSelections}
+      cameraPresets={ringCameraPresets}
+      class="rounded-lg bg-surface"
+    />
+    <div class="flex flex-col gap-4">
+      <ToggleGroupBlock group="modelviewer-doc-model" label="Style" options={styleOptions} />
+      <ToggleGroupBlock group="modelviewer-doc-band" label="Band" options={bandOptions} />
+      <ToggleGroupBlock group="modelviewer-doc-carat" label="Carat" options={caratOptions} />
+      <TextAreaBlock group="modelviewer-doc-engraving" label="Engraving" maxLength={20} rows={2} />
+      <div class="flex flex-wrap gap-2">
+        <div data-selection-group="modelviewer-doc-band" data-selection-mode="single">
+          <button type="button" data-selection-clear class="px-3 py-1 border border-border rounded">
+            Reset band
+          </button>
+        </div>
+        <div data-selection-group="modelviewer-doc-carat" data-selection-mode="single">
+          <button type="button" data-selection-clear class="px-3 py-1 border border-border rounded">
+            Reset carat
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Selections</h3>
+  <p>
+    <code>selections</code> is keyed by selection group name, then by option code, and maps each code
+    to a list of <code>ModelViewerMutation</code>s applied while that code is selected. Every change
+    starts again from the model as loaded and applies the groups in declaration order, so when two
+    groups set the same property the later one wins. Clearing a group's selection reverts what it
+    changed. Group keys must not be integer-like, because JavaScript would reorder them. A group on
+    a
+    <code>text</code> selection only supports <code>camera</code>, since its codes are free input.
+    Names match the glTF file as authored, so check them in the file rather than in three.js.
+  </p>
+  <p>
+    A <code>material</code> edit changes every mesh that uses the named glTF material. Colours are
+    <code>#rgb</code> or <code>#rrggbb</code> in sRGB; <code>metalness</code> and
+    <code>roughness</code> run from 0 to 1.
+  </p>
+  <pre
+    class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{example(mutationExamples.edit)}</code></pre>
+  <p>
+    A <code>material</code> swap with <code>use</code> assigns another material from the same file to
+    a named part, such as a variant that no mesh uses by default.
+  </p>
+  <pre
+    class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{example(mutationExamples.swap)}</code></pre>
+  <p>
+    <code>visible</code> shows the listed glTF nodes and their children. While a group has a selection,
+    every part its options list is hidden first, so exactly the selected option's parts are shown; parts
+    the group never lists are left alone.
+  </p>
+  <pre
+    class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{example(mutationExamples.visible)}</code></pre>
+  <p>
+    <code>model</code> replaces the file. The last selected model mutation wins, falling back to
+    <code>src</code>. The current model stays on screen until the new one has loaded, the camera
+    keeps its position, and the other groups are applied to the new model. If the file fails to
+    load, the current model stays. The files should share part and material names.
+  </p>
+  <pre
+    class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{example(mutationExamples.model)}</code></pre>
+
+  <h3>Camera presets</h3>
+  <p>
+    <code>cameraPresets</code> names camera positions as a <code>position</code> and
+    <code>target</code> in model units, plus an optional <code>fov</code>. A group's
+    <code>camera</code> names the preset to move to when that group changes after a different group did,
+    so typing more into the same field never fights the visitor's orbiting. The camera eases over about
+    600 ms, or jumps when the visitor prefers reduced motion, and dragging stops the move where it is.
+    Applying a preset turns off <code>autoRotate</code>.
+  </p>
+
+  <h3>Development warnings</h3>
+  <p>
+    Malformed configuration throws at build time. Problems that depend on the page or the model file
+    log a single <code>[ModelViewer]</code> warning each in development and nothing in production: a group
+    that is not declared on the page, <code>options</code> on a text group, a material or part missing
+    from the model, and a model file that fails to load. The viewer keeps rendering either way. This example
+    names things that do not exist; open the console and pick the options.
+  </p>
+  <div
+    data-doc-section="warnings"
+    class="grid gap-6 border border-dashed border-gray/80 p-8 md:grid-cols-[2fr_1fr]"
+  >
+    <ModelViewerBlock
+      src="/models/ring.glb"
+      label="A ring configured with names that do not exist"
+      height="300px"
+      selections={{
+        'modelviewer-doc-undeclared': { options: {} },
+        'modelviewer-doc-warnings': {
+          options: {
+            missing: [
+              { type: 'material', material: 'Platinum', color: '#cccccc' },
+              { type: 'visible', parts: ['Stone_Huge'] },
+            ],
+            broken: [{ type: 'model', src: '/models/missing.glb' }],
+          },
+        },
+      }}
+      class="rounded-lg bg-surface"
+    />
+    <ToggleGroupBlock
+      group="modelviewer-doc-warnings"
+      label="Broken options"
+      options={[
+        { code: 'missing', label: 'Missing names' },
+        { code: 'broken', label: 'Missing file' },
+      ]}
+    />
+  </div>
+
   <h3>Failure message</h3>
   <p>
     When WebGL is unavailable or the model cannot be loaded, the viewer shows the matching
@@ -102,3 +280,19 @@ const metadata = {
 
   <ApiReferenceTable component="ModelViewer" category="primitives" />
 </Layout>
+
+<script>
+  import { publish } from '~/utils/selection';
+
+  function initReset(): void {
+    document
+      .querySelectorAll<HTMLButtonElement>(
+        '[data-doc-section="configurator"] [data-selection-clear]'
+      )
+      // onclick, not addEventListener: re-running initReset replaces the handler instead of stacking it.
+      .forEach((button) => (button.onclick = () => publish(button, [])));
+  }
+
+  document.addEventListener('astro:after-swap', initReset);
+  initReset();
+</script>

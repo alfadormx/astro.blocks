@@ -35,6 +35,72 @@ async function expectStatus(root: Locator, text: string): Promise<void> {
   await expect(root.getByRole('status')).toHaveText(text, { useInnerText: true });
 }
 
+async function settledShot(root: Locator): Promise<Buffer> {
+  let previous = await root.screenshot();
+  await expect
+    .poll(async () => {
+      const next = await root.screenshot();
+      const same = next.equals(previous);
+      previous = next;
+      return same;
+    })
+    .toBe(true);
+  return previous;
+}
+
+async function changedShot(root: Locator, from: Buffer): Promise<Buffer> {
+  await expect.poll(async () => (await root.screenshot()).equals(from)).toBe(false);
+  return settledShot(root);
+}
+
+// Share of pixels whose largest channel difference exceeds 16 of 255.
+function diffRatio(page: Page, a: Buffer, b: Buffer): Promise<number> {
+  return page.evaluate(
+    async ([a, b]) => {
+      const pixels = async (base64: string) => {
+        const bitmap = await createImageBitmap(
+          await (await fetch(`data:image/png;base64,${base64}`)).blob()
+        );
+        const context = new OffscreenCanvas(bitmap.width, bitmap.height).getContext('2d')!;
+        context.drawImage(bitmap, 0, 0);
+        return context.getImageData(0, 0, bitmap.width, bitmap.height).data;
+      };
+      const [x, y] = await Promise.all([pixels(a), pixels(b)]);
+      let changed = 0;
+      for (let i = 0; i < x.length; i += 4) {
+        const delta = Math.max(
+          Math.abs(x[i] - y[i]),
+          Math.abs(x[i + 1] - y[i + 1]),
+          Math.abs(x[i + 2] - y[i + 2])
+        );
+        if (delta > 16) changed++;
+      }
+      return changed / (x.length / 4);
+    },
+    [a.toString('base64'), b.toString('base64')]
+  );
+}
+
+function collectWarnings(page: Page): string[] {
+  const warnings: string[] = [];
+  page.on('console', (message) => {
+    if (message.type() === 'warning' && message.text().startsWith('[ModelViewer]')) {
+      warnings.push(message.text());
+    }
+  });
+  return warnings;
+}
+
+function toggle(page: Page, group: string, code: string): Locator {
+  return page.locator(
+    `[data-toggle-group][data-selection-group="${group}"] [data-option-code="${code}"]`
+  );
+}
+
+function reset(page: Page, group: string): Locator {
+  return page.locator(`[data-selection-group="${group}"] [data-selection-clear]`);
+}
+
 test.describe('ModelViewer', () => {
   test('renders the model into a labelled canvas', async ({ page }) => {
     await page.goto(PAGE_URL);
@@ -173,5 +239,196 @@ test.describe('ModelViewer', () => {
     const first = await root.screenshot();
     await page.waitForTimeout(600);
     expect((await root.screenshot()).equals(first)).toBe(true);
+  });
+
+  test.describe('selections', () => {
+    const BAND = 'modelviewer-doc-band';
+    const MODEL = 'modelviewer-doc-model';
+
+    test('recolours the band when an option is picked and reverts on reset', async ({ page }) => {
+      await page.goto(PAGE_URL);
+      const root = await readyViewer(page, 'configurator');
+      const baseline = await settledShot(root);
+
+      await toggle(page, BAND, 'white').click();
+      const white = await changedShot(root, baseline);
+
+      await reset(page, BAND).click();
+      const reverted = await changedShot(root, white);
+      expect(reverted.equals(baseline)).toBe(true);
+
+      await toggle(page, BAND, 'rose').click();
+      await changedShot(root, baseline);
+    });
+
+    test('applies a selection made before the model loaded', async ({ page }) => {
+      await page.setViewportSize({ width: 1280, height: 300 });
+      await page.goto(PAGE_URL);
+      const group = page.locator(`[data-toggle-group][data-selection-group="${BAND}"]`);
+      await expect(group).toHaveAttribute('data-toggle-group-ready', '');
+      await group.locator('input[value="white"]').evaluate((el: HTMLInputElement) => el.click());
+      await expect(viewer(page, 'configurator')).toHaveAttribute('data-model-viewer-state', 'idle');
+      // In a viewport shorter than the viewer, the fixed dev toolbar lands on it at scroll-dependent spots.
+      await page.setViewportSize({ width: 1280, height: 900 });
+
+      const root = await readyViewer(page, 'configurator');
+      const picked = await settledShot(root);
+      await reset(page, BAND).click();
+      await changedShot(root, picked);
+
+      await toggle(page, BAND, 'white').click();
+      await expect.poll(async () => (await settledShot(root)).equals(picked)).toBe(true);
+    });
+
+    test('switches the visible stone per carat and restores it on reset', async ({ page }) => {
+      const CARAT = 'modelviewer-doc-carat';
+      await page.goto(PAGE_URL);
+      const root = await readyViewer(page, 'configurator');
+      const medium = await settledShot(root);
+
+      await toggle(page, CARAT, 'large').click();
+      const large = await changedShot(root, medium);
+
+      await toggle(page, CARAT, 'small').click();
+      const small = await changedShot(root, large);
+      expect(small.equals(medium)).toBe(false);
+
+      await toggle(page, CARAT, 'medium').click();
+      expect((await changedShot(root, small)).equals(medium)).toBe(true);
+
+      await reset(page, CARAT).click();
+      await changedShot(root, medium);
+    });
+
+    test('frames the band once when typing an engraving and does not snap back', async ({
+      page,
+    }) => {
+      await page.goto(PAGE_URL);
+      const root = await readyViewer(page, 'configurator');
+      const engraving = page.locator('[data-doc-section="configurator"] textarea');
+
+      await engraving.pressSequentially('A');
+      await expect(root).toHaveAttribute('data-model-viewer-camera', 'band');
+      const framed = await settledShot(root);
+
+      const box = (await root.locator('canvas').boundingBox())!;
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+      await page.mouse.down();
+      await page.mouse.move(box.x + box.width / 2 + 80, box.y + box.height / 2, { steps: 5 });
+      await page.mouse.up();
+      const orbited = await changedShot(root, framed);
+
+      await engraving.pressSequentially('B');
+      await page.waitForTimeout(800);
+      // OrbitControls keeps a sub-threshold damping residue that the next render consumes.
+      expect(await diffRatio(page, await settledShot(root), orbited)).toBeLessThan(0.02);
+    });
+
+    test('jumps to the preset under reduced motion', async ({ page }) => {
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.goto(PAGE_URL);
+      const root = await readyViewer(page, 'configurator');
+
+      await page.locator('[data-doc-section="configurator"] textarea').pressSequentially('A');
+      await expect(root).toHaveAttribute('data-model-viewer-camera', 'band');
+      await page.waitForTimeout(100);
+      const early = await root.screenshot();
+      await page.waitForTimeout(700);
+      expect((await root.screenshot()).equals(early)).toBe(true);
+    });
+
+    test('swaps to the alternate ring and reflects the effective src', async ({ page }) => {
+      await page.route('**/models/ring-alt.glb', async (route) => {
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        await route.continue();
+      });
+      await page.goto(PAGE_URL);
+      const root = await readyViewer(page, 'configurator');
+      await expect(root).toHaveAttribute('data-model-viewer-src', '/models/ring.glb');
+
+      await toggle(page, MODEL, 'bold').click();
+      await expect(root).toHaveAttribute('data-model-viewer-loading', '');
+      await expect(root).toHaveAttribute('aria-busy', 'true');
+
+      await expect(root).toHaveAttribute('data-model-viewer-src', '/models/ring-alt.glb');
+      await expect(root).not.toHaveAttribute('data-model-viewer-loading');
+      await expect(root).not.toHaveAttribute('aria-busy');
+      await expect(root).toHaveAttribute('data-model-viewer-state', 'ready');
+    });
+
+    test('keeps the current model when a swap fails', async ({ page }) => {
+      await page.route('**/models/ring-alt.glb', (route) => route.fulfill({ status: 404 }));
+      await page.goto(PAGE_URL);
+      const root = await readyViewer(page, 'configurator');
+
+      const failed = page.waitForEvent('console', (message) =>
+        message.text().includes('model "/models/ring-alt.glb" could not be loaded')
+      );
+      await toggle(page, MODEL, 'bold').click();
+      await failed;
+
+      await expect(root).not.toHaveAttribute('data-model-viewer-loading');
+      await expect(root).toHaveAttribute('data-model-viewer-src', '/models/ring.glb');
+      await expect(root).toHaveAttribute('data-model-viewer-state', 'ready');
+      await expect(root.locator('canvas')).toHaveCount(1);
+    });
+
+    test('ends on the last choice after a rapid double swap', async ({ page }) => {
+      await page.route('**/models/ring-alt.glb', async (route) => {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await route.continue().catch(() => {});
+      });
+      await page.goto(PAGE_URL);
+      const root = await readyViewer(page, 'configurator');
+
+      await toggle(page, MODEL, 'bold').click();
+      await expect(root).toHaveAttribute('data-model-viewer-loading', '');
+      await toggle(page, MODEL, 'classic').click();
+
+      await expect(root).toHaveAttribute('data-model-viewer-src', '/models/ring.glb');
+      await expect(root).not.toHaveAttribute('data-model-viewer-loading');
+      await page.waitForTimeout(1500);
+      await expect(root).toHaveAttribute('data-model-viewer-src', '/models/ring.glb');
+    });
+
+    test('keeps band and carat choices across a swap and back', async ({ page }) => {
+      await page.goto(PAGE_URL);
+      const root = await readyViewer(page, 'configurator');
+      const initial = await settledShot(root);
+      await toggle(page, BAND, 'white').click();
+      await toggle(page, 'modelviewer-doc-carat', 'large').click();
+      await changedShot(root, initial);
+      const before = await settledShot(root);
+
+      await toggle(page, MODEL, 'bold').click();
+      await expect(root).toHaveAttribute('data-model-viewer-src', '/models/ring-alt.glb');
+      const bold = await changedShot(root, before);
+
+      await toggle(page, MODEL, 'classic').click();
+      await expect(root).toHaveAttribute('data-model-viewer-src', '/models/ring.glb');
+      expect((await changedShot(root, bold)).equals(before)).toBe(true);
+    });
+
+    test('warns once per problem in development and keeps rendering', async ({ page }) => {
+      const warnings = collectWarnings(page);
+      await page.goto(PAGE_URL);
+      await readyViewer(page, 'configurator');
+      const root = await readyViewer(page, 'warnings');
+      const group = 'modelviewer-doc-warnings';
+
+      await toggle(page, group, 'missing').click();
+      await toggle(page, group, 'broken').click();
+      await expect.poll(() => warnings.some((w) => w.includes('missing.glb'))).toBe(true);
+      await toggle(page, group, 'missing').click();
+      await expect(root).not.toHaveAttribute('data-model-viewer-loading');
+
+      const count = (pattern: RegExp) => warnings.filter((w) => pattern.test(w)).length;
+      expect(count(/group "modelviewer-doc-undeclared"/)).toBe(1);
+      expect(count(/material "Platinum"/)).toBe(1);
+      expect(count(/part "Stone_Huge"/)).toBe(1);
+      expect(count(/model "\/models\/missing\.glb"/)).toBe(1);
+      expect(warnings.filter((w) => w.includes('modelviewer-doc-band'))).toEqual([]);
+      await expect(root).toHaveAttribute('data-model-viewer-state', 'ready');
+    });
   });
 });

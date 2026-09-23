@@ -74,6 +74,9 @@ importers:
       '@eslint/js':
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))
+      '@gltf-transform/core':
+        specifier: ^4.5.0
+        version: 4.5.0
       '@playwright/test':
         specifier: ^1.63.0
         version: 1.63.0
@@ -893,6 +896,12 @@ packages:
         integrity: sha512-+CNAzxglkrpNf/kKywqQfk74QjtceuOE7Qm+AF8miRvPF/wmmK5+OJOgVh3AVTT3RP2mH3+FOaxlE5v72owk0A==,
       }
     engines: { node: ^20.19.0 || ^22.13.0 || >=24 }
+
+  '@gltf-transform/core@4.5.0':
+    resolution:
+      {
+        integrity: sha512-JlvShvnB4AtfGZqjnESS/wfPJbpVnyHhTwJBbWN4qXqkB3C5HIoxxpu/orwGBge6Pc0zObeWj70lVf+4gbuu0A==,
+      }
 
   '@humanfs/core@0.19.2':
     resolution:
@@ -3582,6 +3591,12 @@ packages:
       }
     engines: { node: '>=18.0.0' }
 
+  property-graph@4.1.0:
+    resolution:
+      {
+        integrity: sha512-AvPcP7XECNWy4LGmFQ77k7un4lSKM4eS29PTvW4ck95uYeLxXPWJM7hLuBqK91FaHqCcgJvIUCuNJjjxKE7VKQ==,
+      }
+
   property-information@7.2.0:
     resolution:
       {
@@ -4936,6 +4951,10 @@ snapshots:
     dependencies:
       '@eslint/core': 1.2.1
       levn: 0.4.1
+
+  '@gltf-transform/core@4.5.0':
+    dependencies:
+      property-graph: 4.1.0
 
   '@humanfs/core@0.19.2':
     dependencies:
@@ -6478,6 +6497,8 @@ snapshots:
   prismjs@1.30.0: {}
 
   process-ancestry@0.1.0: {}
+
+  property-graph@4.1.0: {}
 
   property-information@7.2.0: {}
 
