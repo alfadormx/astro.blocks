@@ -1,7 +1,10 @@
-/** Whether a selection group holds at most one entry or any number of entries. */
-export type SelectionMode = 'single' | 'multiple';
+/**
+ * Whether a selection group holds at most one option code, any number of option codes,
+ * or at most one free-text value.
+ */
+export type SelectionMode = 'single' | 'multiple' | 'text';
 
-/** One selected option, identified by its option code. */
+/** One selected entry: an option code, or the raw field text in `text` mode. */
 export type Selection = {
   readonly code: string;
 };
