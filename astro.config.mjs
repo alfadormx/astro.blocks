@@ -24,5 +24,14 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    // Deps reached only via dynamic import are discovered late; Vite then reloads the page mid-test.
+    optimizeDeps: {
+      include: [
+        'three',
+        'three/addons/controls/OrbitControls.js',
+        'three/addons/loaders/GLTFLoader.js',
+        'three/addons/environments/RoomEnvironment.js',
+      ],
+    },
   },
 });
