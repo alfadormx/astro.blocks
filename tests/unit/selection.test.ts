@@ -17,6 +17,9 @@ const multiple = `
   </div>
 `;
 
+const text =
+  '<div data-selection-group="engraving" data-selection-mode="text"><textarea></textarea></div>';
+
 function el(selector: string): Element {
   return document.querySelector(selector)!;
 }
@@ -60,6 +63,20 @@ describe('group declaration', () => {
         <div data-selection-group="colour" data-selection-mode="multiple"></div>
       `)
     ).toThrow(/both "single" and "multiple"/);
+  });
+
+  it('reads an empty selection for a declared text group', () => {
+    swap(text);
+    expect(getSelection('engraving')).toEqual([]);
+  });
+
+  it('throws when one group is declared as both single and text', () => {
+    expect(() =>
+      swap(`
+        <div data-selection-group="colour" data-selection-mode="single"></div>
+        <div data-selection-group="colour" data-selection-mode="text"></div>
+      `)
+    ).toThrow(/both "single" and "text"/);
   });
 
   it('forgets a group that the next page no longer declares', () => {
@@ -130,6 +147,24 @@ describe('publish', () => {
     ).toThrow(/single group "colour"/);
   });
 
+  it('round-trips raw text, whitespace included, in a text group', () => {
+    swap(text);
+    publish(el('textarea'), [{ code: '  two\nlines ' }]);
+    expect(getSelection('engraving')).toEqual([{ code: '  two\nlines ' }]);
+  });
+
+  it('throws on two entries in a text group', () => {
+    swap(text);
+    expect(() => publish(el('textarea'), [{ code: 'a' }, { code: 'b' }])).toThrow(
+      /text group "engraving"/
+    );
+  });
+
+  it('still throws on an empty code in a text group', () => {
+    swap(text);
+    expect(() => publish(el('textarea'), [{ code: '' }])).toThrow(/empty code/);
+  });
+
   it('clears the selection on swap', () => {
     swap(multiple);
     publish(el('#a'), [{ code: 'a' }]);
@@ -147,6 +182,16 @@ describe('selection:change', () => {
     publish(el('#a'), [{ code: 'a' }]);
     document.removeEventListener('selection:change', onChange);
     expect(seen).toEqual([{ group: 'extras', mode: 'multiple', selection: [{ code: 'a' }] }]);
+  });
+
+  it('reports mode text in the change detail', () => {
+    swap(text);
+    const seen: SelectionChangeDetail[] = [];
+    const onChange = (e: DocumentEventMap['selection:change']) => seen.push(e.detail);
+    document.addEventListener('selection:change', onChange);
+    publish(el('textarea'), [{ code: 'Hi' }]);
+    document.removeEventListener('selection:change', onChange);
+    expect(seen).toEqual([{ group: 'engraving', mode: 'text', selection: [{ code: 'Hi' }] }]);
   });
 
   it('types the detail without a cast', () => {

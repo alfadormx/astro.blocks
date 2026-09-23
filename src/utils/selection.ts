@@ -12,7 +12,7 @@ let roots = new WeakSet<Element>();
 let controller = new AbortController();
 
 function isSelectionMode(value: string | null): value is SelectionMode {
-  return value === 'single' || value === 'multiple';
+  return value === 'single' || value === 'multiple' || value === 'text';
 }
 
 function requireGroup(group: string): GroupState {
@@ -27,7 +27,7 @@ function scan(): void {
     const mode = root.getAttribute('data-selection-mode');
     if (!isSelectionMode(mode)) {
       throw new Error(
-        `selection: group "${group}" has data-selection-mode "${mode}"; expected "single" or "multiple"`
+        `selection: group "${group}" has data-selection-mode "${mode}"; expected "single", "multiple" or "text"`
       );
     }
     const existing = groups.get(group);
@@ -75,8 +75,10 @@ export function publish(element: Element, selection: readonly Selection[]): void
     seen.add(code);
     next.push(Object.freeze({ code }));
   }
-  if (state.mode === 'single' && next.length > 1) {
-    throw new Error(`selection: ${next.length} entries published to single group "${group}"`);
+  if (state.mode !== 'multiple' && next.length > 1) {
+    throw new Error(
+      `selection: ${next.length} entries published to ${state.mode} group "${group}"`
+    );
   }
 
   if (sameCodes(state.selection, next)) return;
