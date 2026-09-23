@@ -1,0 +1,231 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import type { TextAreaProps } from '~/types/textarea.types';
+import { cn } from '~/utils/styles';
+import { textAreaId, validateTextArea } from '~/utils/textArea';
+
+type Props = TextAreaProps & Omit<HTMLAttributes<'textarea'>, keyof TextAreaProps>;
+
+const {
+  group,
+  label,
+  hideLabel = false,
+  placeholder,
+  value = '',
+  help,
+  error,
+  rows = 3,
+  name,
+  id: idProp,
+  maxLength,
+  showCounter = false,
+  required = false,
+  disabled = false,
+  readOnly = false,
+  size = 'md',
+  variant = 'outline',
+  intent = 'primary',
+  shape = 'rounded',
+  class: className = '',
+  labelClass = '',
+  fieldClass = '',
+  helpClass = '',
+  errorClass = '',
+  counterClass = '',
+  ...attrs
+} = Astro.props;
+
+validateTextArea({ label, value, maxLength, showCounter });
+
+const id = idProp || textAreaId();
+const helpId = `${id}-help`;
+const errorId = `${id}-error`;
+const counterId = `${id}-counter`;
+const describedBy = [help && helpId, error && errorId, showCounter && counterId]
+  .filter(Boolean)
+  .join(' ');
+const resolvedIntent = error ? 'error' : intent;
+
+const SIZE = {
+  xs: 'px-2 py-1 text-xs',
+  sm: 'px-3 py-1.5 text-sm',
+  md: 'px-4 py-2 text-[1rem]',
+  lg: 'px-5 py-3 text-lg',
+  xl: 'px-6 py-4 text-xl',
+}[size];
+
+const VARIANT = {
+  outline: 'border-border bg-background',
+  solid: 'border-transparent bg-surface',
+  ghost: 'border-transparent bg-transparent hover:border-border',
+}[variant];
+
+const FOCUS_RING = {
+  primary: 'focus-visible:ring-primary',
+  secondary: 'focus-visible:ring-secondary',
+  tertiary: 'focus-visible:ring-tertiary',
+  accent: 'focus-visible:ring-accent',
+  success: 'focus-visible:ring-success',
+  warning: 'focus-visible:ring-warning',
+  error: 'focus-visible:ring-error',
+  neutral: 'focus-visible:ring-border',
+}[resolvedIntent];
+
+const FOCUS_BORDER = {
+  primary: 'focus:border-primary',
+  secondary: 'focus:border-secondary',
+  tertiary: 'focus:border-tertiary',
+  accent: 'focus:border-accent',
+  success: 'focus:border-success',
+  warning: 'focus:border-warning',
+  error: 'focus:border-error',
+  neutral: 'focus:border-border-emphasis',
+}[resolvedIntent];
+
+const SHAPE = { rounded: 'rounded-md', square: 'rounded-sm' }[shape];
+
+// Prop-driven rather than `read-only:` variants, because `:read-only` also matches disabled fields.
+const fieldClassName = cn(
+  'block w-full border-2 text-normal placeholder:text-muted outline-none resize-y',
+  'transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-offset-2',
+  SIZE,
+  VARIANT,
+  SHAPE,
+  FOCUS_RING,
+  !readOnly && FOCUS_BORDER,
+  error && 'border-error',
+  readOnly && 'bg-surface text-muted',
+  disabled && 'opacity-50 cursor-not-allowed resize-none',
+  fieldClass
+);
+---
+
+<div
+  class={cn('flex flex-col gap-1', className)}
+  data-textarea
+  data-selection-group={group || undefined}
+  data-selection-mode={group ? 'text' : undefined}
+>
+  <label
+    for={id}
+    class={cn(
+      'text-sm font-medium text-normal',
+      hideLabel && 'sr-only',
+      disabled && 'opacity-50',
+      labelClass
+    )}
+  >
+    {label}
+  </label>
+  <textarea
+    id={id}
+    name={name}
+    rows={rows}
+    maxlength={maxLength}
+    placeholder={placeholder}
+    required={required}
+    disabled={disabled}
+    readonly={readOnly}
+    aria-invalid={error ? 'true' : undefined}
+    aria-describedby={describedBy || undefined}
+    class={fieldClassName}
+    {...attrs}>{value}</textarea
+  >
+  {
+    help && (
+      <p id={helpId} class={cn('text-sm text-muted', helpClass)}>
+        {help}
+      </p>
+    )
+  }
+  {
+    error && (
+      <p id={errorId} class={cn('text-sm text-error', errorClass)}>
+        {error}
+      </p>
+    )
+  }
+  {
+    showCounter && (
+      <p
+        id={counterId}
+        class={cn('text-sm text-muted text-right tabular-nums', counterClass)}
+        data-textarea-counter
+      >
+        {value.length} / {maxLength}
+      </p>
+    )
+  }
+</div>
+
+<script>
+  import type { Selection } from '~/types/selection.types';
+  import { getSelection, publish, subscribe } from '~/utils/selection';
+
+  const ROOT_SELECTOR = '[data-textarea]';
+
+  // Guards one-time listener binding; connect() runs on every init.
+  const bound = new WeakSet<HTMLElement>();
+
+  function fieldOf(root: HTMLElement): HTMLTextAreaElement {
+    return root.querySelector<HTMLTextAreaElement>('textarea')!;
+  }
+
+  function renderCounter(root: HTMLElement): void {
+    const counter = root.querySelector<HTMLElement>('[data-textarea-counter]');
+    const field = fieldOf(root);
+    if (counter) counter.textContent = `${field.value.length} / ${field.maxLength}`;
+  }
+
+  function toSelection(text: string): Selection[] {
+    // The runtime rejects empty codes; an empty field is an empty selection.
+    return text === '' ? [] : [{ code: text }];
+  }
+
+  function reflect(root: HTMLElement, selection: readonly Selection[]): void {
+    const field = fieldOf(root);
+    const incoming = selection[0]?.code ?? '';
+    const limit = field.maxLength;
+    const next = limit >= 0 && incoming.length > limit ? incoming.slice(0, limit) : incoming;
+    // Rewriting an equal value would move the caret while the user types.
+    if (field.value !== next) field.value = next;
+    renderCounter(root);
+    if (next !== incoming) {
+      // Deferred so every listener sees the over-long event before its truncated replacement.
+      queueMicrotask(() => publish(field, toSelection(field.value)));
+    }
+  }
+
+  function bind(root: HTMLElement): void {
+    const field = fieldOf(root);
+    field.addEventListener('input', () => {
+      renderCounter(root);
+      if (root.dataset.selectionGroup) publish(field, toSelection(field.value));
+    });
+    root.dataset.textareaReady = '';
+  }
+
+  function connect(root: HTMLElement): void {
+    renderCounter(root);
+    const group = root.dataset.selectionGroup;
+    if (!group) return;
+    const field = fieldOf(root);
+    // Groups start empty; publishing [] would only clear another block's initial value.
+    if (field.value !== '') publish(field, toSelection(field.value));
+    subscribe(group, (detail) => reflect(root, detail.selection));
+    reflect(root, getSelection(group));
+  }
+
+  function init(): void {
+    document.querySelectorAll<HTMLElement>(ROOT_SELECTOR).forEach((root) => {
+      if (!bound.has(root)) {
+        bind(root);
+        bound.add(root);
+      }
+      connect(root);
+    });
+  }
+
+  document.addEventListener('astro:after-swap', init);
+  init();
+</script>
