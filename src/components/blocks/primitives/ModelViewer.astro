@@ -1,0 +1,172 @@
+---
+import type { ModelViewerConfig, ModelViewerProps } from '~/types/modelviewer.types';
+import { validateModelViewer } from '~/utils/modelViewer';
+import { cn } from '~/utils/styles';
+
+type Props = ModelViewerProps;
+
+const {
+  src,
+  label,
+  orbit = true,
+  zoom = true,
+  autoRotate = false,
+  autoRotateSpeed = 2,
+  cameraPosition,
+  cameraTarget,
+  fov = 45,
+  lighting = 'studio',
+  exposure = 1,
+  shadow = false,
+  messages = {},
+  height = '400px',
+  width = '100%',
+  class: className = '',
+} = Astro.props;
+
+validateModelViewer({ src, label, fov, cameraPosition, cameraTarget, exposure });
+
+const {
+  webglUnavailable = 'This 3D view needs WebGL, which this browser does not provide.',
+  loadFailed = 'The 3D model could not be loaded.',
+} = messages;
+
+const config: ModelViewerConfig = {
+  src,
+  label,
+  orbit,
+  zoom,
+  autoRotate,
+  autoRotateSpeed,
+  cameraPosition,
+  cameraTarget,
+  fov,
+  lighting,
+  exposure,
+  shadow,
+};
+---
+
+<model-viewer-block
+  class={cn('relative block overflow-hidden', className)}
+  style={`height: ${height}; width: ${width};`}
+  data-model-viewer-config={JSON.stringify(config)}
+  data-model-viewer-state="idle"
+>
+  <div
+    role="status"
+    class="pointer-events-none absolute inset-0 flex items-center justify-center p-6 text-center text-muted"
+  >
+    <p hidden data-model-viewer-message="webgl">{webglUnavailable}</p>
+    <p hidden data-model-viewer-message="load">{loadFailed}</p>
+  </div>
+  <noscript>
+    <p class="flex h-full items-center justify-center p-6 text-center text-muted">
+      {webglUnavailable}
+    </p>
+  </noscript>
+</model-viewer-block>
+
+<script>
+  import type { ModelViewerConfig, ModelViewerErrorReason } from '~/types/modelviewer.types';
+  import type { SceneHandle } from '~/utils/modelViewerScene';
+
+  type SceneModule = typeof import('~/utils/modelViewerScene');
+
+  // Start loading ahead of the fold so the model is usually ready when it scrolls in.
+  const ROOT_MARGIN = '200px';
+
+  let sceneModule: Promise<SceneModule> | undefined;
+
+  function loadSceneModule(): Promise<SceneModule> {
+    sceneModule ??= import('~/utils/modelViewerScene').catch((err) => {
+      sceneModule = undefined;
+      throw err;
+    });
+    return sceneModule;
+  }
+
+  class ModelViewerBlock extends HTMLElement {
+    #intersection?: IntersectionObserver;
+    #resize?: ResizeObserver;
+    #controller?: AbortController;
+    #handle?: SceneHandle;
+    #visible = false;
+
+    connectedCallback(): void {
+      this.#intersection = new IntersectionObserver(
+        (entries) => this.#onIntersect(entries[entries.length - 1].isIntersecting),
+        { rootMargin: ROOT_MARGIN }
+      );
+      this.#intersection.observe(this);
+    }
+
+    disconnectedCallback(): void {
+      this.#intersection?.disconnect();
+      this.#resize?.disconnect();
+      this.#controller?.abort();
+      this.#handle?.dispose();
+      this.#intersection = this.#resize = this.#controller = this.#handle = undefined;
+      this.dataset.modelViewerState = 'idle';
+      this.removeAttribute('aria-busy');
+      delete this.dataset.modelViewerError;
+      this.querySelectorAll<HTMLElement>('[data-model-viewer-message]').forEach(
+        (p) => (p.hidden = true)
+      );
+    }
+
+    #onIntersect(visible: boolean): void {
+      this.#visible = visible;
+      if (this.#handle) this.#handle.setActive(visible);
+      else if (visible && !this.#controller) void this.#start();
+    }
+
+    async #start(): Promise<void> {
+      const controller = (this.#controller = new AbortController());
+      const { signal } = controller;
+      this.dataset.modelViewerState = 'loading';
+      this.setAttribute('aria-busy', 'true');
+      try {
+        const config: ModelViewerConfig = JSON.parse(this.dataset.modelViewerConfig!);
+        const { createScene } = await loadSceneModule();
+        if (signal.aborted) return;
+        const handle = await createScene(this, config, signal);
+        if (signal.aborted) {
+          handle.dispose();
+          return;
+        }
+        this.#handle = handle;
+        this.#resize = new ResizeObserver((entries) => {
+          const { width, height } = entries[entries.length - 1].contentRect;
+          handle.resize(width, height);
+        });
+        this.#resize.observe(this);
+        handle.setActive(this.#visible);
+        this.dataset.modelViewerState = 'ready';
+        this.removeAttribute('aria-busy');
+      } catch (err) {
+        if (signal.aborted) return;
+        // The error class lives in the lazily loaded module, so match on its shape.
+        const reason: ModelViewerErrorReason =
+          (err as { reason?: unknown }).reason === 'webgl' ? 'webgl' : 'load';
+        this.#fail(reason, err);
+      }
+    }
+
+    #fail(reason: ModelViewerErrorReason, err: unknown): void {
+      this.dataset.modelViewerState = 'error';
+      this.dataset.modelViewerError = reason;
+      this.removeAttribute('aria-busy');
+      this.#message(reason)!.hidden = false;
+      console.error('[ModelViewer]', err);
+    }
+
+    #message(reason: ModelViewerErrorReason): HTMLElement | null {
+      return this.querySelector<HTMLElement>(`[data-model-viewer-message="${reason}"]`);
+    }
+  }
+
+  if (!customElements.get('model-viewer-block')) {
+    customElements.define('model-viewer-block', ModelViewerBlock);
+  }
+</script>

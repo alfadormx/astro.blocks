@@ -1,0 +1,104 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import ModelViewerBlock from '~/components/blocks/primitives/ModelViewer.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+const presets = ['studio', 'neutral', 'soft'] as const;
+
+const metadata = {
+  title: {
+    default: 'ModelViewer',
+  },
+};
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitives',
+    title: 'ModelViewer',
+    subtitle: 'An interactive three.js view of a GLB or glTF model',
+  }}
+>
+  <p>
+    Renders a <code>.glb</code> or <code>.gltf</code> model. three.js is fetched only when a viewer comes
+    near the viewport, so pages without one never load it. Compressed models (Draco, meshopt, KTX2) are
+    not supported.
+  </p>
+
+  <h3>Basic</h3>
+  <p>Drag to orbit and scroll to zoom. The camera frames the model from its bounds.</p>
+  <div data-doc-section="basic" class="border border-dashed border-gray/80 p-8">
+    <ModelViewerBlock src="/models/avocado.glb" label="An avocado cut in half" />
+  </div>
+
+  <h3>glTF with external resources</h3>
+  <p>
+    A <code>.gltf</code> loads its <code>.bin</code> and textures relative to <code>src</code>.
+  </p>
+  <div data-doc-section="gltf" class="border border-dashed border-gray/80 p-8">
+    <ModelViewerBlock src="/models/water-bottle/WaterBottle.gltf" label="A water bottle" />
+  </div>
+
+  <h3>Camera framing</h3>
+  <p>
+    Set <code>cameraPosition</code>, <code>cameraTarget</code> and <code>fov</code> to frame the model
+    deliberately. Any value left out is still derived from the model's bounds.
+  </p>
+  <div data-doc-section="camera" class="border border-dashed border-gray/80 p-8">
+    <ModelViewerBlock
+      src="/models/avocado.glb"
+      label="An avocado seen from above"
+      cameraPosition={[0, 0.12, 0.02]}
+      fov={30}
+      class="rounded-lg bg-surface"
+    />
+  </div>
+
+  <h3>Autorotate</h3>
+  <p>
+    <code>autoRotate</code> spins the model, pausing while the user drags it. It is ignored when the visitor
+    prefers reduced motion.
+  </p>
+  <div data-doc-section="autorotate" class="border border-dashed border-gray/80 p-8">
+    <ModelViewerBlock src="/models/avocado.glb" label="A rotating avocado" autoRotate />
+  </div>
+
+  <h3>Lighting and shadow</h3>
+  <p>
+    Pick a <code>lighting</code> preset and tune <code>exposure</code>. Add <code>shadow</code> to ground
+    the model.
+  </p>
+  <div
+    data-doc-section="lighting"
+    class="grid gap-4 border border-dashed border-gray/80 p-8 md:grid-cols-3"
+  >
+    {
+      presets.map((preset) => (
+        <ModelViewerBlock
+          src="/models/water-bottle/WaterBottle.gltf"
+          label={`A water bottle under ${preset} lighting`}
+          lighting={preset}
+          shadow
+          height="300px"
+        />
+      ))
+    }
+  </div>
+
+  <h3>Failure message</h3>
+  <p>
+    When WebGL is unavailable or the model cannot be loaded, the viewer shows the matching
+    <code>messages</code> text instead of a blank area. This example points at a missing file.
+  </p>
+  <div data-doc-section="error" class="border border-dashed border-gray/80 p-8">
+    <ModelViewerBlock
+      src="/models/missing.glb"
+      label="Missing model"
+      height="200px"
+      messages={{ loadFailed: 'This product preview is unavailable right now.' }}
+    />
+  </div>
+
+  <ApiReferenceTable component="ModelViewer" category="primitives" />
+</Layout>
