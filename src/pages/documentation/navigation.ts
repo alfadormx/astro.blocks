@@ -56,6 +56,7 @@ export const documentationNavigation: ButtonProps[] = [
       { label: 'LanguageToggle', href: '/documentation/primitives/LanguageToggle' },
       { label: 'Logo', href: '/documentation/primitives/Logo' },
       { label: 'Map', href: '/documentation/primitives/Map' },
+      { label: 'ModelViewer', href: '/documentation/primitives/ModelViewer' },
       { label: 'TabItem', href: '/documentation/primitives/TabItem' },
       { label: 'TextArea', href: '/documentation/primitives/TextArea' },
       { label: 'ThemeToggle', href: '/documentation/primitives/ThemeToggle' },

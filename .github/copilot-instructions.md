@@ -37,7 +37,7 @@ This is an **Astro component library** — a collection of reusable UI blocks wi
 
 ### Component Layers (`src/components/blocks/`)
 
-- **`primitives/`** — atomic components: `Button`, `Headline`, `Image`, `Logo`, `Map`, `Video`, `Vector`, `Background`, `ThemeToggle`, `LanguageToggle`, `ToggleGroup`, `TextArea`
+- **`primitives/`** — atomic components: `Button`, `Headline`, `Image`, `Logo`, `Map`, `ModelViewer`, `Video`, `Vector`, `Background`, `ThemeToggle`, `LanguageToggle`, `ToggleGroup`, `TextArea`
 - **`composite/`** — composed from primitives: `Header`, `Footer`, `Content`, `CallToAction`, `ItemsGrid`, `ItemsTimeline`, `NavigationTree`, etc.
 - **`layout/`** — structural wrappers: `Container`, `TwoColumnContainer`, `ThreeColumnContainer`, `FourColumnContainer`, `SidebarLeftContainer`, `SidebarRightContainer`, `Modal`
 
