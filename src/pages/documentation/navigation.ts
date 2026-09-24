@@ -65,4 +65,8 @@ export const documentationNavigation: ButtonProps[] = [
       { label: 'Video', href: '/documentation/primitives/Video' },
     ],
   },
+  {
+    label: 'Utilities',
+    children: [{ label: 'CombinationCode', href: '/documentation/utilities/CombinationCode' }],
+  },
 ];
