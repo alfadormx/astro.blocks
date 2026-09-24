@@ -62,6 +62,10 @@ between blocks that don't know about each other.
   never clears another block's initial selection.
 - All state and subscriptions are cleared on `astro:after-swap`; consumers re-subscribe in their
   own after-swap init. Misconfigured markup and invalid publishes throw.
+- **URL state** (`src/utils/urlState.ts`) is also browser-only and script-only. `connectUrlState({ spec })`
+  seeds the groups named in a `CombinationSpec` from `?code=` on `DOMContentLoaded`, writes the code back
+  on change and restores it on `popstate` and `astro:after-swap`. The codec it uses,
+  `src/utils/combinationCode.ts`, is pure and safe anywhere. Spec groups may only be appended.
 
 ### Site Configuration (`src/config.yaml`)
 

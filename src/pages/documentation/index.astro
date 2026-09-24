@@ -15,6 +15,7 @@ const descriptions: Record<string, string> = {
   Composite: 'Higher-level blocks that compose primitives into ready-made sections.',
   Layout: 'Structural containers that arrange content on the page.',
   Primitives: 'The smallest building blocks, used directly or inside composites.',
+  Utilities: 'Browser-side helpers that sit beside the blocks, such as URL state.',
 
   // Base
   Colors: 'The semantic color tokens and how they map across light and dark themes.',
@@ -61,6 +62,9 @@ const descriptions: Record<string, string> = {
   ToggleGroup: 'A compact set of mutually exclusive options as radios or cells.',
   Vector: 'An inline SVG icon or illustration.',
   Video: 'An embedded or self-hosted video player.',
+
+  // Utilities
+  CombinationCode: "Encodes a configurator's selections into one shareable code kept in the URL.",
 };
 
 const groups = documentationNavigation.filter((entry) => entry.children?.length);
