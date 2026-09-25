@@ -1,0 +1,232 @@
+---
+import type {
+  ConfiguratorGridConfig,
+  ConfiguratorProps,
+  ConfiguratorTextConfig,
+  ConfiguratorToggleConfig,
+} from '~/types/configurator.types';
+import type { ButtonProps } from '~/types/button.types';
+import type { ItemsGridSelection } from '~/types/itemsgrid.types';
+import type { TabsProps } from '~/types/tabs.types';
+import type { TwoColumnContainerProps } from '~/types/container.types';
+import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
+import Tabs from '~/components/blocks/composite/Tabs.astro';
+import ConfiguratorPanel from '~/components/blocks/composite/ConfiguratorPanel.astro';
+import ModelViewer from '~/components/blocks/primitives/ModelViewer.astro';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import { cn } from '~/utils/styles';
+import {
+  buildCombinationSpec,
+  buildSummaryModel,
+  buildViewerSelections,
+  configuratorId,
+  formatSummary,
+  initialSelections,
+  stripMutations,
+  validateConfigurator,
+} from '~/utils/configurator';
+
+type Props = ConfiguratorProps;
+
+const {
+  categories,
+  viewer,
+  defaultTriggerConfig,
+  defaultGridConfig,
+  defaultToggleConfig,
+  defaultTextConfig,
+  tabs,
+  layout,
+  urlState,
+  class: className = '',
+} = Astro.props;
+
+validateConfigurator({ categories, viewer, urlState });
+
+const id = configuratorId();
+
+const internalLayout: Partial<TwoColumnContainerProps> = {
+  htmlTag: 'div',
+  content: { air: 'none', widthType: 'full' },
+  responsive: true,
+};
+const internalTabs: Partial<Omit<TabsProps, 'items'>> = {
+  tabList: { layout: 'grid', spacing: { margin: 'mb-6' } },
+  activeTabConfig: { variant: 'outline', intent: 'primary' },
+  container: { htmlTag: 'div', content: { air: 'none', widthType: 'full' } },
+};
+const internalTrigger: Partial<ButtonProps> = { width: 'full' };
+const internalToggle: ConfiguratorToggleConfig = { appearance: 'cell' };
+const internalGrid: ConfiguratorGridConfig = { columns: 3, air: 'tight' };
+const internalText: ConfiguratorTextConfig = { rows: 2 };
+
+const mergedLayout = mergeConfigs<Partial<TwoColumnContainerProps>>({}, internalLayout, layout);
+const mergedTabs = mergeConfigs<Partial<Omit<TabsProps, 'items'>>>({}, internalTabs, tabs);
+
+const triggers = categories.map((category) =>
+  mergeConfigs<Partial<ButtonProps>>({}, internalTrigger, defaultTriggerConfig, category.trigger)
+);
+
+// `options` / `items` stay out of the merge layers: mergeConfigs merges arrays index-wise.
+const panels = categories.map((category, i) => {
+  const headingId = `${id}-heading-${i}`;
+  const base = { heading: category.heading, headingId };
+  if (category.panel === 'toggle') {
+    return {
+      ...base,
+      kind: 'toggle' as const,
+      props: {
+        ...mergeConfigs<ConfiguratorToggleConfig>(
+          {},
+          internalToggle,
+          defaultToggleConfig,
+          category.config
+        ),
+        group: category.name,
+        labelledBy: headingId,
+        options: category.options.map(stripMutations),
+      },
+    };
+  }
+  if (category.panel === 'grid') {
+    const selection: ItemsGridSelection =
+      category.mode === 'multiple'
+        ? {
+            mode: 'multiple',
+            group: category.name,
+            labelledBy: headingId,
+            min: category.min,
+            max: category.max,
+          }
+        : { mode: 'single', group: category.name, labelledBy: headingId };
+    return {
+      ...base,
+      kind: 'grid' as const,
+      props: {
+        ...mergeConfigs<ConfiguratorGridConfig>(
+          {},
+          internalGrid,
+          defaultGridConfig,
+          category.config
+        ),
+        items: category.options.map(stripMutations),
+        selection,
+      },
+    };
+  }
+  return {
+    ...base,
+    kind: 'text' as const,
+    props: {
+      ...mergeConfigs<ConfiguratorTextConfig>({}, internalText, defaultTextConfig, category.config),
+      group: category.name,
+      label: category.heading,
+      hideLabel: true,
+      value: category.value,
+      maxLength: category.maxLength,
+      placeholder: category.placeholder,
+    },
+  };
+});
+
+const selections = buildViewerSelections(categories);
+const summaryModel = buildSummaryModel(categories);
+const summaryText = formatSummary(summaryModel, initialSelections(categories));
+const spec = urlState ? buildCombinationSpec(categories, urlState.product) : undefined;
+---
+
+<div
+  class={cn(className)}
+  data-configurator
+  data-configurator-url-state={spec ? JSON.stringify(spec) : undefined}
+  data-configurator-url-param={urlState?.param}
+>
+  <TwoColumnContainer {...mergedLayout}>
+    <div slot="left">
+      <ModelViewer {...viewer} selections={selections} />
+      <p
+        class="mt-4 text-lg"
+        aria-live="polite"
+        data-configurator-summary
+        data-configurator-labels={JSON.stringify(summaryModel)}
+      >
+        {summaryText}
+      </p>
+    </div>
+    <div slot="right">
+      <Tabs {...mergedTabs} items={triggers}>
+        {
+          /* One static slot per possible tab: the compiler cannot give a slot inside .map() a name
+            that depends on the callback's arguments. Tabs renders only the first items.length. */
+        }
+        <div slot="panel-0">{panels[0] && <ConfiguratorPanel {...panels[0]} />}</div>
+        <div slot="panel-1">{panels[1] && <ConfiguratorPanel {...panels[1]} />}</div>
+        <div slot="panel-2">{panels[2] && <ConfiguratorPanel {...panels[2]} />}</div>
+        <div slot="panel-3">{panels[3] && <ConfiguratorPanel {...panels[3]} />}</div>
+        <div slot="panel-4">{panels[4] && <ConfiguratorPanel {...panels[4]} />}</div>
+        <div slot="panel-5">{panels[5] && <ConfiguratorPanel {...panels[5]} />}</div>
+        <div slot="panel-6">{panels[6] && <ConfiguratorPanel {...panels[6]} />}</div>
+        <div slot="panel-7">{panels[7] && <ConfiguratorPanel {...panels[7]} />}</div>
+        <div slot="panel-8">{panels[8] && <ConfiguratorPanel {...panels[8]} />}</div>
+        <div slot="panel-9">{panels[9] && <ConfiguratorPanel {...panels[9]} />}</div>
+        <div slot="panel-10">{panels[10] && <ConfiguratorPanel {...panels[10]} />}</div>
+        <div slot="panel-11">{panels[11] && <ConfiguratorPanel {...panels[11]} />}</div>
+      </Tabs>
+    </div>
+  </TwoColumnContainer>
+</div>
+
+<script>
+  import { getSelection, subscribe } from '~/utils/selection';
+  import { connectUrlState } from '~/utils/urlState';
+  import { formatSummary } from '~/utils/configurator';
+  import type { CombinationSpec } from '~/types/combinationcode.types';
+  import type { SummaryCategory } from '~/types/configurator.types';
+  import type { Selection } from '~/types/selection.types';
+
+  const ROOT_SELECTOR = '[data-configurator]';
+
+  let disconnectUrlState: (() => void) | undefined;
+
+  // No render on connect: the server rendered the summary from the same markup defaults the
+  // blocks publish, and blocks may publish before or after this script runs.
+  function connectSummary(root: HTMLElement): void {
+    const output = root.querySelector<HTMLElement>('[data-configurator-summary]');
+    if (!output) return;
+    const model: SummaryCategory[] = JSON.parse(output.dataset.configuratorLabels!);
+    const render = (): void => {
+      const state: Record<string, readonly Selection[]> = {};
+      for (const { name } of model) state[name] = getSelection(name);
+      output.textContent = formatSummary(model, state);
+    };
+    for (const { name } of model) subscribe(name, render);
+  }
+
+  function connectUrl(): void {
+    const roots = document.querySelectorAll<HTMLElement>('[data-configurator-url-state]');
+    if (roots.length === 0) return;
+    if (import.meta.env.DEV && roots.length > 1) {
+      console.warn('[Configurator] only the first configurator with urlState is bound to the URL');
+    }
+    const spec: CombinationSpec = JSON.parse(roots[0].dataset.configuratorUrlState!);
+    disconnectUrlState = connectUrlState({ spec, param: roots[0].dataset.configuratorUrlParam });
+  }
+
+  function init(): void {
+    document.querySelectorAll<HTMLElement>(ROOT_SELECTOR).forEach((root) => {
+      connectSummary(root);
+      root.dataset.configuratorReady = '';
+    });
+    connectUrl();
+  }
+
+  // Registered before connectUrlState adds its own after-swap listener, so disposing here also
+  // cancels that listener for this dispatch; the new page may have no configurator. The microtask
+  // lets the block scripts' own after-swap listeners republish markup state first.
+  document.addEventListener('astro:after-swap', () => {
+    disconnectUrlState?.();
+    disconnectUrlState = undefined;
+    queueMicrotask(init);
+  });
+  init();
+</script>

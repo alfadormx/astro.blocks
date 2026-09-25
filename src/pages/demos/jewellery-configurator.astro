@@ -1,0 +1,122 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import Configurator from '~/components/blocks/composite/Configurator.astro';
+import type { ConfiguratorProps } from '~/types/configurator.types';
+
+const metadata = { title: { default: 'Jewellery configurator' } };
+
+const viewer: ConfiguratorProps['viewer'] = {
+  src: '/models/ring.glb',
+  label: 'Your ring',
+  class: 'rounded-lg bg-surface',
+  cameraPresets: { band: { position: [0, -0.9, 2.4], target: [0, -0.6, 0], fov: 35 } },
+};
+
+const categories: ConfiguratorProps['categories'] = [
+  {
+    name: 'ring-style',
+    panel: 'toggle',
+    trigger: { label: 'Style' },
+    heading: 'Pick a style',
+    options: [
+      {
+        code: 'classic',
+        label: 'Classic',
+        selected: true,
+        mutations: [{ type: 'model', src: '/models/ring.glb' }],
+      },
+      {
+        code: 'bold',
+        label: 'Bold',
+        mutations: [{ type: 'model', src: '/models/ring-alt.glb' }],
+      },
+    ],
+  },
+  {
+    name: 'ring-metal',
+    panel: 'toggle',
+    trigger: { label: 'Metal' },
+    heading: 'Choose your metal',
+    options: [
+      {
+        code: 'yellow',
+        label: 'Yellow gold',
+        selected: true,
+        mutations: [{ type: 'material', material: 'Band', color: '#e6b422', roughness: 0.3 }],
+      },
+      {
+        code: 'white',
+        label: 'White gold',
+        mutations: [{ type: 'material', material: 'Band', color: '#e5e4e2', roughness: 0.2 }],
+      },
+      {
+        code: 'rose',
+        label: 'Rose gold',
+        mutations: [{ type: 'material', part: 'Band', use: 'RoseGold' }],
+      },
+    ],
+  },
+  {
+    name: 'ring-stone',
+    panel: 'grid',
+    mode: 'single',
+    trigger: { label: 'Stone' },
+    heading: 'Choose a stone size',
+    options: [
+      {
+        code: 'small',
+        title: '0.25 ct',
+        content: 'Subtle sparkle for everyday wear.',
+        mutations: [{ type: 'visible', parts: ['Stone_Small'] }],
+      },
+      {
+        code: 'medium',
+        title: '0.5 ct',
+        content: 'Our most popular size.',
+        selected: true,
+        mutations: [{ type: 'visible', parts: ['Stone_Medium'] }],
+      },
+      {
+        code: 'large',
+        title: '1 ct',
+        content: 'A statement stone.',
+        mutations: [{ type: 'visible', parts: ['Stone_Large'] }],
+      },
+    ],
+  },
+  {
+    name: 'ring-extras',
+    panel: 'grid',
+    mode: 'multiple',
+    max: 2,
+    trigger: { label: 'Extras' },
+    heading: 'Add up to two extras',
+    options: [
+      { code: 'giftbox', title: 'Gift box', content: 'Wrapped and ready to give.' },
+      { code: 'certificate', title: 'Certificate', content: 'Proof of the stone and metal.' },
+      { code: 'polish', title: 'Lifetime polish', content: 'Free cleaning, forever.' },
+    ],
+  },
+  {
+    name: 'ring-engraving',
+    panel: 'text',
+    trigger: { label: 'Engraving' },
+    heading: 'Add an engraving',
+    maxLength: 20,
+    placeholder: 'Up to 20 characters',
+    camera: 'band',
+  },
+];
+---
+
+<Layout metadata={metadata}>
+  <div class="mx-auto max-w-6xl px-4 py-8">
+    <h1 class="mb-8 text-3xl font-bold">Design your ring</h1>
+    <Configurator
+      categories={categories}
+      viewer={viewer}
+      defaultToggleConfig={{ size: 'sm' }}
+      urlState={{ product: 'RING01' }}
+    />
+  </div>
+</Layout>

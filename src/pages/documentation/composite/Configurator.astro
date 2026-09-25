@@ -1,0 +1,228 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import ConfiguratorBlock from '~/components/blocks/composite/Configurator.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import type { ConfiguratorProps } from '~/types/configurator.types';
+
+const metadata = {
+  title: {
+    default: 'Configurator',
+  },
+};
+
+const viewer: ConfiguratorProps['viewer'] = {
+  src: '/models/ring.glb',
+  label: 'A configurable ring',
+  class: 'rounded-lg bg-surface',
+  height: '320px',
+  cameraPresets: { band: { position: [0, -0.9, 2.4], target: [0, -0.6, 0], fov: 35 } },
+};
+
+const metalOptions = [
+  {
+    code: 'yellow',
+    label: 'Yellow gold',
+    selected: true,
+    mutations: [{ type: 'material', material: 'Band', color: '#e6b422', roughness: 0.3 }],
+  },
+  {
+    code: 'white',
+    label: 'White gold',
+    mutations: [{ type: 'material', material: 'Band', color: '#e5e4e2', roughness: 0.2 }],
+  },
+  {
+    code: 'rose',
+    label: 'Rose gold',
+    mutations: [{ type: 'material', part: 'Band', use: 'RoseGold' }],
+  },
+] satisfies Extract<ConfiguratorProps['categories'][number], { panel: 'toggle' }>['options'];
+
+const togglePanels: ConfiguratorProps['categories'] = [
+  {
+    name: 'configurator-doc-metal',
+    panel: 'toggle',
+    trigger: { label: 'Metal' },
+    heading: 'Choose your metal',
+    options: metalOptions,
+  },
+  {
+    name: 'configurator-doc-engraving',
+    panel: 'text',
+    trigger: { label: 'Engraving' },
+    heading: 'Add an engraving',
+    maxLength: 20,
+    placeholder: 'Up to 20 characters',
+    camera: 'band',
+  },
+];
+
+const gridPanels: ConfiguratorProps['categories'] = [
+  {
+    name: 'configurator-doc-stone',
+    panel: 'grid',
+    mode: 'single',
+    trigger: { label: 'Stone' },
+    heading: 'Choose a stone size',
+    options: [
+      {
+        code: 'small',
+        title: '0.25 ct',
+        mutations: [{ type: 'visible', parts: ['Stone_Small'] }],
+      },
+      {
+        code: 'medium',
+        title: '0.5 ct',
+        selected: true,
+        mutations: [{ type: 'visible', parts: ['Stone_Medium'] }],
+      },
+      {
+        code: 'large',
+        title: '1 ct',
+        mutations: [{ type: 'visible', parts: ['Stone_Large'] }],
+      },
+    ],
+  },
+  {
+    name: 'configurator-doc-extras',
+    panel: 'grid',
+    mode: 'multiple',
+    max: 2,
+    trigger: { label: 'Extras' },
+    heading: 'Add up to two extras',
+    options: [
+      { code: 'giftbox', title: 'Gift box' },
+      { code: 'certificate', title: 'Certificate' },
+      { code: 'polish', title: 'Lifetime polish' },
+    ],
+  },
+];
+
+const layeredPanels: ConfiguratorProps['categories'] = [
+  {
+    name: 'configurator-doc-layered-metal',
+    panel: 'toggle',
+    trigger: { label: 'Metal' },
+    heading: 'Radio rows from defaultToggleConfig',
+    options: metalOptions,
+  },
+  {
+    name: 'configurator-doc-layered-style',
+    panel: 'toggle',
+    trigger: { label: 'Style' },
+    heading: 'Outline cells from this category’s config',
+    options: [
+      {
+        code: 'classic',
+        label: 'Classic',
+        selected: true,
+        mutations: [{ type: 'model', src: '/models/ring.glb' }],
+      },
+      { code: 'bold', label: 'Bold', mutations: [{ type: 'model', src: '/models/ring-alt.glb' }] },
+    ],
+    config: { appearance: 'cell', variant: 'outline' },
+  },
+];
+
+const urlStateExample = `<Configurator
+  categories={categories}
+  viewer={viewer}
+  urlState={{ product: 'RING01' }}
+/>
+<!-- ?code=RING01-bold-rose-large-giftbox-Mia -->`;
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Configurator',
+    subtitle: 'A product configurator assembled from ModelViewer, Tabs and selection blocks',
+  }}
+>
+  <p>
+    Configurator puts a ModelViewer and a live summary in the left column and a tabbed choice panel
+    in the right one. Each category becomes one tab and one selection group: a
+    <code>toggle</code> category renders a ToggleGroup, a <code>grid</code> category an ItemsGrid in selection
+    mode, and a <code>text</code> category a TextArea. Options carry the scene
+    <code>mutations</code> they apply, so the viewer's <code>selections</code> map is built for you. See
+    the <a href="/demos/jewellery-configurator">jewellery configurator demo</a> for the full experience.
+  </p>
+
+  <h3>Category types</h3>
+  <p>
+    <code>ConfiguratorToggleCategory</code> (<code>panel: 'toggle'</code>) takes ToggleGroup
+    <code>options</code>. <code>ConfiguratorGridCategory</code> (<code>panel: 'grid'</code>) takes
+    ItemsGrid items as <code>options</code>, each with a required <code>code</code>, and a
+    <code>mode</code> of <code>'single'</code> or <code>'multiple'</code>; <code>min</code> and
+    <code>max</code> exist only for <code>'multiple'</code>. <code>ConfiguratorTextCategory</code>
+    (<code>panel: 'text'</code>) takes <code>value</code>, <code>maxLength</code> and
+    <code>placeholder</code>. Every category has a <code>name</code> (its selection group), a
+    <code>trigger</code> Button config for its tab, a <code>heading</code> that names the panel, and an
+    optional <code>camera</code> key of <code>viewer.cameraPresets</code>. A configurator holds at
+    most 12 categories.
+  </p>
+
+  <h3>1. Toggle and text panels</h3>
+  <p>
+    The metal toggle recolours the band. Typing an engraving moves the camera to the
+    <code>band</code> preset, because the text category sets <code>camera</code>.
+  </p>
+  <div data-doc-section="toggle-text" class="border border-dashed border-gray/80 p-8">
+    <ConfiguratorBlock categories={togglePanels} viewer={viewer} />
+  </div>
+
+  <h3>2. Grid panels</h3>
+  <p>
+    A <code>'single'</code> grid switches which stone is visible. A <code>'multiple'</code> grid with
+    <code>max: 2</code> disables the remaining option once two are selected.
+  </p>
+  <div data-doc-section="grid" class="border border-dashed border-gray/80 p-8">
+    <ConfiguratorBlock categories={gridPanels} viewer={viewer} />
+  </div>
+
+  <h3>3. Defaults layering</h3>
+  <p>
+    Each panel's config is merged in three layers: the configurator's internal defaults, then the
+    block-level <code>defaultToggleConfig</code>, <code>defaultGridConfig</code> or
+    <code>defaultTextConfig</code>, then the category's own <code>config</code>. Triggers merge the
+    same way with <code>defaultTriggerConfig</code> under each category's <code>trigger</code>. Here
+    <code>defaultToggleConfig</code> asks for radio rows, the style category overrides it with outline
+    cells, and <code>defaultTriggerConfig</code> makes every tab small.
+  </p>
+  <div data-doc-section="layering" class="border border-dashed border-gray/80 p-8">
+    <ConfiguratorBlock
+      categories={layeredPanels}
+      viewer={viewer}
+      defaultToggleConfig={{ appearance: 'radio' }}
+      defaultTriggerConfig={{ size: 'sm' }}
+    />
+  </div>
+
+  <h3>4. Summary</h3>
+  <p>
+    The line under the viewer is derived from the current selections. It lists the label of every
+    selected option: toggle options by <code>label</code>, grid options by <code>title</code> (falling
+    back to <code>code</code>). Categories appear in tab order and options in declaration order,
+    whatever order they were picked in. Text is shown in quotes, empty categories are skipped, and
+    the parts are joined with <code>·</code>. The summary is an <code>aria-live="polite"</code> region,
+    so screen readers announce changes.
+  </p>
+
+  <h3>5. URL state</h3>
+  <p>
+    Set <code>urlState</code> to keep the selections in the page URL as a combination code, so a configuration
+    can be shared or bookmarked and the back button steps through changes. The code lists the categories
+    in tab order, with an optional leading <code>product</code> segment; the query parameter defaults
+    to <code>code</code> and can be changed with <code>param</code>. Only the first configurator
+    with <code>urlState</code> on a page binds to the URL, so this page leaves it off.
+  </p>
+  <p>
+    <strong>Append categories only.</strong> Once codes are shared, never remove or reorder categories,
+    or old codes will decode into the wrong groups. Option codes and <code>product</code> must match
+    <code>[A-Za-z0-9]+</code>.
+  </p>
+  <pre
+    class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{urlStateExample}</code></pre>
+
+  <ApiReferenceTable component="Configurator" category="composite" />
+</Layout>

@@ -1,0 +1,21 @@
+---
+import type { ItemsGridProps } from '~/types/itemsgrid.types';
+import type { TextAreaProps } from '~/types/textarea.types';
+import type { ToggleGroupAppearance, ToggleGroupProps } from '~/types/togglegroup.types';
+import ItemsGrid from '~/components/blocks/composite/ItemsGrid.astro';
+import TextArea from '~/components/blocks/primitives/TextArea.astro';
+import ToggleGroup from '~/components/blocks/primitives/ToggleGroup.astro';
+
+type Props = { heading: string; headingId: string } & (
+  | { kind: 'toggle'; props: ToggleGroupProps & ToggleGroupAppearance }
+  | { kind: 'grid'; props: ItemsGridProps }
+  | { kind: 'text'; props: TextAreaProps }
+);
+
+const panel = Astro.props;
+---
+
+<h3 id={panel.headingId} class="mb-4 text-lg font-semibold">{panel.heading}</h3>
+{panel.kind === 'toggle' && <ToggleGroup {...panel.props} />}
+{panel.kind === 'grid' && <ItemsGrid {...panel.props} />}
+{panel.kind === 'text' && <TextArea {...panel.props} />}
