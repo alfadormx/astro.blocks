@@ -71,12 +71,15 @@ const tabListClass = cn(
   tabList?.border?.radius,
   tabList?.class
 );
+
+const effectiveLayout = tabList?.layout ?? (orientation === 'vertical' ? 'column' : 'row');
+const ariaOrientation = effectiveLayout === 'column' ? 'vertical' : 'horizontal';
 ---
 
 <Container {...mergedContainer}>
   <div class={tabsWrapperClass} data-tabs-root>
     <TabListWrapper {...tabListWrapperProps}>
-      <div role="tablist" class={tabListClass}>
+      <div role="tablist" aria-orientation={ariaOrientation} class={tabListClass}>
         {
           items.map((item, n) => {
             const inactiveMerge = mergeConfigs(
@@ -151,9 +154,58 @@ const tabListClass = cn(
     });
 
     panels.forEach((panel, i) => {
-      panel.hidden = i !== newIndex;
-      panel.setAttribute('aria-hidden', i !== newIndex ? 'true' : 'false');
+      const isActive = i === newIndex;
+      panel.hidden = !isActive;
+      panel.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+      panel.setAttribute(
+        'aria-labelledby',
+        `${instance.idPrefix}-tab-${i}-${isActive ? 'active' : 'inactive'}`
+      );
     });
+  }
+
+  function activeButton(root: HTMLElement, index: number): HTMLElement | null {
+    const span = root.querySelectorAll<HTMLElement>('[data-tab-index]')[index];
+    return span?.querySelector<HTMLElement>('[data-tab-button="active"] [role="tab"]') ?? null;
+  }
+
+  function findEnabled(root: HTMLElement, start: number, step: 1 | -1, count: number): number {
+    for (let k = 0; k < count; k++) {
+      const i = (((start + step * k) % count) + count) % count;
+      const btn = activeButton(root, i);
+      if (btn && !btn.hasAttribute('disabled')) return i;
+    }
+    return -1;
+  }
+
+  function onKeyDown(root: HTMLElement, e: KeyboardEvent): void {
+    const span = (e.target as HTMLElement).closest<HTMLElement>('[data-tab-index]');
+    if (!span || span.closest('[data-tabs-root]') !== root) return;
+    const inst = tabsMap.get(root);
+    const current = parseInt(span.dataset.tabIndex!, 10);
+    if (!inst || isNaN(current)) return;
+
+    const vertical =
+      root.querySelector('[role="tablist"]')?.getAttribute('aria-orientation') === 'vertical';
+    const rtl = !vertical && (document.dir === 'rtl' || getComputedStyle(root).direction === 'rtl');
+    const [prevKey, nextKey] = vertical
+      ? ['ArrowUp', 'ArrowDown']
+      : rtl
+        ? ['ArrowRight', 'ArrowLeft']
+        : ['ArrowLeft', 'ArrowRight'];
+    const count = root.querySelectorAll('[data-tab-index]').length;
+
+    let target: number;
+    if (e.key === nextKey) target = findEnabled(root, current + 1, 1, count);
+    else if (e.key === prevKey) target = findEnabled(root, current - 1, -1, count);
+    else if (e.key === 'Home') target = findEnabled(root, 0, 1, count);
+    else if (e.key === 'End') target = findEnabled(root, count - 1, -1, count);
+    else return;
+    if (target === -1) return;
+
+    e.preventDefault();
+    setActiveTab(root, inst, target);
+    activeButton(root, target)?.focus();
   }
 
   function initTabs(): void {
@@ -182,7 +234,6 @@ const tabListClass = cn(
       panels.forEach((panel, i) => {
         panel.id = `${idPrefix}-panel-${i}`;
         panel.setAttribute('role', 'tabpanel');
-        panel.setAttribute('aria-labelledby', `${idPrefix}-tab-${i}-active`);
       });
 
       setActiveTab(root, instance, 0);
@@ -194,7 +245,10 @@ const tabListClass = cn(
         const inst = tabsMap.get(root);
         if (!inst || isNaN(idx)) return;
         setActiveTab(root, inst, idx);
+        activeButton(root, idx)?.focus();
       });
+
+      root.addEventListener('keydown', (e) => onKeyDown(root, e));
     });
   }
 
