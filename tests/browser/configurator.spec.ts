@@ -3,12 +3,13 @@ import { expect, test, type Locator, type Page } from '@playwright/test';
 const PAGE_URL = '/demos/jewellery-configurator';
 // SwiftShader renders on the CPU; first load includes compiling three's shaders.
 const READY_TIMEOUT = 20_000;
-const STYLE = 'ring-style';
-const METAL = 'ring-metal';
-const STONE = 'ring-stone';
+const MODEL = 'ring-model';
+const CARAT = 'ring-carat';
+const COLOR = 'ring-color';
+const CLARITY = 'ring-clarity';
 const EXTRAS = 'ring-extras';
 const ENGRAVING = 'ring-engraving';
-const DEFAULT_SUMMARY = 'Classic · Yellow gold · 0.5 ct';
+const DEFAULT_SUMMARY = 'Yellow gold 0.5 ct IF';
 
 async function open(page: Page, query = ''): Promise<void> {
   await page.goto(`${PAGE_URL}${query}`);
@@ -69,12 +70,6 @@ async function expectCode(page: Page, code: string | null): Promise<void> {
   await expect.poll(() => codeParam(page)).toBe(code);
 }
 
-async function expectChecked(page: Page, group: string, code: string): Promise<void> {
-  await expect(
-    page.locator(`[data-selection-group="${group}"] input[type="radio"]:checked`)
-  ).toHaveValue(code);
-}
-
 async function expectGridChecked(page: Page, group: string, codes: string[]): Promise<void> {
   await expect
     .poll(() =>
@@ -86,31 +81,64 @@ async function expectGridChecked(page: Page, group: string, codes: string[]): Pr
 }
 
 test.describe('Configurator', () => {
-  test.describe('toggle panel', () => {
-    test('checks the clicked metal and repaints the viewer', async ({ page }) => {
+  test.describe('model panel', () => {
+    test('swaps to the bold model and repaints the viewer', async ({ page }) => {
       await open(page);
       const root = await readyViewer(page);
       const before = await settledShot(root);
-      await openTab(page, 'Metal');
-      await option(page, METAL, 'rose').click();
-      await expectChecked(page, METAL, 'rose');
+      await option(page, MODEL, 'bold').click();
+      await expectGridChecked(page, MODEL, ['bold']);
+      await expect(root).toHaveAttribute('data-model-viewer-src', '/models/ring-alt.glb');
       await changedShot(root, before);
     });
 
-    test('names the metal group by its panel heading', async ({ page }) => {
+    test('names the model group by its panel heading', async ({ page }) => {
       await open(page);
-      await openTab(page, 'Metal');
-      await expect(page.getByRole('radiogroup', { name: 'Choose your metal' })).toBeVisible();
+      await expect(page.getByRole('radiogroup', { name: 'Select your model' })).toBeVisible();
     });
   });
 
   test.describe('grid panel', () => {
-    test('checks only the clicked stone in a single grid', async ({ page }) => {
+    test('checks only the clicked carat in a single grid', async ({ page }) => {
       await open(page);
-      await openTab(page, 'Stone');
-      await option(page, STONE, 'large').click();
-      await expectGridChecked(page, STONE, ['large']);
-      await expect(option(page, STONE, 'medium')).toHaveAttribute('aria-checked', 'false');
+      await openTab(page, 'Carat');
+      await option(page, CARAT, 'large').click();
+      await expectGridChecked(page, CARAT, ['large']);
+      await expect(option(page, CARAT, 'medium')).toHaveAttribute('aria-checked', 'false');
+    });
+
+    test('recolours the band when a metal colour is picked', async ({ page }) => {
+      await open(page);
+      const root = await readyViewer(page);
+      const before = await settledShot(root);
+      await openTab(page, 'Color');
+      await option(page, COLOR, 'rose').click();
+      await expectGridChecked(page, COLOR, ['rose']);
+      await changedShot(root, before);
+    });
+
+    test('clouds the stone when a lower clarity is picked', async ({ page }) => {
+      await open(page);
+      const root = await readyViewer(page);
+      const before = await settledShot(root);
+      await openTab(page, 'Clarity');
+      await option(page, CLARITY, 'vs1').click();
+      await expectGridChecked(page, CLARITY, ['vs1']);
+      await changedShot(root, before);
+    });
+
+    test('grows the carat icon with the weight', async ({ page }) => {
+      await open(page);
+      await openTab(page, 'Carat');
+      const iconWidth = async (code: string): Promise<number> =>
+        (await option(page, CARAT, code)
+          .locator('[data-option-variant]:not([hidden]) svg')
+          .boundingBox())!.width;
+      const small = await iconWidth('small');
+      const medium = await iconWidth('medium');
+      const large = await iconWidth('large');
+      expect(small).toBeLessThan(medium);
+      expect(medium).toBeLessThan(large);
     });
 
     test('disables the remaining extras once max is reached', async ({ page }) => {
@@ -132,35 +160,27 @@ test.describe('Configurator', () => {
       await expect(root).toHaveAttribute('data-model-viewer-camera', 'band');
     });
 
-    test('names the engraving field by its panel heading', async ({ page }) => {
+    test('names the engraving field by its visible label', async ({ page }) => {
       await open(page);
       await openTab(page, 'Engraving');
-      await expect(page.getByRole('textbox', { name: 'Add an engraving' })).toBeVisible();
+      await expect(page.getByRole('textbox', { name: 'Engraving' })).toBeVisible();
     });
   });
 
   test.describe('hidden panels', () => {
-    test('swaps the model from the style panel', async ({ page }) => {
+    test('keeps the default carat selected while its panel is hidden', async ({ page }) => {
       await open(page);
-      const root = await readyViewer(page);
-      await openTab(page, 'Style');
-      await option(page, STYLE, 'bold').click();
-      await expect(root).toHaveAttribute('data-model-viewer-src', '/models/ring-alt.glb');
-    });
-
-    test('keeps the default stone selected while its panel is hidden', async ({ page }) => {
-      await open(page);
-      await expect(option(page, STONE, 'medium')).toBeHidden();
-      await expect(option(page, STONE, 'medium')).toHaveAttribute('aria-checked', 'true');
+      await expect(option(page, CARAT, 'medium')).toBeHidden();
+      await expect(option(page, CARAT, 'medium')).toHaveAttribute('aria-checked', 'true');
     });
   });
 
   test.describe('defaults layering', () => {
-    test('renders metal cells at the size from defaultToggleConfig', async ({ page }) => {
+    test('renders grid tiles with the padding from defaultGridConfig', async ({ page }) => {
       await open(page);
       await expect(
-        option(page, METAL, 'yellow').locator('[data-option-variant="unselected"]')
-      ).toHaveClass(/(^|\s)px-3(\s|$)/);
+        option(page, CARAT, 'small').locator('[data-option-variant="unselected"] > div')
+      ).toHaveClass(/(^|\s)p-4(\s|$)/);
     });
   });
 
@@ -176,45 +196,36 @@ test.describe('Configurator', () => {
       await expect(summary(page)).toHaveText(DEFAULT_SUMMARY);
     });
 
-    test('follows a toggle change', async ({ page }) => {
+    test('follows a grid change', async ({ page }) => {
       await open(page);
-      await openTab(page, 'Metal');
-      await option(page, METAL, 'rose').click();
-      await expect(summary(page)).toHaveText('Classic · Rose gold · 0.5 ct');
+      await openTab(page, 'Carat');
+      await option(page, CARAT, 'large').click();
+      await expect(summary(page)).toHaveText('Yellow gold 1 ct IF');
     });
 
-    test('lists extras in option order, not click order', async ({ page }) => {
+    test('leaves out categories the summary does not list', async ({ page }) => {
       await open(page);
+      await option(page, MODEL, 'bold').click();
       await openTab(page, 'Extras');
-      await option(page, EXTRAS, 'certificate').click();
-      await option(page, EXTRAS, 'giftbox').click();
-      await expect(summary(page)).toHaveText(`${DEFAULT_SUMMARY} · Gift box · Certificate`);
-    });
-
-    test('quotes the engraving', async ({ page }) => {
-      await open(page);
-      await openTab(page, 'Engraving');
-      await engraving(page).pressSequentially('Mia');
-      await expect(summary(page)).toHaveText(`${DEFAULT_SUMMARY} · "Mia"`);
-    });
-
-    test('drops a category once it is emptied', async ({ page }) => {
-      await open(page);
-      await openTab(page, 'Extras');
-      await option(page, EXTRAS, 'giftbox').click();
       await option(page, EXTRAS, 'giftbox').click();
       await openTab(page, 'Engraving');
       await engraving(page).pressSequentially('Mia');
-      await engraving(page).fill('');
+      await expectCode(page, 'RING01-bold-medium-yellow-if-giftbox-Mia');
       await expect(summary(page)).toHaveText(DEFAULT_SUMMARY);
     });
 
     test('keeps updating after a page swap', async ({ page }) => {
       await open(page);
       await page.evaluate(() => document.dispatchEvent(new Event('astro:after-swap')));
-      await openTab(page, 'Metal');
-      await option(page, METAL, 'white').click();
-      await expect(summary(page)).toHaveText('Classic · White gold · 0.5 ct');
+      await openTab(page, 'Color');
+      await option(page, COLOR, 'rose').click();
+      await expect(summary(page)).toHaveText('Rose gold 0.5 ct IF');
+    });
+
+    test('shows the title and call to action under the viewer', async ({ page }) => {
+      await open(page);
+      await expect(page.getByRole('heading', { name: 'Solitaire' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'Save my design' })).toBeVisible();
     });
   });
 
@@ -225,13 +236,14 @@ test.describe('Configurator', () => {
     });
 
     test('restores every panel from a code', async ({ page }) => {
-      await open(page, '?code=RING01-bold-rose-large-giftbox-Mia');
-      await expectChecked(page, STYLE, 'bold');
-      await expectChecked(page, METAL, 'rose');
-      await expectGridChecked(page, STONE, ['large']);
+      await open(page, '?code=RING01-bold-large-rose-vvs1-giftbox-Mia');
+      await expectGridChecked(page, MODEL, ['bold']);
+      await expectGridChecked(page, CARAT, ['large']);
+      await expectGridChecked(page, COLOR, ['rose']);
+      await expectGridChecked(page, CLARITY, ['vvs1']);
       await expectGridChecked(page, EXTRAS, ['giftbox']);
       await expect(engraving(page)).toHaveValue('Mia');
-      await expect(summary(page)).toHaveText('Bold · Rose gold · 1 ct · Gift box · "Mia"');
+      await expect(summary(page)).toHaveText('Rose gold 1 ct VVS1');
       await expect(await readyViewer(page)).toHaveAttribute(
         'data-model-viewer-src',
         '/models/ring-alt.glb'
@@ -239,8 +251,8 @@ test.describe('Configurator', () => {
     });
 
     test('keeps the default for a stale option code', async ({ page }) => {
-      await open(page, '?code=RING01-classic-gold-medium--');
-      await expectChecked(page, METAL, 'yellow');
+      await open(page, '?code=RING01-slim-medium-yellow-if--');
+      await expectGridChecked(page, MODEL, ['classic']);
       await expect(summary(page)).toHaveText(DEFAULT_SUMMARY);
     });
   });
@@ -248,28 +260,26 @@ test.describe('Configurator', () => {
   test.describe('write-back', () => {
     test('writes a change into the code', async ({ page }) => {
       await open(page);
-      await openTab(page, 'Metal');
-      await option(page, METAL, 'white').click();
-      await expectCode(page, 'RING01-classic-white-medium--');
+      await option(page, MODEL, 'bold').click();
+      await expectCode(page, 'RING01-bold-medium-yellow-if--');
     });
   });
 
   test.describe('history', () => {
     test('steps back and forward through changes', async ({ page }) => {
       await open(page);
-      await openTab(page, 'Metal');
-      await option(page, METAL, 'white').click();
-      await openTab(page, 'Stone');
-      await option(page, STONE, 'large').click();
-      await expect(summary(page)).toHaveText('Classic · White gold · 1 ct');
+      await option(page, MODEL, 'bold').click();
+      await openTab(page, 'Carat');
+      await option(page, CARAT, 'large').click();
+      await expect(summary(page)).toHaveText('Yellow gold 1 ct IF');
 
       await page.goBack();
-      await expectGridChecked(page, STONE, ['medium']);
-      await expect(summary(page)).toHaveText('Classic · White gold · 0.5 ct');
+      await expectGridChecked(page, CARAT, ['medium']);
+      await expect(summary(page)).toHaveText(DEFAULT_SUMMARY);
 
       await page.goForward();
-      await expectGridChecked(page, STONE, ['large']);
-      await expect(summary(page)).toHaveText('Classic · White gold · 1 ct');
+      await expectGridChecked(page, CARAT, ['large']);
+      await expect(summary(page)).toHaveText('Yellow gold 1 ct IF');
     });
   });
 
@@ -280,13 +290,14 @@ test.describe('Configurator', () => {
       await expectCode(page, null);
       await expect(summary(page)).toHaveText(DEFAULT_SUMMARY);
 
-      await openTab(page, 'Style');
-      await option(page, STYLE, 'bold').click();
+      await option(page, MODEL, 'bold').click();
       await expect(root).toHaveAttribute('data-model-viewer-src', '/models/ring-alt.glb');
-      await openTab(page, 'Metal');
-      await option(page, METAL, 'rose').click();
-      await openTab(page, 'Stone');
-      await option(page, STONE, 'large').click();
+      await openTab(page, 'Carat');
+      await option(page, CARAT, 'large').click();
+      await openTab(page, 'Color');
+      await option(page, COLOR, 'white').click();
+      await openTab(page, 'Clarity');
+      await option(page, CLARITY, 'vs1').click();
       await openTab(page, 'Extras');
       await option(page, EXTRAS, 'certificate').click();
       await option(page, EXTRAS, 'giftbox').click();
@@ -294,8 +305,8 @@ test.describe('Configurator', () => {
       await engraving(page).pressSequentially('Mia');
       await expect(root).toHaveAttribute('data-model-viewer-camera', 'band');
 
-      const code = 'RING01-bold-rose-large-giftbox.certificate-Mia';
-      const full = 'Bold · Rose gold · 1 ct · Gift box · Certificate · "Mia"';
+      const code = 'RING01-bold-large-white-vs1-giftbox.certificate-Mia';
+      const full = 'White gold 1 ct VS1';
       await expectCode(page, code);
       await expect(summary(page)).toHaveText(full);
 
@@ -306,18 +317,19 @@ test.describe('Configurator', () => {
         'data-model-viewer-src',
         '/models/ring-alt.glb'
       );
-      await expectChecked(shared, STYLE, 'bold');
-      await expectChecked(shared, METAL, 'rose');
-      await expectGridChecked(shared, STONE, ['large']);
+      await expectGridChecked(shared, MODEL, ['bold']);
+      await expectGridChecked(shared, CARAT, ['large']);
+      await expectGridChecked(shared, COLOR, ['white']);
+      await expectGridChecked(shared, CLARITY, ['vs1']);
       await expectGridChecked(shared, EXTRAS, ['giftbox', 'certificate']);
       await expect(engraving(shared)).toHaveValue('Mia');
       await shared.close();
 
       // One typing burst is one history entry, so back lands before the engraving.
       await page.goBack();
-      await expect(summary(page)).toHaveText('Bold · Rose gold · 1 ct · Gift box · Certificate');
+      await expect(engraving(page)).toHaveValue('');
       await page.goForward();
-      await expect(summary(page)).toHaveText(full);
+      await expect(engraving(page)).toHaveValue('Mia');
     });
   });
 });
