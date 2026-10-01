@@ -40,6 +40,7 @@ const {
   tabs,
   layout,
   urlState,
+  headingClass = '',
   title,
   actions = [],
   summary,
@@ -75,7 +76,7 @@ const triggers = categories.map((category) =>
 // `options` / `items` stay out of the merge layers: mergeConfigs merges arrays index-wise.
 const panels = categories.map((category, i) => {
   const headingId = `${id}-heading-${i}`;
-  const base = { heading: category.heading, headingId };
+  const base = { heading: category.heading, headingId, headingClass };
   if (category.panel === 'toggle') {
     return {
       ...base,
@@ -125,8 +126,8 @@ const panels = categories.map((category, i) => {
     props: {
       ...mergeConfigs<ConfiguratorTextConfig>({}, internalText, defaultTextConfig, category.config),
       group: category.name,
-      label: category.heading,
-      hideLabel: true,
+      label: category.fieldLabel || category.heading,
+      hideLabel: !category.fieldLabel,
       value: category.value,
       maxLength: category.maxLength,
       placeholder: category.placeholder,
