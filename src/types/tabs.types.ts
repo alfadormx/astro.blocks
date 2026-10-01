@@ -21,7 +21,7 @@ export interface TabsProps {
     spacing?: SpacingConfig;
     border?: BorderConfig;
     class?: string;
-    /** How the triggers are arranged among themselves; independent of `orientation`. Unset derives from `orientation` ('vertical' -> column, otherwise row). */
+    /** How the triggers are arranged among themselves; independent of `orientation`. Unset derives from `orientation` ('vertical' -> column, otherwise row). In 'grid' and 'column' the triggers fill the tab list (grid: whole cell; column: full width); set `width: 'auto'` on `defaultTabConfig`, `activeTabConfig` or an item to opt out. Setting `align` on a trigger disables the fill. */
     layout?: 'row' | 'column' | 'grid';
     /** Number of trigger columns at the widest step; applies only when `layout` is 'grid', ignored otherwise (default: 2). Steps down by container width, never below 2. */
     columns?: 2 | 3 | 4;
