@@ -10,6 +10,7 @@ const {
   air = 'normal',
   responsive = false,
   breakpoint = 'md:',
+  ratio = '1:1',
   reverseOnMobile = false,
   leftColumn,
   rightColumn,
@@ -23,9 +24,15 @@ const airSettings = {
   loose: 'gap-6 md:gap-8 lg:gap-12',
 };
 
+const ratioClasses = {
+  '1:1': 'grid-cols-2',
+  '3:2': 'grid-cols-[3fr_2fr]',
+  '2:1': 'grid-cols-[2fr_1fr]',
+} as const;
+
 // Build grid classes
 const layoutClass = cn(
-  responsive ? `grid-cols-1 ${breakpoint}grid-cols-2` : 'grid-cols-2',
+  responsive ? `grid-cols-1 ${breakpoint}${ratioClasses[ratio]}` : ratioClasses[ratio],
   airSettings[air]
 );
 
