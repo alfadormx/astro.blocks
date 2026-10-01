@@ -27,6 +27,9 @@ const {
   border,
   class: className = '',
   contentClass,
+  titleClass = 'font-bold text-lg md:text-xl lg:text-2xl mb-1 md:mb-2',
+  textClass = 'mb-2 md:mb-3',
+  mediaClass = 'size-8 md:size-10 lg:size-12',
   showConnector = false,
   showConnectorLeft = false,
   showConnectorRight = false,
@@ -56,8 +59,8 @@ const hasMedia = hasIcon || hasImage;
 // Body: rendered only when it has something to hold
 const hasBody = !!title || !!content || actions.length > 0;
 
-const mergedIconClass = cn('size-8 md:size-10 lg:size-12 shrink-0', icon?.class);
-const mergedImageClass = cn('size-8 md:size-10 lg:size-12 shrink-0', image?.class);
+const mergedIconClass = cn(mediaClass, 'shrink-0', icon?.class);
+const mergedImageClass = cn(mediaClass, 'shrink-0', image?.class);
 
 const connectorFinalClass = cn(
   'w-0.5 h-full border-l border-border',
@@ -127,8 +130,8 @@ const horizontalConnectorRightClass = cn(
           contentClass
         )}
       >
-        {title && <div class="font-bold text-lg md:text-xl lg:text-2xl mb-1 md:mb-2">{title}</div>}
-        {content && <div class="mb-2 md:mb-3">{content}</div>}
+        {title && <div class={titleClass}>{title}</div>}
+        {content && <div class={textClass}>{content}</div>}
         {actions.length > 0 && (
           <div class="flex flex-wrap gap-2 md:gap-3 mt-2 md:mt-3">
             {actions.map((action) => (
