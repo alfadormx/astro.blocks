@@ -25,5 +25,7 @@ export interface TabsProps {
     layout?: 'row' | 'column' | 'grid';
     /** Number of trigger columns at the widest step; applies only when `layout` is 'grid', ignored otherwise (default: 2). Steps down by container width, never below 2. */
     columns?: 2 | 3 | 4;
+    /** Classes on the `@container` wrapper around the tab list, rendered only when `layout` is 'grid'; use it for `sticky` (the wrapper, not the list, is what sticks). */
+    wrapperClass?: string;
   };
 }

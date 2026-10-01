@@ -65,7 +65,7 @@ const tabStateClass = isFill ? 'flex w-full' : undefined;
 const internalFillDefaults: Partial<ButtonProps> = isFill ? { width: 'full' } : {};
 
 const TabListWrapper = isGrid ? 'div' : Fragment;
-const tabListWrapperProps = isGrid ? { class: '@container' } : {};
+const tabListWrapperProps = isGrid ? { class: cn('@container', tabList?.wrapperClass) } : {};
 
 const tabListClass = cn(
   layoutClass,
