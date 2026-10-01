@@ -32,6 +32,12 @@ export interface ItemProps {
   border?: BorderConfig;
   /** Additional custom classes merged onto the item's root element (default: ''). */
   class?: string;
+  /** Classes on the title; replaces the default typography (default: 'font-bold text-lg md:text-xl lg:text-2xl mb-1 md:mb-2'). */
+  titleClass?: string;
+  /** Classes on the content text; replaces the default spacing (default: 'mb-2 md:mb-3'). */
+  textClass?: string;
+  /** Size classes for the icon or image; replaces the default sizes, while `icon.class`/`image.class` still merge on top (default: 'size-8 md:size-10 lg:size-12'). */
+  mediaClass?: string;
   /** Additional custom classes applied to the content element. */
   contentClass?: string;
   /** Shows a connector line on both sides of the item, for timeline UIs (default: false). */

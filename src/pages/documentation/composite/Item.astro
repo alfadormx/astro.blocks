@@ -260,5 +260,24 @@ const metadata = {
     </div>
   </div>
 
+  <h3>7. Custom Typography and Media Size</h3>
+  <p>
+    <code>titleClass</code>, <code>textClass</code> and <code>mediaClass</code> replace the default title
+    typography, content spacing and icon or image sizes. They do not merge with the defaults, so set every
+    class you need. <code>icon.class</code> and <code>image.class</code> still merge on top of <code
+      >mediaClass</code
+    >.
+  </p>
+  <div class="max-w-sm border border-border rounded-lg p-6">
+    <ItemBlock
+      icon={{ name: 'heroicons:sparkles', class: 'text-accent' }}
+      title="Small caps title"
+      content="A compact item with a small icon."
+      titleClass="text-sm uppercase tracking-wider"
+      textClass="text-xs text-muted"
+      mediaClass="size-6"
+    />
+  </div>
+
   <ApiReferenceTable component="Item" category="composite" />
 </Layout>
