@@ -123,6 +123,33 @@ const layeredPanels: ConfiguratorProps['categories'] = [
   },
 ];
 
+const framedPanels: ConfiguratorProps['categories'] = [
+  {
+    name: 'configurator-doc-framed-metal',
+    panel: 'toggle',
+    trigger: { label: 'Metal' },
+    heading: 'Choose your metal',
+    options: metalOptions,
+  },
+  {
+    name: 'configurator-doc-framed-stone',
+    panel: 'grid',
+    mode: 'single',
+    trigger: { label: 'Stone' },
+    heading: 'Choose a stone size',
+    options: [
+      { code: 'small', title: '0.25 ct', mutations: [{ type: 'visible', parts: ['Stone_Small'] }] },
+      {
+        code: 'medium',
+        title: '0.5 ct',
+        selected: true,
+        mutations: [{ type: 'visible', parts: ['Stone_Medium'] }],
+      },
+      { code: 'large', title: '1 ct', mutations: [{ type: 'visible', parts: ['Stone_Large'] }] },
+    ],
+  },
+];
+
 const urlStateExample = `<Configurator
   categories={categories}
   viewer={viewer}
@@ -200,12 +227,15 @@ const urlStateExample = `<Configurator
 
   <h3>4. Summary</h3>
   <p>
-    The line under the viewer is derived from the current selections. It lists the label of every
-    selected option: toggle options by <code>label</code>, grid options by <code>title</code> (falling
-    back to <code>code</code>). Categories appear in tab order and options in declaration order,
-    whatever order they were picked in. Text is shown in quotes, empty categories are skipped, and
-    the parts are joined with <code>·</code>. The summary is an <code>aria-live="polite"</code> region,
-    so screen readers announce changes.
+    The line under the viewer is derived from the current selections. By default it lists the label
+    of every selected option: toggle options by <code>label</code>, grid options by <code
+      >title</code
+    >
+    (falling back to <code>code</code>). Categories appear in tab order and options in declaration
+    order, whatever order they were picked in. Text is shown in quotes, empty categories are
+    skipped, and the parts are joined with <code>·</code>. <code>summary.categories</code> and
+    <code>summary.separator</code> change which categories are listed, their order and the joiner (example
+    6). The summary is an <code>aria-live="polite"</code> region, so screen readers announce changes.
   </p>
 
   <h3>5. URL state</h3>
@@ -223,6 +253,28 @@ const urlStateExample = `<Configurator
   </p>
   <pre
     class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{urlStateExample}</code></pre>
+
+  <h3>6. Title, summary and actions</h3>
+  <p>
+    <code>title</code> names the product under the viewer, and <code>actions</code> renders Buttons under
+    the summary line. <code>summary.categories</code> picks which categories the summary lists and in
+    which order, <code>summary.separator</code> joins them, and <code>summary.class</code>
+    styles the line. URL state and the viewer still use every category. Here the summary lists only the
+    stone, so the metal is left out of it.
+  </p>
+  <div data-doc-section="framed" class="border border-dashed border-gray/80 p-8">
+    <ConfiguratorBlock
+      categories={framedPanels}
+      viewer={viewer}
+      title="Solitaire"
+      summary={{
+        categories: ['configurator-doc-framed-stone'],
+        separator: ' ',
+        class: 'mt-1 text-sm uppercase tracking-widest text-muted',
+      }}
+      actions={[{ label: 'Save my design', variant: 'outline', intent: 'neutral' }]}
+    />
+  </div>
 
   <ApiReferenceTable component="Configurator" category="composite" />
 </Layout>

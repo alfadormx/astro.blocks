@@ -80,6 +80,14 @@ export type ConfiguratorTextCategory = ConfiguratorCategoryBase & {
 export type ConfiguratorCategory =
   ConfiguratorToggleCategory | ConfiguratorGridCategory | ConfiguratorTextCategory;
 
+/** Which categories the summary line lists, in which order, and how parts are joined. */
+export type SummaryFormat = {
+  /** Category names to list, in this order (default: every category, in category order). */
+  categories?: string[];
+  /** String between parts (default: ' · '). */
+  separator?: string;
+};
+
 /** Serialized per-category summary input, in category order; options in spec order. */
 export type SummaryCategory = {
   name: string;
@@ -110,6 +118,12 @@ export interface ConfiguratorProps {
    * first configurator with urlState on a page binds to the URL.
    */
   urlState?: { product?: string; param?: string };
+  /** Product name rendered under the viewer. */
+  title?: string;
+  /** Buttons rendered under the summary line (default: []). */
+  actions?: Partial<ButtonProps>[];
+  /** Summary line under the viewer: listed categories, separator and classes (default: every category, ' · '). URL state and the viewer still use every category. */
+  summary?: SummaryFormat & { class?: string };
   /** Extra classes on the configurator root. */
   class?: string;
 }

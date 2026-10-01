@@ -6,6 +6,7 @@ import type {
   ConfiguratorTextCategory,
   ConfiguratorToggleCategory,
   SummaryCategory,
+  SummaryFormat,
 } from '~/types/configurator.types';
 import type { ModelViewerMutation } from '~/types/modelviewer.types';
 import type { Selection } from '~/types/selection.types';
@@ -74,6 +75,7 @@ describe('validateConfigurator', () => {
     name: string;
     categories: ConfiguratorCategory[];
     urlState?: ConfiguratorProps['urlState'];
+    summary?: ConfiguratorProps['summary'];
     expected: RegExp;
   }> = [
     { name: 'no categories', categories: [], expected: /at least one category/ },
@@ -110,16 +112,23 @@ describe('validateConfigurator', () => {
       urlState: { param: 'my-code' },
       expected: /urlState.param "my-code" must match/,
     },
+    {
+      name: 'summary category that is not a category name',
+      categories: [toggle('a')],
+      summary: { categories: ['x'] },
+      expected: /summary.categories "x" is not a category name/,
+    },
     { name: 'message prefix', categories: [], expected: /^configurator: / },
   ];
-  it.each(throwCases)('throws: $name', ({ categories, urlState, expected }) => {
-    expect(() => validateConfigurator({ categories, viewer, urlState })).toThrow(expected);
+  it.each(throwCases)('throws: $name', ({ categories, urlState, summary, expected }) => {
+    expect(() => validateConfigurator({ categories, viewer, urlState, summary })).toThrow(expected);
   });
 
   const validCases: Array<{
     name: string;
     categories: ConfiguratorCategory[];
     urlState?: ConfiguratorProps['urlState'];
+    summary?: ConfiguratorProps['summary'];
   }> = [
     { name: 'one category', categories: [toggle('a')] },
     { name: 'one of each panel', categories: [toggle('a'), grid('b'), text('c')] },
@@ -134,9 +143,14 @@ describe('validateConfigurator', () => {
       categories: [toggle('a')],
       urlState: { product: 'RING01', param: 'ring_code' },
     },
+    {
+      name: 'known summary categories',
+      categories: [toggle('a'), grid('b')],
+      summary: { categories: ['b', 'a'] },
+    },
   ];
-  it.each(validCases)('accepts: $name', ({ categories, urlState }) => {
-    expect(() => validateConfigurator({ categories, viewer, urlState })).not.toThrow();
+  it.each(validCases)('accepts: $name', ({ categories, urlState, summary }) => {
+    expect(() => validateConfigurator({ categories, viewer, urlState, summary })).not.toThrow();
   });
 });
 
@@ -329,6 +343,33 @@ describe('formatSummary', () => {
   ];
   it.each(cases)('$name', ({ state, expected }) => {
     expect(formatSummary(model, state)).toBe(expected);
+  });
+
+  const state = { metal: codes('rose'), extras: codes('giftbox'), engraving: codes('Mia') };
+  const formatCases: Array<{ name: string; format: SummaryFormat; expected: string }> = [
+    {
+      name: 'lists only the given categories',
+      format: { categories: ['metal'] },
+      expected: 'Rose gold',
+    },
+    {
+      name: 'orders parts by the given categories',
+      format: { categories: ['engraving', 'metal'] },
+      expected: '"Mia" · Rose gold',
+    },
+    {
+      name: 'joins with the given separator',
+      format: { separator: ' ' },
+      expected: 'Rose gold Gift box "Mia"',
+    },
+    {
+      name: 'skips an unknown category name',
+      format: { categories: ['finish', 'metal'] },
+      expected: 'Rose gold',
+    },
+  ];
+  it.each(formatCases)('$name', ({ format, expected }) => {
+    expect(formatSummary(model, state, format)).toBe(expected);
   });
 });
 

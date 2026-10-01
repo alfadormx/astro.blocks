@@ -3,6 +3,7 @@ import type {
   ConfiguratorCategory,
   ConfiguratorProps,
   SummaryCategory,
+  SummaryFormat,
 } from '~/types/configurator.types';
 import type { ModelViewerMutation, ModelViewerSelectionGroup } from '~/types/modelviewer.types';
 import type { Selection } from '~/types/selection.types';
@@ -20,9 +21,9 @@ function fail(message: string): never {
 
 /** Throws on a Configurator config the composed blocks would not catch with a category-level message. */
 export function validateConfigurator(
-  props: Pick<ConfiguratorProps, 'categories' | 'viewer' | 'urlState'>
+  props: Pick<ConfiguratorProps, 'categories' | 'viewer' | 'urlState' | 'summary'>
 ): void {
-  const { categories, viewer, urlState } = props;
+  const { categories, viewer, urlState, summary } = props;
   if (!categories || categories.length === 0) fail('at least one category is required');
   if (categories.length > MAX_CATEGORIES) {
     fail(`${categories.length} categories given; at most ${MAX_CATEGORIES} are supported`);
@@ -39,6 +40,9 @@ export function validateConfigurator(
         `category "${category.name}" camera "${category.camera}" is not a key of viewer.cameraPresets`
       );
     }
+  });
+  summary?.categories?.forEach((name) => {
+    if (!names.has(name)) fail(`summary.categories "${name}" is not a category name`);
   });
 
   if (urlState?.product !== undefined && !PRODUCT_PATTERN.test(urlState.product)) {
@@ -115,13 +119,17 @@ export function initialSelections(
   );
 }
 
-/** Labels of the selected options in category then option order; text quoted; empty categories skipped. */
+/** Labels of the selected options in category then option order; text quoted; empty categories skipped. `format` picks and orders the categories and sets the separator. */
 export function formatSummary(
   model: readonly SummaryCategory[],
-  state: Readonly<Record<string, readonly Selection[]>>
+  state: Readonly<Record<string, readonly Selection[]>>,
+  format: SummaryFormat = {}
 ): string {
+  const listed = format.categories
+    ? format.categories.flatMap((name) => model.filter((category) => category.name === name))
+    : model;
   const parts: string[] = [];
-  for (const category of model) {
+  for (const category of listed) {
     const selection = state[category.name] ?? [];
     if (category.mode === 'text') {
       if (selection[0]?.code) parts.push(`"${selection[0].code}"`);
@@ -130,7 +138,7 @@ export function formatSummary(
     const codes = new Set(selection.map(({ code }) => code));
     for (const option of category.options) if (codes.has(option.code)) parts.push(option.label);
   }
-  return parts.join(SUMMARY_SEPARATOR);
+  return parts.join(format.separator ?? SUMMARY_SEPARATOR);
 }
 
 /** The combination spec for the categories, in category order; throws via validateCombinationSpec. */
