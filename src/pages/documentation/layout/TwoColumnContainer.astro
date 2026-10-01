@@ -223,5 +223,33 @@ var metadata = {
     </div>
   </TwoColumnContainerBlock>
 
+  <h3>8. Column Ratio</h3>
+  <p>
+    <code>ratio</code> sets the column widths, left to right: <code>'1:1'</code> (the default),
+    <code>'3:2'</code> or <code>'2:1'</code>. With <code>responsive</code> it applies from
+    <code>breakpoint</code> up, and the columns still stack below it.
+  </p>
+  <TwoColumnContainerBlock
+    containerWidthType="full"
+    content={{
+      widthType: 'boxed',
+      spacing: { padding: 'py-8' },
+      border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+    }}
+    border={{ width: 'border', color: 'border-border' }}
+    responsive={true}
+    ratio="3:2"
+    spacing={{ margin: 'mb-8' }}
+  >
+    <div slot="left" class="bg-peach text-white p-6 rounded">
+      <h3>Wide column (3)</h3>
+      <p>Three fifths of the width from the breakpoint up.</p>
+    </div>
+    <div slot="right" class="bg-red text-white p-6 rounded">
+      <h3>Narrow column (2)</h3>
+      <p>Two fifths of the width.</p>
+    </div>
+  </TwoColumnContainerBlock>
+
   <ApiReferenceTable component="TwoColumnContainer" category="layout" />
 </Layout>
