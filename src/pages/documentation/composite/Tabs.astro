@@ -352,6 +352,36 @@ const metadata = { title: { default: 'Tabs' } };
     </TabsBlock>
   </div>
 
+  <h3>Sticky grid tab list</h3>
+  <p>
+    In grid layout the tab list sits in a <code>@container</code> wrapper exactly as tall as the list,
+    so <code>sticky</code> on <code>tabList.class</code> has no room to move. Put it on
+    <code>tabList.wrapperClass</code> instead; the wrapper is rendered only in grid layout. Scroll the
+    box below and the triggers stay at the top.
+  </p>
+  <div class="max-w-lg max-h-80 overflow-y-auto border border-border" data-doc-section="sticky">
+    <TabsBlock
+      items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
+      defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      tabList={{
+        layout: 'grid',
+        columns: 3,
+        wrapperClass: 'sticky top-0 bg-background',
+      }}
+    >
+      <TabItemBlock slot="panel-0">
+        {Array.from({ length: 12 }, (_, i) => <p>Overview paragraph {i + 1}.</p>)}
+      </TabItemBlock>
+      <TabItemBlock slot="panel-1">
+        {Array.from({ length: 12 }, (_, i) => <p>API paragraph {i + 1}.</p>)}
+      </TabItemBlock>
+      <TabItemBlock slot="panel-2">
+        {Array.from({ length: 12 }, (_, i) => <p>Examples paragraph {i + 1}.</p>)}
+      </TabItemBlock>
+    </TabsBlock>
+  </div>
+
   <ApiReferenceTable component="Tabs" category="composite" />
   <p>
     Panel content is supplied via <a href="/documentation/primitives/TabItem">TabItem</a> blocks placed
