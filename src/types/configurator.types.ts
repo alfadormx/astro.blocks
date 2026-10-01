@@ -74,6 +74,8 @@ export type ConfiguratorTextCategory = ConfiguratorCategoryBase & {
   maxLength?: number;
   /** Placeholder shown while the field is empty. */
   placeholder?: string;
+  /** Visible field label; when omitted or empty the heading names the field and the label stays hidden. */
+  fieldLabel?: string;
   config?: ConfiguratorTextConfig;
 };
 
@@ -118,6 +120,8 @@ export interface ConfiguratorProps {
    * first configurator with urlState on a page binds to the URL.
    */
   urlState?: { product?: string; param?: string };
+  /** Classes on every panel heading, after its defaults (default: 'mb-4 text-lg font-semibold'). */
+  headingClass?: string;
   /** Product name rendered under the viewer. */
   title?: string;
   /** Buttons rendered under the summary line (default: []). */

@@ -150,6 +150,25 @@ const framedPanels: ConfiguratorProps['categories'] = [
   },
 ];
 
+const headingPanels: ConfiguratorProps['categories'] = [
+  {
+    name: 'configurator-doc-heading-metal',
+    panel: 'toggle',
+    trigger: { label: 'Metal' },
+    heading: 'Choose your metal',
+    options: metalOptions,
+  },
+  {
+    name: 'configurator-doc-heading-engraving',
+    panel: 'text',
+    trigger: { label: 'Engraving' },
+    heading: 'Engrave your ring',
+    fieldLabel: 'Engraving',
+    maxLength: 20,
+    placeholder: 'Up to 20 characters',
+  },
+];
+
 const urlStateExample = `<Configurator
   categories={categories}
   viewer={viewer}
@@ -182,8 +201,9 @@ const urlStateExample = `<Configurator
     ItemsGrid items as <code>options</code>, each with a required <code>code</code>, and a
     <code>mode</code> of <code>'single'</code> or <code>'multiple'</code>; <code>min</code> and
     <code>max</code> exist only for <code>'multiple'</code>. <code>ConfiguratorTextCategory</code>
-    (<code>panel: 'text'</code>) takes <code>value</code>, <code>maxLength</code> and
-    <code>placeholder</code>. Every category has a <code>name</code> (its selection group), a
+    (<code>panel: 'text'</code>) takes <code>value</code>, <code>maxLength</code>,
+    <code>placeholder</code> and an optional <code>fieldLabel</code>; without it the heading names
+    the field and no label is shown. Every category has a <code>name</code> (its selection group), a
     <code>trigger</code> Button config for its tab, a <code>heading</code> that names the panel, and an
     optional <code>camera</code> key of <code>viewer.cameraPresets</code>. A configurator holds at
     most 12 categories.
@@ -273,6 +293,20 @@ const urlStateExample = `<Configurator
         class: 'mt-1 text-sm uppercase tracking-widest text-muted',
       }}
       actions={[{ label: 'Save my design', variant: 'outline', intent: 'neutral' }]}
+    />
+  </div>
+
+  <h3>7. Heading and field label</h3>
+  <p>
+    <code>headingClass</code> adds classes to every panel heading, after its defaults. A text category
+    with <code>fieldLabel</code> shows that label above its field, while the heading stays the panel's
+    name.
+  </p>
+  <div data-doc-section="headings" class="border border-dashed border-gray/80 p-8">
+    <ConfiguratorBlock
+      categories={headingPanels}
+      viewer={viewer}
+      headingClass="text-xs uppercase tracking-[0.2em]"
     />
   </div>
 
