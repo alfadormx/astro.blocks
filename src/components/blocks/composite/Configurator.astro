@@ -4,6 +4,7 @@ import type {
   ConfiguratorProps,
   ConfiguratorTextConfig,
   ConfiguratorToggleConfig,
+  SummaryFormat,
 } from '~/types/configurator.types';
 import type { ButtonProps } from '~/types/button.types';
 import type { ItemsGridSelection } from '~/types/itemsgrid.types';
@@ -13,6 +14,7 @@ import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.as
 import Tabs from '~/components/blocks/composite/Tabs.astro';
 import ConfiguratorPanel from '~/components/blocks/composite/ConfiguratorPanel.astro';
 import ModelViewer from '~/components/blocks/primitives/ModelViewer.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 import { cn } from '~/utils/styles';
 import {
@@ -38,10 +40,13 @@ const {
   tabs,
   layout,
   urlState,
+  title,
+  actions = [],
+  summary,
   class: className = '',
 } = Astro.props;
 
-validateConfigurator({ categories, viewer, urlState });
+validateConfigurator({ categories, viewer, urlState, summary });
 
 const id = configuratorId();
 
@@ -131,7 +136,11 @@ const panels = categories.map((category, i) => {
 
 const selections = buildViewerSelections(categories);
 const summaryModel = buildSummaryModel(categories);
-const summaryText = formatSummary(summaryModel, initialSelections(categories));
+const summaryFormat: SummaryFormat = {
+  categories: summary?.categories,
+  separator: summary?.separator,
+};
+const summaryText = formatSummary(summaryModel, initialSelections(categories), summaryFormat);
 const spec = urlState ? buildCombinationSpec(categories, urlState.product) : undefined;
 ---
 
@@ -144,14 +153,25 @@ const spec = urlState ? buildCombinationSpec(categories, urlState.product) : und
   <TwoColumnContainer {...mergedLayout}>
     <div slot="left">
       <ModelViewer {...viewer} selections={selections} />
+      {title && <h2 class="mt-6 text-2xl font-semibold">{title}</h2>}
       <p
-        class="mt-4 text-lg"
+        class={cn('mt-4 text-lg', summary?.class)}
         aria-live="polite"
         data-configurator-summary
         data-configurator-labels={JSON.stringify(summaryModel)}
+        data-configurator-summary-format={JSON.stringify(summaryFormat)}
       >
         {summaryText}
       </p>
+      {
+        actions.length > 0 && (
+          <div class="mt-6 inline-flex flex-wrap gap-3">
+            {actions.map((action) => (
+              <Button {...action} />
+            ))}
+          </div>
+        )
+      }
     </div>
     <div slot="right">
       <Tabs {...mergedTabs} items={triggers}>
@@ -181,7 +201,7 @@ const spec = urlState ? buildCombinationSpec(categories, urlState.product) : und
   import { connectUrlState } from '~/utils/urlState';
   import { formatSummary } from '~/utils/configurator';
   import type { CombinationSpec } from '~/types/combinationcode.types';
-  import type { SummaryCategory } from '~/types/configurator.types';
+  import type { SummaryCategory, SummaryFormat } from '~/types/configurator.types';
   import type { Selection } from '~/types/selection.types';
 
   const ROOT_SELECTOR = '[data-configurator]';
@@ -194,10 +214,11 @@ const spec = urlState ? buildCombinationSpec(categories, urlState.product) : und
     const output = root.querySelector<HTMLElement>('[data-configurator-summary]');
     if (!output) return;
     const model: SummaryCategory[] = JSON.parse(output.dataset.configuratorLabels!);
+    const format: SummaryFormat = JSON.parse(output.dataset.configuratorSummaryFormat ?? '{}');
     const render = (): void => {
       const state: Record<string, readonly Selection[]> = {};
       for (const { name } of model) state[name] = getSelection(name);
-      output.textContent = formatSummary(model, state);
+      output.textContent = formatSummary(model, state, format);
     };
     for (const { name } of model) subscribe(name, render);
   }
