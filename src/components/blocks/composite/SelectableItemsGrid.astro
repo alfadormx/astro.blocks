@@ -3,6 +3,7 @@ import type { ItemsGridItem, ItemsGridProps, ItemsGridSelection } from '~/types/
 import type { ItemProps } from '~/types/item.types';
 import Item from '~/components/blocks/composite/Item.astro';
 import { mergeConfigs } from '~/utils/mergeConfigs';
+import { cn } from '~/utils/styles';
 import { validateItemsGridSelection } from '~/utils/itemsGridSelection';
 
 // Internal to ItemsGrid: rendered only when selection is enabled, so pages without a
@@ -10,9 +11,11 @@ import { validateItemsGridSelection } from '~/utils/itemsGridSelection';
 type Props = Pick<ItemsGridProps, 'items' | 'defaultItemConfig' | 'selectedItemConfig'> & {
   selection: Exclude<ItemsGridSelection, { mode: 'none' }>;
   gridClass: string;
+  lastItemClass?: string;
 };
 
-const { items, defaultItemConfig, selectedItemConfig, selection, gridClass } = Astro.props;
+const { items, defaultItemConfig, selectedItemConfig, selection, gridClass, lastItemClass } =
+  Astro.props;
 
 // Border config, not class: Item applies `class` after `border.*`, which would override a
 // consumer's selectedItemConfig.border.
@@ -70,7 +73,7 @@ const optionClass =
   data-selection-labelledby={selection.labelledBy || undefined}
 >
   {
-    options.map((option) => {
+    options.map((option, i) => {
       const {
         code,
         selected: isSelected,
@@ -78,7 +81,10 @@ const optionClass =
       } = splitOption(option.unselected);
       const { itemProps: selectedItem } = splitOption(option.selected);
       return (
-        <div data-option-code={code} class={optionClass}>
+        <div
+          data-option-code={code}
+          class={cn(optionClass, i === options.length - 1 && lastItemClass)}
+        >
           <div data-option-variant="unselected" class="h-full" hidden={!!isSelected}>
             <Item {...unselectedItem} />
           </div>
