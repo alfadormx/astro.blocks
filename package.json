@@ -16,7 +16,8 @@
     "fix": "pnpm run fix:eslint && pnpm run fix:prettier",
     "fix:eslint": "eslint . --fix",
     "fix:prettier": "prettier --write .",
-    "models:generate": "node scripts/generate-ring-models.mjs"
+    "models:generate": "node scripts/generate-ring-models.mjs",
+    "stills:generate": "node scripts/generate-ring-stills.mjs"
   },
   "dependencies": {
     "@astrolib/analytics": "^0.6.1",
