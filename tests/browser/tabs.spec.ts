@@ -38,6 +38,53 @@ async function expectActiveIndex(root: Locator, activeIndex: number, count = 3):
   }
 }
 
+function visibleTriggers(root: Locator): Locator {
+  return root.locator('[data-tab-button]:not([hidden]) [role="tab"]');
+}
+
+async function boxOf(locator: Locator): Promise<{ width: number; height: number }> {
+  const box = await locator.boundingBox();
+  expect(box).not.toBeNull();
+  return { width: box!.width, height: box!.height };
+}
+
+async function contentBoxWidth(locator: Locator): Promise<number> {
+  return locator.evaluate((el) => {
+    const s = getComputedStyle(el);
+    return (
+      el.getBoundingClientRect().width -
+      parseFloat(s.paddingLeft) -
+      parseFloat(s.paddingRight) -
+      parseFloat(s.borderLeftWidth) -
+      parseFloat(s.borderRightWidth)
+    );
+  });
+}
+
+async function expectTriggersSpanTabList(root: Locator): Promise<void> {
+  const listWidth = await contentBoxWidth(root.getByRole('tablist'));
+  const triggers = await visibleTriggers(root).all();
+  expect(triggers).toHaveLength(3);
+  for (const trigger of triggers) {
+    expect((await boxOf(trigger)).width).toBeCloseTo(listWidth, 0);
+  }
+}
+
+async function expectGridTilesFillCells(root: Locator, count: number): Promise<void> {
+  const triggers = await visibleTriggers(root).all();
+  expect(triggers).toHaveLength(count);
+  const first = await boxOf(triggers[0]);
+
+  for (let i = 0; i < count; i++) {
+    const tile = await boxOf(triggers[i]);
+    const cell = await boxOf(root.locator(`[data-tab-index="${i}"]`));
+    expect(tile.width).toBeCloseTo(first.width, 0);
+    expect(tile.height).toBeCloseTo(first.height, 0);
+    expect(tile.width).toBeCloseTo(cell.width, 0);
+    expect(tile.height).toBeCloseTo(cell.height, 0);
+  }
+}
+
 test.describe('Tabs', () => {
   test('renders the correct initial state', async ({ page }) => {
     const root = await openTabs(page);
@@ -200,5 +247,50 @@ test.describe('Tabs', () => {
     await page.keyboard.press('ArrowDown');
     await expect(activeTrigger(root, 1)).toBeFocused();
     await expectActiveIndex(root, 1);
+  });
+
+  test('column layout triggers span the full tab list width in every active state', async ({
+    page,
+  }) => {
+    const root = await openTabs(page, 'layout-column');
+    await expectTriggersSpanTabList(root);
+
+    await root.locator('[data-tab-index="1"]').click();
+    await expectActiveIndex(root, 1);
+    await expectTriggersSpanTabList(root);
+  });
+
+  test('vertical Tabs triggers share the tab list width in every active state', async ({
+    page,
+  }) => {
+    const root = await openTabs(page, 'vertical');
+    await expectTriggersSpanTabList(root);
+
+    await root.locator('[data-tab-index="2"]').click();
+    await expectActiveIndex(root, 2);
+    await expectTriggersSpanTabList(root);
+  });
+
+  test('grid layout tiles share one size and fill their cells in every active state', async ({
+    page,
+  }) => {
+    const root = await openTabs(page, 'layout-grid');
+    await expectGridTilesFillCells(root, 6);
+
+    await root.locator('[data-tab-index="4"]').click();
+    await expectActiveIndex(root, 4, 6);
+    await expectGridTilesFillCells(root, 6);
+  });
+
+  test('column triggers stay content-sized when width is auto', async ({ page }) => {
+    const root = await openTabs(page, 'layout-column-auto');
+    const listWidth = await contentBoxWidth(root.getByRole('tablist'));
+    const widths = await Promise.all(
+      (await visibleTriggers(root).all()).map(async (t) => (await boxOf(t)).width)
+    );
+
+    expect(widths).toHaveLength(3);
+    for (const w of widths) expect(w).toBeLessThan(listWidth - 1);
+    expect(new Set(widths.map(Math.round)).size).toBeGreaterThan(1);
   });
 });

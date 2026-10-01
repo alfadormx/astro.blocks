@@ -53,9 +53,16 @@ const layoutClass = isGrid
         ? 'flex flex-col'
         : 'flex flex-row';
 
-// Grid mode only: the trigger spans are class-free in row/column mode, and Button is
-// inline-flex, so without this the tiles sit ragged inside their tracks.
-const tabTileClass = isGrid ? 'w-full h-full' : undefined;
+const effectiveLayout = tabList?.layout ?? (orientation === 'vertical' ? 'column' : 'row');
+const isFill = effectiveLayout === 'grid' || effectiveLayout === 'column';
+
+// Inline spans ignore sizing classes, so in fill layouts both span levels are flex
+// containers: align-items: stretch carries the cell height down to the <button> (through
+// Button's `contents` wrapper) without relying on percentage heights.
+const tabSlotClass = isFill ? 'flex' : undefined;
+const tabStateClass = isFill ? 'flex w-full' : undefined;
+
+const internalFillDefaults: Partial<ButtonProps> = isFill ? { width: 'full' } : {};
 
 const TabListWrapper = isGrid ? 'div' : Fragment;
 const tabListWrapperProps = isGrid ? { class: '@container' } : {};
@@ -72,7 +79,6 @@ const tabListClass = cn(
   tabList?.class
 );
 
-const effectiveLayout = tabList?.layout ?? (orientation === 'vertical' ? 'column' : 'row');
 const ariaOrientation = effectiveLayout === 'column' ? 'vertical' : 'horizontal';
 ---
 
@@ -85,22 +91,24 @@ const ariaOrientation = effectiveLayout === 'column' ? 'vertical' : 'horizontal'
             const inactiveMerge = mergeConfigs(
               {},
               internalTabDefaults,
+              internalFillDefaults,
               defaultTabConfig || {},
               item
             );
             const activeMerge = mergeConfigs(
               {},
               internalTabDefaults,
+              internalFillDefaults,
               defaultTabConfig || {},
               activeTabConfig || {},
               item
             );
             return (
-              <span data-tab-index={String(n)} class={tabTileClass}>
-                <span data-tab-button="inactive" class={tabTileClass}>
+              <span data-tab-index={String(n)} class={tabSlotClass}>
+                <span data-tab-button="inactive" class={tabStateClass}>
                   <Button {...inactiveMerge} />
                 </span>
-                <span data-tab-button="active" hidden class={tabTileClass}>
+                <span data-tab-button="active" hidden class={tabStateClass}>
                   <Button {...activeMerge} />
                 </span>
               </span>
