@@ -43,6 +43,18 @@ function option(root: Locator, code: string): Locator {
   return root.locator(`[data-option-code="${code}"]`);
 }
 
+test.describe('ItemsGrid layout', () => {
+  test('stretches a lone last item across the row with fillLastRow', async ({ page }) => {
+    await page.goto(PAGE_URL);
+    const grid = page.locator('[data-doc-section="fill-last-row"] .grid');
+    const gridBox = (await grid.boundingBox())!;
+    const first = (await grid.locator(':scope > *').first().boundingBox())!;
+    const last = (await grid.locator(':scope > *').last().boundingBox())!;
+    expect(Math.abs(last.width - gridBox.width)).toBeLessThanOrEqual(1);
+    expect(first.width).toBeLessThan(gridBox.width / 2);
+  });
+});
+
 test.describe('ItemsGrid selection', () => {
   test('a grid without selection stays static', async ({ page }) => {
     await page.goto(PAGE_URL);

@@ -40,8 +40,12 @@ export type ItemsGridItem = ItemProps & {
 export interface ItemsGridProps {
   /** The list of items to render in the grid, each rendered via the Item component. */
   items: ItemsGridItem[];
-  /** Maximum number of grid columns, reached when the grid's container is wide enough; the grid steps down to fewer columns in narrower containers (default: 3). */
+  /** Maximum number of grid columns, reached when the grid's container is wide enough; with `responsive` the grid steps down to fewer columns in narrower containers, without it the count is fixed (default: 3). */
   columns?: 1 | 2 | 3 | 4;
+  /** Steps the column count down in narrower containers; `false` keeps `columns` at any width (default: true). */
+  responsive?: boolean;
+  /** A lone item in the last row spans the full row; computed from `columns`, so exact only with `responsive: false` (default: false). */
+  fillLastRow?: boolean;
   /** Gap spacing between grid items (default: 'normal'). */
   air?: 'none' | 'tight' | 'normal' | 'loose';
   /** Additional CSS classes appended to the grid container (default: ''). */
