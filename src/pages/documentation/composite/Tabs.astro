@@ -209,11 +209,38 @@ const metadata = { title: { default: 'Tabs' } };
   </div>
 
   <h3>Tab list layout: column</h3>
-  <p>The mirror case: a horizontal Tabs whose triggers are stacked in a column above the panel.</p>
+  <p>
+    The mirror case: a horizontal Tabs whose triggers are stacked in a column above the panel. Each
+    trigger spans the full width of the tab list.
+  </p>
   <div data-doc-section="layout-column">
     <TabsBlock
       items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
       defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      tabList={{ layout: 'column', spacing: { padding: 'p-2', gap: 'gap-2' } }}
+    >
+      <TabItemBlock slot="panel-0">
+        <p>Overview panel content.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-1">
+        <p>API panel content.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-2">
+        <p>Examples panel content.</p>
+      </TabItemBlock>
+    </TabsBlock>
+  </div>
+
+  <h3>Tab list layout: column, content-sized triggers</h3>
+  <p>
+    Set <code>width: 'auto'</code> on <code>defaultTabConfig</code> (or on an item) to keep triggers as
+    wide as their own label instead of filling the tab list.
+  </p>
+  <div data-doc-section="layout-column-auto">
+    <TabsBlock
+      items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
+      defaultTabConfig={{ variant: 'ghost', intent: 'neutral', width: 'auto' }}
       activeTabConfig={{ variant: 'solid', intent: 'primary' }}
       tabList={{ layout: 'column', spacing: { padding: 'p-2', gap: 'gap-2' } }}
     >
@@ -234,7 +261,7 @@ const metadata = { title: { default: 'Tabs' } };
     <code>tabList.layout: 'grid'</code> arranges the triggers as tiles. The column count is read from
     the width of the tab list's own container, not the viewport, so the same config adapts inside a narrow
     panel. <code>tabList.columns</code> applies only in this layout, and the count never drops below two
-    columns.
+    columns. Each tile fills its grid cell, so every tile has the same size.
   </p>
   <p>
     Grid is meant for <code>orientation="horizontal"</code>. In <code>orientation="vertical"</code> the
