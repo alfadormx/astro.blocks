@@ -8,7 +8,6 @@ import ContentCarouselItem from '~/components/blocks/primitives/ContentCarouselI
 import ItemsGrid from '~/components/blocks/composite/ItemsGrid.astro';
 import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
 import Map from '~/components/blocks/primitives/Map.astro';
-import CallToAction from '~/components/blocks/composite/CallToAction.astro';
 
 const carouselItemBasis = 'basis-full md:basis-1/2 lg:basis-1/2';
 const carouselItemLabelClass =
@@ -497,8 +496,8 @@ const carouselItemLabelClass =
   <Container>
     <Headline anchorId="candidature" title="Visite & Candidature" />
     <p>
-      Merci <a href="#contact">d'envoyer un dossier complet par email</a> (pièce d'identité, justificatifs
-      de ressources et de situation professionnelle). <br />
+      Merci <a href="#">d'envoyer un dossier complet par email</a> (pièce d'identité, justificatifs de
+      ressources et de situation professionnelle). <br />
       Une sélection des dossiers sera effectuée avant l'organisation d'une première ronde de visites.
       <br />
       <strong>Un garant pourra être demandé selon la solidité du dossier.</strong>
@@ -518,9 +517,7 @@ const carouselItemLabelClass =
   <Container>
     <Headline anchorId="faq" title="FAQ" />
     <p>
-      Des questions supplémentaires ? <a href="#contact"
-        >N'hésitez pas à nous contacter par email !</a
-      >
+      Des questions supplémentaires ? <a href="#">N'hésitez pas à nous contacter par email !</a>
     </p>
     <ItemsGrid
       columns={3}
@@ -587,29 +584,6 @@ const carouselItemLabelClass =
           title: "L'assurance habitation est-elle obligatoire ?",
           content:
             'Oui, une assurance habitation couvrant au minimum les risques locatifs est obligatoire. Une attestation devra être fournie à l’entrée dans les lieux.',
-        },
-      ]}
-    />
-  </Container>
-
-  <Container>
-    <CallToAction
-      headline={{
-        anchorId: 'contact',
-        title: 'Désirez-vous candidater ou poser une question ?',
-      }}
-      actions={[
-        {
-          label: 'Envoyer dossier de candidature',
-          icon: { name: 'tabler:file' },
-          intent: 'primary',
-          href: 'mailto:meudonlaforet.location@outlook.fr?subject=Dossier%20de%20candidature%20%E2%80%93%20Duplex%20Meudon-la-For%C3%AAt',
-        },
-        {
-          label: 'Poser une question',
-          icon: { name: 'tabler:question-mark' },
-          intent: 'secondary',
-          href: 'mailto:meudonlaforet.location@outlook.fr?subject=Question%20%E2%80%93%20Duplex%20Meudon-la-For%C3%AAt',
         },
       ]}
     />
