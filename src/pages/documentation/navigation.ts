@@ -13,6 +13,7 @@ export const documentationNavigation: ButtonProps[] = [
     label: 'Composite',
     children: [
       { label: 'CallToAction', href: '/documentation/composite/CallToAction' },
+      { label: 'Configurator', href: '/documentation/composite/Configurator' },
       { label: 'Content', href: '/documentation/composite/Content' },
       { label: 'ContentCarousel', href: '/documentation/composite/ContentCarousel' },
       { label: 'Footer', href: '/documentation/composite/Footer' },
@@ -56,10 +57,17 @@ export const documentationNavigation: ButtonProps[] = [
       { label: 'LanguageToggle', href: '/documentation/primitives/LanguageToggle' },
       { label: 'Logo', href: '/documentation/primitives/Logo' },
       { label: 'Map', href: '/documentation/primitives/Map' },
+      { label: 'ModelViewer', href: '/documentation/primitives/ModelViewer' },
       { label: 'TabItem', href: '/documentation/primitives/TabItem' },
+      { label: 'TextArea', href: '/documentation/primitives/TextArea' },
       { label: 'ThemeToggle', href: '/documentation/primitives/ThemeToggle' },
+      { label: 'ToggleGroup', href: '/documentation/primitives/ToggleGroup' },
       { label: 'Vector', href: '/documentation/primitives/Vector' },
       { label: 'Video', href: '/documentation/primitives/Video' },
     ],
+  },
+  {
+    label: 'Utilities',
+    children: [{ label: 'CombinationCode', href: '/documentation/utilities/CombinationCode' }],
   },
 ];

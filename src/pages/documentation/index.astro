@@ -15,6 +15,7 @@ const descriptions: Record<string, string> = {
   Composite: 'Higher-level blocks that compose primitives into ready-made sections.',
   Layout: 'Structural containers that arrange content on the page.',
   Primitives: 'The smallest building blocks, used directly or inside composites.',
+  Utilities: 'Browser-side helpers that sit beside the blocks, such as URL state.',
 
   // Base
   Colors: 'The semantic color tokens and how they map across light and dark themes.',
@@ -22,13 +23,15 @@ const descriptions: Record<string, string> = {
 
   // Composite
   CallToAction: 'A headline paired with action buttons to drive a single conversion.',
+  Configurator: 'A 3D product configurator with tabbed choices, a live summary and shareable URLs.',
   Content: 'A headline, prose body, and image arranged as an editorial section.',
   ContentCarousel: 'A horizontally scrollable set of content slides.',
   Footer: 'A site footer with link columns, social icons, and a legal line.',
   Header: 'A site header with navigation, logo, and theme controls.',
   Item: 'A single icon, title, and body unit used by every items block.',
   ItemsContent: 'A headline above a grid of items, for feature or FAQ sections.',
-  ItemsGrid: 'A responsive grid that renders a list of items in 2, 3, or 4 columns.',
+  ItemsGrid:
+    'A responsive grid that renders a list of items, sizing its columns to the container it sits in.',
   ItemsTimeline: 'A vertical sequence of items joined by connector lines.',
   ItemsTimelineHorizontal: 'A horizontal sequence of items joined by connector lines.',
   NavigationTree: 'A nested vertical navigation list with expandable groups.',
@@ -53,10 +56,16 @@ const descriptions: Record<string, string> = {
   LanguageToggle: 'A control for switching between configured site languages.',
   Logo: 'The site logo, rendered as text, an image, or a vector.',
   Map: 'An embedded map pinned to a location.',
+  ModelViewer: 'An interactive 3D model with orbit, zoom, framing and lighting presets.',
   TabItem: 'A single panel within a Tabs block.',
+  TextArea: 'A labelled multi-line text field with help text and a character limit.',
   ThemeToggle: 'A control for switching between light and dark themes.',
+  ToggleGroup: 'A compact set of mutually exclusive options as radios or cells.',
   Vector: 'An inline SVG icon or illustration.',
   Video: 'An embedded or self-hosted video player.',
+
+  // Utilities
+  CombinationCode: "Encodes a configurator's selections into one shareable code kept in the URL.",
 };
 
 const groups = documentationNavigation.filter((entry) => entry.children?.length);

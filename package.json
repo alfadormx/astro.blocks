@@ -7,13 +7,17 @@
     "build": "astro build",
     "preview": "astro preview --host",
     "astro": "astro",
-    "check": "pnpm run check:astro && pnpm run check:lint && pnpm run check:prettier",
+    "check": "pnpm run check:astro && pnpm run check:lint && pnpm run check:prettier && pnpm run test:unit && pnpm run test:browser",
     "check:astro": "astro check",
     "check:lint": "eslint .",
     "check:prettier": "prettier --check .",
+    "test:unit": "vitest run",
+    "test:browser": "node scripts/test-browser.mjs",
     "fix": "pnpm run fix:eslint && pnpm run fix:prettier",
     "fix:eslint": "eslint . --fix",
-    "fix:prettier": "prettier --write ."
+    "fix:prettier": "prettier --write .",
+    "models:generate": "node scripts/generate-ring-models.mjs",
+    "stills:generate": "node scripts/generate-ring-stills.mjs"
   },
   "dependencies": {
     "@astrolib/analytics": "^0.6.1",
@@ -34,23 +38,29 @@
     "sharp": "^0.35.3",
     "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.3.3",
+    "three": "^0.186.0",
     "unpic": "^4.2.2"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@eslint/js": "^10.0.1",
+    "@gltf-transform/core": "^4.5.0",
+    "@playwright/test": "^1.63.0",
     "@types/js-yaml": "^4.0.9",
     "@types/leaflet": "^1.9.22",
     "@types/lodash.merge": "^4.6.9",
+    "@types/three": "^0.186.0",
     "@typescript-eslint/parser": "^8.67.0",
     "astro-eslint-parser": "^3.1.0",
     "eslint": "^10.8.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^3.1.0",
     "globals": "^17.11.0",
+    "happy-dom": "^20.14.5",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.67.0"
+    "typescript-eslint": "^8.67.0",
+    "vitest": "^5.0.1"
   }
 }

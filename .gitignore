@@ -25,3 +25,7 @@ pnpm-debug.log*
 
 thoughts/
 .playwright-mcp/
+
+# test runner output
+test-results/
+playwright-report/

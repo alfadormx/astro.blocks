@@ -1,0 +1,319 @@
+---
+import type { ModelViewerConfig, ModelViewerProps } from '~/types/modelviewer.types';
+import { validateModelViewer } from '~/utils/modelViewer';
+import { cn } from '~/utils/styles';
+
+type Props = ModelViewerProps;
+
+const {
+  src,
+  label,
+  orbit = true,
+  zoom = true,
+  autoRotate = false,
+  autoRotateSpeed = 2,
+  cameraPosition,
+  cameraTarget,
+  fov = 45,
+  lighting = 'studio',
+  exposure = 1,
+  shadow = false,
+  messages = {},
+  height = '400px',
+  width = '100%',
+  selections = {},
+  cameraPresets = {},
+  class: className = '',
+} = Astro.props;
+
+validateModelViewer({
+  src,
+  label,
+  fov,
+  cameraPosition,
+  cameraTarget,
+  exposure,
+  selections,
+  cameraPresets,
+});
+
+const {
+  webglUnavailable = 'This 3D view needs WebGL, which this browser does not provide.',
+  loadFailed = 'The 3D model could not be loaded.',
+} = messages;
+
+const config: ModelViewerConfig = {
+  src,
+  label,
+  orbit,
+  zoom,
+  autoRotate,
+  autoRotateSpeed,
+  cameraPosition,
+  cameraTarget,
+  fov,
+  lighting,
+  exposure,
+  shadow,
+  selections,
+  cameraPresets,
+};
+---
+
+<model-viewer-block
+  class={cn('relative block overflow-hidden', className)}
+  style={`height: ${height}; width: ${width};`}
+  data-model-viewer-config={JSON.stringify(config)}
+  data-model-viewer-state="idle"
+>
+  <div
+    role="status"
+    class="pointer-events-none absolute inset-0 flex items-center justify-center p-6 text-center text-muted"
+  >
+    <p hidden data-model-viewer-message="webgl">{webglUnavailable}</p>
+    <p hidden data-model-viewer-message="load">{loadFailed}</p>
+  </div>
+  <noscript>
+    <p class="flex h-full items-center justify-center p-6 text-center text-muted">
+      {webglUnavailable}
+    </p>
+  </noscript>
+</model-viewer-block>
+
+<script>
+  import type { ModelViewerConfig, ModelViewerErrorReason } from '~/types/modelviewer.types';
+  import type { SelectionMode } from '~/types/selection.types';
+  import type { SelectionState } from '~/utils/modelViewerMutations';
+  import type { SceneHandle } from '~/utils/modelViewerScene';
+  import { effectiveSrc } from '~/utils/modelViewerSrc';
+  import { getSelection } from '~/utils/selection';
+
+  type SceneModule = typeof import('~/utils/modelViewerScene');
+
+  // Start loading ahead of the fold so the model is usually ready when it scrolls in.
+  const ROOT_MARGIN = '200px';
+
+  let sceneModule: Promise<SceneModule> | undefined;
+
+  function loadSceneModule(): Promise<SceneModule> {
+    sceneModule ??= import('~/utils/modelViewerScene').catch((err) => {
+      sceneModule = undefined;
+      throw err;
+    });
+    return sceneModule;
+  }
+
+  class ModelViewerBlock extends HTMLElement {
+    #intersection?: IntersectionObserver;
+    #resize?: ResizeObserver;
+    #controller?: AbortController;
+    #handle?: SceneHandle;
+    #visible = false;
+    #config!: ModelViewerConfig;
+    #state: Record<string, readonly string[]> = {};
+    #warned = new Set<string>();
+    #modes = new Map<string, SelectionMode>();
+    #lastCameraGroup?: string;
+    #src?: string;
+    #pendingSrc?: string;
+    #swapController?: AbortController;
+
+    connectedCallback(): void {
+      this.#config = JSON.parse(this.dataset.modelViewerConfig!);
+      document.addEventListener('selection:change', this.#onSelection);
+      this.#intersection = new IntersectionObserver(
+        (entries) => this.#onIntersect(entries[entries.length - 1].isIntersecting),
+        { rootMargin: ROOT_MARGIN }
+      );
+      this.#intersection.observe(this);
+    }
+
+    disconnectedCallback(): void {
+      document.removeEventListener('selection:change', this.#onSelection);
+      this.#intersection?.disconnect();
+      this.#resize?.disconnect();
+      this.#controller?.abort();
+      this.#swapController?.abort();
+      this.#endSwap();
+      this.#handle?.dispose();
+      this.#intersection = this.#resize = this.#controller = this.#handle = undefined;
+      this.#lastCameraGroup = this.#src = this.#swapController = undefined;
+      delete this.dataset.modelViewerCamera;
+      delete this.dataset.modelViewerSrc;
+      this.dataset.modelViewerState = 'idle';
+      this.removeAttribute('aria-busy');
+      delete this.dataset.modelViewerError;
+      this.querySelectorAll<HTMLElement>('[data-model-viewer-message]').forEach(
+        (p) => (p.hidden = true)
+      );
+    }
+
+    #onSelection = (event: DocumentEventMap['selection:change']): void => {
+      const { group, mode, selection } = event.detail;
+      const config = this.#config.selections?.[group];
+      if (!config) return;
+      this.#state = { ...this.#state, [group]: selection.map(({ code }) => code) };
+      this.#learnMode(group, mode);
+      this.#sync();
+      // Before the handle exists the first framing belongs to cameraPosition or the bounds fit.
+      if (!config.camera || group === this.#lastCameraGroup || !this.#handle) return;
+      this.#lastCameraGroup = group;
+      this.#handle.setCamera(this.#config.cameraPresets![config.camera], {
+        animate: !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+      });
+      this.dataset.modelViewerCamera = config.camera;
+    };
+
+    #learnMode(group: string, mode: SelectionMode | undefined): void {
+      if (!mode || this.#modes.get(group) === mode) return;
+      this.#modes.set(group, mode);
+      if (mode === 'text' && this.#config.selections?.[group]?.options) {
+        if (import.meta.env.DEV) {
+          this.#warn(`options are ignored on text group "${group}"; only camera applies`);
+        }
+      }
+    }
+
+    // Text codes are free input, so a text group contributes only its camera move.
+    #applicableState(): SelectionState {
+      return Object.fromEntries(
+        Object.entries(this.#state).map(([group, codes]) => [
+          group,
+          this.#modes.get(group) === 'text' ? [] : codes,
+        ])
+      );
+    }
+
+    // Runs at #start, not at connect: during a DOM swap the element connects before the
+    // runtime's astro:after-swap rescan, when getSelection still sees the previous page.
+    #seed(): void {
+      for (const group of Object.keys(this.#config.selections ?? {})) {
+        const root = document.querySelector<HTMLElement>(
+          `[data-selection-group="${CSS.escape(group)}"]`
+        );
+        this.#learnMode(group, root?.dataset.selectionMode as SelectionMode | undefined);
+        try {
+          this.#state[group] = getSelection(group).map(({ code }) => code);
+        } catch {
+          if (import.meta.env.DEV) {
+            this.#warn(`selections names group "${group}", which is not declared on this page`);
+          }
+          this.#state[group] = [];
+        }
+      }
+    }
+
+    #effectiveSrc(): string {
+      return effectiveSrc(this.#config.src, this.#config.selections ?? {}, this.#applicableState());
+    }
+
+    #sync(): void {
+      const handle = this.#handle;
+      if (!handle) return;
+      const src = this.#effectiveSrc();
+      if (src !== (this.#pendingSrc ?? this.#src)) {
+        this.#swapController?.abort();
+        this.#endSwap();
+        if (src !== this.#src) void this.#swap(handle, src);
+      }
+      this.#report(handle.apply(this.#applicableState()));
+    }
+
+    async #swap(handle: SceneHandle, src: string): Promise<void> {
+      const controller = (this.#swapController = new AbortController());
+      this.#pendingSrc = src;
+      this.dataset.modelViewerLoading = '';
+      this.setAttribute('aria-busy', 'true');
+      try {
+        await handle.swapModel(src, controller.signal);
+        this.#src = this.dataset.modelViewerSrc = src;
+        this.#report(handle.apply(this.#applicableState()));
+      } catch {
+        if (controller.signal.aborted) return;
+        // #src still names the old model, so the next selection change retries the swap.
+        if (import.meta.env.DEV) {
+          this.#warn(`model "${src}" could not be loaded; keeping the current model`);
+        }
+      } finally {
+        if (this.#swapController === controller) {
+          this.#swapController = undefined;
+          this.#endSwap();
+        }
+      }
+    }
+
+    #endSwap(): void {
+      this.#pendingSrc = undefined;
+      delete this.dataset.modelViewerLoading;
+      this.removeAttribute('aria-busy');
+    }
+
+    #report(warnings: readonly string[]): void {
+      if (import.meta.env.DEV) warnings.forEach((message) => this.#warn(message));
+    }
+
+    // Call sites check import.meta.env.DEV themselves, so production builds drop the message text too.
+    #warn(message: string): void {
+      if (this.#warned.has(message)) return;
+      this.#warned.add(message);
+      console.warn(`[ModelViewer] ${message}`);
+    }
+
+    #onIntersect(visible: boolean): void {
+      this.#visible = visible;
+      if (this.#handle) this.#handle.setActive(visible);
+      else if (visible && !this.#controller) void this.#start();
+    }
+
+    async #start(): Promise<void> {
+      const controller = (this.#controller = new AbortController());
+      const { signal } = controller;
+      this.dataset.modelViewerState = 'loading';
+      this.setAttribute('aria-busy', 'true');
+      try {
+        this.#seed();
+        const { createScene } = await loadSceneModule();
+        if (signal.aborted) return;
+        this.#src = this.#effectiveSrc();
+        const handle = await createScene(this, { ...this.#config, src: this.#src }, signal);
+        if (signal.aborted) {
+          handle.dispose();
+          return;
+        }
+        this.#handle = handle;
+        this.#resize = new ResizeObserver((entries) => {
+          const { width, height } = entries[entries.length - 1].contentRect;
+          handle.resize(width, height);
+        });
+        this.#resize.observe(this);
+        this.#sync();
+        handle.setActive(this.#visible);
+        this.dataset.modelViewerSrc = this.#src;
+        this.dataset.modelViewerState = 'ready';
+        this.removeAttribute('aria-busy');
+      } catch (err) {
+        if (signal.aborted) return;
+        // The error class lives in the lazily loaded module, so match on its shape.
+        const reason: ModelViewerErrorReason =
+          (err as { reason?: unknown }).reason === 'webgl' ? 'webgl' : 'load';
+        this.#fail(reason, err);
+      }
+    }
+
+    #fail(reason: ModelViewerErrorReason, err: unknown): void {
+      this.dataset.modelViewerState = 'error';
+      this.dataset.modelViewerError = reason;
+      this.removeAttribute('aria-busy');
+      this.#message(reason)!.hidden = false;
+      console.error('[ModelViewer]', err);
+    }
+
+    #message(reason: ModelViewerErrorReason): HTMLElement | null {
+      return this.querySelector<HTMLElement>(`[data-model-viewer-message="${reason}"]`);
+    }
+  }
+
+  if (!customElements.get('model-viewer-block')) {
+    customElements.define('model-viewer-block', ModelViewerBlock);
+  }
+</script>

@@ -1,0 +1,254 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import Configurator from '~/components/blocks/composite/Configurator.astro';
+import type { ConfiguratorProps } from '~/types/configurator.types';
+import type { ImageProps } from '~/types/image.types';
+import type { ModelViewerMutation } from '~/types/modelviewer.types';
+
+const metadata = { title: { default: 'Jewellery configurator' } };
+
+const viewer: ConfiguratorProps['viewer'] = {
+  src: '/models/ring.glb',
+  label: 'Your ring',
+  class: 'bg-surface',
+  height: '600px',
+  cameraPresets: { band: { position: [0, -0.9, 2.4], target: [0, -0.6, 0], fov: 35 } },
+};
+
+// Empty alt: the tile's title and subtitle already name the image. width/height set the
+// displayed size: the Image block writes them as an inline max-width, which beats size classes.
+const still = (code: string): ImageProps => ({
+  src: `~/assets/images/configurator/${code}.webp`,
+  alt: '',
+  width: 112,
+  height: 112,
+});
+
+// Sized like the tab icons (size-6); the SVG's colours match the option's band mutation.
+const swatch = (metal: string): ImageProps => ({
+  src: `~/assets/images/configurator/metal-${metal}.svg`,
+  alt: '',
+  width: 24,
+  height: 24,
+});
+
+// Lower clarity grades look cloudier: the stone greys and roughens step by step. IF repeats the
+// model's own Stone material so switching back restores it. Carat only toggles which stone is
+// visible, and every stone shares the Stone material, so the two compose.
+const cloudiness = (color: string, roughness: number): ModelViewerMutation => ({
+  type: 'material',
+  material: 'Stone',
+  color,
+  roughness,
+});
+
+const categories: ConfiguratorProps['categories'] = [
+  {
+    name: 'ring-model',
+    panel: 'grid',
+    mode: 'single',
+    trigger: { label: 'Model', icon: { name: 'tabler:rings' } },
+    heading: 'Select your model',
+    config: {
+      columns: 2,
+      defaultItemConfig: { mediaClass: 'w-full h-auto aspect-square' },
+    },
+    options: [
+      {
+        code: 'classic',
+        title: 'Classic',
+        content: 'Slim band',
+        image: still('classic'),
+        selected: true,
+        mutations: [{ type: 'model', src: '/models/ring.glb' }],
+      },
+      {
+        code: 'bold',
+        title: 'Bold',
+        content: 'Wide band',
+        image: still('bold'),
+        mutations: [{ type: 'model', src: '/models/ring-alt.glb' }],
+      },
+    ],
+  },
+  {
+    name: 'ring-carat',
+    panel: 'grid',
+    mode: 'single',
+    trigger: { label: 'Carat', icon: { name: 'tabler:circle-dot' } },
+    heading: 'Select carat',
+    config: { columns: 3 },
+    options: [
+      {
+        code: 'small',
+        title: '0.25 ct',
+        icon: { name: 'tabler:circle-dot' },
+        mediaClass: 'size-5',
+        mutations: [{ type: 'visible', parts: ['Stone_Small'] }],
+      },
+      {
+        code: 'medium',
+        title: '0.5 ct',
+        icon: { name: 'tabler:circle-dot' },
+        mediaClass: 'size-7',
+        selected: true,
+        mutations: [{ type: 'visible', parts: ['Stone_Medium'] }],
+      },
+      {
+        code: 'large',
+        title: '1 ct',
+        icon: { name: 'tabler:circle-dot' },
+        mediaClass: 'size-9',
+        mutations: [{ type: 'visible', parts: ['Stone_Large'] }],
+      },
+    ],
+  },
+  {
+    name: 'ring-color',
+    panel: 'grid',
+    mode: 'single',
+    trigger: { label: 'Color', icon: { name: 'tabler:rainbow' } },
+    heading: 'Select colour',
+    config: { columns: 3 },
+    options: [
+      {
+        code: 'yellow',
+        title: 'Yellow gold',
+        image: swatch('yellow'),
+        selected: true,
+        mutations: [{ type: 'material', material: 'Band', color: '#e6b422', roughness: 0.3 }],
+      },
+      {
+        code: 'white',
+        title: 'White gold',
+        image: swatch('white'),
+        mutations: [{ type: 'material', material: 'Band', color: '#e5e4e2', roughness: 0.2 }],
+      },
+      {
+        code: 'rose',
+        title: 'Rose gold',
+        image: swatch('rose'),
+        mutations: [{ type: 'material', part: 'Band', use: 'RoseGold' }],
+      },
+    ],
+  },
+  {
+    name: 'ring-clarity',
+    panel: 'grid',
+    mode: 'single',
+    trigger: { label: 'Clarity', icon: { name: 'tabler:diamond' } },
+    heading: 'Select clarity',
+    config: { columns: 3 },
+    options: [
+      { code: 'if', title: 'IF', selected: true, mutations: [cloudiness('#c4e7ff', 0.05)] },
+      { code: 'vvs1', title: 'VVS1', mutations: [cloudiness('#c5e1f4', 0.2)] },
+      { code: 'vvs2', title: 'VVS2', mutations: [cloudiness('#c6dbea', 0.35)] },
+      { code: 'vs1', title: 'VS1', mutations: [cloudiness('#c7d4df', 0.55)] },
+    ],
+  },
+  {
+    name: 'ring-extras',
+    panel: 'grid',
+    mode: 'multiple',
+    max: 2,
+    trigger: { label: 'Extras', icon: { name: 'tabler:gift' } },
+    heading: 'Add up to two extras',
+    config: { columns: 3 },
+    options: [
+      { code: 'giftbox', title: 'Gift box', content: 'Wrapped and ready to give.' },
+      { code: 'certificate', title: 'Certificate', content: 'Proof of the stone and metal.' },
+      { code: 'polish', title: 'Lifetime polish', content: 'Free cleaning, forever.' },
+    ],
+  },
+  {
+    name: 'ring-engraving',
+    panel: 'text',
+    trigger: { label: 'Engraving', icon: { name: 'tabler:signature' } },
+    heading: 'Engrave your ring',
+    maxLength: 20,
+    placeholder: 'Up to 20 characters',
+    camera: 'band',
+    fieldLabel: 'Engraving',
+    config: {
+      class: 'p-6',
+      shape: 'square',
+      help: 'Shown on the inside of the band.',
+      labelClass: 'text-xs font-semibold uppercase tracking-widest text-muted',
+      fieldClass: 'border border-border',
+    },
+  },
+];
+
+const defaultGridConfig: ConfiguratorProps['defaultGridConfig'] = {
+  air: 'none',
+  responsive: false,
+  defaultItemConfig: {
+    spacing: { padding: 'p-4' },
+    border: { width: 'border-r border-b', color: 'border-border' },
+    titleClass: 'text-sm font-medium uppercase tracking-wider',
+    textClass: 'text-xs text-muted',
+  },
+  selectedItemConfig: {
+    border: { width: 'border-r border-b-2', color: 'border-border border-b-emphasis' },
+  },
+};
+
+const layout: ConfiguratorProps['layout'] = {
+  ratio: '3:2',
+  air: 'none',
+  leftColumn: { class: 'pb-10 text-center md:border-r md:border-border' },
+  rightColumn: { class: 'md:contain-size md:overflow-y-auto' },
+};
+
+const summary: ConfiguratorProps['summary'] = {
+  categories: ['ring-color', 'ring-carat', 'ring-clarity'],
+  separator: ' ',
+  class: 'mt-1 text-sm uppercase tracking-widest text-muted',
+};
+
+const tabs: ConfiguratorProps['tabs'] = {
+  tabList: {
+    layout: 'grid',
+    columns: 3,
+    spacing: { gap: 'gap-0', margin: 'mb-0' },
+    wrapperClass: 'sticky top-0 z-10 bg-background',
+  },
+  defaultTabConfig: {
+    variant: 'ghost',
+    intent: 'neutral',
+    layout: 'vertical',
+    shape: 'square',
+    size: 'sm',
+    iconSize: 'size-6',
+    class:
+      'h-full rounded-none border-r border-b border-border hover:bg-transparent text-xs uppercase tracking-wider',
+  },
+  activeTabConfig: {
+    variant: 'ghost',
+    intent: 'neutral',
+    class: 'border-b-2 border-b-emphasis',
+  },
+};
+
+const headingClass =
+  'm-0 border-b border-border px-4 py-5 text-center text-xs font-semibold uppercase tracking-[0.2em]';
+
+const actions: ConfiguratorProps['actions'] = [
+  { label: 'Save my design', variant: 'outline', intent: 'neutral', shape: 'square' },
+];
+---
+
+<Layout metadata={metadata}>
+  <Configurator
+    categories={categories}
+    viewer={viewer}
+    title="Solitaire"
+    layout={layout}
+    summary={summary}
+    actions={actions}
+    tabs={tabs}
+    headingClass={headingClass}
+    defaultGridConfig={defaultGridConfig}
+    urlState={{ product: 'RING01' }}
+  />
+</Layout>

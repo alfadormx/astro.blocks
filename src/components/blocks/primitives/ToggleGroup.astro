@@ -1,0 +1,270 @@
+---
+import type {
+  ToggleGroupAppearance,
+  ToggleGroupOptionConfig,
+  ToggleGroupProps,
+} from '~/types/togglegroup.types';
+import ToggleGroupOptionContent from '~/components/blocks/primitives/ToggleGroupOptionContent.astro';
+import { cn } from '~/utils/styles';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import { intentClass, shapeClass, sizeClass } from '~/utils/buttonStyles';
+import { toggleGroupName, validateToggleGroup } from '~/utils/toggleGroup';
+
+type Props = ToggleGroupProps & ToggleGroupAppearance;
+
+const {
+  group,
+  label,
+  labelledBy,
+  options,
+  appearance = 'radio',
+  size = 'md',
+  shape = 'rounded',
+  intent = 'primary',
+  layout = 'horizontal',
+  disabled = false,
+  defaultOptionConfig,
+  selectedOptionConfig,
+  disabledOptionConfig,
+  class: className = '',
+} = Astro.props;
+
+validateToggleGroup({ group, label, labelledBy, options, disabled });
+
+const name = toggleGroupName(group);
+const isVertical = layout === 'vertical';
+const variant = Astro.props.appearance === 'cell' ? (Astro.props.variant ?? 'solid') : undefined;
+
+const RADIO_SIZE = {
+  xs: { text: 'text-xs', marker: 'size-3', gap: 'gap-1.5' },
+  sm: { text: 'text-sm', marker: 'size-3.5', gap: 'gap-2' },
+  md: { text: 'text-[1rem]', marker: 'size-4', gap: 'gap-2' },
+  lg: { text: 'text-lg', marker: 'size-5', gap: 'gap-2.5' },
+  xl: { text: 'text-xl', marker: 'size-6', gap: 'gap-3' },
+}[size];
+
+const MARKER_SELECTED = {
+  primary: 'border-primary bg-primary',
+  secondary: 'border-secondary bg-secondary',
+  tertiary: 'border-tertiary bg-tertiary',
+  accent: 'border-accent bg-accent',
+  success: 'border-success bg-success',
+  warning: 'border-warning bg-warning',
+  error: 'border-error bg-error',
+  neutral: 'border-emphasis bg-emphasis',
+}[intent];
+
+const FOCUS_RING = {
+  primary: 'has-focus-visible:ring-primary',
+  secondary: 'has-focus-visible:ring-secondary',
+  tertiary: 'has-focus-visible:ring-tertiary',
+  accent: 'has-focus-visible:ring-accent',
+  success: 'has-focus-visible:ring-success',
+  warning: 'has-focus-visible:ring-warning',
+  error: 'has-focus-visible:ring-error',
+  neutral: 'has-focus-visible:ring-border',
+}[intent];
+
+// The inset shadow in the background colour turns the filled marker into a radio dot.
+const MARKER_BASE =
+  'shrink-0 rounded-full border-2 shadow-[inset_0_0_0_2px_var(--color-background)]';
+const radioUnselected: ToggleGroupOptionConfig = {
+  class: cn('inline-flex items-center px-1 py-0.5', RADIO_SIZE.gap, RADIO_SIZE.text),
+  markerClass: cn(MARKER_BASE, RADIO_SIZE.marker, 'border-border bg-transparent'),
+};
+const radioSelected: ToggleGroupOptionConfig = {
+  ...radioUnselected,
+  markerClass: cn(MARKER_BASE, RADIO_SIZE.marker, MARKER_SELECTED),
+};
+
+const isCell = appearance === 'cell';
+const cellBase = cn(
+  'inline-flex items-center justify-center font-medium transition-all duration-200',
+  isVertical && 'w-full',
+  sizeClass(size),
+  shapeClass(shape),
+  'gap-2'
+);
+// border-2 border-transparent keeps solid/ghost cells the same size as outline ones.
+const cellUnselected: ToggleGroupOptionConfig = {
+  class: cn(cellBase, intentClass('outline', 'neutral')),
+};
+// Ghost has no fill at rest, so a selected ghost cell would differ only in text colour.
+const GHOST_SELECTED_TINT = {
+  primary: 'bg-primary/10',
+  secondary: 'bg-secondary/10',
+  tertiary: 'bg-tertiary/10',
+  accent: 'bg-accent/10',
+  success: 'bg-success/10',
+  warning: 'bg-warning/10',
+  error: 'bg-error/10',
+  neutral: 'bg-surface',
+}[intent];
+const cellSelected: ToggleGroupOptionConfig = {
+  class: cn(
+    cellBase,
+    'border-2 border-transparent',
+    intentClass(variant ?? 'solid', intent),
+    variant === 'ghost' && GHOST_SELECTED_TINT
+  ),
+};
+
+const internalUnselected = isCell ? cellUnselected : radioUnselected;
+const internalSelected = isCell ? cellSelected : radioSelected;
+
+const rendered = options.map((option) => {
+  const hasMedia = !!(
+    option.image?.src ||
+    option.icon?.name ||
+    defaultOptionConfig?.image?.src ||
+    defaultOptionConfig?.icon?.name
+  );
+  // Button's media-only size-* square would crop a wide sample such as a font preview.
+  const disabledLayer = disabled || option.disabled ? disabledOptionConfig : undefined;
+  const imageOnlyCell = isCell && option.hideLabel && hasMedia;
+  const optionLayer: ToggleGroupOptionConfig = {
+    class: cn(imageOnlyCell && ['p-1', shapeClass(shape, true)], option.class),
+    icon: option.icon,
+    image: option.image,
+  };
+  return {
+    option,
+    unselected: mergeConfigs<ToggleGroupOptionConfig>(
+      {},
+      internalUnselected,
+      defaultOptionConfig,
+      optionLayer,
+      disabledLayer
+    ),
+    selected: mergeConfigs<ToggleGroupOptionConfig>(
+      {},
+      internalSelected,
+      defaultOptionConfig,
+      selectedOptionConfig,
+      optionLayer,
+      disabledLayer
+    ),
+  };
+});
+
+// Kept out of cn(): tailwind-merge must never see these next to consumer classes.
+const HIDE_RULES =
+  '[&:has(:checked)>[data-option-variant=unselected]]:hidden [&:not(:has(:checked))>[data-option-variant=selected]]:hidden';
+const labelShellClass = cn(
+  'relative inline-flex cursor-pointer outline-none transition-all duration-200',
+  'has-focus-visible:ring-2 has-focus-visible:ring-offset-2',
+  'has-disabled:opacity-50 has-disabled:cursor-not-allowed',
+  FOCUS_RING,
+  shapeClass(shape)
+);
+
+const rootClass = cn(
+  'flex',
+  isVertical
+    ? cn('flex-col gap-2', isCell ? 'items-stretch' : 'items-start')
+    : 'flex-row flex-wrap gap-4',
+  className
+);
+---
+
+<div
+  class={rootClass}
+  role="radiogroup"
+  aria-label={labelledBy ? undefined : label}
+  aria-labelledby={labelledBy || undefined}
+  aria-orientation={layout}
+  data-toggle-group
+  data-selection-group={group}
+  data-selection-mode="single"
+>
+  {
+    rendered.map(({ option, unselected, selected }) => (
+      <label class={`${labelShellClass} ${HIDE_RULES}`} data-option-code={option.code}>
+        <input
+          type="radio"
+          class="sr-only"
+          name={name}
+          value={option.code}
+          checked={!!option.selected}
+          disabled={disabled || !!option.disabled}
+        />
+        <span data-option-variant="unselected" class={unselected.class}>
+          <ToggleGroupOptionContent
+            option={option}
+            config={unselected}
+            appearance={appearance}
+            size={size}
+          />
+        </span>
+        <span data-option-variant="selected" class={selected.class}>
+          <ToggleGroupOptionContent
+            option={option}
+            config={selected}
+            appearance={appearance}
+            size={size}
+          />
+        </span>
+      </label>
+    ))
+  }
+</div>
+
+<script>
+  import { getSelection, publish, subscribe } from '~/utils/selection';
+
+  const ROOT_SELECTOR = '[data-toggle-group]';
+
+  // Guards one-time listener binding. Runtime state and subscriptions are cleared on every
+  // astro:after-swap, so connect() runs on every init, bound or not.
+  const bound = new WeakSet<HTMLElement>();
+
+  function inputsOf(root: HTMLElement): HTMLInputElement[] {
+    return Array.from(root.querySelectorAll<HTMLInputElement>('input[type="radio"]'));
+  }
+
+  function render(root: HTMLElement, codes: readonly string[]): void {
+    const selected = new Set(codes);
+    for (const input of inputsOf(root)) input.checked = selected.has(input.value);
+  }
+
+  function bind(root: HTMLElement): void {
+    // `change` fires only on user action, so render()'s programmatic .checked never republishes.
+    root.addEventListener('change', (event) => {
+      const input = event.target;
+      if (input instanceof HTMLInputElement && input.type === 'radio' && root.contains(input)) {
+        publish(input, [{ code: input.value }]);
+      }
+    });
+    root.dataset.toggleGroupReady = '';
+  }
+
+  function connect(root: HTMLElement): void {
+    const group = root.dataset.selectionGroup!;
+    const checked = inputsOf(root).find((input) => input.checked);
+    // Groups start empty; publishing [] would only clear another block's initial selection.
+    if (checked) publish(checked, [{ code: checked.value }]);
+    subscribe(group, (detail) =>
+      render(
+        root,
+        detail.selection.map((entry) => entry.code)
+      )
+    );
+    render(
+      root,
+      getSelection(group).map((entry) => entry.code)
+    );
+  }
+
+  function init(): void {
+    document.querySelectorAll<HTMLElement>(ROOT_SELECTOR).forEach((root) => {
+      if (!bound.has(root)) {
+        bind(root);
+        bound.add(root);
+      }
+      connect(root);
+    });
+  }
+
+  document.addEventListener('astro:after-swap', init);
+  init();
+</script>

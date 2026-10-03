@@ -1,0 +1,259 @@
+---
+import type { ItemsGridItem, ItemsGridProps, ItemsGridSelection } from '~/types/itemsgrid.types';
+import type { ItemProps } from '~/types/item.types';
+import Item from '~/components/blocks/composite/Item.astro';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import { cn } from '~/utils/styles';
+import { validateItemsGridSelection } from '~/utils/itemsGridSelection';
+
+// Internal to ItemsGrid: rendered only when selection is enabled, so pages without a
+// selectable grid never receive this component's script.
+type Props = Pick<ItemsGridProps, 'items' | 'defaultItemConfig' | 'selectedItemConfig'> & {
+  selection: Exclude<ItemsGridSelection, { mode: 'none' }>;
+  gridClass: string;
+  lastItemClass?: string;
+};
+
+const { items, defaultItemConfig, selectedItemConfig, selection, gridClass, lastItemClass } =
+  Astro.props;
+
+// Border config, not class: Item applies `class` after `border.*`, which would override a
+// consumer's selectedItemConfig.border.
+const internalUnselectedDefaults: Partial<ItemProps> = {
+  class: 'h-full',
+  border: { width: 'border-2', color: 'border-transparent' },
+};
+const internalSelectedDefaults: Partial<ItemProps> = {
+  class: 'h-full',
+  border: { width: 'border-2', color: 'border-primary' },
+};
+
+const options = items.map((item) => ({
+  unselected: mergeConfigs<ItemsGridItem>(
+    {},
+    internalUnselectedDefaults,
+    defaultItemConfig || {},
+    item
+  ),
+  selected: mergeConfigs<ItemsGridItem>(
+    {},
+    internalSelectedDefaults,
+    defaultItemConfig || {},
+    selectedItemConfig || {},
+    item
+  ),
+}));
+
+// The selected merge is a superset of the unselected one (arrays merge by index), so it catches
+// actions leaked from defaultItemConfig or selectedItemConfig.
+validateItemsGridSelection(
+  selection,
+  options.map((option) => option.selected)
+);
+
+// Splits the option fields off so only Item props reach <Item>.
+function splitOption({ code, selected, ...itemProps }: ItemsGridItem) {
+  return { code, selected, itemProps };
+}
+
+const min = selection.mode === 'multiple' ? selection.min : undefined;
+const max = selection.mode === 'multiple' ? selection.max : undefined;
+const optionClass =
+  'h-full rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 [&[role]]:cursor-pointer aria-disabled:opacity-50 aria-disabled:cursor-not-allowed';
+---
+
+<div
+  class={gridClass}
+  data-items-grid-selectable
+  data-selection-group={selection.group}
+  data-selection-mode={selection.mode}
+  data-selection-min={min !== undefined ? String(min) : undefined}
+  data-selection-max={max !== undefined ? String(max) : undefined}
+  data-selection-label={selection.label || undefined}
+  data-selection-labelledby={selection.labelledBy || undefined}
+>
+  {
+    options.map((option, i) => {
+      const {
+        code,
+        selected: isSelected,
+        itemProps: unselectedItem,
+      } = splitOption(option.unselected);
+      const { itemProps: selectedItem } = splitOption(option.selected);
+      return (
+        <div
+          data-option-code={code}
+          class={cn(optionClass, i === options.length - 1 && lastItemClass)}
+        >
+          <div data-option-variant="unselected" class="h-full" hidden={!!isSelected}>
+            <Item {...unselectedItem} />
+          </div>
+          <div data-option-variant="selected" class="h-full" hidden={!isSelected}>
+            <Item {...selectedItem} />
+          </div>
+        </div>
+      );
+    })
+  }
+</div>
+
+<script>
+  import { getSelection, publish, subscribe } from '~/utils/selection';
+
+  const ROOT_SELECTOR = '[data-items-grid-selectable]';
+  const OPTION_SELECTOR = '[data-option-code]';
+
+  // Guards one-time ARIA + listener binding. Runtime state and subscriptions are cleared on
+  // every astro:after-swap, so connect() runs on every init, bound or not.
+  const bound = new WeakSet<HTMLElement>();
+
+  function optionsOf(root: HTMLElement): HTMLElement[] {
+    return Array.from(root.querySelectorAll<HTMLElement>(`:scope > ${OPTION_SELECTOR}`));
+  }
+
+  function variant(option: HTMLElement, name: 'selected' | 'unselected'): HTMLElement {
+    return option.querySelector<HTMLElement>(`:scope > [data-option-variant="${name}"]`)!;
+  }
+
+  function codesOf(group: string): string[] {
+    return getSelection(group).map((entry) => entry.code);
+  }
+
+  function render(root: HTMLElement, codes: readonly string[]): void {
+    const selected = new Set(codes);
+    const options = optionsOf(root);
+    for (const option of options) {
+      const isChecked = selected.has(option.dataset.optionCode!);
+      variant(option, 'unselected').hidden = isChecked;
+      variant(option, 'selected').hidden = !isChecked;
+      option.setAttribute('aria-checked', String(isChecked));
+    }
+
+    if (root.dataset.selectionMode === 'multiple') {
+      const max = root.dataset.selectionMax;
+      const checkedCount = options.filter((o) => o.getAttribute('aria-checked') === 'true').length;
+      const atMax = max !== undefined && checkedCount >= Number(max);
+      for (const option of options) {
+        option.setAttribute('tabindex', '0');
+        if (atMax && option.getAttribute('aria-checked') === 'false') {
+          option.setAttribute('aria-disabled', 'true');
+        } else {
+          option.removeAttribute('aria-disabled');
+        }
+      }
+      return;
+    }
+
+    // single: roving tabindex on the checked option, or the first one.
+    const tabStop =
+      options.find((option) => option.getAttribute('aria-checked') === 'true') ?? options[0];
+    for (const option of options) {
+      option.setAttribute('tabindex', option === tabStop ? '0' : '-1');
+    }
+  }
+
+  function activate(root: HTMLElement, option: HTMLElement): void {
+    const code = option.dataset.optionCode!;
+    if (root.dataset.selectionMode !== 'multiple') {
+      publish(option, [{ code }]);
+      return;
+    }
+    if (option.getAttribute('aria-disabled') === 'true') return;
+
+    const owned = optionsOf(root).map((o) => o.dataset.optionCode!);
+    const ownedSet = new Set(owned);
+    const current = codesOf(root.dataset.selectionGroup!);
+    const checked = new Set(current.filter((c) => ownedSet.has(c)));
+
+    if (checked.has(code)) {
+      const min = Number(root.dataset.selectionMin ?? 0);
+      if (checked.size - 1 < min) return;
+      checked.delete(code);
+    } else {
+      checked.add(code);
+    }
+
+    // Owned codes in DOM order, so the same set always publishes the same payload;
+    // codes from other publishers to this group are kept after them.
+    const next = [
+      ...owned.filter((c) => checked.has(c)),
+      ...current.filter((c) => !ownedSet.has(c)),
+    ];
+    publish(
+      option,
+      next.map((c) => ({ code: c }))
+    );
+  }
+
+  function onKeyDown(root: HTMLElement, event: KeyboardEvent): void {
+    const option = (event.target as HTMLElement).closest<HTMLElement>(OPTION_SELECTOR);
+    if (!option || !root.contains(option)) return;
+
+    if (event.key === ' ') {
+      event.preventDefault();
+      activate(root, option);
+      return;
+    }
+    if (root.dataset.selectionMode === 'multiple') return;
+
+    const step =
+      event.key === 'ArrowRight' || event.key === 'ArrowDown'
+        ? 1
+        : event.key === 'ArrowLeft' || event.key === 'ArrowUp'
+          ? -1
+          : 0;
+    if (step === 0) return;
+    event.preventDefault();
+    const options = optionsOf(root);
+    const next = options[(options.indexOf(option) + step + options.length) % options.length];
+    activate(root, next);
+    next.focus();
+  }
+
+  function bind(root: HTMLElement): void {
+    const { selectionLabel, selectionLabelledby } = root.dataset;
+    if (selectionLabelledby) root.setAttribute('aria-labelledby', selectionLabelledby);
+    else if (selectionLabel) root.setAttribute('aria-label', selectionLabel);
+
+    const multiple = root.dataset.selectionMode === 'multiple';
+    root.setAttribute('role', multiple ? 'group' : 'radiogroup');
+    for (const option of optionsOf(root)) {
+      option.setAttribute('role', multiple ? 'checkbox' : 'radio');
+    }
+
+    root.addEventListener('click', (event) => {
+      const option = (event.target as HTMLElement).closest<HTMLElement>(OPTION_SELECTOR);
+      if (option && root.contains(option)) activate(root, option);
+    });
+    root.addEventListener('keydown', (event) => onKeyDown(root, event));
+  }
+
+  function connect(root: HTMLElement): void {
+    const group = root.dataset.selectionGroup!;
+    const initial = optionsOf(root)
+      .filter((option) => !variant(option, 'selected').hidden)
+      .map((option) => ({ code: option.dataset.optionCode! }));
+    publish(root, initial);
+    subscribe(group, (detail) =>
+      render(
+        root,
+        detail.selection.map((entry) => entry.code)
+      )
+    );
+    // publish() is silent when nothing changed (e.g. empty initial), so render explicitly.
+    render(root, codesOf(group));
+  }
+
+  function init(): void {
+    document.querySelectorAll<HTMLElement>(ROOT_SELECTOR).forEach((root) => {
+      if (!bound.has(root)) {
+        bind(root);
+        bound.add(root);
+      }
+      connect(root);
+    });
+  }
+
+  document.addEventListener('astro:after-swap', init);
+  init();
+</script>

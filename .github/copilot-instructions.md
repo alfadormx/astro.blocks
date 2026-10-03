@@ -7,15 +7,29 @@ pnpm dev          # dev server at localhost:4321
 pnpm build        # production build to ./dist/
 pnpm preview      # preview production build
 
-pnpm check        # astro check + eslint + prettier (full validation)
+pnpm check        # astro check + eslint + prettier + unit + browser (full validation)
 pnpm check:astro  # astro type-check only
 pnpm check:lint   # eslint only
 pnpm check:prettier # prettier check only
 
+pnpm test:unit    # vitest run over tests/unit/
+pnpm test:browser # playwright chromium smoke specs in tests/browser/
+
 pnpm fix          # auto-fix eslint + prettier
 ```
 
-No test suite exists. Use `pnpm check` to validate changes.
+Use `pnpm check` to validate changes. It runs both test layers after `astro check`, ESLint and
+Prettier, so the cheap checks fail first.
+
+- `pnpm test:unit` — Vitest over `src/utils`; specs live in `tests/unit/`. The default
+  environment is `node`. A spec that needs a DOM (e.g. `selection.test.ts`) opts into happy-dom
+  with `// @vitest-environment happy-dom` as its first line. No browser or dev server needed.
+- `pnpm test:browser` — Playwright Chromium smoke specs in `tests/browser/`, run against a dev
+  server. Self-skips with a one-line notice (exit code 0) when no Chromium binary is installed;
+  install one with `pnpm exec playwright install chromium`.
+- `tests/browser/tabs.spec.ts` is the worked example later stateful-block tickets follow: stable
+  `data-*` selectors only, ARIA/`hidden` assertions instead of class strings, relationship-based id
+  assertions, and a post-init wait on `[role="tab"]`.
 
 ## Architecture
 
@@ -23,11 +37,35 @@ This is an **Astro component library** — a collection of reusable UI blocks wi
 
 ### Component Layers (`src/components/blocks/`)
 
-- **`primitives/`** — atomic components: `Button`, `Headline`, `Image`, `Logo`, `Map`, `Video`, `Vector`, `Background`, `ThemeToggle`, `LanguageToggle`
+- **`primitives/`** — atomic components: `Button`, `Headline`, `Image`, `Logo`, `Map`, `ModelViewer`, `Video`, `Vector`, `Background`, `ThemeToggle`, `LanguageToggle`, `ToggleGroup`, `TextArea`
 - **`composite/`** — composed from primitives: `Header`, `Footer`, `Content`, `CallToAction`, `ItemsGrid`, `ItemsTimeline`, `NavigationTree`, etc.
 - **`layout/`** — structural wrappers: `Container`, `TwoColumnContainer`, `ThreeColumnContainer`, `FourColumnContainer`, `SidebarLeftContainer`, `SidebarRightContainer`, `Modal`
 
 Every component has a corresponding TypeScript type in `src/types/<name>.types.ts`.
+
+### Client Runtimes (`src/utils/selection.ts`)
+
+Most of `src/utils` runs at build time in frontmatter. `selection.ts` is the exception: it is a
+browser-only runtime, so import it only from a block's client `<script>`, never from frontmatter.
+It initialises itself on import and resets on `astro:after-swap`; it shares selection state
+between blocks that don't know about each other.
+
+- **Declare** a group in markup: `data-selection-group="<name>"` plus
+  `data-selection-mode="single|multiple"` on the block's root. Groups start empty.
+- **Write** with `publish(element, [{ code }])`; the group comes from the element's nearest
+  `[data-selection-group]` ancestor. Last write wins; duplicate codes are dropped.
+- **Read** with `getSelection(group)`; **listen** with `subscribe(group, listener)` (returns an
+  unsubscribe function, no replay) or `document.addEventListener('selection:change', …)`, typed
+  via `DocumentEventMap`, with detail `{ group, mode, selection }`.
+- **Participants**: the selectable `ItemsGrid` and `ToggleGroup` (always `single`). Both publish
+  their initial codes on connect; `ToggleGroup` skips the publish when nothing is checked, so it
+  never clears another block's initial selection.
+- All state and subscriptions are cleared on `astro:after-swap`; consumers re-subscribe in their
+  own after-swap init. Misconfigured markup and invalid publishes throw.
+- **URL state** (`src/utils/urlState.ts`) is also browser-only and script-only. `connectUrlState({ spec })`
+  seeds the groups named in a `CombinationSpec` from `?code=` on `DOMContentLoaded`, writes the code back
+  on change and restores it on `popstate` and `astro:after-swap`. The codec it uses,
+  `src/utils/combinationCode.ts`, is pure and safe anywhere. Spec groups may only be appended.
 
 ### Site Configuration (`src/config.yaml`)
 

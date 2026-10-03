@@ -1,51 +1,68 @@
 ---
-import type { ItemsGridProps } from '~/types/itemsgrid.types';
-import type { ItemProps } from '~/types/item.types';
+import type { ItemsGridItem, ItemsGridProps } from '~/types/itemsgrid.types';
 import { cn } from '~/utils/styles';
 import Item from '~/components/blocks/composite/Item.astro';
+import SelectableItemsGrid from '~/components/blocks/composite/SelectableItemsGrid.astro';
 import { mergeConfigs } from '~/utils/mergeConfigs';
+import { gridColumnsClass, lastItemAlone } from '~/utils/itemsGrid';
 
 type Props = ItemsGridProps;
 
 const {
   items = [],
   columns = 3,
+  responsive = true,
+  fillLastRow = false,
   air = 'normal' as 'none' | 'tight' | 'normal' | 'loose',
   class: className = '',
   defaultItemConfig,
-} = Astro.props;
+  selection = { mode: 'none' },
+  selectedItemConfig,
+} = Astro.props as Props;
 
 const airSettings = {
   none: '',
-  tight: 'gap-3 md:gap-4 lg:gap-6',
-  normal: 'gap-4 md:gap-6 lg:gap-8',
-  loose: 'gap-6 md:gap-8 lg:gap-12',
+  tight: 'gap-3 @3xl:gap-4 @5xl:gap-6',
+  normal: 'gap-4 @3xl:gap-6 @5xl:gap-8',
+  loose: 'gap-6 @3xl:gap-8 @5xl:gap-12',
 } as const;
 
 const baseGridClass = 'grid mx-auto';
-let columnsClass = '';
-
-if (columns === 4) {
-  columnsClass = 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2';
-} else if (columns === 3) {
-  columnsClass = 'lg:grid-cols-3 sm:grid-cols-2';
-} else if (columns === 2) {
-  columnsClass = 'sm:grid-cols-2';
-}
 
 const gridClass = cn(
   baseGridClass,
-  columnsClass,
+  gridColumnsClass(columns, responsive),
   airSettings[air as keyof typeof airSettings],
   className
 );
+
+const lastItemClass =
+  fillLastRow && lastItemAlone(items.length, columns) ? 'col-span-full' : undefined;
 ---
 
-<div class={gridClass}>
+<div class="@container">
   {
-    items.map((item: ItemProps) => {
-      const mergedItem = mergeConfigs({}, defaultItemConfig || {}, item);
-      return <Item {...mergedItem} />;
-    })
+    selection.mode === 'none' ? (
+      <div class={gridClass}>
+        {items.map((item: ItemsGridItem, i: number) => {
+          const mergedItem = mergeConfigs({}, defaultItemConfig || {}, item);
+          return (
+            <Item
+              {...mergedItem}
+              class={cn(mergedItem.class, i === items.length - 1 && lastItemClass)}
+            />
+          );
+        })}
+      </div>
+    ) : (
+      <SelectableItemsGrid
+        items={items}
+        defaultItemConfig={defaultItemConfig}
+        selectedItemConfig={selectedItemConfig}
+        selection={selection}
+        gridClass={gridClass}
+        lastItemClass={lastItemClass}
+      />
+    )
   }
 </div>

@@ -1,0 +1,258 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import ItemsGridBlock from '~/components/blocks/composite/ItemsGrid.astro';
+import TextAreaBlock from '~/components/blocks/primitives/TextArea.astro';
+import ToggleGroupBlock from '~/components/blocks/primitives/ToggleGroup.astro';
+import { encode } from '~/utils/combinationCode';
+import {
+  demoSpec,
+  ENGRAVING_GROUP,
+  ENGRAVING_MAX_LENGTH,
+  EXTRAS_GROUP,
+  extrasItems,
+  FINISH_GROUP,
+  finishOptions,
+} from './_combinationCodeDemo';
+
+const metadata = {
+  title: {
+    default: 'CombinationCode',
+  },
+};
+
+const codes = (...list: string[]) => list.map((code) => ({ code }));
+
+const examples = [
+  {
+    state: 'Page-load defaults: Silver, Gift wrap, no engraving',
+    finish: codes('SV'),
+    extras: codes('GW'),
+    engraving: [],
+  },
+  {
+    state: 'Gold with every extra',
+    finish: codes('GD'),
+    extras: codes('CD', 'EX', 'IN', 'GW'),
+    engraving: [],
+  },
+  {
+    state: 'Rose gold, no extras',
+    finish: codes('RG'),
+    extras: [],
+    engraving: [],
+  },
+  {
+    state: 'Silver, Card, engraving "Mia-Rose v2."',
+    finish: codes('SV'),
+    extras: codes('CD'),
+    engraving: codes('Mia-Rose v2.'),
+  },
+].map(({ state, finish, extras, engraving }) => ({
+  state,
+  code: encode(demoSpec, {
+    [FINISH_GROUP]: finish,
+    [EXTRAS_GROUP]: extras,
+    [ENGRAVING_GROUP]: engraving,
+  }),
+}));
+
+const edgeCases = [
+  ['Empty selection', 'RING01-SV--', 'An empty segment is an explicit empty selection.'],
+  ['Several entries in a multiple group', 'RING01-SV-GW.IN-', 'Entries sit in spec option order.'],
+  ['Text', 'RING01-SV-GW-For%20Sam', 'Percent-encoded; - and . are escaped as %2D and %2E.'],
+  ['Unknown option', 'RING01-SV-GW.XX-', 'Known entries apply; the unknown one is dropped.'],
+  ['Every option unknown', 'RING01-XX-YY-', 'The group keeps its default.'],
+  ['Several entries in a single group', 'RING01-SV.GD-GW-', 'The group keeps its default.'],
+  ['Missing trailing segment', 'RING01-GD', 'Missing groups keep their defaults.'],
+  ['Extra segments', 'RING01-GD-GW--ZZ', 'Ignored, so a newer code still opens on an older page.'],
+  ['Malformed text', 'RING01-SV-GW-%E0%A4%A', 'The text group keeps its default.'],
+  ['Another product', 'OTHER1-GD-IN-', 'The whole code is ignored; every group keeps its default.'],
+];
+
+const grammar = `code     = [product "-"] segment *("-" segment)
+segment  = "" | entry *("." entry) | text
+entry    = 1*(A-Z / a-z / 0-9)
+text     = encodeURIComponent(text) with "-" → %2D and "." → %2E`;
+
+const usage = `<script>
+  import { connectUrlState } from '~/utils/urlState';
+
+  const disconnect = connectUrlState({
+    spec: {
+      product: 'RING01',
+      groups: [
+        { name: 'ring-finish', mode: 'single', options: ['SV', 'GD', 'RG'] },
+        { name: 'ring-extras', mode: 'multiple', options: ['GW', 'IN', 'EX', 'CD'] },
+        { name: 'ring-engraving', mode: 'text' },
+      ],
+    },
+    param: 'code',
+  });
+</script>`;
+
+const pureUsage = `import { decode, encode, validateCombinationSpec } from '~/utils/combinationCode';
+
+validateCombinationSpec(spec);
+const code = encode(spec, { 'ring-finish': [{ code: 'GD' }], 'ring-extras': [], 'ring-engraving': [] });
+const result = decode(spec, code);
+if (result.ok) result.selections.get('ring-finish'); // [{ code: 'GD' }]`;
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Utilities',
+    title: 'CombinationCode',
+    subtitle: 'One shareable code for a configuration, kept in the page URL',
+  }}
+>
+  <p>
+    A combination code captures the selection of an ordered set of selection groups in one string.
+    <code>connectUrlState</code> keeps it in the <code>?code=</code> query parameter: a shared link opens
+    on the same configuration, and back and forward walk through earlier ones.
+  </p>
+
+  <h3>Demo</h3>
+  <p>
+    Change the options below and watch the address bar. Try
+    <a href="?code=RING01-GD-IN.EX-Hello%20you">Gold with Insurance, Express and an engraving</a>
+    or <a href="?code=RING01-XX-IN.ZZ-">a stale code</a>, which applies what it can and, in
+    development, logs a <code>[urlState]</code> warning for the rest.
+  </p>
+  <div data-doc-section="demo" class="flex flex-col gap-6">
+    <ToggleGroupBlock group={FINISH_GROUP} label="Finish" options={finishOptions} />
+    <ItemsGridBlock
+      columns={4}
+      selection={{ mode: 'multiple', group: EXTRAS_GROUP, label: 'Extras' }}
+      items={extrasItems}
+    />
+    <div class="max-w-md">
+      <TextAreaBlock
+        group={ENGRAVING_GROUP}
+        label="Engraving"
+        maxLength={ENGRAVING_MAX_LENGTH}
+        showCounter
+        rows={2}
+      />
+    </div>
+  </div>
+
+  <h3>Format</h3>
+  <p>
+    Groups sit in spec order, separated by <code>-</code>, after an optional product segment.
+    Entries of a
+    <code>multiple</code> group sit in spec option order, separated by <code>.</code>, so one
+    configuration always yields one code. Option and product codes match <code>[A-Za-z0-9]+</code>,
+    which keeps both separators free.
+  </p>
+  <pre
+    class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{grammar}</code></pre>
+
+  <h3>Worked examples</h3>
+  <div class="overflow-x-auto">
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="border-b border-border">
+          <th class="py-2 px-4">State</th>
+          <th class="py-2 px-4">Code</th>
+        </tr>
+      </thead>
+      <tbody class="text-sm">
+        {
+          examples.map(({ state, code }) => (
+            <tr class="border-b border-border/50">
+              <td class="py-2 px-4">{state}</td>
+              <td class="py-2 px-4 font-mono">
+                <a href={`?code=${code}`}>{code}</a>
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Edge cases</h3>
+  <p>
+    Decoding is forgiving per group: whatever a stale or hand-edited code gets wrong falls back to
+    that group's page-load default, and the rest still applies. A code may select more options than
+    a group's
+    <code>max</code>; limits are not enforced on decode.
+  </p>
+  <div class="overflow-x-auto">
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="border-b border-border">
+          <th class="py-2 px-4">Case</th>
+          <th class="py-2 px-4">Code</th>
+          <th class="py-2 px-4">Outcome</th>
+        </tr>
+      </thead>
+      <tbody class="text-sm">
+        {
+          edgeCases.map(([name, code, outcome]) => (
+            <tr class="border-b border-border/50">
+              <td class="py-2 px-4">{name}</td>
+              <td class="py-2 px-4 font-mono">{code}</td>
+              <td class="py-2 px-4">{outcome}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h3>History</h3>
+  <ul>
+    <li>Every discrete change, such as a click, pushes one history entry.</li>
+    <li>
+      Consecutive keystrokes in the same text group replace the current entry, so a typing burst is
+      one entry.
+    </li>
+    <li>Back and forward restore each entry's configuration without writing a new entry.</li>
+    <li>
+      An entry without a code, such as the page as first opened, restores the page-load defaults.
+    </li>
+    <li>Other query parameters and the hash are preserved on every write.</li>
+    <li>
+      Loading a page with a code writes nothing, even when the code is not canonical. Text longer
+      than the field's limit is truncated, and the URL is rewritten in place to match.
+    </li>
+    <li>Returning to the defaults still writes a code; it is never stripped.</li>
+  </ul>
+
+  <h3>Append-only groups</h3>
+  <div class="bg-warning/10 border-l-4 border-warning p-4 rounded">
+    <p>
+      Segments are positional. Removing or reordering a group shifts every later segment, and old
+      codes are then silently misread. Add new groups at the end only; old codes keep working
+      because a missing trailing segment keeps its default.
+    </p>
+  </div>
+
+  <h3>Usage</h3>
+  <p>
+    <code>connectUrlState({'{ spec, param }'})</code> is browser-only: call it from a client
+    <code>&lt;script&gt;</code>. It seeds the groups on <code>DOMContentLoaded</code>, after every
+    block's initial publish, so the code wins over block defaults. It re-runs after <code
+      >astro:after-swap</code
+    >
+    and returns a function that disconnects it. <code>param</code> defaults to <code>'code'</code>.
+  </p>
+  <pre
+    class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{usage}</code></pre>
+  <p>
+    The codec is pure and safe anywhere, including frontmatter: <code>validateCombinationSpec</code>
+    throws on an ambiguous spec, <code>encode</code> returns the code for a state, and
+    <code>decode</code> returns the selections plus notes on what it dropped.
+  </p>
+  <pre
+    class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{pureUsage}</code></pre>
+</Layout>
+
+<script>
+  import { connectUrlState } from '~/utils/urlState';
+  import { demoSpec } from './_combinationCodeDemo';
+
+  connectUrlState({ spec: demoSpec });
+</script>

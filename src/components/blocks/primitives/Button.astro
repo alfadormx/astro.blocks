@@ -1,7 +1,9 @@
 ---
 import type { ButtonProps } from '~/types/button.types';
 import { cn } from '~/utils/styles';
+import { intentClass, mediaSizeClass, shapeClass, sizeClass } from '~/utils/buttonStyles';
 import { Icon } from 'astro-icon/components';
+import Image from '~/components/blocks/primitives/Image.astro';
 
 type Props = ButtonProps;
 
@@ -9,9 +11,12 @@ const {
   id,
   label,
   subtitle,
+  layout,
   icon,
+  image,
   iconPosition = 'left',
   iconSize,
+  imageSize,
   align,
   href,
   target = '_self',
@@ -24,14 +29,23 @@ const {
   class: className = '',
   labelClass = '',
   subtitleClass = '',
+  iconClass = '',
   ...attrs
 } = Astro.props;
 
-// Determine if this is an icon-only button
-const isIconOnly = icon && icon.name && !label && !subtitle;
+// Media slot: icon and image are mutually exclusive, image wins
+const hasImage = !!image?.src;
+const hasIcon = !!icon?.name;
+
+// Determine if this is a media-only button (icon or image, no text)
+const isMediaOnly = (hasIcon || hasImage) && !label && !subtitle;
 
 // Determine if this is a promotional button (has subtitle)
 const hasSubtitle = !!subtitle;
+
+// Resolve the content arrangement: explicit `layout` wins, otherwise a subtitle implies vertical
+const resolvedLayout = layout ?? (subtitle ? 'vertical' : 'horizontal');
+const isVertical = resolvedLayout === 'vertical';
 
 // Base button classes
 const baseClasses = cn(
@@ -41,72 +55,13 @@ const baseClasses = cn(
   disabled && 'opacity-50 cursor-not-allowed pointer-events-none'
 );
 
-// Size classes
-const sizeClasses = {
-  xs: isIconOnly ? 'size-6' : hasSubtitle ? 'px-4 py-3' : 'px-2.5 py-1.5 text-xs',
-  sm: isIconOnly ? 'size-8' : hasSubtitle ? 'px-5 py-4' : 'px-3 py-2 text-sm',
-  md: isIconOnly ? 'size-10' : hasSubtitle ? 'px-6 py-5' : 'px-4 py-2 text-[1rem]',
-  lg: isIconOnly ? 'size-12' : hasSubtitle ? 'px-8 py-6' : 'px-5 py-3 text-lg',
-  xl: isIconOnly ? 'size-14' : hasSubtitle ? 'px-10 py-8' : 'px-6 py-4 text-xl',
-}[size];
-
-// Shape classes
-const shapeClasses = {
-  rounded: 'rounded-md',
-  square: isIconOnly ? 'rounded-none' : 'rounded-sm',
-  pill: 'rounded-full',
-}[shape];
-
-// Intent color mappings for each variant
-const intentClasses = {
-  solid: {
-    primary: 'bg-primary text-background hover:bg-primary-hover focus-visible:ring-primary',
-    secondary: 'bg-secondary text-background hover:bg-secondary-hover focus-visible:ring-secondary',
-    tertiary: 'bg-tertiary text-background hover:bg-tertiary-hover focus-visible:ring-tertiary',
-    accent: 'bg-accent text-background hover:bg-accent-hover focus-visible:ring-accent',
-    success: 'bg-success text-background hover:bg-success-hover focus-visible:ring-success',
-    warning: 'bg-warning text-background hover:bg-warning-hover focus-visible:ring-warning',
-    error: 'bg-error text-background hover:bg-error-hover focus-visible:ring-error',
-    neutral: 'bg-surface text-normal hover:bg-elevated focus-visible:ring-border',
-  },
-  outline: {
-    primary:
-      'border-2 border-primary text-primary hover:bg-primary hover:text-background focus-visible:ring-primary',
-    secondary:
-      'border-2 border-secondary text-secondary hover:bg-secondary hover:text-background focus-visible:ring-secondary',
-    tertiary:
-      'border-2 border-tertiary text-tertiary hover:bg-tertiary hover:text-background focus-visible:ring-tertiary',
-    accent:
-      'border-2 border-accent text-accent hover:bg-accent hover:text-background focus-visible:ring-accent',
-    success:
-      'border-2 border-success text-success hover:bg-success hover:text-background focus-visible:ring-success',
-    warning:
-      'border-2 border-warning text-warning hover:bg-warning hover:text-background focus-visible:ring-warning',
-    error:
-      'border-2 border-error text-error hover:bg-error hover:text-background focus-visible:ring-error',
-    neutral: 'border-2 border-border text-normal hover:bg-surface focus-visible:ring-border',
-  },
-  ghost: {
-    primary: 'text-primary hover:bg-primary/10 focus-visible:ring-primary',
-    secondary: 'text-secondary hover:bg-secondary/10 focus-visible:ring-secondary',
-    tertiary: 'text-tertiary hover:bg-tertiary/10 focus-visible:ring-tertiary',
-    accent: 'text-accent hover:bg-accent/10 focus-visible:ring-accent',
-    success: 'text-success hover:bg-success/10 focus-visible:ring-success',
-    warning: 'text-warning hover:bg-warning/10 focus-visible:ring-warning',
-    error: 'text-error hover:bg-error/10 focus-visible:ring-error',
-    neutral: 'text-normal hover:bg-surface focus-visible:ring-border',
-  },
-  link: {
-    primary: 'text-link hover:text-link-hover hover:underline',
-    secondary: 'text-secondary hover:text-secondary-hover hover:underline',
-    tertiary: 'text-tertiary hover:text-tertiary-hover hover:underline',
-    accent: 'text-accent hover:text-accent-hover hover:underline',
-    success: 'text-success hover:text-success-hover hover:underline',
-    warning: 'text-warning hover:text-warning-hover hover:underline',
-    error: 'text-error hover:text-error-hover hover:underline',
-    neutral: 'text-normal hover:text-emphasis hover:underline',
-  },
-}[variant][intent];
+const sizeClasses = sizeClass(size, {
+  mediaOnly: isMediaOnly,
+  subtitle: hasSubtitle,
+  vertical: isVertical,
+});
+const shapeClasses = shapeClass(shape, isMediaOnly);
+const intentClasses = intentClass(variant, intent);
 
 // Width classes
 const widthClasses = width === 'full' ? 'w-full' : '';
@@ -122,18 +77,10 @@ const alignClass =
         : '';
 
 // Layout classes for content arrangement
-const layoutClasses = cn(hasSubtitle ? 'flex-col gap-1' : 'flex-row gap-2', isIconOnly && 'p-0');
+const layoutClasses = cn(isVertical ? 'flex-col gap-1' : 'flex-row gap-2', isMediaOnly && 'p-0');
 
-// Icon size classes
-const iconSizeClass =
-  iconSize ||
-  {
-    xs: 'size-3',
-    sm: 'size-4',
-    md: 'size-5',
-    lg: 'size-6',
-    xl: 'size-7',
-  }[size];
+const iconSizeClass = iconSize || mediaSizeClass(size);
+const imageSizeClass = imageSize || mediaSizeClass(size);
 
 // Final button classes
 const buttonClass = cn(
@@ -153,7 +100,7 @@ const finalLabelClass = cn(hasSubtitle && 'font-semibold', labelClass);
 const finalSubtitleClass = cn('text-xs opacity-90', subtitleClass);
 
 // Icon wrapper classes
-const finalIconClass = cn(icon?.class);
+const finalIconClass = cn(icon?.class, iconClass);
 
 // Render as link or button
 const Tag = href ? 'a' : 'button';
@@ -165,13 +112,18 @@ const tagProps = href
 <div class={align ? alignClass : 'contents'}>
   <Tag class={buttonClass} {...tagProps}>
     {
-      icon && icon.name && iconPosition === 'left' && (
-        <Icon
-          name={icon.name}
-          class={cn(iconSizeClass, finalIconClass)}
-          aria-label={icon.ariaLabel}
-        />
-      )
+      iconPosition === 'left' &&
+        (hasImage ? (
+          <Image {...image} class={cn(imageSizeClass, image?.class)} />
+        ) : (
+          hasIcon && (
+            <Icon
+              name={icon!.name}
+              class={cn(iconSizeClass, finalIconClass)}
+              aria-label={icon!.ariaLabel}
+            />
+          )
+        ))
     }
 
     {
@@ -184,13 +136,18 @@ const tagProps = href
     }
 
     {
-      icon && icon.name && iconPosition === 'right' && (
-        <Icon
-          name={icon.name}
-          class={cn(iconSizeClass, finalIconClass)}
-          aria-label={icon.ariaLabel}
-        />
-      )
+      iconPosition === 'right' &&
+        (hasImage ? (
+          <Image {...image} class={cn(imageSizeClass, image?.class)} />
+        ) : (
+          hasIcon && (
+            <Icon
+              name={icon!.name}
+              class={cn(iconSizeClass, finalIconClass)}
+              aria-label={icon!.ariaLabel}
+            />
+          )
+        ))
     }
 
     {Astro.slots.has('default') && <slot />}

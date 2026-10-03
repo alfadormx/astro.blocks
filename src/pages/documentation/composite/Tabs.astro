@@ -17,167 +17,370 @@ const metadata = { title: { default: 'Tabs' } };
   }}
 >
   <h3>Horizontal (default)</h3>
-  <TabsBlock
-    items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
-    defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
-    activeTabConfig={{ variant: 'solid', intent: 'primary' }}
-    tabList={{
-      spacing: { padding: 'p-2', gap: 'gap-2' },
-      border: { width: 'border', color: 'border-gray-200', radius: 'rounded-lg' },
-    }}
-  >
-    <TabItemBlock slot="panel-0">
-      <ContentBlock
-        container={{
-          background: {
-            image:
-              'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?fit=min&auto=format&w=768&h=768',
-            overlayClass: 'bg-base/60 backdrop-blur-xl',
-            attachment: 'fixed',
-          },
-        }}
-        headline={{
-          tagline: 'Content Block',
-          title: 'Formula Blueprint: Fun Meets Functionality!',
-          subtitle:
-            'The template is a free, customizable and production-ready template for Astro 5.0 + Tailwind CSS.',
-        }}
-        image={{
-          src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=min&auto=format',
-          alt: 'Demo image',
-        }}
-      >
-        <p>Nested inside a TabItem to show richer blocks are supported.</p>
-      </ContentBlock>
-    </TabItemBlock>
-    <TabItemBlock slot="panel-1">
-      <ContentBlock
-        container={{
-          background: {
-            image:
-              'https://images.unsplash.com/photo-1469474968028-56623f02e42e?fit=min&auto=format&w=768&h=768',
-            overlayClass: 'bg-base/60 backdrop-blur-xl',
-            attachment: 'fixed',
-          },
-        }}
-        headline={{
-          tagline: 'Content Block',
-          title: 'Ship Faster with a Documented API',
-          subtitle:
-            'Every block ships with typed props and clear examples so you spend less time guessing.',
-        }}
-        image={{
-          src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=min&auto=format',
-          alt: 'Demo image',
-        }}
-      >
-        <p>Nested inside a TabItem to show richer blocks are supported.</p>
-      </ContentBlock>
-    </TabItemBlock>
-    <TabItemBlock slot="panel-2">
-      <ContentBlock
-        container={{
-          background: {
-            image:
-              'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?fit=min&auto=format&w=768&h=768',
-            overlayClass: 'bg-base/60 backdrop-blur-xl',
-            attachment: 'fixed',
-          },
-        }}
-        headline={{
-          tagline: 'Content Block',
-          title: 'See It In Action',
-          subtitle: 'Explore real compositions built from the same primitives you already know.',
-        }}
-        image={{
-          src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=min&auto=format',
-          alt: 'Demo image',
-        }}
-      >
-        <p>Nested inside a TabItem to show richer blocks are supported.</p>
-      </ContentBlock>
-    </TabItemBlock>
-  </TabsBlock>
+  <div data-doc-section="horizontal">
+    <TabsBlock
+      items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
+      defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      tabList={{
+        spacing: { padding: 'p-2', gap: 'gap-2' },
+        border: { width: 'border', color: 'border-gray-200', radius: 'rounded-lg' },
+      }}
+    >
+      <TabItemBlock slot="panel-0">
+        <ContentBlock
+          container={{
+            background: {
+              image:
+                'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?fit=min&auto=format&w=768&h=768',
+              overlayClass: 'bg-base/60 backdrop-blur-xl',
+              attachment: 'fixed',
+            },
+          }}
+          headline={{
+            tagline: 'Content Block',
+            title: 'Formula Blueprint: Fun Meets Functionality!',
+            subtitle:
+              'The template is a free, customizable and production-ready template for Astro 5.0 + Tailwind CSS.',
+          }}
+          image={{
+            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=min&auto=format',
+            alt: 'Demo image',
+          }}
+        >
+          <p>Nested inside a TabItem to show richer blocks are supported.</p>
+        </ContentBlock>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-1">
+        <ContentBlock
+          container={{
+            background: {
+              image:
+                'https://images.unsplash.com/photo-1469474968028-56623f02e42e?fit=min&auto=format&w=768&h=768',
+              overlayClass: 'bg-base/60 backdrop-blur-xl',
+              attachment: 'fixed',
+            },
+          }}
+          headline={{
+            tagline: 'Content Block',
+            title: 'Ship Faster with a Documented API',
+            subtitle:
+              'Every block ships with typed props and clear examples so you spend less time guessing.',
+          }}
+          image={{
+            src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=min&auto=format',
+            alt: 'Demo image',
+          }}
+        >
+          <p>Nested inside a TabItem to show richer blocks are supported.</p>
+        </ContentBlock>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-2">
+        <ContentBlock
+          container={{
+            background: {
+              image:
+                'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?fit=min&auto=format&w=768&h=768',
+              overlayClass: 'bg-base/60 backdrop-blur-xl',
+              attachment: 'fixed',
+            },
+          }}
+          headline={{
+            tagline: 'Content Block',
+            title: 'See It In Action',
+            subtitle: 'Explore real compositions built from the same primitives you already know.',
+          }}
+          image={{
+            src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=min&auto=format',
+            alt: 'Demo image',
+          }}
+        >
+          <p>Nested inside a TabItem to show richer blocks are supported.</p>
+        </ContentBlock>
+      </TabItemBlock>
+    </TabsBlock>
+  </div>
 
   <h3>Vertical</h3>
-  <TabsBlock
-    items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
-    defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
-    activeTabConfig={{ variant: 'solid', intent: 'primary' }}
-    orientation="vertical"
-  >
-    <TabItemBlock slot="panel-0">
-      <ContentBlock
-        container={{
-          background: {
-            image:
-              'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?fit=min&auto=format&w=768&h=768',
-            overlayClass: 'bg-base/60 backdrop-blur-xl',
-            attachment: 'fixed',
-          },
-        }}
-        headline={{
-          tagline: 'Content Block',
-          title: 'Formula Blueprint: Fun Meets Functionality!',
-          subtitle:
-            'The template is a free, customizable and production-ready template for Astro 5.0 + Tailwind CSS.',
-        }}
-        image={{
-          src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=min&auto=format',
-          alt: 'Demo image',
-        }}
-      >
-        <p>Nested inside a TabItem to show richer blocks are supported.</p>
-      </ContentBlock>
-    </TabItemBlock>
-    <TabItemBlock slot="panel-1">
-      <ContentBlock
-        container={{
-          background: {
-            image:
-              'https://images.unsplash.com/photo-1469474968028-56623f02e42e?fit=min&auto=format&w=768&h=768',
-            overlayClass: 'bg-base/60 backdrop-blur-xl',
-            attachment: 'fixed',
-          },
-        }}
-        headline={{
-          tagline: 'Content Block',
-          title: 'Ship Faster with a Documented API',
-          subtitle:
-            'Every block ships with typed props and clear examples so you spend less time guessing.',
-        }}
-        image={{
-          src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=min&auto=format',
-          alt: 'Demo image',
-        }}
-      >
-        <p>Nested inside a TabItem to show richer blocks are supported.</p>
-      </ContentBlock>
-    </TabItemBlock>
-    <TabItemBlock slot="panel-2">
-      <ContentBlock
-        container={{
-          background: {
-            image:
-              'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?fit=min&auto=format&w=768&h=768',
-            overlayClass: 'bg-base/60 backdrop-blur-xl',
-            attachment: 'fixed',
-          },
-        }}
-        headline={{
-          tagline: 'Content Block',
-          title: 'See It In Action',
-          subtitle: 'Explore real compositions built from the same primitives you already know.',
-        }}
-        image={{
-          src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=min&auto=format',
-          alt: 'Demo image',
-        }}
-      >
-        <p>Nested inside a TabItem to show richer blocks are supported.</p>
-      </ContentBlock>
-    </TabItemBlock>
-  </TabsBlock>
+  <div data-doc-section="vertical">
+    <TabsBlock
+      items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
+      defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      orientation="vertical"
+    >
+      <TabItemBlock slot="panel-0">
+        <ContentBlock
+          container={{
+            background: {
+              image:
+                'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?fit=min&auto=format&w=768&h=768',
+              overlayClass: 'bg-base/60 backdrop-blur-xl',
+              attachment: 'fixed',
+            },
+          }}
+          headline={{
+            tagline: 'Content Block',
+            title: 'Formula Blueprint: Fun Meets Functionality!',
+            subtitle:
+              'The template is a free, customizable and production-ready template for Astro 5.0 + Tailwind CSS.',
+          }}
+          image={{
+            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=min&auto=format',
+            alt: 'Demo image',
+          }}
+        >
+          <p>Nested inside a TabItem to show richer blocks are supported.</p>
+        </ContentBlock>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-1">
+        <ContentBlock
+          container={{
+            background: {
+              image:
+                'https://images.unsplash.com/photo-1469474968028-56623f02e42e?fit=min&auto=format&w=768&h=768',
+              overlayClass: 'bg-base/60 backdrop-blur-xl',
+              attachment: 'fixed',
+            },
+          }}
+          headline={{
+            tagline: 'Content Block',
+            title: 'Ship Faster with a Documented API',
+            subtitle:
+              'Every block ships with typed props and clear examples so you spend less time guessing.',
+          }}
+          image={{
+            src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=min&auto=format',
+            alt: 'Demo image',
+          }}
+        >
+          <p>Nested inside a TabItem to show richer blocks are supported.</p>
+        </ContentBlock>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-2">
+        <ContentBlock
+          container={{
+            background: {
+              image:
+                'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?fit=min&auto=format&w=768&h=768',
+              overlayClass: 'bg-base/60 backdrop-blur-xl',
+              attachment: 'fixed',
+            },
+          }}
+          headline={{
+            tagline: 'Content Block',
+            title: 'See It In Action',
+            subtitle: 'Explore real compositions built from the same primitives you already know.',
+          }}
+          image={{
+            src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=min&auto=format',
+            alt: 'Demo image',
+          }}
+        >
+          <p>Nested inside a TabItem to show richer blocks are supported.</p>
+        </ContentBlock>
+      </TabItemBlock>
+    </TabsBlock>
+  </div>
+
+  <h3>Tab list layout: row</h3>
+  <p>
+    <code>tabList.layout</code> is independent of <code>orientation</code>. Here a vertical Tabs
+    keeps its tab list beside the panel, while the triggers themselves run in a row.
+  </p>
+  <div data-doc-section="layout-row">
+    <TabsBlock
+      items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
+      defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      orientation="vertical"
+      tabList={{ layout: 'row', spacing: { padding: 'p-2', gap: 'gap-2' } }}
+    >
+      <TabItemBlock slot="panel-0">
+        <p>Overview panel content.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-1">
+        <p>API panel content.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-2">
+        <p>Examples panel content.</p>
+      </TabItemBlock>
+    </TabsBlock>
+  </div>
+
+  <h3>Tab list layout: column</h3>
+  <p>
+    The mirror case: a horizontal Tabs whose triggers are stacked in a column above the panel. Each
+    trigger spans the full width of the tab list.
+  </p>
+  <div data-doc-section="layout-column">
+    <TabsBlock
+      items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
+      defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      tabList={{ layout: 'column', spacing: { padding: 'p-2', gap: 'gap-2' } }}
+    >
+      <TabItemBlock slot="panel-0">
+        <p>Overview panel content.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-1">
+        <p>API panel content.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-2">
+        <p>Examples panel content.</p>
+      </TabItemBlock>
+    </TabsBlock>
+  </div>
+
+  <h3>Tab list layout: column, content-sized triggers</h3>
+  <p>
+    Set <code>width: 'auto'</code> on <code>defaultTabConfig</code> (or on an item) to keep triggers as
+    wide as their own label instead of filling the tab list.
+  </p>
+  <div data-doc-section="layout-column-auto">
+    <TabsBlock
+      items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
+      defaultTabConfig={{ variant: 'ghost', intent: 'neutral', width: 'auto' }}
+      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      tabList={{ layout: 'column', spacing: { padding: 'p-2', gap: 'gap-2' } }}
+    >
+      <TabItemBlock slot="panel-0">
+        <p>Overview panel content.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-1">
+        <p>API panel content.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-2">
+        <p>Examples panel content.</p>
+      </TabItemBlock>
+    </TabsBlock>
+  </div>
+
+  <h3>Tab list layout: grid</h3>
+  <p>
+    <code>tabList.layout: 'grid'</code> arranges the triggers as tiles. The column count is read from
+    the width of the tab list's own container, not the viewport, so the same config adapts inside a narrow
+    panel. <code>tabList.columns</code> applies only in this layout, and the count never drops below two
+    columns. Each tile fills its grid cell, so every tile has the same size.
+  </p>
+  <p>
+    Grid is meant for <code>orientation="horizontal"</code>. In <code>orientation="vertical"</code> the
+    tab list sits in an <code>auto</code> grid track, where a size container has no intrinsic width to
+    measure, so the tile grid collapses; use <code>layout: 'row'</code> or <code
+      >layout: 'column'</code
+    >
+    there.
+  </p>
+  <div class="max-w-lg" data-doc-section="layout-grid">
+    <TabsBlock
+      items={[
+        { label: 'Overview' },
+        { label: 'API' },
+        { label: 'Examples' },
+        { label: 'Themes' },
+        { label: 'Layout' },
+        { label: 'Tokens' },
+      ]}
+      defaultTabConfig={{
+        variant: 'ghost',
+        intent: 'neutral',
+        layout: 'vertical',
+        icon: { name: 'heroicons:cube' },
+      }}
+      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      tabList={{ layout: 'grid', columns: 3 }}
+    >
+      <TabItemBlock slot="panel-0">
+        <p>Overview panel content.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-1">
+        <p>API panel content.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-2">
+        <p>Examples panel content.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-3">
+        <p>Themes panel content.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-4">
+        <p>Layout panel content.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-5">
+        <p>Tokens panel content.</p>
+      </TabItemBlock>
+    </TabsBlock>
+  </div>
+
+  <h3>Any number of tabs</h3>
+  <p>
+    The panel count follows the item count — there is no cap. Twelve items render twelve triggers
+    and twelve <code>panel-0</code> … <code>panel-11</code> slots, each with its own tabpanel id and ARIA
+    wiring.
+  </p>
+  <div class="max-w-lg" data-doc-section="many">
+    <TabsBlock
+      items={[
+        { label: 'One' },
+        { label: 'Two' },
+        { label: 'Three' },
+        { label: 'Four' },
+        { label: 'Five' },
+        { label: 'Six' },
+        { label: 'Seven' },
+        { label: 'Eight' },
+        { label: 'Nine' },
+        { label: 'Ten' },
+        { label: 'Eleven' },
+        { label: 'Twelve' },
+      ]}
+      defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      tabList={{ layout: 'grid', columns: 4 }}
+    >
+      <TabItemBlock slot="panel-0"><p>Panel one.</p></TabItemBlock>
+      <TabItemBlock slot="panel-1"><p>Panel two.</p></TabItemBlock>
+      <TabItemBlock slot="panel-2"><p>Panel three.</p></TabItemBlock>
+      <TabItemBlock slot="panel-3"><p>Panel four.</p></TabItemBlock>
+      <TabItemBlock slot="panel-4"><p>Panel five.</p></TabItemBlock>
+      <TabItemBlock slot="panel-5"><p>Panel six.</p></TabItemBlock>
+      <TabItemBlock slot="panel-6"><p>Panel seven.</p></TabItemBlock>
+      <TabItemBlock slot="panel-7"><p>Panel eight.</p></TabItemBlock>
+      <TabItemBlock slot="panel-8"><p>Panel nine.</p></TabItemBlock>
+      <TabItemBlock slot="panel-9"><p>Panel ten.</p></TabItemBlock>
+      <TabItemBlock slot="panel-10"><p>Panel eleven.</p></TabItemBlock>
+      <TabItemBlock slot="panel-11"><p>Panel twelve.</p></TabItemBlock>
+    </TabsBlock>
+  </div>
+
+  <h3>Sticky grid tab list</h3>
+  <p>
+    In grid layout the tab list sits in a <code>@container</code> wrapper exactly as tall as the list,
+    so <code>sticky</code> on <code>tabList.class</code> has no room to move. Put it on
+    <code>tabList.wrapperClass</code> instead; the wrapper is rendered only in grid layout. Scroll the
+    box below and the triggers stay at the top.
+  </p>
+  <div class="max-w-lg max-h-80 overflow-y-auto border border-border" data-doc-section="sticky">
+    <TabsBlock
+      items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
+      defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      tabList={{
+        layout: 'grid',
+        columns: 3,
+        wrapperClass: 'sticky top-0 bg-background',
+      }}
+    >
+      <TabItemBlock slot="panel-0">
+        {Array.from({ length: 12 }, (_, i) => <p>Overview paragraph {i + 1}.</p>)}
+      </TabItemBlock>
+      <TabItemBlock slot="panel-1">
+        {Array.from({ length: 12 }, (_, i) => <p>API paragraph {i + 1}.</p>)}
+      </TabItemBlock>
+      <TabItemBlock slot="panel-2">
+        {Array.from({ length: 12 }, (_, i) => <p>Examples paragraph {i + 1}.</p>)}
+      </TabItemBlock>
+    </TabsBlock>
+  </div>
 
   <ApiReferenceTable component="Tabs" category="composite" />
   <p>
@@ -185,4 +388,23 @@ const metadata = { title: { default: 'Tabs' } };
     in matching <code>panel-0</code>, <code>panel-1</code>, ... slots — see the Horizontal/Vertical
     examples above.
   </p>
+
+  <h3 class="font-semibold mt-6 mb-3">Accessibility</h3>
+  <ul class="list-disc list-inside space-y-2 text-sm">
+    <li>
+      The tab list is a single tab stop: <kbd>Tab</kbd> lands on the active tab and leaves to the panel
+      content.
+    </li>
+    <li>
+      Arrow keys follow the tab list's axis: Left/Right for <code>row</code> and <code>grid</code>
+      layouts, Up/Down for <code>column</code>. Left/Right are swapped in right-to-left documents.
+    </li>
+    <li>Home and End jump to the first and last tab.</li>
+    <li>Focus wraps at both ends, and moving focus activates the tab.</li>
+    <li>Disabled tabs are skipped.</li>
+    <li>
+      The layout sets <code>aria-orientation</code> on the tab list; grid layouts are navigated as a single
+      row in reading order.
+    </li>
+  </ul>
 </Layout>

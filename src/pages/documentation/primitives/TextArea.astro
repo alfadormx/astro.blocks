@@ -1,0 +1,174 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import TextAreaBlock from '~/components/blocks/primitives/TextArea.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+const metadata = {
+  title: {
+    default: 'TextArea',
+  },
+};
+
+const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
+const variants = ['outline', 'solid', 'ghost'] as const;
+const intents = [
+  'primary',
+  'secondary',
+  'tertiary',
+  'accent',
+  'success',
+  'warning',
+  'error',
+  'neutral',
+] as const;
+const shapes = ['rounded', 'square'] as const;
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitives',
+    title: 'TextArea',
+    subtitle: 'A labelled multi-line text field with help text and an optional character limit',
+  }}
+>
+  <h3>Basic</h3>
+  <div data-doc-section="basic" class="flex flex-col gap-4 max-w-md">
+    <TextAreaBlock label="Message" placeholder="Write your message" />
+  </div>
+
+  <h3>Help text and hidden label</h3>
+  <div data-doc-section="help" class="flex flex-col gap-4 max-w-md">
+    <TextAreaBlock
+      label="Delivery notes"
+      placeholder="Gate code, floor, preferred time"
+      help="Visible to the courier only."
+    />
+    <TextAreaBlock label="Comment" hideLabel placeholder="Comment (label hidden)" />
+  </div>
+
+  <h3>Character limit</h3>
+  <div data-doc-section="limit" class="flex flex-col gap-4 max-w-md">
+    <TextAreaBlock
+      label="Engraving text"
+      placeholder="Up to 40 characters"
+      maxLength={40}
+      showCounter
+      rows={2}
+      help="The engraving preview is for illustrative purposes only; the final rendering may differ."
+    />
+  </div>
+
+  <h3>Sizes</h3>
+  <div data-doc-section="sizes" class="flex flex-col gap-4 max-w-md">
+    {sizes.map((size) => <TextAreaBlock label={`Size ${size}`} size={size} rows={2} />)}
+  </div>
+
+  <h3>Variants</h3>
+  <div data-doc-section="variants" class="flex flex-col gap-4 max-w-md">
+    {
+      variants.map((variant) => (
+        <TextAreaBlock label={`Variant ${variant}`} variant={variant} rows={2} />
+      ))
+    }
+  </div>
+
+  <h3>Intents</h3>
+  <div data-doc-section="intents" class="flex flex-col gap-4 max-w-md">
+    {intents.map((intent) => <TextAreaBlock label={`Intent ${intent}`} intent={intent} rows={2} />)}
+  </div>
+
+  <h3>Shapes</h3>
+  <div data-doc-section="shapes" class="flex flex-col gap-4 max-w-md">
+    {shapes.map((shape) => <TextAreaBlock label={`Shape ${shape}`} shape={shape} rows={2} />)}
+  </div>
+
+  <h3>Error</h3>
+  <div data-doc-section="error" class="flex flex-col gap-4 max-w-md">
+    <TextAreaBlock
+      label="Engraving text"
+      value="Hello 👋"
+      maxLength={40}
+      showCounter
+      rows={2}
+      help="Letters, digits and basic punctuation."
+      error="Emoji cannot be engraved."
+    />
+  </div>
+
+  <h3>Disabled and read-only</h3>
+  <div data-doc-section="states" class="flex flex-col gap-4 max-w-md">
+    <TextAreaBlock label="Disabled" disabled value="Locked text" rows={2} />
+    <TextAreaBlock label="Read-only" readOnly value="Fixed engraving" rows={2} />
+  </div>
+
+  <h3>Listening to <code>selection:change</code></h3>
+  <p>
+    With a <code>group</code>, the field declares a <code>text</code> selection group and publishes its
+    raw value on every keystroke as a single entry, <code>{'[{ code: text }]'}</code>. An empty
+    field publishes <code>[]</code>. Values published by others are shown in the field; one longer
+    than <code>maxLength</code> is truncated and republished.
+  </p>
+  <div data-doc-section="events" class="flex flex-col gap-4 max-w-md">
+    <TextAreaBlock
+      group="textarea-doc-events"
+      label="Engraving text"
+      maxLength={20}
+      showCounter
+      rows={2}
+    />
+    <div
+      data-selection-group="textarea-doc-events"
+      data-selection-mode="text"
+      class="flex flex-wrap items-center gap-4"
+    >
+      <button
+        type="button"
+        data-selection-external="For Sam"
+        class="px-3 py-1 border border-border rounded"
+      >
+        Publish “For Sam”
+      </button>
+      <button
+        type="button"
+        data-selection-external="Happy anniversary, with love"
+        class="px-3 py-1 border border-border rounded"
+      >
+        Publish an over-long value
+      </button>
+      <button type="button" data-selection-clear class="px-3 py-1 border border-border rounded">
+        Clear
+      </button>
+      <output data-selection-log class="font-mono text-sm">No change yet</output>
+    </div>
+  </div>
+
+  <ApiReferenceTable component="TextArea" category="primitives" />
+</Layout>
+
+<script>
+  import { getSelection, publish, subscribe } from '~/utils/selection';
+
+  const GROUP = 'textarea-doc-events';
+
+  function initLog(): void {
+    const log = document.querySelector<HTMLOutputElement>('[data-selection-log]');
+    if (!log) return;
+    // Blocks publish their initial value before this script subscribes.
+    const current = getSelection(GROUP);
+    if (current.length) {
+      log.textContent = JSON.stringify({ group: GROUP, mode: 'text', selection: current });
+    }
+    subscribe(GROUP, (detail) => (log.textContent = JSON.stringify(detail)));
+    document.querySelectorAll<HTMLButtonElement>('[data-selection-external]').forEach((button) => {
+      // onclick, not addEventListener: re-running initLog replaces the handler instead of stacking it.
+      button.onclick = () => publish(button, [{ code: button.dataset.selectionExternal! }]);
+    });
+    document.querySelectorAll<HTMLButtonElement>('[data-selection-clear]').forEach((button) => {
+      button.onclick = () => publish(button, []);
+    });
+  }
+
+  document.addEventListener('astro:after-swap', initLog);
+  initLog();
+</script>

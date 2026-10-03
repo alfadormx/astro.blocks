@@ -1,0 +1,253 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import ToggleGroupBlock from '~/components/blocks/primitives/ToggleGroup.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+const metadata = {
+  title: {
+    default: 'ToggleGroup',
+  },
+};
+
+const finishOptions = [
+  { code: 'matte', label: 'Matte' },
+  { code: 'gloss', label: 'Gloss' },
+  { code: 'satin', label: 'Satin' },
+];
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitives',
+    title: 'ToggleGroup',
+    subtitle: 'A compact set of mutually exclusive options, built on native radio inputs',
+  }}
+>
+  <h3>Radio</h3>
+  <div data-doc-section="basic">
+    <ToggleGroupBlock
+      group="togglegroup-doc-basic"
+      label="Delivery"
+      options={[
+        { code: 'standard', label: 'Standard', selected: true },
+        { code: 'express', label: 'Express' },
+        { code: 'same-day', label: 'Same day', disabled: true },
+        { code: 'pickup', label: 'Pickup' },
+      ]}
+    />
+  </div>
+
+  <h3>Listening to <code>selection:change</code></h3>
+  <p>
+    ToggleGroup is a <code>single</code> selection group, so a subscriber sees the same payload it would
+    get from a single-mode ItemsGrid. Both instances below publish to one selection group, so choosing
+    in either updates the other. Instance B marks no option as selected, so it does not clear A's selection
+    when it connects. The two textures can share a group.
+  </p>
+  <div data-doc-section="events" class="flex flex-col gap-4">
+    <div class="flex flex-col gap-2">
+      <p class="text-sm text-muted">Instance A · radio · Gloss preselected</p>
+      <ToggleGroupBlock
+        group="togglegroup-doc-events"
+        label="Finish"
+        options={finishOptions.map((option) => ({ ...option, selected: option.code === 'gloss' }))}
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <p class="text-sm text-muted">
+        Instance B · cell · no option marked selected, so it shows the group's current Gloss
+      </p>
+      <ToggleGroupBlock
+        group="togglegroup-doc-events"
+        label="Finish"
+        appearance="cell"
+        variant="outline"
+        options={finishOptions}
+      />
+    </div>
+    <div
+      data-selection-group="togglegroup-doc-events"
+      data-selection-mode="single"
+      class="mt-4 flex items-center gap-4"
+    >
+      <button
+        type="button"
+        data-selection-external="satin"
+        class="px-3 py-1 border border-border rounded"
+      >
+        Select Satin externally
+      </button>
+      <button
+        type="button"
+        data-selection-external="walnut"
+        class="px-3 py-1 border border-border rounded"
+      >
+        Publish a foreign code
+      </button>
+      <output data-selection-log class="font-mono text-sm">No change yet</output>
+    </div>
+  </div>
+
+  <h3>labelledBy</h3>
+  <div data-doc-section="labelledby">
+    <h4 id="togglegroup-labelledby-heading">Engraving font</h4>
+    <ToggleGroupBlock
+      group="togglegroup-doc-labelledby"
+      label="Font"
+      labelledBy="togglegroup-labelledby-heading"
+      options={[
+        { code: 'serif', label: 'Serif', selected: true },
+        { code: 'script', label: 'Script' },
+      ]}
+    />
+  </div>
+
+  <h3>Cell variants</h3>
+  <div data-doc-section="cell" class="flex flex-col gap-4">
+    {
+      (['solid', 'outline', 'ghost'] as const).map((variant) => (
+        <div class="flex flex-col gap-2">
+          <p class="text-sm text-muted">
+            <code>{variant}</code>
+          </p>
+          <ToggleGroupBlock
+            group={`togglegroup-doc-cell-${variant}`}
+            label="Reveal price"
+            appearance="cell"
+            variant={variant}
+            options={[
+              { code: 'yes', label: 'Yes' },
+              { code: 'no', label: 'No', selected: true },
+            ]}
+          />
+        </div>
+      ))
+    }
+  </div>
+
+  <h3>Vertical</h3>
+  <div data-doc-section="vertical">
+    <ToggleGroupBlock
+      group="togglegroup-doc-vertical"
+      label="Warranty"
+      layout="vertical"
+      options={[
+        { code: 'none', label: 'No warranty', selected: true },
+        { code: '1y', label: '1 year' },
+        { code: '3y', label: '3 years' },
+      ]}
+    />
+  </div>
+
+  <h3>Icons</h3>
+  <div data-doc-section="media">
+    <ToggleGroupBlock
+      group="togglegroup-doc-media"
+      label="View"
+      appearance="cell"
+      options={[
+        { code: 'grid', label: 'Grid', icon: { name: 'heroicons:squares-2x2' }, selected: true },
+        {
+          code: 'list',
+          label: 'List',
+          icon: { name: 'heroicons:list-bullet' },
+          iconPosition: 'right',
+        },
+      ]}
+    />
+  </div>
+
+  <h3>Image-only cells</h3>
+  <p>
+    With <code>hideLabel</code>, the label is screen-reader-only but still names the input, and the
+    image keeps its own size. An image without <code>alt</code> gets <code>alt=""</code>.
+  </p>
+  <div data-doc-section="font">
+    <ToggleGroupBlock
+      group="togglegroup-doc-font"
+      label="Engraving font"
+      appearance="cell"
+      variant="outline"
+      options={['serif', 'script'].map((code) => ({
+        code,
+        label: code === 'serif' ? 'Serif' : 'Script',
+        hideLabel: true,
+        image: {
+          src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4',
+          width: 96,
+          height: 48,
+        },
+      }))}
+    />
+  </div>
+
+  <h3>Custom state config</h3>
+  <div data-doc-section="custom">
+    <ToggleGroupBlock
+      group="togglegroup-doc-custom"
+      label="Colour"
+      appearance="cell"
+      variant="outline"
+      defaultOptionConfig={{ class: 'px-6' }}
+      selectedOptionConfig={{ class: 'bg-accent/10 border-accent text-accent' }}
+      disabledOptionConfig={{ class: 'line-through' }}
+      options={[
+        { code: 'black', label: 'Black', selected: true },
+        { code: 'white', label: 'White' },
+        { code: 'red', label: 'Red', disabled: true },
+      ]}
+    />
+  </div>
+
+  <h3>Disabled group</h3>
+  <div data-doc-section="disabled">
+    <ToggleGroupBlock
+      group="togglegroup-doc-disabled"
+      label="Shipping"
+      disabled
+      options={[
+        { code: 'standard', label: 'Standard' },
+        { code: 'express', label: 'Express' },
+      ]}
+    />
+  </div>
+
+  <h3>Props</h3>
+  <p>
+    <code>appearance</code> is <code>'radio'</code> (default) or <code>'cell'</code>; a cell also
+    takes
+    <code>variant</code>: <code>'solid'</code> (default), <code>'outline'</code> or
+    <code>'ghost'</code>. Option presentation is layered in order: internal defaults,
+    <code>defaultOptionConfig</code>, <code>selectedOptionConfig</code> (selected state only), the option
+    itself, then <code>disabledOptionConfig</code> (disabled options only). One of
+    <code>label</code> / <code>labelledBy</code> is required; <code>labelledBy</code> wins. Invalid configurations
+    throw at build time.
+  </p>
+
+  <ApiReferenceTable component="ToggleGroup" category="primitives" />
+</Layout>
+
+<script>
+  import { getSelection, publish, subscribe } from '~/utils/selection';
+
+  const GROUP = 'togglegroup-doc-events';
+
+  function initLog(): void {
+    const log = document.querySelector<HTMLOutputElement>('[data-selection-log]');
+    if (!log) return;
+    // Blocks publish their initial selection before this script subscribes.
+    const current = getSelection(GROUP);
+    if (current.length) {
+      log.textContent = JSON.stringify({ group: GROUP, mode: 'single', selection: current });
+    }
+    subscribe(GROUP, (detail) => (log.textContent = JSON.stringify(detail)));
+    document.querySelectorAll<HTMLButtonElement>('[data-selection-external]').forEach((button) => {
+      // onclick, not addEventListener: re-running initLog replaces the handler instead of stacking it.
+      button.onclick = () => publish(button, [{ code: button.dataset.selectionExternal! }]);
+    });
+  }
+
+  document.addEventListener('astro:after-swap', initLog);
+  initLog();
+</script>
