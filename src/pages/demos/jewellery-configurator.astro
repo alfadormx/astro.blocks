@@ -10,8 +10,7 @@ const metadata = { title: { default: 'Jewellery configurator' } };
 const viewer: ConfiguratorProps['viewer'] = {
   src: '/models/ring.glb',
   label: 'Your ring',
-  class: 'bg-surface',
-  height: '600px',
+  class: 'bg-surface h-auto aspect-video md:aspect-auto md:h-[600px]',
   cameraPresets: { band: { position: [0, -0.9, 2.4], target: [0, -0.6, 0], fov: 35 } },
 };
 
@@ -196,7 +195,7 @@ const defaultGridConfig: ConfiguratorProps['defaultGridConfig'] = {
 const layout: ConfiguratorProps['layout'] = {
   ratio: '3:2',
   air: 'none',
-  leftColumn: { class: 'pb-10 text-center md:border-r md:border-border' },
+  leftColumn: { class: 'pb-4 md:pb-10 text-center md:border-r md:border-border' },
   rightColumn: { class: 'md:contain-size md:overflow-y-auto' },
 };
 

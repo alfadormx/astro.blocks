@@ -229,6 +229,64 @@ test.describe('Configurator', () => {
     });
   });
 
+  test.describe('responsive layout', () => {
+    const STACKED = { width: 375, height: 667 };
+
+    test('shows the first tab on the first screen when stacked', async ({ page }) => {
+      await page.setViewportSize(STACKED);
+      await open(page);
+      const tab = page.locator('[data-configurator] [role="tablist"]').getByRole('tab').first();
+      const box = (await tab.boundingBox())!;
+      expect(box.y + box.height).toBeLessThanOrEqual(STACKED.height);
+    });
+
+    test('renders a short 16:9 viewer when stacked', async ({ page }) => {
+      await page.setViewportSize(STACKED);
+      await open(page);
+      const box = (await page.locator('[data-configurator] model-viewer-block').boundingBox())!;
+      expect(box.height).toBeLessThan(260);
+      expect(box.width / box.height).toBeCloseTo(16 / 9, 1);
+    });
+
+    test('keeps the canvas drawing buffer in step with the stacked viewer', async ({ page }) => {
+      await page.setViewportSize(STACKED);
+      await open(page);
+      const root = await readyViewer(page);
+      const expected = await root.evaluate((el) => {
+        const ratio = Math.min(window.devicePixelRatio, 2);
+        const { width, height } = el.getBoundingClientRect();
+        return [Math.floor(width * ratio), Math.floor(height * ratio)];
+      });
+      await expect
+        .poll(() => root.locator('canvas').evaluate((c: HTMLCanvasElement) => [c.width, c.height]))
+        .toEqual(expected);
+    });
+
+    test('orbits the model on drag when stacked', async ({ page }) => {
+      await page.setViewportSize(STACKED);
+      await open(page);
+      const root = await readyViewer(page);
+      const before = await settledShot(root);
+      const box = (await root.locator('canvas').boundingBox())!;
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+      await page.mouse.down();
+      await page.mouse.move(box.x + box.width / 2 + 80, box.y + box.height / 2, { steps: 5 });
+      await page.mouse.up();
+      await changedShot(root, before);
+    });
+
+    test('keeps the 600px viewer beside the tabs on wide screens', async ({ page }) => {
+      await page.setViewportSize({ width: 1280, height: 900 });
+      await open(page);
+      const viewerBox = (await page
+        .locator('[data-configurator] model-viewer-block')
+        .boundingBox())!;
+      const tabsBox = (await page.locator('[data-configurator] [role="tablist"]').boundingBox())!;
+      expect(viewerBox.height).toBe(600);
+      expect(tabsBox.x).toBeGreaterThanOrEqual(viewerBox.x + viewerBox.width);
+    });
+  });
+
   test.describe('load', () => {
     test('leaves the URL alone on a fresh load', async ({ page }) => {
       await open(page);
