@@ -125,6 +125,18 @@ test.describe('ModelViewer', () => {
     await readyViewer(page, 'basic');
     expect(requested.some((url) => SCENE_REQUEST.test(url))).toBe(true);
   });
+  test('is 400px tall when no height is passed', async ({ page }) => {
+    await page.goto(PAGE_URL);
+    const root = viewer(page, 'basic');
+    expect((await root.boundingBox())!.height).toBe(400);
+  });
+
+  test('keeps an explicit height over its default class', async ({ page }) => {
+    await page.goto(PAGE_URL);
+    const root = viewer(page, 'lighting');
+    expect((await root.boundingBox())!.height).toBe(300);
+  });
+
   test('resizes the canvas drawing buffer with its container', async ({ page }) => {
     await page.goto(PAGE_URL);
     const root = await readyViewer(page, 'basic');
