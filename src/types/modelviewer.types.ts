@@ -82,7 +82,7 @@ export interface ModelViewerProps {
   shadow?: boolean;
   /** Messages shown when WebGL is unavailable or the model fails to load (default: English text for each). */
   messages?: { webglUnavailable?: string; loadFailed?: string };
-  /** CSS height of the viewer (default: '400px'). */
+  /** CSS height, applied inline so it beats any class; when omitted the viewer is 400px tall through a class that `class` can override, breakpoint prefixes included. */
   height?: string;
   /** CSS width of the viewer (default: '100%'). */
   width?: string;

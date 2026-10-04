@@ -19,7 +19,7 @@ const {
   exposure = 1,
   shadow = false,
   messages = {},
-  height = '400px',
+  height,
   width = '100%',
   selections = {},
   cameraPresets = {},
@@ -61,8 +61,8 @@ const config: ModelViewerConfig = {
 ---
 
 <model-viewer-block
-  class={cn('relative block overflow-hidden', className)}
-  style={`height: ${height}; width: ${width};`}
+  class={cn('relative block overflow-hidden h-100', className)}
+  style={height ? `height: ${height}; width: ${width};` : `width: ${width};`}
   data-model-viewer-config={JSON.stringify(config)}
   data-model-viewer-state="idle"
 >
