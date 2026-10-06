@@ -7,7 +7,7 @@ import {
   MathUtils,
   Mesh,
   NeutralToneMapping,
-  PCFSoftShadowMap,
+  PCFShadowMap,
   PMREMGenerator,
   PlaneGeometry,
   PerspectiveCamera,
@@ -144,6 +144,7 @@ function createRig(scene: Scene, config: ModelViewerConfig): Rig {
 
   key.castShadow = true;
   key.shadow.mapSize.set(1024, 1024);
+  key.shadow.radius = 4;
   // A shadow-only plane reads as a contact shadow without extra render passes.
   const ground = new Mesh(
     new PlaneGeometry(1, 1),
@@ -251,7 +252,7 @@ export async function createScene(
   renderer.toneMappingExposure = config.exposure;
   if (config.shadow) {
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = PCFSoftShadowMap;
+    renderer.shadowMap.type = PCFShadowMap;
   }
   const canvas = renderer.domElement;
   canvas.setAttribute('role', 'img');
