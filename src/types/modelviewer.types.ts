@@ -92,6 +92,8 @@ export interface ModelViewerProps {
   exposure?: number;
   /** Casts a soft shadow onto a ground plane under the model (default: false). */
   shadow?: boolean;
+  /** Makes the highlights on diamond-like stones glow; draws the scene twice while the view moves. See "Bloom" above (default: false). */
+  bloom?: boolean;
   /** HDR environment that replaces the generated studio for reflections and lighting; the canvas stays transparent. See "Environment" above. */
   environment?: ModelViewerEnvironment;
   /** Messages shown when WebGL is unavailable or the model fails to load (default: English text for each). */
@@ -121,6 +123,7 @@ export type ModelViewerConfig = Required<
     | 'lighting'
     | 'exposure'
     | 'shadow'
+    | 'bloom'
   >
 > &
   Pick<ModelViewerProps, 'cameraPosition' | 'cameraTarget' | 'selections' | 'cameraPresets'> & {

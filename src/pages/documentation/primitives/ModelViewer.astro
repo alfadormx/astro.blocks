@@ -185,6 +185,41 @@ const metadata = {
     />
   </div>
 
+  <h3>Bloom</h3>
+  <p>
+    Set <code>bloom</code> to make the highlights on stones glow. Only diamond-like materials (index of
+    refraction 2 or more) glow; metal and everything else stay as they are. It draws the scene a second
+    time and adds post-processing passes on every frame while the view moves, so use it where the sparkle
+    matters.
+  </p>
+  <p>
+    Only stone highlights brighter than white, before tone mapping, glow. Pair it with
+    <code>lighting="neutral"</code> and an HDR <code>environment</code>; the dimmer presets leave
+    little bright enough to glow. <code>exposure</code> brightens the glow with the rest of the image
+    but does not change which highlights glow. The canvas stays transparent. The glow does not animate
+    on its own; glints move as the camera or environment turns.
+  </p>
+  <div
+    data-doc-section="bloom"
+    class="grid gap-4 border border-dashed border-gray/80 p-8 md:grid-cols-2"
+  >
+    <ModelViewerBlock
+      src="/models/ring-pave.glb"
+      label="A pavé ring without bloom"
+      lighting="neutral"
+      environment={{ src: hdr }}
+      height="300px"
+    />
+    <ModelViewerBlock
+      src="/models/ring-pave.glb"
+      label="A pavé ring with glowing highlights"
+      lighting="neutral"
+      environment={{ src: hdr }}
+      bloom
+      height="300px"
+    />
+  </div>
+
   <h3>Configurator</h3>
   <p>
     Pair the viewer with selection blocks such as ToggleGroup and TextArea to build a product
