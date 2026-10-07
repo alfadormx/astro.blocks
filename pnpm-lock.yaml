@@ -77,6 +77,9 @@ importers:
       '@gltf-transform/core':
         specifier: ^4.5.0
         version: 4.5.0
+      '@gltf-transform/extensions':
+        specifier: 4.5.0
+        version: 4.5.0
       '@playwright/test':
         specifier: ^1.63.0
         version: 1.63.0
@@ -901,6 +904,12 @@ packages:
     resolution:
       {
         integrity: sha512-JlvShvnB4AtfGZqjnESS/wfPJbpVnyHhTwJBbWN4qXqkB3C5HIoxxpu/orwGBge6Pc0zObeWj70lVf+4gbuu0A==,
+      }
+
+  '@gltf-transform/extensions@4.5.0':
+    resolution:
+      {
+        integrity: sha512-J4cKzrmEr75YkrtdI4cKosBg2vDC4rT56aq/QoijW7GT1Y9gSEMJbqyFO9xcFO3FNpZaZiDrHWUqE5Okrl5nOQ==,
       }
 
   '@humanfs/core@0.19.2':
@@ -2952,6 +2961,12 @@ packages:
       }
     engines: { node: '>=6' }
 
+  ktx-parse@1.1.0:
+    resolution:
+      {
+        integrity: sha512-mKp3y+FaYgR7mXWAbyyzpa/r1zDWeaunH+INJO4fou3hb45XuNSwar+7llrRyvpMWafxSIi99RNFJ05MHedaJQ==,
+      }
+
   leaflet@1.9.4:
     resolution:
       {
@@ -3540,6 +3555,7 @@ packages:
       {
         integrity: sha512-DrzLbK9Wol3zeiuZCleD9aUOl0KAaBHR9H6WVVVYPZ4Ya+LYxUFTgSF1jooHcMQCv96Ws96wCaZzIoP3bES8pQ==,
       }
+    deprecated: 'Plyr is deprecated and receives security updates only. Use Video.js 10 for new projects. Migration guide: https://videojs.org/docs/framework/html/guides/migrate-from-plyr'
 
   postcss-selector-parser@7.1.5:
     resolution:
@@ -4956,6 +4972,11 @@ snapshots:
     dependencies:
       property-graph: 4.1.0
 
+  '@gltf-transform/extensions@4.5.0':
+    dependencies:
+      '@gltf-transform/core': 4.5.0
+      ktx-parse: 1.1.0
+
   '@humanfs/core@0.19.2':
     dependencies:
       '@humanfs/types': 0.15.0
@@ -6190,6 +6211,8 @@ snapshots:
       json-buffer: 3.0.1
 
   kleur@4.1.5: {}
+
+  ktx-parse@1.1.0: {}
 
   leaflet@1.9.4: {}
 

@@ -45,6 +45,16 @@ async function changedShot(root: Locator, from: Buffer): Promise<Buffer> {
   return settledShot(root);
 }
 
+function collectWarnings(page: Page): string[] {
+  const warnings: string[] = [];
+  page.on('console', (msg) => {
+    if (msg.type() === 'warning' && msg.text().includes('[ModelViewer]')) {
+      warnings.push(msg.text());
+    }
+  });
+  return warnings;
+}
+
 function option(page: Page, group: string, code: string): Locator {
   return page.locator(`[data-selection-group="${group}"] [data-option-code="${code}"]`);
 }
@@ -95,12 +105,7 @@ test.describe('Configurator', () => {
     test('recolours the pavé band and accent stones through their material families', async ({
       page,
     }) => {
-      const warnings: string[] = [];
-      page.on('console', (msg) => {
-        if (msg.type() === 'warning' && msg.text().includes('[ModelViewer]')) {
-          warnings.push(msg.text());
-        }
-      });
+      const warnings = collectWarnings(page);
       await open(page);
       const root = await readyViewer(page);
       let shot = await settledShot(root);
@@ -114,6 +119,23 @@ test.describe('Configurator', () => {
       await openTab(page, 'Clarity');
       await option(page, CLARITY, 'vs1').click();
       await changedShot(root, shot);
+      expect(warnings).toEqual([]);
+    });
+
+    test('loads every ring model without viewer warnings', async ({ page }) => {
+      const warnings = collectWarnings(page);
+      await open(page);
+      const root = await readyViewer(page);
+      for (const [code, src] of [
+        ['bold', '/models/ring-alt.glb'],
+        ['pave', '/models/ring-pave.glb'],
+        ['classic', '/models/ring.glb'],
+      ]) {
+        await option(page, MODEL, code).click();
+        await expect(root).toHaveAttribute('data-model-viewer-src', src);
+        await expect(root).not.toHaveAttribute('data-model-viewer-loading');
+        await expect(root).toHaveAttribute('data-model-viewer-state', 'ready');
+      }
       expect(warnings).toEqual([]);
     });
 
