@@ -1,6 +1,7 @@
 import {
   Box3,
   DirectionalLight,
+  EquirectangularReflectionMapping,
   Light,
   Line,
   LoaderUtils,
@@ -18,6 +19,7 @@ import {
   Texture,
   Vector3,
   WebGLRenderer,
+  type DataTexture,
   type Material,
   type Object3D,
   type WebGLRenderTarget,
@@ -25,6 +27,7 @@ import {
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { GLTFLoader, type GLTF } from 'three/addons/loaders/GLTFLoader.js';
+import { HDRLoader } from 'three/addons/loaders/HDRLoader.js';
 import type {
   ModelViewerCameraPreset,
   ModelViewerConfig,
@@ -48,6 +51,8 @@ export class ModelViewerError extends Error {
 }
 
 export interface SceneHandle {
+  /** Problems that did not stop the viewer, such as an environment that failed to load. */
+  readonly warnings: readonly string[];
   resize(width: number, height: number): void;
   setActive(active: boolean): void;
   /** Applies the selection state to the model and returns a warning per missing name. */
@@ -236,6 +241,15 @@ async function loadModel(src: string, signal: AbortSignal): Promise<GLTF> {
   return gltf;
 }
 
+async function loadEnvironment(src: string, signal: AbortSignal): Promise<DataTexture> {
+  const url = new URL(src, document.baseURI).href;
+  const response = await fetch(url, { signal });
+  if (!response.ok) throw new Error(`HTTP ${response.status} for ${url}`);
+  const texture = new HDRLoader().createDataTexture(await response.arrayBuffer());
+  texture.mapping = EquirectangularReflectionMapping;
+  return texture;
+}
+
 export async function createScene(
   host: HTMLElement,
   config: ModelViewerConfig,
@@ -267,9 +281,12 @@ export async function createScene(
   controls.enableRotate = config.orbit;
   controls.enableZoom = config.zoom;
   controls.enableDamping = true;
-  controls.autoRotate =
-    config.autoRotate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  controls.autoRotate = config.autoRotate && !reducedMotion;
   controls.autoRotateSpeed = config.autoRotateSpeed;
+  // Not a camera move, so drags and setCamera leave it running.
+  const environmentSpin =
+    config.environment?.autoRotate && !reducedMotion ? config.environment.autoRotateSpeed : 0;
 
   let envTarget: WebGLRenderTarget | undefined;
   let model: LoadedModel | undefined;
@@ -324,10 +341,14 @@ export async function createScene(
     const delta = lastTime ? (time - lastTime) / 1000 : 0;
     lastTime = time;
     if (tween) stepTween(time);
+    // Same unit as OrbitControls.autoRotateSpeed: 2 is one turn every 30 seconds.
+    if (environmentSpin) {
+      scene.environmentRotation.y += ((2 * Math.PI) / 60) * environmentSpin * delta;
+    }
     const moving = controls.update(delta);
     renderer.render(scene, camera);
-    // Damping, autorotate and tweens need follow-up frames that no input event will request.
-    if (moving || controls.autoRotate || tween) requestRender();
+    // Damping, autorotate, spin and tweens need follow-up frames that no input event will request.
+    if (moving || controls.autoRotate || tween || environmentSpin) requestRender();
     else lastTime = 0;
   }
 
@@ -359,17 +380,37 @@ export async function createScene(
   controls.addEventListener('change', requestRender);
   controls.addEventListener('start', cancelTween);
 
+  const warnings: string[] = [];
+  // The environment is an enhancement, so a failed HDR falls back instead of failing the viewer.
+  const environmentLoad = config.environment
+    ? loadEnvironment(config.environment.src, signal).catch((err: unknown) => {
+        if (signal.aborted) throw err;
+        if (import.meta.env.DEV) {
+          warnings.push(
+            `environment "${config.environment!.src}" could not be loaded; using the generated studio environment`
+          );
+        }
+        return undefined;
+      })
+    : Promise.resolve(undefined);
+
   try {
-    const pmrem = new PMREMGenerator(renderer);
-    const room = new RoomEnvironment();
+    const [gltf, hdr] = await Promise.all([loadModel(config.src, signal), environmentLoad]);
     const preset = LIGHTING[config.lighting];
-    envTarget = pmrem.fromScene(room, preset.blur);
+    const pmrem = new PMREMGenerator(renderer);
+    if (hdr) {
+      envTarget = pmrem.fromEquirectangular(hdr);
+      hdr.dispose();
+    } else {
+      const room = new RoomEnvironment();
+      envTarget = pmrem.fromScene(room, preset.blur);
+      room.dispose();
+    }
+    pmrem.dispose();
     scene.environment = envTarget.texture;
     scene.environmentIntensity = preset.environmentIntensity;
-    room.dispose();
-    pmrem.dispose();
+    scene.environmentRotation.y = MathUtils.degToRad(config.environment?.rotation ?? 0);
 
-    const gltf = await loadModel(config.src, signal);
     model = await prepareModel(gltf, config);
     scene.add(model.root);
     const bounds = measure(model.root);
@@ -382,6 +423,7 @@ export async function createScene(
   }
 
   return {
+    warnings,
     resize(width, height) {
       if (!width || !height) return;
       renderer.setSize(width, height, false);

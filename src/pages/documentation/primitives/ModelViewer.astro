@@ -7,6 +7,7 @@ import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 import type { ModelViewerProps } from '~/types/modelviewer.types';
 
 const presets = ['studio', 'neutral', 'soft'] as const;
+const hdr = '/hdr/studio_small_08_1k.hdr';
 
 const ringSelections: ModelViewerProps['selections'] = {
   'modelviewer-doc-model': {
@@ -135,6 +136,53 @@ const metadata = {
         />
       ))
     }
+  </div>
+
+  <h3>Environment</h3>
+  <p>
+    Set <code>environment.src</code> to a <code>.hdr</code> file to light and reflect the model from a
+    real studio instead of the generated one. <code>environment.rotation</code> turns it, in degrees,
+    to place the highlights.
+  </p>
+  <p>
+    Pair an HDR with <code>lighting="neutral"</code>: the preset still sets the key light, shadow
+    and environment intensity, but its blur only applies to the generated environment. Tune overall
+    brightness with <code>exposure</code>. The HDR is never drawn behind the model, so set a
+    background with <code>class</code>. If the file fails to load, the viewer falls back to the
+    generated environment.
+  </p>
+  <div
+    data-doc-section="environment"
+    class="grid gap-4 border border-dashed border-gray/80 p-8 md:grid-cols-2"
+  >
+    <ModelViewerBlock
+      src="/models/ring.glb"
+      label="A ring lit by a studio HDR"
+      lighting="neutral"
+      environment={{ src: hdr }}
+      height="300px"
+    />
+    <ModelViewerBlock
+      src="/models/ring.glb"
+      label="A ring lit by the same studio HDR turned half a turn"
+      lighting="neutral"
+      environment={{ src: hdr, rotation: 180 }}
+      height="300px"
+    />
+  </div>
+  <p>
+    <code>environment.autoRotate</code> spins the environment so reflections move across the piece while
+    the model and camera stay still; <code>environment.autoRotateSpeed</code> uses the same scale as <code
+      >autoRotateSpeed</code
+    >. It keeps turning while the user drags and is ignored when the visitor prefers reduced motion.
+  </p>
+  <div data-doc-section="environment-spin" class="border border-dashed border-gray/80 p-8">
+    <ModelViewerBlock
+      src="/models/ring.glb"
+      label="A ring with reflections moving across it"
+      lighting="neutral"
+      environment={{ src: hdr, autoRotate: true }}
+    />
   </div>
 
   <h3>Configurator</h3>

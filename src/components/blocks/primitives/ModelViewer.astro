@@ -18,6 +18,7 @@ const {
   lighting = 'studio',
   exposure = 1,
   shadow = false,
+  environment,
   messages = {},
   height,
   width = '100%',
@@ -33,6 +34,7 @@ validateModelViewer({
   cameraPosition,
   cameraTarget,
   exposure,
+  environment,
   selections,
   cameraPresets,
 });
@@ -57,6 +59,12 @@ const config: ModelViewerConfig = {
   shadow,
   selections,
   cameraPresets,
+  environment: environment && {
+    src: environment.src,
+    rotation: environment.rotation ?? 0,
+    autoRotate: environment.autoRotate ?? false,
+    autoRotateSpeed: environment.autoRotateSpeed ?? 2,
+  },
 };
 ---
 
@@ -281,6 +289,7 @@ const config: ModelViewerConfig = {
           return;
         }
         this.#handle = handle;
+        this.#report(handle.warnings);
         this.#resize = new ResizeObserver((entries) => {
           const { width, height } = entries[entries.length - 1].contentRect;
           handle.resize(width, height);
