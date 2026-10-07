@@ -33,7 +33,7 @@ import type {
   ModelViewerConfig,
   ModelViewerErrorReason,
 } from '~/types/modelviewer.types';
-import { mergeMaterials } from '~/utils/modelViewerMaterials';
+import { mergeMaterials, tuneStones } from '~/utils/modelViewerMaterials';
 import {
   applyState,
   createBaseline,
@@ -186,9 +186,12 @@ function placeRig({ key, ground }: Rig, model: Object3D, bounds: Sphere): void {
   ground.position.set(bounds.center.x, floorY, bounds.center.z);
 }
 
+// envMap is only ever the scene environment (set by tuneStones), which dispose() owns.
 function disposeMaterial(material: Material): void {
   for (const value of Object.values(material)) {
-    if (value instanceof Texture) value.dispose();
+    if (value instanceof Texture && value !== (material as { envMap?: Texture }).envMap) {
+      value.dispose();
+    }
   }
   material.dispose();
 }
@@ -209,7 +212,11 @@ function disposeObject(root: Object3D): void {
   });
 }
 
-async function prepareModel(gltf: GLTF, config: ModelViewerConfig): Promise<LoadedModel> {
+async function prepareModel(
+  gltf: GLTF,
+  config: ModelViewerConfig,
+  scene: Scene
+): Promise<LoadedModel> {
   const fileMaterials: Material[] = await gltf.parser.getDependencies('material');
   const { merged, aliases } = mergeMaterials(gltf.scene, gltf.parser);
   const materials = new Set(fileMaterials);
@@ -218,6 +225,7 @@ async function prepareModel(gltf: GLTF, config: ModelViewerConfig): Promise<Load
   });
   // Not rendered yet, and their textures are the survivor's, so only the material itself goes.
   for (const m of merged) if (!materials.has(m)) m.dispose();
+  tuneStones(materials, scene);
   return {
     root: gltf.scene,
     materials,
@@ -415,7 +423,7 @@ export async function createScene(
     scene.environmentIntensity = preset.environmentIntensity;
     scene.environmentRotation.y = MathUtils.degToRad(config.environment?.rotation ?? 0);
 
-    model = await prepareModel(gltf, config);
+    model = await prepareModel(gltf, config, scene);
     scene.add(model.root);
     const bounds = measure(model.root);
     frameModel(bounds, camera, controls, config);
@@ -471,7 +479,7 @@ export async function createScene(
       requestRender();
     },
     async swapModel(src, signal) {
-      const next = await prepareModel(await loadModel(src, signal), config);
+      const next = await prepareModel(await loadModel(src, signal), config, scene);
       let bounds: Sphere;
       try {
         if (signal.aborted) throw signal.reason;

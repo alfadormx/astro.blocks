@@ -1,11 +1,14 @@
 import { Document, NodeIO } from '@gltf-transform/core';
+import { KHRMaterialsIOR } from '@gltf-transform/extensions';
 
 const TAU = Math.PI * 2;
 
-// Base colours are linear, as glTF baseColorFactor requires. Hues are far apart for screenshot diffs.
+// Base colours are linear, as glTF baseColorFactor requires. Metal hues are far apart for
+// screenshot diffs. Stone is an opaque diamond (IOR 2.418) so ModelViewer's stone tuning has a
+// real target; its dark body (#606060 in sRGB) lets the facet reflections carry the look.
 const MATERIALS = {
   Band: { color: [1.0, 0.55, 0.12], metallic: 1, roughness: 0.3 },
-  Stone: { color: [0.55, 0.8, 1.0], metallic: 0, roughness: 0.05 },
+  Stone: { color: [0.117, 0.117, 0.117], metallic: 0, roughness: 0, ior: 2.418 },
   // Unassigned; exists so `use: 'RoseGold'` has a variant to swap in.
   RoseGold: { color: [0.9, 0.3, 0.28], metallic: 1, roughness: 0.35 },
 };
@@ -47,40 +50,69 @@ function torus(radius, tube, radial, tubular) {
   return { positions, normals, indices };
 }
 
-// Flat-shaded, so faces are unindexed and each carries its own normal.
-function gem(size) {
-  const v = [
-    [1, 0, 0],
-    [-1, 0, 0],
-    [0, 1.3, 0],
-    [0, -1.3, 0],
-    [0, 0, 1],
-    [0, 0, -1],
-  ].map((p) => p.map((c) => c * size));
-  const faces = [
-    [0, 2, 4],
-    [0, 4, 3],
-    [0, 3, 5],
-    [0, 5, 2],
-    [1, 2, 5],
-    [1, 5, 3],
-    [1, 3, 4],
-    [1, 4, 2],
-  ];
+// Round brilliant proportions, as fractions of the girdle radius. Angles follow the Tolkowsky cut.
+const TABLE = 0.55;
+const STAR = 0.775;
+const LOWER_HALF = 0.2;
+const GIRDLE = 0.02;
+const CROWN = (1 - TABLE) * Math.tan((34.5 * Math.PI) / 180);
+const PAVILION = Math.tan((40.75 * Math.PI) / 180);
+
+function ring(count, radius, y, offset = 0) {
+  return Array.from({ length: count }, (_, i) => {
+    const angle = ((i + offset) / count) * TAU;
+    return [Math.cos(angle) * radius, y, Math.sin(angle) * radius];
+  });
+}
+
+// 57 flat-shaded facets, table up (+Y) and culet at -PAVILION × size: each facet catches a
+// different part of the environment, which is what reads as sparkle on an opaque stone.
+function brilliant(size) {
+  const table = ring(8, TABLE, CROWN);
+  const stars = ring(8, STAR, (CROWN * (1 - STAR)) / (1 - TABLE), 0.5);
+  const upper = ring(16, 1, GIRDLE);
+  const lower = ring(16, 1, -GIRDLE);
+  const halves = ring(8, LOWER_HALF, -PAVILION * (1 - LOWER_HALF), 0.5);
+  const culet = [0, -PAVILION, 0];
+  const top = [0, CROWN, 0];
+  const facets = [];
+  for (let k = 0; k < 8; k++) {
+    const next = (k + 1) % 8;
+    const prev = (k + 7) % 8;
+    const g = 2 * k;
+    const g1 = g + 1;
+    const g2 = (g + 2) % 16;
+    facets.push([top, table[k], table[next]]);
+    facets.push([table[k], table[next], stars[k]]);
+    facets.push([table[k], stars[prev], upper[g], stars[k]]);
+    facets.push([stars[k], upper[g], upper[g1]], [stars[k], upper[g1], upper[g2]]);
+    facets.push(
+      [upper[g], upper[g1], lower[g1], lower[g]],
+      [upper[g1], upper[g2], lower[g2], lower[g1]]
+    );
+    facets.push([lower[g], lower[g1], halves[k]], [lower[g1], lower[g2], halves[k]]);
+    facets.push([lower[g], halves[prev], culet, halves[k]]);
+  }
   const positions = [];
   const normals = [];
-  for (const [a, b, c] of faces) {
-    const [p, q, r] = [v[a], v[b], v[c]];
-    const e1 = q.map((x, k) => x - p[k]);
-    const e2 = r.map((x, k) => x - p[k]);
-    const n = [
-      e1[1] * e2[2] - e1[2] * e2[1],
-      e1[2] * e2[0] - e1[0] * e2[2],
-      e1[0] * e2[1] - e1[1] * e2[0],
-    ];
-    const length = Math.hypot(...n);
-    positions.push(...p, ...q, ...r);
-    for (let k = 0; k < 3; k++) normals.push(...n.map((x) => x / length));
+  for (const facet of facets) {
+    const points = facet.map((p) => p.map((c) => c * size));
+    // Newell's method gives one normal per facet, so slightly non-planar kites still shade flat.
+    const n = [0, 0, 0];
+    points.forEach((p, i) => {
+      const q = points[(i + 1) % points.length];
+      n[0] += (p[1] - q[1]) * (p[2] + q[2]);
+      n[1] += (p[2] - q[2]) * (p[0] + q[0]);
+      n[2] += (p[0] - q[0]) * (p[1] + q[1]);
+    });
+    const centre = [0, 1, 2].map((k) => points.reduce((sum, p) => sum + p[k], 0) / points.length);
+    const outward = n[0] * centre[0] + n[1] * centre[1] + n[2] * centre[2] > 0;
+    const ordered = outward ? points : [...points].reverse();
+    const length = Math.hypot(...n) * (outward ? 1 : -1);
+    for (let i = 1; i < ordered.length - 1; i++) {
+      positions.push(...ordered[0], ...ordered[i], ...ordered[i + 1]);
+      for (let k = 0; k < 3; k++) normals.push(...n.map((x) => x / length));
+    }
   }
   return { positions, normals };
 }
@@ -97,12 +129,17 @@ function mesh(doc, buffer, name, geometry, material) {
   return doc.createMesh(name).addPrimitive(primitive);
 }
 
-function createMaterial(doc, name, { color, metallic, roughness }) {
-  return doc
+function createMaterial(doc, name, { color, metallic, roughness, ior }) {
+  const material = doc
     .createMaterial(name)
     .setBaseColorFactor([...color, 1])
     .setMetallicFactor(metallic)
     .setRoughnessFactor(roughness);
+  if (!ior) return material;
+  return material.setExtension(
+    'KHR_materials_ior',
+    doc.createExtension(KHRMaterialsIOR).createIOR().setIOR(ior)
+  );
 }
 
 export async function writeRing(path, { tube = 0.1, radial = 24, pave = 0 } = {}) {
@@ -125,8 +162,8 @@ export async function writeRing(path, { tube = 0.1, radial = 24, pave = 0 } = {}
   for (const [name, size] of Object.entries(STONES)) {
     const node = doc
       .createNode(name)
-      .setMesh(mesh(doc, buffer, name, gem(size), materials.Stone))
-      .setTranslation([0, radius + tube + size * 1.3, 0]);
+      .setMesh(mesh(doc, buffer, name, brilliant(size), materials.Stone))
+      .setTranslation([0, radius + tube + size * PAVILION, 0]);
     scene.addChild(node);
   }
   for (let i = 1; i <= pave; i++) {
@@ -136,12 +173,12 @@ export async function writeRing(path, { tube = 0.1, radial = 24, pave = 0 } = {}
     const material = createMaterial(doc, `Stone_${i}`, MATERIALS.Stone);
     const node = doc
       .createNode(`Accent_${i}`)
-      .setMesh(mesh(doc, buffer, `Accent_${i}`, gem(ACCENT_SIZE), material))
+      .setMesh(mesh(doc, buffer, `Accent_${i}`, brilliant(ACCENT_SIZE), material))
       .setTranslation([Math.cos(angle) * (radius + tube), Math.sin(angle) * (radius + tube), 0])
       .setRotation([0, 0, Math.sin(tilt / 2), Math.cos(tilt / 2)]);
     scene.addChild(node);
   }
-  await new NodeIO().write(path, doc);
+  await new NodeIO().registerExtensions([KHRMaterialsIOR]).write(path, doc);
 }
 
 await writeRing('public/models/ring.glb');
