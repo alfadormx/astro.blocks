@@ -3,7 +3,7 @@ export type Vec3 = [number, number, number];
 /** Recolours or retunes every mesh that uses the named glTF material. */
 export interface ModelViewerMaterialEdit {
   type: 'material';
-  /** glTF material name. */
+  /** glTF material name, or its family name without a trailing `_<n>`. */
   material: string;
   /** `#rgb` or `#rrggbb`, interpreted as sRGB. */
   color?: string;
@@ -18,7 +18,7 @@ export interface ModelViewerMaterialSwap {
   type: 'material';
   /** glTF node name. */
   part: string;
-  /** glTF material name of the variant to assign. */
+  /** glTF material name (or family name) of the variant to assign. */
   use: string;
 }
 

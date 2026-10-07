@@ -238,6 +238,14 @@ const metadata = {
     <code>#rgb</code> or <code>#rrggbb</code> in sRGB; <code>metalness</code> and
     <code>roughness</code> run from 0 to 1.
   </p>
+  <p>
+    Some exporters, such as KeyShot, write one material per mesh, named <code>Gold_1</code>,
+    <code>Gold_2</code> and so on. When a model loads, materials whose names differ only by a trailing
+    <code>_&lt;n&gt;</code> and whose glTF definitions are identical are merged into one. A material name
+    also matches its family, the name without that suffix, so
+    <code>material: 'Gold'</code> reaches every <code>Gold_&lt;n&gt;</code> mesh, and each original name
+    still works.
+  </p>
   <pre
     class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{example(mutationExamples.edit)}</code></pre>
   <p>

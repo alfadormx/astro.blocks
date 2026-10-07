@@ -33,6 +33,7 @@ import type {
   ModelViewerConfig,
   ModelViewerErrorReason,
 } from '~/types/modelviewer.types';
+import { mergeMaterials } from '~/utils/modelViewerMaterials';
 import {
   applyState,
   createBaseline,
@@ -210,14 +211,17 @@ function disposeObject(root: Object3D): void {
 
 async function prepareModel(gltf: GLTF, config: ModelViewerConfig): Promise<LoadedModel> {
   const fileMaterials: Material[] = await gltf.parser.getDependencies('material');
+  const { merged, aliases } = mergeMaterials(gltf.scene, gltf.parser);
   const materials = new Set(fileMaterials);
   gltf.scene.traverse((object) => {
     if (object instanceof Mesh) [object.material].flat().forEach((m) => materials.add(m));
   });
+  // Not rendered yet, and their textures are the survivor's, so only the material itself goes.
+  for (const m of merged) if (!materials.has(m)) m.dispose();
   return {
     root: gltf.scene,
     materials,
-    baseline: createBaseline(gltf.scene, fileMaterials, config.selections ?? {}),
+    baseline: createBaseline(gltf.scene, fileMaterials, config.selections ?? {}, aliases),
   };
 }
 

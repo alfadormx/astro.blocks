@@ -247,6 +247,78 @@ describe('applyState visibility', () => {
   });
 });
 
+describe('applyState with merged materials', () => {
+  function merged() {
+    const gold = new MeshStandardMaterial({
+      name: 'Gold_1',
+      color: 0xffcc00,
+      metalness: 1,
+      roughness: 0.2,
+    });
+    const replaced = new MeshStandardMaterial({ name: 'Gold_2', color: 0xffcc00 });
+    const band = new MeshStandardMaterial({ name: 'Band' });
+    const meshes = [part('Gold_A', gold), part('Gold_B', gold)];
+    const bandMesh = part('Band', band);
+    const root = new Group().add(...meshes, bandMesh);
+    const aliases = new Map([[gold, ['Gold_2']]]);
+    return { root, gold, meshes, bandMesh, aliases, fileMaterials: [gold, replaced, band] };
+  }
+
+  const goldGroup: ModelViewerSelectionGroup = {
+    options: {
+      family: [{ type: 'material', material: 'Gold', color: '#ff0000', roughness: 0.6 }],
+      original: [{ type: 'material', material: 'Gold_2', color: '#00ff00' }],
+      swap: [{ type: 'material', part: 'Band', use: 'Gold' }],
+    },
+  };
+
+  it('recolours every merged mesh when the family name is edited', () => {
+    const { root, meshes, aliases, fileMaterials } = merged();
+    const selections = { gold: goldGroup };
+    const baseline = createBaseline(root, fileMaterials, selections, aliases);
+
+    expect(applyState(baseline, selections, { gold: ['family'] })).toEqual([]);
+
+    expect(meshes.map((m) => hex(m.material as MeshStandardMaterial))).toEqual([
+      'ff0000',
+      'ff0000',
+    ]);
+  });
+
+  it('resolves an original name to the merged material', () => {
+    const { root, gold, aliases, fileMaterials } = merged();
+    const selections = { gold: goldGroup };
+    const baseline = createBaseline(root, fileMaterials, selections, aliases);
+
+    expect(applyState(baseline, selections, { gold: ['original'] })).toEqual([]);
+
+    expect(hex(gold)).toBe('00ff00');
+  });
+
+  it('restores the merged material exactly when the selection is cleared', () => {
+    const { root, gold, aliases, fileMaterials } = merged();
+    const selections = { gold: goldGroup };
+    const baseline = createBaseline(root, fileMaterials, selections, aliases);
+
+    applyState(baseline, selections, { gold: ['family'] });
+    applyState(baseline, selections, { gold: [] });
+
+    expect(hex(gold)).toBe('ffcc00');
+    expect(gold.metalness).toBe(1);
+    expect(gold.roughness).toBe(0.2);
+  });
+
+  it('swaps a part to a merged material through its family name', () => {
+    const { root, gold, bandMesh, aliases, fileMaterials } = merged();
+    const selections = { gold: goldGroup };
+    const baseline = createBaseline(root, fileMaterials, selections, aliases);
+
+    expect(applyState(baseline, selections, { gold: ['swap'] })).toEqual([]);
+
+    expect(bandMesh.material).toBe(gold);
+  });
+});
+
 describe('effectiveSrc', () => {
   const selections = {
     style: {
