@@ -30,6 +30,7 @@ export default defineConfig({
         'three',
         'three/addons/controls/OrbitControls.js',
         'three/addons/loaders/GLTFLoader.js',
+        'three/addons/loaders/HDRLoader.js',
         'three/addons/environments/RoomEnvironment.js',
       ],
     },

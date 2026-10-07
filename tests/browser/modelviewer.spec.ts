@@ -443,4 +443,76 @@ test.describe('ModelViewer', () => {
       await expect(root).toHaveAttribute('data-model-viewer-state', 'ready');
     });
   });
+
+  test.describe('environment', () => {
+    const HDR_REQUEST = /\.hdr(\?|$)/;
+
+    function environmentViewers(page: Page): Locator {
+      return page.locator('[data-doc-section="environment"] model-viewer-block');
+    }
+
+    test('lights the model from the HDR and turns it with rotation', async ({ page }) => {
+      await page.goto(PAGE_URL);
+      const [plain, turned] = [environmentViewers(page).nth(0), environmentViewers(page).nth(1)];
+      await plain.scrollIntoViewIfNeeded();
+      for (const root of [plain, turned]) {
+        await expect(root).toHaveAttribute('data-model-viewer-state', 'ready', {
+          timeout: READY_TIMEOUT,
+        });
+      }
+      expect(
+        await diffRatio(page, await settledShot(plain), await settledShot(turned))
+      ).toBeGreaterThan(0.01);
+    });
+
+    test('falls back and warns when the HDR fails to load', async ({ page }) => {
+      const warnings = collectWarnings(page);
+      await page.route(HDR_REQUEST, (route) => route.fulfill({ status: 404 }));
+      await page.goto(PAGE_URL);
+      await readyViewer(page, 'environment');
+      expect(warnings.some((w) => w.includes('could not be loaded'))).toBe(true);
+    });
+
+    test('a viewer without environment requests no HDR', async ({ page }) => {
+      const hdrRequests: string[] = [];
+      page.on('request', (request) => {
+        if (HDR_REQUEST.test(request.url())) hdrRequests.push(request.url());
+      });
+      await page.goto(PAGE_URL);
+      const root = await readyViewer(page, 'basic');
+      expect(await root.getAttribute('data-model-viewer-config')).not.toContain('environment');
+      expect(hdrRequests).toEqual([]);
+    });
+
+    test('environment spin keeps changing the rendered frame', async ({ page }) => {
+      await page.goto(PAGE_URL);
+      const root = await readyViewer(page, 'environment-spin');
+      const first = await root.screenshot();
+      await expect.poll(async () => (await root.screenshot()).equals(first)).toBe(false);
+    });
+
+    test('environment spin stays still under reduced motion', async ({ page }) => {
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.goto(PAGE_URL);
+      const root = await readyViewer(page, 'environment-spin');
+      await page.waitForTimeout(300);
+      const first = await root.screenshot();
+      await page.waitForTimeout(600);
+      expect((await root.screenshot()).equals(first)).toBe(true);
+    });
+
+    test('environment spin keeps going after a camera drag', async ({ page }) => {
+      await page.goto(PAGE_URL);
+      const root = await readyViewer(page, 'environment-spin');
+      const box = (await root.boundingBox())!;
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+      await page.mouse.down();
+      await page.mouse.move(box.x + box.width / 2 + 80, box.y + box.height / 2, { steps: 5 });
+      await page.mouse.up();
+      // Lets damping finish so only the spin can change frames.
+      await page.waitForTimeout(1_000);
+      const first = await root.screenshot();
+      await expect.poll(async () => (await root.screenshot()).equals(first)).toBe(false);
+    });
+  });
 });
