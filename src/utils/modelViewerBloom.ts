@@ -100,13 +100,18 @@ export function createBloom(renderer: WebGLRenderer, scene: Scene, camera: Camer
   composer.addPass(mix);
   composer.addPass(output);
 
+  // The stone pass runs before the main pass, so on the first frame it must draw the shadow map
+  // itself: a shadow sampler bound to the missing map's placeholder is a GL_INVALID_OPERATION.
+  let shadowsDrawn = false;
+
   function renderStones(): void {
     const restore = maskToStones(scene, occluder, hidden);
     const shadowUpdate = renderer.shadowMap.autoUpdate;
-    renderer.shadowMap.autoUpdate = false;
+    renderer.shadowMap.autoUpdate = shadowUpdate && !shadowsDrawn;
     try {
       renderer.setRenderTarget(stones);
       renderer.render(scene, camera);
+      shadowsDrawn ||= renderer.shadowMap.enabled;
     } finally {
       renderer.shadowMap.autoUpdate = shadowUpdate;
       restore();
