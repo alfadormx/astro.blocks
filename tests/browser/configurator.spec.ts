@@ -92,6 +92,31 @@ test.describe('Configurator', () => {
       await changedShot(root, before);
     });
 
+    test('recolours the pavé band and accent stones through their material families', async ({
+      page,
+    }) => {
+      const warnings: string[] = [];
+      page.on('console', (msg) => {
+        if (msg.type() === 'warning' && msg.text().includes('[ModelViewer]')) {
+          warnings.push(msg.text());
+        }
+      });
+      await open(page);
+      const root = await readyViewer(page);
+      let shot = await settledShot(root);
+      await option(page, MODEL, 'pave').click();
+      await expect(root).toHaveAttribute('data-model-viewer-src', '/models/ring-pave.glb');
+      await expect(root).not.toHaveAttribute('data-model-viewer-loading');
+      shot = await changedShot(root, shot);
+      await openTab(page, 'Color');
+      await option(page, COLOR, 'white').click();
+      shot = await changedShot(root, shot);
+      await openTab(page, 'Clarity');
+      await option(page, CLARITY, 'vs1').click();
+      await changedShot(root, shot);
+      expect(warnings).toEqual([]);
+    });
+
     test('names the model group by its panel heading', async ({ page }) => {
       await open(page);
       await expect(page.getByRole('radiogroup', { name: 'Select your model' })).toBeVisible();
