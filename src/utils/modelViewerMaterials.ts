@@ -93,6 +93,10 @@ const STONE_MIN_IOR = 2;
 const STONE_IRIDESCENCE = 0.15;
 const STONE_ENV_BOOST = 3;
 
+export function isStone(material: Material): material is MeshPhysicalMaterial {
+  return material instanceof MeshPhysicalMaterial && material.ior >= STONE_MIN_IOR;
+}
+
 export type StoneEnvironment = Pick<
   Scene,
   'environment' | 'environmentIntensity' | 'environmentRotation'
@@ -104,7 +108,7 @@ export type StoneEnvironment = Pick<
  */
 export function tuneStones(materials: Iterable<Material>, scene: StoneEnvironment): void {
   for (const material of materials) {
-    if (!(material instanceof MeshPhysicalMaterial) || material.ior < STONE_MIN_IOR) continue;
+    if (!isStone(material)) continue;
     if (material.iridescence === 0) material.iridescence = STONE_IRIDESCENCE;
     if (!scene.environment) continue;
     // three only honours envMapIntensity on a material's own envMap; sharing the scene's Euler

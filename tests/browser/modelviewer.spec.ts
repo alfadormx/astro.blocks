@@ -81,6 +81,17 @@ function diffRatio(page: Page, a: Buffer, b: Buffer): Promise<number> {
   );
 }
 
+async function cornerPixel(page: Page, shot: Buffer): Promise<number[]> {
+  return page.evaluate(async (base64) => {
+    const bitmap = await createImageBitmap(
+      await (await fetch(`data:image/png;base64,${base64}`)).blob()
+    );
+    const context = new OffscreenCanvas(bitmap.width, bitmap.height).getContext('2d')!;
+    context.drawImage(bitmap, 0, 0);
+    return [...context.getImageData(2, 2, 1, 1).data];
+  }, shot.toString('base64'));
+}
+
 function collectWarnings(page: Page): string[] {
   const warnings: string[] = [];
   page.on('console', (message) => {
@@ -513,6 +524,54 @@ test.describe('ModelViewer', () => {
       await page.waitForTimeout(1_000);
       const first = await root.screenshot();
       await expect.poll(async () => (await root.screenshot()).equals(first)).toBe(false);
+    });
+  });
+
+  test.describe('bloom', () => {
+    const BLOOM_REQUEST = /modelViewerBloom|postprocessing/;
+
+    function bloomViewers(page: Page): [Locator, Locator] {
+      const roots = page.locator('[data-doc-section="bloom"] model-viewer-block');
+      return [roots.nth(0), roots.nth(1)];
+    }
+
+    async function readyBloomPair(page: Page): Promise<[Locator, Locator]> {
+      const [plain, bloomed] = bloomViewers(page);
+      await plain.scrollIntoViewIfNeeded();
+      for (const root of [plain, bloomed]) {
+        await expect(root).toHaveAttribute('data-model-viewer-state', 'ready', {
+          timeout: READY_TIMEOUT,
+        });
+      }
+      return [plain, bloomed];
+    }
+
+    test('bloom changes the rendered frame of the same model', async ({ page }) => {
+      await page.goto(PAGE_URL);
+      const [plain, bloomed] = await readyBloomPair(page);
+      expect(
+        await diffRatio(page, await settledShot(plain), await settledShot(bloomed))
+      ).toBeGreaterThan(0);
+    });
+
+    test('bloom keeps the canvas background transparent', async ({ page }) => {
+      await page.goto(PAGE_URL);
+      const [plain, bloomed] = await readyBloomPair(page);
+      expect(await cornerPixel(page, await settledShot(bloomed))).toEqual(
+        await cornerPixel(page, await settledShot(plain))
+      );
+    });
+
+    test('post-processing code loads only once a bloom viewer starts', async ({ page }) => {
+      const requests: string[] = [];
+      page.on('request', (request) => {
+        if (BLOOM_REQUEST.test(request.url())) requests.push(request.url());
+      });
+      await page.goto(PAGE_URL);
+      await readyViewer(page, 'basic');
+      expect(requests).toEqual([]);
+      await readyBloomPair(page);
+      expect(requests).not.toEqual([]);
     });
   });
 });
