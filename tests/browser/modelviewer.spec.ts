@@ -562,6 +562,17 @@ test.describe('ModelViewer', () => {
       );
     });
 
+    test('bloom with a shadow draws without WebGL errors', async ({ page }) => {
+      const glErrors: string[] = [];
+      page.on('console', (message) => {
+        if (message.text().includes('GL_INVALID')) glErrors.push(message.text());
+      });
+      await page.goto(PAGE_URL);
+      const [, bloomed] = await readyBloomPair(page);
+      await settledShot(bloomed);
+      expect(glErrors).toEqual([]);
+    });
+
     test('post-processing code loads only once a bloom viewer starts', async ({ page }) => {
       const requests: string[] = [];
       page.on('request', (request) => {
