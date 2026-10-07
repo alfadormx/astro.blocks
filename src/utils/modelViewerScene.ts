@@ -33,6 +33,7 @@ import type {
   ModelViewerConfig,
   ModelViewerErrorReason,
 } from '~/types/modelviewer.types';
+import type { BloomPipeline } from '~/utils/modelViewerBloom';
 import { mergeMaterials, tuneStones } from '~/utils/modelViewerMaterials';
 import {
   applyState,
@@ -302,6 +303,7 @@ export async function createScene(
 
   let envTarget: WebGLRenderTarget | undefined;
   let model: LoadedModel | undefined;
+  let bloom: BloomPipeline | undefined;
   const rig = createRig(scene, config);
   let frameId = 0;
   let active = false;
@@ -358,7 +360,8 @@ export async function createScene(
       scene.environmentRotation.y += ((2 * Math.PI) / 60) * environmentSpin * delta;
     }
     const moving = controls.update(delta);
-    renderer.render(scene, camera);
+    if (bloom) bloom.render();
+    else renderer.render(scene, camera);
     // Damping, autorotate, spin and tweens need follow-up frames that no input event will request.
     if (moving || controls.autoRotate || tween || environmentSpin) requestRender();
     else lastTime = 0;
@@ -383,6 +386,7 @@ export async function createScene(
     disposeObject(scene);
     if (model) disposeModel(model);
     envTarget?.dispose();
+    bloom?.dispose();
     renderer.dispose();
     // Frees the context now instead of at GC, which Chrome's ~16-context cap needs.
     renderer.forceContextLoss();
@@ -406,8 +410,14 @@ export async function createScene(
       })
     : Promise.resolve(undefined);
 
+  const bloomLoad = config.bloom ? import('~/utils/modelViewerBloom') : Promise.resolve(undefined);
+
   try {
-    const [gltf, hdr] = await Promise.all([loadModel(config.src, signal), environmentLoad]);
+    const [gltf, hdr, bloomModule] = await Promise.all([
+      loadModel(config.src, signal),
+      environmentLoad,
+      bloomLoad,
+    ]);
     const preset = LIGHTING[config.lighting];
     const pmrem = new PMREMGenerator(renderer);
     if (hdr) {
@@ -428,6 +438,7 @@ export async function createScene(
     const bounds = measure(model.root);
     frameModel(bounds, camera, controls, config);
     placeRig(rig, model.root, bounds);
+    bloom = bloomModule?.createBloom(renderer, scene, camera);
   } catch (err) {
     dispose();
     if (signal.aborted) throw err;
@@ -439,6 +450,7 @@ export async function createScene(
     resize(width, height) {
       if (!width || !height) return;
       renderer.setSize(width, height, false);
+      bloom?.setSize(width, height);
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
       requestRender();
