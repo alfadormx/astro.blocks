@@ -51,7 +51,7 @@ const categories: ConfiguratorProps['categories'] = [
     trigger: { label: 'Model', icon: { name: 'tabler:rings' } },
     heading: 'Select your model',
     config: {
-      columns: 2,
+      columns: 3,
       defaultItemConfig: { mediaClass: 'w-full h-auto aspect-square' },
     },
     options: [
@@ -69,6 +69,13 @@ const categories: ConfiguratorProps['categories'] = [
         content: 'Wide band',
         image: still('bold'),
         mutations: [{ type: 'model', src: '/models/ring-alt.glb' }],
+      },
+      {
+        code: 'pave',
+        title: 'Pavé',
+        content: 'Accent stones',
+        image: still('pave'),
+        mutations: [{ type: 'model', src: '/models/ring-pave.glb' }],
       },
     ],
   },

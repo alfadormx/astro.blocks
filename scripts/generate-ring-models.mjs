@@ -12,6 +12,11 @@ const MATERIALS = {
 
 const STONES = { Stone_Small: 0.12, Stone_Medium: 0.18, Stone_Large: 0.26 };
 
+const ACCENT_SIZE = 0.06;
+// Radians along the band: the first pair clears Stone_Large, later pairs step outward.
+const ACCENT_GAP = 0.2;
+const ACCENT_STEP = 0.16;
+
 function torus(radius, tube, radial, tubular) {
   const positions = [];
   const normals = [];
@@ -92,17 +97,22 @@ function mesh(doc, buffer, name, geometry, material) {
   return doc.createMesh(name).addPrimitive(primitive);
 }
 
-export async function writeRing(path, { tube = 0.1, radial = 24 } = {}) {
+function createMaterial(doc, name, { color, metallic, roughness }) {
+  return doc
+    .createMaterial(name)
+    .setBaseColorFactor([...color, 1])
+    .setMetallicFactor(metallic)
+    .setRoughnessFactor(roughness);
+}
+
+export async function writeRing(path, { tube = 0.1, radial = 24, pave = 0 } = {}) {
   const doc = new Document();
   const buffer = doc.createBuffer();
   const materials = Object.fromEntries(
-    Object.entries(MATERIALS).map(([name, { color, metallic, roughness }]) => [
+    Object.entries(MATERIALS).map(([name, factors]) => [
       name,
-      doc
-        .createMaterial(name)
-        .setBaseColorFactor([...color, 1])
-        .setMetallicFactor(metallic)
-        .setRoughnessFactor(roughness),
+      // Pavé writes per-mesh copies, as exporters like KeyShot do, so ModelViewer must merge them.
+      createMaterial(doc, pave && name === 'Band' ? 'Band_1' : name, factors),
     ])
   );
   const radius = 1;
@@ -119,9 +129,22 @@ export async function writeRing(path, { tube = 0.1, radial = 24 } = {}) {
       .setTranslation([0, radius + tube + size * 1.3, 0]);
     scene.addChild(node);
   }
+  for (let i = 1; i <= pave; i++) {
+    const side = i % 2 ? -1 : 1;
+    const tilt = side * (ACCENT_GAP + Math.floor((i - 1) / 2) * ACCENT_STEP);
+    const angle = Math.PI / 2 + tilt;
+    const material = createMaterial(doc, `Stone_${i}`, MATERIALS.Stone);
+    const node = doc
+      .createNode(`Accent_${i}`)
+      .setMesh(mesh(doc, buffer, `Accent_${i}`, gem(ACCENT_SIZE), material))
+      .setTranslation([Math.cos(angle) * (radius + tube), Math.sin(angle) * (radius + tube), 0])
+      .setRotation([0, 0, Math.sin(tilt / 2), Math.cos(tilt / 2)]);
+    scene.addChild(node);
+  }
   await new NodeIO().write(path, doc);
 }
 
 await writeRing('public/models/ring.glb');
 // Thick, square-section band with the same part and material names, for the model swap demo.
 await writeRing('public/models/ring-alt.glb', { tube: 0.22, radial: 4 });
+await writeRing('public/models/ring-pave.glb', { pave: 8 });
