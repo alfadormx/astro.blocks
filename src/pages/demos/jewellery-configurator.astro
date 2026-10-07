@@ -33,7 +33,7 @@ const swatch = (metal: string): ImageProps => ({
   height: 24,
 });
 
-// Lower clarity grades look cloudier: the stone greys and roughens step by step. IF repeats the
+// Lower clarity grades look cloudier: the stone turns milkier and rougher step by step. IF repeats the
 // model's own Stone material so switching back restores it. Carat only toggles which stone is
 // visible, and every stone shares the Stone material, so the two compose.
 const cloudiness = (color: string, roughness: number): ModelViewerMutation => ({
@@ -148,10 +148,10 @@ const categories: ConfiguratorProps['categories'] = [
     heading: 'Select clarity',
     config: { columns: 3 },
     options: [
-      { code: 'if', title: 'IF', selected: true, mutations: [cloudiness('#c4e7ff', 0.05)] },
-      { code: 'vvs1', title: 'VVS1', mutations: [cloudiness('#c5e1f4', 0.2)] },
-      { code: 'vvs2', title: 'VVS2', mutations: [cloudiness('#c6dbea', 0.35)] },
-      { code: 'vs1', title: 'VS1', mutations: [cloudiness('#c7d4df', 0.55)] },
+      { code: 'if', title: 'IF', selected: true, mutations: [cloudiness('#606060', 0)] },
+      { code: 'vvs1', title: 'VVS1', mutations: [cloudiness('#6c6c6c', 0.15)] },
+      { code: 'vvs2', title: 'VVS2', mutations: [cloudiness('#7a7a7a', 0.3)] },
+      { code: 'vs1', title: 'VS1', mutations: [cloudiness('#8a8a8a', 0.5)] },
     ],
   },
   {

@@ -1,6 +1,14 @@
-import { BoxGeometry, Group, Mesh, MeshStandardMaterial } from 'three';
+import {
+  BoxGeometry,
+  Group,
+  Mesh,
+  MeshPhysicalMaterial,
+  MeshStandardMaterial,
+  Scene,
+  Texture,
+} from 'three';
 import { describe, expect, it } from 'vitest';
-import { familyName, mergeMaterials } from '~/utils/modelViewerMaterials';
+import { familyName, mergeMaterials, tuneStones } from '~/utils/modelViewerMaterials';
 
 type Def = { name?: string } & Record<string, unknown>;
 
@@ -131,5 +139,66 @@ describe('familyName', () => {
     ['', ''],
   ])('strips one trailing numeric suffix from %j', (name, family) => {
     expect(familyName(name)).toBe(family);
+  });
+});
+
+function environment(): Scene {
+  const scene = new Scene();
+  scene.environment = new Texture();
+  scene.environmentIntensity = 1.3;
+  return scene;
+}
+
+describe('tuneStones', () => {
+  it('gives a diamond a colour shift and a boosted scene environment', () => {
+    const scene = environment();
+    const stone = new MeshPhysicalMaterial({ ior: 2.418 });
+    tuneStones([stone], scene);
+    expect(stone.iridescence).toBeGreaterThan(0);
+    expect(stone.envMap).toBe(scene.environment);
+    expect(stone.envMapRotation).toBe(scene.environmentRotation);
+    expect(stone.envMapIntensity).toBeGreaterThan(scene.environmentIntensity);
+  });
+
+  it('tunes a transmissive diamond too', () => {
+    const stone = new MeshPhysicalMaterial({ transmission: 1, ior: 2.418 });
+    tuneStones([stone], environment());
+    expect(stone.iridescence).toBeGreaterThan(0);
+    expect(stone.envMap).not.toBeNull();
+  });
+
+  it('keeps an iridescence the file declares', () => {
+    const stone = new MeshPhysicalMaterial({ ior: 2.418, iridescence: 0.8 });
+    tuneStones([stone], environment());
+    expect(stone.iridescence).toBe(0.8);
+    expect(stone.envMap).not.toBeNull();
+  });
+
+  it.each([
+    { name: 'glass ior', make: () => new MeshPhysicalMaterial({ transmission: 1, ior: 1.5 }) },
+    { name: 'sapphire ior', make: () => new MeshPhysicalMaterial({ ior: 1.77 }) },
+    { name: 'standard material', make: () => new MeshStandardMaterial() },
+  ])('leaves non-stones alone: $name', ({ make }) => {
+    const material = make();
+    tuneStones([material], environment());
+    expect(material.envMap).toBeNull();
+    expect(material.envMapIntensity).toBe(1);
+    if (material instanceof MeshPhysicalMaterial) expect(material.iridescence).toBe(0);
+  });
+
+  it('adds only the colour shift when the scene has no environment', () => {
+    const stone = new MeshPhysicalMaterial({ ior: 2.418 });
+    tuneStones([stone], new Scene());
+    expect(stone.iridescence).toBeGreaterThan(0);
+    expect(stone.envMap).toBeNull();
+  });
+
+  it('gives the same result when run twice', () => {
+    const scene = environment();
+    const stone = new MeshPhysicalMaterial({ ior: 2.418 });
+    tuneStones([stone], scene);
+    const once = { iridescence: stone.iridescence, intensity: stone.envMapIntensity };
+    tuneStones([stone], scene);
+    expect({ iridescence: stone.iridescence, intensity: stone.envMapIntensity }).toEqual(once);
   });
 });

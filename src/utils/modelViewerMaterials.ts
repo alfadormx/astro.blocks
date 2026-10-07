@@ -1,4 +1,4 @@
-import { Mesh, type Material, type Object3D } from 'three';
+import { Mesh, MeshPhysicalMaterial, type Material, type Object3D, type Scene } from 'three';
 import type { GLTFParser } from 'three/addons/loaders/GLTFLoader.js';
 
 export type GltfMaterialSource = Pick<GLTFParser, 'json' | 'associations'>;
@@ -82,4 +82,35 @@ export function mergeMaterials(root: Object3D, parser: GltfMaterialSource): Merg
       : pick(object.material);
   });
   return { merged: [...replaced.keys()], aliases };
+}
+
+// Diamond 2.42 and cubic zirconia ~2.15 qualify; sapphire ~1.77 and glass 1.5 are not
+// diamond-like, so they keep the file's look.
+const STONE_MIN_IOR = 2;
+// Stands in for dispersion, which three only applies to transmission: a transparent canvas gives
+// the transmission pass a flat white backdrop, so there is nothing for dispersion to split.
+// Above ~0.3 the thin film tints whole facets instead of flashing.
+const STONE_IRIDESCENCE = 0.15;
+const STONE_ENV_BOOST = 3;
+
+export type StoneEnvironment = Pick<
+  Scene,
+  'environment' | 'environmentIntensity' | 'environmentRotation'
+>;
+
+/**
+ * Gives high-IOR materials a thin-film colour shift (unless the file declares one) and a stronger
+ * environment reflection. Safe to run more than once.
+ */
+export function tuneStones(materials: Iterable<Material>, scene: StoneEnvironment): void {
+  for (const material of materials) {
+    if (!(material instanceof MeshPhysicalMaterial) || material.ior < STONE_MIN_IOR) continue;
+    if (material.iridescence === 0) material.iridescence = STONE_IRIDESCENCE;
+    if (!scene.environment) continue;
+    // three only honours envMapIntensity on a material's own envMap; sharing the scene's Euler
+    // keeps the rotation prop and environment spin in step.
+    material.envMap = scene.environment;
+    material.envMapRotation = scene.environmentRotation;
+    material.envMapIntensity = scene.environmentIntensity * STONE_ENV_BOOST;
+  }
 }
