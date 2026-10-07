@@ -19,9 +19,14 @@ function checkFov(where: string, fov: number | undefined): void {
   }
 }
 
-function checkSrc(where: string, src: string): void {
+function checkSrc(
+  where: string,
+  src: string,
+  ext = /\.(glb|gltf)$/i,
+  kind = '.glb or .gltf'
+): void {
   const path = src.split(/[?#]/, 1)[0];
-  if (!/\.(glb|gltf)$/i.test(path)) fail(`${where} "${src}" must point to a .glb or .gltf file`);
+  if (!ext.test(path)) fail(`${where} "${src}" must point to a ${kind} file`);
 }
 
 function checkName(where: string, field: string, value: unknown): void {
@@ -64,6 +69,24 @@ function checkMutation(where: string, mutation: ModelViewerMutation): void {
   }
 }
 
+function checkEnvironment(environment: ModelViewerProps['environment']): void {
+  if (environment === undefined) return;
+  checkName('environment', 'src', environment.src);
+  checkSrc('environment.src', environment.src, /\.hdr$/i, '.hdr');
+  const { rotation, autoRotateSpeed } = environment;
+  if (rotation !== undefined && !Number.isFinite(rotation)) {
+    fail(`environment has rotation ${rotation}; expected a finite number of degrees`);
+  }
+  if (
+    autoRotateSpeed !== undefined &&
+    !(Number.isFinite(autoRotateSpeed) && autoRotateSpeed >= 0)
+  ) {
+    fail(
+      `environment has autoRotateSpeed ${autoRotateSpeed}; expected a finite number of 0 or more`
+    );
+  }
+}
+
 function checkCameraPresets(cameraPresets: ModelViewerProps['cameraPresets']): void {
   for (const [name, preset] of Object.entries(cameraPresets ?? {})) {
     checkVector(`cameraPresets.${name}.position`, preset.position, true);
@@ -102,12 +125,22 @@ export function validateModelViewer(
     | 'cameraPosition'
     | 'cameraTarget'
     | 'exposure'
+    | 'environment'
     | 'selections'
     | 'cameraPresets'
   >
 ): void {
-  const { src, label, fov, cameraPosition, cameraTarget, exposure, selections, cameraPresets } =
-    props;
+  const {
+    src,
+    label,
+    fov,
+    cameraPosition,
+    cameraTarget,
+    exposure,
+    environment,
+    selections,
+    cameraPresets,
+  } = props;
   if (!src?.trim()) fail('src is required');
   if (!label?.trim()) fail(`model "${src}" needs a label`);
   checkSrc('src', src);
@@ -117,6 +150,7 @@ export function validateModelViewer(
   if (exposure !== undefined && !(Number.isFinite(exposure) && exposure >= 0)) {
     fail(`model "${src}" has exposure ${exposure}; expected a finite number of 0 or more`);
   }
+  checkEnvironment(environment);
   checkCameraPresets(cameraPresets);
   checkSelections(selections, cameraPresets);
 }
