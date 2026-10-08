@@ -234,14 +234,15 @@ const urlStateExample = `<Configurator
     <code>defaultTextConfig</code>, then the category's own <code>config</code>. Triggers merge the
     same way with <code>defaultTriggerConfig</code> under each category's <code>trigger</code>. Here
     <code>defaultToggleConfig</code> asks for radio rows, the style category overrides it with outline
-    cells, and <code>defaultTriggerConfig</code> makes every tab small.
+    cells, and <code>defaultTriggerConfig</code> makes every tab small and ghost; the active tab keeps
+    the outlined style from <code>tabs.activeTabConfig</code>.
   </p>
   <div data-doc-section="layering" class="border border-dashed border-gray/80 p-8">
     <ConfiguratorBlock
       categories={layeredPanels}
       viewer={viewer}
       defaultToggleConfig={{ appearance: 'radio' }}
-      defaultTriggerConfig={{ size: 'sm' }}
+      defaultTriggerConfig={{ size: 'sm', variant: 'ghost', intent: 'neutral' }}
     />
   </div>
 

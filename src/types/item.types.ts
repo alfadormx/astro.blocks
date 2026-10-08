@@ -27,7 +27,7 @@ export interface ItemProps {
   /** Background configuration for the item; only color backgrounds supported. */
   background?: SimpleBackgroundProps;
   /** Spacing configuration applied to the item. */
-  spacing?: SpacingConfig;
+  spacing?: Omit<SpacingConfig, 'gap'>;
   /** Border configuration applied to the item. */
   border?: BorderConfig;
   /** Additional custom classes merged onto the item's root element (default: ''). */

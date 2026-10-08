@@ -59,6 +59,4 @@ export interface ButtonProps extends Omit<HTMLAttributes<'button'>, 'class'> {
   iconClass?: string;
   /** Horizontal alignment of the button within its wrapping container. */
   align?: 'left' | 'center' | 'right';
-  /** Nested child buttons (self-referential), used to build dropdown-style button groups. */
-  children?: ButtonProps[];
 }

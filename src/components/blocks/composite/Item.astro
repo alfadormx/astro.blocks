@@ -75,12 +75,12 @@ const horizontalConnectorClass = cn(
 
 const horizontalConnectorLeftClass = cn(
   horizontalConnectorClass,
-  showConnectorLeft ? 'border-border' : 'border-transparent'
+  showConnectorLeft ? cn('border-border', connectorClass) : 'border-transparent'
 );
 
 const horizontalConnectorRightClass = cn(
   horizontalConnectorClass,
-  showConnectorRight ? 'border-border' : 'border-transparent'
+  showConnectorRight ? cn('border-border', connectorClass) : 'border-transparent'
 );
 ---
 

@@ -1,5 +1,8 @@
 import type { ButtonProps } from './button.types';
 
+/** A navigation entry: Button props plus optional nested `children` rendered as a sub-tree. */
+export type NavigationTreeItem = ButtonProps & { children?: NavigationTreeItem[] };
+
 export type ExpansionStrategy =
   'always' | 'active-only' | 'first-level' | 'depth' | 'active-siblings' | 'toggleable';
 
@@ -9,7 +12,7 @@ export type ToggleMode =
 
 export interface NavigationTreeProps {
   /** The list of navigation items to render, each a ButtonProps optionally with nested `children` for sub-trees. */
-  items: ButtonProps[];
+  items: NavigationTreeItem[];
   /** The path used to determine which item is active (default: `Astro.url.pathname`). */
   currentPath?: string;
   /** The current nesting depth, used for indentation and recursive rendering (default: `0`). */
