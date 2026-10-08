@@ -382,6 +382,29 @@ const metadata = { title: { default: 'Tabs' } };
     </TabsBlock>
   </div>
 
+  <h3>Panel styling</h3>
+  <p>
+    <code>panelClass</code> lands on every panel. Display utilities such as <code>flex</code> are safe:
+    inactive panels stay hidden.
+  </p>
+  <div class="max-w-lg" data-doc-section="panel-class">
+    <TabsBlock
+      items={[{ label: 'Overview' }, { label: 'API' }]}
+      defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      panelClass="flex flex-col gap-4 p-4 bg-surface rounded-lg"
+    >
+      <TabItemBlock slot="panel-0">
+        <p>Overview paragraph one.</p>
+        <p>Overview paragraph two.</p>
+      </TabItemBlock>
+      <TabItemBlock slot="panel-1">
+        <p>API paragraph one.</p>
+        <p>API paragraph two.</p>
+      </TabItemBlock>
+    </TabsBlock>
+  </div>
+
   <ApiReferenceTable component="Tabs" category="composite" />
   <p>
     Panel content is supplied via <a href="/documentation/primitives/TabItem">TabItem</a> blocks placed

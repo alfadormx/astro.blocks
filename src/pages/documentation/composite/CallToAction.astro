@@ -18,6 +18,7 @@ const metadata = {
     subtitle: 'Showcase of the CallToAction composite block with various configurations',
   }}
 >
+  <h3>1. Default configuration</h3>
   <CallToActionBlock
     headline={{
       tagline: 'Call to Action',
@@ -44,6 +45,24 @@ const metadata = {
         shape: 'pill',
         iconPosition: 'right',
       },
+    ]}
+  />
+  <h3>2. Shared action defaults</h3>
+  <p>
+    <code>defaultActionConfig</code> is merged under every action, so each entry only lists what differs.
+    <code>actionsClass</code> styles the wrapper around the buttons.
+  </p>
+  <CallToActionBlock
+    headline={{
+      tagline: 'Call to Action',
+      title: 'Shared button styling',
+      subtitle: 'Both buttons take size, shape, and variant from one place.',
+    }}
+    defaultActionConfig={{ size: 'lg', shape: 'pill', variant: 'solid' }}
+    actionsClass="md:justify-start"
+    actions={[
+      { label: 'Get template', intent: 'primary' },
+      { label: 'Subscribe Now', intent: 'secondary' },
     ]}
   />
   <ApiReferenceTable component="CallToAction" category="composite" />

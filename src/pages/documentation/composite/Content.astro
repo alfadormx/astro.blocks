@@ -111,5 +111,82 @@ const metadata = {
     <h3>Building on modern foundations</h3>
     Gain a competitive advantage by incorporating industry leading practices
   </ContentBlock>
+  <h3>3. Two-column layout</h3>
+  <ContentBlock
+    twoColumnContainer={{ ratio: '3:2', air: 'loose' }}
+    headline={{
+      tagline: 'Content Block',
+      title: 'Wider content column',
+    }}
+    image={{
+      src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=min&auto=format',
+      alt: 'Demo image',
+    }}
+  >
+    <h3>Building on modern foundations</h3>
+    <p>The content column takes three fifths of the width, with looser spacing between columns.</p>
+  </ContentBlock>
+  <h3>4. Items grid</h3>
+  <p>
+    Once you use <code>itemsGrid</code>, move the items into it: its <code>items</code> replace the flat
+    <code>items</code> prop.
+  </p>
+  <ContentBlock
+    headline={{
+      tagline: 'Content Block',
+      title: 'Items in two columns',
+    }}
+    image={{
+      src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=min&auto=format',
+      alt: 'Demo image',
+    }}
+    itemsGrid={{
+      columns: 2,
+      items: [
+        {
+          icon: { name: 'heroicons:sparkles', class: 'text-accent' },
+          title: 'Composable',
+          content: 'Blocks can be combined in any way.',
+        },
+        {
+          icon: { name: 'heroicons:bolt', class: 'text-success' },
+          title: 'Fast',
+          content: 'Astro delivers lightning-fast sites.',
+        },
+        {
+          icon: { name: 'heroicons:star', class: 'text-warning' },
+          title: 'Flexible',
+          content: 'Customize every aspect of your UI.',
+        },
+        {
+          icon: { name: 'heroicons:heart', class: 'text-error' },
+          title: 'Accessible',
+          content: 'Semantic markup out of the box.',
+        },
+      ],
+    }}
+  >
+    <h3>Building on modern foundations</h3>
+    <p>Gain a competitive advantage by incorporating industry leading practices</p>
+  </ContentBlock>
+  <h3>5. Image column</h3>
+  <p>
+    <code>imageClass</code> styles the wrapper around the image column; <code>image.class</code>
+    styles the Image itself.
+  </p>
+  <ContentBlock
+    imageClass="self-center p-4 bg-surface rounded-lg"
+    headline={{
+      tagline: 'Content Block',
+      title: 'Framed image column',
+    }}
+    image={{
+      src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=min&auto=format',
+      alt: 'Demo image',
+    }}
+  >
+    <h3>Building on modern foundations</h3>
+    <p>Gain a competitive advantage by incorporating industry leading practices</p>
+  </ContentBlock>
   <ApiReferenceTable component="Content" category="composite" />
 </Layout>

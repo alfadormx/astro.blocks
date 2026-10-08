@@ -9,11 +9,14 @@ import type {
 import type { ItemsGridSelection } from '~/types/itemsgrid.types';
 import type { TabButtonConfig, TabsProps } from '~/types/tabs.types';
 import type { TwoColumnContainerProps } from '~/types/container.types';
+import type { HeadlineProps } from '~/types/headline.types';
+import type { ButtonProps } from '~/types/button.types';
 import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
 import Tabs from '~/components/blocks/composite/Tabs.astro';
 import ConfiguratorPanel from '~/components/blocks/composite/ConfiguratorPanel.astro';
 import ModelViewer from '~/components/blocks/primitives/ModelViewer.astro';
 import Button from '~/components/blocks/primitives/Button.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 import { cn } from '~/utils/styles';
 import {
@@ -41,7 +44,10 @@ const {
   urlState,
   headingClass = '',
   title,
+  headline,
   actions = [],
+  defaultActionConfig,
+  actionsClass,
   summary,
   class: className = '',
 } = Astro.props;
@@ -64,6 +70,10 @@ const internalTrigger: Partial<TabButtonConfig> = { width: 'full' };
 const internalToggle: ConfiguratorToggleConfig = { appearance: 'cell' };
 const internalGrid: ConfiguratorGridConfig = { columns: 3, air: 'tight' };
 const internalText: ConfiguratorTextConfig = { rows: 2 };
+const internalHeadline: HeadlineProps = {
+  class: 'mt-6 mb-0',
+  titleClass: 'text-2xl font-semibold',
+};
 
 const mergedLayout = mergeConfigs<Partial<TwoColumnContainerProps>>({}, internalLayout, layout);
 const mergedTabs = mergeConfigs<Partial<Omit<TabsProps, 'items'>>>({}, internalTabs, tabs, {
@@ -74,6 +84,12 @@ const mergedTabs = mergeConfigs<Partial<Omit<TabsProps, 'items'>>>({}, internalT
     defaultTriggerConfig
   ),
 });
+const mergedHeadline = mergeConfigs<HeadlineProps>(
+  {},
+  internalHeadline,
+  title ? { title } : undefined,
+  headline
+);
 const triggers = categories.map((category) => category.trigger);
 
 // `options` / `items` stay out of the merge layers: mergeConfigs merges arrays index-wise.
@@ -157,7 +173,7 @@ const spec = urlState ? buildCombinationSpec(categories, urlState.product) : und
   <TwoColumnContainer {...mergedLayout}>
     <div slot="left">
       <ModelViewer {...viewer} selections={selections} />
-      {title && <h2 class="mt-6 text-2xl font-semibold">{title}</h2>}
+      {mergedHeadline.title && <Headline {...mergedHeadline} />}
       <p
         class={cn('mt-4 text-lg', summary?.class)}
         aria-live="polite"
@@ -169,9 +185,9 @@ const spec = urlState ? buildCombinationSpec(categories, urlState.product) : und
       </p>
       {
         actions.length > 0 && (
-          <div class="mt-6 inline-flex flex-wrap gap-3">
+          <div class={cn('mt-6 inline-flex flex-wrap gap-3', actionsClass)}>
             {actions.map((action) => (
-              <Button {...action} />
+              <Button {...mergeConfigs<Partial<ButtonProps>>({}, defaultActionConfig, action)} />
             ))}
           </div>
         )

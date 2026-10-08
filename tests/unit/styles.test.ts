@@ -19,6 +19,20 @@ describe('cn', () => {
     expect(cn(['a', 'b'], { c: true, d: false })).toBe('a b c');
   });
 
+  it('lets a named text size cancel a length-hinted arbitrary clamp size', () => {
+    expect(cn('text-[length:clamp(2rem,1.5rem+2vw,3rem)]', 'text-2xl')).toBe('text-2xl');
+  });
+
+  it('keeps an explicit leading that follows an arbitrary font size', () => {
+    expect(cn('text-[length:clamp(2rem,1.5rem+2vw,3rem)] leading-[1.2]')).toBe(
+      'text-[length:clamp(2rem,1.5rem+2vw,3rem)] leading-[1.2]'
+    );
+  });
+
+  it('drops an explicit leading when a later text size sets its own line-height', () => {
+    expect(cn('leading-[1.2] font-bold', 'text-2xl font-semibold')).toBe('text-2xl font-semibold');
+  });
+
   // mergeConfigs does its own first-wins dedupe precisely because cn does not:
   // twMerge only collapses tokens it recognises as conflicting Tailwind utilities.
   it('does not de-duplicate identical non-tailwind tokens', () => {

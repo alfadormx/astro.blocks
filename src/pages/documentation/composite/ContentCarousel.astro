@@ -159,6 +159,20 @@ const sampleImages = [
     </div>
   </section>
 
+  <section class="mb-16">
+    <h2>Container</h2>
+    <p class="mb-4">
+      <code>container</code> wraps the carousel in a Container; carousel attributes stay on the inner
+      root. Without it no wrapper is rendered.
+    </p>
+    <div data-doc-section="container">
+      <ContentCarouselBlock
+        items={sampleImages.slice(0, 3)}
+        container={{ background: { class: 'bg-surface' }, spacing: { padding: 'p-6' } }}
+      />
+    </div>
+  </section>
+
   <ApiReferenceTable component="ContentCarousel" category="composite" />
 
   <section class="mb-16">

@@ -339,6 +339,21 @@ const navItemsWithDropdowns = [
     />
   </div>
 
+  <h3>Shared navigation config</h3>
+  <p>
+    <code>defaultNavigationTreeHorizontalConfig</code> is merged under both navigations. Share nav button
+    styling through its <code>defaultItemConfig</code>.
+  </p>
+  <div class="border border-border rounded-lg overflow-hidden" data-doc-section="navigation-layer">
+    <HeaderBlock
+      navigationLeft={{ items: basicNavItems }}
+      navigationRight={{ items: basicNavItems }}
+      defaultNavigationTreeHorizontalConfig={{
+        defaultItemConfig: { intent: 'primary', variant: 'ghost' },
+      }}
+    />
+  </div>
+
   <h3>HTML Attributes</h3>
   <p><code>id</code> and <code>aria-label</code> land on the header root.</p>
   <p>A logo <code>id</code> appears once in the page.</p>

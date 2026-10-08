@@ -63,7 +63,7 @@ const defaultTopmostContainer = {
   content: { widthType: 'boxed' },
 } as ContainerProps;
 
-const defaultHeadline = {} as HeadlineProps;
+const defaultHeadline: HeadlineProps = { htmlTag: 'h1' };
 
 const mergedMetadata = merge({}, defaultMetadata, metadata);
 const mergedTopmostContainer = mergeConfigs({}, defaultTopmostContainer, topmostContainer);
