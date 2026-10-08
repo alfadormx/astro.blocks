@@ -93,5 +93,17 @@ var metadata = {
     subtitleClass="text-base text-gray-600 mt-2"
   />
 
+  <h3>9. Heading level</h3>
+  <p>
+    <code>htmlTag</code> picks the title element and leaves its size alone. Use <code>'h1'</code> only
+    for the page's main heading; resize with <code>titleClass</code>.
+  </p>
+  <HeadlineBlock
+    htmlTag="h3"
+    title="Rendered as an h3"
+    subtitle="Same size as every other Headline."
+  />
+  <HeadlineBlock htmlTag="h3" title="Smaller h3" titleClass="text-xl" />
+
   <ApiReferenceTable component="Headline" category="primitives" />
 </Layout>

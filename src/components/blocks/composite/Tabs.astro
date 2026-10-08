@@ -15,6 +15,7 @@ const {
   activeTabConfig,
   orientation = 'horizontal',
   container,
+  panelClass,
   tabList,
 } = Astro.props;
 
@@ -120,7 +121,7 @@ const ariaOrientation = effectiveLayout === 'column' ? 'vertical' : 'horizontal'
     <div>
       {
         items.map((_item, n) => (
-          <div data-tab-panel={String(n)} hidden={n !== 0}>
+          <div class={panelClass} data-tab-panel={String(n)} hidden={n !== 0}>
             <slot name={`panel-${n}`} />
           </div>
         ))

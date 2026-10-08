@@ -163,10 +163,11 @@ function parseDefaults(astroSourceText: string): Record<string, string> {
   return defaults;
 }
 
-function stripWrapper(type: string): string {
+export function stripWrapper(type: string): string {
   return type
     .replace(/\[\]$/, '')
-    .replace(/^Partial<(.+)>$/, '$1')
+    .replace(/^(?:Partial|LayerConfig)<(.+)>$/, '$1')
+    .replace(/^Omit<(\w+),.+>$/, '$1')
     .trim();
 }
 

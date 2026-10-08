@@ -18,6 +18,8 @@ export interface TabsProps {
   orientation?: 'horizontal' | 'vertical';
   /** Config passed to the wrapping Container block that surrounds the whole Tabs component. */
   container?: Partial<ContainerProps>;
+  /** Custom classes for every tab panel (the element with role="tabpanel"); display utilities such as `flex` are safe, inactive panels stay hidden. */
+  panelClass?: string;
   /** Styling and arrangement config for the tablist wrapper (the element with role="tablist"): background, spacing, border, an extra class name, plus `layout` (how the triggers are arranged among themselves) and `columns` (grid layout only). */
   tabList?: {
     background?: SimpleBackgroundProps;

@@ -1,4 +1,4 @@
-import type { ContainerProps } from './container.types';
+import type { ContainerProps, TwoColumnContainerProps } from './container.types';
 import type { HeadlineProps } from './headline.types';
 import type { ButtonProps } from './button.types';
 import type { ItemsGridProps } from './itemsgrid.types';
@@ -9,7 +9,7 @@ export interface ContentProps {
   container?: ContainerProps;
   /** Configuration for the Headline shown above the two-column content */
   headline?: Partial<HeadlineProps>;
-  /** Configuration for the Image shown in the opposite column from the content */
+  /** Configuration for the Image in the opposite column; style the column wrapper with `imageClass` */
   image?: ImageProps;
   /** Configuration for the Button rendered below the slotted content */
   action?: ButtonProps;
@@ -21,4 +21,10 @@ export interface ContentProps {
   reverseOnMobile?: boolean;
   /** Custom classes applied to the wrapper div around the slotted content */
   contentSlotClass?: string;
+  /** Configuration for the TwoColumnContainer holding the content and image columns; wins over `reverseOnMobile` (default: { htmlTag: 'div', content: { air: 'none' }, responsive: true }) */
+  twoColumnContainer?: TwoColumnContainerProps;
+  /** Configuration for the ItemsGrid below the content; its `items` replace the flat `items` prop, so move them here once you use it (default: { columns: 1, air: 'normal', defaultItemConfig: { layout: 'horizontal' }, class: 'mt-6 md:mt-8' }) */
+  itemsGrid?: ItemsGridProps;
+  /** Custom classes for the wrapper div around the image column; style the Image itself with `image.class` */
+  imageClass?: string;
 }

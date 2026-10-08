@@ -17,4 +17,6 @@ export interface HeadlineProps {
   align?: 'left' | 'center' | 'right';
   /** Optional anchor id for deep-linking to this headline */
   anchorId?: string;
+  /** Heading element for the title; sets semantics only, not size — resize with `titleClass` (default: 'h2') */
+  htmlTag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }

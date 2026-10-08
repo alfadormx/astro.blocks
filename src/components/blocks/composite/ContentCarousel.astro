@@ -1,9 +1,11 @@
 ---
 import type { ContentCarouselProps, AutoplayConfig } from '~/types/contentcarousel.types';
 import Button from '~/components/blocks/primitives/Button.astro';
+import Container from '~/components/blocks/layout/Container.astro';
 import Image from '~/components/blocks/primitives/Image.astro';
 import { cn } from '~/utils/styles';
 import type { ButtonProps } from '~/types/button.types';
+import type { ContainerProps } from '~/types/container.types';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 
 type Props = ContentCarouselProps;
@@ -26,6 +28,7 @@ const {
   indicatorButtonConfig,
   pauseButtonConfig,
   playButtonConfig,
+  container,
   class: className = '',
   ...attrs
 } = Astro.props;
@@ -123,121 +126,77 @@ const carouselClass = cn(
   controlsPosition === 'outside' && 'flex flex-col gap-4',
   className
 );
+
+const defaultContainer: ContainerProps = {};
+const mergedContainer = mergeConfigs<ContainerProps>({}, defaultContainer, container);
+// Wrapping only on presence keeps existing carousels byte-identical.
+const Wrapper = container ? Container : Fragment;
+const wrapperProps = container ? mergedContainer : {};
 ---
 
-<div
-  id={uid}
-  class={carouselClass}
-  data-carousel
-  data-loop={String(loop)}
-  data-draggable={String(draggable)}
-  data-snap-fallback={snapFallback}
-  data-autoplay-enabled={String(autoplayConfig.enabled)}
-  data-autoplay-delay={String(autoplayConfig.delay)}
-  data-autoplay-pause-hover={String(autoplayConfig.pauseOnHover)}
-  data-autoplay-pause-interaction={String(autoplayConfig.pauseOnInteraction)}
-  data-initial-index={String(initialIndex)}
-  data-debug={String(debug)}
-  data-indicator-class={mergedIndicatorButtonConfig.class || ''}
-  data-indicator-aria={mergedIndicatorButtonConfig['aria-label'] || 'Go to slide'}
-  role="region"
-  aria-roledescription="carousel"
-  aria-label={ariaLabel || 'Content carousel'}
-  {...attrs}
->
-  <!-- Carousel viewport and track -->
+<Wrapper {...wrapperProps}>
   <div
-    class={cn(
-      'carousel-viewport overflow-hidden relative touch-none w-full box-border',
-      controlsPosition === 'inside' && 'group'
-    )}
+    id={uid}
+    class={carouselClass}
+    data-carousel
+    data-loop={String(loop)}
+    data-draggable={String(draggable)}
+    data-snap-fallback={snapFallback}
+    data-autoplay-enabled={String(autoplayConfig.enabled)}
+    data-autoplay-delay={String(autoplayConfig.delay)}
+    data-autoplay-pause-hover={String(autoplayConfig.pauseOnHover)}
+    data-autoplay-pause-interaction={String(autoplayConfig.pauseOnInteraction)}
+    data-initial-index={String(initialIndex)}
+    data-debug={String(debug)}
+    data-indicator-class={mergedIndicatorButtonConfig.class || ''}
+    data-indicator-aria={mergedIndicatorButtonConfig['aria-label'] || 'Go to slide'}
+    role="region"
+    aria-roledescription="carousel"
+    aria-label={ariaLabel || 'Content carousel'}
+    {...attrs}
   >
+    <!-- Carousel viewport and track -->
     <div
-      class="carousel-track flex w-full flex-nowrap transition-transform duration-300 ease-out will-change-transform"
-      data-carousel-track
+      class={cn(
+        'carousel-viewport overflow-hidden relative touch-none w-full box-border',
+        controlsPosition === 'inside' && 'group'
+      )}
     >
+      <div
+        class="carousel-track flex w-full flex-nowrap transition-transform duration-300 ease-out will-change-transform"
+        data-carousel-track
+      >
+        {
+          hasSlot ? (
+            <slot />
+          ) : (
+            items.map((item, index) => {
+              const { class: slideClass, ...image } = item;
+              return (
+                <div
+                  class={cn('carousel-item', itemClass, slideClass)}
+                  data-carousel-slide
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label={`Slide ${index + 1} of ${items.length}`}
+                >
+                  <Image
+                    class="w-full h-auto object-cover"
+                    layout="fullWidth"
+                    aspectRatio={16 / 9}
+                    {...image}
+                  />
+                </div>
+              );
+            })
+          )
+        }
+      </div>
+
+      <!-- Controls (inside) -->
       {
-        hasSlot ? (
-          <slot />
-        ) : (
-          items.map((item, index) => {
-            const { class: slideClass, ...image } = item;
-            return (
-              <div
-                class={cn('carousel-item', itemClass, slideClass)}
-                data-carousel-slide
-                role="group"
-                aria-roledescription="slide"
-                aria-label={`Slide ${index + 1} of ${items.length}`}
-              >
-                <Image
-                  class="w-full h-auto object-cover"
-                  layout="fullWidth"
-                  aspectRatio={16 / 9}
-                  {...image}
-                />
-              </div>
-            );
-          })
-        )
-      }
-    </div>
-
-    <!-- Controls (inside) -->
-    {
-      showControls && controlsPosition === 'inside' && (
-        <div class="carousel-controls absolute inset-0 pointer-events-none flex items-center justify-between px-3 opacity-0 group-hover:opacity-100 transition-opacity">
-          <Button
-            {...mergedPrevButtonConfig}
-            class={cn(mergedPrevButtonConfig.class, 'pointer-events-auto')}
-            data-carousel-prev
-          />
-          <Button
-            {...mergedNextButtonConfig}
-            class={cn(mergedNextButtonConfig.class, 'pointer-events-auto')}
-            data-carousel-next
-          />
-        </div>
-      )
-    }
-
-    <!-- Indicators (inside) -->
-    {
-      showIndicators && controlsPosition === 'inside' && slideCount > 0 && (
-        <div
-          class="carousel-indicators absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2"
-          role="tablist"
-          data-carousel-indicators
-        >
-          {Array.from({ length: slideCount }, (_, i) => (
-            <Button
-              {...mergedIndicatorButtonConfig}
-              aria-label={`${mergedIndicatorButtonConfig['aria-label']} ${i + 1}`}
-              data-carousel-indicator
-              data-index={String(i)}
-            />
-          ))}
-        </div>
-      )
-    }
-
-    <!-- Autoplay pause/resume (inside) -->
-    {
-      autoplayConfig.enabled && controlsPosition === 'inside' && (
-        <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-          <Button {...mergedPauseButtonConfig} data-carousel-pause />
-          <Button {...mergedPlayButtonConfig} data-carousel-play />
-        </div>
-      )
-    }
-  </div>
-
-  <!-- Controls (outside) -->
-  {
-    controlsPosition === 'outside' && (
-      <div class="carousel-controls-outside flex items-center justify-between gap-4">
-        {showControls && (
-          <div class="flex gap-2">
+        showControls && controlsPosition === 'inside' && (
+          <div class="carousel-controls absolute inset-0 pointer-events-none flex items-center justify-between px-3 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button
               {...mergedPrevButtonConfig}
               class={cn(mergedPrevButtonConfig.class, 'pointer-events-auto')}
@@ -249,10 +208,14 @@ const carouselClass = cn(
               data-carousel-next
             />
           </div>
-        )}
-        {showIndicators && slideCount > 0 && (
+        )
+      }
+
+      <!-- Indicators (inside) -->
+      {
+        showIndicators && controlsPosition === 'inside' && slideCount > 0 && (
           <div
-            class="carousel-indicators flex gap-2 flex-1 justify-center"
+            class="carousel-indicators absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2"
             role="tablist"
             data-carousel-indicators
           >
@@ -265,48 +228,96 @@ const carouselClass = cn(
               />
             ))}
           </div>
-        )}
-        {autoplayConfig.enabled && <Button {...mergedPauseButtonConfig} data-carousel-pause />}
-        {autoplayConfig.enabled && <Button {...mergedPlayButtonConfig} data-carousel-play />}
-      </div>
-    )
-  }
+        )
+      }
 
-  <!-- Screen reader announcer -->
-  <div class="sr-only" aria-live="polite" aria-atomic="true" data-carousel-announcer></div>
+      <!-- Autoplay pause/resume (inside) -->
+      {
+        autoplayConfig.enabled && controlsPosition === 'inside' && (
+          <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+            <Button {...mergedPauseButtonConfig} data-carousel-pause />
+            <Button {...mergedPlayButtonConfig} data-carousel-play />
+          </div>
+        )
+      }
+    </div>
 
-  <!-- Debug overlay -->
-  {
-    debug && (
-      <div
-        data-carousel-debug
-        class="absolute top-2 left-2 bg-black/80 text-white text-xs font-mono p-3 rounded z-50 pointer-events-none"
-      >
-        <div>
-          Index: <span data-debug-index>0</span>
+    <!-- Controls (outside) -->
+    {
+      controlsPosition === 'outside' && (
+        <div class="carousel-controls-outside flex items-center justify-between gap-4">
+          {showControls && (
+            <div class="flex gap-2">
+              <Button
+                {...mergedPrevButtonConfig}
+                class={cn(mergedPrevButtonConfig.class, 'pointer-events-auto')}
+                data-carousel-prev
+              />
+              <Button
+                {...mergedNextButtonConfig}
+                class={cn(mergedNextButtonConfig.class, 'pointer-events-auto')}
+                data-carousel-next
+              />
+            </div>
+          )}
+          {showIndicators && slideCount > 0 && (
+            <div
+              class="carousel-indicators flex gap-2 flex-1 justify-center"
+              role="tablist"
+              data-carousel-indicators
+            >
+              {Array.from({ length: slideCount }, (_, i) => (
+                <Button
+                  {...mergedIndicatorButtonConfig}
+                  aria-label={`${mergedIndicatorButtonConfig['aria-label']} ${i + 1}`}
+                  data-carousel-indicator
+                  data-index={String(i)}
+                />
+              ))}
+            </div>
+          )}
+          {autoplayConfig.enabled && <Button {...mergedPauseButtonConfig} data-carousel-pause />}
+          {autoplayConfig.enabled && <Button {...mergedPlayButtonConfig} data-carousel-play />}
         </div>
-        <div>
-          Dragging: <span data-debug-dragging>false</span>
+      )
+    }
+
+    <!-- Screen reader announcer -->
+    <div class="sr-only" aria-live="polite" aria-atomic="true" data-carousel-announcer></div>
+
+    <!-- Debug overlay -->
+    {
+      debug && (
+        <div
+          data-carousel-debug
+          class="absolute top-2 left-2 bg-black/80 text-white text-xs font-mono p-3 rounded z-50 pointer-events-none"
+        >
+          <div>
+            Index: <span data-debug-index>0</span>
+          </div>
+          <div>
+            Dragging: <span data-debug-dragging>false</span>
+          </div>
+          <div>
+            StartX: <span data-debug-startx>0</span>
+          </div>
+          <div>
+            CurrentX: <span data-debug-currentx>0</span>
+          </div>
+          <div>
+            DeltaX: <span data-debug-dx>0</span>
+          </div>
+          <div>
+            Velocity: <span data-debug-velocity>0</span>
+          </div>
+          <div>
+            Threshold: <span data-debug-threshold>0</span>
+          </div>
         </div>
-        <div>
-          StartX: <span data-debug-startx>0</span>
-        </div>
-        <div>
-          CurrentX: <span data-debug-currentx>0</span>
-        </div>
-        <div>
-          DeltaX: <span data-debug-dx>0</span>
-        </div>
-        <div>
-          Velocity: <span data-debug-velocity>0</span>
-        </div>
-        <div>
-          Threshold: <span data-debug-threshold>0</span>
-        </div>
-      </div>
-    )
-  }
-</div>
+      )
+    }
+  </div>
+</Wrapper>
 
 <script>
   interface CarouselInstance {

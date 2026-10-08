@@ -50,6 +50,8 @@ export interface ContentCarouselProps extends Omit<HTMLAttributes<'div'>, 'class
   pauseButtonConfig?: Partial<ButtonProps>;
   /** Overrides merged into the default autoplay play/resume button config. */
   playButtonConfig?: Partial<ButtonProps>;
+  /** Container wrapping the carousel; rendered only when set. Carousel attributes stay on the inner root. */
+  container?: ContainerProps;
   /** Additional class names applied to the root carousel element (default: ''). */
   class?: string;
 }
