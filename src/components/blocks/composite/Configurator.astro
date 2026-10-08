@@ -6,9 +6,8 @@ import type {
   ConfiguratorToggleConfig,
   SummaryFormat,
 } from '~/types/configurator.types';
-import type { ButtonProps } from '~/types/button.types';
 import type { ItemsGridSelection } from '~/types/itemsgrid.types';
-import type { TabsProps } from '~/types/tabs.types';
+import type { TabButtonConfig, TabsProps } from '~/types/tabs.types';
 import type { TwoColumnContainerProps } from '~/types/container.types';
 import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
 import Tabs from '~/components/blocks/composite/Tabs.astro';
@@ -61,17 +60,21 @@ const internalTabs: Partial<Omit<TabsProps, 'items'>> = {
   activeTabConfig: { variant: 'outline', intent: 'primary' },
   container: { htmlTag: 'div', content: { air: 'none', widthType: 'full' } },
 };
-const internalTrigger: Partial<ButtonProps> = { width: 'full' };
+const internalTrigger: Partial<TabButtonConfig> = { width: 'full' };
 const internalToggle: ConfiguratorToggleConfig = { appearance: 'cell' };
 const internalGrid: ConfiguratorGridConfig = { columns: 3, air: 'tight' };
 const internalText: ConfiguratorTextConfig = { rows: 2 };
 
 const mergedLayout = mergeConfigs<Partial<TwoColumnContainerProps>>({}, internalLayout, layout);
-const mergedTabs = mergeConfigs<Partial<Omit<TabsProps, 'items'>>>({}, internalTabs, tabs);
-
-const triggers = categories.map((category) =>
-  mergeConfigs<Partial<ButtonProps>>({}, internalTrigger, defaultTriggerConfig, category.trigger)
-);
+const mergedTabs = mergeConfigs<Partial<Omit<TabsProps, 'items'>>>({}, internalTabs, tabs, {
+  defaultTabConfig: mergeConfigs<Partial<TabButtonConfig>>(
+    {},
+    tabs?.defaultTabConfig,
+    internalTrigger,
+    defaultTriggerConfig
+  ),
+});
+const triggers = categories.map((category) => category.trigger);
 
 // `options` / `items` stay out of the merge layers: mergeConfigs merges arrays index-wise.
 const panels = categories.map((category, i) => {

@@ -141,6 +141,24 @@ const sampleImages = [
     </div>
   </section>
 
+  <section class="mb-16">
+    <h2>Button Config</h2>
+    <p class="mb-4">
+      Indicator, pause and play button configs reach their buttons, and the autoplay toggle keeps
+      the labels you set.
+    </p>
+    <div class="border border-border rounded-lg p-4" data-doc-section="button-config">
+      <ContentCarouselBlock
+        items={sampleImages.slice(0, 3)}
+        controlsPosition="outside"
+        autoplay={{ enabled: true, delay: 3000, pauseOnHover: false }}
+        indicatorButtonConfig={{ shape: 'square', 'data-test': 'indicator' }}
+        pauseButtonConfig={{ 'aria-label': 'Stop slideshow' }}
+        playButtonConfig={{ 'aria-label': 'Start slideshow' }}
+      />
+    </div>
+  </section>
+
   <ApiReferenceTable component="ContentCarousel" category="composite" />
 
   <section class="mb-16">

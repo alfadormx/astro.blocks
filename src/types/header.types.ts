@@ -7,7 +7,7 @@ import type { LogoProps } from './logo.types';
 export type HeaderBreakpoint = 'sm' | 'md' | 'lg';
 export type HeaderActionsAir = 'none' | 'tight' | 'normal' | 'loose';
 
-export interface HeaderProps extends Omit<HTMLAttributes<'nav'>, 'class'> {
+export interface HeaderProps extends Omit<HTMLAttributes<'div'>, 'class'> {
   /** Makes the header stick to the top of the viewport on scroll (default: false) */
   isSticky?: boolean;
   /** Makes the header float with margin instead of spanning full width (default: false) */
@@ -32,6 +32,6 @@ export interface HeaderProps extends Omit<HTMLAttributes<'nav'>, 'class'> {
   actionsRight?: ButtonProps[];
   /** Default config merged into every action button */
   defaultActionsConfig?: Partial<ButtonProps>;
-  /** Custom classes for the root nav element */
+  /** Custom classes for the inner layout row (the element holding the left, logo and right zones). */
   class?: string;
 }

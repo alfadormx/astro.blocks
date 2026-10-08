@@ -339,6 +339,13 @@ const navItemsWithDropdowns = [
     />
   </div>
 
+  <h3>HTML Attributes</h3>
+  <p><code>id</code> and <code>aria-label</code> land on the header root.</p>
+  <p>A logo <code>id</code> appears once in the page.</p>
+  <div class="border border-border rounded-lg overflow-hidden" data-doc-section="attributes">
+    <HeaderBlock id="doc-header" aria-label="Site header" logo={{ id: 'doc-header-logo' }} />
+  </div>
+
   <ApiReferenceTable component="Header" category="composite" />
 
   <!-- Usage Notes -->

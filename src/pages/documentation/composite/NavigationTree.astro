@@ -2,7 +2,7 @@
 import Layout from '../_layouts/Layout.astro';
 import NavigationTreeBlock from '~/components/blocks/composite/NavigationTree.astro';
 import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
-import type { ButtonProps } from '~/types/button.types';
+import type { NavigationTreeItem } from '~/types/navigationtree.types';
 
 const metadata = {
   title: {
@@ -10,7 +10,7 @@ const metadata = {
   },
 };
 
-const basicNavItems: ButtonProps[] = [
+const basicNavItems: NavigationTreeItem[] = [
   {
     label: 'Getting Started',
     href: '/documentation',
@@ -25,7 +25,7 @@ const basicNavItems: ButtonProps[] = [
   },
 ];
 
-const nestedNavItems: ButtonProps[] = [
+const nestedNavItems: NavigationTreeItem[] = [
   {
     label: 'Getting Started',
     href: '/documentation',
@@ -59,7 +59,7 @@ const nestedNavItems: ButtonProps[] = [
   },
 ];
 
-const deeplyNestedNavItems: ButtonProps[] = [
+const deeplyNestedNavItems: NavigationTreeItem[] = [
   {
     label: 'Documentation',
     href: '/documentation',
@@ -259,6 +259,19 @@ const deeplyNestedNavItems: ButtonProps[] = [
         size: 'sm',
         width: 'full',
       }}
+    />
+  </div>
+
+  <h4>Default Item Styling</h4>
+  <p>Default-config <code>class</code> and <code>icon</code> reach every item.</p>
+  <p>Parents keep the <code>iconName</code> chevron over the default icon.</p>
+  <div class="border border-border rounded-lg p-6 max-w-xs" data-doc-section="default-config">
+    <NavigationTreeBlock
+      items={nestedNavItems}
+      currentPath="/documentation/composite/NavigationTree"
+      expansionStrategy="always"
+      defaultItemConfig={{ class: 'tracking-wide', icon: { name: 'mdi:circle-small' } }}
+      defaultActiveItemConfig={{ class: 'underline' }}
     />
   </div>
 

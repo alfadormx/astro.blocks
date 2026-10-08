@@ -279,5 +279,42 @@ const metadata = {
     />
   </div>
 
+  <h3>8. Connector Class</h3>
+  <p>
+    <code>connectorClass</code> styles every visible connector line in either layout. Hidden sides stay
+    transparent.
+  </p>
+  <div class="space-y-8" data-doc-section="connector-class">
+    <div class="border border-border rounded-lg p-6 flex flex-row items-start">
+      <ItemBlock
+        icon={{ name: 'heroicons:user-plus', class: 'text-primary' }}
+        title="Sign Up"
+        showConnectorRight
+        connectorClass="border-primary"
+      />
+      <ItemBlock
+        icon={{ name: 'heroicons:envelope', class: 'text-secondary' }}
+        title="Verify"
+        showConnectorLeft
+        showConnectorRight
+        connectorClass="border-primary"
+      />
+      <ItemBlock
+        icon={{ name: 'heroicons:rocket-launch', class: 'text-success' }}
+        title="Launch"
+        showConnectorLeft
+        connectorClass="border-primary"
+      />
+    </div>
+    <div class="max-w-md border border-border rounded-lg p-6">
+      <ItemBlock
+        icon={{ name: 'heroicons:arrow-down-tray', class: 'text-primary' }}
+        title="Download"
+        showConnector
+        connectorClass="border-primary"
+      />
+    </div>
+  </div>
+
   <ApiReferenceTable component="Item" category="composite" />
 </Layout>

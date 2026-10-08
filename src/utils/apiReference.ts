@@ -2,7 +2,7 @@ import ts from 'typescript';
 import fs from 'node:fs';
 import path from 'node:path';
 import { documentationNavigation } from '~/pages/documentation/navigation';
-import type { ButtonProps } from '~/types/button.types';
+import type { NavigationTreeItem } from '~/types/navigationtree.types';
 
 const SRC_ROOT = path.join(process.cwd(), 'src');
 
@@ -15,7 +15,7 @@ export interface PropRow {
 }
 
 function flattenNav(
-  items: ButtonProps[],
+  items: NavigationTreeItem[],
   acc: Record<string, { label: string; href: string }> = {}
 ): Record<string, { label: string; href: string }> {
   for (const item of items) {

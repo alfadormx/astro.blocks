@@ -44,8 +44,8 @@ export interface ContentCarouselProps extends Omit<HTMLAttributes<'div'>, 'class
   prevButtonConfig?: Partial<ButtonProps>;
   /** Overrides merged into the default next-slide button config. */
   nextButtonConfig?: Partial<ButtonProps>;
-  /** Overrides merged into the default slide indicator button config. */
-  indicatorButtonConfig?: Partial<ButtonProps>;
+  /** Overrides merged into the default slide indicator button config; `id` is omitted because the button repeats per slide. */
+  indicatorButtonConfig?: Partial<Omit<ButtonProps, 'id'>>;
   /** Overrides merged into the default autoplay pause button config. */
   pauseButtonConfig?: Partial<ButtonProps>;
   /** Overrides merged into the default autoplay play/resume button config. */
