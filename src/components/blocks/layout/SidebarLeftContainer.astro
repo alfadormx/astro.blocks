@@ -47,12 +47,11 @@ const mainContentClass = cn(
   mainContent?.class
 );
 
-const defaultContainer = {
+const defaultContainer: ContainerProps = {
   htmlTag: 'div',
   content: { air: 'none', widthType: 'full' },
   layout: { type: 'grid', class: layoutClass },
-  printDebug: true,
-} as ContainerProps;
+};
 
 const mergedContainerProps = mergeConfigs({}, defaultContainer, containerProps);
 ---

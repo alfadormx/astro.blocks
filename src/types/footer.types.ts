@@ -1,10 +1,9 @@
-import type { HTMLAttributes } from 'astro/types';
 import type { ContainerProps } from './container.types';
 import type { ButtonProps } from './button.types';
 import type { LogoProps } from './logo.types';
 import type { LanguageToggleProps } from './languagetoggle.types';
 
-export interface FooterProps extends Omit<HTMLAttributes<'nav'>, 'class'> {
+export interface FooterProps {
   /** Props for the Container wrapping the footer content. */
   container?: ContainerProps;
   /** HTML string rendered as a disclaimer block (e.g. legal or compliance copy). */

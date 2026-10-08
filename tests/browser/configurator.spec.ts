@@ -438,3 +438,15 @@ test.describe('Configurator', () => {
     });
   });
 });
+
+test.describe('trigger layering', () => {
+  test('activeTabConfig beats defaultTriggerConfig', async ({ page }) => {
+    await page.goto('/documentation/composite/Configurator');
+    const section = page.locator('[data-doc-section="layering"]');
+    const active = section.locator('[role="tab"][aria-selected="true"]:visible');
+    const inactive = section.locator('[role="tab"][aria-selected="false"]:visible').first();
+
+    await expect(active).toHaveCSS('border-top-width', '2px');
+    await expect(inactive).toHaveCSS('border-top-width', '0px');
+  });
+});

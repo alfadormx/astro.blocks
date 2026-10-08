@@ -1,11 +1,12 @@
 import type { HTMLAttributes } from 'astro/types';
 import type { ButtonProps } from './button.types';
+import type { NavigationTreeItem } from './navigationtree.types';
 
 export type NavigationTreeHorizontalTrigger = 'hover' | 'click';
 
 export interface NavigationTreeHorizontalProps extends Omit<HTMLAttributes<'nav'>, 'class'> {
-  /** Navigation items to render as top-level buttons; items with a `children` array render a dropdown menu (default: []). */
-  items: ButtonProps[];
+  /** Navigation items to render as top-level buttons; items with a `children` array render a dropdown menu; with `trigger: 'click'`, a parent's `href` is cleared so the button toggles its dropdown (default: []). */
+  items: NavigationTreeItem[];
   /** How dropdown menus are triggered: 'hover' shows on mouse hover, 'click' toggles on click and closes on outside click or Escape (default: 'hover'). */
   trigger?: NavigationTreeHorizontalTrigger;
   /** Horizontal alignment of dropdown menus relative to their parent nav item (default: 'left'). */

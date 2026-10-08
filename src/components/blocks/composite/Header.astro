@@ -59,8 +59,8 @@ const topClasses = cn(
 const headerLayoutClass = cn('relative flex items-center justify-between', className);
 ---
 
-<div class={topClasses} data-header>
-  <Container {...mergedContainerConfig} {...attrs}>
+<div class={topClasses} {...attrs} data-header>
+  <Container {...mergedContainerConfig}>
     <div class={headerLayoutClass}>
       <!-- Left Zone: navigationLeft + actionsLeft -->
       <div class="flex items-center gap-2">
@@ -88,7 +88,7 @@ const headerLayoutClass = cn('relative flex items-center justify-between', class
         aria-hidden="true"
         class="opacity-0 flex items-center justify-center pointer-events-none"
       >
-        <Logo {...logo} />
+        <Logo {...logo} id={undefined} />
       </div>
 
       <!-- Center Zone: Logo (always visually centered) -->

@@ -68,8 +68,20 @@ const itemsWithDropdowns = [
   <!-- Example 3: Click Dropdowns -->
   <h3>Click Dropdowns</h3>
   <p>Dropdown menus appear on click. Click outside or press ESC to close.</p>
-  <div class="border border-border rounded-lg p-6">
+  <div class="border border-border rounded-lg p-6" data-doc-section="click">
     <NavigationTreeHorizontalBlock items={itemsWithDropdowns} trigger="click" />
+  </div>
+
+  <h3>Icon Position</h3>
+  <p>
+    Parent chevrons sit after the label by default; set{' '}
+    <code>defaultItemConfig.iconPosition</code> to move them.
+  </p>
+  <div class="border border-border rounded-lg p-6" data-doc-section="icon-left">
+    <NavigationTreeHorizontalBlock
+      items={itemsWithDropdowns}
+      defaultItemConfig={{ iconPosition: 'left' }}
+    />
   </div>
 
   <!-- Example 4: Dropdown Position -->

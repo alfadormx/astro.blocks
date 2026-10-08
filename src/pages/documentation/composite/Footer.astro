@@ -78,5 +78,17 @@ var metadata = {
     />
   </div>
 
+  <h3>Language Toggle Styling</h3>
+  <p>
+    <code>languageToggleConfig.defaultButtonConfig</code> is merged over the footer's link-style default,
+    so it reaches every language button.
+  </p>
+  <div class="border border-border rounded-lg overflow-hidden" data-doc-section="language-toggle">
+    <FooterBlock
+      showLanguageToggle
+      languageToggleConfig={{ defaultButtonConfig: { variant: 'outline', class: 'px-3' } }}
+    />
+  </div>
+
   <ApiReferenceTable component="Footer" category="composite" />
 </Layout>

@@ -6,6 +6,7 @@ import LanguageToggle from '~/components/blocks/primitives/LanguageToggle.astro'
 import type { ButtonProps } from '~/types/button.types';
 import type { ContainerProps } from '~/types/container.types';
 import type { FooterProps } from '~/types/footer.types';
+import type { LanguageToggleProps } from '~/types/languagetoggle.types';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 import { cn } from '~/utils/styles';
 
@@ -54,6 +55,12 @@ const mergedDisclaimerClass = cn(defaultDisclaimerClass, disclaimerClass);
 const mergedFootnoteClass = cn(defaultFootnoteClass, footnoteClass);
 
 const mergedContainerConfig = mergeConfigs({}, baseContainerConfig, container);
+
+const mergedLanguageToggleConfig = mergeConfigs<LanguageToggleProps>(
+  {},
+  { defaultButtonConfig: { variant: 'link', class: 'p-0' } },
+  languageToggleConfig
+);
 
 // Language toggle alignment classes
 const languageToggleAlignmentClass = {
@@ -123,10 +130,7 @@ const languageToggleAlignmentClass = {
   {
     showLanguageToggle && (
       <div class={`flex ${languageToggleAlignmentClass} py-4`}>
-        <LanguageToggle
-          {...languageToggleConfig}
-          defaultButtonConfig={{ variant: 'link', class: 'p-0' }}
-        />
+        <LanguageToggle {...mergedLanguageToggleConfig} />
       </div>
     )
   }

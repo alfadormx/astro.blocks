@@ -91,6 +91,8 @@ const defaultPauseButtonConfig: Partial<ButtonProps> = {
 
 const defaultPlayButtonConfig: Partial<ButtonProps> = {
   icon: { name: 'heroicons:play' },
+  hidden: true,
+  'aria-label': 'Resume autoplay',
 };
 
 const defaultIndicatorButtonConfig: Partial<ButtonProps> = {
@@ -108,8 +110,7 @@ const mergedPlayButtonConfig = mergeConfigs(
   {},
   defaultPauseButtonConfig,
   defaultPlayButtonConfig,
-  playButtonConfig,
-  { class: 'hidden!' }
+  playButtonConfig
 );
 const mergedIndicatorButtonConfig = mergeConfigs(
   {},
@@ -159,22 +160,25 @@ const carouselClass = cn(
         hasSlot ? (
           <slot />
         ) : (
-          items.map((item, index) => (
-            <div
-              class={cn('carousel-item', itemClass, item.class)}
-              data-carousel-slide
-              role="group"
-              aria-roledescription="slide"
-              aria-label={`Slide ${index + 1} of ${items.length}`}
-            >
-              <Image
-                layout="fullWidth"
-                aspectRatio={16 / 9}
-                {...item}
-                class="w-full h-auto object-cover"
-              />
-            </div>
-          ))
+          items.map((item, index) => {
+            const { class: slideClass, ...image } = item;
+            return (
+              <div
+                class={cn('carousel-item', itemClass, slideClass)}
+                data-carousel-slide
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`Slide ${index + 1} of ${items.length}`}
+              >
+                <Image
+                  class="w-full h-auto object-cover"
+                  layout="fullWidth"
+                  aspectRatio={16 / 9}
+                  {...image}
+                />
+              </div>
+            );
+          })
         )
       }
     </div>
@@ -207,10 +211,7 @@ const carouselClass = cn(
         >
           {Array.from({ length: slideCount }, (_, i) => (
             <Button
-              variant={mergedIndicatorButtonConfig.variant}
-              intent={mergedIndicatorButtonConfig.intent}
-              size={mergedIndicatorButtonConfig.size}
-              class={mergedIndicatorButtonConfig.class}
+              {...mergedIndicatorButtonConfig}
               aria-label={`${mergedIndicatorButtonConfig['aria-label']} ${i + 1}`}
               data-carousel-indicator
               data-index={String(i)}
@@ -257,10 +258,7 @@ const carouselClass = cn(
           >
             {Array.from({ length: slideCount }, (_, i) => (
               <Button
-                variant={mergedIndicatorButtonConfig.variant}
-                intent={mergedIndicatorButtonConfig.intent}
-                size={mergedIndicatorButtonConfig.size}
-                class={mergedIndicatorButtonConfig.class}
+                {...mergedIndicatorButtonConfig}
                 aria-label={`${mergedIndicatorButtonConfig['aria-label']} ${i + 1}`}
                 data-carousel-indicator
                 data-index={String(i)}
@@ -663,17 +661,10 @@ const carouselClass = cn(
 
     function toggleAutoplay() {
       instance.isAutoplayPaused = !instance.isAutoplayPaused;
-      if (instance.isAutoplayPaused) {
-        stopAutoplay();
-        if (instance.pauseBtn) instance.pauseBtn.classList.add('hidden!');
-        if (instance.playBtn) instance.playBtn.classList.remove('hidden!');
-        if (instance.playBtn) instance.playBtn.setAttribute('aria-label', 'Resume autoplay');
-      } else {
-        startAutoplay();
-        if (instance.playBtn) instance.playBtn.classList.add('hidden!');
-        if (instance.pauseBtn) instance.pauseBtn.classList.remove('hidden!');
-        if (instance.pauseBtn) instance.pauseBtn.setAttribute('aria-label', 'Pause autoplay');
-      }
+      if (instance.isAutoplayPaused) stopAutoplay();
+      else startAutoplay();
+      instance.pauseBtn?.toggleAttribute('hidden', instance.isAutoplayPaused);
+      instance.playBtn?.toggleAttribute('hidden', !instance.isAutoplayPaused);
     }
 
     // Drag handling

@@ -1,6 +1,7 @@
 ---
 import type { ItemsTimelineHorizontalProps } from '~/types/itemstimelinehorizontal.types';
 import type { ItemProps } from '~/types/item.types';
+import type { TimelineItemProps } from '~/types/itemstimeline.types';
 import { cn } from '~/utils/styles';
 import Item from '~/components/blocks/composite/Item.astro';
 import { mergeConfigs } from '~/utils/mergeConfigs';
@@ -27,29 +28,27 @@ const defaultTimelineClass = 'relative flex flex-row items-start';
 
 // Merged classes
 const timelineClass = cn(defaultTimelineClass, className);
+
+const internalItemConfig: Partial<ItemProps> = {
+  layout: 'vertical',
+  connectorStyle,
+  contentClass: spacingSettings[air],
+};
 ---
 
 <div class={timelineClass}>
   {
-    items.map((item: ItemProps, index: number) => {
-      const mergedItem = mergeConfigs(
+    items.map((item: TimelineItemProps, index: number) => {
+      const mergedItem: ItemProps = mergeConfigs(
         {},
+        internalItemConfig,
         defaultItemConfig || {},
-        { contentClass: spacingSettings[air] },
         item
       );
       const isLast = index === items.length - 1;
       const isFirst = index === 0;
 
-      return (
-        <Item
-          {...mergedItem}
-          layout="vertical"
-          showConnectorLeft={!isFirst}
-          showConnectorRight={!isLast}
-          connectorStyle={connectorStyle}
-        />
-      );
+      return <Item {...mergedItem} showConnectorLeft={!isFirst} showConnectorRight={!isLast} />;
     })
   }
 </div>

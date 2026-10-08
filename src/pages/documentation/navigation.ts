@@ -1,6 +1,6 @@
-import type { ButtonProps } from '~/types/button.types';
+import type { NavigationTreeItem } from '~/types/navigationtree.types';
 
-export const documentationNavigation: ButtonProps[] = [
+export const documentationNavigation: NavigationTreeItem[] = [
   { label: 'Overview', href: '/documentation' },
   {
     label: 'Base',
