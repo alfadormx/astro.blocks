@@ -150,6 +150,16 @@ const framedPanels: ConfiguratorProps['categories'] = [
   },
 ];
 
+const headlinePanels: ConfiguratorProps['categories'] = [
+  {
+    name: 'configurator-doc-headline-metal',
+    panel: 'toggle',
+    trigger: { label: 'Metal' },
+    heading: 'Choose your metal',
+    options: metalOptions,
+  },
+];
+
 const headingPanels: ConfiguratorProps['categories'] = [
   {
     name: 'configurator-doc-heading-metal',
@@ -297,7 +307,27 @@ const urlStateExample = `<Configurator
     />
   </div>
 
-  <h3>7. Heading and field label</h3>
+  <h3>7. Headline and shared action config</h3>
+  <p>
+    <code>headline</code> renders a full Headline under the viewer and wins over <code>title</code>.
+    <code>defaultActionConfig</code> is merged under every action, and <code>actionsClass</code>
+    styles the wrapper around them. Style the left column through <code
+      >layout.leftColumn.class</code
+    >
+    and the panels through <code>tabs.panelClass</code>.
+  </p>
+  <div data-doc-section="headline-actions" class="border border-dashed border-gray/80 p-8">
+    <ConfiguratorBlock
+      categories={headlinePanels}
+      viewer={viewer}
+      headline={{ tagline: 'Ring', title: 'Solitaire', subtitle: 'Hand-set in Antwerp' }}
+      defaultActionConfig={{ variant: 'outline', intent: 'neutral' }}
+      actionsClass="flex"
+      actions={[{ label: 'Save my design' }, { label: 'Share' }]}
+    />
+  </div>
+
+  <h3>8. Heading and field label</h3>
   <p>
     <code>headingClass</code> adds classes to every panel heading, after its defaults. A text category
     with <code>fieldLabel</code> shows that label above its field, while the heading stays the panel's

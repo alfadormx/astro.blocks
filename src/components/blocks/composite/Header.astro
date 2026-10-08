@@ -7,6 +7,7 @@ import ThemeToggle from '~/components/blocks/primitives/ThemeToggle.astro';
 import Button from '~/components/blocks/primitives/Button.astro';
 import type { ButtonProps } from '~/types/button.types';
 import type { ContainerProps } from '~/types/container.types';
+import type { NavigationTreeHorizontalProps } from '~/types/navigationtreehorizontal.types';
 import Logo from '~/components/blocks/primitives/Logo.astro';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 
@@ -21,6 +22,7 @@ const {
   logo,
   navigationLeft,
   navigationRight,
+  defaultNavigationTreeHorizontalConfig,
   themeToggle,
   actionsLeft = [],
   actionsRight = [],
@@ -50,6 +52,20 @@ const baseActionsConfig: Partial<ButtonProps> = {
 };
 
 const mergedContainerConfig = mergeConfigs({}, defaultContainerConfig, container);
+const mergedNavigationLeft = navigationLeft
+  ? mergeConfigs<NavigationTreeHorizontalProps>(
+      {},
+      defaultNavigationTreeHorizontalConfig,
+      navigationLeft
+    )
+  : undefined;
+const mergedNavigationRight = navigationRight
+  ? mergeConfigs<NavigationTreeHorizontalProps>(
+      {},
+      defaultNavigationTreeHorizontalConfig,
+      navigationRight
+    )
+  : undefined;
 
 const topClasses = cn(
   'group header-transitions',
@@ -80,7 +96,7 @@ const headerLayoutClass = cn('relative flex items-center justify-between', class
           )
         }
 
-        {navigationLeft?.items && <NavigationTreeHorizontal {...navigationLeft} />}
+        {mergedNavigationLeft?.items && <NavigationTreeHorizontal {...mergedNavigationLeft} />}
       </div>
 
       <!-- Center spacer: invisible but occupies flow so header retains height -->
@@ -98,7 +114,7 @@ const headerLayoutClass = cn('relative flex items-center justify-between', class
 
       <!-- Right Zone: navigationRight + actionsRight + theme toggle -->
       <div class="flex items-center gap-2">
-        {navigationRight?.items && <NavigationTreeHorizontal {...navigationRight} />}
+        {mergedNavigationRight?.items && <NavigationTreeHorizontal {...mergedNavigationRight} />}
 
         {showThemeToggle && <ThemeToggle {...themeToggle} />}
 

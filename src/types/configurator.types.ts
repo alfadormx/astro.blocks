@@ -1,5 +1,7 @@
 import type { ButtonProps } from './button.types';
+import type { LayerConfig } from './config.types';
 import type { TwoColumnContainerProps } from './container.types';
+import type { HeadlineProps } from './headline.types';
 import type { ItemsGridItem, ItemsGridProps } from './itemsgrid.types';
 import type { ModelViewerMutation, ModelViewerProps } from './modelviewer.types';
 import type { SelectionMode } from './selection.types';
@@ -124,8 +126,14 @@ export interface ConfiguratorProps {
   headingClass?: string;
   /** Product name rendered under the viewer. */
   title?: string;
+  /** Headline under the viewer; wins over `title` (default: { class: 'mt-6 mb-0', titleClass: 'text-2xl font-semibold' }) */
+  headline?: HeadlineProps;
   /** Buttons rendered under the summary line (default: []). */
   actions?: Partial<ButtonProps>[];
+  /** Button config merged under every entry in `actions` */
+  defaultActionConfig?: LayerConfig<ButtonProps>;
+  /** Custom classes for the wrapper around the action buttons (default: 'mt-6 inline-flex flex-wrap gap-3') */
+  actionsClass?: string;
   /** Summary line under the viewer: listed categories, separator and classes (default: every category, ' · '). URL state and the viewer still use every category. */
   summary?: SummaryFormat & { class?: string };
   /** Extra classes on the configurator root. */

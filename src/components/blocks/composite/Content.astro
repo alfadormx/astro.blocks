@@ -23,6 +23,9 @@ const {
   imageOnLeft = false,
   reverseOnMobile = false,
   contentSlotClass,
+  twoColumnContainer,
+  itemsGrid,
+  imageClass,
 } = Astro.props;
 
 const defaultContainer = {};
@@ -31,17 +34,15 @@ const defaultHeadline = {
   class: 'mb-6 md:mb-8 lg:mb-12',
 };
 
-const defaultTwoColumnConfig: TwoColumnContainerProps = {
+const defaultTwoColumnContainer: Partial<TwoColumnContainerProps> = {
   htmlTag: 'div',
   content: { air: 'none' },
   responsive: true,
-  reverseOnMobile: reverseOnMobile,
 };
 
 const defaultItemsGridConfig: Partial<ItemsGridProps> = {
   columns: 1,
   air: 'normal',
-  items: [],
   defaultItemConfig: {
     layout: 'horizontal',
   },
@@ -63,22 +64,33 @@ const mergedContainer = mergeConfigs({}, defaultContainer, container);
 const mergedHeadline = mergeConfigs({}, defaultHeadline, headline);
 const mergedImage = mergeConfigs({}, defaultImage, image);
 
-const mergedItemsGrid = mergeConfigs({}, defaultItemsGridConfig, {
-  items: items,
-});
+const mergedTwoColumnContainer = mergeConfigs<TwoColumnContainerProps>(
+  {},
+  defaultTwoColumnContainer,
+  { reverseOnMobile },
+  twoColumnContainer
+);
+
+// `items` stays out of the merge: mergeConfigs merges arrays index-wise.
+const { items: itemsGridItems, ...itemsGridConfig } = itemsGrid ?? ({} as Partial<ItemsGridProps>);
+const resolvedItems = itemsGridItems ?? items;
+const mergedItemsGrid: ItemsGridProps = {
+  ...mergeConfigs<Partial<ItemsGridProps>>({}, defaultItemsGridConfig, itemsGridConfig),
+  items: resolvedItems,
+};
 
 const contentSpacerClass = cn({
-  'mb-4 md:mb-6': items.length > 0 || action,
+  'mb-4 md:mb-6': resolvedItems.length > 0 || action,
 });
 
 const actionsSpacerClass = cn({
-  'mb-4 md:mb-6': items.length > 0,
+  'mb-4 md:mb-6': resolvedItems.length > 0,
 });
 ---
 
 <Container {...mergedContainer}>
   <Headline {...mergedHeadline} />
-  <TwoColumnContainer {...defaultTwoColumnConfig}>
+  <TwoColumnContainer {...mergedTwoColumnContainer}>
     <div class={contentSlotClass} slot={imageOnLeft ? 'right' : 'left'}>
       <div class={contentSpacerClass}>
         <slot />
@@ -90,9 +102,9 @@ const actionsSpacerClass = cn({
           </div>
         )
       }
-      {items.length > 0 && <ItemsGrid {...mergedItemsGrid} />}
+      {resolvedItems.length > 0 && <ItemsGrid {...mergedItemsGrid} />}
     </div>
-    <div slot={imageOnLeft ? 'left' : 'right'}>
+    <div class={imageClass} slot={imageOnLeft ? 'left' : 'right'}>
       <Image {...mergedImage} />
     </div>
   </TwoColumnContainer>
