@@ -16,18 +16,17 @@ const {
   itemClass = 'basis-full',
   controlsPosition = 'inside',
   showIndicators = true,
-  showControls = true,
   draggable = true,
   loop = false,
   autoplay = false,
   snapFallback = 'transform',
   ariaLabel,
   debug = false,
-  prevButtonConfig,
-  nextButtonConfig,
-  indicatorButtonConfig,
-  pauseButtonConfig,
-  playButtonConfig,
+  prevButton,
+  nextButton,
+  defaultIndicatorButtonConfig,
+  pauseButton,
+  playButton,
   container,
   class: className = '',
   ...attrs
@@ -63,63 +62,60 @@ const autoplayConfig: AutoplayConfig = (() => {
 })();
 
 // Button configs
-const defaultPrevButtonConfig: Partial<ButtonProps> = {
+const internalPrevButton: Partial<ButtonProps> = {
   icon: { name: 'heroicons:chevron-left' },
   variant: 'solid',
   intent: 'neutral',
   size: 'sm',
   shape: 'pill',
-  class: 'carousel-prev-btn',
+  class: 'pointer-events-auto',
   'aria-label': 'Previous slide',
 };
 
-const defaultNextButtonConfig: Partial<ButtonProps> = {
+const internalNextButton: Partial<ButtonProps> = {
   icon: { name: 'heroicons:chevron-right' },
   variant: 'solid',
   intent: 'neutral',
   size: 'sm',
   shape: 'pill',
-  class: 'carousel-next-btn',
+  class: 'pointer-events-auto',
   'aria-label': 'Next slide',
 };
 
-const defaultPauseButtonConfig: Partial<ButtonProps> = {
+const internalPauseButton: Partial<ButtonProps> = {
   icon: { name: 'heroicons:pause' },
   variant: 'solid',
   intent: 'neutral',
   size: 'sm',
-  class: 'carousel-pause-btn',
   'aria-label': 'Pause autoplay',
 };
 
-const defaultPlayButtonConfig: Partial<ButtonProps> = {
+const internalPlayButton: Partial<ButtonProps> = {
   icon: { name: 'heroicons:play' },
   hidden: true,
   'aria-label': 'Resume autoplay',
 };
 
-const defaultIndicatorButtonConfig: Partial<ButtonProps> = {
+const internalIndicatorButton: Partial<ButtonProps> = {
   variant: 'solid',
   intent: 'neutral',
   size: 'xs',
-  class: 'carousel-indicator-btn p-0 w-2 h-2 rounded-full transition-colors',
+  class: 'p-0 w-2 h-2 rounded-full transition-colors',
   'aria-label': 'Go to slide',
 };
 
-const mergedPrevButtonConfig = mergeConfigs({}, defaultPrevButtonConfig, prevButtonConfig);
-const mergedNextButtonConfig = mergeConfigs({}, defaultNextButtonConfig, nextButtonConfig);
-const mergedPauseButtonConfig = mergeConfigs({}, defaultPauseButtonConfig, pauseButtonConfig);
-const mergedPlayButtonConfig = mergeConfigs(
+const mergedPrevButton =
+  prevButton === false ? undefined : mergeConfigs({}, internalPrevButton, prevButton);
+const mergedNextButton =
+  nextButton === false ? undefined : mergeConfigs({}, internalNextButton, nextButton);
+const mergedPauseButton = mergeConfigs({}, internalPauseButton, pauseButton);
+const mergedPlayButton = mergeConfigs({}, internalPauseButton, internalPlayButton, playButton);
+const mergedIndicatorButton = mergeConfigs(
   {},
-  defaultPauseButtonConfig,
-  defaultPlayButtonConfig,
-  playButtonConfig
+  internalIndicatorButton,
+  defaultIndicatorButtonConfig
 );
-const mergedIndicatorButtonConfig = mergeConfigs(
-  {},
-  defaultIndicatorButtonConfig,
-  indicatorButtonConfig
-);
+const hasNavButtons = Boolean(mergedPrevButton || mergedNextButton);
 
 const carouselClass = cn(
   'content-carousel relative',
@@ -148,8 +144,8 @@ const wrapperProps = container ? mergedContainer : {};
     data-autoplay-pause-interaction={String(autoplayConfig.pauseOnInteraction)}
     data-initial-index={String(initialIndex)}
     data-debug={String(debug)}
-    data-indicator-class={mergedIndicatorButtonConfig.class || ''}
-    data-indicator-aria={mergedIndicatorButtonConfig['aria-label'] || 'Go to slide'}
+    data-indicator-class={mergedIndicatorButton.class || ''}
+    data-indicator-aria={mergedIndicatorButton['aria-label'] || 'Go to slide'}
     role="region"
     aria-roledescription="carousel"
     aria-label={ariaLabel || 'Content carousel'}
@@ -195,18 +191,10 @@ const wrapperProps = container ? mergedContainer : {};
 
       <!-- Controls (inside) -->
       {
-        showControls && controlsPosition === 'inside' && (
+        hasNavButtons && controlsPosition === 'inside' && (
           <div class="carousel-controls absolute inset-0 pointer-events-none flex items-center justify-between px-3 opacity-0 group-hover:opacity-100 transition-opacity">
-            <Button
-              {...mergedPrevButtonConfig}
-              class={cn(mergedPrevButtonConfig.class, 'pointer-events-auto')}
-              data-carousel-prev
-            />
-            <Button
-              {...mergedNextButtonConfig}
-              class={cn(mergedNextButtonConfig.class, 'pointer-events-auto')}
-              data-carousel-next
-            />
+            {mergedPrevButton && <Button {...mergedPrevButton} data-carousel-prev />}
+            {mergedNextButton && <Button {...mergedNextButton} data-carousel-next />}
           </div>
         )
       }
@@ -221,8 +209,8 @@ const wrapperProps = container ? mergedContainer : {};
           >
             {Array.from({ length: slideCount }, (_, i) => (
               <Button
-                {...mergedIndicatorButtonConfig}
-                aria-label={`${mergedIndicatorButtonConfig['aria-label']} ${i + 1}`}
+                {...mergedIndicatorButton}
+                aria-label={`${mergedIndicatorButton['aria-label']} ${i + 1}`}
                 data-carousel-indicator
                 data-index={String(i)}
               />
@@ -235,8 +223,8 @@ const wrapperProps = container ? mergedContainer : {};
       {
         autoplayConfig.enabled && controlsPosition === 'inside' && (
           <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-            <Button {...mergedPauseButtonConfig} data-carousel-pause />
-            <Button {...mergedPlayButtonConfig} data-carousel-play />
+            <Button {...mergedPauseButton} data-carousel-pause />
+            <Button {...mergedPlayButton} data-carousel-play />
           </div>
         )
       }
@@ -246,18 +234,10 @@ const wrapperProps = container ? mergedContainer : {};
     {
       controlsPosition === 'outside' && (
         <div class="carousel-controls-outside flex items-center justify-between gap-4">
-          {showControls && (
+          {hasNavButtons && (
             <div class="flex gap-2">
-              <Button
-                {...mergedPrevButtonConfig}
-                class={cn(mergedPrevButtonConfig.class, 'pointer-events-auto')}
-                data-carousel-prev
-              />
-              <Button
-                {...mergedNextButtonConfig}
-                class={cn(mergedNextButtonConfig.class, 'pointer-events-auto')}
-                data-carousel-next
-              />
+              {mergedPrevButton && <Button {...mergedPrevButton} data-carousel-prev />}
+              {mergedNextButton && <Button {...mergedNextButton} data-carousel-next />}
             </div>
           )}
           {showIndicators && slideCount > 0 && (
@@ -268,16 +248,16 @@ const wrapperProps = container ? mergedContainer : {};
             >
               {Array.from({ length: slideCount }, (_, i) => (
                 <Button
-                  {...mergedIndicatorButtonConfig}
-                  aria-label={`${mergedIndicatorButtonConfig['aria-label']} ${i + 1}`}
+                  {...mergedIndicatorButton}
+                  aria-label={`${mergedIndicatorButton['aria-label']} ${i + 1}`}
                   data-carousel-indicator
                   data-index={String(i)}
                 />
               ))}
             </div>
           )}
-          {autoplayConfig.enabled && <Button {...mergedPauseButtonConfig} data-carousel-pause />}
-          {autoplayConfig.enabled && <Button {...mergedPlayButtonConfig} data-carousel-play />}
+          {autoplayConfig.enabled && <Button {...mergedPauseButton} data-carousel-pause />}
+          {autoplayConfig.enabled && <Button {...mergedPlayButton} data-carousel-play />}
         </div>
       )
     }
@@ -554,6 +534,7 @@ const wrapperProps = container ? mergedContainer : {};
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = indicatorClass;
+        btn.setAttribute('data-carousel-indicator', '');
         btn.setAttribute('role', 'tab');
         btn.setAttribute('aria-label', `${root.dataset.indicatorAria || 'Go to slide'} ${i + 1}`);
         btn.addEventListener('click', () => goTo(i));
