@@ -1,4 +1,5 @@
 import type { ConnectorStyle, TimelineItemProps } from './itemstimeline.types';
+import type { LayerConfig } from './config.types';
 
 export type { ConnectorStyle } from './itemstimeline.types';
 
@@ -8,9 +9,11 @@ export interface ItemsTimelineHorizontalProps {
   /** The connector line style applied between timeline items (default: 'solid'). */
   connectorStyle?: ConnectorStyle;
   /** The horizontal spacing between timeline items (default: 'normal'). */
-  air?: 'none' | 'tight' | 'normal' | 'loose';
+  gap?: 'none' | 'tight' | 'normal' | 'loose';
+  /** @deprecated Use `gap`. */
+  air?: never;
   /** Additional CSS classes merged onto the timeline wrapper element (default: ''). */
   class?: string;
   /** Default item props merged into every item before its own values are applied. */
-  defaultItemConfig?: Partial<TimelineItemProps>;
+  defaultItemConfig?: LayerConfig<TimelineItemProps>;
 }

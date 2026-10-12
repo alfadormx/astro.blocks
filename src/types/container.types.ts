@@ -70,9 +70,13 @@ export interface ContainerProps {
   items?: ContainerItem[];
 }
 
+export type GridGap = 'none' | 'tight' | 'normal' | 'loose';
+
 export interface GridLayoutProps extends Omit<ContainerProps, 'layout' | 'items'> {
-  /** Air (spacing) between columns/sections - responsive sizing (default: 'normal') */
-  air?: 'none' | 'tight' | 'normal' | 'loose';
+  /** Gap between columns, responsive (default: 'normal') */
+  gap?: GridGap;
+  /** @deprecated Use `gap`; padding inside the box is `content.air`. */
+  air?: never;
   /** Responsive behavior (default: false - always side-by-side) */
   responsive?: boolean;
   /** Responsive breakpoint (default: 'md:' - use 'sm:', 'lg:', etc.) */

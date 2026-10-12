@@ -11,13 +11,13 @@ type Props = ItemsTimelineHorizontalProps;
 const {
   items = [],
   connectorStyle = 'solid',
-  air = 'normal',
+  gap = 'normal',
   class: className = '',
   defaultItemConfig,
 } = Astro.props;
 
-// Spacing applied as margin-right on entire item wrapper (except last)
-const spacingSettings = {
+// Horizontal padding on each item's content, which spaces the items apart
+const gapSettings = {
   none: '',
   tight: 'px-3 md:px-4 lg:px-6',
   normal: 'px-4 md:px-6 lg:px-8',
@@ -32,7 +32,7 @@ const timelineClass = cn(defaultTimelineClass, className);
 const internalItemConfig: Partial<ItemProps> = {
   orientation: 'vertical',
   connectorStyle,
-  contentClass: spacingSettings[air],
+  contentClass: gapSettings[gap],
 };
 ---
 
