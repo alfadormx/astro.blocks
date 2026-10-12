@@ -1,4 +1,5 @@
 import type { ItemProps } from './item.types';
+import type { LayerConfig } from './config.types';
 
 /**
  * Selection behaviour of an ItemsGrid. `'none'` renders a static grid; `'single'` and
@@ -47,13 +48,15 @@ export interface ItemsGridProps {
   /** A lone item in the last row spans the full row; computed from `columns`, so exact only with `responsive: false` (default: false). */
   fillLastRow?: boolean;
   /** Gap spacing between grid items (default: 'normal'). */
-  air?: 'none' | 'tight' | 'normal' | 'loose';
+  gap?: 'none' | 'tight' | 'normal' | 'loose';
+  /** @deprecated Use `gap`. */
+  air?: never;
   /** Additional CSS classes appended to the grid container (default: ''). */
   class?: string;
   /** Default values merged into every item's props before rendering, overridden by each item's own values. */
-  defaultItemConfig?: Partial<ItemProps>;
+  defaultItemConfig?: LayerConfig<ItemProps>;
   /** Selection mode of the grid; `'none'` renders a static, non-interactive grid (default: { mode: 'none' }). */
   selection?: ItemsGridSelection;
   /** Values merged into each item's selected variant, after `defaultItemConfig` and before the item's own values. */
-  selectedItemConfig?: Partial<ItemProps>;
+  selectedItemConfig?: LayerConfig<ItemProps>;
 }

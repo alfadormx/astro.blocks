@@ -10,12 +10,12 @@ type Props = ItemsTimelineProps;
 const {
   items = [],
   connectorStyle = 'solid',
-  air = 'normal',
+  gap = 'normal',
   class: className = '',
   defaultItemConfig,
 } = Astro.props;
 
-const spacingSettings = {
+const gapSettings = {
   none: '',
   tight: 'pb-3 md:pb-4 lg:pb-6',
   normal: 'pb-4 md:pb-6 lg:pb-8',
@@ -30,7 +30,7 @@ const timelineClass = cn(defaultTimelineClass, className);
 const internalItemConfig: Partial<ItemProps> = {
   orientation: 'horizontal',
   connectorStyle,
-  contentClass: spacingSettings[air],
+  contentClass: gapSettings[gap],
 };
 ---
 

@@ -91,7 +91,7 @@ const groups = documentationNavigation.filter((entry) => entry.children?.length)
         <p>{descriptions[group.label ?? ''] ?? ''}</p>
         <ItemsGrid
           columns={3}
-          air="tight"
+          gap="tight"
           defaultItemConfig={{
             orientation: 'vertical',
             icon: { name: 'heroicons:cube', class: 'text-accent' },
