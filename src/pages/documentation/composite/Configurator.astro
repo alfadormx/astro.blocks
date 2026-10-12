@@ -50,11 +50,29 @@ const togglePanels: ConfiguratorProps['categories'] = [
     panel: 'text',
     triggerButton: { label: 'Engraving' },
     heading: 'Add an engraving',
-    maxLength: 20,
-    placeholder: 'Up to 20 characters',
     camera: 'band',
+    textArea: { maxLength: 20, placeholder: 'Up to 20 characters' },
   },
 ];
+
+const stoneOptions = [
+  {
+    code: 'small',
+    title: '0.25 ct',
+    mutations: [{ type: 'visible', parts: ['Stone_Small'] }],
+  },
+  {
+    code: 'medium',
+    title: '0.5 ct',
+    selected: true,
+    mutations: [{ type: 'visible', parts: ['Stone_Medium'] }],
+  },
+  {
+    code: 'large',
+    title: '1 ct',
+    mutations: [{ type: 'visible', parts: ['Stone_Large'] }],
+  },
+] satisfies Extract<ConfiguratorProps['categories'][number], { panel: 'grid' }>['options'];
 
 const gridPanels: ConfiguratorProps['categories'] = [
   {
@@ -63,24 +81,7 @@ const gridPanels: ConfiguratorProps['categories'] = [
     mode: 'single',
     triggerButton: { label: 'Stone' },
     heading: 'Choose a stone size',
-    options: [
-      {
-        code: 'small',
-        title: '0.25 ct',
-        mutations: [{ type: 'visible', parts: ['Stone_Small'] }],
-      },
-      {
-        code: 'medium',
-        title: '0.5 ct',
-        selected: true,
-        mutations: [{ type: 'visible', parts: ['Stone_Medium'] }],
-      },
-      {
-        code: 'large',
-        title: '1 ct',
-        mutations: [{ type: 'visible', parts: ['Stone_Large'] }],
-      },
-    ],
+    options: stoneOptions,
   },
   {
     name: 'configurator-doc-extras',
@@ -120,6 +121,31 @@ const layeredPanels: ConfiguratorProps['categories'] = [
       { code: 'bold', label: 'Bold', mutations: [{ type: 'model', src: '/models/ring-alt.glb' }] },
     ],
     toggleGroup: { appearance: 'cell', variant: 'outline' },
+  },
+];
+
+const intentPanels: ConfiguratorProps['categories'] = [
+  {
+    name: 'configurator-doc-intent-metal',
+    panel: 'toggle',
+    triggerButton: { label: 'Metal' },
+    heading: 'Choose your metal',
+    options: metalOptions,
+  },
+  {
+    name: 'configurator-doc-intent-stone',
+    panel: 'grid',
+    mode: 'single',
+    triggerButton: { label: 'Stone' },
+    heading: 'Choose a stone size',
+    options: stoneOptions,
+  },
+  {
+    name: 'configurator-doc-intent-engraving',
+    panel: 'text',
+    triggerButton: { label: 'Engraving' },
+    heading: 'Add an engraving',
+    textArea: { maxLength: 20 },
   },
 ];
 
@@ -164,7 +190,6 @@ const headingPanels: ConfiguratorProps['categories'] = [
   {
     name: 'configurator-doc-heading-metal',
     panel: 'toggle',
-    triggerButton: { label: 'Metal' },
     heading: 'Choose your metal',
     options: metalOptions,
   },
@@ -174,8 +199,7 @@ const headingPanels: ConfiguratorProps['categories'] = [
     triggerButton: { label: 'Engraving' },
     heading: 'Engrave your ring',
     fieldLabel: 'Engraving',
-    maxLength: 20,
-    placeholder: 'Up to 20 characters',
+    textArea: { maxLength: 20, placeholder: 'Up to 20 characters' },
   },
 ];
 
@@ -211,13 +235,22 @@ const urlStateExample = `<Configurator
     ItemsGrid items as <code>options</code>, each with a required <code>code</code>, and a
     <code>mode</code> of <code>'single'</code> or <code>'multiple'</code>; <code>min</code> and
     <code>max</code> exist only for <code>'multiple'</code>. <code>ConfiguratorTextCategory</code>
-    (<code>panel: 'text'</code>) takes <code>value</code>, <code>maxLength</code>,
-    <code>placeholder</code> and an optional <code>fieldLabel</code>; without it the heading names
-    the field and no label is shown. Every category has a <code>name</code> (its selection group), a
-    <code>triggerButton</code> Button config for its tab, a <code>heading</code> that names the panel,
-    and an optional <code>camera</code> key of <code>modelViewer.cameraPresets</code>. A category's
-    panel config goes in <code>toggleGroup</code>, <code>itemsGrid</code> or <code>textArea</code>,
-    matching its <code>panel</code>. A configurator holds at most 12 categories.
+    (<code>panel: 'text'</code>) takes <code>value</code> and an optional <code>fieldLabel</code>;
+    without it the heading names the field and no label is shown. <code>maxLength</code>,
+    <code>placeholder</code> and every other TextArea prop or native <code>&lt;textarea&gt;</code>
+    attribute go in <code>textArea</code>. Every category has a <code>name</code> (its selection group),
+    a <code>heading</code> that names the panel, an optional <code>triggerButton</code> Button config
+    for its tab (its <code>label</code> defaults to the heading), and an optional <code>camera</code
+    > key of <code>modelViewer.cameraPresets</code>. A category's panel config goes in <code
+      >toggleGroup</code
+    >, <code>itemsGrid</code> or <code>textArea</code>, matching its <code>panel</code>. The rule: a
+    category holds what Configurator reads or assembles (<code>name</code>, <code>panel</code>, <code
+      >heading</code
+    >, <code>camera</code>,
+    <code>triggerButton</code>, <code>options</code>, <code>value</code>, <code>mode</code> /
+    <code>min</code> / <code>max</code>, <code>fieldLabel</code>); everything passed to the child
+    untouched goes in <code>toggleGroup</code>, <code>itemsGrid</code> or <code>textArea</code>. A
+    configurator holds at most 12 categories.
   </p>
 
   <h3>1. Toggle and text panels</h3>
@@ -243,7 +276,9 @@ const urlStateExample = `<Configurator
     Each panel's config is merged in three layers: the configurator's internal defaults, then the
     block-level <code>defaultToggleGroupConfig</code>, <code>defaultItemsGridConfig</code> or
     <code>defaultTextAreaConfig</code>, then the category's own <code>toggleGroup</code>,
-    <code>itemsGrid</code> or <code>textArea</code>. Triggers merge through Tabs:
+    <code>itemsGrid</code> or <code>textArea</code>. The block-level defaults take any child prop,
+    such as <code>intent</code> (example 4) or <code>maxLength</code> and <code>placeholder</code> in
+    <code>defaultTextAreaConfig</code>. Triggers merge through Tabs:
     <code>tabs.defaultItemConfig</code> under every trigger, <code>tabs.activeItemConfig</code> over the
     active one, and each category's <code>triggerButton</code> last. Here
     <code>defaultToggleGroupConfig</code> asks for radio rows, the style category overrides it with outline
@@ -259,7 +294,23 @@ const urlStateExample = `<Configurator
     />
   </div>
 
-  <h3>4. Summary</h3>
+  <h3>4. One intent across panels</h3>
+  <p>
+    <code>intent</code> colours the selected state and focus ring of every panel kind. Setting it in
+    <code>defaultToggleGroupConfig</code>, <code>defaultItemsGridConfig</code> and
+    <code>defaultTextAreaConfig</code> gives toggle, grid and text panels the same colour.
+  </p>
+  <div data-doc-section="intent" class="border border-dashed border-gray/80 p-8">
+    <ConfiguratorBlock
+      categories={intentPanels}
+      modelViewer={modelViewer}
+      defaultToggleGroupConfig={{ intent: 'accent' }}
+      defaultItemsGridConfig={{ intent: 'accent' }}
+      defaultTextAreaConfig={{ intent: 'accent' }}
+    />
+  </div>
+
+  <h3>5. Summary</h3>
   <p>
     The line under the viewer is derived from the current selections. By default it lists the label
     of every selected option: toggle options by <code>label</code>, grid options by <code
@@ -269,10 +320,10 @@ const urlStateExample = `<Configurator
     order, whatever order they were picked in. Text is shown in quotes, empty categories are
     skipped, and the parts are joined with <code>·</code>. <code>summary.categories</code> and
     <code>summary.separator</code> change which categories are listed, their order and the joiner (example
-    6). The summary is an <code>aria-live="polite"</code> region, so screen readers announce changes.
+    7). The summary is an <code>aria-live="polite"</code> region, so screen readers announce changes.
   </p>
 
-  <h3>5. URL state</h3>
+  <h3>6. URL state</h3>
   <p>
     Set <code>urlState</code> to keep the selections in the page URL as a combination code, so a configuration
     can be shared or bookmarked and the back button steps through changes. The code lists the categories
@@ -288,7 +339,7 @@ const urlStateExample = `<Configurator
   <pre
     class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{urlStateExample}</code></pre>
 
-  <h3>6. Title, summary and actions</h3>
+  <h3>7. Title, summary and actions</h3>
   <p>
     <code>headline.title</code> names the product under the viewer, and <code>actions</code> renders Buttons
     under the summary line. <code>summary.categories</code> picks which categories the summary lists and
@@ -307,7 +358,7 @@ const urlStateExample = `<Configurator
     />
   </div>
 
-  <h3>7. Headline and shared action config</h3>
+  <h3>8. Headline and shared action config</h3>
   <p>
     <code>headline</code> renders a full Headline under the viewer.
     <code>defaultActionConfig</code> is merged under every action, and <code>actionsClass</code>
@@ -327,11 +378,12 @@ const urlStateExample = `<Configurator
     />
   </div>
 
-  <h3>8. Heading and field label</h3>
+  <h3>9. Heading and field label</h3>
   <p>
     <code>headingClass</code> adds classes to every panel heading, after its defaults. A text category
     with <code>fieldLabel</code> shows that label above its field, while the heading stays the panel's
-    name.
+    name. A category without <code>triggerButton</code> uses its heading as the tab label, as the metal
+    tab here does; set <code>{"triggerButton: { label: 'Metal' }"}</code> for a short tab.
   </p>
   <div data-doc-section="headings" class="border border-dashed border-gray/80 p-8">
     <ConfiguratorBlock

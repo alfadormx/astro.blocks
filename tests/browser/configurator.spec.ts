@@ -212,6 +212,17 @@ test.describe('Configurator', () => {
       await openTab(page, 'Engraving');
       await expect(page.getByRole('textbox', { name: 'Engraving' })).toBeVisible();
     });
+
+    test('textArea forwards native attributes to the field', async ({ page }) => {
+      await open(page);
+      await expect(engraving(page)).toHaveAttribute('spellcheck', 'false');
+    });
+
+    test('maxLength set in textArea still limits the engraving', async ({ page }) => {
+      await open(page);
+      await expect(engraving(page)).toHaveAttribute('maxlength', '20');
+      await expect(engraving(page)).toHaveAttribute('placeholder', 'Up to 20 characters');
+    });
   });
 
   test.describe('hidden panels', () => {
@@ -440,7 +451,15 @@ test.describe('Configurator', () => {
 });
 
 test.describe('trigger layering', () => {
-  test('activeItemConfig beats tabs.defaultItemConfig', async ({ page }) => {
+  test('a category without triggerButton labels its tab with the heading', async ({ page }) => {
+    await page.goto('/documentation/composite/Configurator');
+    const section = page.locator('[data-doc-section="headings"]');
+    await expect(section.getByRole('tab', { name: 'Choose your metal' })).toBeVisible();
+  });
+
+  test('active tab stays distinct when tabs.defaultItemConfig styles every trigger', async ({
+    page,
+  }) => {
     await page.goto('/documentation/composite/Configurator');
     const section = page.locator('[data-doc-section="layering"]');
     const active = section.locator('[role="tab"][aria-selected="true"]:visible');
@@ -448,5 +467,58 @@ test.describe('trigger layering', () => {
 
     await expect(active).toHaveCSS('border-top-width', '2px');
     await expect(inactive).toHaveCSS('border-top-width', '0px');
+  });
+});
+
+test.describe('panel intent', () => {
+  function colours(value: string): string[] {
+    return value.match(/(?:rgba?|oklch|oklab|lab|lch|color)\([^)]*\)/g) ?? [];
+  }
+
+  // Polled: the toggle shell and textarea transition their ring in.
+  async function expectFocusRing(target: Locator, colour: string): Promise<void> {
+    await expect
+      .poll(async () => colours(await target.evaluate((el) => getComputedStyle(el).boxShadow)))
+      .toContain(colour);
+  }
+
+  async function activateTab(section: Locator, name: string): Promise<void> {
+    const tab = section.getByRole('tab', { name });
+    await tab.focus();
+    await tab.press('Enter');
+    await expect(tab).toHaveAttribute('aria-selected', 'true');
+  }
+
+  test('one intent gives toggle, grid and text panels the same selected and focus colour', async ({
+    page,
+  }) => {
+    await page.goto('/documentation/composite/Configurator');
+    const section = page.locator('[data-doc-section="intent"]');
+    const grid = section.locator('[data-selection-group="configurator-doc-intent-stone"]');
+    const toggle = section.locator('[data-selection-group="configurator-doc-intent-metal"]');
+    const text = section.locator('[data-selection-group="configurator-doc-intent-engraving"]');
+
+    await activateTab(section, 'Stone');
+    await expect(grid.locator('[role="radio"]').first()).toBeAttached();
+    const gridSelected = grid.locator('[data-option-variant="selected"]:visible > *');
+    const reference = await gridSelected.evaluate((el) => getComputedStyle(el).borderBottomColor);
+    const gridOption = grid.locator('[data-option-code][aria-checked="true"]');
+    await gridOption.focus();
+    await expectFocusRing(gridOption, reference);
+
+    await activateTab(section, 'Metal');
+    const toggleShell = toggle.locator('label:has(input:checked)');
+    await expect(toggleShell.locator('[data-option-variant="selected"]')).toHaveCSS(
+      'background-color',
+      reference
+    );
+    await toggleShell.locator('input').focus();
+    await expectFocusRing(toggleShell, reference);
+
+    await activateTab(section, 'Engraving');
+    const field = text.locator('textarea');
+    await field.focus();
+    await expect(field).toHaveCSS('border-color', reference);
+    await expectFocusRing(field, reference);
   });
 });
