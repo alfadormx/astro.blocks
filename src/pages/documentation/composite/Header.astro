@@ -62,7 +62,7 @@ const navItemsWithDropdowns = [
           height: 48,
         },
       }}
-      navigationRight={{ items: basicNavItems }}
+      rightNavigationTreeHorizontal={{ items: basicNavItems }}
     />
   </div>
 
@@ -76,13 +76,16 @@ const navItemsWithDropdowns = [
     <div>
       <h4>Using SITE.name (default)</h4>
       <div class="border border-border rounded-lg overflow-hidden">
-        <HeaderBlock navigationRight={{ items: basicNavItems }} />
+        <HeaderBlock rightNavigationTreeHorizontal={{ items: basicNavItems }} />
       </div>
     </div>
     <div>
       <h4>Custom text</h4>
       <div class="border border-border rounded-lg overflow-hidden">
-        <HeaderBlock logo={{ label: 'My Brand' }} navigationRight={{ items: basicNavItems }} />
+        <HeaderBlock
+          logo={{ label: 'My Brand' }}
+          rightNavigationTreeHorizontal={{ items: basicNavItems }}
+        />
       </div>
     </div>
     <div>
@@ -94,7 +97,7 @@ const navItemsWithDropdowns = [
             labelClass: '!text-2xl !font-extrabold !text-primary',
             class: 'hover:scale-105 transition-transform',
           }}
-          navigationRight={{ items: basicNavItems }}
+          rightNavigationTreeHorizontal={{ items: basicNavItems }}
         />
       </div>
     </div>
@@ -105,7 +108,6 @@ const navItemsWithDropdowns = [
   <p>Header with theme toggle button.</p>
   <div class="border border-border rounded-lg overflow-hidden">
     <HeaderBlock
-      showThemeToggle
       logo={{
         image: {
           src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
@@ -114,7 +116,7 @@ const navItemsWithDropdowns = [
           height: 48,
         },
       }}
-      navigationRight={{ items: basicNavItems }}
+      rightNavigationTreeHorizontal={{ items: basicNavItems }}
       themeToggle={{ size: 'md' }}
     />
   </div>
@@ -132,7 +134,7 @@ const navItemsWithDropdowns = [
           height: 48,
         },
       }}
-      actionsLeft={[
+      leftButtons={[
         {
           'data-modal-trigger': 'mobile-menu-basic',
           icon: { name: 'heroicons:bars-3' },
@@ -151,11 +153,11 @@ const navItemsWithDropdowns = [
     </div>
   </ModalBlock>
 
-  <!-- Example: Actions Spacing -->
-  <h3>Actions Spacing</h3>
+  <!-- Example: Button Spacing -->
+  <h3>Button Spacing</h3>
   <p>
-    Control spacing between theme toggle and action buttons using the <code
-      class="px-1 py-0.5 bg-muted rounded">actionsAir</code
+    Control spacing between the buttons in each group using the <code
+      class="px-1 py-0.5 bg-muted rounded">buttonsGap</code
     > prop.
   </p>
   <div class="space-y-6">
@@ -163,8 +165,8 @@ const navItemsWithDropdowns = [
       <h4>Tight</h4>
       <div class="border border-border rounded-lg overflow-hidden">
         <HeaderBlock
-          showThemeToggle
-          actionsAir="tight"
+          themeToggle={{}}
+          buttonsGap="tight"
           logo={{
             image: {
               src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
@@ -173,8 +175,8 @@ const navItemsWithDropdowns = [
               height: 48,
             },
           }}
-          navigationRight={{ items: basicNavItems }}
-          actionsRight={[
+          rightNavigationTreeHorizontal={{ items: basicNavItems }}
+          rightButtons={[
             { label: 'Login', variant: 'outline', size: 'sm' },
             { label: 'Sign Up', variant: 'solid', size: 'sm' },
           ]}
@@ -185,8 +187,8 @@ const navItemsWithDropdowns = [
       <h4>Normal (Default)</h4>
       <div class="border border-border rounded-lg overflow-hidden">
         <HeaderBlock
-          showThemeToggle
-          actionsAir="normal"
+          themeToggle={{}}
+          buttonsGap="normal"
           logo={{
             image: {
               src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
@@ -195,8 +197,8 @@ const navItemsWithDropdowns = [
               height: 48,
             },
           }}
-          navigationRight={{ items: basicNavItems }}
-          actionsRight={[
+          rightNavigationTreeHorizontal={{ items: basicNavItems }}
+          rightButtons={[
             { label: 'Login', variant: 'outline', size: 'sm' },
             { label: 'Sign Up', variant: 'solid', size: 'sm' },
           ]}
@@ -207,8 +209,8 @@ const navItemsWithDropdowns = [
       <h4>Loose</h4>
       <div class="border border-border rounded-lg overflow-hidden">
         <HeaderBlock
-          showThemeToggle
-          actionsAir="loose"
+          themeToggle={{}}
+          buttonsGap="loose"
           logo={{
             image: {
               src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
@@ -217,8 +219,8 @@ const navItemsWithDropdowns = [
               height: 48,
             },
           }}
-          navigationRight={{ items: basicNavItems }}
-          actionsRight={[
+          rightNavigationTreeHorizontal={{ items: basicNavItems }}
+          rightButtons={[
             { label: 'Login', variant: 'outline', size: 'sm' },
             { label: 'Sign Up', variant: 'solid', size: 'sm' },
           ]}
@@ -230,7 +232,8 @@ const navItemsWithDropdowns = [
   <!-- Example: Left-side Navigation & Actions -->
   <h3>Left-side Navigation & Actions</h3>
   <p>
-    Demonstrates `navigationLeft` and `actionsLeft` to place navigation and actions on the left.
+    Demonstrates `leftNavigationTreeHorizontal` and `leftButtons` to place navigation and actions on
+    the left.
   </p>
   <div class="border border-border rounded-lg overflow-hidden">
     <HeaderBlock
@@ -242,11 +245,11 @@ const navItemsWithDropdowns = [
           height: 48,
         },
       }}
-      navigationLeft={{ items: basicNavItems }}
-      navigationRight={{ items: basicNavItems }}
-      actionsLeft={[{ label: 'Docs', variant: 'solid', size: 'sm' }]}
-      actionsRight={[{ label: 'Sign In', variant: 'solid', size: 'sm' }]}
-      showThemeToggle
+      leftNavigationTreeHorizontal={{ items: basicNavItems }}
+      rightNavigationTreeHorizontal={{ items: basicNavItems }}
+      leftButtons={[{ label: 'Docs', variant: 'solid', size: 'sm' }]}
+      rightButtons={[{ label: 'Sign In', variant: 'solid', size: 'sm' }]}
+      themeToggle={{}}
     />
   </div>
 
@@ -256,7 +259,7 @@ const navItemsWithDropdowns = [
   <div class="border border-border rounded-lg overflow-hidden h-96 overflow-y-scroll">
     <HeaderBlock
       isSticky
-      showThemeToggle
+      themeToggle={{}}
       logo={{
         image: {
           src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
@@ -265,7 +268,7 @@ const navItemsWithDropdowns = [
           height: 48,
         },
       }}
-      navigationRight={{ items: basicNavItems }}
+      rightNavigationTreeHorizontal={{ items: basicNavItems }}
       container={{
         background: { class: 'bg-background/10 backdrop-blur-sm' },
         border: { width: 'border-b', color: 'border-border' },
@@ -292,7 +295,8 @@ const navItemsWithDropdowns = [
   </p>
   <div class="border border-border rounded-lg overflow-hidden p-4 bg-muted/30">
     <code class="text-sm">
-      &lt;Header isFloating showThemeToggle navigationRight=&#123;&#123; items &#125;&#125; /&gt;
+      &lt;Header isFloating themeToggle=&#123;&#123;&#125;&#125;
+      rightNavigationTreeHorizontal=&#123;&#123; items &#125;&#125; /&gt;
     </code>
   </div>
 
@@ -310,8 +314,8 @@ const navItemsWithDropdowns = [
         },
         class: 'text-primary hover:text-accent transition-colors duration-300',
       }}
-      navigationRight={{ items: basicNavItems }}
-      showThemeToggle
+      rightNavigationTreeHorizontal={{ items: basicNavItems }}
+      themeToggle={{}}
     />
   </div>
 
@@ -320,7 +324,7 @@ const navItemsWithDropdowns = [
   <p>Customize container styling with background, borders, and padding.</p>
   <div class="border border-border rounded-lg overflow-hidden">
     <HeaderBlock
-      showThemeToggle
+      themeToggle={{}}
       logo={{
         image: {
           src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
@@ -329,13 +333,13 @@ const navItemsWithDropdowns = [
           height: 48,
         },
       }}
-      navigationRight={{ items: basicNavItems }}
+      rightNavigationTreeHorizontal={{ items: basicNavItems }}
       container={{
         background: { class: 'bg-accent/10 backdrop-blur-sm' },
         border: { width: 'border-b', color: 'border-primary' },
         content: { air: 'loose' },
       }}
-      actionsRight={[{ label: 'Get Started', variant: 'solid', intent: 'primary', size: 'sm' }]}
+      rightButtons={[{ label: 'Get Started', variant: 'solid', intent: 'primary', size: 'sm' }]}
     />
   </div>
 
@@ -346,8 +350,8 @@ const navItemsWithDropdowns = [
   </p>
   <div class="border border-border rounded-lg overflow-hidden" data-doc-section="navigation-layer">
     <HeaderBlock
-      navigationLeft={{ items: basicNavItems }}
-      navigationRight={{ items: basicNavItems }}
+      leftNavigationTreeHorizontal={{ items: basicNavItems }}
+      rightNavigationTreeHorizontal={{ items: basicNavItems }}
       defaultNavigationTreeHorizontalConfig={{
         defaultItemConfig: { intent: 'primary', variant: 'ghost' },
       }}

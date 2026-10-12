@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 const PAGE_URL = '/documentation/composite/Footer';
 
-test('languageToggleConfig.defaultButtonConfig reaches the toggle buttons', async ({ page }) => {
+test('languageToggle.defaultButtonConfig reaches the toggle buttons', async ({ page }) => {
   await page.goto(PAGE_URL);
   const buttons = page.locator('[data-doc-section="language-toggle"] [data-language-toggle] a');
 

@@ -10,8 +10,8 @@ const metadata = { title: { default: 'Astro Blocks' } };
 
 <Layout metadata={metadata}>
   <Header
-    showThemeToggle={true}
-    actionsRight={[
+    themeToggle={{}}
+    rightButtons={[
       {
         label: 'Documentation',
         href: '/documentation',
@@ -114,7 +114,7 @@ const metadata = { title: { default: 'Astro Blocks' } };
   />
 
   <Footer
-    showLanguageToggle={true}
+    languageToggle={{}}
     disclaimer="Astro Blocks — open-source component library. Not for commercial use."
   />
 </Layout>

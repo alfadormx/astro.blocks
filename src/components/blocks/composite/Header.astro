@@ -16,22 +16,22 @@ type Props = HeaderProps;
 const {
   isSticky = false,
   isFloating = false,
-  showThemeToggle = false,
-  actionsAir = 'normal',
+  buttonsGap = 'normal',
+  buttonsClass,
   container,
   logo,
-  navigationLeft,
-  navigationRight,
+  leftNavigationTreeHorizontal,
+  rightNavigationTreeHorizontal,
   defaultNavigationTreeHorizontalConfig,
   themeToggle,
-  actionsLeft = [],
-  actionsRight = [],
-  defaultActionsConfig,
+  leftButtons = [],
+  rightButtons = [],
+  defaultButtonConfig,
   class: className = '',
   ...attrs
 } = Astro.props;
 
-const actionsAirClasses = {
+const buttonsGapClasses = {
   none: 'gap-0',
   tight: 'gap-2',
   normal: 'gap-4',
@@ -44,7 +44,7 @@ const defaultContainerConfig = {
   spacing: { padding: 'py-3 px-4 md:py-4 md:px-6 lg:px-8' },
 } as ContainerProps;
 
-const baseActionsConfig: Partial<ButtonProps> = {
+const internalButtonConfig: Partial<ButtonProps> = {
   variant: 'ghost',
   intent: 'neutral',
   shape: 'rounded',
@@ -52,20 +52,21 @@ const baseActionsConfig: Partial<ButtonProps> = {
 };
 
 const mergedContainerConfig = mergeConfigs({}, defaultContainerConfig, container);
-const mergedNavigationLeft = navigationLeft
+const mergedLeftNavigationTreeHorizontal = leftNavigationTreeHorizontal
   ? mergeConfigs<NavigationTreeHorizontalProps>(
       {},
       defaultNavigationTreeHorizontalConfig,
-      navigationLeft
+      leftNavigationTreeHorizontal
     )
   : undefined;
-const mergedNavigationRight = navigationRight
+const mergedRightNavigationTreeHorizontal = rightNavigationTreeHorizontal
   ? mergeConfigs<NavigationTreeHorizontalProps>(
       {},
       defaultNavigationTreeHorizontalConfig,
-      navigationRight
+      rightNavigationTreeHorizontal
     )
   : undefined;
+const buttonsWrapperClass = cn('flex flex-row gap-1', buttonsGapClasses[buttonsGap], buttonsClass);
 
 const topClasses = cn(
   'group header-transitions',
@@ -78,25 +79,23 @@ const headerLayoutClass = cn('relative flex items-center justify-between', class
 <div class={topClasses} {...attrs} data-header>
   <Container {...mergedContainerConfig}>
     <div class={headerLayoutClass}>
-      <!-- Left Zone: navigationLeft + actionsLeft -->
+      <!-- Left Zone: leftButtons + leftNavigationTreeHorizontal -->
       <div class="flex items-center gap-2">
         {
-          actionsLeft && actionsLeft.length > 0 && (
-            <div class={cn('flex flex-row gap-1', actionsAirClasses[actionsAir])}>
-              {actionsLeft.map((action) => {
-                const mergedAction = mergeConfigs(
-                  {},
-                  baseActionsConfig,
-                  defaultActionsConfig,
-                  action
-                );
-                return <Button {...mergedAction} />;
-              })}
+          leftButtons.length > 0 && (
+            <div class={buttonsWrapperClass}>
+              {leftButtons.map((button) => (
+                <Button {...mergeConfigs({}, internalButtonConfig, defaultButtonConfig, button)} />
+              ))}
             </div>
           )
         }
 
-        {mergedNavigationLeft?.items && <NavigationTreeHorizontal {...mergedNavigationLeft} />}
+        {
+          mergedLeftNavigationTreeHorizontal?.items && (
+            <NavigationTreeHorizontal {...mergedLeftNavigationTreeHorizontal} />
+          )
+        }
       </div>
 
       <!-- Center spacer: invisible but occupies flow so header retains height -->
@@ -112,24 +111,22 @@ const headerLayoutClass = cn('relative flex items-center justify-between', class
         <Logo {...logo} />
       </div>
 
-      <!-- Right Zone: navigationRight + actionsRight + theme toggle -->
+      <!-- Right Zone: rightNavigationTreeHorizontal + theme toggle + rightButtons -->
       <div class="flex items-center gap-2">
-        {mergedNavigationRight?.items && <NavigationTreeHorizontal {...mergedNavigationRight} />}
+        {
+          mergedRightNavigationTreeHorizontal?.items && (
+            <NavigationTreeHorizontal {...mergedRightNavigationTreeHorizontal} />
+          )
+        }
 
-        {showThemeToggle && <ThemeToggle {...themeToggle} />}
+        {themeToggle && <ThemeToggle {...themeToggle} />}
 
         {
-          actionsRight && actionsRight.length > 0 && (
-            <div class={cn('flex flex-row gap-1', actionsAirClasses[actionsAir])}>
-              {actionsRight.map((action) => {
-                const mergedAction = mergeConfigs(
-                  {},
-                  baseActionsConfig,
-                  defaultActionsConfig,
-                  action
-                );
-                return <Button {...mergedAction} />;
-              })}
+          rightButtons.length > 0 && (
+            <div class={buttonsWrapperClass}>
+              {rightButtons.map((button) => (
+                <Button {...mergeConfigs({}, internalButtonConfig, defaultButtonConfig, button)} />
+              ))}
             </div>
           )
         }

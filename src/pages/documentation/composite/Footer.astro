@@ -36,7 +36,7 @@ var metadata = {
           height: 48,
         },
       }}
-      socialActions={[
+      socialButtons={[
         { icon: { name: 'heroicons:globe-alt' }, href: '#', variant: 'ghost', intent: 'neutral' },
         {
           icon: { name: 'heroicons:envelope' },
@@ -58,12 +58,12 @@ var metadata = {
   <div class="border border-border rounded-lg overflow-hidden">
     <FooterBlock
       logo={{ label: 'My Brand' }}
-      secondaryActions={[
+      secondaryButtons={[
         { label: 'Privacy', href: '#', variant: 'link', size: 'sm' },
         { label: 'Terms', href: '#', variant: 'link', size: 'sm' },
       ]}
       disclaimer="Prices and availability are subject to change without notice."
-      socialActions={[
+      socialButtons={[
         { icon: { name: 'heroicons:globe-alt' }, href: '#', variant: 'ghost', intent: 'neutral' },
         {
           icon: { name: 'heroicons:chat-bubble-left-right' },
@@ -73,21 +73,18 @@ var metadata = {
         },
       ]}
       footnote="© 2026 My Brand. All rights reserved."
-      showLanguageToggle
+      languageToggle={{}}
       languageToggleAlign="center"
     />
   </div>
 
   <h3>Language Toggle Styling</h3>
   <p>
-    <code>languageToggleConfig.defaultButtonConfig</code> is merged over the footer's link-style default,
-    so it reaches every language button.
+    <code>languageToggle.defaultButtonConfig</code> is merged over the footer's link-style default, so
+    it reaches every language button.
   </p>
   <div class="border border-border rounded-lg overflow-hidden" data-doc-section="language-toggle">
-    <FooterBlock
-      showLanguageToggle
-      languageToggleConfig={{ defaultButtonConfig: { variant: 'outline', class: 'px-3' } }}
-    />
+    <FooterBlock languageToggle={{ defaultButtonConfig: { variant: 'outline', class: 'px-3' } }} />
   </div>
 
   <ApiReferenceTable component="Footer" category="composite" />
