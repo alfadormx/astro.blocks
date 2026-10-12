@@ -183,7 +183,7 @@ test.describe('ToggleGroup', () => {
     });
   });
 
-  test('arrow keys move the selection in the vertical layout', async ({ page }) => {
+  test('arrow keys move the selection in the vertical orientation', async ({ page }) => {
     const root = await openGroup(page, 'togglegroup-doc-vertical');
     await expect(root).toHaveAttribute('aria-orientation', 'vertical');
     await input(root, 'none').focus();

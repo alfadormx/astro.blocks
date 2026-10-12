@@ -93,7 +93,7 @@ const groups = documentationNavigation.filter((entry) => entry.children?.length)
           columns={3}
           air="tight"
           defaultItemConfig={{
-            layout: 'vertical',
+            orientation: 'vertical',
             icon: { name: 'heroicons:cube', class: 'text-accent' },
           }}
           items={(group.children ?? []).map((child) => ({
