@@ -28,7 +28,7 @@ const toggle = (
 ): ConfiguratorToggleCategory => ({
   name,
   panel: 'toggle',
-  trigger: { label: name },
+  triggerButton: { label: name },
   heading: `Pick ${name}`,
   options: [{ code: 'a', label: 'A' }],
   ...extra,
@@ -42,7 +42,7 @@ const grid = (
     name,
     panel: 'grid',
     mode: 'single',
-    trigger: { label: name },
+    triggerButton: { label: name },
     heading: `Pick ${name}`,
     options: [{ code: 'a', title: 'A' }],
     ...extra,
@@ -54,12 +54,12 @@ const text = (
 ): ConfiguratorTextCategory => ({
   name,
   panel: 'text',
-  trigger: { label: name },
+  triggerButton: { label: name },
   heading: `Write ${name}`,
   ...extra,
 });
 
-const viewer: ConfiguratorProps['viewer'] = {
+const modelViewer: ConfiguratorProps['modelViewer'] = {
   src: '/models/ring.glb',
   label: 'Ring',
   cameraPresets: { band: { position: [0, 0, 1], target: [0, 0, 0] } },
@@ -121,7 +121,9 @@ describe('validateConfigurator', () => {
     { name: 'message prefix', categories: [], expected: /^configurator: / },
   ];
   it.each(throwCases)('throws: $name', ({ categories, urlState, summary, expected }) => {
-    expect(() => validateConfigurator({ categories, viewer, urlState, summary })).toThrow(expected);
+    expect(() => validateConfigurator({ categories, modelViewer, urlState, summary })).toThrow(
+      expected
+    );
   });
 
   const validCases: Array<{
@@ -150,7 +152,9 @@ describe('validateConfigurator', () => {
     },
   ];
   it.each(validCases)('accepts: $name', ({ categories, urlState, summary }) => {
-    expect(() => validateConfigurator({ categories, viewer, urlState, summary })).not.toThrow();
+    expect(() =>
+      validateConfigurator({ categories, modelViewer, urlState, summary })
+    ).not.toThrow();
   });
 });
 

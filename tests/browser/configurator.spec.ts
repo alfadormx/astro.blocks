@@ -223,7 +223,7 @@ test.describe('Configurator', () => {
   });
 
   test.describe('defaults layering', () => {
-    test('renders grid tiles with the padding from defaultGridConfig', async ({ page }) => {
+    test('renders grid tiles with the padding from defaultItemsGridConfig', async ({ page }) => {
       await open(page);
       await expect(
         option(page, CARAT, 'small').locator('[data-option-variant="unselected"] > div')
@@ -440,7 +440,7 @@ test.describe('Configurator', () => {
 });
 
 test.describe('trigger layering', () => {
-  test('activeTabConfig beats defaultTriggerConfig', async ({ page }) => {
+  test('activeItemConfig beats tabs.defaultItemConfig', async ({ page }) => {
     await page.goto('/documentation/composite/Configurator');
     const section = page.locator('[data-doc-section="layering"]');
     const active = section.locator('[role="tab"][aria-selected="true"]:visible');

@@ -10,7 +10,7 @@ const metadata = {
   },
 };
 
-const viewer: ConfiguratorProps['viewer'] = {
+const modelViewer: ConfiguratorProps['modelViewer'] = {
   src: '/models/ring.glb',
   label: 'A configurable ring',
   class: 'rounded-lg bg-surface',
@@ -41,14 +41,14 @@ const togglePanels: ConfiguratorProps['categories'] = [
   {
     name: 'configurator-doc-metal',
     panel: 'toggle',
-    trigger: { label: 'Metal' },
+    triggerButton: { label: 'Metal' },
     heading: 'Choose your metal',
     options: metalOptions,
   },
   {
     name: 'configurator-doc-engraving',
     panel: 'text',
-    trigger: { label: 'Engraving' },
+    triggerButton: { label: 'Engraving' },
     heading: 'Add an engraving',
     maxLength: 20,
     placeholder: 'Up to 20 characters',
@@ -61,7 +61,7 @@ const gridPanels: ConfiguratorProps['categories'] = [
     name: 'configurator-doc-stone',
     panel: 'grid',
     mode: 'single',
-    trigger: { label: 'Stone' },
+    triggerButton: { label: 'Stone' },
     heading: 'Choose a stone size',
     options: [
       {
@@ -87,7 +87,7 @@ const gridPanels: ConfiguratorProps['categories'] = [
     panel: 'grid',
     mode: 'multiple',
     max: 2,
-    trigger: { label: 'Extras' },
+    triggerButton: { label: 'Extras' },
     heading: 'Add up to two extras',
     options: [
       { code: 'giftbox', title: 'Gift box' },
@@ -101,14 +101,14 @@ const layeredPanels: ConfiguratorProps['categories'] = [
   {
     name: 'configurator-doc-layered-metal',
     panel: 'toggle',
-    trigger: { label: 'Metal' },
-    heading: 'Radio rows from defaultToggleConfig',
+    triggerButton: { label: 'Metal' },
+    heading: 'Radio rows from defaultToggleGroupConfig',
     options: metalOptions,
   },
   {
     name: 'configurator-doc-layered-style',
     panel: 'toggle',
-    trigger: { label: 'Style' },
+    triggerButton: { label: 'Style' },
     heading: 'Outline cells from this category’s config',
     options: [
       {
@@ -119,7 +119,7 @@ const layeredPanels: ConfiguratorProps['categories'] = [
       },
       { code: 'bold', label: 'Bold', mutations: [{ type: 'model', src: '/models/ring-alt.glb' }] },
     ],
-    config: { appearance: 'cell', variant: 'outline' },
+    toggleGroup: { appearance: 'cell', variant: 'outline' },
   },
 ];
 
@@ -127,7 +127,7 @@ const framedPanels: ConfiguratorProps['categories'] = [
   {
     name: 'configurator-doc-framed-metal',
     panel: 'toggle',
-    trigger: { label: 'Metal' },
+    triggerButton: { label: 'Metal' },
     heading: 'Choose your metal',
     options: metalOptions,
   },
@@ -135,7 +135,7 @@ const framedPanels: ConfiguratorProps['categories'] = [
     name: 'configurator-doc-framed-stone',
     panel: 'grid',
     mode: 'single',
-    trigger: { label: 'Stone' },
+    triggerButton: { label: 'Stone' },
     heading: 'Choose a stone size',
     options: [
       { code: 'small', title: '0.25 ct', mutations: [{ type: 'visible', parts: ['Stone_Small'] }] },
@@ -154,7 +154,7 @@ const headlinePanels: ConfiguratorProps['categories'] = [
   {
     name: 'configurator-doc-headline-metal',
     panel: 'toggle',
-    trigger: { label: 'Metal' },
+    triggerButton: { label: 'Metal' },
     heading: 'Choose your metal',
     options: metalOptions,
   },
@@ -164,14 +164,14 @@ const headingPanels: ConfiguratorProps['categories'] = [
   {
     name: 'configurator-doc-heading-metal',
     panel: 'toggle',
-    trigger: { label: 'Metal' },
+    triggerButton: { label: 'Metal' },
     heading: 'Choose your metal',
     options: metalOptions,
   },
   {
     name: 'configurator-doc-heading-engraving',
     panel: 'text',
-    trigger: { label: 'Engraving' },
+    triggerButton: { label: 'Engraving' },
     heading: 'Engrave your ring',
     fieldLabel: 'Engraving',
     maxLength: 20,
@@ -181,7 +181,7 @@ const headingPanels: ConfiguratorProps['categories'] = [
 
 const urlStateExample = `<Configurator
   categories={categories}
-  viewer={viewer}
+  modelViewer={modelViewer}
   urlState={{ product: 'RING01' }}
 />
 <!-- ?code=RING01-bold-large-rose-vvs1-giftbox-Mia -->`;
@@ -214,9 +214,10 @@ const urlStateExample = `<Configurator
     (<code>panel: 'text'</code>) takes <code>value</code>, <code>maxLength</code>,
     <code>placeholder</code> and an optional <code>fieldLabel</code>; without it the heading names
     the field and no label is shown. Every category has a <code>name</code> (its selection group), a
-    <code>trigger</code> Button config for its tab, a <code>heading</code> that names the panel, and an
-    optional <code>camera</code> key of <code>viewer.cameraPresets</code>. A configurator holds at
-    most 12 categories.
+    <code>triggerButton</code> Button config for its tab, a <code>heading</code> that names the panel,
+    and an optional <code>camera</code> key of <code>modelViewer.cameraPresets</code>. A category's
+    panel config goes in <code>toggleGroup</code>, <code>itemsGrid</code> or <code>textArea</code>,
+    matching its <code>panel</code>. A configurator holds at most 12 categories.
   </p>
 
   <h3>1. Toggle and text panels</h3>
@@ -225,7 +226,7 @@ const urlStateExample = `<Configurator
     <code>band</code> preset, because the text category sets <code>camera</code>.
   </p>
   <div data-doc-section="toggle-text" class="border border-dashed border-gray/80 p-8">
-    <ConfiguratorBlock categories={togglePanels} viewer={viewer} />
+    <ConfiguratorBlock categories={togglePanels} modelViewer={modelViewer} />
   </div>
 
   <h3>2. Grid panels</h3>
@@ -234,25 +235,27 @@ const urlStateExample = `<Configurator
     <code>max: 2</code> disables the remaining option once two are selected.
   </p>
   <div data-doc-section="grid" class="border border-dashed border-gray/80 p-8">
-    <ConfiguratorBlock categories={gridPanels} viewer={viewer} />
+    <ConfiguratorBlock categories={gridPanels} modelViewer={modelViewer} />
   </div>
 
   <h3>3. Defaults layering</h3>
   <p>
     Each panel's config is merged in three layers: the configurator's internal defaults, then the
-    block-level <code>defaultToggleConfig</code>, <code>defaultGridConfig</code> or
-    <code>defaultTextConfig</code>, then the category's own <code>config</code>. Triggers merge the
-    same way with <code>defaultTriggerConfig</code> under each category's <code>trigger</code>. Here
-    <code>defaultToggleConfig</code> asks for radio rows, the style category overrides it with outline
-    cells, and <code>defaultTriggerConfig</code> makes every tab small and ghost; the active tab keeps
-    the outlined style from <code>tabs.activeItemConfig</code>.
+    block-level <code>defaultToggleGroupConfig</code>, <code>defaultItemsGridConfig</code> or
+    <code>defaultTextAreaConfig</code>, then the category's own <code>toggleGroup</code>,
+    <code>itemsGrid</code> or <code>textArea</code>. Triggers merge through Tabs:
+    <code>tabs.defaultItemConfig</code> under every trigger, <code>tabs.activeItemConfig</code> over the
+    active one, and each category's <code>triggerButton</code> last. Here
+    <code>defaultToggleGroupConfig</code> asks for radio rows, the style category overrides it with outline
+    cells, and <code>tabs.defaultItemConfig</code> makes every tab small and ghost; the active tab keeps
+    the outlined style from the internal <code>tabs.activeItemConfig</code>.
   </p>
   <div data-doc-section="layering" class="border border-dashed border-gray/80 p-8">
     <ConfiguratorBlock
       categories={layeredPanels}
-      viewer={viewer}
-      defaultToggleConfig={{ appearance: 'radio' }}
-      defaultTriggerConfig={{ size: 'sm', variant: 'ghost', intent: 'neutral' }}
+      modelViewer={modelViewer}
+      defaultToggleGroupConfig={{ appearance: 'radio' }}
+      tabs={{ defaultItemConfig: { size: 'sm', variant: 'ghost', intent: 'neutral' } }}
     />
   </div>
 
@@ -287,39 +290,36 @@ const urlStateExample = `<Configurator
 
   <h3>6. Title, summary and actions</h3>
   <p>
-    <code>title</code> names the product under the viewer, and <code>actions</code> renders Buttons under
-    the summary line. <code>summary.categories</code> picks which categories the summary lists and in
-    which order, <code>summary.separator</code> joins them, and <code>summary.class</code>
+    <code>headline.title</code> names the product under the viewer, and <code>actions</code> renders Buttons
+    under the summary line. <code>summary.categories</code> picks which categories the summary lists and
+    in which order, <code>summary.separator</code> joins them, and <code>summaryClass</code>
     styles the line. URL state and the viewer still use every category. Here the summary lists only the
     stone, so the metal is left out of it.
   </p>
   <div data-doc-section="framed" class="border border-dashed border-gray/80 p-8">
     <ConfiguratorBlock
       categories={framedPanels}
-      viewer={viewer}
-      title="Solitaire"
-      summary={{
-        categories: ['configurator-doc-framed-stone'],
-        separator: ' ',
-        class: 'mt-1 text-sm uppercase tracking-widest text-muted',
-      }}
+      modelViewer={modelViewer}
+      headline={{ title: 'Solitaire' }}
+      summary={{ categories: ['configurator-doc-framed-stone'], separator: ' ' }}
+      summaryClass="mt-1 text-sm uppercase tracking-widest text-muted"
       actions={[{ label: 'Save my design', variant: 'outline', intent: 'neutral' }]}
     />
   </div>
 
   <h3>7. Headline and shared action config</h3>
   <p>
-    <code>headline</code> renders a full Headline under the viewer and wins over <code>title</code>.
+    <code>headline</code> renders a full Headline under the viewer.
     <code>defaultActionConfig</code> is merged under every action, and <code>actionsClass</code>
     styles the wrapper around them. Style the left column through <code
-      >layout.leftColumn.class</code
+      >twoColumnContainer.leftColumn.class</code
     >
     and the panels through <code>tabs.panelClass</code>.
   </p>
   <div data-doc-section="headline-actions" class="border border-dashed border-gray/80 p-8">
     <ConfiguratorBlock
       categories={headlinePanels}
-      viewer={viewer}
+      modelViewer={modelViewer}
       headline={{ tagline: 'Ring', title: 'Solitaire', subtitle: 'Hand-set in Antwerp' }}
       defaultActionConfig={{ variant: 'outline', intent: 'neutral' }}
       actionsClass="flex"
@@ -336,7 +336,7 @@ const urlStateExample = `<Configurator
   <div data-doc-section="headings" class="border border-dashed border-gray/80 p-8">
     <ConfiguratorBlock
       categories={headingPanels}
-      viewer={viewer}
+      modelViewer={modelViewer}
       headingClass="text-xs uppercase tracking-[0.2em]"
     />
   </div>

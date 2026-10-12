@@ -34,39 +34,38 @@ type Props = ConfiguratorProps;
 
 const {
   categories,
-  viewer,
-  defaultTriggerConfig,
-  defaultGridConfig,
-  defaultToggleConfig,
-  defaultTextConfig,
+  modelViewer,
+  defaultItemsGridConfig,
+  defaultToggleGroupConfig,
+  defaultTextAreaConfig,
   tabs,
-  layout,
+  twoColumnContainer,
   urlState,
   headingClass = '',
-  title,
   headline,
   actions = [],
   defaultActionConfig,
   actionsClass,
   summary,
+  summaryClass,
   class: className = '',
 } = Astro.props;
 
-validateConfigurator({ categories, viewer, urlState, summary });
+validateConfigurator({ categories, modelViewer, urlState, summary });
 
 const id = configuratorId();
 
-const internalLayout: Partial<TwoColumnContainerProps> = {
+const internalTwoColumnContainer: TwoColumnContainerProps = {
   htmlTag: 'div',
   content: { air: 'none', widthType: 'full' },
   responsive: true,
 };
-const internalTabs: Partial<Omit<TabsProps, 'items'>> = {
+const internalTabs: Omit<TabsProps, 'items'> = {
   tabList: { layout: 'grid', spacing: { margin: 'mb-6' } },
+  defaultItemConfig: { width: 'full' },
   activeItemConfig: { variant: 'outline', intent: 'primary' },
   container: { htmlTag: 'div', content: { air: 'none', widthType: 'full' } },
 };
-const internalTrigger: Partial<ButtonProps> = { width: 'full' };
 const internalToggle: ConfiguratorToggleConfig = { appearance: 'cell' };
 const internalGrid: ConfiguratorGridConfig = { columns: 3, gap: 'tight' };
 const internalText: ConfiguratorTextConfig = { rows: 2 };
@@ -75,22 +74,14 @@ const internalHeadline: HeadlineProps = {
   titleClass: 'text-2xl font-semibold',
 };
 
-const mergedLayout = mergeConfigs<Partial<TwoColumnContainerProps>>({}, internalLayout, layout);
-const mergedTabs = mergeConfigs<Partial<Omit<TabsProps, 'items'>>>({}, internalTabs, tabs, {
-  defaultItemConfig: mergeConfigs<Partial<ButtonProps>>(
-    {},
-    tabs?.defaultItemConfig,
-    internalTrigger,
-    defaultTriggerConfig
-  ),
-});
-const mergedHeadline = mergeConfigs<HeadlineProps>(
+const mergedTwoColumnContainer = mergeConfigs<TwoColumnContainerProps>(
   {},
-  internalHeadline,
-  title ? { title } : undefined,
-  headline
+  internalTwoColumnContainer,
+  twoColumnContainer
 );
-const triggers = categories.map((category) => category.trigger);
+const mergedTabs = mergeConfigs<Omit<TabsProps, 'items'>>({}, internalTabs, tabs);
+const mergedHeadline = mergeConfigs<HeadlineProps>({}, internalHeadline, headline);
+const triggers = categories.map((category) => category.triggerButton);
 
 // `options` / `items` stay out of the merge layers: mergeConfigs merges arrays index-wise.
 const panels = categories.map((category, i) => {
@@ -104,8 +95,8 @@ const panels = categories.map((category, i) => {
         ...mergeConfigs<ConfiguratorToggleConfig>(
           {},
           internalToggle,
-          defaultToggleConfig,
-          category.config
+          defaultToggleGroupConfig,
+          category.toggleGroup
         ),
         group: category.name,
         labelledBy: headingId,
@@ -131,8 +122,8 @@ const panels = categories.map((category, i) => {
         ...mergeConfigs<ConfiguratorGridConfig>(
           {},
           internalGrid,
-          defaultGridConfig,
-          category.config
+          defaultItemsGridConfig,
+          category.itemsGrid
         ),
         items: category.options.map(stripMutations),
         selection,
@@ -143,7 +134,12 @@ const panels = categories.map((category, i) => {
     ...base,
     kind: 'text' as const,
     props: {
-      ...mergeConfigs<ConfiguratorTextConfig>({}, internalText, defaultTextConfig, category.config),
+      ...mergeConfigs<ConfiguratorTextConfig>(
+        {},
+        internalText,
+        defaultTextAreaConfig,
+        category.textArea
+      ),
       group: category.name,
       label: category.fieldLabel || category.heading,
       hideLabel: !category.fieldLabel,
@@ -170,12 +166,12 @@ const spec = urlState ? buildCombinationSpec(categories, urlState.product) : und
   data-configurator-url-state={spec ? JSON.stringify(spec) : undefined}
   data-configurator-url-param={urlState?.param}
 >
-  <TwoColumnContainer {...mergedLayout}>
+  <TwoColumnContainer {...mergedTwoColumnContainer}>
     <div slot="left">
-      <ModelViewer {...viewer} selections={selections} />
+      <ModelViewer {...modelViewer} selections={selections} />
       {mergedHeadline.title && <Headline {...mergedHeadline} />}
       <p
-        class={cn('mt-4 text-lg', summary?.class)}
+        class={cn('mt-4 text-lg', summaryClass)}
         aria-live="polite"
         data-configurator-summary
         data-configurator-labels={JSON.stringify(summaryModel)}
@@ -187,7 +183,7 @@ const spec = urlState ? buildCombinationSpec(categories, urlState.product) : und
         actions.length > 0 && (
           <div class={cn('mt-6 inline-flex flex-wrap gap-3', actionsClass)}>
             {actions.map((action) => (
-              <Button {...mergeConfigs<Partial<ButtonProps>>({}, defaultActionConfig, action)} />
+              <Button {...mergeConfigs<ButtonProps>({}, defaultActionConfig, action)} />
             ))}
           </div>
         )
