@@ -221,16 +221,10 @@ const buildItemConfig = (
           (childrenContainer as HTMLElement).style.display = newExpandedState ? 'block' : 'none';
         }
 
-        // Toggle icon rotation class - find icon in the button
-        const button = listItem.querySelector('button');
-        const icon = button?.querySelector('.nav-tree-icon');
-        if (icon) {
-          if (newExpandedState) {
-            icon.classList.add('nav-tree-icon-expanded');
-          } else {
-            icon.classList.remove('nav-tree-icon-expanded');
-          }
-        }
+        // In icon mode the parent renders as an <a>, so look up the icon from the toggle itself
+        toggleElement
+          .querySelector('.nav-tree-icon')
+          ?.classList.toggle('nav-tree-icon-expanded', newExpandedState);
       });
     });
   }
