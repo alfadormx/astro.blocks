@@ -43,30 +43,32 @@ const metadata = {
       icon: { name: 'heroicons:arrow-down-tray' },
       intent: 'primary',
     }}
-    items={[
-      {
-        icon: { name: 'heroicons:sparkles', class: 'text-accent' },
-        title: 'Composable',
-        content: 'Blocks can be combined in any way.',
-      },
-      {
-        icon: { name: 'heroicons:bolt', class: 'text-success' },
-        title: 'Fast',
-        content: 'Astro delivers lightning-fast sites.',
-      },
-      {
-        icon: { name: 'heroicons:star', class: 'text-warning' },
-        title: 'Flexible',
-        content: 'Customize every aspect of your UI.',
-      },
-    ]}
+    itemsGrid={{
+      items: [
+        {
+          icon: { name: 'heroicons:sparkles', class: 'text-accent' },
+          title: 'Composable',
+          content: 'Blocks can be combined in any way.',
+        },
+        {
+          icon: { name: 'heroicons:bolt', class: 'text-success' },
+          title: 'Fast',
+          content: 'Astro delivers lightning-fast sites.',
+        },
+        {
+          icon: { name: 'heroicons:star', class: 'text-warning' },
+          title: 'Flexible',
+          content: 'Customize every aspect of your UI.',
+        },
+      ],
+    }}
   >
     <h3>Building on modern foundations</h3>
     <p>Gain a competitive advantage by incorporating industry leading practices</p>
   </ContentBlock>
   <h3>2. Content configuration with image on left</h3>
   <ContentBlock
-    imageOnLeft
+    imagePosition="left"
     container={{
       background: {
         image:
@@ -90,23 +92,25 @@ const metadata = {
       icon: { name: 'heroicons:arrow-down-tray' },
       intent: 'primary',
     }}
-    items={[
-      {
-        icon: { name: 'heroicons:sparkles', class: 'text-accent' },
-        title: 'Composable',
-        content: 'Blocks can be combined in any way.',
-      },
-      {
-        icon: { name: 'heroicons:bolt', class: 'text-success' },
-        title: 'Fast',
-        content: 'Astro delivers lightning-fast sites.',
-      },
-      {
-        icon: { name: 'heroicons:star', class: 'text-warning' },
-        title: 'Flexible',
-        content: 'Customize every aspect of your UI.',
-      },
-    ]}
+    itemsGrid={{
+      items: [
+        {
+          icon: { name: 'heroicons:sparkles', class: 'text-accent' },
+          title: 'Composable',
+          content: 'Blocks can be combined in any way.',
+        },
+        {
+          icon: { name: 'heroicons:bolt', class: 'text-success' },
+          title: 'Fast',
+          content: 'Astro delivers lightning-fast sites.',
+        },
+        {
+          icon: { name: 'heroicons:star', class: 'text-warning' },
+          title: 'Flexible',
+          content: 'Customize every aspect of your UI.',
+        },
+      ],
+    }}
   >
     <h3>Building on modern foundations</h3>
     Gain a competitive advantage by incorporating industry leading practices
@@ -128,8 +132,8 @@ const metadata = {
   </ContentBlock>
   <h3>4. Items grid</h3>
   <p>
-    Once you use <code>itemsGrid</code>, move the items into it: its <code>items</code> replace the flat
-    <code>items</code> prop.
+    <code>itemsGrid</code> holds the items and the grid config; the grid renders when its
+    <code>items</code> is non-empty.
   </p>
   <ContentBlock
     headline={{
