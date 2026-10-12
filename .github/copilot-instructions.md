@@ -171,13 +171,13 @@ Prettier config: single quotes, semicolons, 2-space indent, 100-char print width
 
 Composite components follow a consistent composition model:
 
-**`defaultXConfig` prop** — every composite that renders child components exposes a `defaultXConfig` prop (e.g., `defaultItemConfig`, `defaultActionsConfig`, `defaultButtonConfig`) that provides a base config merged with each child's own props via `mergeConfigs()`. This lets callers style all children at once without touching each one individually.
+**`defaultXConfig` prop** — every composite that renders child components exposes a `defaultXConfig` prop (e.g., `defaultItemConfig`, `defaultButtonConfig`, `defaultSocialButtonConfig`) that provides a base config merged with each child's own props via `mergeConfigs()`. This lets callers style all children at once without touching each one individually.
 
 ```astro
 <!-- ItemsGrid: defaultItemConfig applies to every Item -->
 <ItemsGrid
   items={itemsArray}
-  defaultItemConfig={{ layout: 'horizontal', border: { width: 'border' } }}
+  defaultItemConfig={{ orientation: 'horizontal', border: { width: 'border' } }}
 />
 ```
 
@@ -187,20 +187,20 @@ Composite components follow a consistent composition model:
 
 **Composite component quick reference:**
 
-| Component                  | Key props                                                                                        |
-| -------------------------- | ------------------------------------------------------------------------------------------------ |
-| `Header`                   | `logo`, `navigationLeft/Right`, `actionsLeft/Right`, `isSticky`, `isFloating`, `showThemeToggle` |
-| `Footer`                   | `logo`, `disclaimer`, `footnote`, `socialActions`, `secondaryActions`, `showLanguageToggle`      |
-| `Content`                  | `headline`, `image`, `action`, `items`, `imageOnLeft`, `reverseOnMobile`                         |
-| `CallToAction`             | `headline`, `actions`                                                                            |
-| `ItemsContent`             | `headline`, `itemsGrid`                                                                          |
-| `ItemsGrid`                | `items`, `columns` (1-4), `air`, `defaultItemConfig`                                             |
-| `ItemsTimeline`            | `items`, `defaultItemConfig` — vertical timeline with connectors                                 |
-| `ItemsTimelineHorizontal`  | `items`, `defaultItemConfig` — horizontal timeline                                               |
-| `NavigationTree`           | `items` (nested `ButtonProps[]`), `expansionStrategy`, `toggleMode`, `maxDepth`                  |
-| `NavigationTreeHorizontal` | same as `NavigationTree` but horizontal, used inside `Header`                                    |
+| Component                  | Key props                                                                                                  |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `Header`                   | `logo`, `left/rightNavigationTreeHorizontal`, `left/rightButtons`, `isSticky`, `isFloating`, `themeToggle` |
+| `Footer`                   | `logo`, `disclaimer`, `footnote`, `socialButtons`, `secondaryButtons`, `languageToggle`                    |
+| `Content`                  | `headline`, `image`, `action`, `itemsGrid`, `imagePosition`, `twoColumnContainer`                          |
+| `CallToAction`             | `headline`, `actions`                                                                                      |
+| `ItemsContent`             | `headline`, `itemsGrid`                                                                                    |
+| `ItemsGrid`                | `items`, `columns` (1-4), `gap`, `defaultItemConfig`                                                       |
+| `ItemsTimeline`            | `items`, `defaultItemConfig` — vertical timeline with connectors                                           |
+| `ItemsTimelineHorizontal`  | `items`, `defaultItemConfig` — horizontal timeline                                                         |
+| `NavigationTree`           | `items` (nested `ButtonProps[]`), `expansionStrategy`, `toggleMode`, `maxDepth`                            |
+| `NavigationTreeHorizontal` | same as `NavigationTree` but horizontal, used inside `Header`                                              |
 
-**`Item`** is the shared leaf for all `Items*` components. It supports `icon`, `title`, `content`, `actions`, `layout` (`vertical`/`horizontal`), and connector props (`showConnector`, `connectorStyle`).
+**`Item`** is the shared leaf for all `Items*` components. It supports `icon`, `title`, `content`, `actions`, `orientation` (`vertical`/`horizontal`), and connector props (`showConnector`, `connectorStyle`).
 
 **`Headline`** is the standard section header primitive with `tagline`, `title`, `subtitle`, and `align`. Always use it instead of raw headings inside blocks.
 

@@ -38,18 +38,4 @@ export interface HeaderProps extends Omit<HTMLAttributes<'div'>, 'class'> {
   defaultButtonConfig?: LayerConfig<ButtonProps>;
   /** Custom classes for the inner layout row (the element holding the left, logo and right zones). */
   class?: string;
-  /** @deprecated Use `themeToggle={{}}`. */
-  showThemeToggle?: never;
-  /** @deprecated Use `buttonsGap`. */
-  actionsAir?: never;
-  /** @deprecated Use `leftNavigationTreeHorizontal`. */
-  navigationLeft?: never;
-  /** @deprecated Use `rightNavigationTreeHorizontal`. */
-  navigationRight?: never;
-  /** @deprecated Use `leftButtons`. */
-  actionsLeft?: never;
-  /** @deprecated Use `rightButtons`. */
-  actionsRight?: never;
-  /** @deprecated Use `defaultButtonConfig`. */
-  defaultActionsConfig?: never;
 }

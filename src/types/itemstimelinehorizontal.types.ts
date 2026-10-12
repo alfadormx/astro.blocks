@@ -10,8 +10,6 @@ export interface ItemsTimelineHorizontalProps {
   connectorStyle?: ConnectorStyle;
   /** The horizontal spacing between timeline items (default: 'normal'). */
   gap?: 'none' | 'tight' | 'normal' | 'loose';
-  /** @deprecated Use `gap`. */
-  air?: never;
   /** Additional CSS classes merged onto the timeline wrapper element (default: ''). */
   class?: string;
   /** Default item props merged into every item before its own values are applied. */

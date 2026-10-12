@@ -75,8 +75,6 @@ export type GridGap = 'none' | 'tight' | 'normal' | 'loose';
 export interface GridLayoutProps extends Omit<ContainerProps, 'layout' | 'items'> {
   /** Gap between columns, responsive (default: 'normal') */
   gap?: GridGap;
-  /** @deprecated Use `gap`; padding inside the box is `content.air`. */
-  air?: never;
   /** Responsive behavior (default: false - always side-by-side) */
   responsive?: boolean;
   /** Responsive breakpoint (default: 'md:' - use 'sm:', 'lg:', etc.) */

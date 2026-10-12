@@ -32,8 +32,6 @@ export interface NavigationTreeProps {
   inactiveItemConfig?: LayerConfig<ButtonProps>;
   /** Button config merged over `defaultItemConfig` on the active item. */
   activeItemConfig?: LayerConfig<ButtonProps>;
-  /** @deprecated Use `activeItemConfig`. */
-  defaultActiveItemConfig?: never;
   /** The strategy that decides whether an item's children are shown (default: `'active-only'`). */
   expansionStrategy?: ExpansionStrategy;
   /** The maximum depth expanded when `expansionStrategy` is `'depth'` (default: `Infinity`). */

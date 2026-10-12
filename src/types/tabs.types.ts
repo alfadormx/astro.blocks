@@ -12,10 +12,6 @@ export interface TabsProps {
   defaultItemConfig?: LayerConfig<ButtonProps>;
   /** Button config merged over `defaultItemConfig` on the active tab only. */
   activeItemConfig?: LayerConfig<ButtonProps>;
-  /** @deprecated Use `defaultItemConfig`. */
-  defaultTabConfig?: never;
-  /** @deprecated Use `activeItemConfig`. */
-  activeTabConfig?: never;
   /** Layout direction of the tab list and content: 'horizontal' stacks tabs in a row above the panel, 'vertical' places them side by side in a grid (default: 'horizontal'). */
   orientation?: 'horizontal' | 'vertical';
   /** Config passed to the wrapping Container block that surrounds the whole Tabs component. */
