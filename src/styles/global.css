@@ -262,11 +262,11 @@
     transition: all 0.2s ease;
   }
 
-  .content-carousel .carousel-indicator-btn {
+  .content-carousel [data-carousel-indicator] {
     opacity: 0.7;
   }
 
-  .content-carousel .carousel-indicator-btn[aria-selected='true'] {
+  .content-carousel [data-carousel-indicator][aria-selected='true'] {
     opacity: 1;
     background-color: var(--color-primary) !important;
   }

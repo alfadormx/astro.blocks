@@ -26,7 +26,7 @@ const positionClasses = {
 } as const;
 
 // Configuration: Default close button
-const defaultCloseButton: Partial<ButtonProps> = {
+const internalCloseButton: Partial<ButtonProps> = {
   icon: { name: 'heroicons:x-mark' },
   variant: 'solid',
   intent: 'neutral',
@@ -42,10 +42,9 @@ const {
   position = 'center',
   closeOnBackdrop = true,
   closeOnEscape = true,
-  showCloseButton = true,
   backdropClass = '',
   class: className = '',
-  closeButtonConfig,
+  closeButton,
   ...attrs
 } = Astro.props;
 
@@ -66,7 +65,8 @@ const backdropFinalClass = cn(
 );
 
 const modalFinalClass = cn(defaultModalClass, className);
-const mergedCloseButtonConfig = mergeConfigs({}, defaultCloseButton, closeButtonConfig);
+const mergedCloseButton =
+  closeButton === false ? undefined : mergeConfigs({}, internalCloseButton, closeButton);
 ---
 
 <div
@@ -80,9 +80,9 @@ const mergedCloseButtonConfig = mergeConfigs({}, defaultCloseButton, closeButton
 >
   <div class={modalFinalClass} role="dialog" aria-modal="true" data-modal-content>
     {
-      showCloseButton && (
+      mergedCloseButton && (
         <div class="absolute top-4 right-4 z-10">
-          <Button {...mergedCloseButtonConfig} data-modal-close />
+          <Button {...mergedCloseButton} data-modal-close />
         </div>
       )
     }
