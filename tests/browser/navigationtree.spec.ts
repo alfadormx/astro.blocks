@@ -65,3 +65,20 @@ test('icon toggle mode expands only from the chevron and navigates from the labe
   await control.getByText('Documentation', { exact: true }).click();
   await expect(page).toHaveURL(/\/documentation\/?$/);
 });
+
+test('icon toggle mode rotates the chevron of the toggled parent', async ({ page }) => {
+  await page.goto(PAGE_URL);
+  const root = page.locator('[data-doc-section="icon-toggle"]');
+  const parentItem = root.locator('[data-has-children="true"]').first();
+  const icon = parentItem.locator('> div > div > a .nav-tree-icon');
+  const wasExpanded = (await parentItem.getAttribute('data-expanded')) === 'true';
+  const expandedClass = /\bnav-tree-icon-expanded\b/;
+
+  await icon.click();
+  if (wasExpanded) await expect(icon).not.toHaveClass(expandedClass);
+  else await expect(icon).toHaveClass(expandedClass);
+
+  await icon.click();
+  if (wasExpanded) await expect(icon).toHaveClass(expandedClass);
+  else await expect(icon).not.toHaveClass(expandedClass);
+});
