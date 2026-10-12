@@ -35,7 +35,7 @@ const {
   muted,
   hideControls,
   loop,
-  pipButtonConfig,
+  pipButton,
   class: className = '',
   align,
 } = Astro.props;
@@ -96,16 +96,15 @@ const pipCloseBtnId = isFloating ? 'pip-close' : undefined;
 const defaultWrapperClass = 'w-full relative bg-elevated';
 const defaultVideoGroupClass = 'w-full relative overflow-hidden bg-elevated';
 
-const pipButtonDefaultConfig: Partial<ButtonProps> = {
+const internalPipButton: Partial<ButtonProps> = {
   id: pipCloseBtnId,
   icon: { name: 'heroicons:arrow-up-left' },
   size: 'sm',
-  class: 'absolute z-10 top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity hidden',
+  hidden: true,
+  class: 'absolute z-10 top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity',
 };
 
-const mergedPipButtonConfig = mergeConfigs({}, pipButtonDefaultConfig, pipButtonConfig, {
-  class: cn(pipButtonDefaultConfig?.class, pipButtonConfig?.class),
-});
+const mergedPipButton = mergeConfigs({}, internalPipButton, pipButton);
 
 const mergedWrapperClass = cn(defaultWrapperClass, aspectRatioClasses[aspectRatio], className);
 
@@ -119,7 +118,7 @@ const mergedVideoGroupClass = cn(
 <div class={align ? alignClass : ''}>
   <div class={mergedWrapperClass}>
     <div id={videoGroupId} class={mergedVideoGroupClass}>
-      {isFloating && <Button {...mergedPipButtonConfig} />}
+      {isFloating && <Button {...mergedPipButton} />}
       <video
         class="plyr"
         data-plyr-config={JSON.stringify(defaultOptions)}
@@ -168,22 +167,17 @@ const mergedVideoGroupClass = cn(
 
       if (shouldFloat) {
         videoGroup.classList.add('floating-player');
-        if (pipCloseBtn) {
-          pipCloseBtn.classList.remove('hidden');
-          pipCloseBtn.classList.add('inline-flex');
-        }
+        pipCloseBtn?.toggleAttribute('hidden', false);
       } else {
         videoGroup.classList.remove('floating-player');
-        if (pipCloseBtn) {
-          pipCloseBtn.classList.add('hidden');
-        }
+        pipCloseBtn?.toggleAttribute('hidden', true);
       }
     }
 
     if (pipCloseBtn && videoGroup) {
       pipCloseBtn.addEventListener('click', () => {
         videoGroup.classList.remove('floating-player');
-        pipCloseBtn.classList.add('hidden');
+        pipCloseBtn.toggleAttribute('hidden', true);
 
         userClosedFloatingPlayer = true;
       });

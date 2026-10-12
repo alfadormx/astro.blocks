@@ -2,6 +2,7 @@ import type { HTMLAttributes } from 'astro/types';
 import type { ButtonProps } from './button.types';
 import type { ImageProps } from './image.types';
 import type { ContainerProps } from './container.types';
+import type { LayerConfig } from './config.types';
 
 export type CarouselItem = Partial<ImageProps> & {
   id?: string;
@@ -26,8 +27,6 @@ export interface ContentCarouselProps extends Omit<HTMLAttributes<'div'>, 'class
   controlsPosition?: 'inside' | 'outside';
   /** Whether the slide indicator dots are rendered (default: true). */
   showIndicators?: boolean;
-  /** Whether the previous/next navigation buttons are rendered (default: true). */
-  showControls?: boolean;
   /** Whether pointer/touch drag navigation is enabled (default: true). */
   draggable?: boolean;
   /** Whether the carousel loops infinitely using cloned slides (default: false). */
@@ -40,16 +39,28 @@ export interface ContentCarouselProps extends Omit<HTMLAttributes<'div'>, 'class
   ariaLabel?: string;
   /** Shows a debug overlay with live drag/index state (default: false). */
   debug?: boolean;
-  /** Overrides merged into the default previous-slide button config. */
-  prevButtonConfig?: Partial<ButtonProps>;
-  /** Overrides merged into the default next-slide button config. */
-  nextButtonConfig?: Partial<ButtonProps>;
-  /** Overrides merged into the default slide indicator button config; `id` is omitted because the button repeats per slide. */
-  indicatorButtonConfig?: Partial<Omit<ButtonProps, 'id'>>;
-  /** Overrides merged into the default autoplay pause button config. */
-  pauseButtonConfig?: Partial<ButtonProps>;
-  /** Overrides merged into the default autoplay play/resume button config. */
-  playButtonConfig?: Partial<ButtonProps>;
+  /** Previous-slide button merged over the default; `false` hides it (default: rendered). */
+  prevButton?: ButtonProps | false;
+  /** Next-slide button merged over the default; `false` hides it (default: rendered). */
+  nextButton?: ButtonProps | false;
+  /** Button config merged under every slide indicator. */
+  defaultIndicatorButtonConfig?: LayerConfig<ButtonProps>;
+  /** Autoplay pause button merged over the default. */
+  pauseButton?: ButtonProps;
+  /** Autoplay resume button merged over the default. */
+  playButton?: ButtonProps;
+  /** @deprecated Use `prevButton: false` and `nextButton: false`. */
+  showControls?: never;
+  /** @deprecated Use `prevButton`. */
+  prevButtonConfig?: never;
+  /** @deprecated Use `nextButton`. */
+  nextButtonConfig?: never;
+  /** @deprecated Use `defaultIndicatorButtonConfig`. */
+  indicatorButtonConfig?: never;
+  /** @deprecated Use `pauseButton`. */
+  pauseButtonConfig?: never;
+  /** @deprecated Use `playButton`. */
+  playButtonConfig?: never;
   /** Container wrapping the carousel; rendered only when set. Carousel attributes stay on the inner root. */
   container?: ContainerProps;
   /** Additional class names applied to the root carousel element (default: ''). */

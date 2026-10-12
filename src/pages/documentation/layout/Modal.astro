@@ -161,7 +161,7 @@ var metadata = {
       </div>
     </ModalBlock>
 
-    <ModalBlock id="modal-no-close-btn" showCloseButton={false} size="sm">
+    <ModalBlock id="modal-no-close-btn" closeButton={false} size="sm">
       <div class="p-6">
         <h3>No Close Button</h3>
         <p class="text-sm text-muted-foreground mb-4">
@@ -243,11 +243,11 @@ var metadata = {
 
   <h3>Close Button Label</h3>
   <p class="mb-4">
-    <code>closeButtonConfig</code> reaches the close button, including its <code>aria-label</code>.
+    <code>closeButton</code> reaches the close button, including its <code>aria-label</code>.
   </p>
   <div class="p-8 bg-muted rounded-lg" data-doc-section="close-label">
     <Button data-modal-trigger="labelled-modal" label="Open Labelled Modal" />
-    <ModalBlock id="labelled-modal" closeButtonConfig={{ 'aria-label': 'Dismiss dialog' }}>
+    <ModalBlock id="labelled-modal" closeButton={{ 'aria-label': 'Dismiss dialog' }}>
       <div class="p-6">
         <h3>Labelled Close Button</h3>
         <p class="text-muted-foreground mb-4">The close button is announced as "Dismiss dialog".</p>
@@ -305,10 +305,12 @@ var metadata = {
           <td class="py-2 px-4">Close when pressing ESC key</td>
         </tr>
         <tr class="border-b border-border/50">
-          <td class="py-2 px-4 font-mono">showCloseButton</td>
-          <td class="py-2 px-4">boolean</td>
-          <td class="py-2 px-4">true</td>
-          <td class="py-2 px-4">Show X close button in top-right</td>
+          <td class="py-2 px-4 font-mono">closeButton</td>
+          <td class="py-2 px-4">ButtonProps | false</td>
+          <td class="py-2 px-4">rendered</td>
+          <td class="py-2 px-4"
+            >Close button in top-right, merged over the default; false hides it</td
+          >
         </tr>
         <tr class="border-b border-border/50">
           <td class="py-2 px-4 font-mono">backdropClass</td>
