@@ -24,8 +24,6 @@ export interface ItemProps {
   actions?: ButtonProps[];
   /** Orientation of the item: stacked/centered or icon-left/text-right (default: 'vertical'). */
   orientation?: ItemOrientation;
-  /** @deprecated Use `orientation`. */
-  layout?: never;
   /** Background configuration for the item; only color backgrounds supported. */
   background?: SimpleBackgroundProps;
   /** Spacing configuration applied to the item. */

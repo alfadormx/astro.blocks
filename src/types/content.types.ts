@@ -23,12 +23,4 @@ export interface ContentProps {
   itemsGrid?: ItemsGridProps;
   /** Custom classes for the wrapper div around the image column; style the Image itself with `image.class` */
   imageClass?: string;
-  /** @deprecated Use `imagePosition`. */
-  imageOnLeft?: never;
-  /** @deprecated Use `slotClass`. */
-  contentSlotClass?: never;
-  /** @deprecated Use `twoColumnContainer.reverseOnMobile`. */
-  reverseOnMobile?: never;
-  /** @deprecated Use `itemsGrid.items`. */
-  items?: never;
 }

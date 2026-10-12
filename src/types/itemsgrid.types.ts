@@ -49,8 +49,6 @@ export interface ItemsGridProps {
   fillLastRow?: boolean;
   /** Gap spacing between grid items (default: 'normal'). */
   gap?: 'none' | 'tight' | 'normal' | 'loose';
-  /** @deprecated Use `gap`. */
-  air?: never;
   /** Additional CSS classes appended to the grid container (default: ''). */
   class?: string;
   /** Default values merged into every item's props before rendering, overridden by each item's own values. */

@@ -33,16 +33,4 @@ export interface FooterProps {
   languageToggle?: LanguageToggleProps;
   /** Horizontal alignment of the LanguageToggle row (default: 'center'). */
   languageToggleAlign?: 'left' | 'center' | 'right';
-  /** @deprecated Use `languageToggle={{}}`. */
-  showLanguageToggle?: never;
-  /** @deprecated Use `languageToggle`. */
-  languageToggleConfig?: never;
-  /** @deprecated Use `socialButtons`. */
-  socialActions?: never;
-  /** @deprecated Use `secondaryButtons`. */
-  secondaryActions?: never;
-  /** @deprecated Use `defaultSocialButtonConfig`. */
-  defaultSocialActionsConfig?: never;
-  /** @deprecated Use `defaultSecondaryButtonConfig`. */
-  defaultSecondaryActionsConfig?: never;
 }
