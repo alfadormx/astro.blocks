@@ -1,7 +1,6 @@
 ---
 import Layout from '../_layouts/Layout.astro';
 import TabsBlock from '~/components/blocks/composite/Tabs.astro';
-import TabItemBlock from '~/components/blocks/primitives/TabItem.astro';
 import ContentBlock from '~/components/blocks/composite/Content.astro';
 import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
 
@@ -20,14 +19,14 @@ const metadata = { title: { default: 'Tabs' } };
   <div data-doc-section="horizontal">
     <TabsBlock
       items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
-      defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
-      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      defaultItemConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeItemConfig={{ variant: 'solid', intent: 'primary' }}
       tabList={{
         spacing: { padding: 'p-2', gap: 'gap-2' },
         border: { width: 'border', color: 'border-gray-200', radius: 'rounded-lg' },
       }}
     >
-      <TabItemBlock slot="panel-0">
+      <div slot="panel-0">
         <ContentBlock
           container={{
             background: {
@@ -48,10 +47,10 @@ const metadata = { title: { default: 'Tabs' } };
             alt: 'Demo image',
           }}
         >
-          <p>Nested inside a TabItem to show richer blocks are supported.</p>
+          <p>Nested inside a panel to show richer blocks are supported.</p>
         </ContentBlock>
-      </TabItemBlock>
-      <TabItemBlock slot="panel-1">
+      </div>
+      <div slot="panel-1">
         <ContentBlock
           container={{
             background: {
@@ -72,10 +71,10 @@ const metadata = { title: { default: 'Tabs' } };
             alt: 'Demo image',
           }}
         >
-          <p>Nested inside a TabItem to show richer blocks are supported.</p>
+          <p>Nested inside a panel to show richer blocks are supported.</p>
         </ContentBlock>
-      </TabItemBlock>
-      <TabItemBlock slot="panel-2">
+      </div>
+      <div slot="panel-2">
         <ContentBlock
           container={{
             background: {
@@ -95,9 +94,9 @@ const metadata = { title: { default: 'Tabs' } };
             alt: 'Demo image',
           }}
         >
-          <p>Nested inside a TabItem to show richer blocks are supported.</p>
+          <p>Nested inside a panel to show richer blocks are supported.</p>
         </ContentBlock>
-      </TabItemBlock>
+      </div>
     </TabsBlock>
   </div>
 
@@ -105,11 +104,11 @@ const metadata = { title: { default: 'Tabs' } };
   <div data-doc-section="vertical">
     <TabsBlock
       items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
-      defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
-      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      defaultItemConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeItemConfig={{ variant: 'solid', intent: 'primary' }}
       orientation="vertical"
     >
-      <TabItemBlock slot="panel-0">
+      <div slot="panel-0">
         <ContentBlock
           container={{
             background: {
@@ -130,10 +129,10 @@ const metadata = { title: { default: 'Tabs' } };
             alt: 'Demo image',
           }}
         >
-          <p>Nested inside a TabItem to show richer blocks are supported.</p>
+          <p>Nested inside a panel to show richer blocks are supported.</p>
         </ContentBlock>
-      </TabItemBlock>
-      <TabItemBlock slot="panel-1">
+      </div>
+      <div slot="panel-1">
         <ContentBlock
           container={{
             background: {
@@ -154,10 +153,10 @@ const metadata = { title: { default: 'Tabs' } };
             alt: 'Demo image',
           }}
         >
-          <p>Nested inside a TabItem to show richer blocks are supported.</p>
+          <p>Nested inside a panel to show richer blocks are supported.</p>
         </ContentBlock>
-      </TabItemBlock>
-      <TabItemBlock slot="panel-2">
+      </div>
+      <div slot="panel-2">
         <ContentBlock
           container={{
             background: {
@@ -177,9 +176,9 @@ const metadata = { title: { default: 'Tabs' } };
             alt: 'Demo image',
           }}
         >
-          <p>Nested inside a TabItem to show richer blocks are supported.</p>
+          <p>Nested inside a panel to show richer blocks are supported.</p>
         </ContentBlock>
-      </TabItemBlock>
+      </div>
     </TabsBlock>
   </div>
 
@@ -191,20 +190,20 @@ const metadata = { title: { default: 'Tabs' } };
   <div data-doc-section="layout-row">
     <TabsBlock
       items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
-      defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
-      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      defaultItemConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeItemConfig={{ variant: 'solid', intent: 'primary' }}
       orientation="vertical"
       tabList={{ layout: 'row', spacing: { padding: 'p-2', gap: 'gap-2' } }}
     >
-      <TabItemBlock slot="panel-0">
+      <div slot="panel-0">
         <p>Overview panel content.</p>
-      </TabItemBlock>
-      <TabItemBlock slot="panel-1">
+      </div>
+      <div slot="panel-1">
         <p>API panel content.</p>
-      </TabItemBlock>
-      <TabItemBlock slot="panel-2">
+      </div>
+      <div slot="panel-2">
         <p>Examples panel content.</p>
-      </TabItemBlock>
+      </div>
     </TabsBlock>
   </div>
 
@@ -216,43 +215,43 @@ const metadata = { title: { default: 'Tabs' } };
   <div data-doc-section="layout-column">
     <TabsBlock
       items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
-      defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
-      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      defaultItemConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeItemConfig={{ variant: 'solid', intent: 'primary' }}
       tabList={{ layout: 'column', spacing: { padding: 'p-2', gap: 'gap-2' } }}
     >
-      <TabItemBlock slot="panel-0">
+      <div slot="panel-0">
         <p>Overview panel content.</p>
-      </TabItemBlock>
-      <TabItemBlock slot="panel-1">
+      </div>
+      <div slot="panel-1">
         <p>API panel content.</p>
-      </TabItemBlock>
-      <TabItemBlock slot="panel-2">
+      </div>
+      <div slot="panel-2">
         <p>Examples panel content.</p>
-      </TabItemBlock>
+      </div>
     </TabsBlock>
   </div>
 
   <h3>Tab list layout: column, content-sized triggers</h3>
   <p>
-    Set <code>width: 'auto'</code> on <code>defaultTabConfig</code> (or on an item) to keep triggers as
-    wide as their own label instead of filling the tab list.
+    Set <code>width: 'auto'</code> on <code>defaultItemConfig</code> (or on an item) to keep triggers
+    as wide as their own label instead of filling the tab list.
   </p>
   <div data-doc-section="layout-column-auto">
     <TabsBlock
       items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
-      defaultTabConfig={{ variant: 'ghost', intent: 'neutral', width: 'auto' }}
-      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      defaultItemConfig={{ variant: 'ghost', intent: 'neutral', width: 'auto' }}
+      activeItemConfig={{ variant: 'solid', intent: 'primary' }}
       tabList={{ layout: 'column', spacing: { padding: 'p-2', gap: 'gap-2' } }}
     >
-      <TabItemBlock slot="panel-0">
+      <div slot="panel-0">
         <p>Overview panel content.</p>
-      </TabItemBlock>
-      <TabItemBlock slot="panel-1">
+      </div>
+      <div slot="panel-1">
         <p>API panel content.</p>
-      </TabItemBlock>
-      <TabItemBlock slot="panel-2">
+      </div>
+      <div slot="panel-2">
         <p>Examples panel content.</p>
-      </TabItemBlock>
+      </div>
     </TabsBlock>
   </div>
 
@@ -281,33 +280,33 @@ const metadata = { title: { default: 'Tabs' } };
         { label: 'Layout' },
         { label: 'Tokens' },
       ]}
-      defaultTabConfig={{
+      defaultItemConfig={{
         variant: 'ghost',
         intent: 'neutral',
         orientation: 'vertical',
         icon: { name: 'heroicons:cube' },
       }}
-      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      activeItemConfig={{ variant: 'solid', intent: 'primary' }}
       tabList={{ layout: 'grid', columns: 3 }}
     >
-      <TabItemBlock slot="panel-0">
+      <div slot="panel-0">
         <p>Overview panel content.</p>
-      </TabItemBlock>
-      <TabItemBlock slot="panel-1">
+      </div>
+      <div slot="panel-1">
         <p>API panel content.</p>
-      </TabItemBlock>
-      <TabItemBlock slot="panel-2">
+      </div>
+      <div slot="panel-2">
         <p>Examples panel content.</p>
-      </TabItemBlock>
-      <TabItemBlock slot="panel-3">
+      </div>
+      <div slot="panel-3">
         <p>Themes panel content.</p>
-      </TabItemBlock>
-      <TabItemBlock slot="panel-4">
+      </div>
+      <div slot="panel-4">
         <p>Layout panel content.</p>
-      </TabItemBlock>
-      <TabItemBlock slot="panel-5">
+      </div>
+      <div slot="panel-5">
         <p>Tokens panel content.</p>
-      </TabItemBlock>
+      </div>
     </TabsBlock>
   </div>
 
@@ -333,22 +332,22 @@ const metadata = { title: { default: 'Tabs' } };
         { label: 'Eleven' },
         { label: 'Twelve' },
       ]}
-      defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
-      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      defaultItemConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeItemConfig={{ variant: 'solid', intent: 'primary' }}
       tabList={{ layout: 'grid', columns: 4 }}
     >
-      <TabItemBlock slot="panel-0"><p>Panel one.</p></TabItemBlock>
-      <TabItemBlock slot="panel-1"><p>Panel two.</p></TabItemBlock>
-      <TabItemBlock slot="panel-2"><p>Panel three.</p></TabItemBlock>
-      <TabItemBlock slot="panel-3"><p>Panel four.</p></TabItemBlock>
-      <TabItemBlock slot="panel-4"><p>Panel five.</p></TabItemBlock>
-      <TabItemBlock slot="panel-5"><p>Panel six.</p></TabItemBlock>
-      <TabItemBlock slot="panel-6"><p>Panel seven.</p></TabItemBlock>
-      <TabItemBlock slot="panel-7"><p>Panel eight.</p></TabItemBlock>
-      <TabItemBlock slot="panel-8"><p>Panel nine.</p></TabItemBlock>
-      <TabItemBlock slot="panel-9"><p>Panel ten.</p></TabItemBlock>
-      <TabItemBlock slot="panel-10"><p>Panel eleven.</p></TabItemBlock>
-      <TabItemBlock slot="panel-11"><p>Panel twelve.</p></TabItemBlock>
+      <div slot="panel-0"><p>Panel one.</p></div>
+      <div slot="panel-1"><p>Panel two.</p></div>
+      <div slot="panel-2"><p>Panel three.</p></div>
+      <div slot="panel-3"><p>Panel four.</p></div>
+      <div slot="panel-4"><p>Panel five.</p></div>
+      <div slot="panel-5"><p>Panel six.</p></div>
+      <div slot="panel-6"><p>Panel seven.</p></div>
+      <div slot="panel-7"><p>Panel eight.</p></div>
+      <div slot="panel-8"><p>Panel nine.</p></div>
+      <div slot="panel-9"><p>Panel ten.</p></div>
+      <div slot="panel-10"><p>Panel eleven.</p></div>
+      <div slot="panel-11"><p>Panel twelve.</p></div>
     </TabsBlock>
   </div>
 
@@ -362,23 +361,23 @@ const metadata = { title: { default: 'Tabs' } };
   <div class="max-w-lg max-h-80 overflow-y-auto border border-border" data-doc-section="sticky">
     <TabsBlock
       items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
-      defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
-      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      defaultItemConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeItemConfig={{ variant: 'solid', intent: 'primary' }}
       tabList={{
         layout: 'grid',
         columns: 3,
         wrapperClass: 'sticky top-0 bg-background',
       }}
     >
-      <TabItemBlock slot="panel-0">
+      <div slot="panel-0">
         {Array.from({ length: 12 }, (_, i) => <p>Overview paragraph {i + 1}.</p>)}
-      </TabItemBlock>
-      <TabItemBlock slot="panel-1">
+      </div>
+      <div slot="panel-1">
         {Array.from({ length: 12 }, (_, i) => <p>API paragraph {i + 1}.</p>)}
-      </TabItemBlock>
-      <TabItemBlock slot="panel-2">
+      </div>
+      <div slot="panel-2">
         {Array.from({ length: 12 }, (_, i) => <p>Examples paragraph {i + 1}.</p>)}
-      </TabItemBlock>
+      </div>
     </TabsBlock>
   </div>
 
@@ -390,26 +389,26 @@ const metadata = { title: { default: 'Tabs' } };
   <div class="max-w-lg" data-doc-section="panel-class">
     <TabsBlock
       items={[{ label: 'Overview' }, { label: 'API' }]}
-      defaultTabConfig={{ variant: 'ghost', intent: 'neutral' }}
-      activeTabConfig={{ variant: 'solid', intent: 'primary' }}
+      defaultItemConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeItemConfig={{ variant: 'solid', intent: 'primary' }}
       panelClass="flex flex-col gap-4 p-4 bg-surface rounded-lg"
     >
-      <TabItemBlock slot="panel-0">
+      <div slot="panel-0">
         <p>Overview paragraph one.</p>
         <p>Overview paragraph two.</p>
-      </TabItemBlock>
-      <TabItemBlock slot="panel-1">
+      </div>
+      <div slot="panel-1">
         <p>API paragraph one.</p>
         <p>API paragraph two.</p>
-      </TabItemBlock>
+      </div>
     </TabsBlock>
   </div>
 
   <ApiReferenceTable component="Tabs" category="composite" />
   <p>
-    Panel content is supplied via <a href="/documentation/primitives/TabItem">TabItem</a> blocks placed
-    in matching <code>panel-0</code>, <code>panel-1</code>, ... slots — see the Horizontal/Vertical
-    examples above.
+    Panel content is any element placed in the matching <code>panel-0</code>, <code>panel-1</code>,
+    ... slots — see the Horizontal/Vertical examples above. Style every panel with
+    <code>panelClass</code>.
   </p>
 
   <h3 class="font-semibold mt-6 mb-3">Accessibility</h3>
