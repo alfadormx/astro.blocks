@@ -21,9 +21,9 @@ function fail(message: string): never {
 
 /** Throws on a Configurator config the composed blocks would not catch with a category-level message. */
 export function validateConfigurator(
-  props: Pick<ConfiguratorProps, 'categories' | 'viewer' | 'urlState' | 'summary'>
+  props: Pick<ConfiguratorProps, 'categories' | 'modelViewer' | 'urlState' | 'summary'>
 ): void {
-  const { categories, viewer, urlState, summary } = props;
+  const { categories, modelViewer, urlState, summary } = props;
   if (!categories || categories.length === 0) fail('at least one category is required');
   if (categories.length > MAX_CATEGORIES) {
     fail(`${categories.length} categories given; at most ${MAX_CATEGORIES} are supported`);
@@ -35,9 +35,9 @@ export function validateConfigurator(
     if (names.has(category.name)) fail(`category "${category.name}" is declared twice`);
     names.add(category.name);
     if (!category.heading?.trim()) fail(`category "${category.name}" has no heading`);
-    if (category.camera !== undefined && !viewer.cameraPresets?.[category.camera]) {
+    if (category.camera !== undefined && !modelViewer.cameraPresets?.[category.camera]) {
       fail(
-        `category "${category.name}" camera "${category.camera}" is not a key of viewer.cameraPresets`
+        `category "${category.name}" camera "${category.camera}" is not a key of modelViewer.cameraPresets`
       );
     }
   });
