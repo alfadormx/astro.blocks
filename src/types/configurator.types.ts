@@ -22,10 +22,6 @@ interface ConfiguratorCategoryBase {
   heading: string;
   /** Key of `modelViewer.cameraPresets` to move to when this category changes after another did. */
   camera?: string;
-  /** @deprecated Use `triggerButton`. */
-  trigger?: never;
-  /** @deprecated Use `itemsGrid`, `toggleGroup` or `textArea` for the category's panel. */
-  config?: never;
 }
 
 export type ConfiguratorToggleOption = ToggleGroupOption & {
@@ -140,18 +136,4 @@ export interface ConfiguratorProps {
   summaryClass?: string;
   /** Extra classes on the configurator root. */
   class?: string;
-  /** @deprecated Use `modelViewer`. */
-  viewer?: never;
-  /** @deprecated Use `twoColumnContainer`. */
-  layout?: never;
-  /** @deprecated Use `headline.title`. */
-  title?: never;
-  /** @deprecated Use `tabs.defaultItemConfig`. */
-  defaultTriggerConfig?: never;
-  /** @deprecated Use `defaultItemsGridConfig`. */
-  defaultGridConfig?: never;
-  /** @deprecated Use `defaultToggleGroupConfig`. */
-  defaultToggleConfig?: never;
-  /** @deprecated Use `defaultTextAreaConfig`. */
-  defaultTextConfig?: never;
 }

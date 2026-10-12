@@ -28,6 +28,4 @@ export interface VideoProps {
   align?: 'left' | 'center' | 'right';
   /** Config for the floating player's close (PiP) button, merged over the default button. */
   pipButton?: ButtonProps;
-  /** @deprecated Use `pipButton`. */
-  pipButtonConfig?: never;
 }

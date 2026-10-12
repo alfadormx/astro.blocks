@@ -57,8 +57,6 @@ export interface ToggleGroupProps {
     'primary' | 'secondary' | 'tertiary' | 'accent' | 'success' | 'warning' | 'error' | 'neutral';
   /** Arrangement of the options (default: 'horizontal'). */
   orientation?: 'horizontal' | 'vertical';
-  /** @deprecated Use `orientation`. */
-  layout?: never;
   /** Disables every option (default: false). */
   disabled?: boolean;
   /** Presentation layered onto every option, both states. */

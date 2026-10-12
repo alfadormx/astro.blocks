@@ -16,8 +16,6 @@ export interface ItemsTimelineProps {
   connectorStyle?: ConnectorStyle;
   /** The vertical spacing between timeline items, controlling the bottom padding applied to each item's content (default: 'normal'). */
   gap?: 'none' | 'tight' | 'normal' | 'loose';
-  /** @deprecated Use `gap`. */
-  air?: never;
   /** Additional CSS classes merged onto the timeline's outer container element (default: ''). */
   class?: string;
   /** Default Item props merged into every timeline item before its own item-specific values are applied. */

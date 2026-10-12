@@ -49,18 +49,6 @@ export interface ContentCarouselProps extends Omit<HTMLAttributes<'div'>, 'class
   pauseButton?: ButtonProps;
   /** Autoplay resume button merged over the default. */
   playButton?: ButtonProps;
-  /** @deprecated Use `prevButton: false` and `nextButton: false`. */
-  showControls?: never;
-  /** @deprecated Use `prevButton`. */
-  prevButtonConfig?: never;
-  /** @deprecated Use `nextButton`. */
-  nextButtonConfig?: never;
-  /** @deprecated Use `defaultIndicatorButtonConfig`. */
-  indicatorButtonConfig?: never;
-  /** @deprecated Use `pauseButton`. */
-  pauseButtonConfig?: never;
-  /** @deprecated Use `playButton`. */
-  playButtonConfig?: never;
   /** Container wrapping the carousel; rendered only when set. Carousel attributes stay on the inner root. */
   container?: ContainerProps;
   /** Additional class names applied to the root carousel element (default: ''). */
