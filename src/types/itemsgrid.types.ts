@@ -15,6 +15,16 @@ export type ItemsGridSelection =
       label?: string;
       /** Id of the element naming the option set; wins over `label`. */
       labelledBy?: string;
+      /** Colour of the selected border and focus ring, matching Button (default: 'primary'). */
+      intent?:
+        | 'primary'
+        | 'secondary'
+        | 'tertiary'
+        | 'accent'
+        | 'success'
+        | 'warning'
+        | 'error'
+        | 'neutral';
     }
   | {
       mode: 'multiple';
@@ -28,6 +38,16 @@ export type ItemsGridSelection =
       min?: number;
       /** Maximum number of selected options; further options are disabled at the limit. */
       max?: number;
+      /** Colour of the selected border and focus ring, matching Button (default: 'primary'). */
+      intent?:
+        | 'primary'
+        | 'secondary'
+        | 'tertiary'
+        | 'accent'
+        | 'success'
+        | 'warning'
+        | 'error'
+        | 'neutral';
     };
 
 /** An ItemsGrid item: Item props plus the option fields read when selection is enabled. */

@@ -222,7 +222,32 @@ const metadata = {
     ]}
   />
 
-  <h3>7. Listening to selection:change</h3>
+  <h3>7. Selection intent</h3>
+  <p>
+    <code>selection.intent</code> colours the selected border and the focus ring, with the same values
+    as Button's <code>intent</code> (default: <code>'primary'</code>). <code
+      >selectedItemConfig.border</code
+    >
+    still wins over it.
+  </p>
+  <div data-doc-section="intent">
+    <ItemsGridBlock
+      columns={3}
+      selection={{
+        mode: 'single',
+        group: 'itemsgrid-doc-intent',
+        label: 'Finish',
+        intent: 'accent',
+      }}
+      items={[
+        { code: 'matte', icon: { name: 'heroicons:swatch' }, title: 'Matte', selected: true },
+        { code: 'satin', icon: { name: 'heroicons:swatch' }, title: 'Satin' },
+        { code: 'gloss', icon: { name: 'heroicons:swatch' }, title: 'Gloss' },
+      ]}
+    />
+  </div>
+
+  <h3>8. Listening to selection:change</h3>
   <p>
     The grid publishes to the selection runtime; anything on the page can read it with
     <code>subscribe(group, listener)</code> or a <code>selection:change</code> listener on
@@ -253,7 +278,7 @@ const metadata = {
     <output data-selection-log class="font-mono text-sm">No change yet</output>
   </div>
 
-  <h3>8. Fixed columns</h3>
+  <h3>9. Fixed columns</h3>
   <p>
     <code>responsive={'{false}'}</code> keeps <code>columns</code> at any container width. This is the
     narrow grid from example 3 again, and it now holds three columns.
@@ -271,7 +296,7 @@ const metadata = {
     />
   </div>
 
-  <h3>9. Fill the last row</h3>
+  <h3>10. Fill the last row</h3>
   <p>
     <code>fillLastRow</code> stretches a lone item in the last row across the full row. It is computed
     from <code>columns</code>, so it is exact only together with <code>responsive={'{false}'}</code
@@ -301,8 +326,9 @@ const metadata = {
   <p>
     <code>selection</code> is an <code>ItemsGridSelection</code>: <code>{"{ mode: 'none' }"}</code>
     (default, a static grid with no roles or script), <code
-      >{"{ mode: 'single', group, label?, labelledBy? }"}</code
-    >, or <code>{"{ mode: 'multiple', group, label?, labelledBy?, min?, max? }"}</code>. One of
+      >{"{ mode: 'single', group, label?, labelledBy?, intent? }"}</code
+    >, or <code>{"{ mode: 'multiple', group, label?, labelledBy?, min?, max?, intent? }"}</code>.
+    One of
     <code>label</code> / <code>labelledBy</code> is required; <code>labelledBy</code> wins. Items are
     <code>ItemsGridItem</code>s — Item props plus <code>code</code> (required when selection is enabled,
     unique within the grid) and <code>selected</code> (initial state). Invalid configurations throw at

@@ -81,7 +81,9 @@ const mergedTwoColumnContainer = mergeConfigs<TwoColumnContainerProps>(
 );
 const mergedTabs = mergeConfigs<Omit<TabsProps, 'items'>>({}, internalTabs, tabs);
 const mergedHeadline = mergeConfigs<HeadlineProps>({}, internalHeadline, headline);
-const triggers = categories.map((category) => category.triggerButton);
+const triggers = categories.map((category) =>
+  mergeConfigs<Omit<ButtonProps, 'id'>>({}, { label: category.heading }, category.triggerButton)
+);
 
 // `options` / `items` stay out of the merge layers: mergeConfigs merges arrays index-wise.
 const panels = categories.map((category, i) => {
@@ -105,6 +107,12 @@ const panels = categories.map((category, i) => {
     };
   }
   if (category.panel === 'grid') {
+    const { intent, ...gridConfig } = mergeConfigs<ConfiguratorGridConfig>(
+      {},
+      internalGrid,
+      defaultItemsGridConfig,
+      category.itemsGrid
+    );
     const selection: ItemsGridSelection =
       category.mode === 'multiple'
         ? {
@@ -113,21 +121,13 @@ const panels = categories.map((category, i) => {
             labelledBy: headingId,
             min: category.min,
             max: category.max,
+            intent,
           }
-        : { mode: 'single', group: category.name, labelledBy: headingId };
+        : { mode: 'single', group: category.name, labelledBy: headingId, intent };
     return {
       ...base,
       kind: 'grid' as const,
-      props: {
-        ...mergeConfigs<ConfiguratorGridConfig>(
-          {},
-          internalGrid,
-          defaultItemsGridConfig,
-          category.itemsGrid
-        ),
-        items: category.options.map(stripMutations),
-        selection,
-      },
+      props: { ...gridConfig, items: category.options.map(stripMutations), selection },
     };
   }
   return {
@@ -144,8 +144,6 @@ const panels = categories.map((category, i) => {
       label: category.fieldLabel || category.heading,
       hideLabel: !category.fieldLabel,
       value: category.value,
-      maxLength: category.maxLength,
-      placeholder: category.placeholder,
     },
   };
 });

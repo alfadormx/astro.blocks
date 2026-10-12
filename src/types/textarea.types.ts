@@ -1,3 +1,5 @@
+import type { HTMLAttributes } from 'astro/types';
+
 export interface TextAreaProps {
   /** Selection group the field publishes its text to; omit for a standalone field. */
   group?: string;
@@ -51,3 +53,7 @@ export interface TextAreaProps {
   /** Classes on the counter. */
   counterClass?: string;
 }
+
+/** TextArea props plus the native `<textarea>` attributes forwarded to the field. */
+export type TextAreaAttributes = TextAreaProps &
+  Omit<HTMLAttributes<'textarea'>, keyof TextAreaProps | 'maxlength' | 'readonly'>;

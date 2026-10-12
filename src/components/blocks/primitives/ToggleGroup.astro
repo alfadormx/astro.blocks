@@ -8,6 +8,7 @@ import ToggleGroupOptionContent from '~/components/blocks/primitives/ToggleGroup
 import { cn } from '~/utils/styles';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 import { intentClass, shapeClass, sizeClass } from '~/utils/buttonStyles';
+import { focusRingClass, selectedBorderClass, selectedFillClass } from '~/utils/intentStyles';
 import { toggleGroupName, validateToggleGroup } from '~/utils/toggleGroup';
 
 type Props = ToggleGroupProps & ToggleGroupAppearance;
@@ -43,28 +44,6 @@ const RADIO_SIZE = {
   xl: { text: 'text-xl', marker: 'size-6', gap: 'gap-3' },
 }[size];
 
-const MARKER_SELECTED = {
-  primary: 'border-primary bg-primary',
-  secondary: 'border-secondary bg-secondary',
-  tertiary: 'border-tertiary bg-tertiary',
-  accent: 'border-accent bg-accent',
-  success: 'border-success bg-success',
-  warning: 'border-warning bg-warning',
-  error: 'border-error bg-error',
-  neutral: 'border-emphasis bg-emphasis',
-}[intent];
-
-const FOCUS_RING = {
-  primary: 'has-focus-visible:ring-primary',
-  secondary: 'has-focus-visible:ring-secondary',
-  tertiary: 'has-focus-visible:ring-tertiary',
-  accent: 'has-focus-visible:ring-accent',
-  success: 'has-focus-visible:ring-success',
-  warning: 'has-focus-visible:ring-warning',
-  error: 'has-focus-visible:ring-error',
-  neutral: 'has-focus-visible:ring-border',
-}[intent];
-
 // The inset shadow in the background colour turns the filled marker into a radio dot.
 const MARKER_BASE =
   'shrink-0 rounded-full border-2 shadow-[inset_0_0_0_2px_var(--color-background)]';
@@ -74,7 +53,12 @@ const radioUnselected: ToggleGroupOptionConfig = {
 };
 const radioSelected: ToggleGroupOptionConfig = {
   ...radioUnselected,
-  markerClass: cn(MARKER_BASE, RADIO_SIZE.marker, MARKER_SELECTED),
+  markerClass: cn(
+    MARKER_BASE,
+    RADIO_SIZE.marker,
+    selectedBorderClass(intent),
+    selectedFillClass(intent)
+  ),
 };
 
 const isCell = appearance === 'cell';
@@ -154,7 +138,7 @@ const labelShellClass = cn(
   'relative inline-flex cursor-pointer outline-none transition-all duration-200',
   'has-focus-visible:ring-2 has-focus-visible:ring-offset-2',
   'has-disabled:opacity-50 has-disabled:cursor-not-allowed',
-  FOCUS_RING,
+  focusRingClass(intent, 'has-focus-visible'),
   shapeClass(shape)
 );
 
