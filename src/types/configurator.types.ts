@@ -5,7 +5,7 @@ import type { HeadlineProps } from './headline.types';
 import type { ItemsGridItem, ItemsGridProps } from './itemsgrid.types';
 import type { ModelViewerMutation, ModelViewerProps } from './modelviewer.types';
 import type { SelectionMode } from './selection.types';
-import type { TabButtonConfig, TabsProps } from './tabs.types';
+import type { TabsProps } from './tabs.types';
 import type { TextAreaProps } from './textarea.types';
 import type {
   ToggleGroupAppearance,
@@ -17,7 +17,7 @@ interface ConfiguratorCategoryBase {
   /** Selection group name; unique on the page, not integer-like. */
   name: string;
   /** Button config for this category's tab trigger; a `variant`/`intent` set here also overrides the active-tab style. */
-  trigger: Partial<TabButtonConfig>;
+  trigger: Omit<ButtonProps, 'id'>;
   /** Instruction line above the panel; also the panel's accessible name. */
   heading: string;
   /** Key of `viewer.cameraPresets` to move to when this category changes after another did. */
@@ -104,8 +104,8 @@ export interface ConfiguratorProps {
   categories: ConfiguratorCategory[];
   /** ModelViewer props; `selections` is built from the categories' options and cameras. */
   viewer: Omit<ModelViewerProps, 'selections'>;
-  /** Button config merged under every category's `trigger`, above `tabs.defaultTabConfig` and below `tabs.activeTabConfig`. */
-  defaultTriggerConfig?: Partial<TabButtonConfig>;
+  /** Button config merged under every category's `trigger`, above `tabs.defaultItemConfig` and below `tabs.activeItemConfig`. */
+  defaultTriggerConfig?: LayerConfig<ButtonProps>;
   /** ItemsGrid config merged under every grid category's `config` (default: { columns: 3, gap: 'tight' }). */
   defaultGridConfig?: ConfiguratorGridConfig;
   /** ToggleGroup config merged under every toggle category's `config` (default: { appearance: 'cell' }). */
