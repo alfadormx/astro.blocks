@@ -1,4 +1,5 @@
 import type { HTMLAttributes } from 'astro/types';
+import type { LayerConfig } from './config.types';
 import type { ButtonProps } from './button.types';
 import type { NavigationTreeItem } from './navigationtree.types';
 
@@ -17,6 +18,6 @@ export interface NavigationTreeHorizontalProps extends Omit<HTMLAttributes<'nav'
   itemClass?: string;
   /** Custom classes merged onto each dropdown menu container (default: ''). */
   dropdownClass?: string;
-  /** Partial ButtonProps applied as shared defaults to top-level and child buttons, overriding the built-in ghost/neutral base config but overridden by each item's own props. */
-  defaultItemConfig?: Partial<ButtonProps>;
+  /** ButtonProps applied as shared defaults to top-level and child buttons, overriding the built-in ghost/neutral base config but overridden by each item's own props. */
+  defaultItemConfig?: LayerConfig<ButtonProps>;
 }

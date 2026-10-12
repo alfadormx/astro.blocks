@@ -221,7 +221,7 @@ const deeplyNestedNavItems: NavigationTreeItem[] = [
     Only icon toggles children, button navigates to href. Provides separate controls for navigation
     and expansion.
   </p>
-  <div class="border border-border rounded-lg p-6 max-w-md">
+  <div class="border border-border rounded-lg p-6 max-w-md" data-doc-section="icon-toggle">
     <NavigationTreeBlock
       items={deeplyNestedNavItems}
       expansionStrategy="toggleable"
@@ -247,13 +247,13 @@ const deeplyNestedNavItems: NavigationTreeItem[] = [
     <NavigationTreeBlock
       items={nestedNavItems}
       expansionStrategy="always"
-      defaultItemConfig={{
+      inactiveItemConfig={{
         variant: 'outline',
         intent: 'tertiary',
         size: 'sm',
         width: 'full',
       }}
-      defaultActiveItemConfig={{
+      activeItemConfig={{
         variant: 'solid',
         intent: 'accent',
         size: 'sm',
@@ -264,6 +264,10 @@ const deeplyNestedNavItems: NavigationTreeItem[] = [
 
   <h4>Default Item Styling</h4>
   <p>Default-config <code>class</code> and <code>icon</code> reach every item.</p>
+  <p>
+    <code>defaultItemConfig</code> reaches every item; <code>inactiveItemConfig</code> /
+    <code>activeItemConfig</code> layer on top.
+  </p>
   <p>Parents keep the <code>iconName</code> chevron over the default icon.</p>
   <div class="border border-border rounded-lg p-6 max-w-xs" data-doc-section="default-config">
     <NavigationTreeBlock
@@ -271,7 +275,7 @@ const deeplyNestedNavItems: NavigationTreeItem[] = [
       currentPath="/documentation/composite/NavigationTree"
       expansionStrategy="always"
       defaultItemConfig={{ class: 'tracking-wide', icon: { name: 'mdi:circle-small' } }}
-      defaultActiveItemConfig={{ class: 'underline' }}
+      activeItemConfig={{ class: 'underline' }}
     />
   </div>
 

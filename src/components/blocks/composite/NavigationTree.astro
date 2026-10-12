@@ -19,32 +19,26 @@ const {
   iconName = 'mdi:chevron-right',
   rotateIconOnExpand = true,
   defaultItemConfig,
-  defaultActiveItemConfig,
+  inactiveItemConfig,
+  activeItemConfig,
   expansionStrategy = 'active-only',
   maxDepth = Infinity,
   toggleMode = 'button',
 } = Astro.props;
 
-const defaultItemButtonConfig: Partial<ButtonProps> = {
+const internalItemConfig: Partial<ButtonProps> = {
   variant: 'ghost',
   intent: 'neutral',
   width: 'full',
   iconPosition: 'left',
 };
 
-const defaultActiveItemButtonConfig: Partial<ButtonProps> = {
+const internalActiveItemConfig: Partial<ButtonProps> = {
   variant: 'solid',
   intent: 'primary',
   width: 'full',
   iconPosition: 'left',
 };
-
-const mergedDefaultItemConfig = mergeConfigs({}, defaultItemButtonConfig, defaultItemConfig);
-const mergedDefaultActiveItemConfig = mergeConfigs(
-  {},
-  defaultActiveItemButtonConfig,
-  defaultActiveItemConfig
-);
 
 // Utility functions
 const normalizePath = (path: string) => path.replace(/\/$/, '') || '/';
@@ -101,13 +95,10 @@ const buildItemConfig = (
   mergeConfigs<Partial<ButtonProps>>(
     {},
     { class: 'justify-start' },
-    isActive ? mergedDefaultActiveItemConfig : mergedDefaultItemConfig,
-    {
-      class: cn(
-        hasChildren && toggleMode === 'button' && 'data-nav-toggle',
-        isActive && 'font-semibold'
-      ),
-    },
+    isActive ? internalActiveItemConfig : internalItemConfig,
+    defaultItemConfig,
+    isActive ? activeItemConfig : inactiveItemConfig,
+    isActive ? { class: 'font-semibold' } : {},
     hasChildren
       ? {
           icon: {
@@ -115,7 +106,7 @@ const buildItemConfig = (
             class: cn(
               'nav-tree-icon',
               isExpanded && rotateIconOnExpand && 'nav-tree-icon-expanded',
-              toggleMode === 'icon' && 'data-nav-icon-toggle cursor-pointer'
+              toggleMode === 'icon' && 'cursor-pointer'
             ),
           },
         }
@@ -144,6 +135,8 @@ const buildItemConfig = (
               <Button
                 {...itemConfig}
                 href={hasChildren && toggleMode === 'button' ? undefined : itemConfig.href}
+                data-nav-toggle={hasChildren && toggleMode === 'button' ? '' : undefined}
+                data-nav-icon-toggle={hasChildren && toggleMode === 'icon' ? '' : undefined}
               />
             </div>
 
@@ -156,8 +149,9 @@ const buildItemConfig = (
                   iconName={iconName}
                   rotateIconOnExpand={rotateIconOnExpand}
                   toggleMode={toggleMode}
-                  defaultItemConfig={mergedDefaultItemConfig}
-                  defaultActiveItemConfig={mergedDefaultActiveItemConfig}
+                  defaultItemConfig={defaultItemConfig}
+                  inactiveItemConfig={inactiveItemConfig}
+                  activeItemConfig={activeItemConfig}
                   expansionStrategy={expansionStrategy}
                   maxDepth={maxDepth}
                 />
@@ -187,9 +181,10 @@ const buildItemConfig = (
       navTree.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
 
-        // Check if icon-only toggle mode
-        const iconToggle = target.closest('.data-nav-icon-toggle');
-        const buttonToggle = target.closest('.data-nav-toggle');
+        // Icon mode toggles only when the click lands on the chevron itself
+        const iconHost = target.closest('[data-nav-icon-toggle]');
+        const iconToggle = iconHost && target.closest('svg') ? iconHost : null;
+        const buttonToggle = target.closest('[data-nav-toggle]');
 
         // Determine which toggle handler to use
         const toggleElement = iconToggle || buttonToggle;

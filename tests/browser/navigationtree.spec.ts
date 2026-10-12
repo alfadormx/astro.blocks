@@ -10,17 +10,17 @@ async function section(page: Page): Promise<Locator> {
 const itemControls = (root: Locator): Locator =>
   root.locator('[data-nav-item] > div > div > :is(a, button)');
 
-test('defaultItemConfig class reaches non-active items', async ({ page }) => {
+test('defaultItemConfig class reaches every item', async ({ page }) => {
   const root = await section(page);
-  const inactive = itemControls(root).and(page.locator(`:not([href="${PAGE_URL}"])`));
+  const controls = itemControls(root);
 
-  await expect(inactive.first()).toBeAttached();
-  for (const control of await inactive.all()) {
+  await expect(root.locator(`a[href="${PAGE_URL}"]`)).toHaveClass(/\btracking-wide\b/);
+  for (const control of await controls.all()) {
     await expect(control).toHaveClass(/\btracking-wide\b/);
   }
 });
 
-test('defaultActiveItemConfig class reaches the active item', async ({ page }) => {
+test('activeItemConfig class reaches the active item', async ({ page }) => {
   const root = await section(page);
 
   await expect(root.locator(`a[href="${PAGE_URL}"]`)).toHaveClass(/\bunderline\b/);
@@ -47,4 +47,21 @@ test('clicking a parent still toggles the expanded icon', async ({ page }) => {
   await expect(icon).not.toHaveClass(/\bnav-tree-icon-expanded\b/);
   await parent.click();
   await expect(icon).toHaveClass(/\bnav-tree-icon-expanded\b/);
+});
+
+test('icon toggle mode expands only from the chevron and navigates from the label', async ({
+  page,
+}) => {
+  await page.goto(PAGE_URL);
+  const root = page.locator('[data-doc-section="icon-toggle"]');
+  const parentItem = root.locator('[data-has-children="true"]').first();
+  const control = parentItem.locator('> div > div > a');
+  const wasExpanded = await parentItem.getAttribute('data-expanded');
+
+  await control.locator('svg').first().click();
+  await expect(parentItem).not.toHaveAttribute('data-expanded', wasExpanded ?? '');
+  await expect(page).toHaveURL(new RegExp(`${PAGE_URL}$`));
+
+  await control.getByText('Documentation', { exact: true }).click();
+  await expect(page).toHaveURL(/\/documentation\/?$/);
 });
