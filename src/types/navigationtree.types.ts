@@ -1,4 +1,5 @@
 import type { ButtonProps } from './button.types';
+import type { LayerConfig } from './config.types';
 
 /** A navigation entry: Button props plus optional nested `children` rendered as a sub-tree. */
 export type NavigationTreeItem = ButtonProps & { children?: NavigationTreeItem[] };
@@ -25,10 +26,14 @@ export interface NavigationTreeProps {
   rotateIconOnExpand?: boolean;
   /** Whether clicking the whole button or only the icon toggles children (default: `'button'`). */
   toggleMode?: ToggleMode;
-  /** Button config merged into non-active items, overriding the built-in defaults. */
-  defaultItemConfig?: Partial<ButtonProps>;
-  /** Button config merged into the active item, overriding the built-in defaults. */
-  defaultActiveItemConfig?: Partial<ButtonProps>;
+  /** Button config merged into every item, in every state, under the state layers. */
+  defaultItemConfig?: LayerConfig<ButtonProps>;
+  /** Button config merged over `defaultItemConfig` on non-active items. */
+  inactiveItemConfig?: LayerConfig<ButtonProps>;
+  /** Button config merged over `defaultItemConfig` on the active item. */
+  activeItemConfig?: LayerConfig<ButtonProps>;
+  /** @deprecated Use `activeItemConfig`. */
+  defaultActiveItemConfig?: never;
   /** The strategy that decides whether an item's children are shown (default: `'active-only'`). */
   expansionStrategy?: ExpansionStrategy;
   /** The maximum depth expanded when `expansionStrategy` is `'depth'` (default: `Infinity`). */
