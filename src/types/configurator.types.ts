@@ -16,12 +16,16 @@ import type {
 interface ConfiguratorCategoryBase {
   /** Selection group name; unique on the page, not integer-like. */
   name: string;
-  /** Button config for this category's tab trigger; a `variant`/`intent` set here also overrides the active-tab style. */
-  trigger: Omit<ButtonProps, 'id'>;
+  /** Button config for this category's tab trigger; instance layer, so it beats `tabs.activeItemConfig`. */
+  triggerButton: Omit<ButtonProps, 'id'>;
   /** Instruction line above the panel; also the panel's accessible name. */
   heading: string;
-  /** Key of `viewer.cameraPresets` to move to when this category changes after another did. */
+  /** Key of `modelViewer.cameraPresets` to move to when this category changes after another did. */
   camera?: string;
+  /** @deprecated Use `triggerButton`. */
+  trigger?: never;
+  /** @deprecated Use `itemsGrid`, `toggleGroup` or `textArea` for the category's panel. */
+  config?: never;
 }
 
 export type ConfiguratorToggleOption = ToggleGroupOption & {
@@ -29,7 +33,7 @@ export type ConfiguratorToggleOption = ToggleGroupOption & {
   mutations?: ModelViewerMutation[];
 };
 
-export type ConfiguratorToggleConfig = Partial<
+export type ConfiguratorToggleConfig = LayerConfig<
   Omit<ToggleGroupProps, 'group' | 'label' | 'labelledBy' | 'options'>
 > &
   ToggleGroupAppearance;
@@ -37,7 +41,7 @@ export type ConfiguratorToggleConfig = Partial<
 export type ConfiguratorToggleCategory = ConfiguratorCategoryBase & {
   panel: 'toggle';
   options: ConfiguratorToggleOption[];
-  config?: ConfiguratorToggleConfig;
+  toggleGroup?: ConfiguratorToggleConfig;
 };
 
 export type ConfiguratorGridOption = Omit<ItemsGridItem, 'code'> & {
@@ -47,12 +51,12 @@ export type ConfiguratorGridOption = Omit<ItemsGridItem, 'code'> & {
   mutations?: ModelViewerMutation[];
 };
 
-export type ConfiguratorGridConfig = Partial<Omit<ItemsGridProps, 'items' | 'selection'>>;
+export type ConfiguratorGridConfig = LayerConfig<Omit<ItemsGridProps, 'items' | 'selection'>>;
 
 export type ConfiguratorGridCategory = ConfiguratorCategoryBase & {
   panel: 'grid';
   options: ConfiguratorGridOption[];
-  config?: ConfiguratorGridConfig;
+  itemsGrid?: ConfiguratorGridConfig;
 } & (
     | { mode: 'single' }
     | {
@@ -64,7 +68,7 @@ export type ConfiguratorGridCategory = ConfiguratorCategoryBase & {
       }
   );
 
-export type ConfiguratorTextConfig = Partial<
+export type ConfiguratorTextConfig = LayerConfig<
   Omit<TextAreaProps, 'group' | 'label' | 'hideLabel' | 'value' | 'maxLength' | 'placeholder'>
 >;
 
@@ -78,7 +82,7 @@ export type ConfiguratorTextCategory = ConfiguratorCategoryBase & {
   placeholder?: string;
   /** Visible field label; when omitted or empty the heading names the field and the label stays hidden. */
   fieldLabel?: string;
-  config?: ConfiguratorTextConfig;
+  textArea?: ConfiguratorTextConfig;
 };
 
 export type ConfiguratorCategory =
@@ -103,19 +107,17 @@ export interface ConfiguratorProps {
   /** Categories in tab order; each becomes one tab and one selection group. */
   categories: ConfiguratorCategory[];
   /** ModelViewer props; `selections` is built from the categories' options and cameras. */
-  viewer: Omit<ModelViewerProps, 'selections'>;
-  /** Button config merged under every category's `trigger`, above `tabs.defaultItemConfig` and below `tabs.activeItemConfig`. */
-  defaultTriggerConfig?: LayerConfig<ButtonProps>;
-  /** ItemsGrid config merged under every grid category's `config` (default: { columns: 3, gap: 'tight' }). */
-  defaultGridConfig?: ConfiguratorGridConfig;
-  /** ToggleGroup config merged under every toggle category's `config` (default: { appearance: 'cell' }). */
-  defaultToggleConfig?: ConfiguratorToggleConfig;
-  /** TextArea config merged under every text category's `config` (default: { rows: 2 }). */
-  defaultTextConfig?: ConfiguratorTextConfig;
-  /** Tabs config for the choice panel (default: grid tab list, outlined primary active tab). */
-  tabs?: Partial<Omit<TabsProps, 'items'>>;
-  /** TwoColumnContainer config for the two panes (default: { responsive: true }). */
-  layout?: Partial<TwoColumnContainerProps>;
+  modelViewer: Omit<ModelViewerProps, 'selections'>;
+  /** ItemsGrid config merged under every grid category's `itemsGrid` (default: { columns: 3, gap: 'tight' }). */
+  defaultItemsGridConfig?: ConfiguratorGridConfig;
+  /** ToggleGroup config merged under every toggle category's `toggleGroup` (default: { appearance: 'cell' }). */
+  defaultToggleGroupConfig?: ConfiguratorToggleConfig;
+  /** TextArea config merged under every text category's `textArea` (default: { rows: 2 }). */
+  defaultTextAreaConfig?: ConfiguratorTextConfig;
+  /** Tabs config for the choice panel; style every trigger with `tabs.defaultItemConfig` (default: grid tab list, full-width triggers, outlined primary active tab). */
+  tabs?: Omit<TabsProps, 'items'>;
+  /** TwoColumnContainer for the two panes (default: { responsive: true }). */
+  twoColumnContainer?: TwoColumnContainerProps;
   /**
    * Keeps selections in the URL as a combination code. Category order is the code's group order:
    * append new categories only, never remove or reorder them once codes are shared. Only the
@@ -124,18 +126,32 @@ export interface ConfiguratorProps {
   urlState?: { product?: string; param?: string };
   /** Classes on every panel heading, after its defaults (default: 'mb-4 text-lg font-semibold'). */
   headingClass?: string;
-  /** Product name rendered under the viewer. */
-  title?: string;
-  /** Headline under the viewer; wins over `title` (default: { class: 'mt-6 mb-0', titleClass: 'text-2xl font-semibold' }) */
+  /** Headline under the viewer (default: { class: 'mt-6 mb-0', titleClass: 'text-2xl font-semibold' }) */
   headline?: HeadlineProps;
   /** Buttons rendered under the summary line (default: []). */
-  actions?: Partial<ButtonProps>[];
+  actions?: ButtonProps[];
   /** Button config merged under every entry in `actions` */
   defaultActionConfig?: LayerConfig<ButtonProps>;
   /** Custom classes for the wrapper around the action buttons (default: 'mt-6 inline-flex flex-wrap gap-3') */
   actionsClass?: string;
-  /** Summary line under the viewer: listed categories, separator and classes (default: every category, ' · '). URL state and the viewer still use every category. */
-  summary?: SummaryFormat & { class?: string };
+  /** Summary line under the viewer: listed categories and separator (default: every category, ' · '). URL state and the viewer still use every category. */
+  summary?: SummaryFormat;
+  /** Custom classes for the summary line (default: 'mt-4 text-lg'). */
+  summaryClass?: string;
   /** Extra classes on the configurator root. */
   class?: string;
+  /** @deprecated Use `modelViewer`. */
+  viewer?: never;
+  /** @deprecated Use `twoColumnContainer`. */
+  layout?: never;
+  /** @deprecated Use `headline.title`. */
+  title?: never;
+  /** @deprecated Use `tabs.defaultItemConfig`. */
+  defaultTriggerConfig?: never;
+  /** @deprecated Use `defaultItemsGridConfig`. */
+  defaultGridConfig?: never;
+  /** @deprecated Use `defaultToggleGroupConfig`. */
+  defaultToggleConfig?: never;
+  /** @deprecated Use `defaultTextAreaConfig`. */
+  defaultTextConfig?: never;
 }

@@ -7,7 +7,7 @@ import type { ModelViewerMutation } from '~/types/modelviewer.types';
 
 const metadata = { title: { default: 'Jewellery configurator' } };
 
-const viewer: ConfiguratorProps['viewer'] = {
+const modelViewer: ConfiguratorProps['modelViewer'] = {
   src: '/models/ring.glb',
   label: 'Your ring',
   class: 'bg-surface h-auto aspect-video md:aspect-auto md:h-[600px]',
@@ -49,9 +49,9 @@ const categories: ConfiguratorProps['categories'] = [
     name: 'ring-model',
     panel: 'grid',
     mode: 'single',
-    trigger: { label: 'Model', icon: { name: 'tabler:rings' } },
+    triggerButton: { label: 'Model', icon: { name: 'tabler:rings' } },
     heading: 'Select your model',
-    config: {
+    itemsGrid: {
       columns: 3,
       defaultItemConfig: { mediaClass: 'w-full h-auto aspect-square' },
     },
@@ -84,9 +84,9 @@ const categories: ConfiguratorProps['categories'] = [
     name: 'ring-carat',
     panel: 'grid',
     mode: 'single',
-    trigger: { label: 'Carat', icon: { name: 'tabler:circle-dot' } },
+    triggerButton: { label: 'Carat', icon: { name: 'tabler:circle-dot' } },
     heading: 'Select carat',
-    config: { columns: 3 },
+    itemsGrid: { columns: 3 },
     options: [
       {
         code: 'small',
@@ -116,9 +116,9 @@ const categories: ConfiguratorProps['categories'] = [
     name: 'ring-color',
     panel: 'grid',
     mode: 'single',
-    trigger: { label: 'Color', icon: { name: 'tabler:rainbow' } },
+    triggerButton: { label: 'Color', icon: { name: 'tabler:rainbow' } },
     heading: 'Select colour',
-    config: { columns: 3 },
+    itemsGrid: { columns: 3 },
     options: [
       {
         code: 'yellow',
@@ -145,9 +145,9 @@ const categories: ConfiguratorProps['categories'] = [
     name: 'ring-clarity',
     panel: 'grid',
     mode: 'single',
-    trigger: { label: 'Clarity', icon: { name: 'tabler:diamond' } },
+    triggerButton: { label: 'Clarity', icon: { name: 'tabler:diamond' } },
     heading: 'Select clarity',
-    config: { columns: 3 },
+    itemsGrid: { columns: 3 },
     options: [
       { code: 'if', title: 'IF', selected: true, mutations: [cloudiness('#606060', 0)] },
       { code: 'vvs1', title: 'VVS1', mutations: [cloudiness('#6c6c6c', 0.15)] },
@@ -160,9 +160,9 @@ const categories: ConfiguratorProps['categories'] = [
     panel: 'grid',
     mode: 'multiple',
     max: 2,
-    trigger: { label: 'Extras', icon: { name: 'tabler:gift' } },
+    triggerButton: { label: 'Extras', icon: { name: 'tabler:gift' } },
     heading: 'Add up to two extras',
-    config: { columns: 3 },
+    itemsGrid: { columns: 3 },
     options: [
       { code: 'giftbox', title: 'Gift box', content: 'Wrapped and ready to give.' },
       { code: 'certificate', title: 'Certificate', content: 'Proof of the stone and metal.' },
@@ -172,13 +172,13 @@ const categories: ConfiguratorProps['categories'] = [
   {
     name: 'ring-engraving',
     panel: 'text',
-    trigger: { label: 'Engraving', icon: { name: 'tabler:signature' } },
+    triggerButton: { label: 'Engraving', icon: { name: 'tabler:signature' } },
     heading: 'Engrave your ring',
     maxLength: 20,
     placeholder: 'Up to 20 characters',
     camera: 'band',
     fieldLabel: 'Engraving',
-    config: {
+    textArea: {
       class: 'p-6',
       shape: 'square',
       help: 'Shown on the inside of the band.',
@@ -188,7 +188,7 @@ const categories: ConfiguratorProps['categories'] = [
   },
 ];
 
-const defaultGridConfig: ConfiguratorProps['defaultGridConfig'] = {
+const defaultItemsGridConfig: ConfiguratorProps['defaultItemsGridConfig'] = {
   gap: 'none',
   responsive: false,
   defaultItemConfig: {
@@ -202,7 +202,7 @@ const defaultGridConfig: ConfiguratorProps['defaultGridConfig'] = {
   },
 };
 
-const layout: ConfiguratorProps['layout'] = {
+const twoColumnContainer: ConfiguratorProps['twoColumnContainer'] = {
   ratio: '3:2',
   gap: 'none',
   leftColumn: { class: 'pb-4 md:pb-10 text-center md:border-r md:border-border' },
@@ -212,7 +212,6 @@ const layout: ConfiguratorProps['layout'] = {
 const summary: ConfiguratorProps['summary'] = {
   categories: ['ring-color', 'ring-carat', 'ring-clarity'],
   separator: ' ',
-  class: 'mt-1 text-sm uppercase tracking-widest text-muted',
 };
 
 const tabs: ConfiguratorProps['tabs'] = {
@@ -250,14 +249,15 @@ const actions: ConfiguratorProps['actions'] = [
 <Layout metadata={metadata}>
   <Configurator
     categories={categories}
-    viewer={viewer}
-    title="Solitaire"
-    layout={layout}
+    modelViewer={modelViewer}
+    headline={{ title: 'Solitaire' }}
+    twoColumnContainer={twoColumnContainer}
     summary={summary}
+    summaryClass="mt-1 text-sm uppercase tracking-widest text-muted"
     actions={actions}
     tabs={tabs}
     headingClass={headingClass}
-    defaultGridConfig={defaultGridConfig}
+    defaultItemsGridConfig={defaultItemsGridConfig}
     urlState={{ product: 'RING01' }}
   />
 </Layout>
