@@ -7,7 +7,7 @@ import type {
   SummaryFormat,
 } from '~/types/configurator.types';
 import type { ItemsGridSelection } from '~/types/itemsgrid.types';
-import type { TabButtonConfig, TabsProps } from '~/types/tabs.types';
+import type { TabsProps } from '~/types/tabs.types';
 import type { TwoColumnContainerProps } from '~/types/container.types';
 import type { HeadlineProps } from '~/types/headline.types';
 import type { ButtonProps } from '~/types/button.types';
@@ -63,10 +63,10 @@ const internalLayout: Partial<TwoColumnContainerProps> = {
 };
 const internalTabs: Partial<Omit<TabsProps, 'items'>> = {
   tabList: { layout: 'grid', spacing: { margin: 'mb-6' } },
-  activeTabConfig: { variant: 'outline', intent: 'primary' },
+  activeItemConfig: { variant: 'outline', intent: 'primary' },
   container: { htmlTag: 'div', content: { air: 'none', widthType: 'full' } },
 };
-const internalTrigger: Partial<TabButtonConfig> = { width: 'full' };
+const internalTrigger: Partial<ButtonProps> = { width: 'full' };
 const internalToggle: ConfiguratorToggleConfig = { appearance: 'cell' };
 const internalGrid: ConfiguratorGridConfig = { columns: 3, gap: 'tight' };
 const internalText: ConfiguratorTextConfig = { rows: 2 };
@@ -77,9 +77,9 @@ const internalHeadline: HeadlineProps = {
 
 const mergedLayout = mergeConfigs<Partial<TwoColumnContainerProps>>({}, internalLayout, layout);
 const mergedTabs = mergeConfigs<Partial<Omit<TabsProps, 'items'>>>({}, internalTabs, tabs, {
-  defaultTabConfig: mergeConfigs<Partial<TabButtonConfig>>(
+  defaultItemConfig: mergeConfigs<Partial<ButtonProps>>(
     {},
-    tabs?.defaultTabConfig,
+    tabs?.defaultItemConfig,
     internalTrigger,
     defaultTriggerConfig
   ),

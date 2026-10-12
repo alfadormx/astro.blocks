@@ -3,17 +3,19 @@ import type { ContainerProps } from './container.types';
 import type { SimpleBackgroundProps } from './background.types';
 import type { SpacingConfig } from './spacing.types';
 import type { BorderConfig } from './border.types';
-
-/** Button config for a tab trigger; `id` is omitted because Tabs assigns trigger ids. */
-export type TabButtonConfig = Omit<ButtonProps, 'id'>;
+import type { LayerConfig } from './config.types';
 
 export interface TabsProps {
-  /** List of tab entries; each item is a Button config rendered as a tab trigger, and its index maps to a `panel-{n}` slot for content. Any number of tabs is supported — the panel count follows the item count with no upper bound. */
-  items: Partial<TabButtonConfig>[];
-  /** Button config merged as the base/default styling for every tab (both inactive and active states) before item-specific overrides. */
-  defaultTabConfig?: Partial<TabButtonConfig>;
-  /** Button config merged on top of `defaultTabConfig` to style the currently active tab. */
-  activeTabConfig?: Partial<TabButtonConfig>;
+  /** List of tab entries; each item is a Button config rendered as a tab trigger, and its index maps to a `panel-{n}` slot for content. Any number of tabs is supported — the panel count follows the item count with no upper bound. `id` is omitted because Tabs assigns trigger ids. */
+  items: Omit<ButtonProps, 'id'>[];
+  /** Button config merged under every tab, in both states, before the item's own values. */
+  defaultItemConfig?: LayerConfig<ButtonProps>;
+  /** Button config merged over `defaultItemConfig` on the active tab only. */
+  activeItemConfig?: LayerConfig<ButtonProps>;
+  /** @deprecated Use `defaultItemConfig`. */
+  defaultTabConfig?: never;
+  /** @deprecated Use `activeItemConfig`. */
+  activeTabConfig?: never;
   /** Layout direction of the tab list and content: 'horizontal' stacks tabs in a row above the panel, 'vertical' places them side by side in a grid (default: 'horizontal'). */
   orientation?: 'horizontal' | 'vertical';
   /** Config passed to the wrapping Container block that surrounds the whole Tabs component. */
@@ -26,7 +28,7 @@ export interface TabsProps {
     spacing?: SpacingConfig;
     border?: BorderConfig;
     class?: string;
-    /** How the triggers are arranged among themselves; independent of `orientation`. Unset derives from `orientation` ('vertical' -> column, otherwise row). In 'grid' and 'column' the triggers fill the tab list (grid: whole cell; column: full width); set `width: 'auto'` on `defaultTabConfig`, `activeTabConfig` or an item to opt out. Setting `align` on a trigger disables the fill. */
+    /** How the triggers are arranged among themselves; independent of `orientation`. Unset derives from `orientation` ('vertical' -> column, otherwise row). In 'grid' and 'column' the triggers fill the tab list (grid: whole cell; column: full width); set `width: 'auto'` on `defaultItemConfig`, `activeItemConfig` or an item to opt out. Setting `align` on a trigger disables the fill. */
     layout?: 'row' | 'column' | 'grid';
     /** Number of trigger columns at the widest step; applies only when `layout` is 'grid', ignored otherwise (default: 2). Steps down by container width, never below 2. */
     columns?: 2 | 3 | 4;
