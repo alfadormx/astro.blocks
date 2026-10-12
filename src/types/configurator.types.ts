@@ -106,7 +106,7 @@ export interface ConfiguratorProps {
   viewer: Omit<ModelViewerProps, 'selections'>;
   /** Button config merged under every category's `trigger`, above `tabs.defaultTabConfig` and below `tabs.activeTabConfig`. */
   defaultTriggerConfig?: Partial<TabButtonConfig>;
-  /** ItemsGrid config merged under every grid category's `config` (default: { columns: 3, air: 'tight' }). */
+  /** ItemsGrid config merged under every grid category's `config` (default: { columns: 3, gap: 'tight' }). */
   defaultGridConfig?: ConfiguratorGridConfig;
   /** ToggleGroup config merged under every toggle category's `config` (default: { appearance: 'cell' }). */
   defaultToggleConfig?: ConfiguratorToggleConfig;
