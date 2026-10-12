@@ -119,6 +119,11 @@ describe('validateItemsGridSelection', () => {
       selection: single,
       items: [item('a', { actions: [] })],
     },
+    {
+      name: 'single with an intent',
+      selection: { ...single, intent: 'accent' },
+      items: [item('a')],
+    },
   ];
 
   it.each(validCases)('accepts: $name', ({ selection, items }) => {

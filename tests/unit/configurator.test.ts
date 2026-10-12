@@ -139,6 +139,10 @@ describe('validateConfigurator', () => {
       categories: Array.from({ length: MAX_CATEGORIES }, (_, i) => toggle(`c${i}`)),
     },
     { name: 'known camera', categories: [toggle('a', { camera: 'band' })] },
+    {
+      name: 'category without triggerButton',
+      categories: [toggle('a', { triggerButton: undefined })],
+    },
     { name: 'empty urlState', categories: [toggle('a')], urlState: {} },
     {
       name: 'valid product and param',

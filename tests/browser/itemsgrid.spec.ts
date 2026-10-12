@@ -56,6 +56,26 @@ test.describe('ItemsGrid layout', () => {
 });
 
 test.describe('ItemsGrid selection', () => {
+  test('selection intent colours the selected border', async ({ page }) => {
+    const primary = await openGrid(page, 'itemsgrid-doc-single');
+    const accent = page.locator('[data-selection-group="itemsgrid-doc-intent"]');
+    const borderOf = (root: Locator) =>
+      root
+        .locator('[data-option-variant="selected"]:visible > *')
+        .evaluate((el) => getComputedStyle(el).borderBottomColor);
+    const accentColour = await page.evaluate(() => {
+      const probe = document.createElement('div');
+      probe.className = 'bg-accent';
+      document.body.append(probe);
+      const colour = getComputedStyle(probe).backgroundColor;
+      probe.remove();
+      return colour;
+    });
+
+    expect(await borderOf(accent)).toBe(accentColour);
+    expect(await borderOf(primary)).not.toBe(accentColour);
+  });
+
   test('a grid without selection stays static', async ({ page }) => {
     await page.goto(PAGE_URL);
     await page.waitForLoadState('load');

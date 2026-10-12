@@ -2,11 +2,11 @@ import type { ButtonProps } from './button.types';
 import type { LayerConfig } from './config.types';
 import type { TwoColumnContainerProps } from './container.types';
 import type { HeadlineProps } from './headline.types';
-import type { ItemsGridItem, ItemsGridProps } from './itemsgrid.types';
+import type { ItemsGridItem, ItemsGridProps, ItemsGridSelection } from './itemsgrid.types';
 import type { ModelViewerMutation, ModelViewerProps } from './modelviewer.types';
 import type { SelectionMode } from './selection.types';
 import type { TabsProps } from './tabs.types';
-import type { TextAreaProps } from './textarea.types';
+import type { TextAreaAttributes } from './textarea.types';
 import type {
   ToggleGroupAppearance,
   ToggleGroupOption,
@@ -16,8 +16,12 @@ import type {
 interface ConfiguratorCategoryBase {
   /** Selection group name; unique on the page, not integer-like. */
   name: string;
-  /** Button config for this category's tab trigger; instance layer, so it beats `tabs.activeItemConfig`. */
-  triggerButton: Omit<ButtonProps, 'id'>;
+  /**
+   * Button config for this category's tab trigger; instance layer, so it beats
+   * `tabs.activeItemConfig`. `label` defaults to `heading`; for an icon-only tab set `label: ''`
+   * and `icon.ariaLabel`.
+   */
+  triggerButton?: Omit<ButtonProps, 'id'>;
   /** Instruction line above the panel; also the panel's accessible name. */
   heading: string;
   /** Key of `modelViewer.cameraPresets` to move to when this category changes after another did. */
@@ -47,7 +51,10 @@ export type ConfiguratorGridOption = Omit<ItemsGridItem, 'code'> & {
   mutations?: ModelViewerMutation[];
 };
 
-export type ConfiguratorGridConfig = LayerConfig<Omit<ItemsGridProps, 'items' | 'selection'>>;
+export type ConfiguratorGridConfig = LayerConfig<Omit<ItemsGridProps, 'items' | 'selection'>> & {
+  /** Colour of the selected border and focus ring (default: 'primary'). */
+  intent?: Extract<ItemsGridSelection, { mode: 'single' }>['intent'];
+};
 
 export type ConfiguratorGridCategory = ConfiguratorCategoryBase & {
   panel: 'grid';
@@ -65,17 +72,13 @@ export type ConfiguratorGridCategory = ConfiguratorCategoryBase & {
   );
 
 export type ConfiguratorTextConfig = LayerConfig<
-  Omit<TextAreaProps, 'group' | 'label' | 'hideLabel' | 'value' | 'maxLength' | 'placeholder'>
+  Omit<TextAreaAttributes, 'group' | 'label' | 'hideLabel' | 'value'>
 >;
 
 export type ConfiguratorTextCategory = ConfiguratorCategoryBase & {
   panel: 'text';
   /** Initial text. */
   value?: string;
-  /** Maximum length in UTF-16 code units. */
-  maxLength?: number;
-  /** Placeholder shown while the field is empty. */
-  placeholder?: string;
   /** Visible field label; when omitted or empty the heading names the field and the label stays hidden. */
   fieldLabel?: string;
   textArea?: ConfiguratorTextConfig;
@@ -100,7 +103,13 @@ export type SummaryCategory = {
 };
 
 export interface ConfiguratorProps {
-  /** Categories in tab order; each becomes one tab and one selection group. */
+  /**
+   * Categories in tab order; each becomes one tab and one selection group. A category holds what
+   * Configurator reads or assembles (`name`, `panel`, `heading`, `camera`, `triggerButton`,
+   * `options`, `value`, `mode` / `min` / `max`, `fieldLabel`); everything passed to the child
+   * untouched goes in `toggleGroup`, `itemsGrid` or `textArea`. At most 12 (one static panel slot
+   * each).
+   */
   categories: ConfiguratorCategory[];
   /** ModelViewer props; `selections` is built from the categories' options and cameras. */
   modelViewer: Omit<ModelViewerProps, 'selections'>;

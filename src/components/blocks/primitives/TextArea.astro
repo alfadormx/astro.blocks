@@ -1,10 +1,10 @@
 ---
-import type { HTMLAttributes } from 'astro/types';
-import type { TextAreaProps } from '~/types/textarea.types';
+import type { TextAreaAttributes } from '~/types/textarea.types';
 import { cn } from '~/utils/styles';
+import { focusBorderClass, focusRingClass } from '~/utils/intentStyles';
 import { textAreaId, validateTextArea } from '~/utils/textArea';
 
-type Props = TextAreaProps & Omit<HTMLAttributes<'textarea'>, keyof TextAreaProps>;
+type Props = TextAreaAttributes;
 
 const {
   group,
@@ -60,28 +60,6 @@ const VARIANT = {
   ghost: 'border-transparent bg-transparent hover:border-border',
 }[variant];
 
-const FOCUS_RING = {
-  primary: 'focus-visible:ring-primary',
-  secondary: 'focus-visible:ring-secondary',
-  tertiary: 'focus-visible:ring-tertiary',
-  accent: 'focus-visible:ring-accent',
-  success: 'focus-visible:ring-success',
-  warning: 'focus-visible:ring-warning',
-  error: 'focus-visible:ring-error',
-  neutral: 'focus-visible:ring-border',
-}[resolvedIntent];
-
-const FOCUS_BORDER = {
-  primary: 'focus:border-primary',
-  secondary: 'focus:border-secondary',
-  tertiary: 'focus:border-tertiary',
-  accent: 'focus:border-accent',
-  success: 'focus:border-success',
-  warning: 'focus:border-warning',
-  error: 'focus:border-error',
-  neutral: 'focus:border-border-emphasis',
-}[resolvedIntent];
-
 const SHAPE = { rounded: 'rounded-md', square: 'rounded-sm' }[shape];
 
 // Prop-driven rather than `read-only:` variants, because `:read-only` also matches disabled fields.
@@ -91,8 +69,8 @@ const fieldClassName = cn(
   SIZE,
   VARIANT,
   SHAPE,
-  FOCUS_RING,
-  !readOnly && FOCUS_BORDER,
+  focusRingClass(resolvedIntent),
+  !readOnly && focusBorderClass(resolvedIntent),
   error && 'border-error',
   readOnly && 'bg-surface text-muted',
   disabled && 'opacity-50 cursor-not-allowed resize-none',
