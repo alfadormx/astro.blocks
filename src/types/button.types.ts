@@ -14,7 +14,9 @@ export interface ButtonProps extends Omit<HTMLAttributes<'button'>, 'class'> {
    * omitted it resolves to 'vertical' if `subtitle` is set, otherwise 'horizontal'.
    * An explicit value always wins, including 'horizontal' together with `subtitle`.
    */
-  layout?: 'horizontal' | 'vertical';
+  orientation?: 'horizontal' | 'vertical';
+  /** @deprecated Use `orientation`. */
+  layout?: never;
   /** Icon configuration (name, class, aria-label) rendered alongside the label. */
   icon?: IconConfig;
   /**

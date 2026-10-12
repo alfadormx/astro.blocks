@@ -55,7 +55,7 @@ const metadata = {
           icon: { name: 'heroicons:sun' },
           title: 'No customization',
           content: 'Icon configuration is default.',
-          layout: 'horizontal',
+          orientation: 'horizontal',
         },
         {
           icon: {
@@ -64,14 +64,14 @@ const metadata = {
           },
           title: 'Icon customization',
           content: 'Icon as been given a background, padding and rounded corners.',
-          layout: 'horizontal',
+          orientation: 'horizontal',
         },
         {
           icon: { name: 'heroicons:bolt', class: 'text-success' },
           title: 'Horizontal Layout with action',
           content: 'You shall see a button below.',
           actions: [{ label: 'Learn More', intent: 'success' }],
-          layout: 'horizontal',
+          orientation: 'horizontal',
         },
       ]}
     />
@@ -81,7 +81,7 @@ const metadata = {
   <ItemsGridBlock
     columns={2}
     defaultItemConfig={{
-      layout: 'horizontal',
+      orientation: 'horizontal',
       actions: [{ label: 'Default Action', intent: 'accent' }],
     }}
     items={[

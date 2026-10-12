@@ -1,5 +1,8 @@
 import type { HTMLAttributes } from 'astro/types';
 import type { ButtonProps } from './button.types';
+import type { LayerConfig } from './config.types';
+
+export type LanguageToggleGap = 'none' | 'tight' | 'normal' | 'loose';
 
 export interface LanguageToggleProps extends Omit<HTMLAttributes<'div'>, 'class'> {
   /** Layout direction of the language buttons inside the container (default: 'horizontal') */
@@ -9,17 +12,17 @@ export interface LanguageToggleProps extends Omit<HTMLAttributes<'div'>, 'class'
   showLabels?: boolean;
 
   /** Base Button props merged into both the active and inactive language buttons */
-  defaultButtonConfig?: Partial<ButtonProps>;
+  defaultButtonConfig?: LayerConfig<ButtonProps>;
 
   /** Button props applied to the currently active language button, merged over defaultButtonConfig */
-  activeButtonConfig?: Partial<ButtonProps>;
+  activeButtonConfig?: LayerConfig<ButtonProps>;
 
   /** Button props applied to inactive language buttons, merged over defaultButtonConfig */
-  inactiveButtonConfig?: Partial<ButtonProps>;
+  inactiveButtonConfig?: LayerConfig<ButtonProps>;
 
   /** CSS class applied to the container div wrapping the language buttons */
   class?: string;
 
-  /** Tailwind gap utility class controlling spacing between language buttons (default: 'gap-4') */
-  gap?: string;
+  /** Space between the language buttons (default: 'normal') */
+  gap?: LanguageToggleGap;
 }

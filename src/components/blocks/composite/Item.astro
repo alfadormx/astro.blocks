@@ -21,7 +21,7 @@ const {
   title,
   content,
   actions = [],
-  layout = 'vertical',
+  orientation = 'vertical',
   background,
   spacing,
   border,
@@ -45,7 +45,7 @@ const defaultRootClass = cn(
   border?.color,
   border?.radius,
   'flex',
-  layout === 'horizontal'
+  orientation === 'horizontal'
     ? 'flex-row items-start gap-4 md:gap-6 lg:gap-8'
     : 'flex-col items-center text-center gap-3 md:gap-4 lg:gap-6',
   className
@@ -86,7 +86,7 @@ const horizontalConnectorRightClass = cn(
 
 <div class={defaultRootClass}>
   {
-    layout === 'horizontal' && hasMedia && (
+    orientation === 'horizontal' && hasMedia && (
       <div class="flex flex-col items-center self-stretch">
         {hasImage ? (
           <Image {...image} class={mergedImageClass} />
@@ -98,7 +98,7 @@ const horizontalConnectorRightClass = cn(
     )
   }
   {
-    layout === 'vertical' &&
+    orientation === 'vertical' &&
       hasMedia &&
       (showConnectorLeft || showConnectorRight ? (
         <div class="grid grid-cols-[1fr_auto_1fr] items-center w-full">
@@ -126,7 +126,7 @@ const horizontalConnectorRightClass = cn(
       <div
         class={cn(
           'flex flex-col',
-          layout === 'horizontal' ? 'items-start text-left' : 'items-center text-center',
+          orientation === 'horizontal' ? 'items-start text-left' : 'items-center text-center',
           contentClass
         )}
       >

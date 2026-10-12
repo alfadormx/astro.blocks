@@ -7,6 +7,6 @@ export interface ItemsContentProps {
   container?: ContainerProps;
   /** Configuration for the Headline rendered above the items grid (default: {}). */
   headline?: Partial<HeadlineProps>;
-  /** Configuration for the ItemsGrid, including columns, items, and default item config (default: columns: 2, items: [], defaultItemConfig: { layout: 'horizontal' }). */
+  /** Configuration for the ItemsGrid, including columns, items, and default item config (default: columns: 2, items: [], defaultItemConfig: { orientation: 'horizontal' }). */
   itemsGrid?: Partial<ItemsGridProps>;
 }

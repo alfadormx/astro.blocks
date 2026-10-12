@@ -2,10 +2,10 @@ import type { ItemProps } from './item.types';
 
 export type ConnectorStyle = 'solid' | 'dashed' | 'dotted';
 
-/** Item props for a timeline entry; layout and connectors are set by the timeline. */
+/** Item props for a timeline entry; orientation and connectors are set by the timeline. */
 export type TimelineItemProps = Omit<
   ItemProps,
-  'layout' | 'showConnector' | 'showConnectorLeft' | 'showConnectorRight' | 'connectorStyle'
+  'orientation' | 'showConnector' | 'showConnectorLeft' | 'showConnectorRight' | 'connectorStyle'
 >;
 
 export interface ItemsTimelineProps {

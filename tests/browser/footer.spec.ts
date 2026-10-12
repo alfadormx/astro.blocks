@@ -4,7 +4,7 @@ const PAGE_URL = '/documentation/composite/Footer';
 
 test('languageToggleConfig.defaultButtonConfig reaches the toggle buttons', async ({ page }) => {
   await page.goto(PAGE_URL);
-  const buttons = page.locator('[data-doc-section="language-toggle"] .language-toggle-container a');
+  const buttons = page.locator('[data-doc-section="language-toggle"] [data-language-toggle] a');
 
   await expect(buttons.first()).toBeAttached();
   for (const button of await buttons.all()) {
