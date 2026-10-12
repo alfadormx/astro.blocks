@@ -1,8 +1,8 @@
-import type { ButtonProps } from '~/types/button.types';
-import type { ContainerProps } from '~/types/container.types';
-import type { SimpleBackgroundProps } from '~/types/background.types';
-import type { SpacingConfig } from '~/types/spacing.types';
-import type { BorderConfig } from '~/types/border.types';
+import type { ButtonProps } from './button.types';
+import type { ContainerProps } from './container.types';
+import type { SimpleBackgroundProps } from './background.types';
+import type { SpacingConfig } from './spacing.types';
+import type { BorderConfig } from './border.types';
 
 /** Button config for a tab trigger; `id` is omitted because Tabs assigns trigger ids. */
 export type TabButtonConfig = Omit<ButtonProps, 'id'>;

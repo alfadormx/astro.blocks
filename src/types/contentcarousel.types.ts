@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from 'astro/types';
 import type { ButtonProps } from './button.types';
-import type { ImageProps } from '~/utils/images-optimization';
+import type { ImageProps } from './image.types';
 import type { ContainerProps } from './container.types';
 
 export type CarouselItem = Partial<ImageProps> & {

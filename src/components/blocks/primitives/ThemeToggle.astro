@@ -1,32 +1,23 @@
 ---
 import Button from '~/components/blocks/primitives/Button.astro';
-import { cn } from '~/utils/styles';
+import { mergeConfigs } from '~/utils/mergeConfigs';
 import type { ThemeToggleProps } from '~/types/themetoggle.types';
 
 type Props = ThemeToggleProps;
 
-const {
-  size = 'md',
-  variant = 'solid',
-  intent = 'primary',
-  icon = { name: 'heroicons:sun' },
-  shape = 'rounded',
-  width = 'auto',
-  class: className = '',
-  ...rest
-} = Astro.props;
+const internalConfig: ThemeToggleProps = {
+  size: 'md',
+  variant: 'solid',
+  intent: 'primary',
+  icon: { name: 'heroicons:sun' },
+  shape: 'rounded',
+  width: 'auto',
+};
+
+const merged = mergeConfigs<ThemeToggleProps>({}, internalConfig, Astro.props);
 ---
 
-<Button
-  size={size}
-  variant={variant}
-  intent={intent}
-  shape={shape}
-  icon={icon}
-  width={width}
-  class={cn('theme-toggle-button', className)}
-  {...rest}
-/>
+<Button {...merged} data-theme-toggle />
 
 <script>
   interface WindowWithThemeToggle extends Window {
@@ -38,7 +29,7 @@ const {
     if (win.__themeToggleInitialized) return;
     win.__themeToggleInitialized = true;
 
-    const buttons = document.querySelectorAll('.theme-toggle-button');
+    const buttons = document.querySelectorAll('[data-theme-toggle]');
     if (!buttons.length) return;
 
     function getCurrentTheme(): 'light' | 'dark' {

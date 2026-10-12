@@ -21,7 +21,7 @@ const {
   size = 'md',
   shape = 'rounded',
   intent = 'primary',
-  layout = 'horizontal',
+  orientation = 'horizontal',
   disabled = false,
   defaultOptionConfig,
   selectedOptionConfig,
@@ -32,7 +32,7 @@ const {
 validateToggleGroup({ group, label, labelledBy, options, disabled });
 
 const name = toggleGroupName(group);
-const isVertical = layout === 'vertical';
+const isVertical = orientation === 'vertical';
 const variant = Astro.props.appearance === 'cell' ? (Astro.props.variant ?? 'solid') : undefined;
 
 const RADIO_SIZE = {
@@ -172,7 +172,7 @@ const rootClass = cn(
   role="radiogroup"
   aria-label={labelledBy ? undefined : label}
   aria-labelledby={labelledBy || undefined}
-  aria-orientation={layout}
+  aria-orientation={orientation}
   data-toggle-group
   data-selection-group={group}
   data-selection-mode="single"

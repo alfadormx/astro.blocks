@@ -7,7 +7,7 @@ import Button from '~/components/blocks/primitives/Button.astro';
 import ItemsGrid from '~/components/blocks/composite/ItemsGrid.astro';
 import type { ContentProps } from '~/types/content.types';
 import type { TwoColumnContainerProps } from '~/types/container.types';
-import type { ImageProps } from '~/utils/images-optimization';
+import type { ImageProps } from '~/types/image.types';
 import type { ItemsGridProps } from '~/types/itemsgrid.types';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 import { cn } from '~/utils/styles';
@@ -44,7 +44,7 @@ const defaultItemsGridConfig: Partial<ItemsGridProps> = {
   columns: 1,
   air: 'normal',
   defaultItemConfig: {
-    layout: 'horizontal',
+    orientation: 'horizontal',
   },
   class: 'mt-6 md:mt-8',
 };
