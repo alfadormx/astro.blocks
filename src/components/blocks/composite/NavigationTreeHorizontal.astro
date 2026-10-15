@@ -31,6 +31,7 @@ const {
   itemClass = '',
   dropdownClass = '',
   defaultItemConfig,
+  iconName = 'heroicons:chevron-down',
   ...attrs
 } = Astro.props;
 
@@ -46,12 +47,12 @@ const defaultChildButtonConfig: Partial<ButtonProps> = {
 const defaultNavClass = 'flex flex-row items-center gap-1';
 const navClass = cn(defaultNavClass, className);
 
-const defaultDropdownClass = cn(
-  'absolute top-full pt-2 min-w-50',
-  'bg-base border border-border rounded-sm shadow-lg',
-  'pb-2 z-50',
-  'hidden group-hover:block',
-  dropdownPositionClasses[dropdownPosition],
+const dropdownWrapperClass = cn(
+  'absolute top-full pt-2 z-50',
+  dropdownPositionClasses[dropdownPosition]
+);
+const dropdownPanelClass = cn(
+  'min-w-50 bg-base border border-border rounded-sm shadow-lg pb-2',
   dropdownClass
 );
 ---
@@ -64,8 +65,8 @@ const defaultDropdownClass = cn(
       const mergedItemConfig = mergeConfigs(
         {},
         defaultItemButtonConfig,
-        hasChildren ? { icon: { name: 'heroicons:chevron-down' } } : {},
         defaultItemConfig || {},
+        hasChildren ? { icon: { name: iconName } } : {},
         buttonProps
       );
 
@@ -79,19 +80,21 @@ const defaultDropdownClass = cn(
           <Button {...mergedItemConfig} data-nav-parent={hasChildren || undefined} />
 
           {hasChildren && (
-            <div class={defaultDropdownClass} data-nav-dropdown>
-              {children!.map((child: NavigationTreeItem) => {
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                const { children: _, ...childProps } = child;
-                const mergedChildConfig = mergeConfigs(
-                  {},
-                  defaultChildButtonConfig,
-                  defaultItemConfig,
-                  childProps
-                );
+            <div class={dropdownWrapperClass} data-nav-dropdown>
+              <div class={dropdownPanelClass}>
+                {children!.map((child: NavigationTreeItem) => {
+                  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                  const { children: _, ...childProps } = child;
+                  const mergedChildConfig = mergeConfigs(
+                    {},
+                    defaultChildButtonConfig,
+                    defaultItemConfig,
+                    childProps
+                  );
 
-                return <Button {...mergedChildConfig} />;
-              })}
+                  return <Button {...mergedChildConfig} />;
+                })}
+              </div>
             </div>
           )}
         </div>
@@ -124,26 +127,22 @@ const defaultDropdownClass = cn(
         if (navItem) {
           const dropdown = navItem.querySelector('[data-nav-dropdown]') as HTMLElement;
           if (dropdown) {
-            const isHidden = dropdown.classList.contains('hidden');
+            const isOpen = dropdown.hasAttribute('data-open');
 
             document.querySelectorAll('[data-nav-dropdown]').forEach((d) => {
               if (d !== dropdown) {
-                d.classList.add('hidden');
+                d.removeAttribute('data-open');
               }
             });
 
-            if (isHidden) {
-              dropdown.classList.remove('hidden');
-            } else {
-              dropdown.classList.add('hidden');
-            }
+            dropdown.toggleAttribute('data-open', !isOpen);
           }
         }
       } else {
         const navItem = target.closest('[data-nav-item]');
         if (!navItem) {
           document.querySelectorAll('[data-nav-dropdown]').forEach((d) => {
-            d.classList.add('hidden');
+            d.removeAttribute('data-open');
           });
         }
       }
@@ -152,7 +151,7 @@ const defaultDropdownClass = cn(
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         document.querySelectorAll('[data-nav-dropdown]').forEach((d) => {
-          d.classList.add('hidden');
+          d.removeAttribute('data-open');
         });
       }
     });

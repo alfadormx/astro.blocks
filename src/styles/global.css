@@ -194,11 +194,12 @@
     transform: rotate(90deg);
   }
 
-  [data-nav-item]:hover > [data-nav-dropdown] {
-    display: block;
+  [data-nav-dropdown] {
+    display: none;
   }
 
-  [data-nav-dropdown]:not(.hidden) {
+  [data-nav-dropdown][data-open],
+  [data-nav-item]:hover > [data-nav-dropdown] {
     display: block;
   }
 
