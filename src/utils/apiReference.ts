@@ -124,9 +124,9 @@ function findExtendsIdentifier(
   ts.forEachChild(sourceFile, (node) => {
     if (ts.isInterfaceDeclaration(node) && node.name.text === interfaceName) {
       for (const clause of node.heritageClauses ?? []) {
-        const expr = clause.types[0]?.expression;
-        if (expr && ts.isIdentifier(expr)) {
-          result = expr.text;
+        const heritage = clause.types[0];
+        if (heritage && ts.isIdentifier(heritage.expression)) {
+          result = stripWrapper(heritage.getText(sourceFile));
         }
       }
     }
@@ -168,6 +168,7 @@ function parseDefaults(astroSourceText: string): Record<string, string> {
 
 export function stripWrapper(type: string): string {
   return type
+    .replace(/\s*\|\s*false$/, '')
     .replace(/\[\]$/, '')
     .replace(/^(?:Partial|LayerConfig)<(.+)>$/, '$1')
     .replace(/^Omit<(\w+),.+>$/, '$1')

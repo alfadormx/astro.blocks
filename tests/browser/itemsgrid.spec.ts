@@ -53,6 +53,15 @@ test.describe('ItemsGrid layout', () => {
     expect(Math.abs(last.width - gridBox.width)).toBeLessThanOrEqual(1);
     expect(first.width).toBeLessThan(gridBox.width / 2);
   });
+
+  test('a consumer col-span on the last item beats fillLastRow', async ({ page }) => {
+    await page.goto(PAGE_URL);
+    const grid = page.locator('[data-doc-section="fill-last-row-opt-out"] .grid');
+    const first = (await grid.locator(':scope > *').first().boundingBox())!;
+    const last = (await grid.locator(':scope > *').last().boundingBox())!;
+
+    expect(Math.abs(last.width - first.width)).toBeLessThanOrEqual(1);
+  });
 });
 
 test.describe('ItemsGrid selection', () => {

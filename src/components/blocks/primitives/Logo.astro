@@ -18,6 +18,8 @@ const defaultLogoConfig: Partial<LogoProps> = {
   label: vector?.src || image?.src ? undefined : SITE.name,
   labelClass: 'text-xl font-bold',
   class: 'shrink-0 p-0 hover:no-underline',
+  ...(vector?.src && { vector: { src: vector.src, ariaLabel: SITE.name } }),
+  ...(image?.src && { image: { alt: SITE.name } }),
 };
 
 const mergedLogoConfig = mergeConfigs({}, defaultLogoConfig, Astro.props);
@@ -31,13 +33,9 @@ const { vector: mergedVector, image: mergedImage, ...buttonConfig } = mergedLogo
   (mergedVector?.src || mergedImage?.src || buttonConfig.label) && (
     <Button {...buttonConfig}>
       {mergedVector?.src ? (
-        <Vector
-          {...mergedVector}
-          class={cn('w-full h-full', mergedVector.class)}
-          ariaLabel={mergedVector.ariaLabel || SITE.name}
-        />
+        <Vector {...mergedVector} class={cn('w-full h-full', mergedVector.class)} />
       ) : mergedImage?.src ? (
-        <Image {...mergedImage} alt={mergedImage.alt || SITE.name} />
+        <Image {...mergedImage} />
       ) : null}
     </Button>
   )

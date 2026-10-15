@@ -9,6 +9,8 @@ describe('stripWrapper', () => {
     ["LayerConfig<Omit<NavigationTreeHorizontalProps, 'items'>>", 'NavigationTreeHorizontalProps'],
     ["Partial<Omit<ButtonProps, 'id'>>", 'ButtonProps'],
     ['ContainerProps', 'ContainerProps'],
+    ['ButtonProps | false', 'ButtonProps'],
+    ['ButtonProps[] | false', 'ButtonProps'],
   ])('unwraps %s to %s', (input, expected) => {
     expect(stripWrapper(input)).toBe(expected);
   });
@@ -23,5 +25,11 @@ describe('getPropRows', () => {
     const row = getPropRows('Configurator', 'composite').rows.find((r) => r.name === name);
 
     expect(row?.link?.label).toBe(label);
+  });
+});
+
+describe('inherited props', () => {
+  it('links an interface that extends an Omit of another block to that block', () => {
+    expect(getPropRows('ThemeToggle', 'primitives').inheritsFrom?.label).toBe('Button');
   });
 });
