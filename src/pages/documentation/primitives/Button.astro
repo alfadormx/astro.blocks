@@ -2,11 +2,17 @@
 import Layout from '../_layouts/Layout.astro';
 import ButtonBlock from '~/components/blocks/primitives/Button.astro';
 import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import type { NavigationTreeItem } from '~/types/navigationtree.types';
 
 const metadata = {
   title: {
     default: 'Button',
   },
+};
+
+const menuItem: NavigationTreeItem = {
+  label: 'Products',
+  children: [{ label: 'Laptops', href: '/products/laptops' }],
 };
 ---
 
@@ -280,6 +286,12 @@ const metadata = {
       icon={{ name: 'heroicons:arrow-top-right-on-square' }}
       iconPosition="right"
     />
+  </div>
+
+  <h3>Spreading an item config</h3>
+  <p>A nav item can be spread onto a Button as is. Its <code>children</code> are not rendered.</p>
+  <div class="flex flex-wrap gap-4" data-doc-section="children">
+    <ButtonBlock {...menuItem} />
   </div>
 
   <ApiReferenceTable component="Button" category="primitives" />
