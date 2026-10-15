@@ -124,16 +124,16 @@ const layeredPanels: ConfiguratorProps['categories'] = [
   },
 ];
 
-const intentPanels: ConfiguratorProps['categories'] = [
+const intentPanels = (prefix: string): ConfiguratorProps['categories'] => [
   {
-    name: 'configurator-doc-intent-metal',
+    name: `${prefix}-metal`,
     panel: 'toggle',
     triggerButton: { label: 'Metal' },
     heading: 'Choose your metal',
     options: metalOptions,
   },
   {
-    name: 'configurator-doc-intent-stone',
+    name: `${prefix}-stone`,
     panel: 'grid',
     mode: 'single',
     triggerButton: { label: 'Stone' },
@@ -141,7 +141,7 @@ const intentPanels: ConfiguratorProps['categories'] = [
     options: stoneOptions,
   },
   {
-    name: 'configurator-doc-intent-engraving',
+    name: `${prefix}-engraving`,
     panel: 'text',
     triggerButton: { label: 'Engraving' },
     heading: 'Add an engraving',
@@ -332,15 +332,30 @@ const urlStateExample = `<Configurator
   <p>
     <code>intent</code> colours the selected state and focus ring of every panel kind. Setting it in
     <code>defaultToggleGroupConfig</code>, <code>defaultItemsGridConfig</code> and
-    <code>defaultTextAreaConfig</code> gives toggle, grid and text panels the same colour.
+    <code>defaultTextAreaConfig</code> gives toggle, grid and text panels the same colour. Tabs aren't
+    panels: colour the active tab with <code>tabs.activeItemConfig</code>.
   </p>
   <div data-doc-section="intent" class="border border-dashed border-gray/80 p-8">
     <ConfiguratorBlock
-      categories={intentPanels}
+      categories={intentPanels('configurator-doc-intent')}
       modelViewer={modelViewer}
       defaultToggleGroupConfig={{ intent: 'accent' }}
       defaultItemsGridConfig={{ intent: 'accent' }}
       defaultTextAreaConfig={{ intent: 'accent' }}
+      tabs={{ activeItemConfig: { intent: 'accent' } }}
+    />
+  </div>
+
+  <h3>4b. Neutral intent</h3>
+  <p><code>neutral</code> selects with the emphasis colour in every panel kind.</p>
+  <div data-doc-section="intent-neutral" class="border border-dashed border-gray/80 p-8">
+    <ConfiguratorBlock
+      categories={intentPanels('configurator-doc-intent-neutral')}
+      modelViewer={modelViewer}
+      defaultToggleGroupConfig={{ intent: 'neutral', variant: 'solid' }}
+      defaultItemsGridConfig={{ intent: 'neutral' }}
+      defaultTextAreaConfig={{ intent: 'neutral' }}
+      tabs={{ activeItemConfig: { intent: 'neutral' } }}
     />
   </div>
 

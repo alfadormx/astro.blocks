@@ -126,6 +126,31 @@ const finishOptions = [
     }
   </div>
 
+  <h3>Neutral cells</h3>
+  <p><code>intent="neutral"</code> selects with the emphasis colour in every cell variant.</p>
+  <div data-doc-section="cell-neutral" class="flex flex-col gap-4">
+    {
+      (['solid', 'outline', 'ghost'] as const).map((variant) => (
+        <div class="flex flex-col gap-2">
+          <p class="text-sm text-muted">
+            <code>{variant}</code>
+          </p>
+          <ToggleGroupBlock
+            group={`togglegroup-doc-cell-neutral-${variant}`}
+            label="Reveal price"
+            appearance="cell"
+            variant={variant}
+            intent="neutral"
+            options={[
+              { code: 'yes', label: 'Yes' },
+              { code: 'no', label: 'No', selected: true },
+            ]}
+          />
+        </div>
+      ))
+    }
+  </div>
+
   <h3>Vertical</h3>
   <div data-doc-section="vertical">
     <ToggleGroupBlock

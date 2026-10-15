@@ -512,38 +512,43 @@ test.describe('panel intent', () => {
     await expect(tab).toHaveAttribute('aria-selected', 'true');
   }
 
-  test('one intent gives toggle, grid and text panels the same selected and focus colour', async ({
-    page,
-  }) => {
-    await page.goto('/documentation/composite/Configurator');
-    const section = page.locator('[data-doc-section="intent"]');
-    const grid = section.locator('[data-selection-group="configurator-doc-intent-stone"]');
-    const toggle = section.locator('[data-selection-group="configurator-doc-intent-metal"]');
-    const text = section.locator('[data-selection-group="configurator-doc-intent-engraving"]');
+  for (const { section: name, prefix } of [
+    { section: 'intent', prefix: 'configurator-doc-intent' },
+    { section: 'intent-neutral', prefix: 'configurator-doc-intent-neutral' },
+  ]) {
+    test(`${name}: one intent gives toggle, grid and text panels the same selected and focus colour`, async ({
+      page,
+    }) => {
+      await page.goto('/documentation/composite/Configurator');
+      const section = page.locator(`[data-doc-section="${name}"]`);
+      const grid = section.locator(`[data-selection-group="${prefix}-stone"]`);
+      const toggle = section.locator(`[data-selection-group="${prefix}-metal"]`);
+      const text = section.locator(`[data-selection-group="${prefix}-engraving"]`);
 
-    await activateTab(section, 'Stone');
-    await expect(grid.locator('[role="radio"]').first()).toBeAttached();
-    const gridSelected = grid.locator('[data-option-variant="selected"]:visible > *');
-    const reference = await gridSelected.evaluate((el) => getComputedStyle(el).borderBottomColor);
-    const gridOption = grid.locator('[data-option-code][aria-checked="true"]');
-    await gridOption.focus();
-    await expectFocusRing(gridOption, reference);
+      await activateTab(section, 'Stone');
+      await expect(grid.locator('[role="radio"]').first()).toBeAttached();
+      const gridSelected = grid.locator('[data-option-variant="selected"]:visible > *');
+      const reference = await gridSelected.evaluate((el) => getComputedStyle(el).borderBottomColor);
+      const gridOption = grid.locator('[data-option-code][aria-checked="true"]');
+      await gridOption.focus();
+      await expectFocusRing(gridOption, reference);
 
-    await activateTab(section, 'Metal');
-    const toggleShell = toggle.locator('label:has(input:checked)');
-    await expect(toggleShell.locator('[data-option-variant="selected"]')).toHaveCSS(
-      'background-color',
-      reference
-    );
-    await toggleShell.locator('input').focus();
-    await expectFocusRing(toggleShell, reference);
+      await activateTab(section, 'Metal');
+      const toggleShell = toggle.locator('label:has(input:checked)');
+      await expect(toggleShell.locator('[data-option-variant="selected"]')).toHaveCSS(
+        'background-color',
+        reference
+      );
+      await toggleShell.locator('input').focus();
+      await expectFocusRing(toggleShell, reference);
 
-    await activateTab(section, 'Engraving');
-    const field = text.locator('textarea');
-    await field.focus();
-    await expect(field).toHaveCSS('border-color', reference);
-    await expectFocusRing(field, reference);
-  });
+      await activateTab(section, 'Engraving');
+      const field = text.locator('textarea');
+      await field.focus();
+      await expect(field).toHaveCSS('border-color', reference);
+      await expectFocusRing(field, reference);
+    });
+  }
 });
 
 test.describe('panel slots', () => {

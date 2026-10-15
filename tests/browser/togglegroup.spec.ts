@@ -260,3 +260,24 @@ test.describe('ToggleGroup', () => {
     await expectChecked(root, ['serif']);
   });
 });
+
+test.describe('neutral cells', () => {
+  for (const variant of ['solid', 'outline', 'ghost']) {
+    test(`a selected neutral ${variant} cell differs from an unselected one`, async ({ page }) => {
+      await page.goto(PAGE_URL);
+      const root = await groupRoot(page, `togglegroup-doc-cell-neutral-${variant}`);
+      const look = (cell: Locator) =>
+        cell.evaluate((el) => {
+          const style = getComputedStyle(el);
+          return [style.backgroundColor, style.borderTopColor, style.color];
+        });
+
+      const selected = await look(option(root, 'no').locator('[data-option-variant="selected"]'));
+      const unselected = await look(
+        option(root, 'yes').locator('[data-option-variant="unselected"]')
+      );
+
+      expect(selected).not.toEqual(unselected);
+    });
+  }
+});
