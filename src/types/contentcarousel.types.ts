@@ -6,6 +6,7 @@ import type { LayerConfig } from './config.types';
 
 export type CarouselItem = Partial<ImageProps> & {
   id?: string;
+  /** Classes on the slide wrapper, not the image; style the image with `defaultImageConfig.class`. */
   class?: string;
 };
 
@@ -43,8 +44,10 @@ export interface ContentCarouselProps extends Omit<HTMLAttributes<'div'>, 'class
   prevButton?: ButtonProps | false;
   /** Next-slide button merged over the default; `false` hides it (default: rendered). */
   nextButton?: ButtonProps | false;
-  /** Button config merged under every slide indicator. */
+  /** Button config merged under every slide indicator; `aria-label` is a prefix, and the slide number is appended. */
   defaultIndicatorButtonConfig?: LayerConfig<ButtonProps>;
+  /** Image config merged under every slide in `items`, over the defaults (default: { class: 'w-full h-auto object-cover', layout: 'fullWidth', aspectRatio: 16 / 9 }). */
+  defaultImageConfig?: LayerConfig<ImageProps>;
   /** Autoplay pause button merged over the default. */
   pauseButton?: ButtonProps;
   /** Autoplay resume button merged over the default. */

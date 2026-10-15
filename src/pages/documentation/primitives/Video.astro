@@ -144,9 +144,10 @@ const metadata = {
     Video follows you as you scroll down the page. Try scrolling past this video to see it float in
     the corner. Click the arrow button to dismiss it.
   </p>
-  <div class="border border-dashed border-gray/80 p-8">
+  <div class="border border-dashed border-gray/80 p-8" data-doc-section="floating">
     <VideoBlock
       isFloating={true}
+      pipButton={{ id: 'doc-video-pip', 'aria-label': 'Close floating player' }}
       source={{
         type: 'video',
         sources: [

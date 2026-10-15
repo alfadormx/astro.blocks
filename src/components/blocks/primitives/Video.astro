@@ -90,14 +90,10 @@ const defaultOptions = {
   ...(options || {}),
 };
 
-const videoGroupId = isFloating ? 'video-group' : undefined;
-const pipCloseBtnId = isFloating ? 'pip-close' : undefined;
-
 const defaultWrapperClass = 'w-full relative bg-elevated';
 const defaultVideoGroupClass = 'w-full relative overflow-hidden bg-elevated';
 
 const internalPipButton: Partial<ButtonProps> = {
-  id: pipCloseBtnId,
   icon: { name: 'heroicons:arrow-up-left' },
   size: 'sm',
   hidden: true,
@@ -117,8 +113,8 @@ const mergedVideoGroupClass = cn(
 
 <div class={align ? alignClass : ''}>
   <div class={mergedWrapperClass}>
-    <div id={videoGroupId} class={mergedVideoGroupClass}>
-      {isFloating && <Button {...mergedPipButton} />}
+    <div data-video-group={isFloating ? '' : undefined} class={mergedVideoGroupClass}>
+      {isFloating && <Button {...mergedPipButton} data-video-pip-close />}
       <video
         class="plyr"
         data-plyr-config={JSON.stringify(defaultOptions)}
@@ -139,8 +135,8 @@ const mergedVideoGroupClass = cn(
   });
 
   document.addEventListener('DOMContentLoaded', () => {
-    const videoGroup = document.getElementById('video-group');
-    const pipCloseBtn = document.getElementById('pip-close');
+    const videoGroup = document.querySelector<HTMLElement>('[data-video-group]');
+    const pipCloseBtn = videoGroup?.querySelector<HTMLElement>('[data-video-pip-close]') ?? null;
 
     let userClosedFloatingPlayer = false;
 
