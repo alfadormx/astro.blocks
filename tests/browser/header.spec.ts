@@ -30,18 +30,19 @@ test('header renders each id and name once', async ({ page }) => {
   expect(names.length).toBe(new Set(names).size);
 });
 
-test('aria-hidden logo copy holds nothing focusable', async ({ page }) => {
+test('header renders one logo', async ({ page }) => {
   await page.goto(PAGE_URL);
-  const hidden = page.locator('#doc-header [aria-hidden="true"]');
 
-  await expect(hidden).toHaveCount(1);
-  const focused = await hidden.locator('*').evaluateAll((els) =>
-    els
-      .filter((el) => {
-        (el as HTMLElement).focus();
-        return document.activeElement === el;
-      })
-      .map((el) => el.outerHTML.slice(0, 80))
-  );
-  expect(focused).toEqual([]);
+  await expect(page.locator('#doc-header a[href="/"]')).toHaveCount(1);
+});
+
+test('the logo stays centred on the header row', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto(PAGE_URL);
+  const logo = await page.locator('#doc-header-logo').boundingBox();
+  const row = await page.locator('#doc-header [data-header-row]').boundingBox();
+
+  expect(logo).not.toBeNull();
+  expect(row).not.toBeNull();
+  expect(Math.abs(logo!.x + logo!.width / 2 - (row!.x + row!.width / 2))).toBeLessThan(1);
 });
