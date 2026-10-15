@@ -321,6 +321,26 @@ const metadata = {
       ]}
     />
   </div>
+  <p>A consumer <code>col-span-*</code> on the last item wins over <code>fillLastRow</code>.</p>
+  <div data-doc-section="fill-last-row-opt-out">
+    <ItemsGridBlock
+      columns={2}
+      responsive={false}
+      fillLastRow
+      gap="tight"
+      defaultItemConfig={{
+        border: { width: 'border', color: 'border-border' },
+        spacing: { padding: 'p-4' },
+      }}
+      items={[
+        { title: 'One' },
+        { title: 'Two' },
+        { title: 'Three' },
+        { title: 'Four' },
+        { title: 'Five', class: 'col-span-1' },
+      ]}
+    />
+  </div>
 
   <h3>Selection props</h3>
   <p>

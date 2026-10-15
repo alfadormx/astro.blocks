@@ -17,3 +17,10 @@ test('connectorClass applies to the vertical connector line', async ({ page }) =
 
   await expect(section.locator('.border-l.border-primary')).toHaveCount(1);
 });
+
+test('spacing.margin reaches the item root', async ({ page }) => {
+  await page.goto(PAGE_URL);
+  const root = page.locator('[data-doc-section="spacing-margin"] > *').first();
+
+  await expect(root).toHaveCSS('margin-top', '32px');
+});

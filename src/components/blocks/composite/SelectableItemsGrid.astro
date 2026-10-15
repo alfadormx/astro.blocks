@@ -1,4 +1,6 @@
 ---
+// Internal to ItemsGrid: rendered only when selection is enabled, so pages without a
+// selectable grid never receive this component's script.
 import type { ItemsGridItem, ItemsGridProps, ItemsGridSelection } from '~/types/itemsgrid.types';
 import type { ItemProps } from '~/types/item.types';
 import Item from '~/components/blocks/composite/Item.astro';
@@ -7,8 +9,6 @@ import { cn } from '~/utils/styles';
 import { focusRingClass, selectedBorderClass } from '~/utils/intentStyles';
 import { validateItemsGridSelection } from '~/utils/itemsGridSelection';
 
-// Internal to ItemsGrid: rendered only when selection is enabled, so pages without a
-// selectable grid never receive this component's script.
 type Props = Pick<ItemsGridProps, 'items' | 'defaultItemConfig' | 'selectedItemConfig'> & {
   selection: Exclude<ItemsGridSelection, { mode: 'none' }>;
   gridClass: string;

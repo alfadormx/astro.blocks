@@ -49,7 +49,7 @@ const lastItemClass =
           return (
             <Item
               {...mergedItem}
-              class={cn(mergedItem.class, i === items.length - 1 && lastItemClass)}
+              class={cn(i === items.length - 1 && lastItemClass, mergedItem.class)}
             />
           );
         })}
