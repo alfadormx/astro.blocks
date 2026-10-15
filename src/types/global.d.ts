@@ -1,4 +1,4 @@
-import type { SelectionChangeDetail } from '~/types/selection.types';
+import type { SelectionChangeDetail } from './selection.types';
 
 declare global {
   interface Window {
