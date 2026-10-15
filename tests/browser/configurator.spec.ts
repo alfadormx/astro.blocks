@@ -490,10 +490,18 @@ test.describe('panel intent', () => {
     return value.match(/(?:rgba?|oklch|oklab|lab|lch|color)\([^)]*\)/g) ?? [];
   }
 
-  // Polled: the toggle shell and textarea transition their ring in.
+  // The toggle shell and textarea transition their ring in, and the page's model viewers can
+  // starve frames enough to stall that transition, so it is finished before reading.
   async function expectFocusRing(target: Locator, colour: string): Promise<void> {
     await expect
-      .poll(async () => colours(await target.evaluate((el) => getComputedStyle(el).boxShadow)))
+      .poll(async () =>
+        colours(
+          await target.evaluate((el) => {
+            el.getAnimations().forEach((animation) => animation.finish());
+            return getComputedStyle(el).boxShadow;
+          })
+        )
+      )
       .toContain(colour);
   }
 
@@ -535,5 +543,34 @@ test.describe('panel intent', () => {
     await field.focus();
     await expect(field).toHaveCSS('border-color', reference);
     await expectFocusRing(field, reference);
+  });
+});
+
+test.describe('panel slots', () => {
+  function panelSection(page: Page): Locator {
+    return page.locator('[data-doc-section="panel-class"]');
+  }
+
+  test('heading and control are direct children of the tab panel', async ({ page }) => {
+    await page.goto('/documentation/composite/Configurator');
+    const panel = panelSection(page).locator('[data-tab-panel="0"]');
+
+    await expect(panel.locator(':scope > h3')).toHaveCount(1);
+    await expect(panel.locator(':scope > [data-selection-group]')).toHaveCount(1);
+  });
+
+  test('panelClass gap separates heading and control', async ({ page }) => {
+    await page.goto('/documentation/composite/Configurator');
+    const panel = panelSection(page).locator('[data-tab-panel="0"]');
+    const heading = await panel.locator('h3').boundingBox();
+    const control = await panel.locator('[data-selection-group]').boundingBox();
+
+    expect(control!.y - (heading!.y + heading!.height)).toBeCloseTo(16, 0);
+  });
+
+  test('unused slots render no panel', async ({ page }) => {
+    await page.goto('/documentation/composite/Configurator');
+
+    await expect(panelSection(page).locator('[data-tab-panel]')).toHaveCount(2);
   });
 });

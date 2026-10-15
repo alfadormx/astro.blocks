@@ -197,18 +197,18 @@ const spec = urlState ? buildCombinationSpec(categories, urlState.product) : und
           /* One static slot per possible tab: the compiler cannot give a slot inside .map() a name
             that depends on the callback's arguments. Tabs renders only the first items.length. */
         }
-        <div slot="panel-0">{panels[0] && <ConfiguratorPanel {...panels[0]} />}</div>
-        <div slot="panel-1">{panels[1] && <ConfiguratorPanel {...panels[1]} />}</div>
-        <div slot="panel-2">{panels[2] && <ConfiguratorPanel {...panels[2]} />}</div>
-        <div slot="panel-3">{panels[3] && <ConfiguratorPanel {...panels[3]} />}</div>
-        <div slot="panel-4">{panels[4] && <ConfiguratorPanel {...panels[4]} />}</div>
-        <div slot="panel-5">{panels[5] && <ConfiguratorPanel {...panels[5]} />}</div>
-        <div slot="panel-6">{panels[6] && <ConfiguratorPanel {...panels[6]} />}</div>
-        <div slot="panel-7">{panels[7] && <ConfiguratorPanel {...panels[7]} />}</div>
-        <div slot="panel-8">{panels[8] && <ConfiguratorPanel {...panels[8]} />}</div>
-        <div slot="panel-9">{panels[9] && <ConfiguratorPanel {...panels[9]} />}</div>
-        <div slot="panel-10">{panels[10] && <ConfiguratorPanel {...panels[10]} />}</div>
-        <div slot="panel-11">{panels[11] && <ConfiguratorPanel {...panels[11]} />}</div>
+        <Fragment slot="panel-0">{panels[0] && <ConfiguratorPanel {...panels[0]} />}</Fragment>
+        <Fragment slot="panel-1">{panels[1] && <ConfiguratorPanel {...panels[1]} />}</Fragment>
+        <Fragment slot="panel-2">{panels[2] && <ConfiguratorPanel {...panels[2]} />}</Fragment>
+        <Fragment slot="panel-3">{panels[3] && <ConfiguratorPanel {...panels[3]} />}</Fragment>
+        <Fragment slot="panel-4">{panels[4] && <ConfiguratorPanel {...panels[4]} />}</Fragment>
+        <Fragment slot="panel-5">{panels[5] && <ConfiguratorPanel {...panels[5]} />}</Fragment>
+        <Fragment slot="panel-6">{panels[6] && <ConfiguratorPanel {...panels[6]} />}</Fragment>
+        <Fragment slot="panel-7">{panels[7] && <ConfiguratorPanel {...panels[7]} />}</Fragment>
+        <Fragment slot="panel-8">{panels[8] && <ConfiguratorPanel {...panels[8]} />}</Fragment>
+        <Fragment slot="panel-9">{panels[9] && <ConfiguratorPanel {...panels[9]} />}</Fragment>
+        <Fragment slot="panel-10">{panels[10] && <ConfiguratorPanel {...panels[10]} />}</Fragment>
+        <Fragment slot="panel-11">{panels[11] && <ConfiguratorPanel {...panels[11]} />}</Fragment>
       </Tabs>
     </div>
   </TwoColumnContainer>
