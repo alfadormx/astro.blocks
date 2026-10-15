@@ -203,6 +203,20 @@ const headingPanels: ConfiguratorProps['categories'] = [
   },
 ];
 
+const describedPanels: ConfiguratorProps['categories'] = [
+  {
+    name: 'configurator-doc-described-engraving',
+    panel: 'text',
+    heading: 'Add an engraving',
+    textArea: {
+      help: 'Engraved in capitals.',
+      maxLength: 20,
+      showCounter: true,
+      'aria-describedby': 'configurator-doc-engraving-note',
+    },
+  },
+];
+
 const urlStateExample = `<Configurator
   categories={categories}
   modelViewer={modelViewer}
@@ -391,6 +405,16 @@ const urlStateExample = `<Configurator
       modelViewer={modelViewer}
       headingClass="text-xs uppercase tracking-[0.2em]"
     />
+  </div>
+
+  <h3>10. Extra field description</h3>
+  <p>
+    A native <code>aria-describedby</code> in <code>textArea</code> is added after the field's own help
+    and counter.
+  </p>
+  <div data-doc-section="described" class="border border-dashed border-gray/80 p-8">
+    <p id="configurator-doc-engraving-note">Engraving takes two working days.</p>
+    <ConfiguratorBlock categories={describedPanels} modelViewer={modelViewer} />
   </div>
 
   <ApiReferenceTable component="Configurator" category="composite" />
