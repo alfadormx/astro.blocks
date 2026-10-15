@@ -10,6 +10,7 @@ import type { ContainerProps } from '~/types/container.types';
 import type { NavigationTreeHorizontalProps } from '~/types/navigationtreehorizontal.types';
 import Logo from '~/components/blocks/primitives/Logo.astro';
 import { mergeConfigs } from '~/utils/mergeConfigs';
+import { stripLogoInstanceFields } from '~/utils/logo';
 
 type Props = HeaderProps;
 
@@ -101,9 +102,10 @@ const headerLayoutClass = cn('relative flex items-center justify-between', class
       <!-- Center spacer: invisible but occupies flow so header retains height -->
       <div
         aria-hidden="true"
+        inert
         class="opacity-0 flex items-center justify-center pointer-events-none"
       >
-        <Logo {...logo} id={undefined} />
+        <Logo {...stripLogoInstanceFields(logo)} />
       </div>
 
       <!-- Center Zone: Logo (always visually centered) -->
