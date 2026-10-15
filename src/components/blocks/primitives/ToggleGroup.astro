@@ -82,14 +82,24 @@ const GHOST_SELECTED_TINT = {
   success: 'bg-success/10',
   warning: 'bg-warning/10',
   error: 'bg-error/10',
-  neutral: 'bg-surface',
-}[intent];
+};
+// Button's neutral styles read as "unselected"; a selected neutral cell needs the emphasis family.
+const NEUTRAL_SELECTED = {
+  solid: 'bg-emphasis text-background hover:bg-emphasis/90 focus-visible:ring-emphasis',
+  outline:
+    'border-2 border-emphasis text-emphasis hover:bg-emphasis/10 focus-visible:ring-emphasis',
+  ghost: 'text-emphasis bg-emphasis/10 hover:bg-emphasis/20 focus-visible:ring-emphasis',
+} as const;
 const cellSelected: ToggleGroupOptionConfig = {
   class: cn(
     cellBase,
     'border-2 border-transparent',
-    intentClass(variant ?? 'solid', intent),
-    variant === 'ghost' && GHOST_SELECTED_TINT
+    intent === 'neutral'
+      ? NEUTRAL_SELECTED[variant ?? 'solid']
+      : [
+          intentClass(variant ?? 'solid', intent),
+          variant === 'ghost' && GHOST_SELECTED_TINT[intent],
+        ]
   ),
 };
 

@@ -14,7 +14,7 @@ const FOCUS_RING: Record<FocusPrefix, Record<Intent, string>> = {
     success: 'focus-visible:ring-success',
     warning: 'focus-visible:ring-warning',
     error: 'focus-visible:ring-error',
-    neutral: 'focus-visible:ring-border',
+    neutral: 'focus-visible:ring-emphasis',
   },
   'has-focus-visible': {
     primary: 'has-focus-visible:ring-primary',
@@ -24,7 +24,7 @@ const FOCUS_RING: Record<FocusPrefix, Record<Intent, string>> = {
     success: 'has-focus-visible:ring-success',
     warning: 'has-focus-visible:ring-warning',
     error: 'has-focus-visible:ring-error',
-    neutral: 'has-focus-visible:ring-border',
+    neutral: 'has-focus-visible:ring-emphasis',
   },
 };
 
