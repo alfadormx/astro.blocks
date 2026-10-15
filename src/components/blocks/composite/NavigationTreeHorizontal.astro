@@ -56,7 +56,7 @@ const defaultDropdownClass = cn(
 );
 ---
 
-<nav class={navClass} {...attrs}>
+<nav class={navClass} {...attrs} data-nav-trigger={trigger}>
   {
     items.map((item: NavigationTreeItem) => {
       const { children, ...buttonProps } = item;
@@ -115,6 +115,11 @@ const defaultDropdownClass = cn(
       const parentButton = target.closest('[data-nav-parent]');
 
       if (parentButton) {
+        if (
+          parentButton.closest('[data-nav-trigger]')?.getAttribute('data-nav-trigger') !== 'click'
+        ) {
+          return;
+        }
         const navItem = parentButton.closest('[data-nav-item]');
         if (navItem) {
           const dropdown = navItem.querySelector('[data-nav-dropdown]') as HTMLElement;

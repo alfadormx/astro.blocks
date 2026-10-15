@@ -33,3 +33,14 @@ test('click trigger opens and closes the dropdown', async ({ page }) => {
   await page.keyboard.press('Escape');
   await expect(dropdown).toBeHidden();
 });
+
+test('hover trigger ignores clicks so the dropdown closes when the pointer leaves', async ({
+  page,
+}) => {
+  const root = await section(page, 'icon-left');
+  const dropdown = root.locator('[data-nav-dropdown]').first();
+
+  await root.locator('[data-nav-parent]').first().click();
+  await page.mouse.move(0, 0);
+  await expect(dropdown).toBeHidden();
+});
