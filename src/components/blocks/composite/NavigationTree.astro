@@ -38,6 +38,7 @@ const internalActiveItemConfig: Partial<ButtonProps> = {
   intent: 'primary',
   width: 'full',
   iconPosition: 'left',
+  class: 'font-semibold',
 };
 
 // Utility functions
@@ -98,7 +99,6 @@ const buildItemConfig = (
     isActive ? internalActiveItemConfig : internalItemConfig,
     defaultItemConfig,
     isActive ? activeItemConfig : inactiveItemConfig,
-    isActive ? { class: 'font-semibold' } : {},
     hasChildren
       ? {
           icon: {
