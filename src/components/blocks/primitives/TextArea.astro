@@ -32,6 +32,8 @@ const {
   helpClass = '',
   errorClass = '',
   counterClass = '',
+  'aria-describedby': consumerDescribedBy,
+  'aria-invalid': consumerInvalid,
   ...attrs
 } = Astro.props;
 
@@ -41,7 +43,12 @@ const id = idProp || textAreaId();
 const helpId = `${id}-help`;
 const errorId = `${id}-error`;
 const counterId = `${id}-counter`;
-const describedBy = [help && helpId, error && errorId, showCounter && counterId]
+const describedBy = [
+  help && helpId,
+  error && errorId,
+  showCounter && counterId,
+  consumerDescribedBy,
+]
   .filter(Boolean)
   .join(' ');
 const resolvedIntent = error ? 'error' : intent;
@@ -104,7 +111,7 @@ const fieldClassName = cn(
     required={required}
     disabled={disabled}
     readonly={readOnly}
-    aria-invalid={error ? 'true' : undefined}
+    aria-invalid={error ? 'true' : consumerInvalid}
     aria-describedby={describedBy || undefined}
     class={fieldClassName}
     {...attrs}>{value}</textarea
