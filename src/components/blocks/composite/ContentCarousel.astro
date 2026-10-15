@@ -5,6 +5,7 @@ import Container from '~/components/blocks/layout/Container.astro';
 import Image from '~/components/blocks/primitives/Image.astro';
 import { cn } from '~/utils/styles';
 import type { ButtonProps } from '~/types/button.types';
+import type { ImageProps } from '~/types/image.types';
 import type { ContainerProps } from '~/types/container.types';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 
@@ -25,6 +26,7 @@ const {
   prevButton,
   nextButton,
   defaultIndicatorButtonConfig,
+  defaultImageConfig,
   pauseButton,
   playButton,
   container,
@@ -101,9 +103,18 @@ const internalIndicatorButton: Partial<ButtonProps> = {
   intent: 'neutral',
   size: 'xs',
   shape: 'pill',
-  class: 'p-0 w-2 h-2 transition-colors',
+  class: 'p-0 w-2 h-2 transition-colors aria-selected:bg-primary',
   'aria-label': 'Go to slide',
 };
+
+const internalImage: Partial<ImageProps> = {
+  class: 'w-full h-auto object-cover',
+  layout: 'fullWidth',
+  aspectRatio: 16 / 9,
+};
+
+const slideImage = (image: Partial<ImageProps>) =>
+  mergeConfigs<Partial<ImageProps>>({}, internalImage, defaultImageConfig, image);
 
 const mergedPrevButton =
   prevButton === false ? undefined : mergeConfigs({}, internalPrevButton, prevButton);
@@ -177,12 +188,7 @@ const wrapperProps = container ? mergedContainer : {};
                   aria-roledescription="slide"
                   aria-label={`Slide ${index + 1} of ${items.length}`}
                 >
-                  <Image
-                    class="w-full h-auto object-cover"
-                    layout="fullWidth"
-                    aspectRatio={16 / 9}
-                    {...image}
-                  />
+                  <Image {...slideImage(image)} />
                 </div>
               );
             })
@@ -530,7 +536,8 @@ const wrapperProps = container ? mergedContainer : {};
       // Create indicators on the client using configured class
       instance.indicatorsContainer.innerHTML = '';
       const indicatorClass =
-        root.dataset.indicatorClass || 'w-2 h-2 rounded-full transition-colors';
+        root.dataset.indicatorClass ||
+        'w-2 h-2 rounded-full transition-colors aria-selected:bg-primary';
       for (let i = 0; i < realSlides.length; i++) {
         const btn = document.createElement('button');
         btn.type = 'button';
