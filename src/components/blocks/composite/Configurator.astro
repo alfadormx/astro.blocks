@@ -1,9 +1,9 @@
 ---
 import type {
-  ConfiguratorGridConfig,
+  ConfiguratorItemsGrid,
   ConfiguratorProps,
-  ConfiguratorTextConfig,
-  ConfiguratorToggleConfig,
+  ConfiguratorTextArea,
+  ConfiguratorToggleGroup,
   SummaryFormat,
 } from '~/types/configurator.types';
 import type { ItemsGridSelection } from '~/types/itemsgrid.types';
@@ -66,9 +66,9 @@ const internalTabs: Omit<TabsProps, 'items'> = {
   activeItemConfig: { variant: 'outline', intent: 'primary' },
   container: { htmlTag: 'div', content: { air: 'none', widthType: 'full' } },
 };
-const internalToggle: ConfiguratorToggleConfig = { appearance: 'cell' };
-const internalGrid: ConfiguratorGridConfig = { columns: 3, gap: 'tight' };
-const internalText: ConfiguratorTextConfig = { rows: 2 };
+const internalToggle: ConfiguratorToggleGroup = { appearance: 'cell' };
+const internalGrid: ConfiguratorItemsGrid = { columns: 3, gap: 'tight' };
+const internalText: ConfiguratorTextArea = { rows: 2 };
 const internalHeadline: HeadlineProps = {
   class: 'mt-6 mb-0',
   titleClass: 'text-2xl font-semibold',
@@ -82,7 +82,11 @@ const mergedTwoColumnContainer = mergeConfigs<TwoColumnContainerProps>(
 const mergedTabs = mergeConfigs<Omit<TabsProps, 'items'>>({}, internalTabs, tabs);
 const mergedHeadline = mergeConfigs<HeadlineProps>({}, internalHeadline, headline);
 const triggers = categories.map((category) =>
-  mergeConfigs<Omit<ButtonProps, 'id'>>({}, { label: category.heading }, category.triggerButton)
+  mergeConfigs<Omit<ButtonProps, 'id' | 'name'>>(
+    {},
+    { label: category.heading },
+    category.triggerButton
+  )
 );
 
 // `options` / `items` stay out of the merge layers: mergeConfigs merges arrays index-wise.
@@ -94,7 +98,7 @@ const panels = categories.map((category, i) => {
       ...base,
       kind: 'toggle' as const,
       props: {
-        ...mergeConfigs<ConfiguratorToggleConfig>(
+        ...mergeConfigs<ConfiguratorToggleGroup>(
           {},
           internalToggle,
           defaultToggleGroupConfig,
@@ -107,7 +111,7 @@ const panels = categories.map((category, i) => {
     };
   }
   if (category.panel === 'grid') {
-    const { intent, ...gridConfig } = mergeConfigs<ConfiguratorGridConfig>(
+    const { intent, ...gridConfig } = mergeConfigs<ConfiguratorItemsGrid>(
       {},
       internalGrid,
       defaultItemsGridConfig,
@@ -134,7 +138,7 @@ const panels = categories.map((category, i) => {
     ...base,
     kind: 'text' as const,
     props: {
-      ...mergeConfigs<ConfiguratorTextConfig>(
+      ...mergeConfigs<ConfiguratorTextArea>(
         {},
         internalText,
         defaultTextAreaConfig,

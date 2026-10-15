@@ -39,6 +39,12 @@ export interface ToggleGroupOptionConfig {
 export type ToggleGroupAppearance =
   { appearance?: 'radio' } | { appearance: 'cell'; variant?: 'solid' | 'outline' | 'ghost' };
 
+/** Flat form of `ToggleGroupAppearance` for config layers; ToggleGroup reads `variant` only when `appearance` is 'cell'. */
+export type ToggleGroupCellAppearance = {
+  appearance?: 'radio' | 'cell';
+  variant?: 'solid' | 'outline' | 'ghost';
+};
+
 export interface ToggleGroupProps {
   /** Selection group name this block publishes to and follows. */
   group: string;

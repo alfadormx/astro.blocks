@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { stripWrapper } from '~/utils/apiReference';
+import { getPropRows, stripWrapper } from '~/utils/apiReference';
 
 describe('stripWrapper', () => {
   it.each([
@@ -11,5 +11,17 @@ describe('stripWrapper', () => {
     ['ContainerProps', 'ContainerProps'],
   ])('unwraps %s to %s', (input, expected) => {
     expect(stripWrapper(input)).toBe(expected);
+  });
+});
+
+describe('getPropRows', () => {
+  it.each([
+    ['defaultToggleGroupConfig', 'ToggleGroup'],
+    ['defaultItemsGridConfig', 'ItemsGrid'],
+    ['defaultTextAreaConfig', 'TextArea'],
+  ])('links the Configurator %s row to %s', (name, label) => {
+    const row = getPropRows('Configurator', 'composite').rows.find((r) => r.name === name);
+
+    expect(row?.link?.label).toBe(label);
   });
 });

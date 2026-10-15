@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, expectTypeOf, it } from 'vitest';
 import type {
   ConfiguratorCategory,
   ConfiguratorGridCategory,
@@ -444,5 +444,19 @@ describe('buildCombinationSpec', () => {
     ];
     const spec = buildCombinationSpec(categories, 'RING01');
     expect(encode(spec, initialSelections(categories))).toBe('RING01-classic-yellow-medium--');
+  });
+});
+
+describe('configurator layer types', () => {
+  it('the text layer rejects error', () => {
+    expectTypeOf<NonNullable<ConfiguratorProps['defaultTextAreaConfig']>>().not.toHaveProperty(
+      'error'
+    );
+  });
+
+  it('the toggle layer takes variant without appearance', () => {
+    expectTypeOf<{ variant: 'outline' }>().toExtend<
+      NonNullable<ConfiguratorProps['defaultToggleGroupConfig']>
+    >();
   });
 });
