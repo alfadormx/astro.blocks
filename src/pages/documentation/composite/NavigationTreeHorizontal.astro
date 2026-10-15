@@ -84,6 +84,36 @@ const itemsWithDropdowns = [
     />
   </div>
 
+  <h3>Dropdown class</h3>
+  <p>
+    <code>dropdownClass</code> styles the panel; a display utility in it doesn't open the dropdown.
+  </p>
+  <div class="border border-border rounded-lg p-6" data-doc-section="dropdown-class">
+    <NavigationTreeHorizontalBlock
+      items={itemsWithDropdowns}
+      trigger="click"
+      dropdownClass="flex flex-col"
+    />
+  </div>
+
+  <h3>Default icon and chevron</h3>
+  <p>
+    Parents keep their chevron over <code>defaultItemConfig.icon</code>; set <code>iconName</code> to
+    change it.
+  </p>
+  <div class="border border-border rounded-lg p-6" data-doc-section="default-icon">
+    <NavigationTreeHorizontalBlock
+      items={itemsWithDropdowns}
+      defaultItemConfig={{ icon: { name: 'mdi:circle-small' } }}
+    />
+  </div>
+  <div class="border border-border rounded-lg p-6" data-doc-section="icon-name">
+    <NavigationTreeHorizontalBlock
+      items={itemsWithDropdowns}
+      iconName="heroicons:chevron-double-down"
+    />
+  </div>
+
   <!-- Example 4: Dropdown Position -->
   <h3>Dropdown Position</h3>
   <p>Control dropdown alignment: left (default), center, or right.</p>

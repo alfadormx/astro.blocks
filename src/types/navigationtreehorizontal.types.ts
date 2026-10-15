@@ -16,8 +16,10 @@ export interface NavigationTreeHorizontalProps extends Omit<HTMLAttributes<'nav'
   class?: string;
   /** Custom classes merged onto each nav item wrapper div (default: ''). */
   itemClass?: string;
-  /** Custom classes merged onto each dropdown menu container (default: ''). */
+  /** Custom classes merged onto each dropdown panel; visibility is owned by the wrapper, so display utilities are safe (default: ''). */
   dropdownClass?: string;
   /** ButtonProps applied as shared defaults to top-level and child buttons, overriding the built-in ghost/neutral base config but overridden by each item's own props. */
   defaultItemConfig?: LayerConfig<ButtonProps>;
+  /** Icon name for the chevron on items with children; sits above `defaultItemConfig`, so a layer icon can't replace it (default: 'heroicons:chevron-down'). */
+  iconName?: string;
 }
