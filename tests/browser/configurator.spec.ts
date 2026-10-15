@@ -470,6 +470,21 @@ test.describe('trigger layering', () => {
   });
 });
 
+test.describe('text panel attributes', () => {
+  test('consumer aria-describedby joins the field help and counter', async ({ page }) => {
+    await page.goto('/documentation/composite/Configurator');
+    const field = page.locator('[data-doc-section="described"] textarea');
+    const id = await field.getAttribute('id');
+
+    await expect(field).toHaveAttribute(
+      'aria-describedby',
+      `${id}-help ${id}-counter configurator-doc-engraving-note`
+    );
+    await expect(field).toHaveAccessibleDescription(/Engraved in capitals\./);
+    await expect(field).toHaveAccessibleDescription(/Engraving takes two working days\./);
+  });
+});
+
 test.describe('panel intent', () => {
   function colours(value: string): string[] {
     return value.match(/(?:rgba?|oklch|oklab|lab|lch|color)\([^)]*\)/g) ?? [];
