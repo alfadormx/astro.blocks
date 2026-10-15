@@ -279,6 +279,19 @@ const deeplyNestedNavItems: NavigationTreeItem[] = [
     />
   </div>
 
+  <h4>Active Item Weight</h4>
+  <p>
+    The active item is semi-bold by default. <code>activeItemConfig.class</code> can change its weight.
+  </p>
+  <div class="border border-border rounded-lg p-6 max-w-xs" data-doc-section="active-weight">
+    <NavigationTreeBlock
+      items={nestedNavItems}
+      currentPath="/documentation/composite/NavigationTree"
+      expansionStrategy="always"
+      activeItemConfig={{ class: 'font-normal' }}
+    />
+  </div>
+
   <h3>Current Path Detection</h3>
   <p>
     Current path: <code class="bg-surface px-2 py-1 rounded text-sm">{Astro.url.pathname}</code>

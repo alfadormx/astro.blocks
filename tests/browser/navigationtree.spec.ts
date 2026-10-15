@@ -2,9 +2,9 @@ import { expect, test, type Locator, type Page } from '@playwright/test';
 
 const PAGE_URL = '/documentation/composite/NavigationTree';
 
-async function section(page: Page): Promise<Locator> {
+async function section(page: Page, name = 'default-config'): Promise<Locator> {
   await page.goto(PAGE_URL);
-  return page.locator('[data-doc-section="default-config"]');
+  return page.locator(`[data-doc-section="${name}"]`);
 }
 
 const itemControls = (root: Locator): Locator =>
@@ -30,11 +30,23 @@ test('defaultItemConfig icon renders on leaf items while parents keep the chevro
   page,
 }) => {
   const root = await section(page);
+  const parents = root.locator('[data-has-children="true"] > div > div > button');
 
-  await expect(root.locator('a[href="/documentation/installation"] svg')).toHaveCount(1);
   await expect(
-    root.locator('[data-has-children="true"] > div > div > button .nav-tree-icon').first()
-  ).toBeAttached();
+    root.locator('a[href="/documentation/installation"] svg[data-icon="mdi:circle-small"]')
+  ).toHaveCount(1);
+  await expect(parents.first()).toBeAttached();
+  for (const parent of await parents.all()) {
+    await expect(parent.locator('svg[data-icon="mdi:chevron-right"]')).toHaveCount(1);
+  }
+});
+
+test('activeItemConfig class overrides the active weight', async ({ page }) => {
+  const overridden = (await section(page, 'active-weight')).locator(`a[href="${PAGE_URL}"]`);
+  const fallback = page.locator(`[data-doc-section="default-config"] a[href="${PAGE_URL}"]`);
+
+  await expect(overridden).toHaveCSS('font-weight', '400');
+  await expect(fallback).toHaveCSS('font-weight', '600');
 });
 
 test('clicking a parent still toggles the expanded icon', async ({ page }) => {
