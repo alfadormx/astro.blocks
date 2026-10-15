@@ -26,11 +26,11 @@ describe('intent styles', () => {
     expect(focusRingClass(intent, 'has-focus-visible')).toBe(`has-focus-visible:ring-${intent}`);
   });
 
-  it('neutral resolves to the emphasis token for selected and focus border, and to ring-border for focus ring', () => {
+  it('neutral resolves to the emphasis token for selected, focus border and focus ring', () => {
     expect(selectedBorderClass('neutral')).toBe('border-emphasis');
     expect(selectedFillClass('neutral')).toBe('bg-emphasis');
     expect(focusBorderClass('neutral')).toBe('focus:border-emphasis');
-    expect(focusRingClass('neutral')).toBe('focus-visible:ring-border');
-    expect(focusRingClass('neutral', 'has-focus-visible')).toBe('has-focus-visible:ring-border');
+    expect(focusRingClass('neutral')).toBe('focus-visible:ring-emphasis');
+    expect(focusRingClass('neutral', 'has-focus-visible')).toBe('has-focus-visible:ring-emphasis');
   });
 });
