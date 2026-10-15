@@ -290,9 +290,12 @@ const urlStateExample = `<Configurator
     Each panel's config is merged in three layers: the configurator's internal defaults, then the
     block-level <code>defaultToggleGroupConfig</code>, <code>defaultItemsGridConfig</code> or
     <code>defaultTextAreaConfig</code>, then the category's own <code>toggleGroup</code>,
-    <code>itemsGrid</code> or <code>textArea</code>. The block-level defaults take any child prop,
-    such as <code>intent</code> (example 4) or <code>maxLength</code> and <code>placeholder</code> in
-    <code>defaultTextAreaConfig</code>. Triggers merge through Tabs:
+    <code>itemsGrid</code> or <code>textArea</code>. The block-level defaults take any child prop
+    except per-instance keys (<code>id</code>, <code>name</code>, <code>anchorId</code>) and, in
+    <code>defaultTextAreaConfig</code>, <code>error</code>. For example, <code>intent</code>
+    (example 4) or <code>maxLength</code> and <code>placeholder</code> in
+    <code>defaultTextAreaConfig</code>. A field set on a <code>triggerButton</code> applies in every state,
+    so style the active tab through <code>tabs.activeItemConfig</code>. Triggers merge through Tabs:
     <code>tabs.defaultItemConfig</code> under every trigger, <code>tabs.activeItemConfig</code> over the
     active one, and each category's <code>triggerButton</code> last. Here
     <code>defaultToggleGroupConfig</code> asks for radio rows, the style category overrides it with outline

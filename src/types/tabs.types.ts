@@ -6,7 +6,7 @@ import type { BorderConfig } from './border.types';
 import type { LayerConfig } from './config.types';
 
 export interface TabsProps {
-  /** List of tab entries; each item is a Button config rendered as a tab trigger, and its index maps to a `panel-{n}` slot for content. Any number of tabs is supported — the panel count follows the item count with no upper bound. `id` is omitted because Tabs assigns trigger ids. */
+  /** List of tab entries; each item is a Button config rendered as a tab trigger, and its index maps to a `panel-{n}` slot for content. Any number of tabs is supported — the panel count follows the item count with no upper bound. `id` is omitted because Tabs assigns trigger ids. A field set on an item applies in every state; style states through `defaultItemConfig` / `activeItemConfig`. */
   items: Omit<ButtonProps, 'id'>[];
   /** Button config merged under every tab, in both states, before the item's own values. */
   defaultItemConfig?: LayerConfig<ButtonProps>;

@@ -50,9 +50,12 @@ const INTERFACE_NAME_OVERRIDES: Record<string, string> = {
 };
 
 // Types that document an existing block's Props under another name (e.g. an item type that
-// extends ItemProps), resolved after stripWrapper for the row's link.
+// extends or narrows another block's Props), resolved after stripWrapper for the row's link.
 const TYPE_LINK_ALIASES: Record<string, string> = {
   ItemsGridItem: 'ItemProps',
+  ConfiguratorToggleGroup: 'ToggleGroupProps',
+  ConfiguratorItemsGrid: 'ItemsGridProps',
+  ConfiguratorTextArea: 'TextAreaProps',
 };
 
 function typesFilePath(componentName: string): string {
