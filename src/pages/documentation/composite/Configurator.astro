@@ -149,6 +149,23 @@ const intentPanels: ConfiguratorProps['categories'] = [
   },
 ];
 
+const panelClassPanels: ConfiguratorProps['categories'] = [
+  {
+    name: 'configurator-doc-panel-class-metal',
+    panel: 'toggle',
+    triggerButton: { label: 'Metal' },
+    heading: 'Choose your metal',
+    options: metalOptions,
+  },
+  {
+    name: 'configurator-doc-panel-class-engraving',
+    panel: 'text',
+    triggerButton: { label: 'Engraving' },
+    heading: 'Add an engraving',
+    textArea: { maxLength: 20 },
+  },
+];
+
 const framedPanels: ConfiguratorProps['categories'] = [
   {
     name: 'configurator-doc-framed-metal',
@@ -418,6 +435,19 @@ const urlStateExample = `<Configurator
   <div data-doc-section="described" class="border border-dashed border-gray/80 p-8">
     <p id="configurator-doc-engraving-note">Engraving takes two working days.</p>
     <ConfiguratorBlock categories={describedPanels} modelViewer={modelViewer} />
+  </div>
+
+  <h3>11. Panel layout</h3>
+  <p>
+    <code>tabs.panelClass</code> lays out each panel's heading and control, which are its direct children.
+  </p>
+  <div data-doc-section="panel-class" class="border border-dashed border-gray/80 p-8">
+    <ConfiguratorBlock
+      categories={panelClassPanels}
+      modelViewer={modelViewer}
+      headingClass="mb-0"
+      tabs={{ panelClass: 'flex flex-col gap-4' }}
+    />
   </div>
 
   <ApiReferenceTable component="Configurator" category="composite" />

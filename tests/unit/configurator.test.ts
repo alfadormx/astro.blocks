@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { describe, expect, expectTypeOf, it } from 'vitest';
 import type {
   ConfiguratorCategory,
@@ -458,5 +459,13 @@ describe('configurator layer types', () => {
     expectTypeOf<{ variant: 'outline' }>().toExtend<
       NonNullable<ConfiguratorProps['defaultToggleGroupConfig']>
     >();
+  });
+});
+
+describe('configurator panel slots', () => {
+  it('renders one panel slot per allowed category', () => {
+    const source = readFileSync('src/components/blocks/composite/Configurator.astro', 'utf8');
+
+    expect(source.match(/slot="panel-\d+"/g)).toHaveLength(MAX_CATEGORIES);
   });
 });
