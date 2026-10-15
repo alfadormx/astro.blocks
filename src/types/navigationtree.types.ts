@@ -24,7 +24,7 @@ export interface NavigationTreeProps {
   iconName?: string;
   /** Whether the expand icon rotates when its item is expanded (default: `true`). */
   rotateIconOnExpand?: boolean;
-  /** Whether clicking the whole button or only the icon toggles children (default: `'button'`). */
+  /** Whether clicking the whole button or only the icon toggles children; in 'button' mode a parent's `href` is cleared so the button toggles (default: `'button'`). */
   toggleMode?: ToggleMode;
   /** Button config merged into every item, in every state, under the state layers. */
   defaultItemConfig?: LayerConfig<ButtonProps>;
