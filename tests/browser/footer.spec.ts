@@ -10,5 +10,7 @@ test('languageToggle.defaultButtonConfig reaches the toggle buttons', async ({ p
   for (const button of await buttons.all()) {
     await expect(button).toHaveCSS('border-top-width', '2px');
     await expect(button).toHaveClass(/\bpx-3\b/);
+    await expect(button).toHaveCSS('padding-top', '0px');
+    await expect(button).toHaveCSS('padding-bottom', '0px');
   }
 });

@@ -7,14 +7,26 @@ async function section(page: Page): Promise<Locator> {
   return page.locator('[data-doc-section="button-config"]');
 }
 
-test('indicator receives spread consumer attributes', async ({ page }) => {
+test('indicator receives spread consumer attributes and shape', async ({ page }) => {
   const indicators = (await section(page)).locator('[data-carousel-indicator]');
 
   await expect(indicators).toHaveCount(3);
   for (const indicator of await indicators.all()) {
     await expect(indicator).toHaveAttribute('data-test', 'indicator');
-    await expect(indicator).toHaveAttribute('aria-label', /^Go to slide \d+$/);
+    await expect(indicator).toHaveCSS('border-top-left-radius', '4px');
   }
+});
+
+test('indicators default to a pill shape', async ({ page }) => {
+  await page.goto(PAGE_URL);
+  const indicator = page
+    .locator('[data-doc-section="container"] [data-carousel-indicator]')
+    .first();
+  const radius = await indicator.evaluate((el) =>
+    parseFloat(getComputedStyle(el).borderTopLeftRadius)
+  );
+
+  expect(radius).toBeGreaterThan(4);
 });
 
 test('pause/play toggle switches hidden and keeps consumer labels', async ({ page }) => {
