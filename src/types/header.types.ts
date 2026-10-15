@@ -20,7 +20,7 @@ export interface HeaderProps extends Omit<HTMLAttributes<'div'>, 'class'> {
   buttonsClass?: string;
   /** Container configuration wrapping the header content */
   container?: ContainerProps;
-  /** Logo configuration rendered at the start of the header */
+  /** Logo rendered once, centred over the header row whatever the width of the left and right zones. */
   logo?: LogoProps;
   /** Horizontal navigation tree in the left zone */
   leftNavigationTreeHorizontal?: NavigationTreeHorizontalProps;
