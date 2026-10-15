@@ -269,7 +269,6 @@
 
   .content-carousel [data-carousel-indicator][aria-selected='true'] {
     opacity: 1;
-    background-color: var(--color-primary) !important;
   }
 }
 

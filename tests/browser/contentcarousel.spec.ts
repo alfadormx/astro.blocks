@@ -48,3 +48,41 @@ test('pause/play toggle switches hidden and keeps consumer labels', async ({ pag
   await expect(pause).toBeVisible();
   await expect(pause).toHaveAttribute('aria-label', 'Stop slideshow');
 });
+
+async function probeBackground(page: Page, className: string): Promise<string> {
+  return page.evaluate((cls) => {
+    const probe = document.createElement('div');
+    probe.className = cls;
+    document.body.append(probe);
+    const colour = getComputedStyle(probe).backgroundColor;
+    probe.remove();
+    return colour;
+  }, className);
+}
+
+function selectedIndicator(page: Page, name: string): Locator {
+  return page.locator(
+    `[data-doc-section="${name}"] [data-carousel-indicator][aria-selected="true"]`
+  );
+}
+
+test('the selected indicator uses the primary colour', async ({ page }) => {
+  await page.goto(PAGE_URL);
+  const indicator = selectedIndicator(page, 'container');
+
+  await expect(indicator).toHaveCSS('background-color', await probeBackground(page, 'bg-primary'));
+});
+
+test('defaultIndicatorButtonConfig can override the selected colour', async ({ page }) => {
+  await page.goto(PAGE_URL);
+  const indicator = selectedIndicator(page, 'indicator-class');
+
+  await expect(indicator).toHaveCSS('background-color', await probeBackground(page, 'bg-accent'));
+});
+
+test('defaultImageConfig class reaches the slide image', async ({ page }) => {
+  await page.goto(PAGE_URL);
+  const image = page.locator('[data-doc-section="image-config"] [data-carousel-slide] img').first();
+
+  await expect(image).toHaveCSS('border-top-left-radius', '12px');
+});
