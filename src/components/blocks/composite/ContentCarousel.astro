@@ -130,7 +130,7 @@ const mergedIndicatorButton = mergeConfigs(
 const hasNavButtons = Boolean(mergedPrevButton || mergedNextButton);
 
 const carouselClass = cn(
-  'content-carousel relative',
+  'relative',
   controlsPosition === 'outside' && 'flex flex-col gap-4',
   className
 );
@@ -166,12 +166,13 @@ const wrapperProps = container ? mergedContainer : {};
     <!-- Carousel viewport and track -->
     <div
       class={cn(
-        'carousel-viewport overflow-hidden relative touch-none w-full box-border',
+        'overflow-hidden relative touch-none w-full box-border',
         controlsPosition === 'inside' && 'group'
       )}
+      data-carousel-viewport
     >
       <div
-        class="carousel-track flex w-full flex-nowrap transition-transform duration-300 ease-out will-change-transform"
+        class="flex w-full flex-nowrap transition-transform duration-300 ease-out will-change-transform"
         data-carousel-track
       >
         {
@@ -199,7 +200,10 @@ const wrapperProps = container ? mergedContainer : {};
       <!-- Controls (inside) -->
       {
         hasNavButtons && controlsPosition === 'inside' && (
-          <div class="carousel-controls absolute inset-0 pointer-events-none flex items-center justify-between px-3 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div
+            class="absolute inset-0 pointer-events-none flex items-center justify-between px-3 opacity-0 group-hover:opacity-100 transition-opacity"
+            data-carousel-controls
+          >
             {mergedPrevButton && <Button {...mergedPrevButton} data-carousel-prev />}
             {mergedNextButton && <Button {...mergedNextButton} data-carousel-next />}
           </div>
@@ -210,7 +214,7 @@ const wrapperProps = container ? mergedContainer : {};
       {
         showIndicators && controlsPosition === 'inside' && slideCount > 0 && (
           <div
-            class="carousel-indicators absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2"
+            class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2"
             role="tablist"
             data-carousel-indicators
           >
@@ -240,7 +244,7 @@ const wrapperProps = container ? mergedContainer : {};
     <!-- Controls (outside) -->
     {
       controlsPosition === 'outside' && (
-        <div class="carousel-controls-outside flex items-center justify-between gap-4">
+        <div class="flex items-center justify-between gap-4">
           {hasNavButtons && (
             <div class="flex gap-2">
               {mergedPrevButton && <Button {...mergedPrevButton} data-carousel-prev />}
@@ -248,11 +252,7 @@ const wrapperProps = container ? mergedContainer : {};
             </div>
           )}
           {showIndicators && slideCount > 0 && (
-            <div
-              class="carousel-indicators flex gap-2 flex-1 justify-center"
-              role="tablist"
-              data-carousel-indicators
-            >
+            <div class="flex gap-2 flex-1 justify-center" role="tablist" data-carousel-indicators>
               {Array.from({ length: slideCount }, (_, i) => (
                 <Button
                   {...mergedIndicatorButton}
