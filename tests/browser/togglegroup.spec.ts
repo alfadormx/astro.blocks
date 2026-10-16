@@ -195,6 +195,13 @@ test.describe('ToggleGroup', () => {
     await expectChecked(root, ['none']);
   });
 
+  test('option images without alt render alt=""', async ({ page }) => {
+    const root = await openGroup(page, 'togglegroup-doc-font');
+    const images = root.locator('img');
+    await expect(images.first()).toBeAttached();
+    for (const img of await images.all()) await expect(img).toHaveAttribute('alt', '');
+  });
+
   test("a hidden label is still the input's accessible name", async ({ page }) => {
     const root = await openGroup(page, 'togglegroup-doc-font');
     await expect(input(root, 'serif')).toHaveAccessibleName('Serif');
