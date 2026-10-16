@@ -113,9 +113,9 @@ function parseInterfaceFields(
   return [...inheritedFields, ...ownFields];
 }
 
-// Returns the plain identifier an interface extends (e.g. `ButtonProps` in
-// `interface ThemeToggleProps extends ButtonProps {}`), or undefined for no
-// heritage clause or a non-identifier heritage type (e.g. `Omit<X, 'y'>`).
+// Returns the type an interface extends, unwrapped by `stripWrapper` (`ButtonProps` for both
+// `extends ButtonProps` and `extends Omit<ButtonProps, 'y'>`), or undefined without a
+// heritage clause. Only the first type of each clause is read.
 function findExtendsIdentifier(
   sourceFile: ts.SourceFile,
   interfaceName: string
@@ -168,7 +168,12 @@ function parseDefaults(astroSourceText: string): Record<string, string> {
 
 export function stripWrapper(type: string): string {
   return type
-    .replace(/\s*\|\s*false$/, '')
+    .replace(/\s+/g, ' ')
+    .replace(/<\s/g, '<')
+    .replace(/\s>/g, '>')
+    .trim()
+    .replace(/^false\s*\|\s*/, '')
+    .replace(/(?:\s*\|\s*(?:false|null|undefined))+$/, '')
     .replace(/\[\]$/, '')
     .replace(/^(?:Partial|LayerConfig)<(.+)>$/, '$1')
     .replace(/^Omit<(\w+),.+>$/, '$1')
