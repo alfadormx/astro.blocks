@@ -43,14 +43,13 @@ const id = idProp || textAreaId();
 const helpId = `${id}-help`;
 const errorId = `${id}-error`;
 const counterId = `${id}-counter`;
-const describedBy = [
-  help && helpId,
-  error && errorId,
-  showCounter && counterId,
-  consumerDescribedBy,
-]
-  .filter(Boolean)
-  .join(' ');
+const generatedIds = [help && helpId, error && errorId, showCounter && counterId].filter(
+  (v): v is string => Boolean(v)
+);
+const consumerIds = (consumerDescribedBy ?? '')
+  .split(/\s+/)
+  .filter((v) => v && !generatedIds.includes(v));
+const describedBy = [...new Set([...generatedIds, ...consumerIds])].join(' ');
 const resolvedIntent = error ? 'error' : intent;
 
 const SIZE = {
