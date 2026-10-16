@@ -22,11 +22,18 @@ test('indicators default to a pill shape', async ({ page }) => {
   const indicator = page
     .locator('[data-doc-section="container"] [data-carousel-indicator]')
     .first();
-  const radius = await indicator.evaluate((el) =>
-    parseFloat(getComputedStyle(el).borderTopLeftRadius)
-  );
+  // Widened so a fixed radius (rounded-md, 6px) can't pass as a pill on the 8px default dot.
+  const { radius, height } = await indicator.evaluate((el) => {
+    el.style.width = '32px';
+    el.style.height = '32px';
+    const style = getComputedStyle(el);
+    return {
+      radius: parseFloat(style.borderTopLeftRadius),
+      height: el.getBoundingClientRect().height,
+    };
+  });
 
-  expect(radius).toBeGreaterThan(4);
+  expect(radius).toBeGreaterThanOrEqual(height / 2);
 });
 
 test('pause/play toggle switches hidden and keeps consumer labels', async ({ page }) => {

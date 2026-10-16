@@ -191,7 +191,9 @@ const sampleImages = [
     <h2>Image Config</h2>
     <p class="mb-4">
       <code>defaultImageConfig</code> reaches every slide image; a slide's <code>class</code> stays on
-      its wrapper.
+      its wrapper. The image optimiser writes <code>object-fit</code> inline: <code>cover</code>, or
+      <code>contain</code> with <code>layout: 'contained'</code>. Change it through
+      <code>layout</code>, not a class.
     </p>
     <div data-doc-section="image-config">
       <ContentCarouselBlock
