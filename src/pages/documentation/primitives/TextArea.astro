@@ -96,6 +96,30 @@ const shapes = ['rounded', 'square'] as const;
     />
   </div>
 
+  <h3>Consumer ARIA</h3>
+  <p>
+    A consumer <code>aria-invalid</code> is kept unless <code>error</code> is set, and a consumer
+    <code>aria-describedby</code> is appended to the generated ids without repeating them.
+  </p>
+  <div data-doc-section="consumer-aria" class="flex flex-col gap-4 max-w-md">
+    <TextAreaBlock id="doc-aria-valid" label="Valid" aria-invalid="false" rows={2} />
+    <TextAreaBlock
+      id="doc-aria-error"
+      label="With error"
+      aria-invalid="false"
+      error="Required."
+      rows={2}
+    />
+    <TextAreaBlock
+      id="doc-aria-dup"
+      label="Duplicate reference"
+      help="Shown once."
+      aria-describedby="doc-aria-dup-help doc-aria-note"
+      rows={2}
+    />
+    <p id="doc-aria-note">External note.</p>
+  </div>
+
   <h3>Disabled and read-only</h3>
   <div data-doc-section="states" class="flex flex-col gap-4 max-w-md">
     <TextAreaBlock label="Disabled" disabled value="Locked text" rows={2} />

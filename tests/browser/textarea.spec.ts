@@ -92,6 +92,27 @@ test.describe('TextArea', () => {
       await expect(section(page, 'basic').locator('textarea')).not.toHaveAttribute('aria-invalid');
     });
 
+    test('a consumer aria-invalid is kept without error and overridden by error', async ({
+      page,
+    }) => {
+      const root = section(page, 'consumer-aria');
+      await expect(root.getByRole('textbox', { name: 'Valid' })).toHaveAttribute(
+        'aria-invalid',
+        'false'
+      );
+      await expect(root.getByRole('textbox', { name: 'With error' })).toHaveAttribute(
+        'aria-invalid',
+        'true'
+      );
+    });
+
+    test('a consumer describedby id already generated appears once', async ({ page }) => {
+      const field = section(page, 'consumer-aria').getByRole('textbox', {
+        name: 'Duplicate reference',
+      });
+      await expect(field).toHaveAttribute('aria-describedby', 'doc-aria-dup-help doc-aria-note');
+    });
+
     test('disabled field rejects input', async ({ page }) => {
       const field = section(page, 'states').getByRole('textbox', { name: 'Disabled' });
       await expect(field).toBeDisabled();
