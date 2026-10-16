@@ -195,10 +195,14 @@
   }
 
   /* Keyboard focus opens hover dropdowns; mouse focus doesn't. Not `:has(:focus-visible)`: Chromium
-     drops it while focus moves from the parent into the dropdown, so Tab skips the children. */
+     drops it while focus moves from the parent into the dropdown, so Tab skips the children.
+     `data-dismissed` is Escape's override, cleared by the script once pointer and focus leave. */
   [data-nav-dropdown][data-open],
   [data-nav-trigger='hover']
-    [data-nav-item]:is(:hover, :focus-within:not(:has(:focus:not(:focus-visible))))
+    [data-nav-item]:not([data-dismissed]):is(
+      :hover,
+      :focus-within:not(:has(:focus:not(:focus-visible)))
+    )
     > [data-nav-dropdown] {
     display: block;
   }

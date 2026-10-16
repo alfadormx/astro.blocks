@@ -7,6 +7,15 @@ async function section(page: Page, name: string): Promise<Locator> {
   return page.locator(`[data-doc-section="${name}"]`);
 }
 
+async function tabToProducts(page: Page, root: Locator): Promise<Locator> {
+  await page.getByText('Parent chevrons sit after the label by default').click();
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Tab');
+  const parent = root.getByRole('button', { name: 'Products' });
+  await expect(parent).toBeFocused();
+  return parent;
+}
+
 test('defaultItemConfig iconPosition left renders the chevron before the label', async ({
   page,
 }) => {
@@ -79,13 +88,53 @@ test('hover trigger opens the dropdown on keyboard focus and Tab reaches its chi
   page,
 }) => {
   const root = await section(page, 'icon-left');
-  const parent = root.getByRole('button', { name: 'Products' });
   const dropdown = root.locator('[data-nav-dropdown]').first();
 
-  await parent.focus();
+  await tabToProducts(page, root);
   await expect(dropdown).toBeVisible();
   await page.keyboard.press('Tab');
   await expect(root.getByRole('link', { name: 'Product 1' })).toBeFocused();
+});
+
+test('Escape closes a focus-opened hover dropdown until focus re-enters', async ({ page }) => {
+  const root = await section(page, 'icon-left');
+  const dropdown = root.locator('[data-nav-dropdown]').first();
+
+  const parent = await tabToProducts(page, root);
+  await expect(dropdown).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(dropdown).toBeHidden();
+  await page.keyboard.press('Tab');
+  await expect(dropdown).toBeHidden();
+  await page.keyboard.press('Shift+Tab');
+  await expect(parent).toBeFocused();
+  await expect(dropdown).toBeVisible();
+  await page.keyboard.press('Tab');
+  await expect(root.getByRole('link', { name: 'Product 1' })).toBeFocused();
+});
+
+test('Escape closes a hovered dropdown until the pointer re-enters', async ({ page }) => {
+  const root = await section(page, 'icon-left');
+  const parent = root.getByRole('button', { name: 'Products' });
+  const dropdown = root.locator('[data-nav-dropdown]').first();
+
+  await parent.hover();
+  await expect(dropdown).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(dropdown).toBeHidden();
+  await page.mouse.move(0, 0);
+  await parent.hover();
+  await expect(dropdown).toBeVisible();
+});
+
+test('focus leaving a hover item closes its dropdown', async ({ page }) => {
+  const root = await section(page, 'icon-left');
+  const dropdown = root.locator('[data-nav-dropdown]').first();
+
+  await tabToProducts(page, root);
+  for (let i = 0; i < 4; i++) await page.keyboard.press('Tab');
+  await expect(root.getByRole('button', { name: 'Services' })).toBeFocused();
+  await expect(dropdown).toBeHidden();
 });
 
 test('click trigger keeps a closed dropdown closed under hover', async ({ page }) => {
