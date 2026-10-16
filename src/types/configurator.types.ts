@@ -7,11 +7,7 @@ import type { ModelViewerMutation, ModelViewerProps } from './modelviewer.types'
 import type { SelectionMode } from './selection.types';
 import type { TabsProps } from './tabs.types';
 import type { TextAreaAttributes } from './textarea.types';
-import type {
-  ToggleGroupAppearance,
-  ToggleGroupOption,
-  ToggleGroupProps,
-} from './togglegroup.types';
+import type { ToggleGroupOption, ToggleGroupProps } from './togglegroup.types';
 
 interface ConfiguratorCategoryBase {
   /** Selection group name; unique on the page, not integer-like. */
@@ -34,11 +30,14 @@ export type ConfiguratorToggleOption = ToggleGroupOption & {
   mutations?: ModelViewerMutation[];
 };
 
+type ConfiguratorToggleAppearance =
+  { appearance: 'radio' } | { appearance?: 'cell'; variant?: 'solid' | 'outline' | 'ghost' };
+
 export type ConfiguratorToggleGroup = Omit<
   ToggleGroupProps,
   'group' | 'label' | 'labelledBy' | 'options'
 > &
-  ToggleGroupAppearance;
+  ConfiguratorToggleAppearance;
 
 export type ConfiguratorToggleCategory = ConfiguratorCategoryBase & {
   panel: 'toggle';
