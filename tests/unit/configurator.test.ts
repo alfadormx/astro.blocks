@@ -460,12 +460,31 @@ describe('configurator layer types', () => {
       NonNullable<ConfiguratorProps['defaultToggleGroupConfig']>
     >();
   });
+
+  it('a category toggleGroup rejects variant with radio appearance', () => {
+    const instance: NonNullable<ConfiguratorToggleCategory['toggleGroup']> = {
+      appearance: 'radio',
+      // @ts-expect-error variant applies only to cell appearance
+      variant: 'ghost',
+    };
+    expectTypeOf(instance).toBeObject();
+  });
+
+  it('the toggle layer rejects variant with radio appearance', () => {
+    const layer: NonNullable<ConfiguratorProps['defaultToggleGroupConfig']> = {
+      appearance: 'radio',
+      // @ts-expect-error variant applies only to cell appearance
+      variant: 'ghost',
+    };
+    expectTypeOf(layer).toBeObject();
+  });
 });
 
 describe('configurator panel slots', () => {
-  it('renders one panel slot per allowed category', () => {
+  it('renders one panel slot per allowed category, numbered from zero', () => {
     const source = readFileSync('src/components/blocks/composite/Configurator.astro', 'utf8');
+    const indices = [...source.matchAll(/slot="panel-(\d+)"/g)].map((m) => Number(m[1]));
 
-    expect(source.match(/slot="panel-\d+"/g)).toHaveLength(MAX_CATEGORIES);
+    expect(indices).toEqual(Array.from({ length: MAX_CATEGORIES }, (_, i) => i));
   });
 });

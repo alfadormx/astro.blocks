@@ -308,8 +308,11 @@ const urlStateExample = `<Configurator
     block-level <code>defaultToggleGroupConfig</code>, <code>defaultItemsGridConfig</code> or
     <code>defaultTextAreaConfig</code>, then the category's own <code>toggleGroup</code>,
     <code>itemsGrid</code> or <code>textArea</code>. The block-level defaults take any child prop
-    except per-instance keys (<code>id</code>, <code>name</code>, <code>anchorId</code>) and, in
-    <code>defaultTextAreaConfig</code>, <code>error</code>. For example, <code>intent</code>
+    except per-instance keys (<code>id</code>, <code>name</code>, <code>anchorId</code>), the fields
+    Configurator fills from the category (toggle: <code>group</code>, <code>label</code>,
+    <code>labelledBy</code>, <code>options</code>; grid: <code>items</code>, <code>selection</code>;
+    text: <code>group</code>, <code>label</code>, <code>hideLabel</code>, <code>value</code>) and,
+    in <code>defaultTextAreaConfig</code>, <code>error</code>. For example, <code>intent</code>
     (example 4) or <code>maxLength</code> and <code>placeholder</code> in
     <code>defaultTextAreaConfig</code>. A field set on a <code>triggerButton</code> applies in every state,
     so style the active tab through <code>tabs.activeItemConfig</code>. Triggers merge through Tabs:
