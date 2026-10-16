@@ -72,61 +72,51 @@ const topClasses = cn(
   'group header-transitions',
   isFloating ? 'fixed top-0 left-0 right-0 z-50' : isSticky ? 'sticky top-0 z-40' : ''
 );
-
-const headerLayoutClass = cn('grid items-center', className);
 ---
 
 <div class={topClasses} {...attrs} data-header>
   <Container {...mergedContainerConfig}>
-    <div class={headerLayoutClass}>
-      <div class="col-start-1 row-start-1 flex items-center justify-between" data-header-row>
-        <!-- Left Zone: leftButtons + leftNavigationTreeHorizontal -->
-        <div class="flex items-center gap-2">
-          {
-            leftButtons.length > 0 && (
-              <div class={buttonsWrapperClass}>
-                {leftButtons.map((button) => (
-                  <Button
-                    {...mergeConfigs({}, internalButtonConfig, defaultButtonConfig, button)}
-                  />
-                ))}
-              </div>
-            )
-          }
+    <div class={cn('flex items-center', className)} data-header-row>
+      <!-- Left Zone: leftButtons + leftNavigationTreeHorizontal -->
+      <div class="flex flex-1 basis-0 items-center gap-2">
+        {
+          leftButtons.length > 0 && (
+            <div class={buttonsWrapperClass}>
+              {leftButtons.map((button) => (
+                <Button {...mergeConfigs({}, internalButtonConfig, defaultButtonConfig, button)} />
+              ))}
+            </div>
+          )
+        }
 
-          {
-            mergedLeftNavigationTreeHorizontal?.items && (
-              <NavigationTreeHorizontal {...mergedLeftNavigationTreeHorizontal} />
-            )
-          }
-        </div>
-
-        <!-- Right Zone: rightNavigationTreeHorizontal + theme toggle + rightButtons -->
-        <div class="flex items-center gap-2">
-          {
-            mergedRightNavigationTreeHorizontal?.items && (
-              <NavigationTreeHorizontal {...mergedRightNavigationTreeHorizontal} />
-            )
-          }
-
-          {themeToggle && <ThemeToggle {...themeToggle} />}
-
-          {
-            rightButtons.length > 0 && (
-              <div class={buttonsWrapperClass}>
-                {rightButtons.map((button) => (
-                  <Button
-                    {...mergeConfigs({}, internalButtonConfig, defaultButtonConfig, button)}
-                  />
-                ))}
-              </div>
-            )
-          }
-        </div>
+        {
+          mergedLeftNavigationTreeHorizontal?.items && (
+            <NavigationTreeHorizontal {...mergedLeftNavigationTreeHorizontal} />
+          )
+        }
       </div>
 
-      <div class="col-start-1 row-start-1 justify-self-center z-10 flex items-center">
-        <Logo {...logo} />
+      <Logo {...logo} />
+
+      <!-- Right Zone: rightNavigationTreeHorizontal + theme toggle + rightButtons -->
+      <div class="flex flex-1 basis-0 items-center justify-end gap-2">
+        {
+          mergedRightNavigationTreeHorizontal?.items && (
+            <NavigationTreeHorizontal {...mergedRightNavigationTreeHorizontal} />
+          )
+        }
+
+        {themeToggle && <ThemeToggle {...themeToggle} />}
+
+        {
+          rightButtons.length > 0 && (
+            <div class={buttonsWrapperClass}>
+              {rightButtons.map((button) => (
+                <Button {...mergeConfigs({}, internalButtonConfig, defaultButtonConfig, button)} />
+              ))}
+            </div>
+          )
+        }
       </div>
     </div>
   </Container>
