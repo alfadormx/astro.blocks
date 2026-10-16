@@ -20,7 +20,7 @@ export interface HeaderProps extends Omit<HTMLAttributes<'div'>, 'class'> {
   buttonsClass?: string;
   /** Container configuration wrapping the header content */
   container?: ContainerProps;
-  /** Logo rendered once, centred over the header row whatever the width of the left and right zones. */
+  /** Logo rendered once between the zones; centred while the zones fit, pushed aside rather than covered. */
   logo?: LogoProps;
   /** Horizontal navigation tree in the left zone */
   leftNavigationTreeHorizontal?: NavigationTreeHorizontalProps;
@@ -36,6 +36,6 @@ export interface HeaderProps extends Omit<HTMLAttributes<'div'>, 'class'> {
   rightButtons?: ButtonProps[];
   /** Button config merged under every entry in `leftButtons` and `rightButtons` */
   defaultButtonConfig?: LayerConfig<ButtonProps>;
-  /** Custom classes for the inner layout row (the element holding the left, logo and right zones). */
+  /** Classes merged onto the zones row (flex); a consumer `grid` replaces `flex`. */
   class?: string;
 }
