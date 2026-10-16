@@ -23,7 +23,6 @@ const externalUrl = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=
 
 <div class={cn('w-full', className)}>
   <div
-    class="leaflet-map-block"
     data-map-config={mapConfig}
     style={`height: ${height}; width: ${width};`}
     role="application"
@@ -81,7 +80,7 @@ const externalUrl = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=
     topo: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://opentopomap.org">OpenTopoMap</a>',
   };
 
-  document.querySelectorAll<HTMLElement>('.leaflet-map-block').forEach((el) => {
+  document.querySelectorAll<HTMLElement>('[data-map-config]').forEach((el) => {
     const config: MapConfig = JSON.parse(el.dataset.mapConfig ?? '{}');
     const { lat, lon, zoom, layer, showMarker, markerTitle } = config;
 
