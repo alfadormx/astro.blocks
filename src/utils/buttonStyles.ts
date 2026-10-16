@@ -1,4 +1,5 @@
 import type { ButtonProps } from '~/types/button.types';
+import { focusRingClass } from './intentStyles';
 
 type Size = NonNullable<ButtonProps['size']>;
 type Shape = NonNullable<ButtonProps['shape']>;
@@ -69,7 +70,7 @@ const INTENT_CLASSES: Record<Variant, Record<Intent, string>> = {
     success: 'bg-success text-background hover:bg-success-hover focus-visible:ring-success',
     warning: 'bg-warning text-background hover:bg-warning-hover focus-visible:ring-warning',
     error: 'bg-error text-background hover:bg-error-hover focus-visible:ring-error',
-    neutral: 'bg-surface text-normal hover:bg-elevated focus-visible:ring-border',
+    neutral: `bg-surface text-normal hover:bg-elevated ${focusRingClass('neutral')}`,
   },
   outline: {
     primary:
@@ -86,7 +87,7 @@ const INTENT_CLASSES: Record<Variant, Record<Intent, string>> = {
       'border-2 border-warning text-warning hover:bg-warning hover:text-background focus-visible:ring-warning',
     error:
       'border-2 border-error text-error hover:bg-error hover:text-background focus-visible:ring-error',
-    neutral: 'border-2 border-border text-normal hover:bg-surface focus-visible:ring-border',
+    neutral: `border-2 border-border text-normal hover:bg-surface ${focusRingClass('neutral')}`,
   },
   ghost: {
     primary: 'text-primary hover:bg-primary/10 focus-visible:ring-primary',
@@ -96,7 +97,7 @@ const INTENT_CLASSES: Record<Variant, Record<Intent, string>> = {
     success: 'text-success hover:bg-success/10 focus-visible:ring-success',
     warning: 'text-warning hover:bg-warning/10 focus-visible:ring-warning',
     error: 'text-error hover:bg-error/10 focus-visible:ring-error',
-    neutral: 'text-normal hover:bg-surface focus-visible:ring-border',
+    neutral: `text-normal hover:bg-surface ${focusRingClass('neutral')}`,
   },
   link: {
     primary: 'text-link hover:text-link-hover hover:underline',

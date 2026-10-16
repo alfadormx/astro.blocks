@@ -1,4 +1,5 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
+import { expectFocusRing } from './focusRing';
 
 const PAGE_URL = '/demos/jewellery-configurator';
 // SwiftShader renders on the CPU; first load includes compiling three's shaders.
@@ -486,25 +487,6 @@ test.describe('text panel attributes', () => {
 });
 
 test.describe('panel intent', () => {
-  function colours(value: string): string[] {
-    return value.match(/(?:rgba?|oklch|oklab|lab|lch|color)\([^)]*\)/g) ?? [];
-  }
-
-  // The toggle shell and textarea transition their ring in, and the page's model viewers can
-  // starve frames enough to stall that transition, so it is finished before reading.
-  async function expectFocusRing(target: Locator, colour: string): Promise<void> {
-    await expect
-      .poll(async () =>
-        colours(
-          await target.evaluate((el) => {
-            el.getAnimations().forEach((animation) => animation.finish());
-            return getComputedStyle(el).boxShadow;
-          })
-        )
-      )
-      .toContain(colour);
-  }
-
   async function activateTab(section: Locator, name: string): Promise<void> {
     const tab = section.getByRole('tab', { name });
     await tab.focus();
