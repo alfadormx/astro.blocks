@@ -198,8 +198,12 @@
     display: none;
   }
 
+  /* Keyboard focus opens hover dropdowns; mouse focus doesn't. Not `:has(:focus-visible)`: Chromium
+     drops it while focus moves from the parent into the dropdown, so Tab skips the children. */
   [data-nav-dropdown][data-open],
-  [data-nav-item]:hover > [data-nav-dropdown] {
+  [data-nav-trigger='hover']
+    [data-nav-item]:is(:hover, :focus-within:not(:has(:focus:not(:focus-visible))))
+    > [data-nav-dropdown] {
     display: block;
   }
 

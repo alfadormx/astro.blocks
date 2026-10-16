@@ -76,7 +76,7 @@ const dropdownPanelClass = cn(
       }
 
       return (
-        <div class={cn('relative group', itemClass)} data-nav-item>
+        <div class={cn('relative', itemClass)} data-nav-item>
           <Button {...mergedItemConfig} data-nav-parent={hasChildren || undefined} />
 
           {hasChildren && (
@@ -118,26 +118,18 @@ const dropdownPanelClass = cn(
       const parentButton = target.closest('[data-nav-parent]');
 
       if (parentButton) {
+        const navItem = parentButton.closest('[data-nav-item]');
+        const dropdown = navItem?.querySelector('[data-nav-dropdown]') as HTMLElement | null;
+        document.querySelectorAll('[data-nav-dropdown]').forEach((d) => {
+          if (d !== dropdown) d.removeAttribute('data-open');
+        });
         if (
+          !dropdown ||
           parentButton.closest('[data-nav-trigger]')?.getAttribute('data-nav-trigger') !== 'click'
         ) {
           return;
         }
-        const navItem = parentButton.closest('[data-nav-item]');
-        if (navItem) {
-          const dropdown = navItem.querySelector('[data-nav-dropdown]') as HTMLElement;
-          if (dropdown) {
-            const isOpen = dropdown.hasAttribute('data-open');
-
-            document.querySelectorAll('[data-nav-dropdown]').forEach((d) => {
-              if (d !== dropdown) {
-                d.removeAttribute('data-open');
-              }
-            });
-
-            dropdown.toggleAttribute('data-open', !isOpen);
-          }
-        }
+        dropdown.toggleAttribute('data-open', !dropdown.hasAttribute('data-open'));
       } else {
         const navItem = target.closest('[data-nav-item]');
         if (!navItem) {
