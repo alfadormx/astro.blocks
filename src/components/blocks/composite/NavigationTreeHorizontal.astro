@@ -115,32 +115,27 @@ const dropdownPanelClass = cn(
     if (win.__navHorizontalInitialized) return;
     win.__navHorizontalInitialized = true;
 
-    document.addEventListener('click', (e) => {
-      const target = e.target as HTMLElement;
-      const parentButton = target.closest('[data-nav-parent]');
-
-      if (parentButton) {
-        const navItem = parentButton.closest('[data-nav-item]');
-        const dropdown = navItem?.querySelector('[data-nav-dropdown]') as HTMLElement | null;
-        document.querySelectorAll('[data-nav-dropdown]').forEach((d) => {
-          if (d !== dropdown) d.removeAttribute('data-open');
+    // Capture phase: NavigationTree stops propagation on its toggles, which would hide those clicks.
+    document.addEventListener(
+      'click',
+      (e) => {
+        const target = e.target as Element;
+        const item = target.closest('[data-nav-item]');
+        document.querySelectorAll('[data-nav-dropdown][data-open]').forEach((d) => {
+          if (d.closest('[data-nav-item]') !== item) d.removeAttribute('data-open');
         });
+
+        const parentButton = target.closest('[data-nav-parent]');
+        const dropdown = parentButton && item?.querySelector('[data-nav-dropdown]');
         if (
-          !dropdown ||
-          parentButton.closest('[data-nav-trigger]')?.getAttribute('data-nav-trigger') !== 'click'
+          dropdown &&
+          parentButton.closest('[data-nav-trigger]')?.getAttribute('data-nav-trigger') === 'click'
         ) {
-          return;
+          dropdown.toggleAttribute('data-open');
         }
-        dropdown.toggleAttribute('data-open', !dropdown.hasAttribute('data-open'));
-      } else {
-        const navItem = target.closest('[data-nav-item]');
-        if (!navItem) {
-          document.querySelectorAll('[data-nav-dropdown]').forEach((d) => {
-            d.removeAttribute('data-open');
-          });
-        }
-      }
-    });
+      },
+      true
+    );
 
     document.addEventListener('keydown', (e) => {
       if (e.key !== 'Escape') return;
