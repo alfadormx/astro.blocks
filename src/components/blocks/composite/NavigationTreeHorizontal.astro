@@ -143,10 +143,33 @@ const dropdownPanelClass = cn(
     });
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        document.querySelectorAll('[data-nav-dropdown]').forEach((d) => {
-          d.removeAttribute('data-open');
-        });
+      if (e.key !== 'Escape') return;
+      document.querySelectorAll('[data-nav-dropdown]').forEach((d) => {
+        d.removeAttribute('data-open');
+      });
+      document.querySelectorAll('[data-nav-trigger="hover"] [data-nav-item]').forEach((item) => {
+        if (item.matches(':hover') || item.contains(document.activeElement)) {
+          item.setAttribute('data-dismissed', '');
+        }
+      });
+    });
+
+    // Re-arm only once pointer and focus have both left, so Escape isn't undone by either alone.
+    document.addEventListener('focusout', (e) => {
+      const item = (e.target as Element).closest('[data-nav-item][data-dismissed]');
+      if (item && !item.contains(e.relatedTarget as Node | null) && !item.matches(':hover')) {
+        item.removeAttribute('data-dismissed');
+      }
+    });
+
+    document.addEventListener('pointerout', (e) => {
+      const item = (e.target as Element).closest('[data-nav-item][data-dismissed]');
+      if (
+        item &&
+        !item.contains(e.relatedTarget as Node | null) &&
+        !item.contains(document.activeElement)
+      ) {
+        item.removeAttribute('data-dismissed');
       }
     });
   }
