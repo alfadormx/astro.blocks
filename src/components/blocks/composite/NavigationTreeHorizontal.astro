@@ -169,10 +169,7 @@ const dropdownPanelClass = cn(
     });
   }
 
+  // Every listener is on `document` and queries at event time, so it survives a ClientRouter swap;
+  // re-initialising on astro:after-swap would only stack duplicates.
   initNavigationTreeHorizontal();
-
-  document.addEventListener('astro:after-swap', () => {
-    (window as WindowWithNavInit).__navHorizontalInitialized = false;
-    initNavigationTreeHorizontal();
-  });
 </script>

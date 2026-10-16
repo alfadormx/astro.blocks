@@ -205,3 +205,16 @@ test('a vertical-tree toggle closes an open click-mode dropdown', async ({ page 
   await page.mouse.move(0, 0);
   await expect(dropdown).toBeHidden();
 });
+
+test('click trigger still toggles after a view-transition swap', async ({ page }) => {
+  const root = await section(page, 'click');
+  const dropdown = root.locator('[data-nav-dropdown]').first();
+
+  // The document and its listeners survive a ClientRouter swap; only the event fires again.
+  await page.evaluate(() => document.dispatchEvent(new Event('astro:after-swap')));
+  await root.locator('[data-nav-parent]').first().click();
+  await page.mouse.move(0, 0);
+  await expect(dropdown).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(dropdown).toBeHidden();
+});
