@@ -11,6 +11,10 @@ describe('stripWrapper', () => {
     ['ContainerProps', 'ContainerProps'],
     ['ButtonProps | false', 'ButtonProps'],
     ['ButtonProps[] | false', 'ButtonProps'],
+    ['false | ButtonProps', 'ButtonProps'],
+    ['ButtonProps | null | undefined', 'ButtonProps'],
+    ["LayerConfig<\n  Omit<ButtonProps, 'id'>\n>", 'ButtonProps'],
+    ["Omit<\n  TextAreaAttributes,\n  'group' | 'label'\n>", 'TextAreaAttributes'],
   ])('unwraps %s to %s', (input, expected) => {
     expect(stripWrapper(input)).toBe(expected);
   });

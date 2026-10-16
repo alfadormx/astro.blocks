@@ -8,7 +8,7 @@ import type { SelectionMode } from './selection.types';
 import type { TabsProps } from './tabs.types';
 import type { TextAreaAttributes } from './textarea.types';
 import type {
-  ToggleGroupCellAppearance,
+  ToggleGroupAppearance,
   ToggleGroupOption,
   ToggleGroupProps,
 } from './togglegroup.types';
@@ -38,7 +38,7 @@ export type ConfiguratorToggleGroup = Omit<
   ToggleGroupProps,
   'group' | 'label' | 'labelledBy' | 'options'
 > &
-  ToggleGroupCellAppearance;
+  ToggleGroupAppearance;
 
 export type ConfiguratorToggleCategory = ConfiguratorCategoryBase & {
   panel: 'toggle';
