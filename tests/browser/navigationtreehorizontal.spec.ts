@@ -144,7 +144,9 @@ test('click trigger keeps a closed dropdown closed under hover', async ({ page }
 
   await parentItem.locator('[data-nav-parent]').click();
   await expect(dropdown).toBeVisible();
-  await page.keyboard.press('Escape');
+  await parentItem.locator('[data-nav-parent]').click();
+  await page.mouse.move(0, 0);
+  await expect(dropdown).toBeHidden();
   await parentItem.hover();
   await expect(dropdown).toBeHidden();
 });
@@ -168,6 +170,38 @@ test('a hover-mode parent click closes an open click-mode dropdown', async ({ pa
   await page.mouse.move(0, 0);
   await expect(dropdown).toBeVisible();
   await page.locator('[data-doc-section="icon-left"] [data-nav-parent]').first().click();
+  await page.mouse.move(0, 0);
+  await expect(dropdown).toBeHidden();
+});
+
+test('a leaf click in another nav closes an open click-mode dropdown', async ({ page }) => {
+  const click = await section(page, 'click');
+  const dropdown = click.locator('[data-nav-dropdown]').first();
+
+  await click.locator('[data-nav-parent]').first().click();
+  await page.mouse.move(0, 0);
+  await expect(dropdown).toBeVisible();
+  const leaf = page
+    .locator('[data-doc-section="icon-left"] [data-nav-item]')
+    .first()
+    .locator('a, button')
+    .first();
+  // Stay on the page, so a hidden dropdown can't just mean it navigated away.
+  await leaf.evaluate((el) => el.addEventListener('click', (e) => e.preventDefault()));
+  await leaf.click();
+  await page.mouse.move(0, 0);
+  await expect(page).toHaveURL(PAGE_URL);
+  await expect(dropdown).toBeHidden();
+});
+
+test('a vertical-tree toggle closes an open click-mode dropdown', async ({ page }) => {
+  const click = await section(page, 'click');
+  const dropdown = click.locator('[data-nav-dropdown]').first();
+
+  await click.locator('[data-nav-parent]').first().click();
+  await page.mouse.move(0, 0);
+  await expect(dropdown).toBeVisible();
+  await page.locator('[data-navigation-tree] [data-nav-toggle]').first().click();
   await page.mouse.move(0, 0);
   await expect(dropdown).toBeHidden();
 });
