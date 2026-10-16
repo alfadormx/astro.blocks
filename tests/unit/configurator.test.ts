@@ -461,6 +461,11 @@ describe('configurator layer types', () => {
     >();
   });
 
+  it('a category toggleGroup takes variant without appearance', () => {
+    const instance: NonNullable<ConfiguratorToggleCategory['toggleGroup']> = { variant: 'ghost' };
+    expectTypeOf(instance).toBeObject();
+  });
+
   it('a category toggleGroup rejects variant with radio appearance', () => {
     const instance: NonNullable<ConfiguratorToggleCategory['toggleGroup']> = {
       appearance: 'radio',
@@ -482,7 +487,10 @@ describe('configurator layer types', () => {
 
 describe('configurator panel slots', () => {
   it('renders one panel slot per allowed category, numbered from zero', () => {
-    const source = readFileSync('src/components/blocks/composite/Configurator.astro', 'utf8');
+    const source = readFileSync(
+      new URL('../../src/components/blocks/composite/Configurator.astro', import.meta.url),
+      'utf8'
+    );
     const indices = [...source.matchAll(/slot="panel-(\d+)"/g)].map((m) => Number(m[1]));
 
     expect(indices).toEqual(Array.from({ length: MAX_CATEGORIES }, (_, i) => i));
