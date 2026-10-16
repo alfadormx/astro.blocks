@@ -14,11 +14,11 @@ const ALLOWED = new Set([
 const root = new URL('../../src/', import.meta.url);
 const read = (path: string) => readFileSync(new URL(path, root), 'utf8');
 
-function astroFiles(dir: string): string[] {
+function files(dir: string, ext: string): string[] {
   return readdirSync(new URL(dir, root), { withFileTypes: true }).flatMap((e) =>
     e.isDirectory()
-      ? astroFiles(`${dir}${e.name}/`)
-      : e.name.endsWith('.astro')
+      ? files(`${dir}${e.name}/`, ext)
+      : e.name.endsWith(ext)
         ? [`${dir}${e.name}`]
         : []
   );
@@ -32,13 +32,43 @@ function selectorClasses(css: string): string[] {
   return [...selectors.matchAll(/(?<![\d-])\.(-?[a-z][\w-]*)/gi)].map((m) => m[1]);
 }
 
+const ARG = String.raw`\(\s*(?:(['"\`])(?<literal>(?:(?!\1).)*)\1|(?<ident>[A-Za-z_$][\w$]*)\s*[,)])`;
+const SELECTOR_CALL = new RegExp(
+  String.raw`\.(?:querySelector(?:All)?|closest|matches)(?:<[^>]+>)?` + ARG,
+  'g'
+);
+const CLASS_CALL = new RegExp(
+  String.raw`\.(?:classList\.(?:add|remove|toggle|contains)|getElementsByClassName)` + ARG,
+  'g'
+);
+
+// Only string constants used as a call argument or `${IDENT}` resolve, so unrelated constants
+// such as a '.' separator never reach selectorClasses.
+function constants(code: string): Map<string, string> {
+  return new Map(
+    [...code.matchAll(/\bconst\s+([A-Za-z_$][\w$]*)\s*=\s*(['"`])((?:(?!\2).)*)\2/g)].map((m) => [
+      m[1],
+      m[3],
+    ])
+  );
+}
+
+function codeClasses(code: string): string[] {
+  const consts = constants(code);
+  const arg = (m: RegExpMatchArray) =>
+    (m.groups!.literal ?? consts.get(m.groups!.ident) ?? '').replace(
+      /\$\{\s*([A-Za-z_$][\w$]*)\s*\}/g,
+      (_, id: string) => consts.get(id) ?? ''
+    );
+  return [
+    ...[...code.matchAll(SELECTOR_CALL)].flatMap((m) => selectorClasses(arg(m))),
+    ...[...code.matchAll(CLASS_CALL)].flatMap((m) => arg(m).split(/\s+/).filter(Boolean)),
+  ];
+}
+
 function scriptClasses(source: string): string[] {
-  const scripts = [...source.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
-  return scripts.flatMap((s) =>
-    [
-      ...s.matchAll(/querySelector(?:All)?(?:<[^>]+>)?\(\s*['"`]([^'"`]+)['"`]/g),
-      ...s.matchAll(/classList\.(?:add|remove|toggle|contains)\(\s*['"`]([^'"`]+)['"`]/g),
-    ].flatMap((m) => (m[0].startsWith('classList') ? [m[1]] : selectorClasses(m[1])))
+  return [...source.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)].flatMap((m) =>
+    codeClasses(m[1])
   );
 }
 
@@ -54,13 +84,21 @@ describe('class hooks', () => {
     expect(selectorClasses(css).filter((c) => !ALLOWED.has(c))).toEqual([]);
   });
 
-  it.each(astroFiles('components/'))(
-    '%s scripts and styles select only allowed classes',
+  it.each([
+    ...files('components/', '.astro'),
+    ...files('layouts/', '.astro'),
+    ...files('pages/', '.astro'),
+  ])('%s scripts and styles select only allowed classes', (file) => {
+    const source = read(file);
+    expect(
+      [...scriptClasses(source), ...styleClasses(source)].filter((c) => !ALLOWED.has(c))
+    ).toEqual([]);
+  });
+
+  it.each([...files('utils/', '.ts'), ...files('layouts/', '.ts'), ...files('pages/', '.ts')])(
+    '%s selects only allowed classes',
     (file) => {
-      const source = read(file);
-      expect(
-        [...scriptClasses(source), ...styleClasses(source)].filter((c) => !ALLOWED.has(c))
-      ).toEqual([]);
+      expect(codeClasses(read(file)).filter((c) => !ALLOWED.has(c))).toEqual([]);
     }
   );
 });
