@@ -46,7 +46,11 @@ export interface ContentCarouselProps extends Omit<HTMLAttributes<'div'>, 'class
   nextButton?: ButtonProps | false;
   /** Button config merged under every slide indicator; `aria-label` is a prefix, and the slide number is appended. */
   defaultIndicatorButtonConfig?: LayerConfig<ButtonProps>;
-  /** Image config merged under every slide in `items`, over the defaults (default: { class: 'w-full h-auto object-cover', layout: 'fullWidth', aspectRatio: 16 / 9 }). */
+  /**
+   * Image config merged under every slide in `items`, over the defaults (default: { class: 'w-full h-auto', layout: 'fullWidth', aspectRatio: 16 / 9 }).
+   * Named after the block it reaches, since a slide's `class` stays on its wrapper (contract A14).
+   * `object-fit` is written inline by the image optimiser (`cover`; `contain` with `layout: 'contained'`); change it through `layout`, not a class.
+   */
   defaultImageConfig?: LayerConfig<ImageProps>;
   /** Autoplay pause button merged over the default. */
   pauseButton?: ButtonProps;
