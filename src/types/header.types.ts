@@ -16,11 +16,11 @@ export interface HeaderProps extends Omit<HTMLAttributes<'div'>, 'class'> {
   isFloating?: boolean;
   /** Space between buttons in each button group (default: 'normal') */
   buttonsGap?: HeaderButtonsGap;
-  /** Custom classes for both button-group wrappers (default: 'flex flex-row gap-1') */
+  /** Custom classes for both button-group wrappers (default: 'flex flex-row flex-wrap gap-1') */
   buttonsClass?: string;
   /** Container configuration wrapping the header content */
   container?: ContainerProps;
-  /** Logo rendered once between the zones; centred while the zones fit, pushed aside rather than covered. */
+  /** Logo rendered once between the zones; centred while the zones fit, pushed aside rather than covered, and wrapped onto its own line with the zones when they don't fit (A16). */
   logo?: LogoProps;
   /** Horizontal navigation tree in the left zone */
   leftNavigationTreeHorizontal?: NavigationTreeHorizontalProps;
@@ -36,6 +36,6 @@ export interface HeaderProps extends Omit<HTMLAttributes<'div'>, 'class'> {
   rightButtons?: ButtonProps[];
   /** Button config merged under every entry in `leftButtons` and `rightButtons` */
   defaultButtonConfig?: LayerConfig<ButtonProps>;
-  /** Classes merged onto the zones row (flex); a consumer `grid` replaces `flex`. */
+  /** Classes merged onto the zones row (flex, wraps when the zones don't fit); a consumer `grid` replaces `flex`. */
   class?: string;
 }

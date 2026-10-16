@@ -68,7 +68,11 @@ const mergedRightNavigationTreeHorizontal = rightNavigationTreeHorizontal
       rightNavigationTreeHorizontal
     )
   : undefined;
-const buttonsWrapperClass = cn('flex flex-row gap-1', buttonsGapClasses[buttonsGap], buttonsClass);
+const buttonsWrapperClass = cn(
+  'flex flex-row flex-wrap gap-1',
+  buttonsGapClasses[buttonsGap],
+  buttonsClass
+);
 
 const topClasses = cn(
   isFloating ? 'fixed top-0 left-0 right-0 z-50' : isSticky ? 'sticky top-0 z-40' : ''
@@ -77,9 +81,11 @@ const topClasses = cn(
 
 <div class={topClasses} {...attrs} data-header>
   <Container {...mergedContainerConfig}>
-    <div class={cn('flex items-center', className)} data-header-row>
+    <div class={cn('flex flex-wrap items-center gap-y-2', className)} data-header-row>
       <!-- Left Zone: leftButtons + leftNavigationTreeHorizontal -->
-      <div class="flex flex-1 basis-0 items-center gap-2">
+      <div
+        class="flex min-w-fit flex-1 basis-0 flex-wrap items-center gap-2 whitespace-nowrap **:shrink-0"
+      >
         {
           leftButtons.length > 0 && (
             <div class={buttonsWrapperClass}>
@@ -100,7 +106,9 @@ const topClasses = cn(
       <Logo {...logo} />
 
       <!-- Right Zone: rightNavigationTreeHorizontal + theme toggle + rightButtons -->
-      <div class="flex flex-1 basis-0 items-center justify-end gap-2">
+      <div
+        class="flex min-w-fit flex-1 basis-0 flex-wrap items-center justify-end gap-2 whitespace-nowrap **:shrink-0"
+      >
         {
           mergedRightNavigationTreeHorizontal?.items && (
             <NavigationTreeHorizontal {...mergedRightNavigationTreeHorizontal} />
