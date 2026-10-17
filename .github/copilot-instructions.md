@@ -7,33 +7,26 @@ pnpm dev          # dev server at localhost:4321
 pnpm build        # production build to ./dist/
 pnpm preview      # preview production build
 
-pnpm check        # astro check + eslint + prettier + unit + browser (full validation)
+pnpm check        # astro check + eslint + prettier + unit + astro tests (full validation)
 pnpm check:astro  # astro type-check only
 pnpm check:lint   # eslint only
 pnpm check:prettier # prettier check only
 
 pnpm test:unit    # vitest run over tests/unit/
-pnpm test:browser # playwright chromium smoke specs in tests/browser/
 
 pnpm fix          # auto-fix eslint + prettier
 ```
 
-Use `pnpm check` to validate changes. It runs both test layers after `astro check`, ESLint and
+Use `pnpm check` to validate changes. It runs the test layers after `astro check`, ESLint and
 Prettier, so the cheap checks fail first.
 
 - `pnpm test:unit` — Vitest over `src/utils`; specs live in `tests/unit/`. The default
   environment is `node`. A spec that needs a DOM (e.g. `selection.test.ts`) opts into happy-dom
   with `// @vitest-environment happy-dom` as its first line. No browser or dev server needed.
-- `pnpm test:browser` — Playwright Chromium smoke specs in `tests/browser/`, run against a dev
-  server. Self-skips with a one-line notice (exit code 0) when no Chromium binary is installed;
-  install one with `pnpm exec playwright install chromium`.
-- `tests/browser/tabs.spec.ts` is the worked example later stateful-block tickets follow: stable
-  `data-*` selectors only, ARIA/`hidden` assertions instead of class strings, relationship-based id
-  assertions, and a post-init wait on `[role="tab"]`.
 
 ## Architecture
 
-This is an **Astro component library** — a collection of reusable UI blocks with a documentation site.
+This is an **Astro component library** — a collection of reusable UI blocks.
 
 ### Component Layers (`src/components/blocks/`)
 
@@ -76,10 +69,6 @@ import { SITE, I18N, METADATA, ANALYTICS } from 'site-config';
 ```
 
 The integration also auto-updates `robots.txt` with the sitemap URL on build.
-
-### Documentation Pages (`src/pages/documentation/`)
-
-Mirrors the component structure (`primitives/`, `composite/`, `layout/`). Each page demonstrates its corresponding component.
 
 ## Key Conventions
 
