@@ -15,9 +15,7 @@
     "test:astro": "vitest run --config vitest.astro.config.ts",
     "fix": "pnpm run fix:eslint && pnpm run fix:prettier",
     "fix:eslint": "eslint . --fix",
-    "fix:prettier": "prettier --write .",
-    "models:generate": "node scripts/generate-ring-models.mjs",
-    "stills:generate": "node scripts/generate-ring-stills.mjs"
+    "fix:prettier": "prettier --write ."
   },
   "dependencies": {
     "@astrolib/analytics": "^0.6.1",
@@ -44,9 +42,6 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@eslint/js": "^10.0.1",
-    "@gltf-transform/core": "^4.5.0",
-    "@gltf-transform/extensions": "4.5.0",
-    "@playwright/test": "^1.63.0",
     "@types/js-yaml": "^4.0.9",
     "@types/leaflet": "^1.9.22",
     "@types/lodash.merge": "^4.6.9",
