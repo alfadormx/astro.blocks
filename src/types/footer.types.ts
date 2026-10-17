@@ -1,10 +1,10 @@
-import type { HTMLAttributes } from 'astro/types';
 import type { ContainerProps } from './container.types';
 import type { ButtonProps } from './button.types';
 import type { LogoProps } from './logo.types';
 import type { LanguageToggleProps } from './languagetoggle.types';
+import type { LayerConfig } from './config.types';
 
-export interface FooterProps extends Omit<HTMLAttributes<'nav'>, 'class'> {
+export interface FooterProps {
   /** Props for the Container wrapping the footer content. */
   container?: ContainerProps;
   /** HTML string rendered as a disclaimer block (e.g. legal or compliance copy). */
@@ -17,18 +17,20 @@ export interface FooterProps extends Omit<HTMLAttributes<'nav'>, 'class'> {
   footnote?: string;
   /** Additional custom classes applied to the footnote block. */
   footnoteClass?: string;
-  /** Icon buttons rendered alongside the footnote (e.g. social media links). */
-  socialActions?: ButtonProps[];
-  /** Base Button props merged into each socialActions button. */
-  defaultSocialActionsConfig?: Partial<ButtonProps>;
-  /** Link-style buttons rendered alongside the logo (e.g. "Privacy · Terms"). */
-  secondaryActions?: ButtonProps[];
-  /** Base Button props merged into each secondaryActions button. */
-  defaultSecondaryActionsConfig?: Partial<ButtonProps>;
-  /** Whether the LanguageToggle is rendered in the footer (default: false). */
-  showLanguageToggle?: boolean;
+  /** Icon buttons alongside the footnote (e.g. social links). */
+  socialButtons?: ButtonProps[];
+  /** Button config merged under every entry in `socialButtons`. */
+  defaultSocialButtonConfig?: LayerConfig<ButtonProps>;
+  /** Custom classes for the social buttons wrapper (default: 'md:order-1 flex flex-row gap-1'). */
+  socialButtonsClass?: string;
+  /** Link-style buttons under the logo (e.g. "Privacy · Terms"). */
+  secondaryButtons?: ButtonProps[];
+  /** Button config merged under every entry in `secondaryButtons`. */
+  defaultSecondaryButtonConfig?: LayerConfig<ButtonProps>;
+  /** Custom classes for the secondary buttons wrapper (default: 'flex flex-row gap-1'). */
+  secondaryButtonsClass?: string;
+  /** LanguageToggle row; rendered when set (`{}` for defaults). */
+  languageToggle?: LanguageToggleProps;
   /** Horizontal alignment of the LanguageToggle row (default: 'center'). */
   languageToggleAlign?: 'left' | 'center' | 'right';
-  /** Props passed to the LanguageToggle component. */
-  languageToggleConfig?: LanguageToggleProps;
 }

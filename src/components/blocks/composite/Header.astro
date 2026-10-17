@@ -7,6 +7,7 @@ import ThemeToggle from '~/components/blocks/primitives/ThemeToggle.astro';
 import Button from '~/components/blocks/primitives/Button.astro';
 import type { ButtonProps } from '~/types/button.types';
 import type { ContainerProps } from '~/types/container.types';
+import type { NavigationTreeHorizontalProps } from '~/types/navigationtreehorizontal.types';
 import Logo from '~/components/blocks/primitives/Logo.astro';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 
@@ -15,21 +16,24 @@ type Props = HeaderProps;
 const {
   isSticky = false,
   isFloating = false,
-  showThemeToggle = false,
-  actionsAir = 'normal',
+  buttonsGap = 'normal',
+  buttonsClass,
   container,
   logo,
-  navigationLeft,
-  navigationRight,
+  leftNavigationTreeHorizontal,
+  rightNavigationTreeHorizontal,
+  defaultNavigationTreeHorizontalConfig,
   themeToggle,
-  actionsLeft = [],
-  actionsRight = [],
-  defaultActionsConfig,
+  leftButtons = [],
+  rightButtons = [],
+  defaultButtonConfig,
   class: className = '',
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  children: _children,
   ...attrs
 } = Astro.props;
 
-const actionsAirClasses = {
+const buttonsGapClasses = {
   none: 'gap-0',
   tight: 'gap-2',
   normal: 'gap-4',
@@ -42,7 +46,7 @@ const defaultContainerConfig = {
   spacing: { padding: 'py-3 px-4 md:py-4 md:px-6 lg:px-8' },
 } as ContainerProps;
 
-const baseActionsConfig: Partial<ButtonProps> = {
+const internalButtonConfig: Partial<ButtonProps> = {
   variant: 'ghost',
   intent: 'neutral',
   shape: 'rounded',
@@ -50,70 +54,75 @@ const baseActionsConfig: Partial<ButtonProps> = {
 };
 
 const mergedContainerConfig = mergeConfigs({}, defaultContainerConfig, container);
-
-const topClasses = cn(
-  'group header-transitions',
-  isFloating ? 'fixed top-0 left-0 right-0 z-50' : isSticky ? 'sticky top-0 z-40' : ''
+const mergedLeftNavigationTreeHorizontal = leftNavigationTreeHorizontal
+  ? mergeConfigs<NavigationTreeHorizontalProps>(
+      {},
+      defaultNavigationTreeHorizontalConfig,
+      leftNavigationTreeHorizontal
+    )
+  : undefined;
+const mergedRightNavigationTreeHorizontal = rightNavigationTreeHorizontal
+  ? mergeConfigs<NavigationTreeHorizontalProps>(
+      {},
+      defaultNavigationTreeHorizontalConfig,
+      rightNavigationTreeHorizontal
+    )
+  : undefined;
+const buttonsWrapperClass = cn(
+  'flex flex-row flex-wrap gap-1',
+  buttonsGapClasses[buttonsGap],
+  buttonsClass
 );
 
-const headerLayoutClass = cn('relative flex items-center justify-between', className);
+const topClasses = cn(
+  isFloating ? 'fixed top-0 left-0 right-0 z-50' : isSticky ? 'sticky top-0 z-40' : ''
+);
 ---
 
-<div class={topClasses} data-header>
-  <Container {...mergedContainerConfig} {...attrs}>
-    <div class={headerLayoutClass}>
-      <!-- Left Zone: navigationLeft + actionsLeft -->
-      <div class="flex items-center gap-2">
+<div class={topClasses} {...attrs} data-header>
+  <Container {...mergedContainerConfig}>
+    <div class={cn('flex flex-wrap items-center gap-y-2', className)} data-header-row>
+      <!-- Left Zone: leftButtons + leftNavigationTreeHorizontal -->
+      <div
+        class="flex min-w-fit flex-1 basis-0 flex-wrap items-center gap-2 whitespace-nowrap **:shrink-0"
+      >
         {
-          actionsLeft && actionsLeft.length > 0 && (
-            <div class={cn('flex flex-row gap-1', actionsAirClasses[actionsAir])}>
-              {actionsLeft.map((action) => {
-                const mergedAction = mergeConfigs(
-                  {},
-                  baseActionsConfig,
-                  defaultActionsConfig,
-                  action
-                );
-                return <Button {...mergedAction} />;
-              })}
+          leftButtons.length > 0 && (
+            <div class={buttonsWrapperClass}>
+              {leftButtons.map((button) => (
+                <Button {...mergeConfigs({}, internalButtonConfig, defaultButtonConfig, button)} />
+              ))}
             </div>
           )
         }
 
-        {navigationLeft?.items && <NavigationTreeHorizontal {...navigationLeft} />}
+        {
+          mergedLeftNavigationTreeHorizontal?.items && (
+            <NavigationTreeHorizontal {...mergedLeftNavigationTreeHorizontal} />
+          )
+        }
       </div>
 
-      <!-- Center spacer: invisible but occupies flow so header retains height -->
+      <Logo {...logo} />
+
+      <!-- Right Zone: rightNavigationTreeHorizontal + theme toggle + rightButtons -->
       <div
-        aria-hidden="true"
-        class="opacity-0 flex items-center justify-center pointer-events-none"
+        class="flex min-w-fit flex-1 basis-0 flex-wrap items-center justify-end gap-2 whitespace-nowrap **:shrink-0"
       >
-        <Logo {...logo} />
-      </div>
+        {
+          mergedRightNavigationTreeHorizontal?.items && (
+            <NavigationTreeHorizontal {...mergedRightNavigationTreeHorizontal} />
+          )
+        }
 
-      <!-- Center Zone: Logo (always visually centered) -->
-      <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-        <Logo {...logo} />
-      </div>
-
-      <!-- Right Zone: navigationRight + actionsRight + theme toggle -->
-      <div class="flex items-center gap-2">
-        {navigationRight?.items && <NavigationTreeHorizontal {...navigationRight} />}
-
-        {showThemeToggle && <ThemeToggle {...themeToggle} />}
+        {themeToggle && <ThemeToggle {...themeToggle} />}
 
         {
-          actionsRight && actionsRight.length > 0 && (
-            <div class={cn('flex flex-row gap-1', actionsAirClasses[actionsAir])}>
-              {actionsRight.map((action) => {
-                const mergedAction = mergeConfigs(
-                  {},
-                  baseActionsConfig,
-                  defaultActionsConfig,
-                  action
-                );
-                return <Button {...mergedAction} />;
-              })}
+          rightButtons.length > 0 && (
+            <div class={buttonsWrapperClass}>
+              {rightButtons.map((button) => (
+                <Button {...mergeConfigs({}, internalButtonConfig, defaultButtonConfig, button)} />
+              ))}
             </div>
           )
         }

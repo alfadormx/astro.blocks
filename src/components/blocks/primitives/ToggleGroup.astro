@@ -8,6 +8,7 @@ import ToggleGroupOptionContent from '~/components/blocks/primitives/ToggleGroup
 import { cn } from '~/utils/styles';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 import { intentClass, shapeClass, sizeClass } from '~/utils/buttonStyles';
+import { focusRingClass, selectedBorderClass, selectedFillClass } from '~/utils/intentStyles';
 import { toggleGroupName, validateToggleGroup } from '~/utils/toggleGroup';
 
 type Props = ToggleGroupProps & ToggleGroupAppearance;
@@ -21,7 +22,7 @@ const {
   size = 'md',
   shape = 'rounded',
   intent = 'primary',
-  layout = 'horizontal',
+  orientation = 'horizontal',
   disabled = false,
   defaultOptionConfig,
   selectedOptionConfig,
@@ -32,7 +33,7 @@ const {
 validateToggleGroup({ group, label, labelledBy, options, disabled });
 
 const name = toggleGroupName(group);
-const isVertical = layout === 'vertical';
+const isVertical = orientation === 'vertical';
 const variant = Astro.props.appearance === 'cell' ? (Astro.props.variant ?? 'solid') : undefined;
 
 const RADIO_SIZE = {
@@ -43,28 +44,6 @@ const RADIO_SIZE = {
   xl: { text: 'text-xl', marker: 'size-6', gap: 'gap-3' },
 }[size];
 
-const MARKER_SELECTED = {
-  primary: 'border-primary bg-primary',
-  secondary: 'border-secondary bg-secondary',
-  tertiary: 'border-tertiary bg-tertiary',
-  accent: 'border-accent bg-accent',
-  success: 'border-success bg-success',
-  warning: 'border-warning bg-warning',
-  error: 'border-error bg-error',
-  neutral: 'border-emphasis bg-emphasis',
-}[intent];
-
-const FOCUS_RING = {
-  primary: 'has-focus-visible:ring-primary',
-  secondary: 'has-focus-visible:ring-secondary',
-  tertiary: 'has-focus-visible:ring-tertiary',
-  accent: 'has-focus-visible:ring-accent',
-  success: 'has-focus-visible:ring-success',
-  warning: 'has-focus-visible:ring-warning',
-  error: 'has-focus-visible:ring-error',
-  neutral: 'has-focus-visible:ring-border',
-}[intent];
-
 // The inset shadow in the background colour turns the filled marker into a radio dot.
 const MARKER_BASE =
   'shrink-0 rounded-full border-2 shadow-[inset_0_0_0_2px_var(--color-background)]';
@@ -74,7 +53,12 @@ const radioUnselected: ToggleGroupOptionConfig = {
 };
 const radioSelected: ToggleGroupOptionConfig = {
   ...radioUnselected,
-  markerClass: cn(MARKER_BASE, RADIO_SIZE.marker, MARKER_SELECTED),
+  markerClass: cn(
+    MARKER_BASE,
+    RADIO_SIZE.marker,
+    selectedBorderClass(intent),
+    selectedFillClass(intent)
+  ),
 };
 
 const isCell = appearance === 'cell';
@@ -98,14 +82,24 @@ const GHOST_SELECTED_TINT = {
   success: 'bg-success/10',
   warning: 'bg-warning/10',
   error: 'bg-error/10',
-  neutral: 'bg-surface',
-}[intent];
+};
+// Button's neutral styles read as "unselected"; a selected neutral cell needs the emphasis family.
+const NEUTRAL_SELECTED = {
+  solid: 'bg-emphasis text-background hover:bg-emphasis/90 focus-visible:ring-emphasis',
+  outline:
+    'border-2 border-emphasis text-emphasis hover:bg-emphasis/10 focus-visible:ring-emphasis',
+  ghost: 'text-emphasis bg-emphasis/10 hover:bg-emphasis/20 focus-visible:ring-emphasis',
+} as const;
 const cellSelected: ToggleGroupOptionConfig = {
   class: cn(
     cellBase,
     'border-2 border-transparent',
-    intentClass(variant ?? 'solid', intent),
-    variant === 'ghost' && GHOST_SELECTED_TINT
+    intent === 'neutral'
+      ? NEUTRAL_SELECTED[variant ?? 'solid']
+      : [
+          intentClass(variant ?? 'solid', intent),
+          variant === 'ghost' && GHOST_SELECTED_TINT[intent],
+        ]
   ),
 };
 
@@ -154,7 +148,7 @@ const labelShellClass = cn(
   'relative inline-flex cursor-pointer outline-none transition-all duration-200',
   'has-focus-visible:ring-2 has-focus-visible:ring-offset-2',
   'has-disabled:opacity-50 has-disabled:cursor-not-allowed',
-  FOCUS_RING,
+  focusRingClass(intent, 'has-focus-visible'),
   shapeClass(shape)
 );
 
@@ -172,7 +166,7 @@ const rootClass = cn(
   role="radiogroup"
   aria-label={labelledBy ? undefined : label}
   aria-labelledby={labelledBy || undefined}
-  aria-orientation={layout}
+  aria-orientation={orientation}
   data-toggle-group
   data-selection-group={group}
   data-selection-mode="single"

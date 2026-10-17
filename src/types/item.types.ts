@@ -5,7 +5,7 @@ import type { ButtonProps } from './button.types';
 import type { IconConfig } from './icon.types';
 import type { ImageProps } from './image.types';
 
-export type ItemLayout = 'vertical' | 'horizontal';
+export type ItemOrientation = 'vertical' | 'horizontal';
 
 export interface ItemProps {
   /** Icon configuration (name, class, aria-label) rendered alongside the title/content. */
@@ -22,12 +22,12 @@ export interface ItemProps {
   content?: string;
   /** Action buttons rendered below/beside the content (default: []). */
   actions?: ButtonProps[];
-  /** Layout of the item: stacked/centered or icon-left/text-right (default: 'vertical'). */
-  layout?: ItemLayout;
+  /** Orientation of the item: stacked/centered or icon-left/text-right (default: 'vertical'). */
+  orientation?: ItemOrientation;
   /** Background configuration for the item; only color backgrounds supported. */
   background?: SimpleBackgroundProps;
   /** Spacing configuration applied to the item. */
-  spacing?: SpacingConfig;
+  spacing?: Omit<SpacingConfig, 'gap'>;
   /** Border configuration applied to the item. */
   border?: BorderConfig;
   /** Additional custom classes merged onto the item's root element (default: ''). */

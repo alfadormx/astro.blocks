@@ -3,7 +3,7 @@ export type Vec3 = [number, number, number];
 /** Recolours or retunes every mesh that uses the named glTF material. */
 export interface ModelViewerMaterialEdit {
   type: 'material';
-  /** glTF material name. */
+  /** glTF material name, or its family name without a trailing `_<n>`. */
   material: string;
   /** `#rgb` or `#rrggbb`, interpreted as sRGB. */
   color?: string;
@@ -18,7 +18,7 @@ export interface ModelViewerMaterialSwap {
   type: 'material';
   /** glTF node name. */
   part: string;
-  /** glTF material name of the variant to assign. */
+  /** glTF material name (or family name) of the variant to assign. */
   use: string;
 }
 
@@ -55,6 +55,18 @@ export interface ModelViewerSelectionGroup {
   options?: Record<string, ModelViewerMutation[]>;
 }
 
+/** An HDR environment for reflections and image-based lighting; never drawn as a background. */
+export interface ModelViewerEnvironment {
+  /** URL of a Radiance .hdr equirectangular image. */
+  src: string;
+  /** Turns the environment around the vertical axis, in degrees, to place highlights (default: 0). */
+  rotation?: number;
+  /** Spins the environment while the model and camera stay still; ignored under prefers-reduced-motion (default: false). */
+  autoRotate?: boolean;
+  /** Environment spin speed; 2 is one turn every 30 seconds (default: 2). */
+  autoRotateSpeed?: number;
+}
+
 export interface ModelViewerProps {
   /** URL of the .glb or .gltf model; a .gltf loads its .bin and textures relative to this URL. */
   src: string;
@@ -74,12 +86,16 @@ export interface ModelViewerProps {
   cameraTarget?: Vec3;
   /** Vertical field of view in degrees, between 0 and 180 exclusive (default: 45). */
   fov?: number;
-  /** Lighting preset built from a generated studio environment, no HDR asset needed (default: 'studio'). */
+  /** Lighting preset: sets the key light, shadow strength and environment intensity; the environment is generated unless `environment` is set (default: 'studio'). */
   lighting?: 'studio' | 'neutral' | 'soft';
   /** Tone-mapping exposure; higher is brighter (default: 1). */
   exposure?: number;
   /** Casts a soft shadow onto a ground plane under the model (default: false). */
   shadow?: boolean;
+  /** Makes the highlights on diamond-like stones glow; draws the scene twice while the view moves. See "Bloom" above (default: false). */
+  bloom?: boolean;
+  /** HDR environment that replaces the generated studio for reflections and lighting; the canvas stays transparent. See "Environment" above. */
+  environment?: ModelViewerEnvironment;
   /** Messages shown when WebGL is unavailable or the model fails to load (default: English text for each). */
   messages?: { webglUnavailable?: string; loadFailed?: string };
   /** CSS height, applied inline so it beats any class; when omitted the viewer is 400px tall through a class that `class` can override, breakpoint prefixes included. */
@@ -107,8 +123,11 @@ export type ModelViewerConfig = Required<
     | 'lighting'
     | 'exposure'
     | 'shadow'
+    | 'bloom'
   >
 > &
-  Pick<ModelViewerProps, 'cameraPosition' | 'cameraTarget' | 'selections' | 'cameraPresets'>;
+  Pick<ModelViewerProps, 'cameraPosition' | 'cameraTarget' | 'selections' | 'cameraPresets'> & {
+    environment?: Required<ModelViewerEnvironment>;
+  };
 
 export type ModelViewerErrorReason = 'webgl' | 'load';

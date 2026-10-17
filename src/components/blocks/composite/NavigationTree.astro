@@ -1,8 +1,9 @@
 ---
 import type { ButtonProps } from '~/types/button.types';
 import Button from '~/components/blocks/primitives/Button.astro';
-import type { NavigationTreeProps } from '~/types/navigationtree.types';
+import type { NavigationTreeItem, NavigationTreeProps } from '~/types/navigationtree.types';
 import { mergeConfigs } from '~/utils/mergeConfigs';
+import { cn } from '~/utils/styles';
 
 type Props = NavigationTreeProps;
 
@@ -18,39 +19,34 @@ const {
   iconName = 'mdi:chevron-right',
   rotateIconOnExpand = true,
   defaultItemConfig,
-  defaultActiveItemConfig,
+  inactiveItemConfig,
+  activeItemConfig,
   expansionStrategy = 'active-only',
   maxDepth = Infinity,
   toggleMode = 'button',
 } = Astro.props;
 
-const defaultItemButtonConfig: Partial<ButtonProps> = {
+const internalItemConfig: Partial<ButtonProps> = {
   variant: 'ghost',
   intent: 'neutral',
   width: 'full',
   iconPosition: 'left',
 };
 
-const defaultActiveItemButtonConfig: Partial<ButtonProps> = {
+const internalActiveItemConfig: Partial<ButtonProps> = {
   variant: 'solid',
   intent: 'primary',
   width: 'full',
   iconPosition: 'left',
+  class: 'font-semibold',
 };
-
-const mergedDefaultItemConfig = mergeConfigs({}, defaultItemButtonConfig, defaultItemConfig);
-const mergedDefaultActiveItemConfig = mergeConfigs(
-  {},
-  defaultActiveItemButtonConfig,
-  defaultActiveItemConfig
-);
 
 // Utility functions
 const normalizePath = (path: string) => path.replace(/\/$/, '') || '/';
 const normalizedCurrentPath = normalizePath(currentPath);
 
 // Check if current item or any child is active
-const isActiveOrHasActiveChild = (item: ButtonProps): boolean => {
+const isActiveOrHasActiveChild = (item: NavigationTreeItem): boolean => {
   if (item.href && normalizePath(item.href) === normalizedCurrentPath) {
     return true;
   }
@@ -65,7 +61,7 @@ const indentClass = indentMap[Math.min(level, indentMap.length - 1)] || 'pl-0';
 
 // Determine if children should be shown based on expansion strategy
 const shouldShowChildren = (
-  item: ButtonProps,
+  item: NavigationTreeItem,
   isActive: boolean,
   hasActiveChild: boolean
 ): boolean => {
@@ -90,74 +86,75 @@ const shouldShowChildren = (
       return isActive || hasActiveChild;
   }
 };
+
+const buildItemConfig = (
+  buttonProps: ButtonProps,
+  isActive: boolean,
+  hasChildren: boolean,
+  isExpanded: boolean
+): Partial<ButtonProps> => {
+  const config = mergeConfigs<Partial<ButtonProps>>(
+    {},
+    { class: 'justify-start' },
+    isActive ? internalActiveItemConfig : internalItemConfig,
+    defaultItemConfig,
+    isActive ? activeItemConfig : inactiveItemConfig,
+    hasChildren
+      ? {
+          icon: {
+            name: iconName,
+            class: cn(
+              'nav-tree-icon',
+              isExpanded && rotateIconOnExpand && 'nav-tree-icon-expanded',
+              toggleMode === 'icon' && 'cursor-pointer'
+            ),
+          },
+        }
+      : {},
+    buttonProps
+  );
+  // lodash.merge skips undefined, so the clear can't be a layer.
+  if (hasChildren && toggleMode === 'button') config.href = undefined;
+  return config;
+};
 ---
 
 <nav class={className} data-navigation-tree data-expansion-strategy={expansionStrategy}>
   <ul class="list-none m-0 p-0 space-y-1">
     {
       items.map((item) => {
+        const { children, ...buttonProps } = item;
         const isActive = item.href ? normalizePath(item.href) === normalizedCurrentPath : false;
-        const hasActiveChild = item.children
-          ? item.children.some((child) => isActiveOrHasActiveChild(child))
+        const hasActiveChild = children
+          ? children.some((child) => isActiveOrHasActiveChild(child))
           : false;
-        const hasChildren = item.children && item.children.length > 0;
+        const hasChildren = children && children.length > 0;
         const isExpanded = shouldShowChildren(item, isActive, hasActiveChild);
+
+        const itemConfig = buildItemConfig(buttonProps, isActive, !!hasChildren, isExpanded);
 
         return (
           <li data-nav-item data-has-children={hasChildren} data-expanded={isExpanded}>
             <div class={indentClass}>
               <Button
-                {...(isActive ? mergedDefaultActiveItemConfig : mergedDefaultItemConfig)}
-                {...item}
-                href={hasChildren && toggleMode === 'button' ? undefined : item.href}
-                variant={
-                  item.variant ||
-                  (isActive
-                    ? mergedDefaultActiveItemConfig.variant
-                    : mergedDefaultItemConfig.variant)
-                }
-                intent={
-                  item.intent ||
-                  (isActive ? mergedDefaultActiveItemConfig.intent : mergedDefaultItemConfig.intent)
-                }
-                size={
-                  item.size ||
-                  (isActive ? mergedDefaultActiveItemConfig.size : mergedDefaultItemConfig.size)
-                }
-                width={
-                  item.width ||
-                  (isActive ? mergedDefaultActiveItemConfig.width : mergedDefaultItemConfig.width)
-                }
-                class={`justify-start ${hasChildren && toggleMode === 'button' ? 'data-nav-toggle' : ''} ${item.class || ''} ${isActive ? 'font-semibold' : ''}`}
-                icon={
-                  hasChildren
-                    ? {
-                        name: iconName,
-                        class: `nav-tree-icon ${isExpanded && rotateIconOnExpand ? 'nav-tree-icon-expanded' : ''} ${toggleMode === 'icon' ? 'data-nav-icon-toggle cursor-pointer' : ''}`,
-                        ...item.icon,
-                      }
-                    : item.icon
-                }
-                iconPosition={
-                  item.iconPosition ||
-                  (isActive
-                    ? mergedDefaultActiveItemConfig.iconPosition
-                    : mergedDefaultItemConfig.iconPosition)
-                }
+                {...itemConfig}
+                data-nav-toggle={hasChildren && toggleMode === 'button' ? '' : undefined}
+                data-nav-icon-toggle={hasChildren && toggleMode === 'icon' ? '' : undefined}
               />
             </div>
 
             {hasChildren && (
-              <div class="data-nav-children" style={isExpanded ? '' : 'display: none;'}>
+              <div data-nav-children style={isExpanded ? '' : 'display: none;'}>
                 <Astro.self
-                  items={item.children!}
+                  items={children!}
                   currentPath={currentPath}
                   level={level + 1}
                   iconName={iconName}
                   rotateIconOnExpand={rotateIconOnExpand}
                   toggleMode={toggleMode}
-                  defaultItemConfig={mergedDefaultItemConfig}
-                  defaultActiveItemConfig={mergedDefaultActiveItemConfig}
+                  defaultItemConfig={defaultItemConfig}
+                  inactiveItemConfig={inactiveItemConfig}
+                  activeItemConfig={activeItemConfig}
                   expansionStrategy={expansionStrategy}
                   maxDepth={maxDepth}
                 />
@@ -187,9 +184,10 @@ const shouldShowChildren = (
       navTree.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
 
-        // Check if icon-only toggle mode
-        const iconToggle = target.closest('.data-nav-icon-toggle');
-        const buttonToggle = target.closest('.data-nav-toggle');
+        // Icon mode toggles only when the click lands on the chevron itself
+        const iconHost = target.closest('[data-nav-icon-toggle]');
+        const iconToggle = iconHost && target.closest('svg') ? iconHost : null;
+        const buttonToggle = target.closest('[data-nav-toggle]');
 
         // Determine which toggle handler to use
         const toggleElement = iconToggle || buttonToggle;
@@ -220,22 +218,16 @@ const shouldShowChildren = (
 
         listItem.setAttribute('data-expanded', String(newExpandedState));
 
-        const childrenContainer = listItem.querySelector(':scope > .data-nav-children');
+        const childrenContainer = listItem.querySelector(':scope > [data-nav-children]');
 
         if (childrenContainer) {
           (childrenContainer as HTMLElement).style.display = newExpandedState ? 'block' : 'none';
         }
 
-        // Toggle icon rotation class - find icon in the button
-        const button = listItem.querySelector('button');
-        const icon = button?.querySelector('.nav-tree-icon');
-        if (icon) {
-          if (newExpandedState) {
-            icon.classList.add('nav-tree-icon-expanded');
-          } else {
-            icon.classList.remove('nav-tree-icon-expanded');
-          }
-        }
+        // In icon mode the parent renders as an <a>, so look up the icon from the toggle itself
+        toggleElement
+          .querySelector('.nav-tree-icon')
+          ?.classList.toggle('nav-tree-icon-expanded', newExpandedState);
       });
     });
   }

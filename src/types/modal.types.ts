@@ -11,8 +11,8 @@ export interface ModalProps extends Omit<HTMLAttributes<'div'>, 'class'> {
   position?: ModalPosition;
   closeOnBackdrop?: boolean;
   closeOnEscape?: boolean;
-  showCloseButton?: boolean;
   backdropClass?: string;
   class?: string;
-  closeButtonConfig?: ButtonProps;
+  /** Close button config merged over the default icon button; `false` hides it (default: rendered). */
+  closeButton?: ButtonProps | false;
 }

@@ -4,6 +4,7 @@ import type { ButtonProps } from '~/types/button.types';
 import Button from './Button.astro';
 import { I18N, SITE } from 'site-config';
 import { mergeConfigs } from '~/utils/mergeConfigs';
+import { cn } from '~/utils/styles';
 
 // Type for a single language from i18n config
 type I18NLanguage = {
@@ -23,12 +24,14 @@ const {
   activeButtonConfig,
   inactiveButtonConfig,
   class: className,
-  gap = 'gap-4',
+  gap = 'normal',
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  children: _children,
   ...rest
 } = Astro.props;
 
 // Default button configurations following NavigationTree pattern
-const defaultInactiveButtonConfig: Partial<ButtonProps> = {
+const internalInactiveButtonConfig: Partial<ButtonProps> = {
   variant: 'solid',
   intent: 'neutral',
   size: 'md',
@@ -36,7 +39,7 @@ const defaultInactiveButtonConfig: Partial<ButtonProps> = {
   width: 'auto',
 };
 
-const defaultActiveButtonConfig: Partial<ButtonProps> = {
+const internalActiveButtonConfig: Partial<ButtonProps> = {
   variant: 'solid',
   intent: 'primary',
   size: 'md',
@@ -47,14 +50,14 @@ const defaultActiveButtonConfig: Partial<ButtonProps> = {
 // Merge configs: defaults < component defaults < user defaults < specific active/inactive config
 const mergedInactiveButtonConfig = mergeConfigs(
   {},
-  defaultInactiveButtonConfig,
+  internalInactiveButtonConfig,
   defaultButtonConfig,
   inactiveButtonConfig
 );
 
 const mergedActiveButtonConfig = mergeConfigs(
   {},
-  defaultActiveButtonConfig,
+  internalActiveButtonConfig,
   defaultButtonConfig,
   activeButtonConfig
 );
@@ -108,13 +111,12 @@ const buildLanguageUrl = (langCode: string, langBasePath: string) => {
 // Container orientation classes
 const orientationClasses = orientation === 'vertical' ? 'flex-col' : 'flex-row';
 
-// Container classes
-const containerClasses = ['language-toggle-container', 'flex', orientationClasses, gap, className]
-  .filter(Boolean)
-  .join(' ');
+const gapClasses = { none: 'gap-0', tight: 'gap-1', normal: 'gap-4', loose: 'gap-6' } as const;
+
+const containerClasses = cn('flex', orientationClasses, gapClasses[gap], className);
 ---
 
-<div class={containerClasses} {...rest}>
+<div class={containerClasses} {...rest} data-language-toggle>
   {
     I18N.languages.map((lang: I18NLanguage) => {
       const isActive = currentLang.code === lang.code;

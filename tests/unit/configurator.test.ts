@@ -1,4 +1,5 @@
-import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { describe, expect, expectTypeOf, it } from 'vitest';
 import type {
   ConfiguratorCategory,
   ConfiguratorGridCategory,
@@ -28,7 +29,7 @@ const toggle = (
 ): ConfiguratorToggleCategory => ({
   name,
   panel: 'toggle',
-  trigger: { label: name },
+  triggerButton: { label: name },
   heading: `Pick ${name}`,
   options: [{ code: 'a', label: 'A' }],
   ...extra,
@@ -42,7 +43,7 @@ const grid = (
     name,
     panel: 'grid',
     mode: 'single',
-    trigger: { label: name },
+    triggerButton: { label: name },
     heading: `Pick ${name}`,
     options: [{ code: 'a', title: 'A' }],
     ...extra,
@@ -54,12 +55,12 @@ const text = (
 ): ConfiguratorTextCategory => ({
   name,
   panel: 'text',
-  trigger: { label: name },
+  triggerButton: { label: name },
   heading: `Write ${name}`,
   ...extra,
 });
 
-const viewer: ConfiguratorProps['viewer'] = {
+const modelViewer: ConfiguratorProps['modelViewer'] = {
   src: '/models/ring.glb',
   label: 'Ring',
   cameraPresets: { band: { position: [0, 0, 1], target: [0, 0, 0] } },
@@ -121,7 +122,9 @@ describe('validateConfigurator', () => {
     { name: 'message prefix', categories: [], expected: /^configurator: / },
   ];
   it.each(throwCases)('throws: $name', ({ categories, urlState, summary, expected }) => {
-    expect(() => validateConfigurator({ categories, viewer, urlState, summary })).toThrow(expected);
+    expect(() => validateConfigurator({ categories, modelViewer, urlState, summary })).toThrow(
+      expected
+    );
   });
 
   const validCases: Array<{
@@ -137,6 +140,10 @@ describe('validateConfigurator', () => {
       categories: Array.from({ length: MAX_CATEGORIES }, (_, i) => toggle(`c${i}`)),
     },
     { name: 'known camera', categories: [toggle('a', { camera: 'band' })] },
+    {
+      name: 'category without triggerButton',
+      categories: [toggle('a', { triggerButton: undefined })],
+    },
     { name: 'empty urlState', categories: [toggle('a')], urlState: {} },
     {
       name: 'valid product and param',
@@ -150,7 +157,9 @@ describe('validateConfigurator', () => {
     },
   ];
   it.each(validCases)('accepts: $name', ({ categories, urlState, summary }) => {
-    expect(() => validateConfigurator({ categories, viewer, urlState, summary })).not.toThrow();
+    expect(() =>
+      validateConfigurator({ categories, modelViewer, urlState, summary })
+    ).not.toThrow();
   });
 });
 
@@ -436,5 +445,54 @@ describe('buildCombinationSpec', () => {
     ];
     const spec = buildCombinationSpec(categories, 'RING01');
     expect(encode(spec, initialSelections(categories))).toBe('RING01-classic-yellow-medium--');
+  });
+});
+
+describe('configurator layer types', () => {
+  it('the text layer rejects error', () => {
+    expectTypeOf<NonNullable<ConfiguratorProps['defaultTextAreaConfig']>>().not.toHaveProperty(
+      'error'
+    );
+  });
+
+  it('the toggle layer takes variant without appearance', () => {
+    expectTypeOf<{ variant: 'outline' }>().toExtend<
+      NonNullable<ConfiguratorProps['defaultToggleGroupConfig']>
+    >();
+  });
+
+  it('a category toggleGroup takes variant without appearance', () => {
+    const instance: NonNullable<ConfiguratorToggleCategory['toggleGroup']> = { variant: 'ghost' };
+    expectTypeOf(instance).toBeObject();
+  });
+
+  it('a category toggleGroup rejects variant with radio appearance', () => {
+    const instance: NonNullable<ConfiguratorToggleCategory['toggleGroup']> = {
+      appearance: 'radio',
+      // @ts-expect-error variant applies only to cell appearance
+      variant: 'ghost',
+    };
+    expectTypeOf(instance).toBeObject();
+  });
+
+  it('the toggle layer rejects variant with radio appearance', () => {
+    const layer: NonNullable<ConfiguratorProps['defaultToggleGroupConfig']> = {
+      appearance: 'radio',
+      // @ts-expect-error variant applies only to cell appearance
+      variant: 'ghost',
+    };
+    expectTypeOf(layer).toBeObject();
+  });
+});
+
+describe('configurator panel slots', () => {
+  it('renders one panel slot per allowed category, numbered from zero', () => {
+    const source = readFileSync(
+      new URL('../../src/components/blocks/composite/Configurator.astro', import.meta.url),
+      'utf8'
+    );
+    const indices = [...source.matchAll(/slot="panel-(\d+)"/g)].map((m) => Number(m[1]));
+
+    expect(indices).toEqual(Array.from({ length: MAX_CATEGORIES }, (_, i) => i));
   });
 });

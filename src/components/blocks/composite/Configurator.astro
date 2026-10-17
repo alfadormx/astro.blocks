@@ -1,20 +1,22 @@
 ---
 import type {
-  ConfiguratorGridConfig,
+  ConfiguratorItemsGrid,
   ConfiguratorProps,
-  ConfiguratorTextConfig,
-  ConfiguratorToggleConfig,
+  ConfiguratorTextArea,
+  ConfiguratorToggleGroup,
   SummaryFormat,
 } from '~/types/configurator.types';
-import type { ButtonProps } from '~/types/button.types';
 import type { ItemsGridSelection } from '~/types/itemsgrid.types';
 import type { TabsProps } from '~/types/tabs.types';
 import type { TwoColumnContainerProps } from '~/types/container.types';
+import type { HeadlineProps } from '~/types/headline.types';
+import type { ButtonProps } from '~/types/button.types';
 import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
 import Tabs from '~/components/blocks/composite/Tabs.astro';
 import ConfiguratorPanel from '~/components/blocks/composite/ConfiguratorPanel.astro';
 import ModelViewer from '~/components/blocks/primitives/ModelViewer.astro';
 import Button from '~/components/blocks/primitives/Button.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 import { cn } from '~/utils/styles';
 import {
@@ -32,45 +34,59 @@ type Props = ConfiguratorProps;
 
 const {
   categories,
-  viewer,
-  defaultTriggerConfig,
-  defaultGridConfig,
-  defaultToggleConfig,
-  defaultTextConfig,
+  modelViewer,
+  defaultItemsGridConfig,
+  defaultToggleGroupConfig,
+  defaultTextAreaConfig,
   tabs,
-  layout,
+  twoColumnContainer,
   urlState,
   headingClass = '',
-  title,
+  headline,
   actions = [],
+  defaultActionConfig,
+  actionsClass,
   summary,
+  summaryClass,
   class: className = '',
 } = Astro.props;
 
-validateConfigurator({ categories, viewer, urlState, summary });
+validateConfigurator({ categories, modelViewer, urlState, summary });
 
 const id = configuratorId();
 
-const internalLayout: Partial<TwoColumnContainerProps> = {
+const internalTwoColumnContainer: TwoColumnContainerProps = {
   htmlTag: 'div',
   content: { air: 'none', widthType: 'full' },
   responsive: true,
 };
-const internalTabs: Partial<Omit<TabsProps, 'items'>> = {
+const internalTabs: Omit<TabsProps, 'items'> = {
   tabList: { layout: 'grid', spacing: { margin: 'mb-6' } },
-  activeTabConfig: { variant: 'outline', intent: 'primary' },
+  defaultItemConfig: { width: 'full' },
+  activeItemConfig: { variant: 'outline', intent: 'primary' },
   container: { htmlTag: 'div', content: { air: 'none', widthType: 'full' } },
 };
-const internalTrigger: Partial<ButtonProps> = { width: 'full' };
-const internalToggle: ConfiguratorToggleConfig = { appearance: 'cell' };
-const internalGrid: ConfiguratorGridConfig = { columns: 3, air: 'tight' };
-const internalText: ConfiguratorTextConfig = { rows: 2 };
+const internalToggle: ConfiguratorToggleGroup = { appearance: 'cell' };
+const internalGrid: ConfiguratorItemsGrid = { columns: 3, gap: 'tight' };
+const internalText: ConfiguratorTextArea = { rows: 2 };
+const internalHeadline: HeadlineProps = {
+  class: 'mt-6 mb-0',
+  titleClass: 'text-2xl font-semibold',
+};
 
-const mergedLayout = mergeConfigs<Partial<TwoColumnContainerProps>>({}, internalLayout, layout);
-const mergedTabs = mergeConfigs<Partial<Omit<TabsProps, 'items'>>>({}, internalTabs, tabs);
-
+const mergedTwoColumnContainer = mergeConfigs<TwoColumnContainerProps>(
+  {},
+  internalTwoColumnContainer,
+  twoColumnContainer
+);
+const mergedTabs = mergeConfigs<Omit<TabsProps, 'items'>>({}, internalTabs, tabs);
+const mergedHeadline = mergeConfigs<HeadlineProps>({}, internalHeadline, headline);
 const triggers = categories.map((category) =>
-  mergeConfigs<Partial<ButtonProps>>({}, internalTrigger, defaultTriggerConfig, category.trigger)
+  mergeConfigs<Omit<ButtonProps, 'id' | 'name'>>(
+    {},
+    { label: category.heading },
+    category.triggerButton
+  )
 );
 
 // `options` / `items` stay out of the merge layers: mergeConfigs merges arrays index-wise.
@@ -82,11 +98,11 @@ const panels = categories.map((category, i) => {
       ...base,
       kind: 'toggle' as const,
       props: {
-        ...mergeConfigs<ConfiguratorToggleConfig>(
+        ...mergeConfigs<ConfiguratorToggleGroup>(
           {},
           internalToggle,
-          defaultToggleConfig,
-          category.config
+          defaultToggleGroupConfig,
+          category.toggleGroup
         ),
         group: category.name,
         labelledBy: headingId,
@@ -95,6 +111,12 @@ const panels = categories.map((category, i) => {
     };
   }
   if (category.panel === 'grid') {
+    const { intent, ...gridConfig } = mergeConfigs<ConfiguratorItemsGrid>(
+      {},
+      internalGrid,
+      defaultItemsGridConfig,
+      category.itemsGrid
+    );
     const selection: ItemsGridSelection =
       category.mode === 'multiple'
         ? {
@@ -103,34 +125,29 @@ const panels = categories.map((category, i) => {
             labelledBy: headingId,
             min: category.min,
             max: category.max,
+            intent,
           }
-        : { mode: 'single', group: category.name, labelledBy: headingId };
+        : { mode: 'single', group: category.name, labelledBy: headingId, intent };
     return {
       ...base,
       kind: 'grid' as const,
-      props: {
-        ...mergeConfigs<ConfiguratorGridConfig>(
-          {},
-          internalGrid,
-          defaultGridConfig,
-          category.config
-        ),
-        items: category.options.map(stripMutations),
-        selection,
-      },
+      props: { ...gridConfig, items: category.options.map(stripMutations), selection },
     };
   }
   return {
     ...base,
     kind: 'text' as const,
     props: {
-      ...mergeConfigs<ConfiguratorTextConfig>({}, internalText, defaultTextConfig, category.config),
+      ...mergeConfigs<ConfiguratorTextArea>(
+        {},
+        internalText,
+        defaultTextAreaConfig,
+        category.textArea
+      ),
       group: category.name,
       label: category.fieldLabel || category.heading,
       hideLabel: !category.fieldLabel,
       value: category.value,
-      maxLength: category.maxLength,
-      placeholder: category.placeholder,
     },
   };
 });
@@ -151,12 +168,12 @@ const spec = urlState ? buildCombinationSpec(categories, urlState.product) : und
   data-configurator-url-state={spec ? JSON.stringify(spec) : undefined}
   data-configurator-url-param={urlState?.param}
 >
-  <TwoColumnContainer {...mergedLayout}>
+  <TwoColumnContainer {...mergedTwoColumnContainer}>
     <div slot="left">
-      <ModelViewer {...viewer} selections={selections} />
-      {title && <h2 class="mt-6 text-2xl font-semibold">{title}</h2>}
+      <ModelViewer {...modelViewer} selections={selections} />
+      {mergedHeadline.title && <Headline {...mergedHeadline} />}
       <p
-        class={cn('mt-4 text-lg', summary?.class)}
+        class={cn('mt-4 text-lg', summaryClass)}
         aria-live="polite"
         data-configurator-summary
         data-configurator-labels={JSON.stringify(summaryModel)}
@@ -166,9 +183,9 @@ const spec = urlState ? buildCombinationSpec(categories, urlState.product) : und
       </p>
       {
         actions.length > 0 && (
-          <div class="mt-6 inline-flex flex-wrap gap-3">
+          <div class={cn('mt-6 inline-flex flex-wrap gap-3', actionsClass)}>
             {actions.map((action) => (
-              <Button {...action} />
+              <Button {...mergeConfigs<ButtonProps>({}, defaultActionConfig, action)} />
             ))}
           </div>
         )
@@ -180,18 +197,18 @@ const spec = urlState ? buildCombinationSpec(categories, urlState.product) : und
           /* One static slot per possible tab: the compiler cannot give a slot inside .map() a name
             that depends on the callback's arguments. Tabs renders only the first items.length. */
         }
-        <div slot="panel-0">{panels[0] && <ConfiguratorPanel {...panels[0]} />}</div>
-        <div slot="panel-1">{panels[1] && <ConfiguratorPanel {...panels[1]} />}</div>
-        <div slot="panel-2">{panels[2] && <ConfiguratorPanel {...panels[2]} />}</div>
-        <div slot="panel-3">{panels[3] && <ConfiguratorPanel {...panels[3]} />}</div>
-        <div slot="panel-4">{panels[4] && <ConfiguratorPanel {...panels[4]} />}</div>
-        <div slot="panel-5">{panels[5] && <ConfiguratorPanel {...panels[5]} />}</div>
-        <div slot="panel-6">{panels[6] && <ConfiguratorPanel {...panels[6]} />}</div>
-        <div slot="panel-7">{panels[7] && <ConfiguratorPanel {...panels[7]} />}</div>
-        <div slot="panel-8">{panels[8] && <ConfiguratorPanel {...panels[8]} />}</div>
-        <div slot="panel-9">{panels[9] && <ConfiguratorPanel {...panels[9]} />}</div>
-        <div slot="panel-10">{panels[10] && <ConfiguratorPanel {...panels[10]} />}</div>
-        <div slot="panel-11">{panels[11] && <ConfiguratorPanel {...panels[11]} />}</div>
+        <Fragment slot="panel-0">{panels[0] && <ConfiguratorPanel {...panels[0]} />}</Fragment>
+        <Fragment slot="panel-1">{panels[1] && <ConfiguratorPanel {...panels[1]} />}</Fragment>
+        <Fragment slot="panel-2">{panels[2] && <ConfiguratorPanel {...panels[2]} />}</Fragment>
+        <Fragment slot="panel-3">{panels[3] && <ConfiguratorPanel {...panels[3]} />}</Fragment>
+        <Fragment slot="panel-4">{panels[4] && <ConfiguratorPanel {...panels[4]} />}</Fragment>
+        <Fragment slot="panel-5">{panels[5] && <ConfiguratorPanel {...panels[5]} />}</Fragment>
+        <Fragment slot="panel-6">{panels[6] && <ConfiguratorPanel {...panels[6]} />}</Fragment>
+        <Fragment slot="panel-7">{panels[7] && <ConfiguratorPanel {...panels[7]} />}</Fragment>
+        <Fragment slot="panel-8">{panels[8] && <ConfiguratorPanel {...panels[8]} />}</Fragment>
+        <Fragment slot="panel-9">{panels[9] && <ConfiguratorPanel {...panels[9]} />}</Fragment>
+        <Fragment slot="panel-10">{panels[10] && <ConfiguratorPanel {...panels[10]} />}</Fragment>
+        <Fragment slot="panel-11">{panels[11] && <ConfiguratorPanel {...panels[11]} />}</Fragment>
       </Tabs>
     </div>
   </TwoColumnContainer>

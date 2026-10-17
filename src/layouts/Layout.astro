@@ -14,7 +14,7 @@ import type { ContainerProps } from '~/types/container.types';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 import Header from '~/components/blocks/composite/Header.astro';
 
-import type { ButtonProps } from '~/types/button.types';
+import type { NavigationTreeItem } from '~/types/navigationtree.types';
 import Modal from '~/components/blocks/layout/Modal.astro';
 import NavigationTree from '~/components/blocks/composite/NavigationTree.astro';
 
@@ -45,7 +45,7 @@ const defaultTopmostContainer = {
 
 const mergedTopmostContainer = mergeConfigs({}, defaultTopmostContainer, topmostContainer);
 
-const navigationItems: ButtonProps[] = [
+const navigationItems: NavigationTreeItem[] = [
   { label: 'Caractéristiques', href: '#caracteristiques' },
   { label: 'Détail du prix', href: '#prix' },
   { label: 'Photos', href: '#photos' },
@@ -113,12 +113,12 @@ const navigationItems: ButtonProps[] = [
             class: 'bg-background/70 backdrop-blur-sm',
           },
         }}
-        defaultActionsConfig={{
+        defaultButtonConfig={{
           variant: 'link',
           class: 'text-normal hover:text-normal',
         }}
         logo={{ label: '' }}
-        navigationRight={{
+        rightNavigationTreeHorizontal={{
           class: 'hidden lg:flex',
           defaultItemConfig: {
             variant: 'link',
@@ -126,7 +126,7 @@ const navigationItems: ButtonProps[] = [
           },
           items: navigationItems,
         }}
-        actionsRight={[
+        rightButtons={[
           {
             'data-modal-trigger': 'mobile-menu',
             class: 'lg:hidden text-normal hover:text-normal',

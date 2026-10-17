@@ -35,7 +35,7 @@ const {
   muted,
   hideControls,
   loop,
-  pipButtonConfig,
+  pipButton,
   class: className = '',
   align,
 } = Astro.props;
@@ -90,22 +90,17 @@ const defaultOptions = {
   ...(options || {}),
 };
 
-const videoGroupId = isFloating ? 'video-group' : undefined;
-const pipCloseBtnId = isFloating ? 'pip-close' : undefined;
-
 const defaultWrapperClass = 'w-full relative bg-elevated';
 const defaultVideoGroupClass = 'w-full relative overflow-hidden bg-elevated';
 
-const pipButtonDefaultConfig: Partial<ButtonProps> = {
-  id: pipCloseBtnId,
+const internalPipButton: Partial<ButtonProps> = {
   icon: { name: 'heroicons:arrow-up-left' },
   size: 'sm',
-  class: 'absolute z-10 top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity hidden',
+  hidden: true,
+  class: 'absolute z-10 top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity',
 };
 
-const mergedPipButtonConfig = mergeConfigs({}, pipButtonDefaultConfig, pipButtonConfig, {
-  class: cn(pipButtonDefaultConfig?.class, pipButtonConfig?.class),
-});
+const mergedPipButton = mergeConfigs({}, internalPipButton, pipButton);
 
 const mergedWrapperClass = cn(defaultWrapperClass, aspectRatioClasses[aspectRatio], className);
 
@@ -118,8 +113,8 @@ const mergedVideoGroupClass = cn(
 
 <div class={align ? alignClass : ''}>
   <div class={mergedWrapperClass}>
-    <div id={videoGroupId} class={mergedVideoGroupClass}>
-      {isFloating && <Button {...mergedPipButtonConfig} />}
+    <div data-video-group={isFloating ? '' : undefined} class={mergedVideoGroupClass}>
+      {isFloating && <Button {...mergedPipButton} data-video-pip-close />}
       <video
         class="plyr"
         data-plyr-config={JSON.stringify(defaultOptions)}
@@ -140,8 +135,8 @@ const mergedVideoGroupClass = cn(
   });
 
   document.addEventListener('DOMContentLoaded', () => {
-    const videoGroup = document.getElementById('video-group');
-    const pipCloseBtn = document.getElementById('pip-close');
+    const videoGroup = document.querySelector<HTMLElement>('[data-video-group]');
+    const pipCloseBtn = videoGroup?.querySelector<HTMLElement>('[data-video-pip-close]') ?? null;
 
     let userClosedFloatingPlayer = false;
 
@@ -168,22 +163,17 @@ const mergedVideoGroupClass = cn(
 
       if (shouldFloat) {
         videoGroup.classList.add('floating-player');
-        if (pipCloseBtn) {
-          pipCloseBtn.classList.remove('hidden');
-          pipCloseBtn.classList.add('inline-flex');
-        }
+        pipCloseBtn?.toggleAttribute('hidden', false);
       } else {
         videoGroup.classList.remove('floating-player');
-        if (pipCloseBtn) {
-          pipCloseBtn.classList.add('hidden');
-        }
+        pipCloseBtn?.toggleAttribute('hidden', true);
       }
     }
 
     if (pipCloseBtn && videoGroup) {
       pipCloseBtn.addEventListener('click', () => {
         videoGroup.classList.remove('floating-player');
-        pipCloseBtn.classList.add('hidden');
+        pipCloseBtn.toggleAttribute('hidden', true);
 
         userClosedFloatingPlayer = true;
       });

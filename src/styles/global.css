@@ -173,17 +173,13 @@
 }
 
 @layer components {
-  .subtitle {
+  [data-subtitle] {
     font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem); /* 18px → 22px */
     line-height: 1.5;
   }
 
   .floating-player {
     @apply fixed! bottom-6 right-6 z-50 shadow-2xl transition-none w-80! h-45! rounded-lg overflow-hidden;
-  }
-
-  .headline:first-child {
-    margin-top: 0;
   }
 
   .nav-tree-icon {
@@ -194,17 +190,26 @@
     transform: rotate(90deg);
   }
 
-  [data-nav-item]:hover > [data-nav-dropdown] {
-    display: block;
+  [data-nav-dropdown] {
+    display: none;
   }
 
-  [data-nav-dropdown]:not(.hidden) {
+  /* Keyboard focus opens hover dropdowns; mouse focus doesn't. Not `:has(:focus-visible)`: Chromium
+     drops it while focus moves from the parent into the dropdown, so Tab skips the children.
+     `data-dismissed` is Escape's override, cleared by the script once pointer and focus leave. */
+  [data-nav-dropdown][data-open],
+  [data-nav-trigger='hover']
+    [data-nav-item]:not([data-dismissed]):is(
+      :hover,
+      :focus-within:not(:has(:focus:not(:focus-visible)))
+    )
+    > [data-nav-dropdown] {
     display: block;
   }
 
   /* ContentCarousel styles (consolidated and scoped) */
 
-  .content-carousel {
+  [data-carousel] {
     display: block;
     position: relative;
     contain: layout inline-size;
@@ -214,7 +219,7 @@
     box-sizing: border-box;
   }
 
-  .content-carousel .carousel-viewport {
+  [data-carousel] [data-carousel-viewport] {
     width: 100%;
     box-sizing: border-box;
     overflow: hidden;
@@ -222,7 +227,7 @@
     contain: layout inline-size;
   }
 
-  .content-carousel .carousel-track {
+  [data-carousel] [data-carousel-track] {
     width: 100%;
     max-width: 100%;
     display: flex;
@@ -232,48 +237,42 @@
     transition-property: transform;
   }
 
-  .content-carousel .carousel-track.is-dragging {
-    transition-duration: 0ms;
-  }
-
-  .content-carousel .carousel-item {
+  [data-carousel] .carousel-item {
     box-sizing: border-box;
     flex-shrink: 0;
     min-width: 0;
   }
 
-  .content-carousel .carousel-track > .carousel-item,
-  .content-carousel .carousel-track > * {
+  [data-carousel] [data-carousel-track] > * {
     box-sizing: border-box;
     flex-shrink: 0;
     min-width: 0;
     max-width: 100%;
   }
 
-  .content-carousel .carousel-controls {
+  [data-carousel] [data-carousel-controls] {
     pointer-events: none;
   }
 
-  .content-carousel .carousel-controls > * {
+  [data-carousel] [data-carousel-controls] > * {
     pointer-events: auto;
   }
 
-  .content-carousel .carousel-indicators button {
+  [data-carousel] [data-carousel-indicators] button {
     transition: all 0.2s ease;
   }
 
-  .content-carousel .carousel-indicator-btn {
+  [data-carousel] [data-carousel-indicator] {
     opacity: 0.7;
   }
 
-  .content-carousel .carousel-indicator-btn[aria-selected='true'] {
+  [data-carousel] [data-carousel-indicator][aria-selected='true'] {
     opacity: 1;
-    background-color: var(--color-primary) !important;
   }
 }
 
 @layer utilities {
-  .header-transitions * {
+  [data-header] * {
     @apply transition-colors duration-300 ease-in-out;
     transition-property: color, background-color, width, transform, backdrop-filter;
   }

@@ -1,13 +1,14 @@
 ---
+// Internal to ItemsGrid: rendered only when selection is enabled, so pages without a
+// selectable grid never receive this component's script.
 import type { ItemsGridItem, ItemsGridProps, ItemsGridSelection } from '~/types/itemsgrid.types';
 import type { ItemProps } from '~/types/item.types';
 import Item from '~/components/blocks/composite/Item.astro';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 import { cn } from '~/utils/styles';
+import { focusRingClass, selectedBorderClass } from '~/utils/intentStyles';
 import { validateItemsGridSelection } from '~/utils/itemsGridSelection';
 
-// Internal to ItemsGrid: rendered only when selection is enabled, so pages without a
-// selectable grid never receive this component's script.
 type Props = Pick<ItemsGridProps, 'items' | 'defaultItemConfig' | 'selectedItemConfig'> & {
   selection: Exclude<ItemsGridSelection, { mode: 'none' }>;
   gridClass: string;
@@ -16,6 +17,7 @@ type Props = Pick<ItemsGridProps, 'items' | 'defaultItemConfig' | 'selectedItemC
 
 const { items, defaultItemConfig, selectedItemConfig, selection, gridClass, lastItemClass } =
   Astro.props;
+const intent = selection.intent ?? 'primary';
 
 // Border config, not class: Item applies `class` after `border.*`, which would override a
 // consumer's selectedItemConfig.border.
@@ -25,7 +27,7 @@ const internalUnselectedDefaults: Partial<ItemProps> = {
 };
 const internalSelectedDefaults: Partial<ItemProps> = {
   class: 'h-full',
-  border: { width: 'border-2', color: 'border-primary' },
+  border: { width: 'border-2', color: selectedBorderClass(intent) },
 };
 
 const options = items.map((item) => ({
@@ -58,8 +60,10 @@ function splitOption({ code, selected, ...itemProps }: ItemsGridItem) {
 
 const min = selection.mode === 'multiple' ? selection.min : undefined;
 const max = selection.mode === 'multiple' ? selection.max : undefined;
-const optionClass =
-  'h-full rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 [&[role]]:cursor-pointer aria-disabled:opacity-50 aria-disabled:cursor-not-allowed';
+const optionClass = cn(
+  'h-full rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-offset-2 [&[role]]:cursor-pointer aria-disabled:opacity-50 aria-disabled:cursor-not-allowed',
+  focusRingClass(intent)
+);
 ---
 
 <div

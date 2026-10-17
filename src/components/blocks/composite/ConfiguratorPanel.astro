@@ -1,6 +1,8 @@
 ---
+// Internal to Configurator: one tab panel (heading + control), split out so the 12 static
+// panel slots stay one line each.
 import type { ItemsGridProps } from '~/types/itemsgrid.types';
-import type { TextAreaProps } from '~/types/textarea.types';
+import type { TextAreaAttributes } from '~/types/textarea.types';
 import type { ToggleGroupAppearance, ToggleGroupProps } from '~/types/togglegroup.types';
 import ItemsGrid from '~/components/blocks/composite/ItemsGrid.astro';
 import TextArea from '~/components/blocks/primitives/TextArea.astro';
@@ -10,7 +12,7 @@ import { cn } from '~/utils/styles';
 type Props = { heading: string; headingId: string; headingClass?: string } & (
   | { kind: 'toggle'; props: ToggleGroupProps & ToggleGroupAppearance }
   | { kind: 'grid'; props: ItemsGridProps }
-  | { kind: 'text'; props: TextAreaProps }
+  | { kind: 'text'; props: TextAreaAttributes }
 );
 
 const panel = Astro.props;

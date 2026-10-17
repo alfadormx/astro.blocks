@@ -1,6 +1,7 @@
 ---
 import type { ItemsTimelineHorizontalProps } from '~/types/itemstimelinehorizontal.types';
 import type { ItemProps } from '~/types/item.types';
+import type { TimelineItemProps } from '~/types/itemstimeline.types';
 import { cn } from '~/utils/styles';
 import Item from '~/components/blocks/composite/Item.astro';
 import { mergeConfigs } from '~/utils/mergeConfigs';
@@ -10,13 +11,13 @@ type Props = ItemsTimelineHorizontalProps;
 const {
   items = [],
   connectorStyle = 'solid',
-  air = 'normal',
+  gap = 'normal',
   class: className = '',
   defaultItemConfig,
 } = Astro.props;
 
-// Spacing applied as margin-right on entire item wrapper (except last)
-const spacingSettings = {
+// Horizontal padding on each item's content, which spaces the items apart
+const gapSettings = {
   none: '',
   tight: 'px-3 md:px-4 lg:px-6',
   normal: 'px-4 md:px-6 lg:px-8',
@@ -27,29 +28,27 @@ const defaultTimelineClass = 'relative flex flex-row items-start';
 
 // Merged classes
 const timelineClass = cn(defaultTimelineClass, className);
+
+const internalItemConfig: Partial<ItemProps> = {
+  orientation: 'vertical',
+  connectorStyle,
+  contentClass: gapSettings[gap],
+};
 ---
 
 <div class={timelineClass}>
   {
-    items.map((item: ItemProps, index: number) => {
-      const mergedItem = mergeConfigs(
+    items.map((item: TimelineItemProps, index: number) => {
+      const mergedItem: ItemProps = mergeConfigs(
         {},
+        internalItemConfig,
         defaultItemConfig || {},
-        { contentClass: spacingSettings[air] },
         item
       );
       const isLast = index === items.length - 1;
       const isFirst = index === 0;
 
-      return (
-        <Item
-          {...mergedItem}
-          layout="vertical"
-          showConnectorLeft={!isFirst}
-          showConnectorRight={!isLast}
-          connectorStyle={connectorStyle}
-        />
-      );
+      return <Item {...mergedItem} showConnectorLeft={!isFirst} showConnectorRight={!isLast} />;
     })
   }
 </div>

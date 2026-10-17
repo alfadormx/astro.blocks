@@ -1,4 +1,5 @@
 import type { ButtonProps } from '~/types/button.types';
+import { focusRingClass } from './intentStyles';
 
 type Size = NonNullable<ButtonProps['size']>;
 type Shape = NonNullable<ButtonProps['shape']>;
@@ -62,41 +63,34 @@ export function shapeClass(shape: Shape, mediaOnly = false): string {
 
 const INTENT_CLASSES: Record<Variant, Record<Intent, string>> = {
   solid: {
-    primary: 'bg-primary text-background hover:bg-primary-hover focus-visible:ring-primary',
-    secondary: 'bg-secondary text-background hover:bg-secondary-hover focus-visible:ring-secondary',
-    tertiary: 'bg-tertiary text-background hover:bg-tertiary-hover focus-visible:ring-tertiary',
-    accent: 'bg-accent text-background hover:bg-accent-hover focus-visible:ring-accent',
-    success: 'bg-success text-background hover:bg-success-hover focus-visible:ring-success',
-    warning: 'bg-warning text-background hover:bg-warning-hover focus-visible:ring-warning',
-    error: 'bg-error text-background hover:bg-error-hover focus-visible:ring-error',
-    neutral: 'bg-surface text-normal hover:bg-elevated focus-visible:ring-border',
+    primary: `bg-primary text-background hover:bg-primary-hover ${focusRingClass('primary')}`,
+    secondary: `bg-secondary text-background hover:bg-secondary-hover ${focusRingClass('secondary')}`,
+    tertiary: `bg-tertiary text-background hover:bg-tertiary-hover ${focusRingClass('tertiary')}`,
+    accent: `bg-accent text-background hover:bg-accent-hover ${focusRingClass('accent')}`,
+    success: `bg-success text-background hover:bg-success-hover ${focusRingClass('success')}`,
+    warning: `bg-warning text-background hover:bg-warning-hover ${focusRingClass('warning')}`,
+    error: `bg-error text-background hover:bg-error-hover ${focusRingClass('error')}`,
+    neutral: `bg-surface text-normal hover:bg-elevated ${focusRingClass('neutral')}`,
   },
   outline: {
-    primary:
-      'border-2 border-primary text-primary hover:bg-primary hover:text-background focus-visible:ring-primary',
-    secondary:
-      'border-2 border-secondary text-secondary hover:bg-secondary hover:text-background focus-visible:ring-secondary',
-    tertiary:
-      'border-2 border-tertiary text-tertiary hover:bg-tertiary hover:text-background focus-visible:ring-tertiary',
-    accent:
-      'border-2 border-accent text-accent hover:bg-accent hover:text-background focus-visible:ring-accent',
-    success:
-      'border-2 border-success text-success hover:bg-success hover:text-background focus-visible:ring-success',
-    warning:
-      'border-2 border-warning text-warning hover:bg-warning hover:text-background focus-visible:ring-warning',
-    error:
-      'border-2 border-error text-error hover:bg-error hover:text-background focus-visible:ring-error',
-    neutral: 'border-2 border-border text-normal hover:bg-surface focus-visible:ring-border',
+    primary: `border-2 border-primary text-primary hover:bg-primary hover:text-background ${focusRingClass('primary')}`,
+    secondary: `border-2 border-secondary text-secondary hover:bg-secondary hover:text-background ${focusRingClass('secondary')}`,
+    tertiary: `border-2 border-tertiary text-tertiary hover:bg-tertiary hover:text-background ${focusRingClass('tertiary')}`,
+    accent: `border-2 border-accent text-accent hover:bg-accent hover:text-background ${focusRingClass('accent')}`,
+    success: `border-2 border-success text-success hover:bg-success hover:text-background ${focusRingClass('success')}`,
+    warning: `border-2 border-warning text-warning hover:bg-warning hover:text-background ${focusRingClass('warning')}`,
+    error: `border-2 border-error text-error hover:bg-error hover:text-background ${focusRingClass('error')}`,
+    neutral: `border-2 border-border text-normal hover:bg-surface ${focusRingClass('neutral')}`,
   },
   ghost: {
-    primary: 'text-primary hover:bg-primary/10 focus-visible:ring-primary',
-    secondary: 'text-secondary hover:bg-secondary/10 focus-visible:ring-secondary',
-    tertiary: 'text-tertiary hover:bg-tertiary/10 focus-visible:ring-tertiary',
-    accent: 'text-accent hover:bg-accent/10 focus-visible:ring-accent',
-    success: 'text-success hover:bg-success/10 focus-visible:ring-success',
-    warning: 'text-warning hover:bg-warning/10 focus-visible:ring-warning',
-    error: 'text-error hover:bg-error/10 focus-visible:ring-error',
-    neutral: 'text-normal hover:bg-surface focus-visible:ring-border',
+    primary: `text-primary hover:bg-primary/10 ${focusRingClass('primary')}`,
+    secondary: `text-secondary hover:bg-secondary/10 ${focusRingClass('secondary')}`,
+    tertiary: `text-tertiary hover:bg-tertiary/10 ${focusRingClass('tertiary')}`,
+    accent: `text-accent hover:bg-accent/10 ${focusRingClass('accent')}`,
+    success: `text-success hover:bg-success/10 ${focusRingClass('success')}`,
+    warning: `text-warning hover:bg-warning/10 ${focusRingClass('warning')}`,
+    error: `text-error hover:bg-error/10 ${focusRingClass('error')}`,
+    neutral: `text-normal hover:bg-surface ${focusRingClass('neutral')}`,
   },
   link: {
     primary: 'text-link hover:text-link-hover hover:underline',

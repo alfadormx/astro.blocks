@@ -11,10 +11,11 @@ type Props = TabsProps;
 
 const {
   items,
-  defaultTabConfig,
-  activeTabConfig,
+  defaultItemConfig,
+  activeItemConfig,
   orientation = 'horizontal',
   container,
+  panelClass,
   tabList,
 } = Astro.props;
 
@@ -25,7 +26,7 @@ const internalTabDefaults: Partial<ButtonProps> = {
 };
 
 const defaultContainer: Partial<ContainerProps> = {};
-const mergedContainer = mergeConfigs({}, defaultContainer, container || {});
+const mergedContainer = mergeConfigs({}, defaultContainer, container);
 
 const tabsWrapperClass = cn(
   orientation === 'vertical' ? 'grid grid-cols-[auto_1fr]' : 'flex flex-col'
@@ -92,15 +93,15 @@ const ariaOrientation = effectiveLayout === 'column' ? 'vertical' : 'horizontal'
               {},
               internalTabDefaults,
               internalFillDefaults,
-              defaultTabConfig || {},
+              defaultItemConfig,
               item
             );
             const activeMerge = mergeConfigs(
               {},
               internalTabDefaults,
               internalFillDefaults,
-              defaultTabConfig || {},
-              activeTabConfig || {},
+              defaultItemConfig,
+              activeItemConfig,
               item
             );
             return (
@@ -120,7 +121,7 @@ const ariaOrientation = effectiveLayout === 'column' ? 'vertical' : 'horizontal'
     <div>
       {
         items.map((_item, n) => (
-          <div data-tab-panel={String(n)} hidden={n !== 0}>
+          <div class={panelClass} data-tab-panel={String(n)} hidden={n !== 0}>
             <slot name={`panel-${n}`} />
           </div>
         ))

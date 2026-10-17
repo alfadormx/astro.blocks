@@ -14,7 +14,7 @@ export interface ButtonProps extends Omit<HTMLAttributes<'button'>, 'class'> {
    * omitted it resolves to 'vertical' if `subtitle` is set, otherwise 'horizontal'.
    * An explicit value always wins, including 'horizontal' together with `subtitle`.
    */
-  layout?: 'horizontal' | 'vertical';
+  orientation?: 'horizontal' | 'vertical';
   /** Icon configuration (name, class, aria-label) rendered alongside the label. */
   icon?: IconConfig;
   /**
@@ -59,6 +59,4 @@ export interface ButtonProps extends Omit<HTMLAttributes<'button'>, 'class'> {
   iconClass?: string;
   /** Horizontal alignment of the button within its wrapping container. */
   align?: 'left' | 'center' | 'right';
-  /** Nested child buttons (self-referential), used to build dropdown-style button groups. */
-  children?: ButtonProps[];
 }

@@ -1,5 +1,5 @@
 ---
-import type { ItemsTimelineProps } from '~/types/itemstimeline.types';
+import type { ItemsTimelineProps, TimelineItemProps } from '~/types/itemstimeline.types';
 import type { ItemProps } from '~/types/item.types';
 import { cn } from '~/utils/styles';
 import Item from '~/components/blocks/composite/Item.astro';
@@ -10,12 +10,12 @@ type Props = ItemsTimelineProps;
 const {
   items = [],
   connectorStyle = 'solid',
-  air = 'normal',
+  gap = 'normal',
   class: className = '',
   defaultItemConfig,
 } = Astro.props;
 
-const spacingSettings = {
+const gapSettings = {
   none: '',
   tight: 'pb-3 md:pb-4 lg:pb-6',
   normal: 'pb-4 md:pb-6 lg:pb-8',
@@ -26,27 +26,26 @@ const defaultTimelineClass = 'relative flex flex-col';
 
 // Merged classes
 const timelineClass = cn(defaultTimelineClass, className);
+
+const internalItemConfig: Partial<ItemProps> = {
+  orientation: 'horizontal',
+  connectorStyle,
+  contentClass: gapSettings[gap],
+};
 ---
 
 <div class={timelineClass}>
   {
-    items.map((item: ItemProps, index: number) => {
-      const mergedItem = mergeConfigs(
+    items.map((item: TimelineItemProps, index: number) => {
+      const mergedItem: ItemProps = mergeConfigs(
         {},
+        internalItemConfig,
         defaultItemConfig || {},
-        { contentClass: spacingSettings[air] },
         item
       );
       const isLast = index === items.length - 1;
 
-      return (
-        <Item
-          {...mergedItem}
-          layout="horizontal"
-          showConnector={!isLast}
-          connectorStyle={connectorStyle}
-        />
-      );
+      return <Item {...mergedItem} showConnector={!isLast} />;
     })
   }
 </div>

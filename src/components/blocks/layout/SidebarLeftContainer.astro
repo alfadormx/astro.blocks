@@ -7,7 +7,7 @@ import { cn } from '~/utils/styles';
 type Props = SidebarContainerProps;
 
 const {
-  air = 'normal',
+  gap = 'normal',
   responsive = false,
   breakpoint = 'md:',
   sidebar,
@@ -15,7 +15,7 @@ const {
   ...containerProps
 } = Astro.props;
 
-const airSettings = {
+const gapSettings = {
   none: '',
   tight: 'gap-3 md:gap-4 lg:gap-6',
   normal: 'gap-4 md:gap-6 lg:gap-8',
@@ -24,7 +24,7 @@ const airSettings = {
 
 const layoutClass = cn(
   responsive ? `grid-cols-1 ${breakpoint}grid-cols-[1fr_3fr]` : 'grid-cols-[1fr_3fr]',
-  airSettings[air]
+  gapSettings[gap]
 );
 
 const sidebarClass = cn(
@@ -47,12 +47,11 @@ const mainContentClass = cn(
   mainContent?.class
 );
 
-const defaultContainer = {
+const defaultContainer: ContainerProps = {
   htmlTag: 'div',
   content: { air: 'none', widthType: 'full' },
   layout: { type: 'grid', class: layoutClass },
-  printDebug: true,
-} as ContainerProps;
+};
 
 const mergedContainerProps = mergeConfigs({}, defaultContainer, containerProps);
 ---

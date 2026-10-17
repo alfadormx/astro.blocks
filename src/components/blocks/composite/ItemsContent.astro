@@ -14,17 +14,21 @@ const defaultContainer = {};
 
 const defaultHeadline = {};
 
-const defaultItemsGrid: Partial<ItemsGridProps> = {
+const internalItemsGrid: Partial<ItemsGridProps> = {
   columns: 2,
-  items: [],
   defaultItemConfig: {
-    layout: 'horizontal',
+    orientation: 'horizontal',
   },
 };
 
 const mergedContainer = mergeConfigs({}, defaultContainer, container);
 const mergedHeadline = mergeConfigs({}, defaultHeadline, headline);
-const mergedItemsGrid = mergeConfigs({}, defaultItemsGrid, itemsGrid);
+// `items` stays out of the merge: mergeConfigs merges arrays index-wise.
+const { items = [], ...itemsGridConfig } = itemsGrid ?? ({} as Partial<ItemsGridProps>);
+const mergedItemsGrid: ItemsGridProps = {
+  ...mergeConfigs<Partial<ItemsGridProps>>({}, internalItemsGrid, itemsGridConfig),
+  items,
+};
 ---
 
 <Container {...mergedContainer}>

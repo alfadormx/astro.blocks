@@ -47,7 +47,7 @@ export interface ContainerProps {
   /** Inner content sizing, spacing, and border configuration */
   content?: ContentConfig;
   /** Margin/padding configuration applied to the outer container element */
-  spacing?: SpacingConfig;
+  spacing?: Omit<SpacingConfig, 'gap'>;
   /** Border configuration applied to the outer container element */
   border?: BorderConfig;
   /** Flex or grid layout configuration for arranging child elements */
@@ -70,9 +70,11 @@ export interface ContainerProps {
   items?: ContainerItem[];
 }
 
+export type GridGap = 'none' | 'tight' | 'normal' | 'loose';
+
 export interface GridLayoutProps extends Omit<ContainerProps, 'layout' | 'items'> {
-  /** Air (spacing) between columns/sections - responsive sizing (default: 'normal') */
-  air?: 'none' | 'tight' | 'normal' | 'loose';
+  /** Gap between columns, responsive (default: 'normal') */
+  gap?: GridGap;
   /** Responsive behavior (default: false - always side-by-side) */
   responsive?: boolean;
   /** Responsive breakpoint (default: 'md:' - use 'sm:', 'lg:', etc.) */
@@ -83,7 +85,7 @@ export interface CellProps {
   /** Background color/class configuration for the column (image/video not supported) */
   background?: SimpleBackgroundProps;
   /** Margin/padding configuration applied to the column */
-  spacing?: SpacingConfig;
+  spacing?: Omit<SpacingConfig, 'gap'>;
   /** Border configuration applied to the column */
   border?: BorderConfig;
   /** Custom classes for the column element */

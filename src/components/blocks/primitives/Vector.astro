@@ -15,6 +15,8 @@ const {
   class: className = '',
   ariaLabel,
   preserveColors = false,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  children: _children,
   ...attrs
 } = Astro.props;
 
@@ -118,7 +120,6 @@ if (svgContent) {
 
 // Build wrapper classes based on layout
 const wrapperClasses = cn(
-  'vector-wrapper',
   // Layout classes
   {
     responsive: 'w-full h-full flex items-center justify-center',
@@ -144,12 +145,12 @@ const wrapperStyle =
   !svgContent ? (
     <Fragment />
   ) : (
-    <div class={wrapperClasses} style={wrapperStyle} {...attrs} set:html={svgContent} />
+    <div class={wrapperClasses} style={wrapperStyle} {...attrs} data-vector set:html={svgContent} />
   )
 }
 
 <style>
-  .vector-wrapper :global(svg) {
+  [data-vector] :global(svg) {
     display: block;
     width: 100%;
     height: 100%;

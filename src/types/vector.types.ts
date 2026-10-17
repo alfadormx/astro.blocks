@@ -2,7 +2,6 @@ import type { HTMLAttributes } from 'astro/types';
 import type { ImageMetadata } from 'astro';
 
 export type VectorLayout = 'responsive' | 'fixed' | 'intrinsic' | 'fill';
-export type VectorFit = 'contain' | 'cover' | 'fill';
 export type VectorAlign = 'left' | 'center' | 'right';
 
 export interface VectorProps extends Omit<HTMLAttributes<'div'>, 'class'> {
@@ -10,8 +9,6 @@ export interface VectorProps extends Omit<HTMLAttributes<'div'>, 'class'> {
   src: string | ImageMetadata;
   /** Layout mode controlling the wrapper's sizing behavior: 'responsive' fills width/height and centers content, 'fixed' sizes to the given width/height, 'intrinsic' sizes to the SVG's natural dimensions, 'fill' stretches to fill the container (default: 'responsive'). */
   layout?: VectorLayout;
-  /** How the SVG should fit within its container (contain, cover, or fill). */
-  fit?: VectorFit;
   /** Width of the wrapper; applied as inline CSS (in px if a number) only when layout is 'fixed'. */
   width?: number | string;
   /** Height of the wrapper; applied as inline CSS (in px if a number) only when layout is 'fixed'. */

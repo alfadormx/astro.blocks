@@ -5,6 +5,7 @@ import { validateModelViewer } from '~/utils/modelViewer';
 type ValidatedProps = Parameters<typeof validateModelViewer>[0];
 
 const props: ValidatedProps = { src: '/models/avocado.glb', label: 'Avocado' };
+const hdr = { src: '/hdr/studio.hdr' };
 
 function withMutation(mutation: ModelViewerMutation): ValidatedProps {
   return { ...props, selections: { finish: { options: { gold: [mutation] } } } };
@@ -139,6 +140,36 @@ describe('validateModelViewer', () => {
       input: withMutation({ type: 'texture' } as unknown as ModelViewerMutation),
       expected: /has unknown type "texture"/,
     },
+    {
+      name: 'environment without src',
+      input: { ...props, environment: { src: '' } },
+      expected: /environment needs a non-empty src/,
+    },
+    {
+      name: 'environment with an .exr',
+      input: { ...props, environment: { src: '/hdr/studio.exr' } },
+      expected: /environment\.src "\/hdr\/studio\.exr" must point to a \.hdr file/,
+    },
+    {
+      name: 'environment rotation NaN',
+      input: { ...props, environment: { ...hdr, rotation: NaN } },
+      expected: /environment has rotation NaN/,
+    },
+    {
+      name: 'environment rotation Infinity',
+      input: { ...props, environment: { ...hdr, rotation: Infinity } },
+      expected: /environment has rotation Infinity/,
+    },
+    {
+      name: 'negative environment autoRotateSpeed',
+      input: { ...props, environment: { ...hdr, autoRotateSpeed: -1 } },
+      expected: /environment has autoRotateSpeed -1/,
+    },
+    {
+      name: 'environment autoRotateSpeed NaN',
+      input: { ...props, environment: { ...hdr, autoRotateSpeed: NaN } },
+      expected: /environment has autoRotateSpeed NaN/,
+    },
   ];
 
   it.each(throwCases)('throws: $name', ({ input, expected }) => {
@@ -154,6 +185,17 @@ describe('validateModelViewer', () => {
     'https://cdn.example.com/models/chair.glb?token=abc',
   ])('accepts %s', (src) => {
     expect(() => validateModelViewer({ ...props, src })).not.toThrow();
+  });
+
+  it.each([
+    { name: 'src only', environment: hdr },
+    { name: 'query string', environment: { src: '/hdr/studio.HDR?v=2' } },
+    {
+      name: 'every field',
+      environment: { ...hdr, rotation: -90, autoRotate: true, autoRotateSpeed: 0 },
+    },
+  ])('accepts environment: $name', ({ environment }) => {
+    expect(() => validateModelViewer({ ...props, environment })).not.toThrow();
   });
 
   it('accepts explicit camera and exposure settings', () => {

@@ -26,6 +26,6 @@ export interface VideoProps {
   class?: string;
   /** Horizontal alignment of the video wrapper within its container. */
   align?: 'left' | 'center' | 'right';
-  /** Config for the floating player's close (PiP) button, merged with the default button config. */
-  pipButtonConfig?: ButtonProps;
+  /** Config for the floating player's close (PiP) button, merged over the default button; the floating player owns `hidden`. */
+  pipButton?: Omit<ButtonProps, 'hidden'>;
 }

@@ -13,14 +13,14 @@ const {
   columns = 3,
   responsive = true,
   fillLastRow = false,
-  air = 'normal' as 'none' | 'tight' | 'normal' | 'loose',
+  gap = 'normal',
   class: className = '',
   defaultItemConfig,
   selection = { mode: 'none' },
   selectedItemConfig,
 } = Astro.props as Props;
 
-const airSettings = {
+const gapSettings = {
   none: '',
   tight: 'gap-3 @3xl:gap-4 @5xl:gap-6',
   normal: 'gap-4 @3xl:gap-6 @5xl:gap-8',
@@ -32,7 +32,7 @@ const baseGridClass = 'grid mx-auto';
 const gridClass = cn(
   baseGridClass,
   gridColumnsClass(columns, responsive),
-  airSettings[air as keyof typeof airSettings],
+  gapSettings[gap],
   className
 );
 
@@ -49,7 +49,7 @@ const lastItemClass =
           return (
             <Item
               {...mergedItem}
-              class={cn(mergedItem.class, i === items.length - 1 && lastItemClass)}
+              class={cn(i === items.length - 1 && lastItemClass, mergedItem.class)}
             />
           );
         })}

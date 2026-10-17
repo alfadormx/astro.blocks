@@ -1,5 +1,6 @@
 import { Color, Mesh, SRGBColorSpace, type Material, type Object3D } from 'three';
 import type { ModelViewerMutation, ModelViewerSelectionGroup } from '~/types/modelviewer.types';
+import { familyName } from '~/utils/modelViewerMaterials';
 
 export { effectiveSrc } from '~/utils/modelViewerSrc';
 
@@ -50,13 +51,19 @@ function allMutations(selections: Selections): ModelViewerMutation[] {
 export function createBaseline(
   root: Object3D,
   fileMaterials: readonly Material[],
-  selections: Selections
+  selections: Selections,
+  aliases: ReadonlyMap<Material, readonly string[]> = new Map()
 ): Baseline {
   const parts = new Map<string, Object3D[]>();
   const materials = new Map<string, Material[]>();
   root.traverse((object) => {
     add(parts, partName(object), object);
-    if (object instanceof Mesh) for (const m of [object.material].flat()) add(materials, m.name, m);
+    if (!(object instanceof Mesh)) return;
+    for (const m of [object.material].flat()) {
+      for (const name of [m.name, familyName(m.name), ...(aliases.get(m) ?? [])]) {
+        add(materials, name, m);
+      }
+    }
   });
   // After mesh materials, so `use` prefers the loader's assigned clone over the unassigned original.
   for (const m of fileMaterials) add(materials, m.name, m);

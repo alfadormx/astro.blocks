@@ -6,6 +6,7 @@ import LanguageToggle from '~/components/blocks/primitives/LanguageToggle.astro'
 import type { ButtonProps } from '~/types/button.types';
 import type { ContainerProps } from '~/types/container.types';
 import type { FooterProps } from '~/types/footer.types';
+import type { LanguageToggleProps } from '~/types/languagetoggle.types';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 import { cn } from '~/utils/styles';
 
@@ -18,13 +19,14 @@ const {
   logo,
   footnote,
   footnoteClass,
-  socialActions,
-  defaultSocialActionsConfig,
-  secondaryActions,
-  defaultSecondaryActionsConfig,
-  showLanguageToggle = false,
+  socialButtons = [],
+  defaultSocialButtonConfig,
+  socialButtonsClass,
+  secondaryButtons = [],
+  defaultSecondaryButtonConfig,
+  secondaryButtonsClass,
+  languageToggle,
   languageToggleAlign = 'center',
-  languageToggleConfig,
 } = Astro.props;
 
 const defaultDisclaimerClass = 'text-xs text-subtle';
@@ -35,7 +37,7 @@ const baseContainerConfig: ContainerProps = {
   content: { air: 'none' },
 };
 
-const baseSocialIconConfig: Partial<ButtonProps> = {
+const internalSocialButtonConfig: Partial<ButtonProps> = {
   size: 'sm',
   variant: 'ghost',
   intent: 'neutral',
@@ -43,7 +45,7 @@ const baseSocialIconConfig: Partial<ButtonProps> = {
   width: 'auto',
 };
 
-const baseSecondaryActionsConfig: Partial<ButtonProps> = {
+const internalSecondaryButtonConfig: Partial<ButtonProps> = {
   variant: 'link',
   intent: 'neutral',
   class: 'p-0',
@@ -54,6 +56,14 @@ const mergedDisclaimerClass = cn(defaultDisclaimerClass, disclaimerClass);
 const mergedFootnoteClass = cn(defaultFootnoteClass, footnoteClass);
 
 const mergedContainerConfig = mergeConfigs({}, baseContainerConfig, container);
+
+const mergedLanguageToggle = languageToggle
+  ? mergeConfigs<LanguageToggleProps>(
+      {},
+      { defaultButtonConfig: { variant: 'link', class: 'p-0' } },
+      languageToggle
+    )
+  : undefined;
 
 // Language toggle alignment classes
 const languageToggleAlignmentClass = {
@@ -70,19 +80,19 @@ const languageToggleAlignmentClass = {
         <Logo {...logo} />
       </div>
       {
-        secondaryActions && secondaryActions.length > 0 && (
-          <div class="flex flex-row gap-1">
-            {secondaryActions.map((actionConfig, index) => {
-              const mergedSecondaryActionConfig = mergeConfigs(
+        secondaryButtons.length > 0 && (
+          <div class={cn('flex flex-row gap-1', secondaryButtonsClass)}>
+            {secondaryButtons.map((button, index) => {
+              const mergedSecondaryButton = mergeConfigs(
                 {},
-                baseSecondaryActionsConfig,
-                defaultSecondaryActionsConfig,
-                actionConfig
+                internalSecondaryButtonConfig,
+                defaultSecondaryButtonConfig,
+                button
               );
               return (
                 <>
                   {index !== 0 ? ' · ' : ''}
-                  <Button {...mergedSecondaryActionConfig} />
+                  <Button {...mergedSecondaryButton} />
                 </>
               );
             })}
@@ -100,17 +110,13 @@ const languageToggleAlignmentClass = {
   }
   <div class="md:flex md:items-center md:justify-between pt-6 pb-0 md:pt-8 md:pb-2">
     {
-      socialActions && socialActions.length > 0 && (
-        <div class="md:order-1 flex flex-row gap-1">
-          {socialActions.map((iconConfig) => {
-            const mergedIconConfig = mergeConfigs(
-              {},
-              baseSocialIconConfig,
-              defaultSocialActionsConfig,
-              iconConfig
-            );
-            return <Button {...mergedIconConfig} />;
-          })}
+      socialButtons.length > 0 && (
+        <div class={cn('md:order-1 flex flex-row gap-1', socialButtonsClass)}>
+          {socialButtons.map((button) => (
+            <Button
+              {...mergeConfigs({}, internalSocialButtonConfig, defaultSocialButtonConfig, button)}
+            />
+          ))}
         </div>
       )
     }
@@ -121,12 +127,9 @@ const languageToggleAlignmentClass = {
   </div>
 
   {
-    showLanguageToggle && (
+    mergedLanguageToggle && (
       <div class={`flex ${languageToggleAlignmentClass} py-4`}>
-        <LanguageToggle
-          {...languageToggleConfig}
-          defaultButtonConfig={{ variant: 'link', class: 'p-0' }}
-        />
+        <LanguageToggle {...mergedLanguageToggle} />
       </div>
     )
   }

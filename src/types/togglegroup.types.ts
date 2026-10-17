@@ -1,3 +1,4 @@
+import type { LayerConfig } from './config.types';
 import type { IconConfig } from './icon.types';
 import type { ImageProps } from './image.types';
 
@@ -55,15 +56,15 @@ export interface ToggleGroupProps {
   intent?:
     'primary' | 'secondary' | 'tertiary' | 'accent' | 'success' | 'warning' | 'error' | 'neutral';
   /** Arrangement of the options (default: 'horizontal'). */
-  layout?: 'horizontal' | 'vertical';
+  orientation?: 'horizontal' | 'vertical';
   /** Disables every option (default: false). */
   disabled?: boolean;
   /** Presentation layered onto every option, both states. */
-  defaultOptionConfig?: ToggleGroupOptionConfig;
+  defaultOptionConfig?: LayerConfig<ToggleGroupOptionConfig>;
   /** Presentation layered onto the selected state only. */
-  selectedOptionConfig?: ToggleGroupOptionConfig;
+  selectedOptionConfig?: LayerConfig<ToggleGroupOptionConfig>;
   /** Presentation layered onto disabled options, last. */
-  disabledOptionConfig?: ToggleGroupOptionConfig;
+  disabledOptionConfig?: LayerConfig<ToggleGroupOptionConfig>;
   /** Extra classes on the group root. */
   class?: string;
 }

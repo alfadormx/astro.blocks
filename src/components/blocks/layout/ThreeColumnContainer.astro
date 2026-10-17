@@ -7,7 +7,7 @@ import { cn } from '~/utils/styles';
 type Props = ThreeColumnContainerProps;
 
 const {
-  air = 'normal',
+  gap = 'normal',
   responsive = false,
   breakpoint = 'md:',
   leftColumn,
@@ -16,7 +16,7 @@ const {
   ...containerProps
 } = Astro.props;
 
-const airSettings = {
+const gapSettings = {
   none: '',
   tight: 'gap-3 md:gap-4 lg:gap-6',
   normal: 'gap-4 md:gap-6 lg:gap-8',
@@ -26,7 +26,7 @@ const airSettings = {
 // Build grid classes
 const layoutClass = cn(
   responsive ? `grid-cols-1 ${breakpoint}grid-cols-3` : 'grid-cols-3',
-  airSettings[air]
+  gapSettings[gap]
 );
 
 const leftColumnClass = cn(
@@ -59,12 +59,11 @@ const rightColumnClass = cn(
   rightColumn?.class
 );
 
-const defaultContainer = {
+const defaultContainer: ContainerProps = {
   htmlTag: 'div',
   content: { air: 'none', widthType: 'full' },
   layout: { type: 'grid', class: layoutClass },
-  printDebug: true,
-} as ContainerProps;
+};
 
 const mergedContainerProps = mergeConfigs({}, defaultContainer, containerProps);
 ---

@@ -32,7 +32,7 @@ async function isUp() {
 
 async function ensureServer() {
   if (await isUp()) return undefined;
-  // Same opt-out as playwright.config.ts: without it `astro dev` daemonises in agent shells.
+  // ASTRO_DEV_BACKGROUND stops `astro dev` daemonising in agent shells.
   const server = spawn('pnpm', ['dev'], {
     env: { ...process.env, ASTRO_DEV_BACKGROUND: '1' },
     stdio: 'ignore',
