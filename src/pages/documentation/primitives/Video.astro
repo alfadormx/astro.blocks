@@ -15,13 +15,12 @@ const metadata = {
   headline={{
     tagline: 'Primitives',
     title: 'Video',
-    subtitle: 'Showcase of the Video primitive block with Plyr integration',
+    subtitle: 'Showcase of the Video primitive block',
   }}
 >
   <p>
-    Demonstrating video playback with Plyr for HTML5 videos, YouTube, and Vimeo embeds. Includes
-    aspect ratio options, floating player behavior, autoplay support, and control visibility
-    customization.
+    Video playback for self-hosted files, YouTube and Vimeo embeds, with aspect ratio options, a
+    floating player, autoplay and hidden controls.
   </p>
 
   <!-- Example 1: HTML5 Video (16:9) -->
@@ -30,21 +29,13 @@ const metadata = {
     Standard video player with 16:9 aspect ratio. Supports all modern video formats with full
     controls.
   </p>
-  <div class="border border-dashed border-gray/80 p-8">
+  <div class="border border-dashed border-gray/80 p-8" data-doc-section="html5">
     <VideoBlock
       source={{
-        type: 'video',
+        provider: 'html5',
         sources: [
-          {
-            src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4',
-            type: 'video/mp4',
-            size: 576,
-          },
-          {
-            src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4',
-            type: 'video/mp4',
-            size: 720,
-          },
+          { src: '/videos/flower.webm', type: 'video/webm' },
+          { src: '/videos/flower.mp4', type: 'video/mp4' },
         ],
       }}
     />
@@ -52,89 +43,45 @@ const metadata = {
 
   <!-- Example 2: YouTube Embed -->
   <h3>2. YouTube Embed</h3>
-  <p>Embed YouTube videos with Plyr's enhanced controls and consistent UI.</p>
-  <div class="border border-dashed border-gray/80 p-8">
-    <VideoBlock
-      source={{
-        type: 'video',
-        sources: [
-          {
-            src: 'bTqVqk7FSmY',
-            provider: 'youtube',
-          },
-        ],
-      }}
-    />
+  <p>Embed YouTube videos with the same player controls.</p>
+  <div class="border border-dashed border-gray/80 p-8" data-doc-section="youtube">
+    <VideoBlock source={{ provider: 'youtube', id: 'bTqVqk7FSmY' }} />
   </div>
 
   <!-- Example 3: Vimeo Embed -->
   <h3>3. Vimeo Embed</h3>
-  <p>Embed Vimeo videos with full Plyr functionality.</p>
-  <div class="border border-dashed border-gray/80 p-8">
-    <VideoBlock
-      source={{
-        type: 'video',
-        sources: [
-          {
-            src: '76979871',
-            provider: 'vimeo',
-          },
-        ],
-      }}
-    />
+  <p>Embed Vimeo videos with the same player controls.</p>
+  <div class="border border-dashed border-gray/80 p-8" data-doc-section="vimeo">
+    <VideoBlock source={{ provider: 'vimeo', id: '1084537' }} />
   </div>
 
   <!-- Example 4: Square Aspect Ratio -->
   <h3>4. Square Aspect Ratio (1:1)</h3>
   <p>Perfect for social media-style videos or profile content.</p>
-  <div class="border border-dashed border-gray/80 p-8 max-w-lg mx-auto">
-    <VideoBlock
-      aspectRatio="square"
-      source={{
-        type: 'video',
-        sources: [
-          {
-            src: 'bTqVqk7FSmY',
-            provider: 'youtube',
-          },
-        ],
-      }}
-    />
+  <div
+    class="border border-dashed border-gray/80 p-8 max-w-lg mx-auto"
+    data-doc-section="ratio-square"
+  >
+    <VideoBlock aspectRatio="square" source={{ provider: 'youtube', id: 'bTqVqk7FSmY' }} />
   </div>
 
   <!-- Example 5: Portrait Aspect Ratio -->
   <h3>5. Portrait Aspect Ratio (9:16)</h3>
   <p>Optimized for mobile-first vertical videos.</p>
-  <div class="border border-dashed border-gray/80 p-8 max-w-md mx-auto">
-    <VideoBlock
-      aspectRatio="portrait"
-      source={{
-        type: 'video',
-        sources: [
-          {
-            src: 'bTqVqk7FSmY',
-            provider: 'youtube',
-          },
-        ],
-      }}
-    />
+  <div
+    class="border border-dashed border-gray/80 p-8 max-w-md mx-auto"
+    data-doc-section="ratio-portrait"
+  >
+    <VideoBlock aspectRatio="portrait" source={{ provider: 'youtube', id: 'bTqVqk7FSmY' }} />
   </div>
 
   <!-- Example 6: Cinema Aspect Ratio -->
   <h3>6. Cinema Aspect Ratio (21:9)</h3>
   <p>Ultra-wide cinematic format for immersive content.</p>
-  <div class="border border-dashed border-gray/80 p-8">
+  <div class="border border-dashed border-gray/80 p-8" data-doc-section="ratio-cinema">
     <VideoBlock
       aspectRatio="cinema"
-      source={{
-        type: 'video',
-        sources: [
-          {
-            src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4',
-            type: 'video/mp4',
-          },
-        ],
-      }}
+      source={{ provider: 'html5', sources: [{ src: '/videos/flower.mp4', type: 'video/mp4' }] }}
     />
   </div>
 
@@ -148,15 +95,7 @@ const metadata = {
     <VideoBlock
       isFloating={true}
       pipButton={{ id: 'doc-video-pip', 'aria-label': 'Close floating player' }}
-      source={{
-        type: 'video',
-        sources: [
-          {
-            src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4',
-            type: 'video/mp4',
-          },
-        ],
-      }}
+      source={{ provider: 'html5', sources: [{ src: '/videos/flower.mp4', type: 'video/mp4' }] }}
     />
   </div>
 
@@ -165,52 +104,35 @@ const metadata = {
     <p class="text-xl text-muted">Scroll up to see the floating player appear</p>
   </div>
 
-  <!-- Custom Plyr Options -->
-  <h3>8. Custom Plyr Options</h3>
-  <p>Configure Plyr with custom controls, quality settings, and more.</p>
-  <div class="border border-dashed border-gray/80 p-8">
-    <VideoBlock
-      source={{
-        type: 'video',
-        sources: [
-          {
-            src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4',
-            type: 'video/mp4',
-          },
-        ],
-      }}
-      options={{
-        controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
-        autoplay: false,
-        muted: false,
-        clickToPlay: true,
-        keyboard: { focused: true, global: false },
-      }}
-    />
-  </div>
-
-  <!-- Example 9: Autoplay with Hidden Controls -->
-  <h3>9. Autoplay with Hidden Controls</h3>
+  <!-- Example 8: Autoplay with Hidden Controls -->
+  <h3>8. Autoplay with Hidden Controls</h3>
   <p>
     Video starts playing automatically with no controls visible. Autoplay automatically enables
     muting to comply with browser autoplay policies. Use the `muted` prop to override this behavior
     if desired. Looping is also enabled in this example to allow continuous playback.
   </p>
-  <div class="border border-dashed border-gray/80 p-8">
+  <div class="border border-dashed border-gray/80 p-8" data-doc-section="autoplay">
     <VideoBlock
       autoplay
       hideControls
       loop
-      source={{
-        type: 'video',
-        sources: [
-          {
-            src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4',
-            type: 'video/mp4',
-          },
-        ],
-      }}
+      source={{ provider: 'html5', sources: [{ src: '/videos/flower.mp4', type: 'video/mp4' }] }}
     />
+  </div>
+
+  <!-- Example 9: Several Floating Players -->
+  <h3>9. Several Floating Players</h3>
+  <p>Each floating video docks and closes on its own.</p>
+  <div class="border border-dashed border-gray/80 p-8" data-doc-section="floating-2">
+    <VideoBlock
+      isFloating={true}
+      pipButton={{ id: 'doc-video-pip-2', 'aria-label': 'Close floating player' }}
+      source={{ provider: 'html5', sources: [{ src: '/videos/flower.mp4', type: 'video/mp4' }] }}
+    />
+  </div>
+
+  <div class="h-screen flex items-center justify-center border border-dashed border-gray/80">
+    <p class="text-xl text-muted">Scroll up to see both floating players</p>
   </div>
 
   <ApiReferenceTable component="Video" category="primitives" />
