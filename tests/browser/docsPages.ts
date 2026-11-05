@@ -1,4 +1,4 @@
-import { documentationNavigation } from '../../src/pages/documentation/navigation';
+import { documentationNavigation } from '../../src/data/documentationNavigation';
 import type { NavigationTreeItem } from '../../src/types/navigationtree.types';
 
 const hrefs = (items: NavigationTreeItem[]): string[] =>
