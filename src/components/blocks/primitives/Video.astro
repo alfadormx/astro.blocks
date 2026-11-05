@@ -1,10 +1,10 @@
 ---
 import type { VideoProps } from '~/types/video.types';
-import type Plyr from 'plyr';
 import { cn } from '~/utils/styles';
 import Button from './Button.astro';
 import type { ButtonProps } from '~/types/button.types';
 import { mergeConfigs } from '~/utils/mergeConfigs';
+import { validateVideoSource } from '~/utils/video';
 
 type Props = VideoProps;
 
@@ -16,18 +16,9 @@ const aspectRatioClasses = {
   cinema: 'aspect-[21/9]', // 21:9
 } as const;
 
-// Configuration: Plyr ratio format
-const plyrRatios = {
-  video: '16:9',
-  square: '1:1',
-  portrait: '9:16',
-  cinema: '21:9',
-} as const;
-
 // Extract props
 const {
   source,
-  options,
   aspectRatio = 'video',
   isFloating = false,
   crossorigin = 'anonymous',
@@ -40,6 +31,20 @@ const {
   align,
 } = Astro.props;
 
+validateVideoSource(source);
+
+const provider = source.provider;
+const isMuted = muted ?? !!autoplay;
+const mediaClass = 'block h-full w-full';
+const embedSrc =
+  source.provider === 'youtube'
+    ? source.id
+    : source.provider === 'vimeo'
+      ? `https://vimeo.com/${source.id}`
+      : undefined;
+const Skin = hideControls ? Fragment : 'video-skin';
+const skinProps = hideControls ? {} : { class: 'h-full w-full', style: '--media-border-radius: 0' };
+
 // Build alignment class
 const alignClass =
   align === 'center'
@@ -49,46 +54,6 @@ const alignClass =
       : align === 'left'
         ? 'flex justify-start'
         : '';
-
-// Build convenience options from props
-const convenienceOptions: Partial<Plyr.Options> = {};
-
-if (hideControls) {
-  convenienceOptions.controls = [];
-}
-
-if (autoplay) {
-  convenienceOptions.autoplay = true;
-}
-
-// Set muted: use explicit value, or default to true if autoplay is enabled
-if (muted !== undefined) {
-  convenienceOptions.muted = muted;
-} else if (autoplay) {
-  convenienceOptions.muted = true;
-}
-
-if (loop) {
-  convenienceOptions.loop = { active: true };
-}
-
-// Default Plyr options (merged priority: defaults < convenience props < user options)
-const defaultOptions = {
-  controls: [
-    'play-large',
-    'play',
-    'progress',
-    'current-time',
-    'mute',
-    'volume',
-    'settings',
-    'pip',
-    'fullscreen',
-  ],
-  ratio: plyrRatios[aspectRatio],
-  ...convenienceOptions,
-  ...(options || {}),
-};
 
 const defaultWrapperClass = 'w-full relative bg-elevated';
 const defaultVideoGroupClass = 'w-full relative overflow-hidden bg-elevated';
@@ -113,75 +78,102 @@ const mergedVideoGroupClass = cn(
 
 <div class={align ? alignClass : ''}>
   <div class={mergedWrapperClass}>
-    <div data-video-group={isFloating ? '' : undefined} class={mergedVideoGroupClass}>
+    <div
+      data-video-group={isFloating ? '' : undefined}
+      data-video-provider={provider}
+      class={mergedVideoGroupClass}
+    >
       {isFloating && <Button {...mergedPipButton} data-video-pip-close />}
-      <video
-        class="plyr"
-        data-plyr-config={JSON.stringify(defaultOptions)}
-        data-plyr-source={JSON.stringify(source)}
-        crossorigin={crossorigin}
-      ></video>
+      <video-player
+        class="block h-full w-full"
+        poster={!hideControls && source.provider === 'html5' ? source.poster : undefined}
+      >
+        <Skin {...skinProps}>
+          {source.provider === 'html5' ? (
+            <video
+              class={cn(mediaClass, 'object-contain')}
+              crossorigin={crossorigin}
+              autoplay={autoplay}
+              muted={isMuted}
+              loop={loop}
+              playsinline
+              preload="metadata"
+              poster={hideControls ? source.poster : undefined}
+            >
+              {source.sources.map((file) => (
+                <source src={file.src} type={file.type} />
+              ))}
+            </video>
+          ) : source.provider === 'youtube' ? (
+            <youtube-video
+              class={mediaClass}
+              src={embedSrc}
+              autoplay={autoplay || undefined}
+              muted={isMuted || undefined}
+              loop={loop || undefined}
+              playsinline=""
+            />
+          ) : (
+            <vimeo-video
+              class={mediaClass}
+              src={embedSrc}
+              autoplay={autoplay || undefined}
+              muted={isMuted || undefined}
+              loop={loop || undefined}
+              playsinline=""
+            />
+          )}
+        </Skin>
+      </video-player>
     </div>
   </div>
 </div>
 
 <script>
-  import Plyr from 'plyr';
-  import 'plyr/dist/plyr.css';
+  import '@videojs/html/video/player';
+  import '@videojs/html/video/skin';
 
-  const plyrEls = document.querySelectorAll('.plyr');
-  Plyr.setup(plyrEls).forEach((player: Plyr, i: number) => {
-    const plyrEl = plyrEls[i] as HTMLElement;
-    player.source = JSON.parse(plyrEl.dataset.plyrSource ?? '{}');
-  });
+  const providers = {
+    youtube: () => import('@videojs/html/media/youtube-video'),
+    vimeo: () => import('@videojs/html/media/vimeo-video'),
+  } as const;
+
+  for (const [name, load] of Object.entries(providers)) {
+    if (document.querySelector(`[data-video-provider="${name}"]`)) {
+      load().catch((err) => console.error('[Video]', err));
+    }
+  }
+
+  function setupFloating(group: HTMLElement) {
+    const closeBtn = group.querySelector<HTMLElement>('[data-video-pip-close]');
+    const rect = group.getBoundingClientRect();
+    const threshold = rect.top + window.scrollY + rect.height / 3;
+    let userClosed = false;
+
+    const setFloating = (floating: boolean) => {
+      group.classList.toggle('floating-player', floating);
+      closeBtn?.toggleAttribute('hidden', !floating);
+    };
+
+    const update = () => {
+      const current = group.getBoundingClientRect();
+      const fullyVisible =
+        current.top >= 0 &&
+        current.bottom <= window.innerHeight &&
+        current.top < window.innerHeight / 2;
+      if (fullyVisible) userClosed = false;
+      setFloating(window.scrollY > threshold && !userClosed);
+    };
+
+    closeBtn?.addEventListener('click', () => {
+      userClosed = true;
+      setFloating(false);
+    });
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
 
   document.addEventListener('DOMContentLoaded', () => {
-    const videoGroup = document.querySelector<HTMLElement>('[data-video-group]');
-    const pipCloseBtn = videoGroup?.querySelector<HTMLElement>('[data-video-pip-close]') ?? null;
-
-    let userClosedFloatingPlayer = false;
-
-    if (!videoGroup) return;
-
-    const videoRect = videoGroup.getBoundingClientRect();
-    const videoTop = videoRect.top + window.scrollY;
-    const videoBottom = videoTop + videoRect.height / 3;
-
-    function updateFloatingState() {
-      if (!videoGroup) return;
-
-      const currentRect = videoGroup.getBoundingClientRect();
-      const isVideoFullyVisible =
-        currentRect.top >= 0 &&
-        currentRect.bottom <= window.innerHeight &&
-        currentRect.top < window.innerHeight / 2;
-
-      if (isVideoFullyVisible) {
-        userClosedFloatingPlayer = false;
-      }
-
-      const shouldFloat = window.scrollY > videoBottom && !userClosedFloatingPlayer;
-
-      if (shouldFloat) {
-        videoGroup.classList.add('floating-player');
-        pipCloseBtn?.toggleAttribute('hidden', false);
-      } else {
-        videoGroup.classList.remove('floating-player');
-        pipCloseBtn?.toggleAttribute('hidden', true);
-      }
-    }
-
-    if (pipCloseBtn && videoGroup) {
-      pipCloseBtn.addEventListener('click', () => {
-        videoGroup.classList.remove('floating-player');
-        pipCloseBtn.toggleAttribute('hidden', true);
-
-        userClosedFloatingPlayer = true;
-      });
-    }
-
-    window.addEventListener('scroll', updateFloatingState);
-
-    updateFloatingState();
+    document.querySelectorAll<HTMLElement>('[data-video-group]').forEach(setupFloating);
   });
 </script>

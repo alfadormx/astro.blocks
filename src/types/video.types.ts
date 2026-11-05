@@ -1,31 +1,41 @@
-import type Plyr from 'plyr';
 import type { ButtonProps } from './button.types';
 
 export type AspectRatio = 'video' | 'square' | 'portrait' | 'cinema';
 
+/** A self-hosted file in one or more formats; the browser plays the first it supports. */
+export interface VideoFileSource {
+  /** URL of the media file. */
+  src: string;
+  /** MIME type, e.g. 'video/mp4'. */
+  type?: string;
+}
+
+export type VideoSource =
+  | { provider: 'html5'; sources: VideoFileSource[]; poster?: string }
+  | { provider: 'youtube'; id: string }
+  | { provider: 'vimeo'; id: string };
+
 export interface VideoProps {
-  /** Plyr source configuration describing the video to play, passed to the underlying player. */
-  source: Plyr.SourceInfo;
-  /** Plyr options object merged on top of the defaults and convenience props (highest priority). */
-  options?: Plyr.Options;
-  /** Aspect ratio applied to the video wrapper and passed to Plyr's ratio option (default: 'video'). */
+  /** What to play: self-hosted files (`html5`) or a YouTube or Vimeo video id. */
+  source: VideoSource;
+  /** Aspect ratio of the video box (default: 'video'). */
   aspectRatio?: AspectRatio;
-  /** Enables a floating (picture-in-picture style) player that docks on scroll (default: false). */
+  /** Docks the video in the bottom-right corner once it scrolls out of view (default: false). */
   isFloating?: boolean;
-  /** Value of the `crossorigin` attribute on the underlying `<video>` element (default: 'anonymous'). */
+  /** Value of the `crossorigin` attribute on a self-hosted `<video>` (default: 'anonymous'). */
   crossorigin?: 'anonymous' | 'use-credentials';
-  /** Enables autoplay by setting Plyr's autoplay convenience option. */
+  /** Starts playback on load. */
   autoplay?: boolean;
-  /** Mutes the player; if unset, defaults to true whenever autoplay is enabled. */
+  /** Mutes the video; if unset, defaults to true whenever autoplay is enabled. */
   muted?: boolean;
-  /** Hides all Plyr controls by setting the controls list to empty. */
+  /** Renders the video without player controls. */
   hideControls?: boolean;
-  /** Enables looping playback via Plyr's loop convenience option. */
+  /** Restarts playback when the video ends. */
   loop?: boolean;
   /** Additional CSS classes merged onto the video wrapper element. */
   class?: string;
   /** Horizontal alignment of the video wrapper within its container. */
   align?: 'left' | 'center' | 'right';
-  /** Config for the floating player's close (PiP) button, merged over the default button; the floating player owns `hidden`. */
+  /** Config for the floating player's close button, merged over the default button; the floating player owns `hidden`. */
   pipButton?: Omit<ButtonProps, 'hidden'>;
 }
