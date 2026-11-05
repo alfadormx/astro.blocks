@@ -1,6 +1,6 @@
 ---
 import type { VideoProps } from '~/types/video.types';
-import type { Options } from 'plyr';
+import type Plyr from 'plyr';
 import { cn } from '~/utils/styles';
 import Button from './Button.astro';
 import type { ButtonProps } from '~/types/button.types';
@@ -51,7 +51,7 @@ const alignClass =
         : '';
 
 // Build convenience options from props
-const convenienceOptions: Partial<Options> = {};
+const convenienceOptions: Partial<Plyr.Options> = {};
 
 if (hideControls) {
   convenienceOptions.controls = [];
