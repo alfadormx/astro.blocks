@@ -16,7 +16,11 @@ const merged = merge({}, METADATA, props) as MetaData;
 const title = merged.title?.default ?? SITE.name;
 const titleTemplate = merged.ignoreTitleTemplate ? undefined : merged.title?.template;
 const description = merged.description ?? '';
-const canonical = merged.canonical ?? SITE.site;
+const pagePath =
+  SITE.trailingSlash || Astro.url.pathname === '/'
+    ? Astro.url.pathname
+    : Astro.url.pathname.replace(/\/+$/, '');
+const canonical = merged.canonical ?? new URL(pagePath, Astro.site ?? Astro.url).href;
 const charset = merged.charset ?? 'UTF-8';
 
 // Robots

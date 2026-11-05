@@ -5,7 +5,6 @@ site:
   site: 'https://astrocomponents.dev'
   base: '/'
   trailingSlash: false
-  googleSiteVerificationId: 'some-verification-id'
 
 i18n:
   default: 'en'
@@ -26,13 +25,12 @@ metadata:
     default: 'Astro Blocks'
     template: '%s | Astro Blocks'
   description: 'Modern, accessible Astro Blocks for building amazing web experiences.'
-  author: 'Your Name'
+  author: 'alFadorMX'
   keywords: ['astro', 'components', 'blocks', 'web', 'design']
   charset: 'UTF-8'
   robots:
     index: true
     follow: true
-  canonical: 'https://astrocomponents.dev' # Base, will be extended per page
 
   # Theme
   theme:
@@ -64,8 +62,6 @@ metadata:
 
   # Twitter
   twitter:
-    handle: '@yourhandle'
-    site: '@yourhandle'
     cardType: 'summary_large_image'
     title: 'Astro Blocks'
     description: 'Modern, accessible Astro Blocks for building amazing web experiences.'
