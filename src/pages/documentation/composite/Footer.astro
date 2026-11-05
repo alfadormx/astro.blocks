@@ -73,7 +73,7 @@ var metadata = {
         },
       ]}
       footnote="© 2026 My Brand. All rights reserved."
-      languageToggle={{}}
+      languageToggle={{ preservePath: false }}
       languageToggleAlign="center"
     />
   </div>
@@ -84,7 +84,12 @@ var metadata = {
     so it reaches every language button.
   </p>
   <div class="border border-border rounded-lg overflow-hidden" data-doc-section="language-toggle">
-    <FooterBlock languageToggle={{ defaultButtonConfig: { variant: 'outline', class: 'px-3' } }} />
+    <FooterBlock
+      languageToggle={{
+        preservePath: false,
+        defaultButtonConfig: { variant: 'outline', class: 'px-3' },
+      }}
+    />
   </div>
 
   <ApiReferenceTable component="Footer" category="composite" />

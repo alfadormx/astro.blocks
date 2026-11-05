@@ -27,6 +27,12 @@ const currentLang =
   I18N.languages.find((lang: (typeof I18N.languages)[number]) => lang.code === I18N.default) ||
   I18N.languages[0];
 
+const localizedMetadata = mergeConfigs<Partial<MetaData>>(
+  {},
+  METADATA.localized?.[currentLang.code],
+  metadata
+);
+
 const htmlLang = currentLang.code;
 const htmlDir = currentLang.direction;
 
@@ -46,7 +52,7 @@ const mergedTopmostContainer = mergeConfigs({}, defaultTopmostContainer, topmost
   <head>
     <CommonMeta />
     <Favicons />
-    <Metadata {...metadata} />
+    <Metadata {...localizedMetadata} />
     <SiteVerification />
     <Analytics />
 

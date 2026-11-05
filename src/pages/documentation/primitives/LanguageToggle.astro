@@ -32,7 +32,7 @@ const metadata = {
   <!-- Basic Language Toggle -->
   <h3>Basic Toggle</h3>
   <div class="flex flex-wrap gap-4 mb-8">
-    <LanguageToggleBlock />
+    <LanguageToggleBlock preservePath={false} />
   </div>
 
   <!-- Sizes -->
@@ -40,23 +40,23 @@ const metadata = {
   <div class="flex flex-col gap-6 mb-8">
     <div class="flex items-center gap-4">
       <span class="w-12 text-sm text-gray-600 dark:text-gray-400">xs</span>
-      <LanguageToggleBlock defaultButtonConfig={{ size: 'xs' }} />
+      <LanguageToggleBlock preservePath={false} defaultButtonConfig={{ size: 'xs' }} />
     </div>
     <div class="flex items-center gap-4">
       <span class="w-12 text-sm text-gray-600 dark:text-gray-400">sm</span>
-      <LanguageToggleBlock defaultButtonConfig={{ size: 'sm' }} />
+      <LanguageToggleBlock preservePath={false} defaultButtonConfig={{ size: 'sm' }} />
     </div>
     <div class="flex items-center gap-4">
       <span class="w-12 text-sm text-gray-600 dark:text-gray-400">md</span>
-      <LanguageToggleBlock defaultButtonConfig={{ size: 'md' }} />
+      <LanguageToggleBlock preservePath={false} defaultButtonConfig={{ size: 'md' }} />
     </div>
     <div class="flex items-center gap-4">
       <span class="w-12 text-sm text-gray-600 dark:text-gray-400">lg</span>
-      <LanguageToggleBlock defaultButtonConfig={{ size: 'lg' }} />
+      <LanguageToggleBlock preservePath={false} defaultButtonConfig={{ size: 'lg' }} />
     </div>
     <div class="flex items-center gap-4">
       <span class="w-12 text-sm text-gray-600 dark:text-gray-400">xl</span>
-      <LanguageToggleBlock defaultButtonConfig={{ size: 'xl' }} />
+      <LanguageToggleBlock preservePath={false} defaultButtonConfig={{ size: 'xl' }} />
     </div>
   </div>
 
@@ -65,19 +65,19 @@ const metadata = {
   <div class="flex flex-col gap-6 mb-8">
     <div class="flex items-center gap-4">
       <span class="w-20 text-sm text-gray-600 dark:text-gray-400">solid</span>
-      <LanguageToggleBlock defaultButtonConfig={{ variant: 'solid' }} />
+      <LanguageToggleBlock preservePath={false} defaultButtonConfig={{ variant: 'solid' }} />
     </div>
     <div class="flex items-center gap-4">
       <span class="w-20 text-sm text-gray-600 dark:text-gray-400">outline</span>
-      <LanguageToggleBlock defaultButtonConfig={{ variant: 'outline' }} />
+      <LanguageToggleBlock preservePath={false} defaultButtonConfig={{ variant: 'outline' }} />
     </div>
     <div class="flex items-center gap-4">
       <span class="w-20 text-sm text-gray-600 dark:text-gray-400">ghost</span>
-      <LanguageToggleBlock defaultButtonConfig={{ variant: 'ghost' }} />
+      <LanguageToggleBlock preservePath={false} defaultButtonConfig={{ variant: 'ghost' }} />
     </div>
     <div class="flex items-center gap-4">
       <span class="w-20 text-sm text-gray-600 dark:text-gray-400">link</span>
-      <LanguageToggleBlock defaultButtonConfig={{ variant: 'link' }} />
+      <LanguageToggleBlock preservePath={false} defaultButtonConfig={{ variant: 'link' }} />
     </div>
   </div>
 
@@ -87,6 +87,7 @@ const metadata = {
     <div class="flex items-center gap-4">
       <span class="w-32 text-sm text-gray-600 dark:text-gray-400">primary/neutral</span>
       <LanguageToggleBlock
+        preservePath={false}
         activeButtonConfig={{ intent: 'primary' }}
         inactiveButtonConfig={{ intent: 'neutral' }}
       />
@@ -94,6 +95,7 @@ const metadata = {
     <div class="flex items-center gap-4">
       <span class="w-32 text-sm text-gray-600 dark:text-gray-400">accent/secondary</span>
       <LanguageToggleBlock
+        preservePath={false}
         activeButtonConfig={{ intent: 'accent' }}
         inactiveButtonConfig={{ intent: 'secondary' }}
       />
@@ -101,6 +103,7 @@ const metadata = {
     <div class="flex items-center gap-4">
       <span class="w-32 text-sm text-gray-600 dark:text-gray-400">success/neutral</span>
       <LanguageToggleBlock
+        preservePath={false}
         defaultButtonConfig={{ variant: 'outline' }}
         activeButtonConfig={{ intent: 'success' }}
         inactiveButtonConfig={{ intent: 'neutral' }}
@@ -113,15 +116,15 @@ const metadata = {
   <div class="flex flex-col gap-6 mb-8">
     <div class="flex items-center gap-4">
       <span class="w-20 text-sm text-gray-600 dark:text-gray-400">rounded</span>
-      <LanguageToggleBlock defaultButtonConfig={{ shape: 'rounded' }} />
+      <LanguageToggleBlock preservePath={false} defaultButtonConfig={{ shape: 'rounded' }} />
     </div>
     <div class="flex items-center gap-4">
       <span class="w-20 text-sm text-gray-600 dark:text-gray-400">square</span>
-      <LanguageToggleBlock defaultButtonConfig={{ shape: 'square' }} />
+      <LanguageToggleBlock preservePath={false} defaultButtonConfig={{ shape: 'square' }} />
     </div>
     <div class="flex items-center gap-4">
       <span class="w-20 text-sm text-gray-600 dark:text-gray-400">pill</span>
-      <LanguageToggleBlock defaultButtonConfig={{ shape: 'pill' }} />
+      <LanguageToggleBlock preservePath={false} defaultButtonConfig={{ shape: 'pill' }} />
     </div>
   </div>
 
@@ -130,11 +133,11 @@ const metadata = {
   <div class="flex flex-col gap-6 mb-8">
     <div>
       <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Horizontal (default)</p>
-      <LanguageToggleBlock orientation="horizontal" />
+      <LanguageToggleBlock preservePath={false} orientation="horizontal" />
     </div>
     <div>
       <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Vertical</p>
-      <LanguageToggleBlock orientation="vertical" />
+      <LanguageToggleBlock preservePath={false} orientation="vertical" />
     </div>
   </div>
 
@@ -143,11 +146,11 @@ const metadata = {
   <div class="flex flex-col gap-6 mb-8">
     <div>
       <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Full labels (default)</p>
-      <LanguageToggleBlock showLabels={true} />
+      <LanguageToggleBlock preservePath={false} showLabels={true} />
     </div>
     <div>
       <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Language codes only</p>
-      <LanguageToggleBlock showLabels={false} />
+      <LanguageToggleBlock preservePath={false} showLabels={false} />
     </div>
   </div>
 
@@ -157,6 +160,7 @@ const metadata = {
     <div>
       <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Large pills with accent colors</p>
       <LanguageToggleBlock
+        preservePath={false}
         defaultButtonConfig={{ size: 'lg', variant: 'solid', shape: 'pill' }}
         activeButtonConfig={{ intent: 'accent' }}
         inactiveButtonConfig={{ intent: 'secondary' }}
@@ -166,6 +170,7 @@ const metadata = {
     <div>
       <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Small outline vertical stack</p>
       <LanguageToggleBlock
+        preservePath={false}
         defaultButtonConfig={{ size: 'sm', variant: 'outline' }}
         activeButtonConfig={{ intent: 'primary' }}
         inactiveButtonConfig={{ intent: 'neutral' }}
@@ -176,11 +181,23 @@ const metadata = {
     <div>
       <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Link style with codes only</p>
       <LanguageToggleBlock
+        preservePath={false}
         defaultButtonConfig={{ variant: 'link', size: 'lg' }}
         showLabels={false}
         gap="loose"
       />
     </div>
+  </div>
+
+  <h3>Path Preservation</h3>
+  <p>
+    By default each button keeps the current path, so <code>/pricing</code> links to
+    <code>/es/pricing</code>. Pages that exist in one language only should pass
+    <code>preservePath=&#123;false&#125;</code> so every button links to that language's
+    <code>basePath</code>. The demos on this page do, because documentation is English-only.
+  </p>
+  <div class="flex flex-wrap gap-4 mb-8" data-doc-section="preserve-path">
+    <LanguageToggleBlock preservePath={false} />
   </div>
 
   <ApiReferenceTable component="LanguageToggle" category="primitives" />
@@ -190,13 +207,14 @@ const metadata = {
   <div class="space-y-4">
     <p class="text-sm text-gray-600 dark:text-gray-400">
       The Language Toggle component automatically detects the current language from the URL path and
-      highlights the active language button. Click on a language button to navigate to that language
-      version of the current page.
+      highlights the active language button. The buttons below link to each language's home page,
+      because the documentation is not translated.
     </p>
     <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg">
       <div class="flex items-center justify-between mb-4">
         <h4 class="text-lg font-semibold">Header Example</h4>
         <LanguageToggleBlock
+          preservePath={false}
           defaultButtonConfig={{ size: 'sm', variant: 'outline', shape: 'pill' }}
         />
       </div>

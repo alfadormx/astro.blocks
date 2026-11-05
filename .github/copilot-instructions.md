@@ -228,7 +228,7 @@ i18n:
 - The `I18N` object from `site-config` exposes `I18N.default` and `I18N.languages[]`
 - `Layout.astro` resolves `lang` and `dir` on `<html>` from the `langCode` prop matched against `I18N.languages`
 - **`LanguageToggle`** reads `Astro.url.pathname` at runtime to detect the current language by `basePath` matching and rewrites URLs by swapping `basePath` prefixes. It respects `SITE.trailingSlash`.
-- Per-language metadata overrides live under `metadata.localized.<code>` in `config.yaml` and are merged in `configBuilder.ts`
+- Per-language metadata overrides live under `metadata.localized.<code>` in `config.yaml` and are merged under the page's `metadata` in `src/layouts/Layout.astro` (the docs layout does not apply them)
 - Pass `langCode` to `<Layout>` on every page to set the correct `<html lang>` attribute
 
 ## vendor/integration Internals

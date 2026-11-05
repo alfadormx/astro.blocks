@@ -25,4 +25,7 @@ export interface LanguageToggleProps extends Omit<HTMLAttributes<'div'>, 'class'
 
   /** Space between the language buttons (default: 'normal') */
   gap?: LanguageToggleGap;
+
+  /** Keep the current path when switching language (`/x` → `/es/x`); when false, each button links to that language's basePath (default: true) */
+  preservePath?: boolean;
 }

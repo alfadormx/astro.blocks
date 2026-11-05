@@ -2,6 +2,7 @@ import { readdirSync } from 'node:fs';
 import { expect, test } from '@playwright/test';
 
 import { docsPages } from './docsPages';
+import { localePaths } from './locales';
 
 // R-50: the suculentas demos get their h1 when they're committed.
 const PENDING_DEMOS = new Set(['suculentas', 'suculentas-keyshot']);
@@ -12,7 +13,7 @@ const demoPages = readdirSync(new URL('../../src/pages/demos/', import.meta.url)
   .filter((name) => !PENDING_DEMOS.has(name))
   .map((name) => `/demos/${name}`);
 
-for (const href of ['/', ...demoPages, ...docsPages]) {
+for (const href of [...localePaths, ...demoPages, ...docsPages]) {
   test(`${href} renders exactly one h1`, async ({ page }) => {
     await page.goto(href);
     // Light DOM only: Playwright's CSS engine pierces the dev toolbar's shadow root and its h1s.
