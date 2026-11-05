@@ -37,18 +37,16 @@ const internalItemConfig: Partial<ItemProps> = {
 ---
 
 <div class={timelineClass}>
-  {
-    items.map((item: TimelineItemProps, index: number) => {
-      const mergedItem: ItemProps = mergeConfigs(
-        {},
-        internalItemConfig,
-        defaultItemConfig || {},
-        item
-      );
-      const isLast = index === items.length - 1;
-      const isFirst = index === 0;
+  {items.map((item: TimelineItemProps, index: number) => {
+    const mergedItem: ItemProps = mergeConfigs(
+      {},
+      internalItemConfig,
+      defaultItemConfig || {},
+      item
+    );
+    const isLast = index === items.length - 1;
+    const isFirst = index === 0;
 
-      return <Item {...mergedItem} showConnectorLeft={!isFirst} showConnectorRight={!isLast} />;
-    })
-  }
+    return <Item {...mergedItem} showConnectorLeft={!isFirst} showConnectorRight={!isLast} />;
+  })}
 </div>

@@ -86,8 +86,29 @@ const horizontalConnectorRightClass = cn(
 ---
 
 <div class={defaultRootClass}>
-  {
-    orientation === 'horizontal' && hasMedia && (
+  {orientation === 'horizontal' && hasMedia && (
+    <div class="flex flex-col items-center self-stretch">
+      {hasImage ? (
+        <Image {...image} class={mergedImageClass} />
+      ) : (
+        hasIcon && <Icon name={icon.name} class={mergedIconClass} aria-label={icon.ariaLabel} />
+      )}
+      {showConnector && <div class={connectorFinalClass} />}
+    </div>
+  )}
+  {orientation === 'vertical' &&
+    hasMedia &&
+    (showConnectorLeft || showConnectorRight ? (
+      <div class="grid grid-cols-[1fr_auto_1fr] items-center w-full">
+        <div class={horizontalConnectorLeftClass} />
+        {hasImage ? (
+          <Image {...image} class={mergedImageClass} />
+        ) : (
+          hasIcon && <Icon name={icon.name} class={mergedIconClass} aria-label={icon.ariaLabel} />
+        )}
+        <div class={horizontalConnectorRightClass} />
+      </div>
+    ) : (
       <div class="flex flex-col items-center self-stretch">
         {hasImage ? (
           <Image {...image} class={mergedImageClass} />
@@ -96,51 +117,24 @@ const horizontalConnectorRightClass = cn(
         )}
         {showConnector && <div class={connectorFinalClass} />}
       </div>
-    )
-  }
-  {
-    orientation === 'vertical' &&
-      hasMedia &&
-      (showConnectorLeft || showConnectorRight ? (
-        <div class="grid grid-cols-[1fr_auto_1fr] items-center w-full">
-          <div class={horizontalConnectorLeftClass} />
-          {hasImage ? (
-            <Image {...image} class={mergedImageClass} />
-          ) : (
-            hasIcon && <Icon name={icon.name} class={mergedIconClass} aria-label={icon.ariaLabel} />
-          )}
-          <div class={horizontalConnectorRightClass} />
+    ))}
+  {hasBody && (
+    <div
+      class={cn(
+        'flex flex-col',
+        orientation === 'horizontal' ? 'items-start text-left' : 'items-center text-center',
+        contentClass
+      )}
+    >
+      {title && <div class={titleClass}>{title}</div>}
+      {content && <div class={textClass}>{content}</div>}
+      {actions.length > 0 && (
+        <div class="flex flex-wrap gap-2 md:gap-3 mt-2 md:mt-3">
+          {actions.map((action) => (
+            <Button {...action} />
+          ))}
         </div>
-      ) : (
-        <div class="flex flex-col items-center self-stretch">
-          {hasImage ? (
-            <Image {...image} class={mergedImageClass} />
-          ) : (
-            hasIcon && <Icon name={icon.name} class={mergedIconClass} aria-label={icon.ariaLabel} />
-          )}
-          {showConnector && <div class={connectorFinalClass} />}
-        </div>
-      ))
-  }
-  {
-    hasBody && (
-      <div
-        class={cn(
-          'flex flex-col',
-          orientation === 'horizontal' ? 'items-start text-left' : 'items-center text-center',
-          contentClass
-        )}
-      >
-        {title && <div class={titleClass}>{title}</div>}
-        {content && <div class={textClass}>{content}</div>}
-        {actions.length > 0 && (
-          <div class="flex flex-wrap gap-2 md:gap-3 mt-2 md:mt-3">
-            {actions.map((action) => (
-              <Button {...action} />
-            ))}
-          </div>
-        )}
-      </div>
-    )
-  }
+      )}
+    </div>
+  )}
 </div>

@@ -80,8 +80,12 @@ const config: ModelViewerConfig = {
     role="status"
     class="pointer-events-none absolute inset-0 flex items-center justify-center p-6 text-center text-muted"
   >
-    <p hidden data-model-viewer-message="webgl">{webglUnavailable}</p>
-    <p hidden data-model-viewer-message="load">{loadFailed}</p>
+    <p hidden data-model-viewer-message="webgl">
+      {webglUnavailable}
+    </p>
+    <p hidden data-model-viewer-message="load">
+      {loadFailed}
+    </p>
   </div>
   <noscript>
     <p class="flex h-full items-center justify-center p-6 text-center text-muted">

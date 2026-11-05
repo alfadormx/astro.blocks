@@ -54,12 +54,12 @@ const metadata = {
   <!-- Example 3: Connector Lines -->
   <h3>3. Connector Lines</h3>
   <p>
-    Connector lines link items together to build timeline UIs. Use <code
-      class="px-1 py-0.5 bg-muted rounded">showConnector</code
-    > on a horizontal item for a vertical connecting line (as used by ItemsTimeline), or <code
-      class="px-1 py-0.5 bg-muted rounded">showConnectorLeft</code
-    >/<code class="px-1 py-0.5 bg-muted rounded">showConnectorRight</code> on a vertical item for a horizontal
-    connecting line (as used by ItemsTimelineHorizontal).
+    Connector lines link items together to build timeline UIs. Use{' '}
+    <code class="px-1 py-0.5 bg-muted rounded">showConnector</code> on a horizontal item for a
+    vertical connecting line (as used by ItemsTimeline), or{' '}
+    <code class="px-1 py-0.5 bg-muted rounded">showConnectorLeft</code>/
+    <code class="px-1 py-0.5 bg-muted rounded">showConnectorRight</code> on a vertical item for a
+    horizontal connecting line (as used by ItemsTimelineHorizontal).
   </p>
   <div class="space-y-8">
     <div>
@@ -116,8 +116,8 @@ const metadata = {
   <h3>4. Optional Text</h3>
   <p>
     <code class="px-1 py-0.5 bg-muted rounded">title</code> and
-    <code class="px-1 py-0.5 bg-muted rounded">content</code> are both optional. Item renders only what
-    it is given — an omitted or empty value produces no element and no reserved space.
+    <code class="px-1 py-0.5 bg-muted rounded">content</code> are both optional. Item renders only
+    what it is given — an omitted or empty value produces no element and no reserved space.
   </p>
   <div class="flex flex-wrap items-start gap-6">
     <div class="max-w-xs border border-border rounded-lg p-6">
@@ -137,18 +137,18 @@ const metadata = {
   <!-- Example 5: Image Instead of Icon -->
   <h3>5. Image Instead of Icon</h3>
   <p>
-    <code class="px-1 py-0.5 bg-muted rounded">image</code> carries the Image primitive's configuration
-    and renders in the same media slot as <code class="px-1 py-0.5 bg-muted rounded">icon</code>.
-    The two are mutually exclusive — when both are supplied the image wins.
-    <code class="px-1 py-0.5 bg-muted rounded">image.alt</code> is required at runtime; the Image primitive
-    throws without it. Supply <code class="px-1 py-0.5 bg-muted rounded">width</code>/<code
-      class="px-1 py-0.5 bg-muted rounded">height</code
-    > or an <code class="px-1 py-0.5 bg-muted rounded">aspectRatio</code>, or the optimizer logs an
-    error. The default box is <code class="px-1 py-0.5 bg-muted rounded"
-      >size-8 md:size-10 lg:size-12</code
-    >, which fixes both axes — pass <code class="px-1 py-0.5 bg-muted rounded">image.class</code> to override
-    it or to add <code class="px-1 py-0.5 bg-muted rounded">object-*</code> handling for a non-square
-    source.
+    <code class="px-1 py-0.5 bg-muted rounded">image</code> carries the Image primitive's
+    configuration and renders in the same media slot as{' '}
+    <code class="px-1 py-0.5 bg-muted rounded">icon</code>. The two are mutually exclusive — when
+    both are supplied the image wins.
+    <code class="px-1 py-0.5 bg-muted rounded">image.alt</code> is required at runtime; the Image
+    primitive throws without it. Supply <code class="px-1 py-0.5 bg-muted rounded">width</code>/
+    <code class="px-1 py-0.5 bg-muted rounded">height</code> or an{' '}
+    <code class="px-1 py-0.5 bg-muted rounded">aspectRatio</code>, or the optimizer logs an error.
+    The default box is{' '}
+    <code class="px-1 py-0.5 bg-muted rounded">size-8 md:size-10 lg:size-12</code>, which fixes both
+    axes — pass <code class="px-1 py-0.5 bg-muted rounded">image.class</code> to override it or to
+    add <code class="px-1 py-0.5 bg-muted rounded">object-*</code> handling for a non-square source.
   </p>
   <div class="flex flex-wrap items-start gap-6">
     <div class="max-w-xs border border-border rounded-lg p-6">
@@ -262,11 +262,10 @@ const metadata = {
 
   <h3>7. Custom Typography and Media Size</h3>
   <p>
-    <code>titleClass</code>, <code>textClass</code> and <code>mediaClass</code> replace the default title
-    typography, content spacing and icon or image sizes. They do not merge with the defaults, so set every
-    class you need. <code>icon.class</code> and <code>image.class</code> still merge on top of <code
-      >mediaClass</code
-    >.
+    <code>titleClass</code>, <code>textClass</code> and <code>mediaClass</code> replace the default
+    title typography, content spacing and icon or image sizes. They do not merge with the defaults,
+    so set every class you need. <code>icon.class</code> and <code>image.class</code> still merge on
+    top of <code>mediaClass</code>.
   </p>
   <div class="max-w-sm border border-border rounded-lg p-6">
     <ItemBlock
@@ -281,8 +280,8 @@ const metadata = {
 
   <h3>8. Connector Class</h3>
   <p>
-    <code>connectorClass</code> styles every visible connector line in either layout. Hidden sides stay
-    transparent.
+    <code>connectorClass</code> styles every visible connector line in either layout. Hidden sides
+    stay transparent.
   </p>
   <div class="space-y-8" data-doc-section="connector-class">
     <div class="border border-border rounded-lg p-6 flex flex-row items-start">
@@ -317,7 +316,9 @@ const metadata = {
   </div>
 
   <h3>9. Spacing margin</h3>
-  <p><code>spacing.margin</code> lands on the item root next to <code>spacing.padding</code>.</p>
+  <p>
+    <code>spacing.margin</code> lands on the item root next to <code>spacing.padding</code>.
+  </p>
   <div data-doc-section="spacing-margin">
     <ItemBlock
       title="Spaced"

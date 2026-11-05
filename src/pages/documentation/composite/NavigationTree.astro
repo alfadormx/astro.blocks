@@ -263,12 +263,16 @@ const deeplyNestedNavItems: NavigationTreeItem[] = [
   </div>
 
   <h4>Default Item Styling</h4>
-  <p>Default-config <code>class</code> and <code>icon</code> reach every item.</p>
+  <p>
+    Default-config <code>class</code> and <code>icon</code> reach every item.
+  </p>
   <p>
     <code>defaultItemConfig</code> reaches every item; <code>inactiveItemConfig</code> /
     <code>activeItemConfig</code> layer on top.
   </p>
-  <p>Parents keep the <code>iconName</code> chevron over the default icon.</p>
+  <p>
+    Parents keep the <code>iconName</code> chevron over the default icon.
+  </p>
   <div class="border border-border rounded-lg p-6 max-w-xs" data-doc-section="default-config">
     <NavigationTreeBlock
       items={nestedNavItems}
@@ -281,7 +285,8 @@ const deeplyNestedNavItems: NavigationTreeItem[] = [
 
   <h4>Active Item Weight</h4>
   <p>
-    The active item is semi-bold by default. <code>activeItemConfig.class</code> can change its weight.
+    The active item is semi-bold by default. <code>activeItemConfig.class</code> can change its
+    weight.
   </p>
   <div class="border border-border rounded-lg p-6 max-w-xs" data-doc-section="active-weight">
     <NavigationTreeBlock
@@ -301,8 +306,7 @@ const deeplyNestedNavItems: NavigationTreeItem[] = [
   </div>
 
   <h3>Data Structure Example</h3>
-  <pre
-    class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{JSON.stringify(nestedNavItems, null, 2)}</code></pre>
+  <pre class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{JSON.stringify(nestedNavItems, null, 2)}</code></pre>
 
   <ApiReferenceTable component="NavigationTree" category="composite" />
 </Layout>

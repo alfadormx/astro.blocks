@@ -141,13 +141,11 @@ const wrapperStyle =
     : '';
 ---
 
-{
-  !svgContent ? (
-    <Fragment />
-  ) : (
-    <div class={wrapperClasses} style={wrapperStyle} {...attrs} data-vector set:html={svgContent} />
-  )
-}
+{!svgContent ? (
+  <Fragment />
+) : (
+  <div class={wrapperClasses} style={wrapperStyle} {...attrs} data-vector set:html={svgContent} />
+)}
 
 <style>
   [data-vector] :global(svg) {

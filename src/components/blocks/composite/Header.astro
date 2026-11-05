@@ -83,49 +83,37 @@ const topClasses = cn(
   <Container {...mergedContainerConfig}>
     <div class={cn('flex flex-wrap items-center gap-y-2', className)} data-header-row>
       <!-- Left Zone: leftButtons + leftNavigationTreeHorizontal -->
-      <div
-        class="flex min-w-fit flex-1 basis-0 flex-wrap items-center gap-2 whitespace-nowrap **:shrink-0"
-      >
-        {
-          leftButtons.length > 0 && (
-            <div class={buttonsWrapperClass}>
-              {leftButtons.map((button) => (
-                <Button {...mergeConfigs({}, internalButtonConfig, defaultButtonConfig, button)} />
-              ))}
-            </div>
-          )
-        }
+      <div class="flex min-w-fit flex-1 basis-0 flex-wrap items-center gap-2 whitespace-nowrap **:shrink-0">
+        {leftButtons.length > 0 && (
+          <div class={buttonsWrapperClass}>
+            {leftButtons.map((button) => (
+              <Button {...mergeConfigs({}, internalButtonConfig, defaultButtonConfig, button)} />
+            ))}
+          </div>
+        )}
 
-        {
-          mergedLeftNavigationTreeHorizontal?.items && (
-            <NavigationTreeHorizontal {...mergedLeftNavigationTreeHorizontal} />
-          )
-        }
+        {mergedLeftNavigationTreeHorizontal?.items && (
+          <NavigationTreeHorizontal {...mergedLeftNavigationTreeHorizontal} />
+        )}
       </div>
 
       <Logo {...logo} />
 
       <!-- Right Zone: rightNavigationTreeHorizontal + theme toggle + rightButtons -->
-      <div
-        class="flex min-w-fit flex-1 basis-0 flex-wrap items-center justify-end gap-2 whitespace-nowrap **:shrink-0"
-      >
-        {
-          mergedRightNavigationTreeHorizontal?.items && (
-            <NavigationTreeHorizontal {...mergedRightNavigationTreeHorizontal} />
-          )
-        }
+      <div class="flex min-w-fit flex-1 basis-0 flex-wrap items-center justify-end gap-2 whitespace-nowrap **:shrink-0">
+        {mergedRightNavigationTreeHorizontal?.items && (
+          <NavigationTreeHorizontal {...mergedRightNavigationTreeHorizontal} />
+        )}
 
         {themeToggle && <ThemeToggle {...themeToggle} />}
 
-        {
-          rightButtons.length > 0 && (
-            <div class={buttonsWrapperClass}>
-              {rightButtons.map((button) => (
-                <Button {...mergeConfigs({}, internalButtonConfig, defaultButtonConfig, button)} />
-              ))}
-            </div>
-          )
-        }
+        {rightButtons.length > 0 && (
+          <div class={buttonsWrapperClass}>
+            {rightButtons.map((button) => (
+              <Button {...mergeConfigs({}, internalButtonConfig, defaultButtonConfig, button)} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   </Container>

@@ -22,11 +22,11 @@ var metadata = {
   }}
 >
   <p>
-    <code>ContentCarouselItem</code> wraps arbitrary slide content (images, text, buttons, or other blocks)
-    in a <code>Container</code> and tags it with the <code>carousel-item</code> class the
-    <code>ContentCarousel</code> block relies on to detect slides passed via its default slot. It's only
-    needed when slotting custom content — carousels built from the <code>items</code> array prop render
-    their own slides automatically.
+    <code>ContentCarouselItem</code> wraps arbitrary slide content (images, text, buttons, or other
+    blocks) in a <code>Container</code> and tags it with the <code>carousel-item</code> class the
+    <code>ContentCarousel</code> block relies on to detect slides passed via its default slot. It's
+    only needed when slotting custom content — carousels built from the <code>items</code> array
+    prop render their own slides automatically.
   </p>
 
   <!-- Example: ContentCarouselItem used as slotted slides inside ContentCarousel -->
@@ -53,8 +53,8 @@ var metadata = {
       <ContentCarouselItem basis="basis-full" background={{ class: 'bg-surface' }}>
         <h3 class="text-xl font-bold">Interactive Content</h3>
         <p class="text-center max-w-md">
-          Each <code>ContentCarouselItem</code> can hold any content — text, buttons, or nested blocks
-          — while the carousel handles drag, autoplay, and indicator behavior.
+          Each <code>ContentCarouselItem</code> can hold any content — text, buttons, or nested
+          blocks — while the carousel handles drag, autoplay, and indicator behavior.
         </p>
         <div class="flex gap-3">
           <Button label="Action 1" icon={{ name: 'heroicons:star' }} intent="primary" />

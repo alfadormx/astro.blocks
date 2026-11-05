@@ -60,49 +60,47 @@ const dropdownPanelClass = cn(
 ---
 
 <nav class={navClass} {...attrs} data-nav-trigger={trigger}>
-  {
-    items.map((item: NavigationTreeItem) => {
-      const { children, ...buttonProps } = item;
-      const hasChildren = children && children.length > 0;
-      const mergedItemConfig = mergeConfigs(
-        {},
-        defaultItemButtonConfig,
-        defaultItemConfig || {},
-        hasChildren ? { icon: { name: iconName } } : {},
-        buttonProps
-      );
+  {items.map((item: NavigationTreeItem) => {
+    const { children, ...buttonProps } = item;
+    const hasChildren = children && children.length > 0;
+    const mergedItemConfig = mergeConfigs(
+      {},
+      defaultItemButtonConfig,
+      defaultItemConfig || {},
+      hasChildren ? { icon: { name: iconName } } : {},
+      buttonProps
+    );
 
-      // For items with children, remove href to prevent navigation
-      if (hasChildren && trigger === 'click') {
-        mergedItemConfig.href = undefined;
-      }
+    // For items with children, remove href to prevent navigation
+    if (hasChildren && trigger === 'click') {
+      mergedItemConfig.href = undefined;
+    }
 
-      return (
-        <div class={cn('relative', itemClass)} data-nav-item>
-          <Button {...mergedItemConfig} data-nav-parent={hasChildren || undefined} />
+    return (
+      <div class={cn('relative', itemClass)} data-nav-item>
+        <Button {...mergedItemConfig} data-nav-parent={hasChildren || undefined} />
 
-          {hasChildren && (
-            <div class={dropdownWrapperClass} data-nav-dropdown>
-              <div class={dropdownPanelClass}>
-                {children!.map((child: NavigationTreeItem) => {
-                  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                  const { children: _, ...childProps } = child;
-                  const mergedChildConfig = mergeConfigs(
-                    {},
-                    defaultChildButtonConfig,
-                    defaultItemConfig,
-                    childProps
-                  );
+        {hasChildren && (
+          <div class={dropdownWrapperClass} data-nav-dropdown>
+            <div class={dropdownPanelClass}>
+              {children!.map((child: NavigationTreeItem) => {
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const { children: _, ...childProps } = child;
+                const mergedChildConfig = mergeConfigs(
+                  {},
+                  defaultChildButtonConfig,
+                  defaultItemConfig,
+                  childProps
+                );
 
-                  return <Button {...mergedChildConfig} />;
-                })}
-              </div>
+                return <Button {...mergedChildConfig} />;
+              })}
             </div>
-          )}
-        </div>
-      );
-    })
-  }
+          </div>
+        )}
+      </div>
+    );
+  })}
 </nav>
 
 <script>

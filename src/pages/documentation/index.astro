@@ -83,32 +83,30 @@ const groups = documentationNavigation.filter((entry) => entry.children?.length)
     with live examples and a generated API reference.
   </p>
 
-  {
-    groups.map((group) => (
-      <Fragment>
-        <h2>{group.label}</h2>
-        <p>{descriptions[group.label ?? ''] ?? ''}</p>
-        <ItemsGrid
-          columns={3}
-          gap="tight"
-          defaultItemConfig={{
-            orientation: 'vertical',
-            icon: { name: 'heroicons:cube', class: 'text-accent' },
-          }}
-          items={(group.children ?? []).map((child) => ({
-            title: child.label ?? '',
-            content: descriptions[child.label ?? ''] ?? '',
-            actions: [
-              {
-                label: 'View',
-                href: child.href,
-                variant: 'ghost' as const,
-                intent: 'primary' as const,
-              },
-            ],
-          }))}
-        />
-      </Fragment>
-    ))
-  }
+  {groups.map((group) => (
+    <Fragment>
+      <h2>{group.label}</h2>
+      <p>{descriptions[group.label ?? ''] ?? ''}</p>
+      <ItemsGrid
+        columns={3}
+        gap="tight"
+        defaultItemConfig={{
+          orientation: 'vertical',
+          icon: { name: 'heroicons:cube', class: 'text-accent' },
+        }}
+        items={(group.children ?? []).map((child) => ({
+          title: child.label ?? '',
+          content: descriptions[child.label ?? ''] ?? '',
+          actions: [
+            {
+              label: 'View',
+              href: child.href,
+              variant: 'ghost' as const,
+              intent: 'primary' as const,
+            },
+          ],
+        }))}
+      />
+    </Fragment>
+  ))}
 </Layout>
