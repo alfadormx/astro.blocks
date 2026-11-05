@@ -1,46 +1,121 @@
-# Astro Starter Kit: Basics
+# Astro Blocks
 
-```sh
-pnpm create astro@latest -- --template basics
+Composable UI blocks for building sites quickly with [Astro](https://astro.build) and [Tailwind CSS](https://tailwindcss.com). Every block is configured through typed props, so a page is assembled by passing data rather than writing markup.
+
+```astro
+---
+import Layout from '~/layouts/Layout.astro';
+import Header from '~/components/blocks/composite/Header.astro';
+import CallToAction from '~/components/blocks/composite/CallToAction.astro';
+import Footer from '~/components/blocks/composite/Footer.astro';
+---
+
+<Layout metadata={{ title: { default: 'My site' } }}>
+  <Header themeToggle={{}} />
+  <CallToAction
+    headline={{ title: 'Ship faster', htmlTag: 'h1', align: 'center' }}
+    actions={[{ label: 'Get started', href: '/start', intent: 'primary', shape: 'pill' }]}
+  />
+  <Footer languageToggle={{}} />
+</Layout>
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Block catalogue
 
-## 🚀 Project Structure
+Blocks live in `src/components/blocks/`, with prop types in `src/types/*.types.ts`. Live examples and API tables are served at `/documentation`.
 
-Inside of your Astro project, you'll see the following folders and files:
+### Primitives
+
+| Block                           | Purpose                                                         |
+| :------------------------------ | :-------------------------------------------------------------- |
+| `Headline`                      | Tagline, title and subtitle with alignment and heading tag      |
+| `Button`                        | Link or button with size, variant, intent, shape, icon or image |
+| `Image`, `Vector`, `Logo`       | Optimized images, inline SVG and site logo                      |
+| `TextArea`                      | Rich text body                                                  |
+| `Background`                    | Image or video background with overlay                          |
+| `Video`                         | Video.js player, including YouTube and Vimeo sources            |
+| `Map`                           | Leaflet map                                                     |
+| `ModelViewer`                   | Three.js 3D model viewer with materials and bloom               |
+| `ThemeToggle`, `LanguageToggle` | Light/dark switch and language switcher                         |
+| `ToggleGroup`                   | Single or multiple choice option group                          |
+| `ContentCarouselItem`           | Slide used by `ContentCarousel`                                 |
+
+### Layout
+
+| Block                                                               | Purpose                                                           |
+| :------------------------------------------------------------------ | :---------------------------------------------------------------- |
+| `Container`                                                         | Section wrapper: background, spacing, border, width, flex or grid |
+| `TwoColumnContainer`, `ThreeColumnContainer`, `FourColumnContainer` | Column layouts                                                    |
+| `SidebarLeftContainer`, `SidebarRightContainer`                     | Sidebar plus main content                                         |
+| `Modal`                                                             | Dialog overlay                                                    |
+
+### Composite
+
+| Block                                        | Purpose                                                                   |
+| :------------------------------------------- | :------------------------------------------------------------------------ |
+| `Header`                                     | Sticky or floating header with logo, navigation, buttons and theme toggle |
+| `Footer`                                     | Logo, disclaimer, social and secondary links, language toggle             |
+| `NavigationTree`, `NavigationTreeHorizontal` | Vertical and horizontal nested navigation                                 |
+| `CallToAction`                               | Headline plus actions; doubles as a hero                                  |
+| `Content`                                    | Text and image side by side with an action                                |
+| `ItemsContent`                               | Headline above an items grid                                              |
+| `ItemsGrid`, `Item`                          | 1–4 column grid of items, optionally selectable                           |
+| `SelectableItemsGrid`                        | Items grid with single or multiple selection state                        |
+| `ItemsTimeline`, `ItemsTimelineHorizontal`   | Vertical and horizontal timelines                                         |
+| `ContentCarousel`                            | Carousel with autoplay, drag, indicators and loop                         |
+| `Tabs`                                       | Horizontal or vertical tabbed panels                                      |
+| `Configurator`, `ConfiguratorPanel`          | Product configurator with shareable URL state                             |
+
+### Meta
+
+`Metadata`, `CommonMeta`, `Favicons`, `Analytics` and `SiteVerification` are wired into `src/layouts/Layout.astro` and read from the site config.
+
+## Conventions
+
+- **Props, not markup.** Composites take the props of the blocks they contain, for example `headline: HeadlineProps` or `actions: ButtonProps[]`.
+- **Layered defaults.** `default*Config` props set shared config for repeated children, and `selected*Config` or `active*Config` props layer state on top.
+- **Style tokens.** Buttons and items share an `intent`, `variant`, `size` and `shape` vocabulary. Colors come from `src/styles/colors.css`.
+
+## Site configuration
+
+`src/config.yaml` holds the site name and URL, i18n languages, default metadata, theme color, favicons and analytics. It is exposed to components through the `site-config` virtual module from `vendor/integration`.
+
+## Project structure
 
 ```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+src/
+├── components/
+│   ├── blocks/        primitives/, layout/, composite/
+│   └── meta/          head and SEO components
+├── config.yaml        site configuration
+├── layouts/           page layout
+├── pages/
+│   ├── index.astro    landing page
+│   ├── demos/         full example sites
+│   └── documentation/ block reference
+├── styles/            global styles and color tokens
+├── types/             prop types per block
+└── utils/             shared helpers
+tests/                 unit/, astro/, browser/
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Demos
 
-## 🧞 Commands
+- `/` builds the landing page from `Header`, `CallToAction`, `ItemsContent` and `Footer`.
+- `/demos/jewellery-configurator` is a ring configurator built on `Configurator` and `ModelViewer`.
 
-All commands are run from the root of the project, from a terminal:
+## Commands
 
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `pnpm install`         | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Command                | Action                                                 |
+| :--------------------- | :----------------------------------------------------- |
+| `pnpm install`         | Install dependencies                                   |
+| `pnpm dev`             | Start the dev server at `localhost:4321`               |
+| `pnpm build`           | Build the site to `./dist/`                            |
+| `pnpm preview`         | Preview the build                                      |
+| `pnpm check`           | Run type check, lint, prettier and all test suites     |
+| `pnpm test:unit`       | Vitest unit tests                                      |
+| `pnpm test:astro`      | Vitest component tests                                 |
+| `pnpm test:browser`    | Playwright browser tests                               |
+| `pnpm fix`             | Apply ESLint and Prettier fixes                        |
+| `pnpm models:generate` | Regenerate ring models for the configurator demo       |
+| `pnpm stills:generate` | Regenerate ring still images for the configurator demo |
