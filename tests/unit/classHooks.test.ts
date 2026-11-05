@@ -7,7 +7,6 @@ const ALLOWED = new Set([
   'nav-tree-icon',
   'nav-tree-icon-expanded',
   'floating-player',
-  'plyr',
   'color-btn',
 ]);
 
