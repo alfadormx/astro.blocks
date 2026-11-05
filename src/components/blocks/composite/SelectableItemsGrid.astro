@@ -76,29 +76,27 @@ const optionClass = cn(
   data-selection-label={selection.label || undefined}
   data-selection-labelledby={selection.labelledBy || undefined}
 >
-  {
-    options.map((option, i) => {
-      const {
-        code,
-        selected: isSelected,
-        itemProps: unselectedItem,
-      } = splitOption(option.unselected);
-      const { itemProps: selectedItem } = splitOption(option.selected);
-      return (
-        <div
-          data-option-code={code}
-          class={cn(optionClass, i === options.length - 1 && lastItemClass)}
-        >
-          <div data-option-variant="unselected" class="h-full" hidden={!!isSelected}>
-            <Item {...unselectedItem} />
-          </div>
-          <div data-option-variant="selected" class="h-full" hidden={!isSelected}>
-            <Item {...selectedItem} />
-          </div>
+  {options.map((option, i) => {
+    const {
+      code,
+      selected: isSelected,
+      itemProps: unselectedItem,
+    } = splitOption(option.unselected);
+    const { itemProps: selectedItem } = splitOption(option.selected);
+    return (
+      <div
+        data-option-code={code}
+        class={cn(optionClass, i === options.length - 1 && lastItemClass)}
+      >
+        <div data-option-variant="unselected" class="h-full" hidden={!!isSelected}>
+          <Item {...unselectedItem} />
         </div>
-      );
-    })
-  }
+        <div data-option-variant="selected" class="h-full" hidden={!isSelected}>
+          <Item {...selectedItem} />
+        </div>
+      </div>
+    );
+  })}
 </div>
 
 <script>

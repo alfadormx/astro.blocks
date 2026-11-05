@@ -20,8 +20,8 @@ const metadata = {
 >
   <p>
     ItemsGrid sizes its columns from the width of the element that contains it, not from the
-    viewport. A grid asks for at most <code>columns</code> columns and, by default, steps down when its
-    container is too narrow to fit them: two columns from <code>32rem</code>, three from
+    viewport. A grid asks for at most <code>columns</code> columns and, by default, steps down when
+    its container is too narrow to fit them: two columns from <code>32rem</code>, three from
     <code>48rem</code>, four from <code>64rem</code>. The same grid therefore renders three columns
     in a full-width section and one in a sidebar, with no change at the call site. Set
     <code>responsive={'{false}'}</code> to keep <code>columns</code> at any width (example 8).
@@ -154,8 +154,9 @@ const metadata = {
 
   <h3>4. Single selection</h3>
   <p>
-    With <code>{"selection={{ mode: 'single', group, label }}"}</code> every item becomes an option. Each
-    item needs a <code>code</code>, the value published to the group; <code>selected: true</code>
+    With <code>{"selection={{ mode: 'single', group, label }}"}</code> every item becomes an option.
+    Each item needs a <code>code</code>, the value published to the group;{' '}
+    <code>selected: true</code>
     marks the option chosen on load. Options cannot carry <code>actions</code>.
   </p>
   <ItemsGridBlock
@@ -176,9 +177,9 @@ const metadata = {
 
   <h3>5. Multiple selection with min/max</h3>
   <p>
-    <code>mode: 'multiple'</code> turns each option into a checkbox. <code>max</code> disables the remaining
-    options once reached; <code>min</code> refuses a deselect that would drop below it. An initial state
-    below <code>min</code> is allowed — nothing is selected implicitly.
+    <code>mode: 'multiple'</code> turns each option into a checkbox. <code>max</code> disables the
+    remaining options once reached; <code>min</code> refuses a deselect that would drop below it. An
+    initial state below <code>min</code> is allowed — nothing is selected implicitly.
   </p>
   <ItemsGridBlock
     columns={4}
@@ -200,8 +201,8 @@ const metadata = {
   <h3 id="itemsgrid-custom-heading">6. Custom selectedItemConfig</h3>
   <p>
     <code>selectedItemConfig</code> is merged into every option's selected variant after
-    <code>defaultItemConfig</code> and before the item itself, like <code>activeItemConfig</code> in Tabs.
-    This grid is named by the heading above via <code>labelledBy</code>.
+    <code>defaultItemConfig</code> and before the item itself, like <code>activeItemConfig</code> in
+    Tabs. This grid is named by the heading above via <code>labelledBy</code>.
   </p>
   <ItemsGridBlock
     columns={3}
@@ -224,10 +225,9 @@ const metadata = {
 
   <h3>7. Selection intent</h3>
   <p>
-    <code>selection.intent</code> colours the selected border and the focus ring, with the same values
-    as Button's <code>intent</code> (default: <code>'primary'</code>). <code
-      >selectedItemConfig.border</code
-    >
+    <code>selection.intent</code> colours the selected border and the focus ring, with the same
+    values as Button's <code>intent</code> (default: <code>'primary'</code>).{' '}
+    <code>selectedItemConfig.border</code>
     still wins over it.
   </p>
   <div data-doc-section="intent">
@@ -275,13 +275,15 @@ const metadata = {
     >
       Select Pickup externally
     </button>
-    <output data-selection-log class="font-mono text-sm">No change yet</output>
+    <output data-selection-log class="font-mono text-sm">
+      No change yet
+    </output>
   </div>
 
   <h3>9. Fixed columns</h3>
   <p>
-    <code>responsive={'{false}'}</code> keeps <code>columns</code> at any container width. This is the
-    narrow grid from example 3 again, and it now holds three columns.
+    <code>responsive={'{false}'}</code> keeps <code>columns</code> at any container width. This is
+    the narrow grid from example 3 again, and it now holds three columns.
   </p>
   <div class="max-w-sm">
     <ItemsGridBlock
@@ -298,9 +300,9 @@ const metadata = {
 
   <h3>10. Fill the last row</h3>
   <p>
-    <code>fillLastRow</code> stretches a lone item in the last row across the full row. It is computed
-    from <code>columns</code>, so it is exact only together with <code>responsive={'{false}'}</code
-    >.
+    <code>fillLastRow</code> stretches a lone item in the last row across the full row. It is
+    computed from <code>columns</code>, so it is exact only together with{' '}
+    <code>responsive={'{false}'}</code>.
   </p>
   <div data-doc-section="fill-last-row">
     <ItemsGridBlock
@@ -321,7 +323,9 @@ const metadata = {
       ]}
     />
   </div>
-  <p>A consumer <code>col-span-*</code> on the last item wins over <code>fillLastRow</code>.</p>
+  <p>
+    A consumer <code>col-span-*</code> on the last item wins over <code>fillLastRow</code>.
+  </p>
   <div data-doc-section="fill-last-row-opt-out">
     <ItemsGridBlock
       columns={2}
@@ -345,14 +349,14 @@ const metadata = {
   <h3>Selection props</h3>
   <p>
     <code>selection</code> is an <code>ItemsGridSelection</code>: <code>{"{ mode: 'none' }"}</code>
-    (default, a static grid with no roles or script), <code
-      >{"{ mode: 'single', group, label?, labelledBy?, intent? }"}</code
-    >, or <code>{"{ mode: 'multiple', group, label?, labelledBy?, min?, max?, intent? }"}</code>.
-    One of
-    <code>label</code> / <code>labelledBy</code> is required; <code>labelledBy</code> wins. Items are
-    <code>ItemsGridItem</code>s — Item props plus <code>code</code> (required when selection is enabled,
-    unique within the grid) and <code>selected</code> (initial state). Invalid configurations throw at
-    build time.
+    (default, a static grid with no roles or script),{' '}
+    <code>{"{ mode: 'single', group, label?, labelledBy?, intent? }"}</code>, or{' '}
+    <code>{"{ mode: 'multiple', group, label?, labelledBy?, min?, max?, intent? }"}</code>. One of
+    <code>label</code> / <code>labelledBy</code> is required; <code>labelledBy</code> wins. Items
+    are
+    <code>ItemsGridItem</code>s — Item props plus <code>code</code> (required when selection is
+    enabled, unique within the grid) and <code>selected</code> (initial state). Invalid
+    configurations throw at build time.
   </p>
 
   <ApiReferenceTable component="ItemsGrid" category="composite" />

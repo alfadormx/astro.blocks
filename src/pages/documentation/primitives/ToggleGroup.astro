@@ -38,12 +38,14 @@ const finishOptions = [
     />
   </div>
 
-  <h3>Listening to <code>selection:change</code></h3>
+  <h3>
+    Listening to <code>selection:change</code>
+  </h3>
   <p>
-    ToggleGroup is a <code>single</code> selection group, so a subscriber sees the same payload it would
-    get from a single-mode ItemsGrid. Both instances below publish to one selection group, so choosing
-    in either updates the other. Instance B marks no option as selected, so it does not clear A's selection
-    when it connects. The two textures can share a group.
+    ToggleGroup is a <code>single</code> selection group, so a subscriber sees the same payload it
+    would get from a single-mode ItemsGrid. Both instances below publish to one selection group, so
+    choosing in either updates the other. Instance B marks no option as selected, so it does not
+    clear A's selection when it connects. The two textures can share a group.
   </p>
   <div data-doc-section="events" class="flex flex-col gap-4">
     <div class="flex flex-col gap-2">
@@ -85,7 +87,9 @@ const finishOptions = [
       >
         Publish a foreign code
       </button>
-      <output data-selection-log class="font-mono text-sm">No change yet</output>
+      <output data-selection-log class="font-mono text-sm">
+        No change yet
+      </output>
     </div>
   </div>
 
@@ -105,50 +109,48 @@ const finishOptions = [
 
   <h3>Cell variants</h3>
   <div data-doc-section="cell" class="flex flex-col gap-4">
-    {
-      (['solid', 'outline', 'ghost'] as const).map((variant) => (
-        <div class="flex flex-col gap-2">
-          <p class="text-sm text-muted">
-            <code>{variant}</code>
-          </p>
-          <ToggleGroupBlock
-            group={`togglegroup-doc-cell-${variant}`}
-            label="Reveal price"
-            appearance="cell"
-            variant={variant}
-            options={[
-              { code: 'yes', label: 'Yes' },
-              { code: 'no', label: 'No', selected: true },
-            ]}
-          />
-        </div>
-      ))
-    }
+    {(['solid', 'outline', 'ghost'] as const).map((variant) => (
+      <div class="flex flex-col gap-2">
+        <p class="text-sm text-muted">
+          <code>{variant}</code>
+        </p>
+        <ToggleGroupBlock
+          group={`togglegroup-doc-cell-${variant}`}
+          label="Reveal price"
+          appearance="cell"
+          variant={variant}
+          options={[
+            { code: 'yes', label: 'Yes' },
+            { code: 'no', label: 'No', selected: true },
+          ]}
+        />
+      </div>
+    ))}
   </div>
 
   <h3>Neutral cells</h3>
-  <p><code>intent="neutral"</code> selects with the emphasis colour in every cell variant.</p>
+  <p>
+    <code>intent="neutral"</code> selects with the emphasis colour in every cell variant.
+  </p>
   <div data-doc-section="cell-neutral" class="flex flex-col gap-4">
-    {
-      (['solid', 'outline', 'ghost'] as const).map((variant) => (
-        <div class="flex flex-col gap-2">
-          <p class="text-sm text-muted">
-            <code>{variant}</code>
-          </p>
-          <ToggleGroupBlock
-            group={`togglegroup-doc-cell-neutral-${variant}`}
-            label="Reveal price"
-            appearance="cell"
-            variant={variant}
-            intent="neutral"
-            options={[
-              { code: 'yes', label: 'Yes' },
-              { code: 'no', label: 'No', selected: true },
-            ]}
-          />
-        </div>
-      ))
-    }
+    {(['solid', 'outline', 'ghost'] as const).map((variant) => (
+      <div class="flex flex-col gap-2">
+        <p class="text-sm text-muted">
+          <code>{variant}</code>
+        </p>
+        <ToggleGroupBlock
+          group={`togglegroup-doc-cell-neutral-${variant}`}
+          label="Reveal price"
+          appearance="cell"
+          variant={variant}
+          intent="neutral"
+          options={[
+            { code: 'yes', label: 'Yes' },
+            { code: 'no', label: 'No', selected: true },
+          ]}
+        />
+      </div>
+    ))}
   </div>
 
   <h3>Vertical</h3>
@@ -244,10 +246,10 @@ const finishOptions = [
     takes
     <code>variant</code>: <code>'solid'</code> (default), <code>'outline'</code> or
     <code>'ghost'</code>. Option presentation is layered in order: internal defaults,
-    <code>defaultOptionConfig</code>, <code>selectedOptionConfig</code> (selected state only), the option
-    itself, then <code>disabledOptionConfig</code> (disabled options only). One of
-    <code>label</code> / <code>labelledBy</code> is required; <code>labelledBy</code> wins. Invalid configurations
-    throw at build time.
+    <code>defaultOptionConfig</code>, <code>selectedOptionConfig</code> (selected state only), the
+    option itself, then <code>disabledOptionConfig</code> (disabled options only). One of
+    <code>label</code> / <code>labelledBy</code> is required; <code>labelledBy</code> wins. Invalid
+    configurations throw at build time.
   </p>
 
   <ApiReferenceTable component="ToggleGroup" category="primitives" />

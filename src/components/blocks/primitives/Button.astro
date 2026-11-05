@@ -113,44 +113,38 @@ const tagProps = href
 
 <div class={align ? alignClass : 'contents'}>
   <Tag class={buttonClass} {...tagProps}>
-    {
-      iconPosition === 'left' &&
-        (hasImage ? (
-          <Image {...image} class={cn(imageSizeClass, image?.class)} />
-        ) : (
-          hasIcon && (
-            <Icon
-              name={icon!.name}
-              class={cn(iconSizeClass, finalIconClass)}
-              aria-label={icon!.ariaLabel}
-            />
-          )
-        ))
-    }
+    {iconPosition === 'left' &&
+      (hasImage ? (
+        <Image {...image} class={cn(imageSizeClass, image?.class)} />
+      ) : (
+        hasIcon && (
+          <Icon
+            name={icon!.name}
+            class={cn(iconSizeClass, finalIconClass)}
+            aria-label={icon!.ariaLabel}
+          />
+        )
+      ))}
 
-    {
-      (label || subtitle) && (
-        <span class={cn('flex flex-col', hasSubtitle && 'items-start')}>
-          {label && <span class={finalLabelClass}>{label}</span>}
-          {subtitle && <span class={finalSubtitleClass}>{subtitle}</span>}
-        </span>
-      )
-    }
+    {(label || subtitle) && (
+      <span class={cn('flex flex-col', hasSubtitle && 'items-start')}>
+        {label && <span class={finalLabelClass}>{label}</span>}
+        {subtitle && <span class={finalSubtitleClass}>{subtitle}</span>}
+      </span>
+    )}
 
-    {
-      iconPosition === 'right' &&
-        (hasImage ? (
-          <Image {...image} class={cn(imageSizeClass, image?.class)} />
-        ) : (
-          hasIcon && (
-            <Icon
-              name={icon!.name}
-              class={cn(iconSizeClass, finalIconClass)}
-              aria-label={icon!.ariaLabel}
-            />
-          )
-        ))
-    }
+    {iconPosition === 'right' &&
+      (hasImage ? (
+        <Image {...image} class={cn(imageSizeClass, image?.class)} />
+      ) : (
+        hasIcon && (
+          <Icon
+            name={icon!.name}
+            class={cn(iconSizeClass, finalIconClass)}
+            aria-label={icon!.ariaLabel}
+          />
+        )
+      ))}
 
     {Astro.slots.has('default') && <slot />}
   </Tag>

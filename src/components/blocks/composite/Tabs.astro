@@ -87,45 +87,41 @@ const ariaOrientation = effectiveLayout === 'column' ? 'vertical' : 'horizontal'
   <div class={tabsWrapperClass} data-tabs-root>
     <TabListWrapper {...tabListWrapperProps}>
       <div role="tablist" aria-orientation={ariaOrientation} class={tabListClass}>
-        {
-          items.map((item, n) => {
-            const inactiveMerge = mergeConfigs(
-              {},
-              internalTabDefaults,
-              internalFillDefaults,
-              defaultItemConfig,
-              item
-            );
-            const activeMerge = mergeConfigs(
-              {},
-              internalTabDefaults,
-              internalFillDefaults,
-              defaultItemConfig,
-              activeItemConfig,
-              item
-            );
-            return (
-              <span data-tab-index={String(n)} class={tabSlotClass}>
-                <span data-tab-button="inactive" class={tabStateClass}>
-                  <Button {...inactiveMerge} />
-                </span>
-                <span data-tab-button="active" hidden class={tabStateClass}>
-                  <Button {...activeMerge} />
-                </span>
+        {items.map((item, n) => {
+          const inactiveMerge = mergeConfigs(
+            {},
+            internalTabDefaults,
+            internalFillDefaults,
+            defaultItemConfig,
+            item
+          );
+          const activeMerge = mergeConfigs(
+            {},
+            internalTabDefaults,
+            internalFillDefaults,
+            defaultItemConfig,
+            activeItemConfig,
+            item
+          );
+          return (
+            <span data-tab-index={String(n)} class={tabSlotClass}>
+              <span data-tab-button="inactive" class={tabStateClass}>
+                <Button {...inactiveMerge} />
               </span>
-            );
-          })
-        }
+              <span data-tab-button="active" hidden class={tabStateClass}>
+                <Button {...activeMerge} />
+              </span>
+            </span>
+          );
+        })}
       </div>
     </TabListWrapper>
     <div>
-      {
-        items.map((_item, n) => (
-          <div class={panelClass} data-tab-panel={String(n)} hidden={n !== 0}>
-            <slot name={`panel-${n}`} />
-          </div>
-        ))
-      }
+      {items.map((_item, n) => (
+        <div class={panelClass} data-tab-panel={String(n)} hidden={n !== 0}>
+          <slot name={`panel-${n}`} />
+        </div>
+      ))}
     </div>
   </div>
 </Container>

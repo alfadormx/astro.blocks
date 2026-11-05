@@ -177,49 +177,75 @@ const wrapperProps = container ? mergedContainer : {};
         class="flex w-full flex-nowrap transition-transform duration-300 ease-out will-change-transform"
         data-carousel-track
       >
-        {
-          hasSlot ? (
-            <slot />
-          ) : (
-            items.map((item, index) => {
-              const { class: slideClass, ...image } = item;
-              return (
-                <div
-                  class={cn('carousel-item', itemClass, slideClass)}
-                  data-carousel-slide
-                  role="group"
-                  aria-roledescription="slide"
-                  aria-label={`Slide ${index + 1} of ${items.length}`}
-                >
-                  <Image {...slideImage(image)} />
-                </div>
-              );
-            })
-          )
-        }
+        {hasSlot ? (
+          <slot />
+        ) : (
+          items.map((item, index) => {
+            const { class: slideClass, ...image } = item;
+            return (
+              <div
+                class={cn('carousel-item', itemClass, slideClass)}
+                data-carousel-slide
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`Slide ${index + 1} of ${items.length}`}
+              >
+                <Image {...slideImage(image)} />
+              </div>
+            );
+          })
+        )}
       </div>
 
       <!-- Controls (inside) -->
-      {
-        hasNavButtons && controlsPosition === 'inside' && (
-          <div
-            class="absolute inset-0 pointer-events-none flex items-center justify-between px-3 opacity-0 group-hover:opacity-100 transition-opacity"
-            data-carousel-controls
-          >
+      {hasNavButtons && controlsPosition === 'inside' && (
+        <div
+          class="absolute inset-0 pointer-events-none flex items-center justify-between px-3 opacity-0 group-hover:opacity-100 transition-opacity"
+          data-carousel-controls
+        >
+          {mergedPrevButton && <Button {...mergedPrevButton} data-carousel-prev />}
+          {mergedNextButton && <Button {...mergedNextButton} data-carousel-next />}
+        </div>
+      )}
+
+      <!-- Indicators (inside) -->
+      {showIndicators && controlsPosition === 'inside' && slideCount > 0 && (
+        <div
+          class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2"
+          role="tablist"
+          data-carousel-indicators
+        >
+          {Array.from({ length: slideCount }, (_, i) => (
+            <Button
+              {...mergedIndicatorButton}
+              aria-label={`${mergedIndicatorButton['aria-label']} ${i + 1}`}
+              data-carousel-indicator
+              data-index={String(i)}
+            />
+          ))}
+        </div>
+      )}
+
+      <!-- Autoplay pause/resume (inside) -->
+      {autoplayConfig.enabled && controlsPosition === 'inside' && (
+        <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+          <Button {...mergedPauseButton} data-carousel-pause />
+          <Button {...mergedPlayButton} data-carousel-play />
+        </div>
+      )}
+    </div>
+
+    <!-- Controls (outside) -->
+    {controlsPosition === 'outside' && (
+      <div class="flex items-center justify-between gap-4">
+        {hasNavButtons && (
+          <div class="flex gap-2">
             {mergedPrevButton && <Button {...mergedPrevButton} data-carousel-prev />}
             {mergedNextButton && <Button {...mergedNextButton} data-carousel-next />}
           </div>
-        )
-      }
-
-      <!-- Indicators (inside) -->
-      {
-        showIndicators && controlsPosition === 'inside' && slideCount > 0 && (
-          <div
-            class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2"
-            role="tablist"
-            data-carousel-indicators
-          >
+        )}
+        {showIndicators && slideCount > 0 && (
+          <div class="flex gap-2 flex-1 justify-center" role="tablist" data-carousel-indicators>
             {Array.from({ length: slideCount }, (_, i) => (
               <Button
                 {...mergedIndicatorButton}
@@ -229,82 +255,44 @@ const wrapperProps = container ? mergedContainer : {};
               />
             ))}
           </div>
-        )
-      }
-
-      <!-- Autoplay pause/resume (inside) -->
-      {
-        autoplayConfig.enabled && controlsPosition === 'inside' && (
-          <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-            <Button {...mergedPauseButton} data-carousel-pause />
-            <Button {...mergedPlayButton} data-carousel-play />
-          </div>
-        )
-      }
-    </div>
-
-    <!-- Controls (outside) -->
-    {
-      controlsPosition === 'outside' && (
-        <div class="flex items-center justify-between gap-4">
-          {hasNavButtons && (
-            <div class="flex gap-2">
-              {mergedPrevButton && <Button {...mergedPrevButton} data-carousel-prev />}
-              {mergedNextButton && <Button {...mergedNextButton} data-carousel-next />}
-            </div>
-          )}
-          {showIndicators && slideCount > 0 && (
-            <div class="flex gap-2 flex-1 justify-center" role="tablist" data-carousel-indicators>
-              {Array.from({ length: slideCount }, (_, i) => (
-                <Button
-                  {...mergedIndicatorButton}
-                  aria-label={`${mergedIndicatorButton['aria-label']} ${i + 1}`}
-                  data-carousel-indicator
-                  data-index={String(i)}
-                />
-              ))}
-            </div>
-          )}
-          {autoplayConfig.enabled && <Button {...mergedPauseButton} data-carousel-pause />}
-          {autoplayConfig.enabled && <Button {...mergedPlayButton} data-carousel-play />}
-        </div>
-      )
-    }
+        )}
+        {autoplayConfig.enabled && <Button {...mergedPauseButton} data-carousel-pause />}
+        {autoplayConfig.enabled && <Button {...mergedPlayButton} data-carousel-play />}
+      </div>
+    )}
 
     <!-- Screen reader announcer -->
     <div class="sr-only" aria-live="polite" aria-atomic="true" data-carousel-announcer></div>
 
     <!-- Debug overlay -->
-    {
-      debug && (
-        <div
-          data-carousel-debug
-          class="absolute top-2 left-2 bg-black/80 text-white text-xs font-mono p-3 rounded z-50 pointer-events-none"
-        >
-          <div>
-            Index: <span data-debug-index>0</span>
-          </div>
-          <div>
-            Dragging: <span data-debug-dragging>false</span>
-          </div>
-          <div>
-            StartX: <span data-debug-startx>0</span>
-          </div>
-          <div>
-            CurrentX: <span data-debug-currentx>0</span>
-          </div>
-          <div>
-            DeltaX: <span data-debug-dx>0</span>
-          </div>
-          <div>
-            Velocity: <span data-debug-velocity>0</span>
-          </div>
-          <div>
-            Threshold: <span data-debug-threshold>0</span>
-          </div>
+    {debug && (
+      <div
+        data-carousel-debug
+        class="absolute top-2 left-2 bg-black/80 text-white text-xs font-mono p-3 rounded z-50 pointer-events-none"
+      >
+        <div>
+          Index: <span data-debug-index>0</span>
         </div>
-      )
-    }
+        <div>
+          Dragging: <span data-debug-dragging>false</span>
+        </div>
+        <div>
+          StartX: <span data-debug-startx>0</span>
+        </div>
+        <div>
+          CurrentX: <span data-debug-currentx>0</span>
+        </div>
+        <div>
+          DeltaX: <span data-debug-dx>0</span>
+        </div>
+        <div>
+          Velocity: <span data-debug-velocity>0</span>
+        </div>
+        <div>
+          Threshold: <span data-debug-threshold>0</span>
+        </div>
+      </div>
+    )}
   </div>
 </Wrapper>
 

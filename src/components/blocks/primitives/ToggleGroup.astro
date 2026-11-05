@@ -171,36 +171,34 @@ const rootClass = cn(
   data-selection-group={group}
   data-selection-mode="single"
 >
-  {
-    rendered.map(({ option, unselected, selected }) => (
-      <label class={`${labelShellClass} ${HIDE_RULES}`} data-option-code={option.code}>
-        <input
-          type="radio"
-          class="sr-only"
-          name={name}
-          value={option.code}
-          checked={!!option.selected}
-          disabled={disabled || !!option.disabled}
+  {rendered.map(({ option, unselected, selected }) => (
+    <label class={`${labelShellClass} ${HIDE_RULES}`} data-option-code={option.code}>
+      <input
+        type="radio"
+        class="sr-only"
+        name={name}
+        value={option.code}
+        checked={!!option.selected}
+        disabled={disabled || !!option.disabled}
+      />
+      <span data-option-variant="unselected" class={unselected.class}>
+        <ToggleGroupOptionContent
+          option={option}
+          config={unselected}
+          appearance={appearance}
+          size={size}
         />
-        <span data-option-variant="unselected" class={unselected.class}>
-          <ToggleGroupOptionContent
-            option={option}
-            config={unselected}
-            appearance={appearance}
-            size={size}
-          />
-        </span>
-        <span data-option-variant="selected" class={selected.class}>
-          <ToggleGroupOptionContent
-            option={option}
-            config={selected}
-            appearance={appearance}
-            size={size}
-          />
-        </span>
-      </label>
-    ))
-  }
+      </span>
+      <span data-option-variant="selected" class={selected.class}>
+        <ToggleGroupOptionContent
+          option={option}
+          config={selected}
+          appearance={appearance}
+          size={size}
+        />
+      </span>
+    </label>
+  ))}
 </div>
 
 <script>

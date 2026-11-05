@@ -79,58 +79,50 @@ const languageToggleAlignmentClass = {
       <div class="mb-2">
         <Logo {...logo} />
       </div>
-      {
-        secondaryButtons.length > 0 && (
-          <div class={cn('flex flex-row gap-1', secondaryButtonsClass)}>
-            {secondaryButtons.map((button, index) => {
-              const mergedSecondaryButton = mergeConfigs(
-                {},
-                internalSecondaryButtonConfig,
-                defaultSecondaryButtonConfig,
-                button
-              );
-              return (
-                <>
-                  {index !== 0 ? ' · ' : ''}
-                  <Button {...mergedSecondaryButton} />
-                </>
-              );
-            })}
-          </div>
-        )
-      }
+      {secondaryButtons.length > 0 && (
+        <div class={cn('flex flex-row gap-1', secondaryButtonsClass)}>
+          {secondaryButtons.map((button, index) => {
+            const mergedSecondaryButton = mergeConfigs(
+              {},
+              internalSecondaryButtonConfig,
+              defaultSecondaryButtonConfig,
+              button
+            );
+            return (
+              <>
+                {index !== 0 ? ' · ' : ''}
+                <Button {...mergedSecondaryButton} />
+              </>
+            );
+          })}
+        </div>
+      )}
     </div>
   </div>
-  {
-    disclaimer && (
-      <div class={mergedDisclaimerClass}>
-        <Fragment set:html={disclaimer} />
-      </div>
-    )
-  }
+  {disclaimer && (
+    <div class={mergedDisclaimerClass}>
+      <Fragment set:html={disclaimer} />
+    </div>
+  )}
   <div class="md:flex md:items-center md:justify-between pt-6 pb-0 md:pt-8 md:pb-2">
-    {
-      socialButtons.length > 0 && (
-        <div class={cn('md:order-1 flex flex-row gap-1', socialButtonsClass)}>
-          {socialButtons.map((button) => (
-            <Button
-              {...mergeConfigs({}, internalSocialButtonConfig, defaultSocialButtonConfig, button)}
-            />
-          ))}
-        </div>
-      )
-    }
+    {socialButtons.length > 0 && (
+      <div class={cn('md:order-1 flex flex-row gap-1', socialButtonsClass)}>
+        {socialButtons.map((button) => (
+          <Button
+            {...mergeConfigs({}, internalSocialButtonConfig, defaultSocialButtonConfig, button)}
+          />
+        ))}
+      </div>
+    )}
 
     <div class={mergedFootnoteClass}>
       <Fragment set:html={footnote} />
     </div>
   </div>
 
-  {
-    mergedLanguageToggle && (
-      <div class={`flex ${languageToggleAlignmentClass} py-4`}>
-        <LanguageToggle {...mergedLanguageToggle} />
-      </div>
-    )
-  }
+  {mergedLanguageToggle && (
+    <div class={`flex ${languageToggleAlignmentClass} py-4`}>
+      <LanguageToggle {...mergedLanguageToggle} />
+    </div>
+  )}
 </Container>

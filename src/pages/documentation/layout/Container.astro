@@ -26,21 +26,20 @@ var metadata = {
   <!-- Section 1: ContainerBlock & Content Width -->
   <h2>ContainerBlock & Content Width</h2>
   <p>
-    Control how your container and content are sized using <code>containerWidthType</code> and the <code
-      >content</code
-    > object.
+    Control how your container and content are sized using <code>containerWidthType</code> and the{' '}
+    <code>content</code> object.
   </p>
   <ul class="list-disc list-inside">
-    <li><b>containerWidthType</b>: Controls the outer container (background/section) width.</li>
     <li>
-      <b>content.widthType</b>: Controls the inner content width (only when containerWidthType is <code
-        >full</code
-      >).
+      <b>containerWidthType</b>: Controls the outer container (background/section) width.
     </li>
     <li>
-      <b>content.boxWidth</b>: Custom max-width for boxed content (default: <code
-        >max-w-[var(--container-max-width)]</code
-      >).
+      <b>content.widthType</b>: Controls the inner content width (only when containerWidthType is{' '}
+      <code>full</code>).
+    </li>
+    <li>
+      <b>content.boxWidth</b>: Custom max-width for boxed content (default:{' '}
+      <code>max-w-[var(--container-max-width)]</code>).
     </li>
   </ul>
 
@@ -68,7 +67,9 @@ var metadata = {
     border={{ width: 'border', color: 'border-border' }}
     spacing={{ margin: 'mb-8' }}
   >
-    <p class="text-center py-8">Full-width container, boxed content at <b>50%</b> width.</p>
+    <p class="text-center py-8">
+      Full-width container, boxed content at <b>50%</b> width.
+    </p>
   </ContainerBlock>
 
   <h3>3. Full-bleed background, full-width content</h3>
@@ -110,9 +111,8 @@ var metadata = {
   <!-- Section 2: Backgrounds -->
   <h2>Backgrounds</h2>
   <p>
-    Add visual richness with background images, videos, colors, or gradients using the <code
-      >background</code
-    > prop object.
+    Add visual richness with background images, videos, colors, or gradients using the{' '}
+    <code>background</code> prop object.
   </p>
 
   <h3>1. Background Image (with parallax effect)</h3>

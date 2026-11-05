@@ -107,8 +107,9 @@ const sampleImages = [
   <section class="mb-16">
     <h2>Autoplay & Responsive Sizing</h2>
     <p class="mb-4">
-      Enable autoplay with configurable delay and pause behavior. Use <code>itemClass</code> with Tailwind
-      basis utilities for responsive layouts (e.g., one slide on mobile, multiple on desktop).
+      Enable autoplay with configurable delay and pause behavior. Use <code>itemClass</code> with
+      Tailwind basis utilities for responsive layouts (e.g., one slide on mobile, multiple on
+      desktop).
     </p>
     <div class="border border-border rounded-lg overflow-hidden">
       <ContentCarouselBlock
@@ -133,8 +134,8 @@ const sampleImages = [
   <section class="mb-16">
     <h2>Loop Mode</h2>
     <p class="mb-4">
-      Enable <code>loop</code> for continuous infinite scrolling using cloned-slide technique for seamless
-      transitions.
+      Enable <code>loop</code> for continuous infinite scrolling using cloned-slide technique for
+      seamless transitions.
     </p>
     <div class="border border-border rounded-lg overflow-hidden">
       <ContentCarouselBlock items={sampleImages.slice(0, 3)} loop={true} />
@@ -144,8 +145,8 @@ const sampleImages = [
   <section class="mb-16">
     <h2>Button Config</h2>
     <p class="mb-4">
-      <code>defaultIndicatorButtonConfig</code>, <code>pauseButton</code> and <code>playButton</code
-      >
+      <code>defaultIndicatorButtonConfig</code>, <code>pauseButton</code> and{' '}
+      <code>playButton</code>
       reach their buttons, and the autoplay toggle keeps the labels you set.
     </p>
     <div class="border border-border rounded-lg p-4" data-doc-section="button-config">
@@ -163,8 +164,8 @@ const sampleImages = [
   <section class="mb-16">
     <h2>Container</h2>
     <p class="mb-4">
-      <code>container</code> wraps the carousel in a Container; carousel attributes stay on the inner
-      root. Without it no wrapper is rendered.
+      <code>container</code> wraps the carousel in a Container; carousel attributes stay on the
+      inner root. Without it no wrapper is rendered.
     </p>
     <div data-doc-section="container">
       <ContentCarouselBlock
@@ -190,8 +191,9 @@ const sampleImages = [
   <section class="mb-16">
     <h2>Image Config</h2>
     <p class="mb-4">
-      <code>defaultImageConfig</code> reaches every slide image; a slide's <code>class</code> stays on
-      its wrapper. The image optimiser writes <code>object-fit</code> inline: <code>cover</code>, or
+      <code>defaultImageConfig</code> reaches every slide image; a slide's <code>class</code> stays
+      on its wrapper. The image optimiser writes <code>object-fit</code> inline: <code>cover</code>,
+      or
       <code>contain</code> with <code>layout: 'contained'</code>. Change it through
       <code>layout</code>, not a class.
     </p>
@@ -214,20 +216,21 @@ const sampleImages = [
           <code>items</code>: Array of CarouselItem objects (optional if using slot)
         </li>
         <li>
-          <code>itemClass</code>: Tailwind classes for slide sizing (default: <code>basis-full</code
-          >)
+          <code>itemClass</code>: Tailwind classes for slide sizing (default:{' '}
+          <code>basis-full</code>)
         </li>
         <li>
-          <code>controlsPosition</code>: <code>'inside'</code> (overlay) or <code>'outside'</code> (adjacent)
+          <code>controlsPosition</code>: <code>'inside'</code> (overlay) or <code>'outside'</code>{' '}
+          (adjacent)
         </li>
         <li>
-          Hide prev/next with <code>{'prevButton={false}'}</code> / <code
-            >{'nextButton={false}'}</code
-          >; indicators with <code>{'showIndicators={false}'}</code>
+          Hide prev/next with <code>{'prevButton={false}'}</code> /{' '}
+          <code>{'nextButton={false}'}</code>; indicators with{' '}
+          <code>{'showIndicators={false}'}</code>
         </li>
         <li>
-          <code>draggable</code>: Enable/disable pointer drag navigation (default: <code>true</code
-          >)
+          <code>draggable</code>: Enable/disable pointer drag navigation (default: <code>true</code>
+          )
         </li>
         <li>
           <code>loop</code>: Enable infinite looping (default: <code>false</code>)
@@ -236,8 +239,8 @@ const sampleImages = [
           <code>autoplay</code>: Boolean, number (delay in ms), or config object
         </li>
         <li>
-          <code>snapFallback</code>: <code>'transform'</code> (default) or <code>'scroll-snap'</code
-          >
+          <code>snapFallback</code>: <code>'transform'</code> (default) or{' '}
+          <code>'scroll-snap'</code>
         </li>
       </ul>
 
@@ -246,18 +249,27 @@ const sampleImages = [
         <li>Keyboard navigation: Left/Right arrows, Home/End</li>
         <li>Screen reader announcements for slide changes</li>
         <li>ARIA labels and roles for carousel structure</li>
-        <li>Respects <code>prefers-reduced-motion</code> for autoplay</li>
+        <li>
+          Respects <code>prefers-reduced-motion</code> for autoplay
+        </li>
         <li>Focusable indicators and controls</li>
       </ul>
 
       <h3 class="font-semibold mt-6 mb-3">Responsive Sizing</h3>
       <p class="text-sm mb-2">
-        Use Tailwind's <code>basis-*</code> utilities in <code>itemClass</code> for responsive layouts:
+        Use Tailwind's <code>basis-*</code> utilities in <code>itemClass</code> for responsive
+        layouts:
       </p>
       <ul class="list-disc list-inside space-y-1 text-sm">
-        <li><code>basis-full</code>: One slide at a time (default)</li>
-        <li><code>basis-1/2 md:basis-1/3</code>: Two slides on mobile, three on tablet+</li>
-        <li><code>basis-full sm:basis-1/2 lg:basis-1/4</code>: Progressively show more slides</li>
+        <li>
+          <code>basis-full</code>: One slide at a time (default)
+        </li>
+        <li>
+          <code>basis-1/2 md:basis-1/3</code>: Two slides on mobile, three on tablet+
+        </li>
+        <li>
+          <code>basis-full sm:basis-1/2 lg:basis-1/4</code>: Progressively show more slides
+        </li>
       </ul>
     </div>
   </section>

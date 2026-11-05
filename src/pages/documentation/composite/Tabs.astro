@@ -233,8 +233,8 @@ const metadata = { title: { default: 'Tabs' } };
 
   <h3>Tab list layout: column, content-sized triggers</h3>
   <p>
-    Set <code>width: 'auto'</code> on <code>defaultItemConfig</code> (or on an item) to keep triggers
-    as wide as their own label instead of filling the tab list.
+    Set <code>width: 'auto'</code> on <code>defaultItemConfig</code> (or on an item) to keep
+    triggers as wide as their own label instead of filling the tab list.
   </p>
   <div data-doc-section="layout-column-auto">
     <TabsBlock
@@ -257,17 +257,16 @@ const metadata = { title: { default: 'Tabs' } };
 
   <h3>Tab list layout: grid</h3>
   <p>
-    <code>tabList.layout: 'grid'</code> arranges the triggers as tiles. The column count is read from
-    the width of the tab list's own container, not the viewport, so the same config adapts inside a narrow
-    panel. <code>tabList.columns</code> applies only in this layout, and the count never drops below two
-    columns. Each tile fills its grid cell, so every tile has the same size.
+    <code>tabList.layout: 'grid'</code> arranges the triggers as tiles. The column count is read
+    from the width of the tab list's own container, not the viewport, so the same config adapts
+    inside a narrow panel. <code>tabList.columns</code> applies only in this layout, and the count
+    never drops below two columns. Each tile fills its grid cell, so every tile has the same size.
   </p>
   <p>
-    Grid is meant for <code>orientation="horizontal"</code>. In <code>orientation="vertical"</code> the
-    tab list sits in an <code>auto</code> grid track, where a size container has no intrinsic width to
-    measure, so the tile grid collapses; use <code>layout: 'row'</code> or <code
-      >layout: 'column'</code
-    >
+    Grid is meant for <code>orientation="horizontal"</code>. In <code>orientation="vertical"</code>{' '}
+    the tab list sits in an <code>auto</code> grid track, where a size container has no intrinsic
+    width to measure, so the tile grid collapses; use <code>layout: 'row'</code> or{' '}
+    <code>layout: 'column'</code>
     there.
   </p>
   <div class="max-w-lg" data-doc-section="layout-grid">
@@ -313,8 +312,8 @@ const metadata = { title: { default: 'Tabs' } };
   <h3>Any number of tabs</h3>
   <p>
     The panel count follows the item count — there is no cap. Twelve items render twelve triggers
-    and twelve <code>panel-0</code> … <code>panel-11</code> slots, each with its own tabpanel id and ARIA
-    wiring.
+    and twelve <code>panel-0</code> … <code>panel-11</code> slots, each with its own tabpanel id and
+    ARIA wiring.
   </p>
   <div class="max-w-lg" data-doc-section="many">
     <TabsBlock
@@ -336,27 +335,51 @@ const metadata = { title: { default: 'Tabs' } };
       activeItemConfig={{ variant: 'solid', intent: 'primary' }}
       tabList={{ layout: 'grid', columns: 4 }}
     >
-      <div slot="panel-0"><p>Panel one.</p></div>
-      <div slot="panel-1"><p>Panel two.</p></div>
-      <div slot="panel-2"><p>Panel three.</p></div>
-      <div slot="panel-3"><p>Panel four.</p></div>
-      <div slot="panel-4"><p>Panel five.</p></div>
-      <div slot="panel-5"><p>Panel six.</p></div>
-      <div slot="panel-6"><p>Panel seven.</p></div>
-      <div slot="panel-7"><p>Panel eight.</p></div>
-      <div slot="panel-8"><p>Panel nine.</p></div>
-      <div slot="panel-9"><p>Panel ten.</p></div>
-      <div slot="panel-10"><p>Panel eleven.</p></div>
-      <div slot="panel-11"><p>Panel twelve.</p></div>
+      <div slot="panel-0">
+        <p>Panel one.</p>
+      </div>
+      <div slot="panel-1">
+        <p>Panel two.</p>
+      </div>
+      <div slot="panel-2">
+        <p>Panel three.</p>
+      </div>
+      <div slot="panel-3">
+        <p>Panel four.</p>
+      </div>
+      <div slot="panel-4">
+        <p>Panel five.</p>
+      </div>
+      <div slot="panel-5">
+        <p>Panel six.</p>
+      </div>
+      <div slot="panel-6">
+        <p>Panel seven.</p>
+      </div>
+      <div slot="panel-7">
+        <p>Panel eight.</p>
+      </div>
+      <div slot="panel-8">
+        <p>Panel nine.</p>
+      </div>
+      <div slot="panel-9">
+        <p>Panel ten.</p>
+      </div>
+      <div slot="panel-10">
+        <p>Panel eleven.</p>
+      </div>
+      <div slot="panel-11">
+        <p>Panel twelve.</p>
+      </div>
     </TabsBlock>
   </div>
 
   <h3>Sticky grid tab list</h3>
   <p>
-    In grid layout the tab list sits in a <code>@container</code> wrapper exactly as tall as the list,
-    so <code>sticky</code> on <code>tabList.class</code> has no room to move. Put it on
-    <code>tabList.wrapperClass</code> instead; the wrapper is rendered only in grid layout. Scroll the
-    box below and the triggers stay at the top.
+    In grid layout the tab list sits in a <code>@container</code> wrapper exactly as tall as the
+    list, so <code>sticky</code> on <code>tabList.class</code> has no room to move. Put it on
+    <code>tabList.wrapperClass</code> instead; the wrapper is rendered only in grid layout. Scroll
+    the box below and the triggers stay at the top.
   </p>
   <div class="max-w-lg max-h-80 overflow-y-auto border border-border" data-doc-section="sticky">
     <TabsBlock
@@ -370,21 +393,27 @@ const metadata = { title: { default: 'Tabs' } };
       }}
     >
       <div slot="panel-0">
-        {Array.from({ length: 12 }, (_, i) => <p>Overview paragraph {i + 1}.</p>)}
+        {Array.from({ length: 12 }, (_, i) => (
+          <p>Overview paragraph {i + 1}.</p>
+        ))}
       </div>
       <div slot="panel-1">
-        {Array.from({ length: 12 }, (_, i) => <p>API paragraph {i + 1}.</p>)}
+        {Array.from({ length: 12 }, (_, i) => (
+          <p>API paragraph {i + 1}.</p>
+        ))}
       </div>
       <div slot="panel-2">
-        {Array.from({ length: 12 }, (_, i) => <p>Examples paragraph {i + 1}.</p>)}
+        {Array.from({ length: 12 }, (_, i) => (
+          <p>Examples paragraph {i + 1}.</p>
+        ))}
       </div>
     </TabsBlock>
   </div>
 
   <h3>Panel styling</h3>
   <p>
-    <code>panelClass</code> lands on every panel. Display utilities such as <code>flex</code> are safe:
-    inactive panels stay hidden.
+    <code>panelClass</code> lands on every panel. Display utilities such as <code>flex</code> are
+    safe: inactive panels stay hidden.
   </p>
   <div class="max-w-lg" data-doc-section="panel-class">
     <TabsBlock
@@ -414,8 +443,8 @@ const metadata = { title: { default: 'Tabs' } };
   <h3 class="font-semibold mt-6 mb-3">Accessibility</h3>
   <ul class="list-disc list-inside space-y-2 text-sm">
     <li>
-      The tab list is a single tab stop: <kbd>Tab</kbd> lands on the active tab and leaves to the panel
-      content.
+      The tab list is a single tab stop: <kbd>Tab</kbd> lands on the active tab and leaves to the
+      panel content.
     </li>
     <li>
       Arrow keys follow the tab list's axis: Left/Right for <code>row</code> and <code>grid</code>
@@ -425,8 +454,8 @@ const metadata = { title: { default: 'Tabs' } };
     <li>Focus wraps at both ends, and moving focus activates the tab.</li>
     <li>Disabled tabs are skipped.</li>
     <li>
-      The layout sets <code>aria-orientation</code> on the tab list; grid layouts are navigated as a single
-      row in reading order.
+      The layout sets <code>aria-orientation</code> on the tab list; grid layouts are navigated as a
+      single row in reading order.
     </li>
   </ul>
 </Layout>

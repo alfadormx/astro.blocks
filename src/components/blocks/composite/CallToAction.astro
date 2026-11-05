@@ -24,13 +24,11 @@ const mergedContainer = mergeConfigs({}, defaultContainer, container);
 
 <Container {...mergedContainer}>
   {headline && <Headline {...headline} />}
-  {
-    actions.length > 0 && (
-      <div class={cn('flex flex-col md:flex-row gap-4 justify-center mb-8', actionsClass)}>
-        {actions.map((action: ButtonProps) => (
-          <Button {...mergeConfigs<ButtonProps>({}, defaultActionConfig, action)} />
-        ))}
-      </div>
-    )
-  }
+  {actions.length > 0 && (
+    <div class={cn('flex flex-col md:flex-row gap-4 justify-center mb-8', actionsClass)}>
+      {actions.map((action: ButtonProps) => (
+        <Button {...mergeConfigs<ButtonProps>({}, defaultActionConfig, action)} />
+      ))}
+    </div>
+  )}
 </Container>

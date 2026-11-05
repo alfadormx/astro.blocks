@@ -92,13 +92,11 @@ const actionsSpacerClass = cn({
       <div class={contentSpacerClass}>
         <slot />
       </div>
-      {
-        action && (
-          <div class={actionsSpacerClass}>
-            <Button {...action} />
-          </div>
-        )
-      }
+      {action && (
+        <div class={actionsSpacerClass}>
+          <Button {...action} />
+        </div>
+      )}
       {resolvedItems.length > 0 && <ItemsGrid {...mergedItemsGrid} />}
     </div>
     <div class={imageClass} slot={imagePosition === 'left' ? 'left' : 'right'}>

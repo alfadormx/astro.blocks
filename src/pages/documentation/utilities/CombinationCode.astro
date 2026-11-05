@@ -108,8 +108,8 @@ if (result.ok) result.selections.get('ring-finish'); // [{ code: 'GD' }]`;
 >
   <p>
     A combination code captures the selection of an ordered set of selection groups in one string.
-    <code>connectUrlState</code> keeps it in the <code>?code=</code> query parameter: a shared link opens
-    on the same configuration, and back and forward walk through earlier ones.
+    <code>connectUrlState</code> keeps it in the <code>?code=</code> query parameter: a shared link
+    opens on the same configuration, and back and forward walk through earlier ones.
   </p>
 
   <h3>Demo</h3>
@@ -140,13 +140,11 @@ if (result.ok) result.selections.get('ring-finish'); // [{ code: 'GD' }]`;
   <h3>Format</h3>
   <p>
     Groups sit in spec order, separated by <code>-</code>, after an optional product segment.
-    Entries of a
-    <code>multiple</code> group sit in spec option order, separated by <code>.</code>, so one
-    configuration always yields one code. Option and product codes match <code>[A-Za-z0-9]+</code>,
-    which keeps both separators free.
+    Entries of a<code>multiple</code> group sit in spec option order, separated by <code>.</code>,
+    so one configuration always yields one code. Option and product codes match{' '}
+    <code>[A-Za-z0-9]+</code>, which keeps both separators free.
   </p>
-  <pre
-    class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{grammar}</code></pre>
+  <pre class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{grammar}</code></pre>
 
   <h3>Worked examples</h3>
   <div class="overflow-x-auto">
@@ -158,16 +156,14 @@ if (result.ok) result.selections.get('ring-finish'); // [{ code: 'GD' }]`;
         </tr>
       </thead>
       <tbody class="text-sm">
-        {
-          examples.map(({ state, code }) => (
-            <tr class="border-b border-border/50">
-              <td class="py-2 px-4">{state}</td>
-              <td class="py-2 px-4 font-mono">
-                <a href={`?code=${code}`}>{code}</a>
-              </td>
-            </tr>
-          ))
-        }
+        {examples.map(({ state, code }) => (
+          <tr class="border-b border-border/50">
+            <td class="py-2 px-4">{state}</td>
+            <td class="py-2 px-4 font-mono">
+              <a href={`?code=${code}`}>{code}</a>
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
   </div>
@@ -189,15 +185,13 @@ if (result.ok) result.selections.get('ring-finish'); // [{ code: 'GD' }]`;
         </tr>
       </thead>
       <tbody class="text-sm">
-        {
-          edgeCases.map(([name, code, outcome]) => (
-            <tr class="border-b border-border/50">
-              <td class="py-2 px-4">{name}</td>
-              <td class="py-2 px-4 font-mono">{code}</td>
-              <td class="py-2 px-4">{outcome}</td>
-            </tr>
-          ))
-        }
+        {edgeCases.map(([name, code, outcome]) => (
+          <tr class="border-b border-border/50">
+            <td class="py-2 px-4">{name}</td>
+            <td class="py-2 px-4 font-mono">{code}</td>
+            <td class="py-2 px-4">{outcome}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   </div>
@@ -234,20 +228,17 @@ if (result.ok) result.selections.get('ring-finish'); // [{ code: 'GD' }]`;
   <p>
     <code>connectUrlState({'{ spec, param }'})</code> is browser-only: call it from a client
     <code>&lt;script&gt;</code>. It seeds the groups on <code>DOMContentLoaded</code>, after every
-    block's initial publish, so the code wins over block defaults. It re-runs after <code
-      >astro:after-swap</code
-    >
+    block's initial publish, so the code wins over block defaults. It re-runs after{' '}
+    <code>astro:after-swap</code>
     and returns a function that disconnects it. <code>param</code> defaults to <code>'code'</code>.
   </p>
-  <pre
-    class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{usage}</code></pre>
+  <pre class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{usage}</code></pre>
   <p>
     The codec is pure and safe anywhere, including frontmatter: <code>validateCombinationSpec</code>
     throws on an ambiguous spec, <code>encode</code> returns the code for a state, and
     <code>decode</code> returns the selections plus notes on what it dropped.
   </p>
-  <pre
-    class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{pureUsage}</code></pre>
+  <pre class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{pureUsage}</code></pre>
 </Layout>
 
 <script>

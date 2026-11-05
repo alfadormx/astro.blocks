@@ -156,9 +156,8 @@ const navItemsWithDropdowns = [
   <!-- Example: Button Spacing -->
   <h3>Button Spacing</h3>
   <p>
-    Control spacing between the buttons in each group using the <code
-      class="px-1 py-0.5 bg-muted rounded">buttonsGap</code
-    > prop.
+    Control spacing between the buttons in each group using the{' '}
+    <code class="px-1 py-0.5 bg-muted rounded">buttonsGap</code> prop.
   </p>
   <div class="space-y-6">
     <div>
@@ -289,9 +288,9 @@ const navItemsWithDropdowns = [
     sections or full-page layouts.
   </p>
   <p class="text-sm text-muted mb-4">
-    Note: <code class="px-1 py-0.5 bg-muted rounded">isFloating</code> uses fixed positioning relative
-    to the viewport, making it float above all content and stay visible during scroll. Cannot be demonstrated
-    in a scrollable container.
+    Note: <code class="px-1 py-0.5 bg-muted rounded">isFloating</code> uses fixed positioning
+    relative to the viewport, making it float above all content and stay visible during scroll.
+    Cannot be demonstrated in a scrollable container.
   </p>
   <div class="border border-border rounded-lg overflow-hidden p-4 bg-muted/30">
     <code class="text-sm">
@@ -345,8 +344,8 @@ const navItemsWithDropdowns = [
 
   <h3>Shared navigation config</h3>
   <p>
-    <code>defaultNavigationTreeHorizontalConfig</code> is merged under both navigations. Share nav button
-    styling through its <code>defaultItemConfig</code>.
+    <code>defaultNavigationTreeHorizontalConfig</code> is merged under both navigations. Share nav
+    button styling through its <code>defaultItemConfig</code>.
   </p>
   <div class="border border-border rounded-lg overflow-hidden" data-doc-section="navigation-layer">
     <HeaderBlock
@@ -359,7 +358,9 @@ const navItemsWithDropdowns = [
   </div>
 
   <h3>HTML Attributes</h3>
-  <p><code>id</code> and <code>aria-label</code> land on the header root.</p>
+  <p>
+    <code>id</code> and <code>aria-label</code> land on the header root.
+  </p>
   <p>
     The logo's <code>id</code>, <code>name</code> and media <code>id</code> appear once in the page.
   </p>
@@ -390,16 +391,16 @@ const navItemsWithDropdowns = [
       <h4 class="font-semibold mb-2">Mobile Menu Pattern</h4>
       <p class="text-muted-foreground">
         The Header provides the layout and hamburger button, but the mobile menu Modal is placed
-        separately. Connect them using <code class="px-1 py-0.5 bg-muted rounded"
-          >data-modal-trigger</code
-        > attribute on the hamburger button.
+        separately. Connect them using{' '}
+        <code class="px-1 py-0.5 bg-muted rounded">data-modal-trigger</code> attribute on the
+        hamburger button.
       </p>
     </div>
     <div>
       <h4 class="font-semibold mb-2">Sticky Positioning</h4>
       <p class="text-muted-foreground">
-        When <code class="px-1 py-0.5 bg-muted rounded">isSticky</code> is enabled, consider adding a
-        semi-transparent background with opacity to maintain readability over content.
+        When <code class="px-1 py-0.5 bg-muted rounded">isSticky</code> is enabled, consider adding
+        a semi-transparent background with opacity to maintain readability over content.
       </p>
     </div>
   </div>

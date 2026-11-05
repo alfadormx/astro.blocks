@@ -115,33 +115,27 @@ const fieldClassName = cn(
     aria-invalid={error ? 'true' : consumerInvalid}
     aria-describedby={describedBy || undefined}
     class={fieldClassName}
-    {...attrs}>{value}</textarea
-  >
-  {
-    help && (
-      <p id={helpId} class={cn('text-sm text-muted', helpClass)}>
-        {help}
-      </p>
-    )
-  }
-  {
-    error && (
-      <p id={errorId} class={cn('text-sm text-error', errorClass)}>
-        {error}
-      </p>
-    )
-  }
-  {
-    showCounter && (
-      <p
-        id={counterId}
-        class={cn('text-sm text-muted text-right tabular-nums', counterClass)}
-        data-textarea-counter
-      >
-        {value.length} / {maxLength}
-      </p>
-    )
-  }
+    {...attrs}
+  >{value}</textarea>
+  {help && (
+    <p id={helpId} class={cn('text-sm text-muted', helpClass)}>
+      {help}
+    </p>
+  )}
+  {error && (
+    <p id={errorId} class={cn('text-sm text-error', errorClass)}>
+      {error}
+    </p>
+  )}
+  {showCounter && (
+    <p
+      id={counterId}
+      class={cn('text-sm text-muted text-right tabular-nums', counterClass)}
+      data-textarea-counter
+    >
+      {value.length} / {maxLength}
+    </p>
+  )}
 </div>
 
 <script>

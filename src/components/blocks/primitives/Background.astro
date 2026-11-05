@@ -41,30 +41,28 @@ if (resolvedImageUrl) {
 const overlay = overlayClass ?? '';
 ---
 
-{
-  video ? (
-    <div class={bgClass}>
-      <video
-        class="absolute inset-0 w-full h-full object-cover"
-        autoplay
-        loop
-        muted
-        playsinline
-        aria-hidden="true"
-      >
-        <source src={video} type="video/mp4" />
-      </video>
-      {overlay && <div class={cn('absolute inset-0', overlay)} />}
-      <slot />
-    </div>
-  ) : resolvedImageUrl ? (
-    <div class={bgClass} style={bgStyle}>
-      {overlay && <div class={cn('absolute inset-0', overlay)} />}
-      <slot />
-    </div>
-  ) : (
-    <div class={cn(bgClass, overlay)}>
-      <slot />
-    </div>
-  )
-}
+{video ? (
+  <div class={bgClass}>
+    <video
+      class="absolute inset-0 w-full h-full object-cover"
+      autoplay
+      loop
+      muted
+      playsinline
+      aria-hidden="true"
+    >
+      <source src={video} type="video/mp4" />
+    </video>
+    {overlay && <div class={cn('absolute inset-0', overlay)} />}
+    <slot />
+  </div>
+) : resolvedImageUrl ? (
+  <div class={bgClass} style={bgStyle}>
+    {overlay && <div class={cn('absolute inset-0', overlay)} />}
+    <slot />
+  </div>
+) : (
+  <div class={cn(bgClass, overlay)}>
+    <slot />
+  </div>
+)}

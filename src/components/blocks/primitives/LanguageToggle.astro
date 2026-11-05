@@ -117,20 +117,18 @@ const containerClasses = cn('flex', orientationClasses, gapClasses[gap], classNa
 ---
 
 <div class={containerClasses} {...rest} data-language-toggle>
-  {
-    I18N.languages.map((lang: I18NLanguage) => {
-      const isActive = currentLang.code === lang.code;
-      const languageUrl = buildLanguageUrl(lang.code, lang.basePath);
-      const buttonConfig = isActive ? mergedActiveButtonConfig : mergedInactiveButtonConfig;
+  {I18N.languages.map((lang: I18NLanguage) => {
+    const isActive = currentLang.code === lang.code;
+    const languageUrl = buildLanguageUrl(lang.code, lang.basePath);
+    const buttonConfig = isActive ? mergedActiveButtonConfig : mergedInactiveButtonConfig;
 
-      return (
-        <Button
-          {...buttonConfig}
-          href={languageUrl}
-          label={showLabels ? lang.label : lang.code.toUpperCase()}
-          aria-current={isActive ? 'page' : undefined}
-        />
-      );
-    })
-  }
+    return (
+      <Button
+        {...buttonConfig}
+        href={languageUrl}
+        label={showLabels ? lang.label : lang.code.toUpperCase()}
+        aria-current={isActive ? 'page' : undefined}
+      />
+    );
+  })}
 </div>

@@ -77,20 +77,16 @@ const contentClass = cn(
 ---
 
 <ContainerTag class={containerClass} style={containerStyle}>
-  {
-    Astro.slots.background ? (
-      <slot name="background" />
-    ) : background ? (
-      <Background {...background} />
-    ) : null
-  }
+  {Astro.slots.background ? (
+    <slot name="background" />
+  ) : background ? (
+    <Background {...background} />
+  ) : null}
   <div class={contentClass}>
-    {
-      items && items.length > 0 ? (
-        items.map((item) => <div class={item.class} id={item.id} set:html={item.content} />)
-      ) : (
-        <slot />
-      )
-    }
+    {items && items.length > 0 ? (
+      items.map((item) => <div class={item.class} id={item.id} set:html={item.content} />)
+    ) : (
+      <slot />
+    )}
   </div>
 </ContainerTag>

@@ -20,14 +20,12 @@ const metadata = {
   }}
 >
   <!-- Info Notice -->
-  <div
-    class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-8"
-  >
+  <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-8">
     <p class="text-sm text-blue-800 dark:text-blue-200">
       <strong>Note:</strong> The Language Toggle component displays all languages configured in the
-      <code class="px-1 py-0.5 bg-blue-100 dark:bg-blue-900 rounded">i18n.languages</code> array in <code
-        class="px-1 py-0.5 bg-blue-100 dark:bg-blue-900 rounded">src/config.yaml</code
-      >. Add more languages to the configuration to see additional options in the toggle.
+      <code class="px-1 py-0.5 bg-blue-100 dark:bg-blue-900 rounded">i18n.languages</code> array in{' '}
+      <code class="px-1 py-0.5 bg-blue-100 dark:bg-blue-900 rounded">src/config.yaml</code>. Add
+      more languages to the configuration to see additional options in the toggle.
     </p>
   </div>
 
@@ -210,18 +208,15 @@ const metadata = {
 
   <!-- Current Language Info -->
   <h3>Current Language Detection</h3>
-  <div
-    class="bg-linear-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-6"
-  >
+  <div class="bg-linear-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-6">
     <p class="text-sm text-purple-900 dark:text-purple-200">
       <strong>Current URL:</strong>
       <code class="px-2 py-1 bg-purple-100 dark:bg-purple-900 rounded">{Astro.url.pathname}</code>
     </p>
     <p class="text-sm text-purple-900 dark:text-purple-200 mt-2">
       The component uses the pathname to determine which language button should be marked as active
-      (using <code class="px-2 py-1 bg-purple-100 dark:bg-purple-900 rounded"
-        >aria-current="page"</code
-      >).
+      (using{' '}
+      <code class="px-2 py-1 bg-purple-100 dark:bg-purple-900 rounded">aria-current="page"</code>).
     </p>
   </div>
 </Layout>
