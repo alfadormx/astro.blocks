@@ -1,7 +1,7 @@
 import ts from 'typescript';
 import fs from 'node:fs';
 import path from 'node:path';
-import { documentationNavigation } from '~/pages/documentation/navigation';
+import { documentationNavigation } from '~/data/documentationNavigation';
 import type { NavigationTreeItem } from '~/types/navigationtree.types';
 
 const SRC_ROOT = path.join(process.cwd(), 'src');
