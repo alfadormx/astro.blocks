@@ -1,13 +1,13 @@
-import type { Options, SourceInfo } from 'plyr';
+import type Plyr from 'plyr';
 import type { ButtonProps } from './button.types';
 
 export type AspectRatio = 'video' | 'square' | 'portrait' | 'cinema';
 
 export interface VideoProps {
   /** Plyr source configuration describing the video to play, passed to the underlying player. */
-  source: SourceInfo;
+  source: Plyr.SourceInfo;
   /** Plyr options object merged on top of the defaults and convenience props (highest priority). */
-  options?: Options;
+  options?: Plyr.Options;
   /** Aspect ratio applied to the video wrapper and passed to Plyr's ratio option (default: 'video'). */
   aspectRatio?: AspectRatio;
   /** Enables a floating (picture-in-picture style) player that docks on scroll (default: false). */
