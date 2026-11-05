@@ -60,11 +60,10 @@ Blocks live in `src/components/blocks/`, with prop types in `src/types/*.types.t
 | `Content`                                    | Text and image side by side with an action                                |
 | `ItemsContent`                               | Headline above an items grid                                              |
 | `ItemsGrid`, `Item`                          | 1–4 column grid of items, optionally selectable                           |
-| `SelectableItemsGrid`                        | Items grid with single or multiple selection state                        |
 | `ItemsTimeline`, `ItemsTimelineHorizontal`   | Vertical and horizontal timelines                                         |
 | `ContentCarousel`                            | Carousel with autoplay, drag, indicators and loop                         |
 | `Tabs`                                       | Horizontal or vertical tabbed panels                                      |
-| `Configurator`, `ConfiguratorPanel`          | Product configurator with shareable URL state                             |
+| `Configurator`                               | Product configurator with shareable URL state                             |
 
 ### Meta
 
@@ -75,6 +74,7 @@ Blocks live in `src/components/blocks/`, with prop types in `src/types/*.types.t
 - **Props, not markup.** Composites take the props of the blocks they contain, for example `headline: HeadlineProps` or `actions: ButtonProps[]`.
 - **Layered defaults.** `default*Config` props set shared config for repeated children, and `selected*Config` or `active*Config` props layer state on top.
 - **Style tokens.** Buttons and items share an `intent`, `variant`, `size` and `shape` vocabulary. Colors come from `src/styles/colors.css`.
+- **Internal sub-components stay internal.** Files that open with `// Internal to <Parent>` declare `Props` inline, have no docs page and are imported only by their parent; use the parent instead.
 
 ## Site configuration
 
