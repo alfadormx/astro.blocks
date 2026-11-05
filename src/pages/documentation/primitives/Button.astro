@@ -46,9 +46,9 @@ const menuItem: NavigationTreeItem = {
 
   <h3>Vertical Orientation</h3>
   <p>
-    The <code>orientation</code> prop stacks the icon or image above the label. It has no literal default:
-    without it, a button resolves to vertical only when a <code>subtitle</code> is set. An explicit value
-    always wins.
+    The <code>orientation</code> prop stacks the icon or image above the label. It has no literal
+    default: without it, a button resolves to vertical only when a <code>subtitle</code> is set. An
+    explicit value always wins.
   </p>
   <div class="flex flex-wrap items-start gap-4">
     <ButtonBlock
@@ -75,8 +75,9 @@ const menuItem: NavigationTreeItem = {
 
   <h3>With Images</h3>
   <p>
-    <code>icon</code> and <code>image</code> occupy the same media slot and are mutually exclusive; when
-    both are supplied the image wins. <code>iconPosition</code> positions whichever medium is present.
+    <code>icon</code> and <code>image</code> occupy the same media slot and are mutually exclusive;
+    when both are supplied the image wins. <code>iconPosition</code> positions whichever medium is
+    present.
     <code>image.alt</code> is required at runtime — the Image primitive throws without it.
   </p>
   <div class="flex flex-wrap items-start gap-4">
@@ -122,9 +123,9 @@ const menuItem: NavigationTreeItem = {
   <h3>Image Sizing</h3>
   <p>
     <code>imageSize</code> is a Tailwind class governing the rendered box, while
-    <code>image.width</code> / <code>image.height</code> / <code>image.aspectRatio</code> govern what
-    the optimizer generates. Both are needed — supply dimensions or an <code>aspectRatio</code>, or
-    the optimizer logs an error. Note that <code>image.layout</code> of <code>'cover'</code> or
+    <code>image.width</code> / <code>image.height</code> / <code>image.aspectRatio</code> govern
+    what the optimizer generates. Both are needed — supply dimensions or an <code>aspectRatio</code>
+    , or the optimizer logs an error. Note that <code>image.layout</code> of <code>'cover'</code> or
     <code>'contained'</code> makes the Image wrapper <code>w-full h-full</code>, which will fill the
     button.
   </p>
@@ -289,7 +290,9 @@ const menuItem: NavigationTreeItem = {
   </div>
 
   <h3>Spreading an item config</h3>
-  <p>A nav item can be spread onto a Button as is. Its <code>children</code> are not rendered.</p>
+  <p>
+    A nav item can be spread onto a Button as is. Its <code>children</code> are not rendered.
+  </p>
   <div class="flex flex-wrap gap-4" data-doc-section="children">
     <ButtonBlock {...menuItem} />
   </div>

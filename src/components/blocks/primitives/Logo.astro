@@ -29,14 +29,12 @@ const mergedLogoConfig = mergeConfigs({}, defaultLogoConfig, Astro.props);
 const { vector: mergedVector, image: mergedImage, ...buttonConfig } = mergedLogoConfig;
 ---
 
-{
-  (mergedVector?.src || mergedImage?.src || buttonConfig.label) && (
-    <Button {...buttonConfig}>
-      {mergedVector?.src ? (
-        <Vector {...mergedVector} class={cn('w-full h-full', mergedVector.class)} />
-      ) : mergedImage?.src ? (
-        <Image {...mergedImage} />
-      ) : null}
-    </Button>
-  )
-}
+{(mergedVector?.src || mergedImage?.src || buttonConfig.label) && (
+  <Button {...buttonConfig}>
+    {mergedVector?.src ? (
+      <Vector {...mergedVector} class={cn('w-full h-full', mergedVector.class)} />
+    ) : mergedImage?.src ? (
+      <Image {...mergedImage} />
+    ) : null}
+  </Button>
+)}

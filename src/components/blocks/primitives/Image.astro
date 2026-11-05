@@ -79,12 +79,10 @@ if (
 }
 ---
 
-{
-  !image ? (
-    <Fragment />
-  ) : (
-    <div class={wrapperClass}>
-      <img src={image.src} referrerpolicy="no-referrer" {...image.attributes} />
-    </div>
-  )
-}
+{!image ? (
+  <Fragment />
+) : (
+  <div class={wrapperClass}>
+    <img src={image.src} referrerpolicy="no-referrer" {...image.attributes} />
+  </div>
+)}

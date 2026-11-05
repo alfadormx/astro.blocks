@@ -41,28 +41,26 @@ const lastItemClass =
 ---
 
 <div class="@container">
-  {
-    selection.mode === 'none' ? (
-      <div class={gridClass}>
-        {items.map((item: ItemsGridItem, i: number) => {
-          const mergedItem = mergeConfigs({}, defaultItemConfig || {}, item);
-          return (
-            <Item
-              {...mergedItem}
-              class={cn(i === items.length - 1 && lastItemClass, mergedItem.class)}
-            />
-          );
-        })}
-      </div>
-    ) : (
-      <SelectableItemsGrid
-        items={items}
-        defaultItemConfig={defaultItemConfig}
-        selectedItemConfig={selectedItemConfig}
-        selection={selection}
-        gridClass={gridClass}
-        lastItemClass={lastItemClass}
-      />
-    )
-  }
+  {selection.mode === 'none' ? (
+    <div class={gridClass}>
+      {items.map((item: ItemsGridItem, i: number) => {
+        const mergedItem = mergeConfigs({}, defaultItemConfig || {}, item);
+        return (
+          <Item
+            {...mergedItem}
+            class={cn(i === items.length - 1 && lastItemClass, mergedItem.class)}
+          />
+        );
+      })}
+    </div>
+  ) : (
+    <SelectableItemsGrid
+      items={items}
+      defaultItemConfig={defaultItemConfig}
+      selectedItemConfig={selectedItemConfig}
+      selection={selection}
+      gridClass={gridClass}
+      lastItemClass={lastItemClass}
+    />
+  )}
 </div>

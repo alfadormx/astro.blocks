@@ -181,22 +181,18 @@ const spec = urlState ? buildCombinationSpec(categories, urlState.product) : und
       >
         {summaryText}
       </p>
-      {
-        actions.length > 0 && (
-          <div class={cn('mt-6 inline-flex flex-wrap gap-3', actionsClass)}>
-            {actions.map((action) => (
-              <Button {...mergeConfigs<ButtonProps>({}, defaultActionConfig, action)} />
-            ))}
-          </div>
-        )
-      }
+      {actions.length > 0 && (
+        <div class={cn('mt-6 inline-flex flex-wrap gap-3', actionsClass)}>
+          {actions.map((action) => (
+            <Button {...mergeConfigs<ButtonProps>({}, defaultActionConfig, action)} />
+          ))}
+        </div>
+      )}
     </div>
     <div slot="right">
       <Tabs {...mergedTabs} items={triggers}>
-        {
-          /* One static slot per possible tab: the compiler cannot give a slot inside .map() a name
-            that depends on the callback's arguments. Tabs renders only the first items.length. */
-        }
+        {/* One static slot per possible tab: the compiler cannot give a slot inside .map() a name
+            that depends on the callback's arguments. Tabs renders only the first items.length. */}
         <Fragment slot="panel-0">{panels[0] && <ConfiguratorPanel {...panels[0]} />}</Fragment>
         <Fragment slot="panel-1">{panels[1] && <ConfiguratorPanel {...panels[1]} />}</Fragment>
         <Fragment slot="panel-2">{panels[2] && <ConfiguratorPanel {...panels[2]} />}</Fragment>

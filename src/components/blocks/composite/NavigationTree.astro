@@ -121,49 +121,47 @@ const buildItemConfig = (
 
 <nav class={className} data-navigation-tree data-expansion-strategy={expansionStrategy}>
   <ul class="list-none m-0 p-0 space-y-1">
-    {
-      items.map((item) => {
-        const { children, ...buttonProps } = item;
-        const isActive = item.href ? normalizePath(item.href) === normalizedCurrentPath : false;
-        const hasActiveChild = children
-          ? children.some((child) => isActiveOrHasActiveChild(child))
-          : false;
-        const hasChildren = children && children.length > 0;
-        const isExpanded = shouldShowChildren(item, isActive, hasActiveChild);
+    {items.map((item) => {
+      const { children, ...buttonProps } = item;
+      const isActive = item.href ? normalizePath(item.href) === normalizedCurrentPath : false;
+      const hasActiveChild = children
+        ? children.some((child) => isActiveOrHasActiveChild(child))
+        : false;
+      const hasChildren = children && children.length > 0;
+      const isExpanded = shouldShowChildren(item, isActive, hasActiveChild);
 
-        const itemConfig = buildItemConfig(buttonProps, isActive, !!hasChildren, isExpanded);
+      const itemConfig = buildItemConfig(buttonProps, isActive, !!hasChildren, isExpanded);
 
-        return (
-          <li data-nav-item data-has-children={hasChildren} data-expanded={isExpanded}>
-            <div class={indentClass}>
-              <Button
-                {...itemConfig}
-                data-nav-toggle={hasChildren && toggleMode === 'button' ? '' : undefined}
-                data-nav-icon-toggle={hasChildren && toggleMode === 'icon' ? '' : undefined}
+      return (
+        <li data-nav-item data-has-children={hasChildren} data-expanded={isExpanded}>
+          <div class={indentClass}>
+            <Button
+              {...itemConfig}
+              data-nav-toggle={hasChildren && toggleMode === 'button' ? '' : undefined}
+              data-nav-icon-toggle={hasChildren && toggleMode === 'icon' ? '' : undefined}
+            />
+          </div>
+
+          {hasChildren && (
+            <div data-nav-children style={isExpanded ? '' : 'display: none;'}>
+              <Astro.self
+                items={children!}
+                currentPath={currentPath}
+                level={level + 1}
+                iconName={iconName}
+                rotateIconOnExpand={rotateIconOnExpand}
+                toggleMode={toggleMode}
+                defaultItemConfig={defaultItemConfig}
+                inactiveItemConfig={inactiveItemConfig}
+                activeItemConfig={activeItemConfig}
+                expansionStrategy={expansionStrategy}
+                maxDepth={maxDepth}
               />
             </div>
-
-            {hasChildren && (
-              <div data-nav-children style={isExpanded ? '' : 'display: none;'}>
-                <Astro.self
-                  items={children!}
-                  currentPath={currentPath}
-                  level={level + 1}
-                  iconName={iconName}
-                  rotateIconOnExpand={rotateIconOnExpand}
-                  toggleMode={toggleMode}
-                  defaultItemConfig={defaultItemConfig}
-                  inactiveItemConfig={inactiveItemConfig}
-                  activeItemConfig={activeItemConfig}
-                  expansionStrategy={expansionStrategy}
-                  maxDepth={maxDepth}
-                />
-              </div>
-            )}
-          </li>
-        );
-      })
-    }
+          )}
+        </li>
+      );
+    })}
   </ul>
 </nav>
 

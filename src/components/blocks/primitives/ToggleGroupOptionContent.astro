@@ -30,37 +30,31 @@ const imageClass = option.hideLabel ? image?.class : cn(mediaSizeClass(size), im
 const mergedImage = hasImage ? mergeConfigs<ImageProps>({}, { alt: '' }, image) : undefined;
 ---
 
-{
-  appearance === 'radio' && (
-    <span aria-hidden="true" class={config.markerClass} data-option-marker />
-  )
-}
-{
-  mediaFirst &&
-    (hasImage ? (
-      <Image {...mergedImage!} class={imageClass} />
-    ) : (
-      hasIcon && (
-        <Icon
-          name={icon!.name!}
-          class={cn(mediaSizeClass(size), icon!.class)}
-          aria-label={icon!.ariaLabel}
-        />
-      )
-    ))
-}
+{appearance === 'radio' && (
+  <span aria-hidden="true" class={config.markerClass} data-option-marker />
+)}
+{mediaFirst &&
+  (hasImage ? (
+    <Image {...mergedImage!} class={imageClass} />
+  ) : (
+    hasIcon && (
+      <Icon
+        name={icon!.name!}
+        class={cn(mediaSizeClass(size), icon!.class)}
+        aria-label={icon!.ariaLabel}
+      />
+    )
+  ))}
 <span class={cn(config.labelClass, option.hideLabel && 'sr-only')}>{option.label}</span>
-{
-  !mediaFirst &&
-    (hasImage ? (
-      <Image {...mergedImage!} class={imageClass} />
-    ) : (
-      hasIcon && (
-        <Icon
-          name={icon!.name!}
-          class={cn(mediaSizeClass(size), icon!.class)}
-          aria-label={icon!.ariaLabel}
-        />
-      )
-    ))
-}
+{!mediaFirst &&
+  (hasImage ? (
+    <Image {...mergedImage!} class={imageClass} />
+  ) : (
+    hasIcon && (
+      <Icon
+        name={icon!.name!}
+        class={cn(mediaSizeClass(size), icon!.class)}
+        aria-label={icon!.ariaLabel}
+      />
+    )
+  ))}

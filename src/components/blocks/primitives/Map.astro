@@ -27,14 +27,16 @@ const externalUrl = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=
     style={`height: ${height}; width: ${width};`}
     role="application"
     aria-label={title}
-  >
-  </div>
+  ></div>
   <small class="block mt-1 text-xs text-right">
     &copy;
-    <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer"
-      >OpenStreetMap</a
-    > contributors &mdash;
-    <a href={externalUrl} target="_blank" rel="noopener noreferrer">View larger map &rarr;</a>
+    <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">
+      OpenStreetMap
+    </a>{' '}
+    contributors &mdash;
+    <a href={externalUrl} target="_blank" rel="noopener noreferrer">
+      View larger map &rarr;
+    </a>
   </small>
 </div>
 
