@@ -6,14 +6,7 @@ import { I18N, SITE } from 'site-config';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 import { cn } from '~/utils/styles';
 
-// Type for a single language from i18n config
-type I18NLanguage = {
-  code: string;
-  locale: string;
-  basePath: string;
-  direction: 'ltr' | 'rtl';
-  label: string;
-};
+type Language = (typeof I18N.languages)[number];
 
 type Props = LanguageToggleProps;
 
@@ -25,12 +18,12 @@ const {
   inactiveButtonConfig,
   class: className,
   gap = 'normal',
+  preservePath = true,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   children: _children,
   ...rest
 } = Astro.props;
 
-// Default button configurations following NavigationTree pattern
 const internalInactiveButtonConfig: Partial<ButtonProps> = {
   variant: 'solid',
   intent: 'neutral',
@@ -62,53 +55,40 @@ const mergedActiveButtonConfig = mergeConfigs(
   activeButtonConfig
 );
 
-// Get current pathname
 const currentPath = Astro.url.pathname;
 
-// Determine current language by matching basePath
+const matchesBasePath = (basePath: string) =>
+  basePath === '/'
+    ? currentPath === '/'
+    : currentPath === basePath || currentPath.startsWith(`${basePath}/`);
+
 const currentLang =
-  I18N.languages.find((lang: I18NLanguage) => {
-    // Exact match for root path
-    if (lang.basePath === '/' && currentPath === '/') return true;
-    // Check if path starts with the basePath (and it's not just '/')
-    if (lang.basePath !== '/' && currentPath.startsWith(lang.basePath)) return true;
-    return false;
-  }) ||
-  I18N.languages.find((lang: I18NLanguage) => lang.code === I18N.default) ||
+  I18N.languages.find((lang: Language) => matchesBasePath(lang.basePath)) ||
+  I18N.languages.find((lang: Language) => lang.code === I18N.default) ||
   I18N.languages[0];
 
-// Function to build language URL
-const buildLanguageUrl = (langCode: string, langBasePath: string) => {
-  // Get the path without the current language's basePath
-  let pathWithoutLang = currentPath;
-
-  if (currentLang.basePath !== '/') {
-    pathWithoutLang = currentPath.replace(new RegExp(`^${currentLang.basePath}`), '/');
-  }
-
-  // Build the new URL with the target language's basePath
-  let newPath =
-    langBasePath === '/'
-      ? pathWithoutLang
-      : `${langBasePath}${pathWithoutLang === '/' ? '' : pathWithoutLang}`;
-
-  // Handle trailing slash based on site config
+const applyTrailingSlash = (path: string) => {
   if (SITE.trailingSlash) {
-    // Add trailing slash if not present (except for paths with file extensions)
-    if (!newPath.endsWith('/') && !newPath.includes('.')) {
-      newPath += '/';
-    }
-  } else {
-    // Remove trailing slash if present (except for root path)
-    if (newPath.endsWith('/') && newPath.length > 1) {
-      newPath = newPath.slice(0, -1);
-    }
+    return path.endsWith('/') || path.includes('.') ? path : `${path}/`;
   }
-
-  return newPath;
+  return path.endsWith('/') && path.length > 1 ? path.slice(0, -1) : path;
 };
 
-// Container orientation classes
+const buildLanguageUrl = (langBasePath: string) => {
+  if (!preservePath) return applyTrailingSlash(langBasePath);
+
+  const pathWithoutLang =
+    currentLang.basePath === '/'
+      ? currentPath
+      : currentPath.slice(currentLang.basePath.length) || '/';
+
+  return applyTrailingSlash(
+    langBasePath === '/'
+      ? pathWithoutLang
+      : `${langBasePath}${pathWithoutLang === '/' ? '' : pathWithoutLang}`
+  );
+};
+
 const orientationClasses = orientation === 'vertical' ? 'flex-col' : 'flex-row';
 
 const gapClasses = { none: 'gap-0', tight: 'gap-1', normal: 'gap-4', loose: 'gap-6' } as const;
@@ -117,9 +97,9 @@ const containerClasses = cn('flex', orientationClasses, gapClasses[gap], classNa
 ---
 
 <div class={containerClasses} {...rest} data-language-toggle>
-  {I18N.languages.map((lang: I18NLanguage) => {
+  {I18N.languages.map((lang: Language) => {
     const isActive = currentLang.code === lang.code;
-    const languageUrl = buildLanguageUrl(lang.code, lang.basePath);
+    const languageUrl = buildLanguageUrl(lang.basePath);
     const buttonConfig = isActive ? mergedActiveButtonConfig : mergedInactiveButtonConfig;
 
     return (

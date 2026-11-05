@@ -1,19 +1,40 @@
 ---
+import type { GetStaticPaths } from 'astro';
+import { I18N, SITE } from 'site-config';
 import Layout from '~/layouts/Layout.astro';
 import Header from '~/components/blocks/composite/Header.astro';
 import Footer from '~/components/blocks/composite/Footer.astro';
 import CallToAction from '~/components/blocks/composite/CallToAction.astro';
 import ItemsContent from '~/components/blocks/composite/ItemsContent.astro';
+import { homeCopy } from '~/data/home';
 
-const metadata = { title: { default: 'Astro Blocks' } };
+type Language = (typeof I18N.languages)[number];
+
+export const getStaticPaths = (() =>
+  I18N.languages
+    .filter((lang: Language) => homeCopy[lang.code])
+    .map((lang: Language) => ({
+      params: { lang: lang.basePath === '/' ? undefined : lang.basePath.replace(/^\//, '') },
+      props: { langCode: lang.code, basePath: lang.basePath },
+    }))) satisfies GetStaticPaths;
+
+type Props = { langCode: string; basePath: string };
+
+const { langCode, basePath } = Astro.props;
+const copy = homeCopy[langCode];
+
+const metadata = {
+  title: { default: copy.pageTitle },
+  canonical: `${SITE.site}${basePath === '/' ? '' : basePath}`,
+};
 ---
 
-<Layout metadata={metadata}>
+<Layout langCode={langCode} metadata={metadata}>
   <Header
     themeToggle={{}}
     rightButtons={[
       {
-        label: 'Documentation',
+        label: copy.headerDocsLabel,
         href: '/documentation',
         intent: 'primary',
         variant: 'solid',
@@ -25,16 +46,15 @@ const metadata = { title: { default: 'Astro Blocks' } };
 
   <CallToAction
     headline={{
-      tagline: 'Component Library',
-      title: 'Astro Blocks',
+      tagline: copy.hero.tagline,
+      title: copy.hero.title,
       htmlTag: 'h1',
-      subtitle:
-        'Composable UI components built with Astro and Tailwind CSS. Pick, customize, ship.',
+      subtitle: copy.hero.subtitle,
       align: 'center',
     }}
     actions={[
       {
-        label: 'Browse Documentation',
+        label: copy.hero.browseDocsLabel,
         href: '/documentation',
         intent: 'primary',
         variant: 'solid',
@@ -44,7 +64,7 @@ const metadata = { title: { default: 'Astro Blocks' } };
         iconPosition: 'right',
       },
       {
-        label: 'View Source',
+        label: copy.hero.viewSourceLabel,
         href: 'https://github.com/alfadormx/astro.blocks',
         intent: 'secondary',
         variant: 'outline',
@@ -58,10 +78,9 @@ const metadata = { title: { default: 'Astro Blocks' } };
 
   <ItemsContent
     headline={{
-      tagline: "What's Inside",
-      title: 'Three layers of components',
-      subtitle:
-        'From atomic primitives to fully assembled sections — everything composable, nothing opinionated.',
+      tagline: copy.inside.tagline,
+      title: copy.inside.title,
+      subtitle: copy.inside.subtitle,
       align: 'center',
     }}
     itemsGrid={{
@@ -70,23 +89,20 @@ const metadata = { title: { default: 'Astro Blocks' } };
       items: [
         {
           icon: { name: 'heroicons:squares-2x2' },
-          title: 'Primitives',
-          content:
-            'Atomic building blocks: Button, Headline, Image, Video, Map, ModelViewer, Logo, Vector, ThemeToggle, LanguageToggle, ToggleGroup, TextArea.',
+          title: copy.inside.primitives.title,
+          content: copy.inside.primitives.content,
           orientation: 'vertical',
         },
         {
           icon: { name: 'heroicons:rectangle-stack' },
-          title: 'Composites',
-          content:
-            'Pre-assembled sections: Header, Footer, Content, ItemsGrid, ContentCarousel, NavigationTree and more.',
+          title: copy.inside.composites.title,
+          content: copy.inside.composites.content,
           orientation: 'vertical',
         },
         {
           icon: { name: 'heroicons:view-columns' },
-          title: 'Layout',
-          content:
-            'Structural containers: Container, TwoColumn, ThreeColumn, FourColumn, Sidebar variants, Modal.',
+          title: copy.inside.layout.title,
+          content: copy.inside.layout.content,
           orientation: 'vertical',
         },
       ],
@@ -95,14 +111,14 @@ const metadata = { title: { default: 'Astro Blocks' } };
 
   <CallToAction
     headline={{
-      tagline: 'Get Started',
-      title: 'Ready to build?',
-      subtitle: 'Explore the full component reference with live usage examples.',
+      tagline: copy.getStarted.tagline,
+      title: copy.getStarted.title,
+      subtitle: copy.getStarted.subtitle,
       align: 'center',
     }}
     actions={[
       {
-        label: 'Open Documentation',
+        label: copy.getStarted.openDocsLabel,
         href: '/documentation',
         intent: 'primary',
         variant: 'solid',
@@ -113,8 +129,5 @@ const metadata = { title: { default: 'Astro Blocks' } };
     ]}
   />
 
-  <Footer
-    languageToggle={{}}
-    disclaimer="Astro Blocks — open-source component library. Not for commercial use."
-  />
+  <Footer languageToggle={{}} disclaimer={copy.footerDisclaimer} />
 </Layout>
