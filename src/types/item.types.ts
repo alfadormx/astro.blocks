@@ -18,7 +18,7 @@ export interface ItemProps {
   image?: ImageProps;
   /** Title text displayed for the item. Omitted or empty renders no title element. */
   title?: string;
-  /** Body text displayed below/beside the title. Omitted or empty renders no content element. */
+  /** HTML string displayed below/beside the title. Omitted or empty renders no content element. */
   content?: string;
   /** Action buttons rendered below/beside the content (default: []). */
   actions?: ButtonProps[];

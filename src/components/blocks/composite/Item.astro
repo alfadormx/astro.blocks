@@ -127,7 +127,7 @@ const horizontalConnectorRightClass = cn(
       )}
     >
       {title && <div class={titleClass}>{title}</div>}
-      {content && <div class={textClass}>{content}</div>}
+      {content && <div class={textClass} set:html={content} />}
       {actions.length > 0 && (
         <div class="flex flex-wrap gap-2 md:gap-3 mt-2 md:mt-3">
           {actions.map((action) => (
