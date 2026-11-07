@@ -7,6 +7,8 @@ import Footer from '~/components/blocks/composite/Footer.astro';
 import CallToAction from '~/components/blocks/composite/CallToAction.astro';
 import ItemsContent from '~/components/blocks/composite/ItemsContent.astro';
 import { homeCopy } from '~/data/home';
+import { documentationNavigation } from '~/data/documentationNavigation';
+import { getGroupChildLabels } from '~/utils/navigationGroups';
 
 type Language = (typeof I18N.languages)[number];
 
@@ -22,6 +24,27 @@ type Props = { langCode: string; basePath: string };
 
 const { langCode, basePath } = Astro.props;
 const copy = homeCopy[langCode];
+
+const language = I18N.languages.find((lang: Language) => lang.code === langCode);
+if (!language) {
+  throw new Error(`No i18n language configured for "${langCode}"`);
+}
+const listFormat = new Intl.ListFormat(language.locale, { type: 'conjunction' });
+
+const layers = [
+  { group: 'Primitives', icon: 'heroicons:squares-2x2', copyKey: 'primitives' },
+  { group: 'Composite', icon: 'heroicons:rectangle-stack', copyKey: 'composites' },
+  { group: 'Layout', icon: 'heroicons:view-columns', copyKey: 'layout' },
+] as const;
+
+const layerItems = layers.map(({ group, icon, copyKey }) => ({
+  icon: { name: icon },
+  title: copy.inside[copyKey].title,
+  content: `<strong>${copy.inside[copyKey].lead}:</strong> ${listFormat.format(
+    getGroupChildLabels(documentationNavigation, group)
+  )}.`,
+  orientation: 'vertical' as const,
+}));
 
 const metadata = {
   title: { default: copy.pageTitle },
@@ -86,26 +109,7 @@ const metadata = {
     itemsGrid={{
       columns: 3,
       gap: 'tight',
-      items: [
-        {
-          icon: { name: 'heroicons:squares-2x2' },
-          title: copy.inside.primitives.title,
-          content: copy.inside.primitives.content,
-          orientation: 'vertical',
-        },
-        {
-          icon: { name: 'heroicons:rectangle-stack' },
-          title: copy.inside.composites.title,
-          content: copy.inside.composites.content,
-          orientation: 'vertical',
-        },
-        {
-          icon: { name: 'heroicons:view-columns' },
-          title: copy.inside.layout.title,
-          content: copy.inside.layout.content,
-          orientation: 'vertical',
-        },
-      ],
+      items: layerItems,
     }}
   />
 

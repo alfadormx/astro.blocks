@@ -90,7 +90,7 @@ src/
 ├── config.yaml        site configuration
 ├── layouts/           page layout
 ├── pages/
-│   ├── index.astro    landing page
+│   ├── [...lang]/     landing page, one route for all locales
 │   ├── demos/         full example sites
 │   └── documentation/ block reference
 ├── styles/            global styles and color tokens

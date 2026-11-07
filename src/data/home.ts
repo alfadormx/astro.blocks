@@ -1,6 +1,6 @@
 export interface HomeItemCopy {
   title: string;
-  content: string;
+  lead: string;
 }
 
 export interface HomeCopy {
@@ -49,18 +49,15 @@ export const homeCopy: Record<string, HomeCopy> = {
         'From atomic primitives to fully assembled sections — everything composable, nothing opinionated.',
       primitives: {
         title: 'Primitives',
-        content:
-          'Atomic building blocks: Button, Headline, Image, Video, Map, ModelViewer, Logo, Vector, ThemeToggle, LanguageToggle, ToggleGroup, TextArea.',
+        lead: 'Atomic building blocks',
       },
       composites: {
         title: 'Composites',
-        content:
-          'Pre-assembled sections: Header, Footer, Content, ItemsGrid, ContentCarousel, NavigationTree and more.',
+        lead: 'Pre-assembled sections',
       },
       layout: {
         title: 'Layout',
-        content:
-          'Structural containers: Container, TwoColumn, ThreeColumn, FourColumn, Sidebar variants, Modal.',
+        lead: 'Structural containers',
       },
     },
     getStarted: {
@@ -88,18 +85,15 @@ export const homeCopy: Record<string, HomeCopy> = {
       subtitle: 'De primitivas atómicas a secciones completas: todo combinable, nada impuesto.',
       primitives: {
         title: 'Primitivas',
-        content:
-          'Piezas básicas: Button, Headline, Image, Video, Map, ModelViewer, Logo, Vector, ThemeToggle, LanguageToggle, ToggleGroup, TextArea.',
+        lead: 'Piezas básicas',
       },
       composites: {
         title: 'Compuestos',
-        content:
-          'Secciones preensambladas: Header, Footer, Content, ItemsGrid, ContentCarousel, NavigationTree y más.',
+        lead: 'Secciones preensambladas',
       },
       layout: {
         title: 'Maquetación',
-        content:
-          'Contenedores estructurales: Container, TwoColumn, ThreeColumn, FourColumn, variantes Sidebar, Modal.',
+        lead: 'Contenedores estructurales',
       },
     },
     getStarted: {
