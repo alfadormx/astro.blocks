@@ -19,6 +19,19 @@ export function gridColumnsClass(columns: GridColumns, responsive: boolean): str
   return (responsive ? RESPONSIVE_COLUMNS : FIXED_COLUMNS)[columns];
 }
 
+const GAP_CLASSES = {
+  none: '',
+  tight: 'gap-3 @3xl:gap-4 @5xl:gap-6',
+  normal: 'gap-4 @3xl:gap-6 @5xl:gap-8',
+  loose: 'gap-6 @3xl:gap-8 @5xl:gap-12',
+} as const;
+
+export type GridGapSize = keyof typeof GAP_CLASSES;
+
+export function gridGapClass(gap: GridGapSize): string {
+  return GAP_CLASSES[gap];
+}
+
 /** Whether the last item sits alone in its row at `columns` columns. */
 export function lastItemAlone(count: number, columns: number): boolean {
   return columns > 1 && count % columns === 1;
