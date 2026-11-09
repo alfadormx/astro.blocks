@@ -57,6 +57,7 @@ Blocks live in `src/components/blocks/`, with prop types in `src/types/*.types.t
 | `Footer`                                     | Logo, disclaimer, social and secondary links, language toggle             |
 | `NavigationTree`, `NavigationTreeHorizontal` | Vertical and horizontal nested navigation                                 |
 | `CallToAction`                               | Headline plus actions; doubles as a hero                                  |
+| `Hero`                                       | Opening section: copy centered or beside an image or video                |
 | `Content`                                    | Text and image side by side with an action                                |
 | `ItemsContent`                               | Headline above an items grid                                              |
 | `ItemsGrid`, `Item`                          | 1–4 column grid of items, optionally selectable                           |
@@ -101,7 +102,7 @@ tests/                 unit/, astro/, browser/
 
 ## Demos
 
-- `/` builds the landing page from `Header`, `CallToAction`, `ItemsContent` and `Footer`.
+- `/` builds the landing page from `Header`, `Hero`, `ItemsContent`, `CallToAction` and `Footer`.
 - `/demos/jewellery-configurator` is a ring configurator built on `Configurator` and `ModelViewer`.
 
 ## Commands

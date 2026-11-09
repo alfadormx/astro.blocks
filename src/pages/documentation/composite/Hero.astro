@@ -1,0 +1,126 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import HeroBlock from '~/components/blocks/composite/Hero.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import type { ButtonProps } from '~/types/button.types';
+
+const metadata = { title: { default: 'Hero' } };
+
+const actions: ButtonProps[] = [
+  {
+    label: 'Get started',
+    intent: 'primary',
+    icon: { name: 'heroicons:arrow-right' },
+    iconPosition: 'right',
+  },
+  { label: 'View source', intent: 'secondary', variant: 'outline' },
+];
+const defaultActionConfig = { size: 'lg', shape: 'pill', variant: 'solid' } as const;
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Hero',
+    subtitle: 'The opening section of a page: copy centered or beside an image or video.',
+  }}
+>
+  <p>
+    Hero renders its title as an <code>h1</code> by default, because it opens the page. The examples
+    below pass <code>headline.htmlTag: 'h2'</code> only because this page already has its own
+    <code>h1</code>. Leave it out when Hero is the first block.
+  </p>
+
+  <h3>1. Centered</h3>
+  <div data-doc-section="centered">
+    <HeroBlock
+      headline={{
+        tagline: 'Hero',
+        title: 'Build pages from blocks',
+        subtitle: 'Copy and actions centered in a full-width section.',
+        htmlTag: 'h2',
+      }}
+      defaultActionConfig={defaultActionConfig}
+      actions={actions}
+    />
+  </div>
+
+  <h3>2. Background video</h3>
+  <p>
+    <code>container.background</code> puts an image or video behind centered copy, with a
+    <code>bg-base/60</code> overlay by default. <code>container.minHeight</code> sets the height.
+  </p>
+  <div data-doc-section="background-video">
+    <HeroBlock
+      container={{
+        minHeight: 'min-h-[80vh]',
+        background: { video: 'https://www.pexels.com/download/video/2646392/' },
+      }}
+      headline={{
+        tagline: 'Hero',
+        title: 'Copy over motion',
+        subtitle: 'A full-bleed background video with an overlay for contrast.',
+        htmlTag: 'h2',
+      }}
+      defaultActionConfig={defaultActionConfig}
+      actions={actions}
+    />
+  </div>
+
+  <h3>3. Split, media on the right</h3>
+  <p>
+    <code>layout: 'split'</code> puts the copy beside media: set <code>image</code> or
+    <code>video</code>. On small screens the copy stacks above the media.
+  </p>
+  <div data-doc-section="split-right">
+    <HeroBlock
+      layout="split"
+      image={{
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=min&auto=format',
+        alt: 'Mountain peaks above the clouds',
+      }}
+      headline={{
+        tagline: 'Hero',
+        title: 'Copy beside an image',
+        subtitle:
+          'The image loads eagerly with high fetch priority, since it is usually the largest paint.',
+        htmlTag: 'h2',
+      }}
+      defaultActionConfig={defaultActionConfig}
+      actions={actions}
+    />
+  </div>
+
+  <h3>4. Split, media on the left</h3>
+  <p>
+    <code>mediaPosition: 'left'</code> moves the media to the left column from the
+    <code>md</code> breakpoint up. <code>twoColumnContainer</code> sets the ratio and gap.
+  </p>
+  <div data-doc-section="split-left">
+    <HeroBlock
+      layout="split"
+      mediaPosition="left"
+      twoColumnContainer={{ ratio: '3:2' }}
+      video={{
+        source: {
+          provider: 'html5',
+          sources: [
+            { src: '/videos/flower.webm', type: 'video/webm' },
+            { src: '/videos/flower.mp4', type: 'video/mp4' },
+          ],
+        },
+      }}
+      headline={{
+        tagline: 'Hero',
+        title: 'Copy beside a video',
+        subtitle: 'Any Video source works: html5, YouTube or Vimeo.',
+        htmlTag: 'h2',
+      }}
+      defaultActionConfig={defaultActionConfig}
+      actions={actions}
+    />
+  </div>
+
+  <ApiReferenceTable component="Hero" category="composite" />
+</Layout>
