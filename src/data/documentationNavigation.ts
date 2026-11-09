@@ -50,6 +50,7 @@ export const documentationNavigation: NavigationTreeItem[] = [
   {
     label: 'Primitives',
     children: [
+      { label: 'Accordion', href: '/documentation/primitives/Accordion' },
       { label: 'Background', href: '/documentation/primitives/Background' },
       { label: 'Button', href: '/documentation/primitives/Button' },
       { label: 'ContentCarouselItem', href: '/documentation/primitives/ContentCarouselItem' },
