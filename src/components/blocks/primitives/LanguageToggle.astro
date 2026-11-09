@@ -3,6 +3,7 @@ import type { LanguageToggleProps } from '~/types/languagetoggle.types';
 import type { ButtonProps } from '~/types/button.types';
 import Button from './Button.astro';
 import { I18N, SITE } from 'site-config';
+import { currentLanguage } from '~/utils/currentLanguage';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 import { cn } from '~/utils/styles';
 
@@ -56,16 +57,7 @@ const mergedActiveButtonConfig = mergeConfigs(
 );
 
 const currentPath = Astro.url.pathname;
-
-const matchesBasePath = (basePath: string) =>
-  basePath === '/'
-    ? currentPath === '/'
-    : currentPath === basePath || currentPath.startsWith(`${basePath}/`);
-
-const currentLang =
-  I18N.languages.find((lang: Language) => matchesBasePath(lang.basePath)) ||
-  I18N.languages.find((lang: Language) => lang.code === I18N.default) ||
-  I18N.languages[0];
+const currentLang = currentLanguage(currentPath, I18N);
 
 const applyTrailingSlash = (path: string) => {
   if (SITE.trailingSlash) {
