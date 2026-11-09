@@ -355,22 +355,36 @@ const wrapperProps = container ? mergedContainer : {};
 
     if (slideCount === 0) return;
 
+    realSlides.forEach((slide, i) => {
+      if (slide.hasAttribute('role')) return;
+      slide.setAttribute('role', 'group');
+      slide.setAttribute('aria-roledescription', 'slide');
+      slide.setAttribute('aria-label', `Slide ${i + 1} of ${slideCount}`);
+    });
+
     // Clone slides for loop
     let slides = realSlides;
     if (isLoop && slideCount > 1) {
+      // inert keeps focusable content in clones out of the tab order, which aria-hidden alone does not.
+      const markClone = (slide: HTMLElement, position: 'before' | 'after'): HTMLElement => {
+        const clone = slide.cloneNode(true) as HTMLElement;
+        clone.setAttribute('data-carousel-clone', position);
+        clone.removeAttribute('data-carousel-slide');
+        clone.removeAttribute('role');
+        clone.removeAttribute('aria-roledescription');
+        clone.removeAttribute('aria-label');
+        clone.setAttribute('aria-hidden', 'true');
+        clone.inert = true;
+        return clone;
+      };
+
       // Clone all slides before and after to support multiple visible slides
       realSlides.forEach((slide) => {
-        const cloneAfter = slide.cloneNode(true) as HTMLElement;
-        cloneAfter.setAttribute('data-carousel-clone', 'after');
-        cloneAfter.removeAttribute('data-carousel-slide');
-        track.appendChild(cloneAfter);
+        track.appendChild(markClone(slide, 'after'));
       });
 
       realSlides.forEach((slide) => {
-        const cloneBefore = slide.cloneNode(true) as HTMLElement;
-        cloneBefore.setAttribute('data-carousel-clone', 'before');
-        cloneBefore.removeAttribute('data-carousel-slide');
-        track.insertBefore(cloneBefore, track.firstChild);
+        track.insertBefore(markClone(slide, 'before'), track.firstChild);
       });
 
       slides = Array.from(track.children) as HTMLElement[];

@@ -63,7 +63,7 @@ const sampleImages = [
       Use the default slot to include any custom content, including interactive components. The
       carousel intelligently distinguishes between drag gestures and clicks.
     </p>
-    <div class="border border-border rounded-lg overflow-hidden">
+    <div class="border border-border rounded-lg overflow-hidden" data-doc-section="slotted">
       <ContentCarouselBlock>
         <ContentCarouselItem basis="basis-full" background={{ class: 'bg-surface' }}>
           <Image
@@ -137,7 +137,7 @@ const sampleImages = [
       Enable <code>loop</code> for continuous infinite scrolling using cloned-slide technique for
       seamless transitions.
     </p>
-    <div class="border border-border rounded-lg overflow-hidden">
+    <div class="border border-border rounded-lg overflow-hidden" data-doc-section="loop">
       <ContentCarouselBlock items={sampleImages.slice(0, 3)} loop={true} />
     </div>
   </section>

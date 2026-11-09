@@ -93,3 +93,28 @@ test('defaultImageConfig class reaches the slide image', async ({ page }) => {
 
   await expect(image).toHaveCSS('border-top-left-radius', '12px');
 });
+
+test('slotted slides are announced as slides', async ({ page }) => {
+  await page.goto(PAGE_URL);
+  const slides = page.locator(
+    '[data-doc-section="slotted"] .carousel-item:not([data-carousel-clone])'
+  );
+  const count = await slides.count();
+  expect(count).toBeGreaterThan(1);
+  for (let i = 0; i < count; i++) {
+    await expect(slides.nth(i)).toHaveAttribute('role', 'group');
+    await expect(slides.nth(i)).toHaveAttribute('aria-roledescription', 'slide');
+    await expect(slides.nth(i)).toHaveAttribute('aria-label', `Slide ${i + 1} of ${count}`);
+  }
+});
+
+test('loop clones are hidden and carry no slide label', async ({ page }) => {
+  await page.goto(PAGE_URL);
+  const clones = page.locator('[data-doc-section="loop"] [data-carousel-clone]');
+  await expect(clones.first()).toBeAttached();
+  for (const clone of await clones.all()) {
+    await expect(clone).toHaveAttribute('aria-hidden', 'true');
+    await expect(clone).not.toHaveAttribute('aria-label');
+    await expect(clone).not.toHaveAttribute('role');
+  }
+});
