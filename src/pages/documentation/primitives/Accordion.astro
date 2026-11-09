@@ -1,0 +1,78 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import AccordionBlock from '~/components/blocks/primitives/Accordion.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import type { AccordionItem } from '~/types/accordion.types';
+
+const metadata = { title: { default: 'Accordion' } };
+
+const items: AccordionItem[] = [
+  {
+    id: 'shipping',
+    title: 'How long does shipping take?',
+    content: '<p>Orders ship within two working days.</p>',
+  },
+  {
+    title: 'Can I return an item?',
+    content: '<p>Yes, within 30 days of delivery.</p>',
+  },
+  {
+    title: 'Do you ship abroad?',
+    content: '<p>We ship to every country in the EU.</p>',
+  },
+];
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitive',
+    title: 'Accordion',
+    subtitle: 'Collapsible sections built on native details and summary. Works without JavaScript.',
+  }}
+>
+  <h3>1. Basic</h3>
+  <p>
+    Each item is a <code>&lt;details&gt;</code>. Click a title, or focus it and press Enter or
+    Space, to toggle it. Several items can be open at once.
+  </p>
+  <p>
+    Titles render in a <code>span</code> by default. Set <code>titleTag</code> to a heading level
+    when the titles belong in the page outline, as in an FAQ section.
+  </p>
+  <div data-doc-section="basic">
+    <AccordionBlock items={items} />
+  </div>
+
+  <h3>2. Single</h3>
+  <p>
+    <code>mode="single"</code> gives every item the same <code>name</code>, so the browser closes
+    the open item when another opens. No JavaScript involved.
+  </p>
+  <div data-doc-section="single">
+    <AccordionBlock items={items} mode="single" />
+  </div>
+
+  <h3>3. Open by default</h3>
+  <div data-doc-section="default-open">
+    <AccordionBlock items={items} defaultOpen={[0, 2]} />
+  </div>
+
+  <h3>4. Rich content from slots</h3>
+  <p>
+    An <code>item-N</code> slot (0-based) replaces that item's <code>content</code>. Keep slotted
+    answers to static markup.
+  </p>
+  <div data-doc-section="slotted">
+    <AccordionBlock items={[{ title: 'What is in the box?' }, items[1]]}>
+      <Fragment slot="item-0">
+        <ul>
+          <li>The device</li>
+          <li>A USB-C cable</li>
+        </ul>
+      </Fragment>
+    </AccordionBlock>
+  </div>
+
+  <ApiReferenceTable component="Accordion" category="primitives" />
+</Layout>
