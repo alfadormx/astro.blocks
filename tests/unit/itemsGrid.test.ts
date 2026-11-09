@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { gridColumnsClass, lastItemAlone, type GridColumns } from '~/utils/itemsGrid';
+import {
+  gridColumnsClass,
+  gridGapClass,
+  lastItemAlone,
+  type GridColumns,
+  type GridGapSize,
+} from '~/utils/itemsGrid';
 
 describe('gridColumnsClass', () => {
   const cases: Array<{
@@ -23,6 +29,16 @@ describe('gridColumnsClass', () => {
   ];
   it.each(cases)('$name', ({ columns, responsive, expected }) => {
     expect(gridColumnsClass(columns, responsive)).toBe(expected);
+  });
+});
+
+describe('gridGapClass', () => {
+  const cases: Array<{ gap: GridGapSize; expected: string }> = [
+    { gap: 'none', expected: '' },
+    { gap: 'normal', expected: 'gap-4 @3xl:gap-6 @5xl:gap-8' },
+  ];
+  it.each(cases)('$gap gap maps to "$expected"', ({ gap, expected }) => {
+    expect(gridGapClass(gap)).toBe(expected);
   });
 });
 

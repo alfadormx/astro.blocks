@@ -4,7 +4,7 @@ import { cn } from '~/utils/styles';
 import Item from '~/components/blocks/composite/Item.astro';
 import SelectableItemsGrid from '~/components/blocks/composite/SelectableItemsGrid.astro';
 import { mergeConfigs } from '~/utils/mergeConfigs';
-import { gridColumnsClass, lastItemAlone } from '~/utils/itemsGrid';
+import { gridColumnsClass, gridGapClass, lastItemAlone } from '~/utils/itemsGrid';
 
 type Props = ItemsGridProps;
 
@@ -20,19 +20,12 @@ const {
   selectedItemConfig,
 } = Astro.props as Props;
 
-const gapSettings = {
-  none: '',
-  tight: 'gap-3 @3xl:gap-4 @5xl:gap-6',
-  normal: 'gap-4 @3xl:gap-6 @5xl:gap-8',
-  loose: 'gap-6 @3xl:gap-8 @5xl:gap-12',
-} as const;
-
 const baseGridClass = 'grid mx-auto';
 
 const gridClass = cn(
   baseGridClass,
   gridColumnsClass(columns, responsive),
-  gapSettings[gap],
+  gridGapClass(gap),
   className
 );
 
