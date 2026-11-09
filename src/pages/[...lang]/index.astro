@@ -5,6 +5,7 @@ import Layout from '~/layouts/Layout.astro';
 import Header from '~/components/blocks/composite/Header.astro';
 import Footer from '~/components/blocks/composite/Footer.astro';
 import CallToAction from '~/components/blocks/composite/CallToAction.astro';
+import Hero from '~/components/blocks/composite/Hero.astro';
 import ItemsContent from '~/components/blocks/composite/ItemsContent.astro';
 import { homeCopy } from '~/data/home';
 import { documentationNavigation } from '~/data/documentationNavigation';
@@ -67,13 +68,11 @@ const metadata = {
     ]}
   />
 
-  <CallToAction
+  <Hero
     headline={{
       tagline: copy.hero.tagline,
       title: copy.hero.title,
-      htmlTag: 'h1',
       subtitle: copy.hero.subtitle,
-      align: 'center',
     }}
     actions={[
       {

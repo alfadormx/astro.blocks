@@ -1,0 +1,117 @@
+---
+import Container from '~/components/blocks/layout/Container.astro';
+import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
+import Image from '~/components/blocks/primitives/Image.astro';
+import Video from '~/components/blocks/primitives/Video.astro';
+import type { ButtonProps } from '~/types/button.types';
+import type { ContainerProps, TwoColumnContainerProps } from '~/types/container.types';
+import type { HeadlineProps } from '~/types/headline.types';
+import type { HeroProps } from '~/types/hero.types';
+import type { ImageProps } from '~/types/image.types';
+import { validateHero } from '~/utils/hero';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import { cn } from '~/utils/styles';
+
+type Props = HeroProps;
+
+const {
+  layout = 'centered',
+  mediaPosition = 'right',
+  image,
+  video,
+  container,
+  twoColumnContainer,
+  headline,
+  actions = [],
+  defaultActionConfig,
+  actionsClass,
+} = Astro.props;
+
+validateHero({ layout, image, video });
+
+const defaultContainer: Partial<ContainerProps> = {
+  content: { class: 'flex flex-col justify-center' },
+};
+
+// Only a media background gets the overlay; any `background` key makes Container render Background.
+const hasMediaBackground = !!(container?.background?.image || container?.background?.video);
+const defaultBackground: Partial<ContainerProps> | undefined = hasMediaBackground
+  ? { background: { overlayClass: 'bg-base/60' } }
+  : undefined;
+
+const mergedContainer = mergeConfigs<ContainerProps>(
+  {},
+  defaultContainer,
+  defaultBackground,
+  container
+);
+
+const defaultHeadline: Partial<HeadlineProps> = {
+  htmlTag: 'h1',
+  align: layout === 'centered' ? 'center' : 'left',
+};
+const mergedHeadline = headline && mergeConfigs<HeadlineProps>({}, defaultHeadline, headline);
+
+const actionsWrapperClass = cn(
+  'flex flex-col md:flex-row gap-4',
+  layout === 'centered' ? 'justify-center' : 'justify-start',
+  actionsClass
+);
+
+const defaultTwoColumnContainer: Partial<TwoColumnContainerProps> = {
+  htmlTag: 'div',
+  content: { air: 'none', widthType: 'full', class: 'items-center' },
+};
+const mergedTwoColumnContainer: TwoColumnContainerProps = {
+  ...mergeConfigs<TwoColumnContainerProps>({}, defaultTwoColumnContainer, twoColumnContainer),
+  responsive: true,
+  reverseOnMobile: mediaPosition === 'left',
+};
+
+const defaultImage: Partial<ImageProps> = {
+  loading: 'eager',
+  fetchpriority: 'high',
+  layout: 'responsive',
+  width: 640,
+  height: 480,
+  class: 'rounded-lg',
+};
+const mergedImage = image && mergeConfigs<ImageProps>({}, defaultImage, image);
+
+const copySlot = mediaPosition === 'left' ? 'right' : 'left';
+const mediaSlot = mediaPosition === 'left' ? 'left' : 'right';
+---
+
+<Container {...mergedContainer}>
+  {layout === 'centered' ? (
+    <div data-hero-copy>
+      {mergedHeadline && <Headline {...mergedHeadline} />}
+      {actions.length > 0 && (
+        <div class={actionsWrapperClass}>
+          {actions.map((action: ButtonProps) => (
+            <Button {...mergeConfigs<ButtonProps>({}, defaultActionConfig, action)} />
+          ))}
+        </div>
+      )}
+    </div>
+  ) : (
+    <TwoColumnContainer {...mergedTwoColumnContainer}>
+      <div slot={copySlot} data-hero-copy>
+        {mergedHeadline && <Headline {...mergedHeadline} />}
+        {actions.length > 0 && (
+          <div class={actionsWrapperClass}>
+            {actions.map((action: ButtonProps) => (
+              <Button {...mergeConfigs<ButtonProps>({}, defaultActionConfig, action)} />
+            ))}
+          </div>
+        )}
+      </div>
+      <div slot={mediaSlot} data-hero-media>
+        {mergedImage && <Image {...mergedImage} />}
+        {video && <Video {...video} />}
+      </div>
+    </TwoColumnContainer>
+  )}
+</Container>
