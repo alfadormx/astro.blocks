@@ -1,0 +1,93 @@
+---
+// Internal to Pricing: renders one already-merged tier card; Pricing owns layering, order and billing.
+import { Icon } from 'astro-icon/components';
+import Button from '~/components/blocks/primitives/Button.astro';
+import type { PricingFeature, PricingTier } from '~/types/pricing.types';
+import { formatPrice } from '~/utils/pricing';
+import { cn } from '~/utils/styles';
+
+type Props = { tier: PricingTier; locale: string; billing: boolean };
+
+const { tier, locale, billing: hasBilling } = Astro.props;
+const {
+  name,
+  description,
+  price,
+  currency = 'USD',
+  period = {},
+  features,
+  action,
+  nameTag: NameTag = 'h3',
+  includedIcon,
+  excludedIcon,
+  includedLabel,
+  excludedLabel,
+  class: className,
+  nameClass,
+  priceClass,
+  featuresClass,
+  badge,
+  badgeClass,
+  highlighted,
+} = tier;
+
+const normalize = (feature: PricingFeature) =>
+  typeof feature === 'string' ? { label: feature, included: true } : feature;
+
+// Without a billing toggle no radio is checked, so a keyed pair would show both prices.
+// One unkeyed monthly line shows in every state.
+const lines =
+  !hasBilling || price.yearly === undefined
+    ? [{ billing: undefined, amount: price.monthly, label: period.monthly }]
+    : (['monthly', 'yearly'] as const).map((billing) => ({
+        billing,
+        amount: price[billing]!,
+        label: period[billing],
+      }));
+---
+
+<div class={className} data-pricing-tier data-highlighted={highlighted ? '' : undefined}>
+  {badge && (
+    <span class={badgeClass} data-pricing-badge>
+      {badge}
+    </span>
+  )}
+  <NameTag class={nameClass}>{name}</NameTag>
+  {description && <p class="mt-2 text-muted">{description}</p>}
+  <p class={priceClass} data-pricing-price>
+    {lines.map(({ billing, amount, label }) => (
+      <span data-billing={billing}>
+        <span data-price-amount>{formatPrice(amount, currency, locale)}</span>
+        {label && <span class="text-base font-normal text-muted">{label}</span>}
+      </span>
+    ))}
+  </p>
+  <ul class={featuresClass}>
+    {features.map(normalize).map(({ label, included }) => {
+      const icon = included ? includedIcon : excludedIcon;
+      return (
+        <li
+          class={cn('flex items-start gap-3', !included && 'text-muted')}
+          data-feature-included={String(included)}
+        >
+          <Icon
+            name={icon?.name ?? ''}
+            class={cn(
+              'mt-0.5 size-5 shrink-0',
+              included ? 'text-success' : 'text-muted',
+              icon?.class
+            )}
+            aria-hidden="true"
+          />
+          <span>
+            <span class="sr-only">{included ? includedLabel : excludedLabel}: </span>
+            {label}
+          </span>
+        </li>
+      );
+    })}
+  </ul>
+  <div class="mt-auto">
+    <Button {...action} />
+  </div>
+</div>
