@@ -32,6 +32,7 @@ export const documentationNavigation: NavigationTreeItem[] = [
         label: 'NavigationTreeHorizontal',
         href: '/documentation/composite/NavigationTreeHorizontal',
       },
+      { label: 'Pricing', href: '/documentation/composite/Pricing' },
       { label: 'Tabs', href: '/documentation/composite/Tabs' },
     ],
   },

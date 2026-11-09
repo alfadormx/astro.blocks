@@ -1,0 +1,148 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import PricingBlock from '~/components/blocks/composite/Pricing.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import type { PricingTier } from '~/types/pricing.types';
+
+const metadata = { title: { default: 'Pricing' } };
+
+const starter: PricingTier = {
+  name: 'Starter',
+  description: 'For individuals getting started.',
+  price: { monthly: 9 },
+  features: ['1 project', '5 GB storage', { label: 'Priority support', included: false }],
+  action: { label: 'Start free trial', href: '#' },
+};
+const pro: PricingTier = {
+  name: 'Pro',
+  description: 'For growing teams.',
+  price: { monthly: 29 },
+  features: ['10 projects', '50 GB storage', 'Priority support'],
+  action: { label: 'Start free trial', href: '#' },
+  highlighted: true,
+  badge: 'Most popular',
+};
+const team: PricingTier = {
+  name: 'Team',
+  description: 'For larger teams.',
+  price: { monthly: 79 },
+  features: ['Unlimited projects', '500 GB storage', 'Priority support'],
+  action: { label: 'Start free trial', href: '#' },
+};
+const enterprise: PricingTier = {
+  name: 'Enterprise',
+  description: 'For organisations with custom needs.',
+  price: { monthly: 'Custom' },
+  period: { monthly: '' },
+  features: ['Unlimited projects', 'Unlimited storage', 'Dedicated support'],
+  action: { label: 'Contact sales', href: '#' },
+};
+const free: PricingTier = {
+  name: 'Free',
+  description: 'For trying things out.',
+  price: { monthly: 0 },
+  features: ['1 project', '1 GB storage', { label: 'Priority support', included: false }],
+  action: { label: 'Sign up', href: '#' },
+};
+
+const starterYearly: PricingTier = { ...starter, price: { monthly: 9, yearly: 90 } };
+const proYearly: PricingTier = { ...pro, price: { monthly: 29, yearly: 290 } };
+const teamYearly: PricingTier = { ...team, price: { monthly: 79, yearly: 790 } };
+
+const headline = { tagline: 'Pricing', title: 'Plans for every team' };
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Pricing',
+    subtitle: 'Pricing tiers with feature checklists, a highlighted tier and a billing toggle.',
+  }}
+>
+  <p>
+    The demos below render their headline as <code>h2</code> and tier names as <code>h3</code>,
+    because the page already has an <code>h1</code>. A <code>yearly</code> price is shown as an
+    annual total; Pricing does not divide it. Numeric prices are formatted in the page language with{' '}
+    <code>Intl.NumberFormat</code>; string prices render verbatim.
+  </p>
+
+  <h3>1. Single tier</h3>
+  <div data-doc-section="single">
+    <PricingBlock headline={headline} tiers={[starter]} />
+  </div>
+
+  <h3>2. Three tiers</h3>
+  <p>
+    <code>highlighted</code> emphasises one tier with a primary border, a shadow and a solid action,
+    and <code>badge</code> adds a pill on its top edge. When tiers stack on narrow widths, the
+    highlighted tier moves first.
+  </p>
+  <div data-doc-section="three-tiers">
+    <PricingBlock headline={headline} tiers={[starter, pro, enterprise]} />
+  </div>
+
+  <h3>3. Four tiers</h3>
+  <p>
+    Four tiers sit in four columns from the <code>@5xl</code> container width, and two by two below
+    it.
+  </p>
+  <div data-doc-section="four-tiers">
+    <PricingBlock headline={headline} tiers={[starter, pro, team, enterprise]} />
+  </div>
+
+  <h3>4. Billing toggle</h3>
+  <p>
+    When any tier has a <code>yearly</code> price, a Monthly/Yearly toggle renders above the tiers.
+    It works without JavaScript; with it, the change is announced to screen readers.
+  </p>
+  <div data-doc-section="billing-toggle">
+    <PricingBlock headline={headline} tiers={[starterYearly, proYearly, teamYearly]} />
+  </div>
+
+  <h3>5. Mixed tiers</h3>
+  <p>
+    Tiers without a <code>yearly</code> price keep their price in both billing states.
+  </p>
+  <div data-doc-section="mixed-tiers">
+    <PricingBlock headline={headline} tiers={[free, proYearly, enterprise]} />
+  </div>
+
+  <h3>6. Localized labels</h3>
+  <p>
+    Toggle options are matched by position, Monthly then Yearly, so pass both when relabelling them.
+  </p>
+  <div data-doc-section="localized">
+    <PricingBlock
+      headline={{ tagline: 'Precios', title: 'Planes para cada equipo' }}
+      tiers={[starterYearly, proYearly, teamYearly]}
+      toggleGroup={{
+        label: 'Periodo de facturación',
+        options: [{ label: 'Mensual', selected: true }, { label: 'Anual' }],
+      }}
+      billingAnnouncement={{
+        monthly: 'Mostrando precios mensuales',
+        yearly: 'Mostrando precios anuales',
+      }}
+      defaultTierConfig={{
+        period: { monthly: '/mes', yearly: '/año' },
+        includedLabel: 'Incluido',
+        excludedLabel: 'No incluido',
+      }}
+    />
+  </div>
+
+  <h3>7. No toggle</h3>
+  <p>
+    <code>toggleGroup={'{false}'}</code> hides the toggle; monthly prices show.
+  </p>
+  <div data-doc-section="no-toggle">
+    <PricingBlock
+      headline={headline}
+      tiers={[starterYearly, proYearly, teamYearly]}
+      toggleGroup={false}
+    />
+  </div>
+
+  <ApiReferenceTable component="Pricing" category="composite" />
+</Layout>

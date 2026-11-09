@@ -1,0 +1,175 @@
+---
+import { I18N } from 'site-config';
+import Container from '~/components/blocks/layout/Container.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
+import ToggleGroup from '~/components/blocks/primitives/ToggleGroup.astro';
+import PricingTierCard from '~/components/blocks/composite/PricingTier.astro';
+import type { ContainerProps } from '~/types/container.types';
+import type { HeadlineProps } from '~/types/headline.types';
+import type { PricingProps, PricingTier, PricingToggleGroup } from '~/types/pricing.types';
+import type { ToggleGroupAppearance, ToggleGroupProps } from '~/types/togglegroup.types';
+import { currentLanguage } from '~/utils/currentLanguage';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import {
+  hasYearly,
+  pricingColumnsClass,
+  pricingGapClass,
+  pricingGroupName,
+  pricingOrderClass,
+  validatePricing,
+  type PricingColumns,
+} from '~/utils/pricing';
+import { cn } from '~/utils/styles';
+
+type Props = PricingProps;
+type TierLayer = Omit<PricingTier, 'features' | 'highlighted'>;
+
+const {
+  container,
+  headline,
+  tiers,
+  toggleGroup,
+  billingAnnouncement,
+  defaultTierConfig,
+  highlightedTierConfig,
+  gap = 'normal',
+  tiersClass,
+  toggleGroupClass,
+} = Astro.props;
+
+validatePricing({ tiers, toggleGroup });
+
+const { locale } = currentLanguage(Astro.url.pathname, I18N);
+
+const mergedContainer = mergeConfigs<ContainerProps>({}, {}, container);
+const mergedHeadline =
+  headline && mergeConfigs<HeadlineProps>({}, { htmlTag: 'h2', align: 'center' }, headline);
+
+const internalTier: Partial<TierLayer> = {
+  currency: 'USD',
+  period: { monthly: '/month', yearly: '/year' },
+  nameTag: 'h3',
+  includedIcon: { name: 'heroicons:check' },
+  excludedIcon: { name: 'heroicons:x-mark' },
+  includedLabel: 'Included',
+  excludedLabel: 'Not included',
+  class: 'relative flex h-full flex-col rounded-lg border border-border bg-surface p-6 md:p-8',
+  nameClass: 'text-xl font-semibold',
+  priceClass: 'mt-4 text-4xl font-bold',
+  featuresClass: 'mt-6 mb-8 list-none space-y-3 p-0',
+  badgeClass:
+    'absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-background',
+  action: { width: 'full', variant: 'outline' },
+};
+
+const internalHighlightedTier: Partial<TierLayer> = {
+  class: 'border-2 border-primary shadow-lg',
+  action: { variant: 'solid' },
+};
+
+const count = tiers.length as PricingColumns;
+const orderClass = pricingOrderClass(count);
+
+const mergedTiers: PricingTier[] = tiers.map(({ features, highlighted = false, ...tier }) => {
+  const merged = mergeConfigs<TierLayer>(
+    {},
+    internalTier,
+    highlighted ? internalHighlightedTier : {},
+    defaultTierConfig,
+    highlighted ? highlightedTierConfig : {},
+    tier as TierLayer
+  );
+  return {
+    ...merged,
+    class: highlighted ? cn(merged.class, orderClass) : merged.class,
+    features,
+    highlighted,
+  };
+});
+
+const gridClass = cn('grid pt-3', pricingColumnsClass(count), pricingGapClass(gap), tiersClass);
+
+const showToggle = toggleGroup !== false && hasYearly(tiers);
+
+const internalToggleGroup: PricingToggleGroup = {
+  label: 'Billing period',
+  options: [{ label: 'Monthly', selected: true }, { label: 'Yearly' }],
+};
+
+const mergedToggleGroup = showToggle
+  ? mergeConfigs<PricingToggleGroup>({}, internalToggleGroup, toggleGroup || undefined)
+  : undefined;
+const group = mergedToggleGroup?.group ?? pricingGroupName();
+const toggleGroupProps: (ToggleGroupProps & ToggleGroupAppearance) | undefined =
+  mergedToggleGroup && {
+    ...mergedToggleGroup,
+    group,
+    options: [
+      { ...mergedToggleGroup.options![0], code: 'monthly' },
+      { ...mergedToggleGroup.options![1], code: 'yearly' },
+    ],
+  };
+
+const announcement = {
+  monthly: 'Showing monthly prices',
+  yearly: 'Showing yearly prices',
+  ...billingAnnouncement,
+};
+---
+
+<Container {...mergedContainer}>
+  <div
+    class="[&:has([data-pricing-toggle]_input[value=yearly]:checked)_[data-billing=monthly]]:hidden [&:has([data-pricing-toggle]_input[value=monthly]:checked)_[data-billing=yearly]]:hidden"
+    data-pricing
+    data-pricing-group={showToggle ? group : undefined}
+    data-announce-monthly={announcement.monthly}
+    data-announce-yearly={announcement.yearly}
+  >
+    {mergedHeadline && <Headline {...mergedHeadline} />}
+    {toggleGroupProps && (
+      <div class={cn('mb-8 flex justify-center', toggleGroupClass)} data-pricing-toggle>
+        <ToggleGroup {...toggleGroupProps} />
+      </div>
+    )}
+    <div class="@container">
+      <div class={gridClass} data-pricing-tiers>
+        {mergedTiers.map((tier) => (
+          <PricingTierCard tier={tier} locale={locale} billing={showToggle} />
+        ))}
+      </div>
+    </div>
+    {showToggle && (
+      <div class="sr-only" aria-live="polite" aria-atomic="true" data-pricing-announcer />
+    )}
+  </div>
+</Container>
+
+<script>
+  import { getSelection, subscribe } from '~/utils/selection';
+
+  function connect(root: HTMLElement): void {
+    const group = root.dataset.pricingGroup;
+    const announcer = root.querySelector<HTMLElement>('[data-pricing-announcer]');
+    if (!group || !announcer) return;
+    // Seeded from the server-checked radio so ToggleGroup's initial publish is not announced.
+    let last =
+      getSelection(group)[0]?.code ??
+      root.querySelector<HTMLInputElement>('[data-pricing-toggle] input:checked')?.value;
+    subscribe(group, (detail) => {
+      const code = detail.selection[0]?.code;
+      if (!code || code === last) return;
+      last = code;
+      announcer.textContent =
+        (code === 'yearly' ? root.dataset.announceYearly : root.dataset.announceMonthly) ?? '';
+    });
+    root.dataset.pricingReady = '';
+  }
+
+  function init(): void {
+    // Subscriptions are cleared on astro:after-swap, so connect on every init.
+    document.querySelectorAll<HTMLElement>('[data-pricing]').forEach(connect);
+  }
+
+  document.addEventListener('astro:after-swap', init);
+  init();
+</script>
