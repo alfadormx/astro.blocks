@@ -1,0 +1,158 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import TestimonialsBlock from '~/components/blocks/composite/Testimonials.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import type { Testimonial } from '~/types/testimonials.types';
+
+const metadata = { title: { default: 'Testimonials' } };
+
+const headline = { title: 'What our customers say', subtitle: 'Real words from real teams.' };
+
+const testimonials: Testimonial[] = [
+  {
+    quote: 'Setup took ten minutes. We shipped our new landing page the same afternoon.',
+    author: { name: 'Ana Ruiz', role: 'Marketing lead, Northwind' },
+  },
+  {
+    quote:
+      'The blocks fit our design system without fighting it.\n\nOur designers stopped filing tickets about spacing.',
+    author: { name: 'Sam Okafor', role: 'Front-end engineer' },
+  },
+  {
+    quote: 'Docs are clear, and every example is live. That alone saved us days.',
+    author: { name: 'Lee Chen' },
+  },
+];
+
+const rated: Testimonial[] = [
+  { ...testimonials[0], rating: 5 },
+  { ...testimonials[1], rating: 4 },
+  { ...testimonials[2], rating: 3 },
+];
+
+const withPeople: Testimonial[] = [
+  {
+    ...testimonials[0],
+    rating: 5,
+    author: {
+      ...testimonials[0].author,
+      avatar: {
+        src: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=96&h=96&fit=crop&crop=faces',
+        width: 48,
+        height: 48,
+      },
+    },
+    source: { label: 'G2', href: 'https://www.g2.com/' },
+  },
+  {
+    ...testimonials[1],
+    author: {
+      ...testimonials[1].author,
+      avatar: {
+        src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop&crop=faces',
+        width: 48,
+        height: 48,
+      },
+    },
+  },
+  { ...testimonials[2], source: { label: 'Product Hunt', href: 'https://www.producthunt.com/' } },
+];
+
+const many: Testimonial[] = [
+  ...rated,
+  {
+    quote: 'Swapping themes is one attribute. Our dark mode came for free.',
+    author: { name: 'Priya Natarajan', role: 'Design lead, Fabrikam' },
+    rating: 5,
+  },
+  {
+    quote: 'We replaced three in-house carousels with one block and deleted a lot of code.',
+    author: { name: 'Tomás Herrera', role: 'Staff engineer' },
+    rating: 4,
+  },
+];
+
+const single: Testimonial[] = [
+  {
+    quote: 'One quote can carry a whole section when it is the right one.',
+    author: { name: 'Jordan Blake' },
+  },
+];
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Testimonials',
+    subtitle:
+      'Customer quotes with author, optional star rating and source, in a grid or a carousel.',
+  }}
+>
+  <h3>1. Grid</h3>
+  <p>
+    The default <code>layout="grid"</code> places cards in up to <code>columns</code> columns,
+    stepping down as the container narrows. Blank lines in <code>quote</code> start new paragraphs.
+  </p>
+  <div data-doc-section="grid">
+    <TestimonialsBlock headline={headline} testimonials={testimonials} />
+  </div>
+
+  <h3>2. Rating</h3>
+  <p>
+    <code>rating</code> draws one to five stars. The stars are hidden from assistive tech;
+    <code>ratingLabel</code> is read instead (default <code>'{'{rating}'} out of 5'</code>).
+  </p>
+  <div data-doc-section="rating">
+    <TestimonialsBlock testimonials={rated} />
+  </div>
+
+  <h3>3. Avatar and source</h3>
+  <p>
+    <code>author.avatar</code> takes Image props and renders a small round photo.
+    <code>source</code> adds a cited link to the original review.
+  </p>
+  <div data-doc-section="avatar-source">
+    <TestimonialsBlock testimonials={withPeople} />
+  </div>
+
+  <h3>4. Shared config</h3>
+  <p>
+    <code>defaultTestimonialConfig</code> restyles or localizes every card, here a Spanish
+    <code>ratingLabel</code> and the pull-quote font restored through <code>quoteClass</code>.
+  </p>
+  <div data-doc-section="layer">
+    <TestimonialsBlock
+      testimonials={rated}
+      columns={2}
+      defaultTestimonialConfig={{
+        ratingLabel: '{rating} de 5 estrellas',
+        quoteClass: 'font-quote text-2xl',
+      }}
+    />
+  </div>
+
+  <h3>5. Carousel</h3>
+  <p>
+    <code>layout="carousel"</code> puts one card per slide in a ContentCarousel, showing one, two or
+    three at a time as the container widens (<code>slideClass</code>). Configure the carousel
+    through <code>contentCarousel</code>. With more than one card per view, set <code>loop</code>:
+    without it, the last positions leave empty space. Without JavaScript only the first cards show.
+  </p>
+  <div data-doc-section="carousel">
+    <TestimonialsBlock
+      layout="carousel"
+      headline={{ title: 'Loved by teams' }}
+      testimonials={many}
+      contentCarousel={{ loop: true }}
+    />
+  </div>
+
+  <h3>6. Single quote</h3>
+  <p>One testimonial in one column, without role or rating.</p>
+  <div data-doc-section="single">
+    <TestimonialsBlock testimonials={single} columns={1} />
+  </div>
+
+  <ApiReferenceTable component="Testimonials" category="composite" />
+</Layout>

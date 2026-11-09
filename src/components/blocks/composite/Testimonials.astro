@@ -1,0 +1,100 @@
+---
+import Container from '~/components/blocks/layout/Container.astro';
+import ContentCarousel from '~/components/blocks/composite/ContentCarousel.astro';
+import ContentCarouselItem from '~/components/blocks/primitives/ContentCarouselItem.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
+import TestimonialCard from '~/components/blocks/composite/TestimonialCard.astro';
+import type { ContainerProps } from '~/types/container.types';
+import type { ContentCarouselProps } from '~/types/contentcarousel.types';
+import type { HeadlineProps } from '~/types/headline.types';
+import type { Testimonial, TestimonialsProps } from '~/types/testimonials.types';
+import { gridColumnsClass, gridGapClass } from '~/utils/itemsGrid';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import { validateTestimonials } from '~/utils/testimonials';
+import { cn } from '~/utils/styles';
+
+type Props = TestimonialsProps;
+type TestimonialLayer = Omit<Testimonial, 'quote' | 'author' | 'rating' | 'source'>;
+
+const {
+  container,
+  headline,
+  testimonials,
+  layout = 'grid',
+  columns = 3,
+  gap = 'normal',
+  testimonialsClass,
+  contentCarousel,
+  slideClass = 'basis-full @lg:basis-1/2 @3xl:basis-1/3',
+  defaultTestimonialConfig,
+} = Astro.props;
+
+validateTestimonials(testimonials);
+
+const mergedContainer = mergeConfigs<ContainerProps>({}, {}, container);
+const mergedHeadline =
+  headline && mergeConfigs<HeadlineProps>({}, { htmlTag: 'h2', align: 'center' }, headline);
+
+const internalTestimonial: TestimonialLayer = {
+  class: 'flex h-full flex-col gap-4 rounded-lg border border-border bg-surface p-6',
+  quoteClass: 'font-body not-italic text-[1rem] leading-normal border-0 pl-0 my-0 space-y-3',
+  authorClass: 'mt-auto flex items-center gap-3',
+  ratingClass: 'flex gap-0.5',
+  ratingLabel: '{rating} out of 5',
+};
+
+// mergeConfigs merges arrays index-wise and data makes no sense as a shared default,
+// so data fields bypass the merge.
+const mergedTestimonials: Testimonial[] = testimonials.map(
+  ({ quote, author, rating, source, ...presentation }) => ({
+    ...mergeConfigs<TestimonialLayer>(
+      {},
+      internalTestimonial,
+      defaultTestimonialConfig,
+      presentation
+    ),
+    quote,
+    author,
+    rating,
+    source,
+  })
+);
+
+const mergedContentCarousel = mergeConfigs<Omit<ContentCarouselProps, 'items'>>(
+  {},
+  { ariaLabel: 'Testimonials', controlsPosition: 'outside' },
+  contentCarousel
+);
+
+// Slides keep the card's own spacing: no Container air, full width, cards stretched to equal height.
+const slide = {
+  content: { air: 'none', widthType: 'full' },
+  layout: { type: 'flex', class: 'items-stretch' },
+  class: 'px-2 py-1',
+} as const;
+
+const gridClass = cn('grid', gridColumnsClass(columns, true), gridGapClass(gap), testimonialsClass);
+---
+
+<Container {...mergedContainer}>
+  {mergedHeadline && <Headline {...mergedHeadline} />}
+  {layout === 'carousel' ? (
+    <div class="@container">
+      <ContentCarousel {...mergedContentCarousel}>
+        {mergedTestimonials.map((testimonial) => (
+          <ContentCarouselItem {...slide} basis={slideClass}>
+            <TestimonialCard testimonial={testimonial} />
+          </ContentCarouselItem>
+        ))}
+      </ContentCarousel>
+    </div>
+  ) : (
+    <div class="@container">
+      <div class={gridClass} data-testimonials>
+        {mergedTestimonials.map((testimonial) => (
+          <TestimonialCard testimonial={testimonial} />
+        ))}
+      </div>
+    </div>
+  )}
+</Container>

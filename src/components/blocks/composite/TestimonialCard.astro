@@ -1,0 +1,76 @@
+---
+// Internal to Testimonials: renders one already-merged testimonial; Testimonials owns layering and layout.
+import { Icon } from 'astro-icon/components';
+import Image from '~/components/blocks/primitives/Image.astro';
+import type { ImageProps } from '~/types/image.types';
+import type { Testimonial } from '~/types/testimonials.types';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import { ratingText, splitQuote } from '~/utils/testimonials';
+import { cn } from '~/utils/styles';
+
+type Props = { testimonial: Testimonial };
+
+const { testimonial } = Astro.props;
+const {
+  quote,
+  author,
+  rating,
+  source,
+  class: className,
+  quoteClass,
+  authorClass,
+  ratingClass,
+  ratingLabel = '{rating} out of 5',
+} = testimonial;
+
+const paragraphs = splitQuote(quote);
+const stars = [1, 2, 3, 4, 5];
+
+const internalAvatar: ImageProps = {
+  alt: '',
+  width: 48,
+  height: 48,
+  layout: 'fixed',
+  class: 'size-12 rounded-full object-cover',
+};
+const avatar = author.avatar && mergeConfigs<ImageProps>({}, internalAvatar, author.avatar);
+---
+
+<figure class={className} data-testimonial>
+  {rating !== undefined && (
+    <div data-testimonial-rating={String(rating)}>
+      <span class={ratingClass} aria-hidden="true">
+        {stars.map((star) => (
+          <Icon
+            name={star <= rating ? 'heroicons:star-solid' : 'heroicons:star'}
+            class={cn('size-5', star <= rating ? 'text-warning' : 'text-muted')}
+            data-star-filled={String(star <= rating)}
+          />
+        ))}
+      </span>
+      <span class="sr-only">{ratingText(ratingLabel, rating)}</span>
+    </div>
+  )}
+  <span class="text-4xl leading-none text-primary font-title" aria-hidden="true">
+    &ldquo;
+  </span>
+  <blockquote class={quoteClass}>
+    {paragraphs.map((paragraph) => (
+      <p>{paragraph}</p>
+    ))}
+  </blockquote>
+  <figcaption class={authorClass}>
+    {avatar && <Image {...avatar} />}
+    <span class="flex flex-col">
+      <span class="font-semibold" data-testimonial-name>
+        {author.name}
+      </span>
+      {author.role && <span class="text-muted text-sm">{author.role}</span>}
+      {source && (
+        <cite class="text-sm not-italic">
+          <a href={source.href}>{source.label}</a>
+        </cite>
+      )}
+    </span>
+  </figcaption>
+</figure>
