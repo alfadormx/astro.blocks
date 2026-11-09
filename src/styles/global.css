@@ -287,6 +287,7 @@
 @source inline('{md:,}grid-cols-[3fr_1fr]');
 @source inline('{sm:,md:,lg:,xl:,}grid-cols-[3fr_2fr]');
 @source inline('{sm:,md:,lg:,xl:,}grid-cols-[2fr_1fr]');
+@source inline('{sm:,md:,lg:,xl:,}grid-cols-[2fr_3fr]');
 @source inline('{sm:,md:,lg:,xl:,}order-{1,2}');
 @source inline('gap-{2,3,4,6,8,12}');
 @source inline('{md:,lg:,}gap-{2,3,4,6,8,12}');

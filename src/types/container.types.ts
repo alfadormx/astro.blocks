@@ -94,7 +94,7 @@ export interface CellProps {
 
 export interface TwoColumnContainerProps extends GridLayoutProps {
   /** Column width ratio, left to right; applies from `breakpoint` up when `responsive` (default: '1:1'). */
-  ratio?: '1:1' | '3:2' | '2:1';
+  ratio?: '1:1' | '3:2' | '2:1' | '2:3';
   /** Reverse order on mobile (default: false) */
   reverseOnMobile?: boolean;
   /** Configuration for the left column */
