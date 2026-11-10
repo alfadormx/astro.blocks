@@ -1,0 +1,102 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import CheckboxGroupBlock from '~/components/blocks/primitives/CheckboxGroup.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+const metadata = {
+  title: {
+    default: 'CheckboxGroup',
+  },
+};
+
+const interests = [
+  { label: 'Laptops', value: 'laptops' },
+  { label: 'Phones', value: 'phones' },
+  { label: 'Televisions', value: 'televisions' },
+];
+
+const gaps = ['none', 'tight', 'normal', 'loose'] as const;
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitives',
+    title: 'CheckboxGroup',
+    subtitle: 'A labelled set of checkboxes sharing one form name, on a native fieldset',
+  }}
+>
+  <h3>Basic</h3>
+  <div data-doc-section="basic" class="flex flex-col gap-4 max-w-md">
+    <CheckboxGroupBlock label="Interests" name="interests" options={interests} />
+  </div>
+
+  <h3>Help text</h3>
+  <div data-doc-section="help" class="flex flex-col gap-4 max-w-md">
+    <CheckboxGroupBlock
+      label="Notifications"
+      name="notifications"
+      help="Pick every channel you want updates on."
+      options={[
+        { label: 'Email', value: 'email', checked: true },
+        { label: 'SMS', value: 'sms' },
+      ]}
+    />
+  </div>
+
+  <h3>Horizontal</h3>
+  <div data-doc-section="horizontal" class="flex flex-col gap-4 max-w-md">
+    <CheckboxGroupBlock
+      label="Interests"
+      name="interests-horizontal"
+      orientation="horizontal"
+      options={interests}
+    />
+  </div>
+
+  <h3>Gap</h3>
+  <div data-doc-section="gap" class="flex flex-col gap-6 max-w-md">
+    {gaps.map((gap) => (
+      <CheckboxGroupBlock
+        label={`Gap ${gap}`}
+        name={`interests-gap-${gap}`}
+        optionsGap={gap}
+        options={interests}
+      />
+    ))}
+  </div>
+
+  <h3>Error</h3>
+  <div data-doc-section="error" class="flex flex-col gap-4 max-w-md">
+    <CheckboxGroupBlock
+      label="Interests"
+      name="interests-error"
+      help="Pick at least one."
+      error="Choose one or more interests."
+      options={interests}
+    />
+  </div>
+
+  <h3>Option layer</h3>
+  <p>
+    <code>defaultOptionConfig</code> is merged into every option, under the option's own fields.
+  </p>
+  <div data-doc-section="custom" class="flex flex-col gap-4 max-w-md">
+    <CheckboxGroupBlock
+      label="Extras"
+      name="extras"
+      defaultOptionConfig={{ intent: 'success', shape: 'square' }}
+      options={[
+        { label: 'Installation', value: 'installation', checked: true },
+        { label: 'Take away the old one', value: 'takeaway' },
+      ]}
+    />
+  </div>
+
+  <h3>Disabled</h3>
+  <div data-doc-section="disabled" class="flex flex-col gap-4 max-w-md">
+    <CheckboxGroupBlock label="Interests" name="interests-disabled" disabled options={interests} />
+  </div>
+
+  <ApiReferenceTable component="CheckboxGroup" category="primitives" />
+</Layout>

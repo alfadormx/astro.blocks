@@ -1,0 +1,91 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import CheckboxBlock from '~/components/blocks/primitives/Checkbox.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+const metadata = {
+  title: {
+    default: 'Checkbox',
+  },
+};
+
+const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
+const intents = [
+  'primary',
+  'secondary',
+  'tertiary',
+  'accent',
+  'success',
+  'warning',
+  'error',
+  'neutral',
+] as const;
+const shapes = ['rounded', 'square'] as const;
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitives',
+    title: 'Checkbox',
+    subtitle: 'A labelled checkbox on a native input, with help and error text',
+  }}
+>
+  <h3>Basic</h3>
+  <div data-doc-section="basic" class="flex flex-col gap-4 max-w-md">
+    <CheckboxBlock label="Subscribe to the newsletter" name="newsletter" />
+  </div>
+
+  <h3>Help text</h3>
+  <div data-doc-section="help" class="flex flex-col gap-4 max-w-md">
+    <CheckboxBlock label="Gift wrap" help="Adds a card with your message." />
+  </div>
+
+  <h3>Checked</h3>
+  <div data-doc-section="checked" class="flex flex-col gap-4 max-w-md">
+    <CheckboxBlock label="Remember me" checked />
+  </div>
+
+  <h3>Sizes</h3>
+  <div data-doc-section="sizes" class="flex flex-col gap-4 max-w-md">
+    {sizes.map((size) => (
+      <CheckboxBlock label={`Size ${size}`} size={size} checked />
+    ))}
+  </div>
+
+  <h3>Intents</h3>
+  <div data-doc-section="intents" class="flex flex-col gap-4 max-w-md">
+    {intents.map((intent) => (
+      <CheckboxBlock label={`Intent ${intent}`} intent={intent} checked />
+    ))}
+  </div>
+
+  <h3>Shapes</h3>
+  <div data-doc-section="shapes" class="flex flex-col gap-4 max-w-md">
+    {shapes.map((shape) => (
+      <CheckboxBlock label={`Shape ${shape}`} shape={shape} checked />
+    ))}
+  </div>
+
+  <h3>Error</h3>
+  <div data-doc-section="error" class="flex flex-col gap-4 max-w-md">
+    <CheckboxBlock
+      label="I accept the terms"
+      help="Read them before ordering."
+      error="Accept the terms to continue."
+    />
+  </div>
+
+  <h3>Required</h3>
+  <div data-doc-section="required" class="flex flex-col gap-4 max-w-md">
+    <CheckboxBlock label="I accept the terms and conditions" name="terms" required />
+  </div>
+
+  <h3>Disabled</h3>
+  <div data-doc-section="states" class="flex flex-col gap-4 max-w-md">
+    <CheckboxBlock label="Disabled" disabled />
+    <CheckboxBlock label="Disabled and checked" disabled checked />
+  </div>
+
+  <ApiReferenceTable component="Checkbox" category="primitives" />
+</Layout>

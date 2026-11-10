@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  checkedFillClass,
   focusBorderClass,
   focusRingClass,
   selectedBorderClass,
@@ -32,5 +33,13 @@ describe('intent styles', () => {
     expect(focusBorderClass('neutral')).toBe('focus:border-emphasis');
     expect(focusRingClass('neutral')).toBe('focus-visible:ring-emphasis');
     expect(focusRingClass('neutral', 'has-focus-visible')).toBe('has-focus-visible:ring-emphasis');
+  });
+
+  it.each(colourIntents)('%s fills and borders a checked box with its own colour', (intent) => {
+    expect(checkedFillClass(intent)).toBe(`checked:bg-${intent} checked:border-${intent}`);
+  });
+
+  it('neutral fills a checked box with the emphasis token', () => {
+    expect(checkedFillClass('neutral')).toBe('checked:bg-emphasis checked:border-emphasis');
   });
 });

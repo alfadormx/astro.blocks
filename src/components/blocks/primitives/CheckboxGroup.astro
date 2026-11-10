@@ -1,0 +1,85 @@
+---
+import Checkbox from '~/components/blocks/primitives/Checkbox.astro';
+import Field from '~/components/blocks/primitives/Field.astro';
+import type { CheckboxProps } from '~/types/checkbox.types';
+import type { CheckboxGroupProps } from '~/types/checkboxgroup.types';
+import { checkboxGroupId, OPTIONS_GAP, validateCheckboxGroup } from '~/utils/checkbox';
+import { describedBy, fieldDescriptionIds } from '~/utils/field';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import { cn } from '~/utils/styles';
+
+type Props = CheckboxGroupProps;
+
+const {
+  label,
+  hideLabel = false,
+  name,
+  options,
+  help,
+  error,
+  disabled = false,
+  orientation = 'vertical',
+  optionsGap = 'normal',
+  optionsClass = '',
+  size = 'md',
+  intent = 'primary',
+  shape = 'rounded',
+  defaultOptionConfig,
+  class: className = '',
+  labelClass = '',
+  helpClass = '',
+  errorClass = '',
+} = Astro.props;
+
+validateCheckboxGroup({ label, name, options });
+
+const groupId = checkboxGroupId();
+const { helpId, errorId } = fieldDescriptionIds(groupId);
+const internalOption = { size, intent, shape, fieldClass: error ? 'border-error' : '' };
+const merged = options.map((option, i) =>
+  mergeConfigs<CheckboxProps>(
+    {},
+    internalOption,
+    defaultOptionConfig,
+    { name, id: `${groupId}-${i}`, disabled: disabled || undefined },
+    option
+  )
+);
+---
+
+<Field
+  as="fieldset"
+  id={groupId}
+  label={label}
+  hideLabel={hideLabel}
+  disabled={disabled}
+  help={help}
+  error={error}
+  class={className}
+  labelClass={labelClass}
+  helpClass={helpClass}
+  errorClass={errorClass}
+  rootAttrs={{
+    id: groupId,
+    'data-checkbox-group': '',
+    disabled: disabled || undefined,
+    'aria-describedby': describedBy({
+      helpId: help ? helpId : undefined,
+      errorId: error ? errorId : undefined,
+    }),
+    'aria-invalid': error ? 'true' : undefined,
+  }}
+>
+  <div
+    class={cn(
+      orientation === 'vertical' ? 'flex flex-col' : 'flex flex-row flex-wrap',
+      OPTIONS_GAP[optionsGap],
+      optionsClass
+    )}
+    data-checkbox-group-options
+  >
+    {merged.map((option) => (
+      <Checkbox {...option} />
+    ))}
+  </div>
+</Field>

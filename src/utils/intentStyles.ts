@@ -50,6 +50,17 @@ const SELECTED_FILL: Record<Intent, string> = {
   neutral: 'bg-emphasis',
 };
 
+const CHECKED_FILL: Record<Intent, string> = {
+  primary: 'checked:bg-primary checked:border-primary',
+  secondary: 'checked:bg-secondary checked:border-secondary',
+  tertiary: 'checked:bg-tertiary checked:border-tertiary',
+  accent: 'checked:bg-accent checked:border-accent',
+  success: 'checked:bg-success checked:border-success',
+  warning: 'checked:bg-warning checked:border-warning',
+  error: 'checked:bg-error checked:border-error',
+  neutral: 'checked:bg-emphasis checked:border-emphasis',
+};
+
 const FOCUS_BORDER: Record<Intent, string> = {
   primary: 'focus:border-primary',
   secondary: 'focus:border-secondary',
@@ -75,4 +86,8 @@ export function selectedFillClass(intent: Intent): string {
 
 export function focusBorderClass(intent: Intent): string {
   return FOCUS_BORDER[intent];
+}
+
+export function checkedFillClass(intent: Intent): string {
+  return CHECKED_FILL[intent];
 }

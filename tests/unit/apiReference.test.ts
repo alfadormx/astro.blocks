@@ -60,3 +60,22 @@ describe('shared field props', () => {
     expect(row?.default).toBe("'md'");
   });
 });
+
+describe('Omit of shared field props', () => {
+  it('drops the Omit keys from the CheckboxGroup table and keeps its own name', () => {
+    const rows = getPropRows('CheckboxGroup', 'primitives').rows;
+    const names = rows.map((r) => r.name);
+
+    expect(names).toEqual(
+      expect.arrayContaining(['label', 'name', 'options', 'defaultOptionConfig'])
+    );
+    expect(names).not.toContain('fieldClass');
+    expect(names.filter((n) => n === 'name')).toHaveLength(1);
+  });
+
+  it('links the CheckboxGroup options row to Checkbox', () => {
+    const row = getPropRows('CheckboxGroup', 'primitives').rows.find((r) => r.name === 'options');
+
+    expect(row?.link?.label).toBe('Checkbox');
+  });
+});
