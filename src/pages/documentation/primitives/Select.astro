@@ -1,0 +1,134 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import SelectBlock from '~/components/blocks/primitives/Select.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+const metadata = {
+  title: {
+    default: 'Select',
+  },
+};
+
+const countries = [
+  { value: 'nl', label: 'Netherlands' },
+  { value: 'be', label: 'Belgium' },
+  { value: 'de', label: 'Germany' },
+  { value: 'fr', label: 'France' },
+];
+
+const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
+const variants = ['outline', 'solid', 'ghost'] as const;
+const intents = [
+  'primary',
+  'secondary',
+  'tertiary',
+  'accent',
+  'success',
+  'warning',
+  'error',
+  'neutral',
+] as const;
+const shapes = ['rounded', 'square'] as const;
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitives',
+    title: 'Select',
+    subtitle: 'A labelled native dropdown for one choice, with an optional placeholder',
+  }}
+>
+  <h3>Basic</h3>
+  <div data-doc-section="basic" class="flex flex-col gap-4 max-w-md">
+    <SelectBlock label="Country" options={countries} />
+  </div>
+
+  <h3>Placeholder</h3>
+  <div data-doc-section="placeholder" class="flex flex-col gap-4 max-w-md">
+    <SelectBlock label="Country" placeholder="Choose a country" options={countries} />
+  </div>
+
+  <h3>Help text and hidden label</h3>
+  <div data-doc-section="help" class="flex flex-col gap-4 max-w-md">
+    <SelectBlock
+      label="Delivery country"
+      options={countries}
+      help="We ship to these countries only."
+    />
+    <SelectBlock label="Language" hideLabel options={countries} />
+  </div>
+
+  <h3>Sizes</h3>
+  <div data-doc-section="sizes" class="flex flex-col gap-4 max-w-md">
+    {sizes.map((size) => (
+      <SelectBlock label={`Size ${size}`} size={size} options={countries} />
+    ))}
+  </div>
+
+  <h3>Variants</h3>
+  <div data-doc-section="variants" class="flex flex-col gap-4 max-w-md">
+    {variants.map((variant) => (
+      <SelectBlock label={`Variant ${variant}`} variant={variant} options={countries} />
+    ))}
+  </div>
+
+  <h3>Intents</h3>
+  <div data-doc-section="intents" class="flex flex-col gap-4 max-w-md">
+    {intents.map((intent) => (
+      <SelectBlock label={`Intent ${intent}`} intent={intent} options={countries} />
+    ))}
+  </div>
+
+  <h3>Shapes</h3>
+  <div data-doc-section="shapes" class="flex flex-col gap-4 max-w-md">
+    {shapes.map((shape) => (
+      <SelectBlock label={`Shape ${shape}`} shape={shape} options={countries} />
+    ))}
+  </div>
+
+  <h3>Error</h3>
+  <div data-doc-section="error" class="flex flex-col gap-4 max-w-md">
+    <SelectBlock
+      label="Country"
+      placeholder="Choose a country"
+      options={countries}
+      error="Choose the country you live in."
+    />
+  </div>
+
+  <h3>Disabled</h3>
+  <div data-doc-section="states" class="flex flex-col gap-4 max-w-md">
+    <SelectBlock label="Disabled" disabled options={countries} />
+    <SelectBlock
+      label="With a disabled option"
+      options={[
+        { value: 'standard', label: 'Standard delivery' },
+        { value: 'express', label: 'Express delivery (sold out)', disabled: true },
+        { value: 'pickup', label: 'Pick up in store' },
+      ]}
+    />
+  </div>
+
+  <h3>Required</h3>
+  <p>
+    With a <code>placeholder</code> and <code>required</code>, the field is invalid until a choice
+    is made.
+  </p>
+  <div data-doc-section="required" class="flex flex-col gap-4 max-w-md">
+    <form class="flex flex-col gap-4" onsubmit="return false">
+      <SelectBlock
+        label="Country"
+        name="country"
+        placeholder="Choose a country"
+        required
+        options={countries}
+      />
+      <button type="submit" class="self-start px-3 py-1 border border-border rounded">
+        Submit
+      </button>
+    </form>
+  </div>
+
+  <ApiReferenceTable component="Select" category="primitives" />
+</Layout>

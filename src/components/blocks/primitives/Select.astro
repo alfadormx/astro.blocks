@@ -1,0 +1,111 @@
+---
+import { Icon } from 'astro-icon/components';
+import Field from '~/components/blocks/primitives/Field.astro';
+import type { SelectAttributes } from '~/types/select.types';
+import { ariaInvalid, describedBy, fieldControlClass, fieldDescriptionIds } from '~/utils/field';
+import { selectId, validateSelect } from '~/utils/select';
+import { cn } from '~/utils/styles';
+
+type Props = SelectAttributes;
+
+const {
+  label,
+  hideLabel = false,
+  help,
+  error,
+  id: idProp,
+  name,
+  options,
+  placeholder,
+  required = false,
+  disabled = false,
+  size = 'md',
+  variant = 'outline',
+  intent = 'primary',
+  shape = 'rounded',
+  class: className = '',
+  labelClass = '',
+  fieldClass = '',
+  helpClass = '',
+  errorClass = '',
+  'aria-describedby': consumerDescribedBy,
+  'aria-invalid': consumerInvalid,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  children: _children,
+  ...attrs
+} = Astro.props;
+
+validateSelect({ label, options, placeholder });
+
+const id = idProp || selectId();
+const { helpId, errorId } = fieldDescriptionIds(id);
+
+// Full literal class strings so Tailwind's scanner sees every one.
+const END_PADDING = { xs: 'pe-7', sm: 'pe-8', md: 'pe-10', lg: 'pe-12', xl: 'pe-14' }[size];
+const CHEVRON = {
+  xs: 'end-2 size-3',
+  sm: 'end-2.5 size-3.5',
+  md: 'end-3 size-4',
+  lg: 'end-4 size-5',
+  xl: 'end-5 size-6',
+}[size];
+const anySelected = options.some((o) => o.selected);
+---
+
+<Field
+  id={id}
+  label={label}
+  hideLabel={hideLabel}
+  required={required}
+  disabled={disabled}
+  help={help}
+  error={error}
+  class={className}
+  labelClass={labelClass}
+  helpClass={helpClass}
+  errorClass={errorClass}
+  rootAttrs={{ 'data-select': '' }}
+>
+  <div class="relative" data-select-control>
+    <select
+      id={id}
+      name={name}
+      required={required}
+      disabled={disabled}
+      aria-invalid={ariaInvalid(error, consumerInvalid)}
+      aria-describedby={describedBy({
+        helpId: help ? helpId : undefined,
+        errorId: error ? errorId : undefined,
+        consumer: consumerDescribedBy,
+      })}
+      class={fieldControlClass({
+        base: 'appearance-none cursor-pointer dark:[color-scheme:dark]',
+        afterSize: END_PADDING,
+        size,
+        variant,
+        shape,
+        intent,
+        error,
+        disabled,
+        fieldClass,
+      })}
+      {...attrs}
+    >
+      {placeholder !== undefined && (
+        <option value="" disabled selected={!anySelected}>
+          {placeholder}
+        </option>
+      )}
+      {options.map((o) => (
+        <option value={o.value} disabled={o.disabled} selected={o.selected}>
+          {o.label}
+        </option>
+      ))}
+    </select>
+    <Icon
+      name="heroicons:chevron-down"
+      aria-hidden="true"
+      class={cn('pointer-events-none absolute top-1/2 -translate-y-1/2 text-muted', CHEVRON)}
+    />
+  </div>
+</Field>

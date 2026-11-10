@@ -33,6 +33,7 @@ Blocks live in `src/components/blocks/`, with prop types in `src/types/*.types.t
 | `Image`, `Vector`, `Logo`       | Optimized images, inline SVG and site logo                        |
 | `TextArea`                      | Rich text body                                                    |
 | `Input`                         | Labelled single-line field with help, error and native validation |
+| `Select`                        | Labelled native single-choice dropdown with placeholder           |
 | `Background`                    | Image or video background with overlay                            |
 | `Video`                         | Video.js player, including YouTube and Vimeo sources              |
 | `Map`                           | Leaflet map                                                       |
