@@ -27,6 +27,10 @@ export interface ItemProps {
   defaultActionConfig?: LayerConfig<ButtonProps>;
   /** Classes on the actions wrapper, merged over the default 'flex flex-wrap gap-2 md:gap-3 mt-2 md:mt-3'. */
   actionsClass?: string;
+  /** Tag of the title. A heading tag renders through Headline with the same look as 'div'; sets semantics only (default: 'div'). */
+  titleTag?: 'div' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  /** Tag of the element styled by `textClass`. 'p' is invalid when `content` holds block HTML such as <p> or <ul> (default: 'div'). */
+  textTag?: 'div' | 'p';
   /** Orientation of the item: stacked/centered or icon-left/text-right (default: 'vertical'). */
   orientation?: ItemOrientation;
   /** Background configuration for the item; only color backgrounds supported. */

@@ -87,6 +87,12 @@ describe('validateItemsGridSelection', () => {
       expected: /2 items selected .* with max 1/,
     },
     {
+      name: 'item with a heading title',
+      selection: single,
+      items: [item('a', { titleTag: 'h3' })],
+      expected: /has a heading title/,
+    },
+    {
       name: 'message prefix',
       selection: { ...single, group: '' },
       items: [item('a')],
@@ -118,6 +124,11 @@ describe('validateItemsGridSelection', () => {
       name: 'empty actions array',
       selection: single,
       items: [item('a', { actions: [] })],
+    },
+    {
+      name: "item with titleTag 'div'",
+      selection: single,
+      items: [item('a', { titleTag: 'div' })],
     },
     {
       name: 'single with an intent',
