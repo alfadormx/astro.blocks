@@ -171,3 +171,102 @@ test.describe('focus pause', () => {
     await expect(root.locator('[data-carousel-announcer]')).toHaveText('Slide 2 of 3');
   });
 });
+
+test.describe('continuous autoplay', () => {
+  function continuous(page: Page): Locator {
+    return page.locator('[data-doc-section="continuous"]');
+  }
+
+  async function offset(page: Page): Promise<number> {
+    return continuous(page)
+      .locator('[data-carousel-track]')
+      .evaluate((el) => new DOMMatrix(getComputedStyle(el).transform).m41);
+  }
+
+  async function open(page: Page): Promise<Locator> {
+    await page.clock.install();
+    await page.goto(PAGE_URL);
+    const root = continuous(page);
+    await expect(root.locator('[data-carousel-clone]').first()).toBeAttached();
+    return root;
+  }
+
+  test('continuous autoplay moves the track at about speed pixels per second', async ({ page }) => {
+    await open(page);
+    const before = await offset(page);
+    await page.clock.runFor(1000);
+    const delta = (await offset(page)) - before;
+    expect(delta).toBeGreaterThanOrEqual(-75);
+    expect(delta).toBeLessThanOrEqual(-45);
+  });
+
+  test('hovering a continuous carousel freezes the track', async ({ page }) => {
+    const root = await open(page);
+    await root.locator('[data-carousel-viewport]').hover();
+    const before = await offset(page);
+    await page.clock.runFor(1000);
+    expect(await offset(page)).toBe(before);
+  });
+
+  test('focus inside a continuous carousel freezes the track', async ({ page }) => {
+    const root = await open(page);
+    await root.locator('[data-carousel-next]').focus();
+    const before = await offset(page);
+    await page.clock.runFor(1000);
+    expect(await offset(page)).toBe(before);
+  });
+
+  test('the pause button freezes a continuous carousel after focus leaves', async ({ page }) => {
+    const root = await open(page);
+    await root.locator('[data-carousel-pause]').focus();
+    await page.keyboard.press('Enter');
+    await root.locator('[data-carousel-play]').evaluate((el) => (el as HTMLElement).blur());
+    const before = await offset(page);
+    await page.clock.runFor(1000);
+    expect(await offset(page)).toBe(before);
+  });
+
+  test('a continuous carousel does not move with reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await open(page);
+    const before = await offset(page);
+    await page.clock.runFor(2000);
+    expect(await offset(page)).toBe(before);
+  });
+
+  test('next mid-drift lands on a real slide', async ({ page }) => {
+    const root = await open(page);
+    await page.clock.runFor(1500);
+    await root.locator('[data-carousel-next]').click();
+    const track = root.locator('[data-carousel-track]');
+    const width = await track.evaluate(
+      (el) => (el.firstElementChild as HTMLElement).getBoundingClientRect().width
+    );
+    let index = 0;
+    await expect
+      .poll(async () => {
+        const slides = -(await offset(page)) / width;
+        index = Math.round(slides);
+        return Math.abs(slides - index);
+      })
+      .toBeLessThan(0.01);
+    const isClone = await track.evaluate(
+      (el, i) => el.children[i].hasAttribute('data-carousel-clone'),
+      index
+    );
+    expect(isClone).toBe(false);
+  });
+
+  test('continuous autoplay drifts the other way in RTL', async ({ page }) => {
+    await page.route('**/documentation/composite/ContentCarousel', async (route) => {
+      const response = await route.fetch();
+      const body = (await response.text()).replace(/(<html[^>]*?)dir="ltr"/, '$1dir="rtl"');
+      await route.fulfill({ response, body });
+    });
+    await open(page);
+    expect(await page.locator('html').getAttribute('dir')).toBe('rtl');
+    const before = await offset(page);
+    await page.clock.runFor(1000);
+    expect((await offset(page)) - before).toBeGreaterThan(0);
+  });
+});
