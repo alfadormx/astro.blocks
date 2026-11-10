@@ -1,0 +1,151 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import TeamBlock from '~/components/blocks/composite/Team.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import type { ButtonProps } from '~/types/button.types';
+import type { TeamMember } from '~/types/team.types';
+
+const metadata = { title: { default: 'Team' } };
+
+const photo = (id: string) => ({
+  src: `https://images.unsplash.com/${id}?w=320&h=320&fit=crop&crop=faces`,
+});
+
+const NETWORK_ICONS = {
+  LinkedIn: 'mdi:linkedin',
+  GitHub: 'mdi:github',
+  Email: 'heroicons:envelope',
+} as const;
+
+const link = (first: string, network: keyof typeof NETWORK_ICONS, href: string): ButtonProps => ({
+  icon: { name: NETWORK_ICONS[network] },
+  href,
+  'aria-label': `${first} on ${network}`,
+});
+
+const member = (
+  name: string,
+  role: string,
+  bio: string,
+  id: string,
+  links: ButtonProps[]
+): TeamMember => ({
+  title: name,
+  content: `<p class="text-sm text-muted">${role}</p><p class="mt-2">${bio}</p>`,
+  image: photo(id),
+  actions: links,
+});
+
+const people: TeamMember[] = [
+  member(
+    'Ana Ruiz',
+    'Head of Product',
+    'Turns customer interviews into roadmaps.',
+    'photo-1494790108377-be9c29b29330',
+    [
+      link('Ana', 'LinkedIn', 'https://www.linkedin.com/'),
+      link('Ana', 'GitHub', 'https://github.com/'),
+    ]
+  ),
+  member(
+    'Ben Okafor',
+    'Lead Engineer',
+    'Keeps the build fast and the pages light.',
+    'photo-1507003211169-0a1dd7228f2d',
+    [link('Ben', 'GitHub', 'https://github.com/'), link('Ben', 'Email', 'mailto:ben@example.com')]
+  ),
+  member(
+    'Chloé Martin',
+    'Design Lead',
+    'Owns the design system and its tokens.',
+    'photo-1438761681033-6461ffad8d80',
+    [
+      link('Chloé', 'LinkedIn', 'https://www.linkedin.com/'),
+      link('Chloé', 'Email', 'mailto:chloe@example.com'),
+    ]
+  ),
+  member(
+    'Dev Patel',
+    'Developer Advocate',
+    'Writes the guides and answers the questions.',
+    'photo-1500648767791-00dcc994a43e',
+    [
+      link('Dev', 'LinkedIn', 'https://www.linkedin.com/'),
+      link('Dev', 'GitHub', 'https://github.com/'),
+    ]
+  ),
+];
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Team',
+    subtitle: 'People cards with a photo, name, role and social links, in two to four columns.',
+  }}
+>
+  <p>
+    A grid of person cards: photo, name, role, bio and social links. Team is a preset over
+    ItemsGrid, so every member is an Item: the name is <code>title</code>, the role and bio are
+    <code>content</code> (HTML), the photo is <code>image</code> and the links are
+    <code>actions</code>.
+  </p>
+
+  <h3>1. Basic</h3>
+  <p>
+    Names render as <code>h3</code> headings and photos are decorative (<code>alt=""</code>),
+    because the name sits right next to them. Icon-only links have no visible text, so give each one
+    an <code>aria-label</code> naming the person, such as "Ana on LinkedIn".
+  </p>
+  <div data-doc-section="basic">
+    <TeamBlock members={people.slice(0, 3)} />
+  </div>
+
+  <h3>2. Square photos</h3>
+  <p>
+    <code>imageShape="square"</code> crops the photos to squares with rounded corners.
+  </p>
+  <div data-doc-section="square">
+    <TeamBlock members={people.slice(0, 3)} imageShape="square" />
+  </div>
+
+  <h3>3. Two columns</h3>
+  <p>
+    <code>columns</code> sets the column count at the widest size; it steps down when narrower.
+  </p>
+  <div data-doc-section="two-columns">
+    <TeamBlock members={people} columns={2} />
+  </div>
+
+  <h3>4. Four columns</h3>
+  <div data-doc-section="four-columns">
+    <TeamBlock members={people} columns={4} />
+  </div>
+
+  <h3>5. With a headline</h3>
+  <p>
+    <code>headline</code> renders a centred <code>h2</code> above the members.
+  </p>
+  <div data-doc-section="headline">
+    <TeamBlock
+      members={people.slice(0, 3)}
+      headline={{ tagline: 'Team', title: 'The people behind the product' }}
+    />
+  </div>
+
+  <h3>6. Link defaults</h3>
+  <p>
+    Links are ghost, neutral, small icon buttons by default.
+    <code>defaultMemberConfig.defaultActionConfig</code> is one layer that restyles every link of
+    every member.
+  </p>
+  <div data-doc-section="link-defaults">
+    <TeamBlock
+      members={people.slice(0, 3)}
+      defaultMemberConfig={{ defaultActionConfig: { variant: 'outline', intent: 'primary' } }}
+    />
+  </div>
+
+  <ApiReferenceTable component="Team" category="composite" />
+</Layout>

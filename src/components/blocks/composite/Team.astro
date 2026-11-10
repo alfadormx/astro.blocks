@@ -1,0 +1,57 @@
+---
+import Headline from '~/components/blocks/primitives/Headline.astro';
+import ItemsGrid from '~/components/blocks/composite/ItemsGrid.astro';
+import type { LayerConfig } from '~/types/config.types';
+import type { HeadlineProps } from '~/types/headline.types';
+import type { ItemProps } from '~/types/item.types';
+import type { TeamProps } from '~/types/team.types';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+
+type Props = TeamProps;
+
+const {
+  headline,
+  members,
+  columns = 3,
+  gap = 'normal',
+  imageShape = 'circle',
+  fillLastRow = false,
+  defaultMemberConfig,
+  class: className,
+} = Astro.props;
+
+const mergedHeadline =
+  headline && mergeConfigs<HeadlineProps>({}, { htmlTag: 'h2', align: 'center' }, headline);
+
+// The name sits next to the photo, so the photo is decorative.
+// `md:gap-1` is explicit because twMerge keeps the wrapper's `md:gap-3` against a bare `gap-1`.
+const internalMember: LayerConfig<ItemProps> = {
+  orientation: 'vertical',
+  titleTag: 'h3',
+  mediaClass: 'w-full aspect-square',
+  image: { alt: '', width: 320, height: 320, class: 'object-cover' },
+  defaultActionConfig: { variant: 'ghost', intent: 'neutral', size: 'sm', shape: 'rounded' },
+  actionsClass: 'justify-center gap-1 md:gap-1',
+};
+
+const shapeMember: LayerConfig<ItemProps> = {
+  image: { class: imageShape === 'circle' ? 'rounded-full' : 'rounded-lg' },
+};
+
+const defaultItemConfig = mergeConfigs<LayerConfig<ItemProps>>(
+  {},
+  internalMember,
+  shapeMember,
+  defaultMemberConfig
+);
+---
+
+{mergedHeadline && <Headline {...mergedHeadline} />}
+<ItemsGrid
+  items={members}
+  columns={columns}
+  gap={gap}
+  fillLastRow={fillLastRow}
+  defaultItemConfig={defaultItemConfig}
+  class={className}
+/>
