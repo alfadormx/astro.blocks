@@ -32,7 +32,7 @@ export interface AccordionProps {
   itemClass?: string;
   /** Custom classes for each `<summary>` row */
   summaryClass?: string;
-  /** Custom classes for each title element (default: 'm-0 text-base font-semibold text-normal') */
+  /** Custom classes for each title element (default: 'm-0 font-semibold text-normal') */
   titleClass?: string;
   /** Custom classes for each content panel (default: 'pb-4 text-muted') */
   contentClass?: string;
