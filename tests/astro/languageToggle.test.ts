@@ -59,4 +59,15 @@ describe('LanguageToggle', () => {
       )
     );
   });
+
+  it('shows full labels by default', async () => {
+    const html = await render('/');
+    for (const lang of I18N.languages as Language[]) expect(html).toContain(lang.label);
+  });
+
+  it('shows uppercase codes when labelFormat is code', async () => {
+    const html = await render('/', { labelFormat: 'code' });
+    for (const lang of I18N.languages as Language[])
+      expect(html).toContain(`>${lang.code.toUpperCase()}<`);
+  });
 });

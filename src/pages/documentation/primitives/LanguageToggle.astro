@@ -146,11 +146,11 @@ const metadata = {
   <div class="flex flex-col gap-6 mb-8">
     <div>
       <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Full labels (default)</p>
-      <LanguageToggleBlock preservePath={false} showLabels={true} />
+      <LanguageToggleBlock preservePath={false} />
     </div>
     <div>
       <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Language codes only</p>
-      <LanguageToggleBlock preservePath={false} showLabels={false} />
+      <LanguageToggleBlock preservePath={false} labelFormat="code" />
     </div>
   </div>
 
@@ -183,7 +183,7 @@ const metadata = {
       <LanguageToggleBlock
         preservePath={false}
         defaultButtonConfig={{ variant: 'link', size: 'lg' }}
-        showLabels={false}
+        labelFormat="code"
         gap="loose"
       />
     </div>
