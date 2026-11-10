@@ -32,6 +32,11 @@ export interface ButtonProps extends Omit<HTMLAttributes<'button'>, 'class'> {
    * (xs: 'size-3', sm: 'size-4', md: 'size-5', lg: 'size-6', xl: 'size-7').
    */
   imageSize?: string;
+  /**
+   * Renders the button as the `<summary>` of a `<details>` it is the first child of, so it
+   * toggles that disclosure natively. `href`, `target` and `align` are ignored.
+   */
+  as?: 'summary';
   /** URL that, when set, renders the button as an `<a>` element instead of a `<button>`. */
   href?: string;
   /** Anchor `target` attribute used when `href` is set (default: '_self'). */

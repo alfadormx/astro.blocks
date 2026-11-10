@@ -18,6 +18,7 @@ const {
   iconSize,
   imageSize,
   align,
+  as,
   href,
   target = '_self',
   size = 'md',
@@ -49,11 +50,14 @@ const hasSubtitle = !!subtitle;
 const resolvedOrientation = orientation ?? (subtitle ? 'vertical' : 'horizontal');
 const isVertical = resolvedOrientation === 'vertical';
 
+const isSummary = as === 'summary';
+
 // Base button classes
 const baseClasses = cn(
   'inline-flex items-center justify-center font-medium transition-all duration-200',
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
   'cursor-pointer',
+  isSummary && 'list-none [&::-webkit-details-marker]:hidden',
   disabled && 'opacity-50 cursor-not-allowed pointer-events-none'
 );
 
@@ -104,14 +108,24 @@ const finalSubtitleClass = cn('text-xs opacity-90', subtitleClass);
 // Icon wrapper classes
 const finalIconClass = cn(icon?.class, iconClass);
 
-// Render as link or button
-const Tag = href ? 'a' : 'button';
-const tagProps = href
-  ? { id, href, target, rel: target === '_blank' ? 'noopener noreferrer' : undefined, ...attrs }
-  : { id, type: 'button' as const, disabled, ...attrs };
+const Tag = isSummary ? 'summary' : href ? 'a' : 'button';
+const tagProps = isSummary
+  ? {
+      id,
+      'aria-disabled': disabled ? ('true' as const) : undefined,
+      tabindex: disabled ? -1 : undefined,
+      ...attrs,
+    }
+  : href
+    ? { id, href, target, rel: target === '_blank' ? 'noopener noreferrer' : undefined, ...attrs }
+    : { id, type: 'button' as const, disabled, ...attrs };
+
+// A <summary> only toggles its <details> as a direct child, so it gets no wrapper.
+const Wrapper = isSummary ? Fragment : 'div';
+const wrapperProps = isSummary ? {} : { class: align ? alignClass : 'contents' };
 ---
 
-<div class={align ? alignClass : 'contents'}>
+<Wrapper {...wrapperProps}>
   <Tag class={buttonClass} {...tagProps}>
     {iconPosition === 'left' &&
       (hasImage ? (
@@ -148,4 +162,4 @@ const tagProps = href
 
     {Astro.slots.has('default') && <slot />}
   </Tag>
-</div>
+</Wrapper>

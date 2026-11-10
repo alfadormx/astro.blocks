@@ -186,7 +186,8 @@
     transition: transform 0.2s ease-in-out;
   }
 
-  .nav-tree-icon-expanded {
+  .nav-tree-icon-expanded,
+  [data-nav-details][data-rotate-icon][open] > summary > .nav-tree-icon {
     transform: rotate(90deg);
   }
 
