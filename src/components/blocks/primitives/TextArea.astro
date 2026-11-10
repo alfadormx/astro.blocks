@@ -1,7 +1,8 @@
 ---
+import Field from '~/components/blocks/primitives/Field.astro';
 import type { TextAreaAttributes } from '~/types/textarea.types';
+import { ariaInvalid, describedBy, fieldControlClass, fieldDescriptionIds } from '~/utils/field';
 import { cn } from '~/utils/styles';
-import { focusBorderClass, focusRingClass } from '~/utils/intentStyles';
 import { textAreaId, validateTextArea } from '~/utils/textArea';
 
 type Props = TextAreaAttributes;
@@ -42,67 +43,28 @@ const {
 validateTextArea({ label, value, maxLength, showCounter });
 
 const id = idProp || textAreaId();
-const helpId = `${id}-help`;
-const errorId = `${id}-error`;
+const { helpId, errorId } = fieldDescriptionIds(id);
 const counterId = `${id}-counter`;
-const generatedIds = [help && helpId, error && errorId, showCounter && counterId].filter(
-  (v): v is string => Boolean(v)
-);
-const consumerIds = (consumerDescribedBy ?? '')
-  .split(/\s+/)
-  .filter((v) => v && !generatedIds.includes(v));
-const describedBy = [...new Set([...generatedIds, ...consumerIds])].join(' ');
-const resolvedIntent = error ? 'error' : intent;
-
-const SIZE = {
-  xs: 'px-2 py-1 text-xs',
-  sm: 'px-3 py-1.5 text-sm',
-  md: 'px-4 py-2 text-[1rem]',
-  lg: 'px-5 py-3 text-lg',
-  xl: 'px-6 py-4 text-xl',
-}[size];
-
-const VARIANT = {
-  outline: 'border-border bg-background',
-  solid: 'border-transparent bg-surface',
-  ghost: 'border-transparent bg-transparent hover:border-border',
-}[variant];
-
-const SHAPE = { rounded: 'rounded-md', square: 'rounded-sm' }[shape];
-
-// Prop-driven rather than `read-only:` variants, because `:read-only` also matches disabled fields.
-const fieldClassName = cn(
-  'block w-full border-2 text-normal placeholder:text-muted outline-none resize-y',
-  'transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-offset-2',
-  SIZE,
-  VARIANT,
-  SHAPE,
-  focusRingClass(resolvedIntent),
-  !readOnly && focusBorderClass(resolvedIntent),
-  error && 'border-error',
-  readOnly && 'bg-surface text-muted',
-  disabled && 'opacity-50 cursor-not-allowed resize-none',
-  fieldClass
-);
 ---
 
-<div
-  class={cn('flex flex-col gap-1', className)}
-  data-textarea
-  data-selection-group={group || undefined}
-  data-selection-mode={group ? 'text' : undefined}
+<Field
+  id={id}
+  label={label}
+  hideLabel={hideLabel}
+  required={required}
+  disabled={disabled}
+  help={help}
+  error={error}
+  class={className}
+  labelClass={labelClass}
+  helpClass={helpClass}
+  errorClass={errorClass}
+  rootAttrs={{
+    'data-textarea': '',
+    'data-selection-group': group || undefined,
+    'data-selection-mode': group ? 'text' : undefined,
+  }}
 >
-  <label
-    for={id}
-    class={cn(
-      'text-sm font-medium text-normal',
-      hideLabel && 'sr-only',
-      disabled && 'opacity-50',
-      labelClass
-    )}
-  >
-    {label}
-  </label>
   <textarea
     id={id}
     name={name}
@@ -112,23 +74,30 @@ const fieldClassName = cn(
     required={required}
     disabled={disabled}
     readonly={readOnly}
-    aria-invalid={error ? 'true' : consumerInvalid}
-    aria-describedby={describedBy || undefined}
-    class={fieldClassName}
+    aria-invalid={ariaInvalid(error, consumerInvalid)}
+    aria-describedby={describedBy({
+      helpId: help ? helpId : undefined,
+      errorId: error ? errorId : undefined,
+      extraIds: showCounter ? [counterId] : [],
+      consumer: consumerDescribedBy,
+    })}
+    class={fieldControlClass({
+      base: 'resize-y',
+      disabledClass: 'resize-none',
+      size,
+      variant,
+      shape,
+      intent,
+      error,
+      readOnly,
+      disabled,
+      fieldClass,
+    })}
     {...attrs}
   >{value}</textarea>
-  {help && (
-    <p id={helpId} class={cn('text-sm text-muted', helpClass)}>
-      {help}
-    </p>
-  )}
-  {error && (
-    <p id={errorId} class={cn('text-sm text-error', errorClass)}>
-      {error}
-    </p>
-  )}
   {showCounter && (
     <p
+      slot="after"
       id={counterId}
       class={cn('text-sm text-muted text-right tabular-nums', counterClass)}
       data-textarea-counter
@@ -136,7 +105,7 @@ const fieldClassName = cn(
       {value.length} / {maxLength}
     </p>
   )}
-</div>
+</Field>
 
 <script>
   import type { Selection } from '~/types/selection.types';

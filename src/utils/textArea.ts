@@ -1,4 +1,5 @@
 import type { TextAreaProps } from '~/types/textarea.types';
+import { fieldId, validateFieldLabel } from '~/utils/field';
 
 function fail(message: string): never {
   throw new Error(`textArea: ${message}`);
@@ -9,7 +10,7 @@ export function validateTextArea(
   props: Pick<TextAreaProps, 'label' | 'value' | 'maxLength' | 'showCounter'>
 ): void {
   const { label, value = '', maxLength, showCounter } = props;
-  if (!label?.trim()) fail('a label is required');
+  validateFieldLabel('textArea', label);
   if (maxLength !== undefined && !(Number.isInteger(maxLength) && maxLength > 0)) {
     fail(`field "${label}" has maxLength ${maxLength}; expected a positive integer`);
   }
@@ -21,10 +22,7 @@ export function validateTextArea(
   }
 }
 
-// Module scope survives across renders within a build; frontmatter does not.
-let instanceCount = 0;
-
 /** A `<textarea>` id unique per rendered instance. */
 export function textAreaId(): string {
-  return `textarea-${instanceCount++}`;
+  return fieldId('textarea');
 }
