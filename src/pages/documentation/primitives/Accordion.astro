@@ -74,5 +74,18 @@ const items: AccordionItem[] = [
     </AccordionBlock>
   </div>
 
+  <h3>5. Nested</h3>
+  <p>
+    An Accordion can sit inside another's slot. Each chevron follows its own item, so an inner item
+    stays closed and unrotated while its parent is open.
+  </p>
+  <div data-doc-section="nested">
+    <AccordionBlock items={[{ title: 'Delivery options' }, items[1]]} defaultOpen={[0]}>
+      <Fragment slot="item-0">
+        <AccordionBlock items={[{ ...items[0], id: undefined }, items[2]]} />
+      </Fragment>
+    </AccordionBlock>
+  </div>
+
   <ApiReferenceTable component="Accordion" category="primitives" />
 </Layout>

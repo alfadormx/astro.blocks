@@ -29,7 +29,7 @@ validateAccordion({ items, mode, defaultOpen, hasSlot: (i) => Astro.slots.has(sl
 const groupName = mode === 'single' ? (name ?? nextAccordionName()) : undefined;
 const openIndices = new Set(defaultOpen);
 
-const detailsClass = cn('group/accordion border-b border-border', itemClass);
+const detailsClass = cn('border-b border-border', itemClass);
 const summaryClasses = cn(
   'flex cursor-pointer list-none items-center justify-between gap-4 rounded-sm py-4',
   '[&::-webkit-details-marker]:hidden',
@@ -39,7 +39,8 @@ const summaryClasses = cn(
 );
 const titleClasses = cn('m-0 text-base font-semibold text-normal', titleClass);
 const iconClasses = cn(
-  'size-5 shrink-0 text-muted transition-transform duration-200 group-open/accordion:rotate-180 motion-reduce:transition-none',
+  // A group-open variant would match any open ancestor, rotating nested closed items too.
+  'size-5 shrink-0 text-muted transition-transform duration-200 [[open]>summary>&]:rotate-180 motion-reduce:transition-none',
   icon ? icon.class : undefined,
   iconClass
 );
