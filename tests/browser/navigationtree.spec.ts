@@ -144,3 +144,17 @@ test('icon toggle mode rotates the chevron of the toggled parent', async ({ page
   if (wasExpanded) await expect(icon).toHaveClass(expandedClass);
   else await expect(icon).not.toHaveClass(expandedClass);
 });
+
+test('current path detection expands the parent of the page and labels the active link after it', async ({
+  page,
+}) => {
+  const root = await section(page, 'current-path');
+  const active = root.locator(`a[href="${PAGE_URL}"]`);
+
+  await expect(active).toBeVisible();
+  await expect(active).toHaveText('NavigationTree');
+  await expect(root.locator('[data-nav-details]:has(a[href="' + PAGE_URL + '"])')).toHaveAttribute(
+    'open',
+    ''
+  );
+});

@@ -47,7 +47,7 @@ const nestedNavItems: NavigationTreeItem[] = [
   {
     label: 'Composite',
     href: '/documentation/composite',
-    children: [{ label: 'Content', href: '/documentation/composite/NavigationTree' }],
+    children: [{ label: 'NavigationTree', href: '/documentation/composite/NavigationTree' }],
   },
   {
     label: 'Layout',
@@ -301,7 +301,7 @@ const deeplyNestedNavItems: NavigationTreeItem[] = [
   <p>
     Current path: <code class="bg-surface px-2 py-1 rounded text-sm">{Astro.url.pathname}</code>
   </p>
-  <div class="border border-border rounded-lg p-6 max-w-xs">
+  <div class="border border-border rounded-lg p-6 max-w-xs" data-doc-section="current-path">
     <NavigationTreeBlock items={nestedNavItems} expansionStrategy="active-only" />
   </div>
 
