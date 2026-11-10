@@ -26,19 +26,20 @@ Blocks live in `src/components/blocks/`, with prop types in `src/types/*.types.t
 
 ### Primitives
 
-| Block                           | Purpose                                                         |
-| :------------------------------ | :-------------------------------------------------------------- |
-| `Headline`                      | Tagline, title and subtitle with alignment and heading tag      |
-| `Button`                        | Link or button with size, variant, intent, shape, icon or image |
-| `Image`, `Vector`, `Logo`       | Optimized images, inline SVG and site logo                      |
-| `TextArea`                      | Rich text body                                                  |
-| `Background`                    | Image or video background with overlay                          |
-| `Video`                         | Video.js player, including YouTube and Vimeo sources            |
-| `Map`                           | Leaflet map                                                     |
-| `ModelViewer`                   | Three.js 3D model viewer with materials and bloom               |
-| `ThemeToggle`, `LanguageToggle` | Light/dark switch and language switcher                         |
-| `ToggleGroup`                   | Single or multiple choice option group                          |
-| `ContentCarouselItem`           | Slide used by `ContentCarousel`                                 |
+| Block                           | Purpose                                                           |
+| :------------------------------ | :---------------------------------------------------------------- |
+| `Headline`                      | Tagline, title and subtitle with alignment and heading tag        |
+| `Button`                        | Link or button with size, variant, intent, shape, icon or image   |
+| `Image`, `Vector`, `Logo`       | Optimized images, inline SVG and site logo                        |
+| `TextArea`                      | Rich text body                                                    |
+| `Input`                         | Labelled single-line field with help, error and native validation |
+| `Background`                    | Image or video background with overlay                            |
+| `Video`                         | Video.js player, including YouTube and Vimeo sources              |
+| `Map`                           | Leaflet map                                                       |
+| `ModelViewer`                   | Three.js 3D model viewer with materials and bloom                 |
+| `ThemeToggle`, `LanguageToggle` | Light/dark switch and language switcher                           |
+| `ToggleGroup`                   | Single or multiple choice option group                            |
+| `ContentCarouselItem`           | Slide used by `ContentCarousel`                                   |
 
 ### Layout
 
@@ -75,7 +76,7 @@ Blocks live in `src/components/blocks/`, with prop types in `src/types/*.types.t
 - **Props, not markup.** Composites take the props of the blocks they contain, for example `headline: HeadlineProps` or `actions: ButtonProps[]`.
 - **Layered defaults.** `default*Config` props set shared config for repeated children, and `selected*Config` or `active*Config` props layer state on top.
 - **Style tokens.** Buttons and items share an `intent`, `variant`, `size` and `shape` vocabulary. Colors come from `src/styles/colors.css`.
-- **Internal sub-components stay internal.** Files that open with `// Internal to <Parent>` declare `Props` inline, have no docs page and are imported only by their parent; use the parent instead.
+- **Internal sub-components stay internal.** Files that open with `// Internal to <Parent>` (or a list of parents) declare `Props` inline, have no docs page and are imported only by the parents they list; use a parent instead.
 
 ## Site configuration
 

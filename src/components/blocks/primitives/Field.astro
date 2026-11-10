@@ -1,0 +1,89 @@
+---
+// Internal to Input, Select, Checkbox, CheckboxGroup, TextArea: one source for label, required marker, help and error, so every form control looks and behaves alike.
+import { fieldDescriptionIds } from '~/utils/field';
+import { cn } from '~/utils/styles';
+
+type Props = {
+  /** Id of the native control (label `for`), or of the group; help and error ids derive from it. */
+  id: string;
+  label: string;
+  hideLabel?: boolean;
+  required?: boolean;
+  disabled?: boolean;
+  help?: string;
+  error?: string;
+  as?: 'div' | 'fieldset';
+  layout?: 'stacked' | 'inline';
+  class?: string;
+  labelClass?: string;
+  helpClass?: string;
+  errorClass?: string;
+  rootAttrs?: Record<string, string | boolean | undefined>;
+};
+
+const {
+  id,
+  label,
+  hideLabel = false,
+  required = false,
+  disabled = false,
+  help,
+  error,
+  as = 'div',
+  layout = 'stacked',
+  class: className = '',
+  labelClass = '',
+  helpClass = '',
+  errorClass = '',
+  rootAttrs = {},
+} = Astro.props;
+
+const { helpId, errorId } = fieldDescriptionIds(id);
+const Root = as;
+const isFieldset = as === 'fieldset';
+const LabelTag = isFieldset ? 'legend' : 'label';
+const inline = layout === 'inline';
+// Inline puts the control in column 1 and the label in column 2; the control's own class
+// supplies `col-start-1 row-start-1`, so DOM order stays label then control.
+const support = inline && 'col-start-2';
+---
+
+<Root
+  class={cn(
+    inline ? 'grid grid-cols-[auto_1fr] items-center gap-x-2 gap-y-1' : 'flex flex-col gap-1',
+    isFieldset && 'm-0 min-w-0 border-0 p-0',
+    className
+  )}
+  {...rootAttrs}
+>
+  <LabelTag
+    for={isFieldset ? undefined : id}
+    class={cn(
+      'text-sm font-medium text-normal',
+      isFieldset && 'mb-1 p-0',
+      inline && 'col-start-2 row-start-1',
+      hideLabel && 'sr-only',
+      disabled && 'opacity-50',
+      labelClass
+    )}
+  >
+    {label}
+    {required && (
+      <span aria-hidden="true" data-field-required class="ms-0.5 text-error">
+        *
+      </span>
+    )}
+  </LabelTag>
+  <slot />
+  {help && (
+    <p id={helpId} class={cn('text-sm text-muted', support, helpClass)}>
+      {help}
+    </p>
+  )}
+  {error && (
+    <p id={errorId} class={cn('text-sm text-error', support, errorClass)}>
+      {error}
+    </p>
+  )}
+  <slot name="after" />
+</Root>

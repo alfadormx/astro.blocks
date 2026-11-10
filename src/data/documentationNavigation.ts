@@ -61,6 +61,7 @@ export const documentationNavigation: NavigationTreeItem[] = [
       { label: 'ContentCarouselItem', href: '/documentation/primitives/ContentCarouselItem' },
       { label: 'Headline', href: '/documentation/primitives/Headline' },
       { label: 'Image', href: '/documentation/primitives/Image' },
+      { label: 'Input', href: '/documentation/primitives/Input' },
       { label: 'LanguageToggle', href: '/documentation/primitives/LanguageToggle' },
       { label: 'Logo', href: '/documentation/primitives/Logo' },
       { label: 'Map', href: '/documentation/primitives/Map' },
