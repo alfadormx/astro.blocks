@@ -66,6 +66,22 @@ test.describe('rendering', () => {
     await expect(all.nth(2)).toHaveAttribute('open', '');
   });
 
+  test('a nested closed item keeps its icon unrotated while its parent is open', async ({
+    page,
+  }) => {
+    const outer = items(page, 'nested').first();
+    const inner = outer.locator('[data-accordion-content] [data-accordion-item]').first();
+    const innerIcon = inner.locator('[data-accordion-summary] svg');
+
+    await expect(outer).toHaveAttribute('open', '');
+    await expect(inner).not.toHaveAttribute('open');
+    await expect(outer.locator('> [data-accordion-summary] svg')).toHaveCSS('rotate', '180deg');
+    await expect(innerIcon).toHaveCSS('rotate', 'none');
+
+    await inner.locator('[data-accordion-summary]').click();
+    await expect(innerIcon).toHaveCSS('rotate', '180deg');
+  });
+
   test('a slotted answer replaces the item content', async ({ page }) => {
     const item = items(page, 'slotted').first();
     await item.locator('[data-accordion-summary]').click();
