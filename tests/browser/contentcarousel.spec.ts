@@ -128,3 +128,46 @@ test('loop clones leave each slide id in the DOM once', async ({ page }) => {
     section.locator('[data-carousel-clone] [id], [data-carousel-clone][id]')
   ).toHaveCount(0);
 });
+
+test.describe('focus pause', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.clock.install();
+  });
+
+  test('focus on a carousel control stops step autoplay', async ({ page }) => {
+    const root = await section(page);
+    const announcer = root.locator('[data-carousel-announcer]');
+    await expect(announcer).toHaveText('Slide 1 of 3');
+    await root.locator('[data-carousel-next]').focus();
+    await page.clock.runFor(7000);
+    await expect(announcer).toHaveText('Slide 1 of 3');
+  });
+
+  test('focus leaving the carousel resumes step autoplay', async ({ page }) => {
+    const root = await section(page);
+    const next = root.locator('[data-carousel-next]');
+    await next.focus();
+    await next.evaluate((el) => (el as HTMLElement).blur());
+    await page.clock.runFor(3500);
+    await expect(root.locator('[data-carousel-announcer]')).toHaveText('Slide 2 of 3');
+  });
+
+  test('focus leaving after the pause button keeps autoplay paused', async ({ page }) => {
+    const root = await section(page);
+    await root.locator('[data-carousel-pause]').focus();
+    await page.keyboard.press('Enter');
+    await root.locator('[data-carousel-play]').evaluate((el) => (el as HTMLElement).blur());
+    await page.clock.runFor(7000);
+    await expect(root.locator('[data-carousel-announcer]')).toHaveText('Slide 1 of 3');
+  });
+
+  test('pressing next after pause does not restart step autoplay', async ({ page }) => {
+    const root = await section(page);
+    await root.locator('[data-carousel-pause]').click();
+    await root.locator('[data-carousel-next]').click();
+    await root.locator('[data-carousel-next]').evaluate((el) => (el as HTMLElement).blur());
+    await page.mouse.move(0, 0);
+    await page.clock.runFor(7000);
+    await expect(root.locator('[data-carousel-announcer]')).toHaveText('Slide 2 of 3');
+  });
+});
