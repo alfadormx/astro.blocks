@@ -1,0 +1,78 @@
+---
+import Container from '~/components/blocks/layout/Container.astro';
+import ContentCarousel from '~/components/blocks/composite/ContentCarousel.astro';
+import ContentCarouselItem from '~/components/blocks/primitives/ContentCarouselItem.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
+import LogoCloudEntry from '~/components/blocks/composite/LogoCloudEntry.astro';
+import type { ContainerProps } from '~/types/container.types';
+import type { ContentCarouselProps } from '~/types/contentcarousel.types';
+import type { HeadlineProps } from '~/types/headline.types';
+import type { LogoCloudProps } from '~/types/logocloud.types';
+import { gridGapClass } from '~/utils/itemsGrid';
+import { validateLogoCloud } from '~/utils/logoCloud';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import { cn } from '~/utils/styles';
+
+type Props = LogoCloudProps;
+
+const {
+  container,
+  headline,
+  logos,
+  layout = 'static',
+  grayscale = false,
+  gap = 'normal',
+  logosClass,
+  contentCarousel,
+  defaultImageConfig,
+  defaultVectorConfig,
+} = Astro.props;
+
+validateLogoCloud(logos, layout);
+
+const mergedContainer = mergeConfigs<ContainerProps>({}, {}, container);
+const mergedHeadline =
+  headline && mergeConfigs<HeadlineProps>({}, { htmlTag: 'h2', align: 'center' }, headline);
+
+const mergedContentCarousel = mergeConfigs<Omit<ContentCarouselProps, 'items'>>(
+  {},
+  {
+    ariaLabel: 'Logos',
+    loop: true,
+    autoplay: { mode: 'continuous' },
+    showIndicators: false,
+    controlsPosition: 'outside',
+  },
+  contentCarousel
+);
+
+const slide = { content: { air: 'none', widthType: 'full' }, class: 'px-4 py-2' } as const;
+
+const logosClassName = cn(
+  'flex flex-wrap items-center justify-center',
+  gridGapClass(gap),
+  logosClass
+);
+const entry = { grayscale, defaultImageConfig, defaultVectorConfig };
+---
+
+<Container {...mergedContainer}>
+  {mergedHeadline && <Headline {...mergedHeadline} />}
+  <div class="@container" data-logo-cloud>
+    {layout === 'marquee' ? (
+      <ContentCarousel {...mergedContentCarousel}>
+        {logos.map((logo) => (
+          <ContentCarouselItem {...slide} basis="basis-1/2 @lg:basis-1/4 @3xl:basis-1/6">
+            <LogoCloudEntry logo={logo} {...entry} />
+          </ContentCarouselItem>
+        ))}
+      </ContentCarousel>
+    ) : (
+      <div class={logosClassName} data-logo-cloud-logos>
+        {logos.map((logo) => (
+          <LogoCloudEntry logo={logo} {...entry} />
+        ))}
+      </div>
+    )}
+  </div>
+</Container>

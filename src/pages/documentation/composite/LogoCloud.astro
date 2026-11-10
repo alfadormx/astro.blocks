@@ -1,0 +1,162 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import LogoCloudBlock from '~/components/blocks/composite/LogoCloud.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import type { LogoCloudLogo } from '~/types/logocloud.types';
+
+const metadata = { title: { default: 'LogoCloud' } };
+
+const wordmark = (shape: string, label: string, colour: string) =>
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 32"><g fill="${colour}">${shape}<text x="40" y="22" font-family="system-ui, sans-serif" font-size="18" font-weight="700">${label}</text></g></svg>`;
+
+const marks: Record<string, string> = {
+  Acme: wordmark('<circle cx="16" cy="16" r="12"/>', 'Acme', '#e11d48'),
+  Globex: wordmark(
+    '<path d="M8 4h16a4 4 0 0 1 4 4v16a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z"/>',
+    'Globex',
+    '#2563eb'
+  ),
+  Initech: wordmark('<polygon points="16,3 29,28 3,28"/>', 'Initech', '#16a34a'),
+  Umbrella: wordmark(
+    '<path d="M4 18a12 12 0 0 1 24 0z"/><path d="M15 18h2v10h-2z"/>',
+    'Umbrella',
+    '#dc2626'
+  ),
+  Hooli: wordmark('<polygon points="16,2 30,16 16,30 2,16"/>', 'Hooli', '#9333ea'),
+  Vandelay: wordmark(
+    '<path d="M9 10h14a6 6 0 0 1 0 12H9a6 6 0 0 1 0-12z"/>',
+    'Vandelay',
+    '#ea580c'
+  ),
+  Stark: wordmark('<polygon points="16,2 29,9 29,23 16,30 3,23 3,9"/>', 'Stark', '#ca8a04'),
+  Wayne: wordmark('<path d="M2 8h8l6 12 6-12h8L18 28h-4z"/>', 'Wayne', '#0891b2'),
+};
+
+const names = Object.keys(marks);
+const slug = (name: string) => name.toLowerCase();
+
+const vectorLogo = (name: string): LogoCloudLogo => ({ name, vector: { src: marks[name] } });
+const linkedLogo = (name: string): LogoCloudLogo => ({
+  ...vectorLogo(name),
+  href: `https://example.com/${slug(name)}`,
+});
+const colouredLogo = (name: string, href?: string): LogoCloudLogo => ({
+  name,
+  href,
+  vector: { src: marks[name], preserveColors: true },
+});
+const imageLogos: LogoCloudLogo[] = [
+  ['Northwind', 'white'],
+  ['Contoso', 'yellow'],
+  ['Fabrikam', 'rose'],
+].map(([name, metal]) => ({
+  name,
+  image: { src: `~/assets/images/configurator/metal-${metal}.svg`, width: 32, height: 32 },
+}));
+
+const basic = names.slice(0, 6).map(vectorLogo);
+const links = names.slice(0, 4).map(linkedLogo);
+const mixed = [...imageLogos, ...names.slice(0, 3).map(vectorLogo)];
+const grayscaleLogos = [
+  ...imageLogos,
+  ...names.slice(0, 3).map((name) => colouredLogo(name, `https://example.com/${slug(name)}`)),
+];
+const marqueeLogos = names.map(vectorLogo);
+const marqueeColoured = names.map((name) => colouredLogo(name));
+const marqueeLinks = names.map(linkedLogo);
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'LogoCloud',
+    subtitle: 'A row of partner or customer logos, as inline SVG or images, optionally linked.',
+  }}
+>
+  <h3>1. Basic</h3>
+  <p>
+    The default <code>layout="static"</code> wraps and centres the logos in a row. Each logo takes
+    its <code>name</code> as its text alternative. The optional <code>headline</code> renders as an{' '}
+    <code>h2</code>.
+  </p>
+  <div data-doc-section="basic">
+    <LogoCloudBlock headline={{ title: 'Trusted by teams everywhere' }} logos={basic} />
+  </div>
+
+  <h3>2. Links</h3>
+  <p>
+    With <code>href</code> a logo becomes a link that opens in the same tab and shows a focus ring
+    when reached with the keyboard.
+  </p>
+  <div data-doc-section="links">
+    <LogoCloudBlock logos={links} />
+  </div>
+
+  <h3>3. Image and vector</h3>
+  <p>
+    Each logo sets exactly one of <code>image</code> (Image props) and <code>vector</code> (Vector
+    props). A vector is recoloured to the text colour, so it follows the theme. To keep its brand
+    colours, set <code>preserveColors</code>.
+  </p>
+  <div data-doc-section="vector">
+    <LogoCloudBlock logos={mixed} />
+  </div>
+
+  <h3>4. Grayscale</h3>
+  <p>
+    <code>grayscale</code> desaturates every logo; each regains its colour on hover and keyboard
+    focus. A recoloured vector is already one colour, so the effect is only visible on images and on
+    vectors with <code>preserveColors</code>.
+  </p>
+  <div data-doc-section="grayscale">
+    <LogoCloudBlock logos={grayscaleLogos} grayscale />
+  </div>
+
+  <h3>5. Gap and width</h3>
+  <p>
+    <code>gap</code> sets the space between logos; <code>logosClass</code> styles their wrapper,
+    here narrowing it so the logos wrap into more rows.
+  </p>
+  <div data-doc-section="gap">
+    <LogoCloudBlock logos={names.map(vectorLogo)} gap="loose" logosClass="max-w-2xl mx-auto" />
+  </div>
+
+  <h3>6. Marquee</h3>
+  <p>
+    <code>layout="marquee"</code> drifts the logos through a looping ContentCarousel at 40 pixels
+    per second; set <code>contentCarousel.autoplay.speed</code> to change it. The strip pauses on
+    hover, on keyboard focus and with its pause button. With reduced motion it stays still, and the
+    arrows move it by hand. A marquee needs at least 6 logos.
+  </p>
+  <div data-doc-section="marquee">
+    <LogoCloudBlock logos={marqueeLogos} layout="marquee" />
+  </div>
+
+  <h3>7. Marquee in grayscale</h3>
+  <p>Brand-coloured vectors in a grayscale marquee; each regains its colour on hover.</p>
+  <div data-doc-section="marquee-grayscale">
+    <LogoCloudBlock logos={marqueeColoured} layout="marquee" grayscale />
+  </div>
+
+  <h3>8. Linked marquee</h3>
+  <p>
+    Linked logos in a slower marquee. Tabbing through them pauses the strip and brings each focused
+    logo into view.
+  </p>
+  <div data-doc-section="marquee-links">
+    <LogoCloudBlock
+      logos={marqueeLinks}
+      layout="marquee"
+      contentCarousel={{ autoplay: { mode: 'continuous', speed: 25 } }}
+    />
+  </div>
+
+  <p>
+    Without JavaScript the marquee shows the first view of logos and its arrows do nothing. The
+    pause control that WCAG 2.2.2 asks for also exists only while JavaScript runs, so use{' '}
+    <code>layout="static"</code> where that matters.
+  </p>
+
+  <ApiReferenceTable component="LogoCloud" category="composite" />
+</Layout>

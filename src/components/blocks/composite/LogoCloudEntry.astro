@@ -1,0 +1,51 @@
+---
+// Internal to LogoCloud: one logo, shared by the static and marquee layouts.
+import Image from '~/components/blocks/primitives/Image.astro';
+import Vector from '~/components/blocks/primitives/Vector.astro';
+import type { LayerConfig } from '~/types/config.types';
+import type { ImageProps } from '~/types/image.types';
+import type { LogoCloudLogo } from '~/types/logocloud.types';
+import type { VectorProps } from '~/types/vector.types';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import { cn } from '~/utils/styles';
+
+interface Props {
+  logo: LogoCloudLogo;
+  grayscale: boolean;
+  defaultImageConfig?: LayerConfig<ImageProps>;
+  defaultVectorConfig?: LayerConfig<VectorProps>;
+}
+
+const { logo, grayscale, defaultImageConfig, defaultVectorConfig } = Astro.props;
+const { name, href, image, vector } = logo;
+
+const mergedImage =
+  image &&
+  mergeConfigs<ImageProps>(
+    {},
+    { alt: name, layout: 'contained', class: 'h-8 w-auto' },
+    defaultImageConfig,
+    image
+  );
+const mergedVector =
+  vector &&
+  mergeConfigs<VectorProps>(
+    {},
+    { ariaLabel: name, class: 'h-8 w-auto' },
+    defaultVectorConfig,
+    vector
+  );
+
+const Tag = href ? 'a' : 'div';
+const wrapperClass = cn(
+  'inline-flex items-center justify-center rounded-sm',
+  href &&
+    'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emphasis',
+  grayscale &&
+    'grayscale hover:grayscale-0 focus-within:grayscale-0 transition-[filter] motion-reduce:transition-none'
+);
+---
+
+<Tag href={href} class={wrapperClass} data-logo-cloud-logo>
+  {mergedVector ? <Vector {...mergedVector} /> : mergedImage && <Image {...mergedImage} />}
+</Tag>
