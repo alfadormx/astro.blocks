@@ -1,11 +1,13 @@
 ---
 import type { ItemProps } from '~/types/item.types';
 import type { ButtonProps } from '~/types/button.types';
+import type { HeadlineProps } from '~/types/headline.types';
 import { cn } from '~/utils/styles';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 import { Icon } from 'astro-icon/components';
 import Button from '~/components/blocks/primitives/Button.astro';
 import Image from '~/components/blocks/primitives/Image.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
 
 type Props = ItemProps;
 
@@ -25,6 +27,8 @@ const {
   actions = [],
   defaultActionConfig,
   actionsClass,
+  titleTag = 'div',
+  textTag: TextTag = 'div',
   orientation = 'vertical',
   background,
   spacing,
@@ -68,6 +72,23 @@ const mergedIconClass = cn(mediaClass, 'shrink-0', icon?.class);
 const mergedImageClass = cn(mediaClass, 'shrink-0', image?.class);
 
 const actionsWrapperClass = cn('flex flex-wrap gap-2 md:gap-3 mt-2 md:mt-3', actionsClass);
+
+// Cancels Headline's wrapper margins and title look, plus the base-layer heading size,
+// line height and margins, so a heading title keeps the div title's box.
+const internalTitleHeadline: HeadlineProps = {
+  class: 'my-0 space-y-0',
+  titleClass: 'font-[family-name:inherit] font-normal text-[length:inherit] leading-[inherit] mb-0',
+};
+
+const titleHeadline =
+  title && titleTag !== 'div'
+    ? mergeConfigs<HeadlineProps>({}, internalTitleHeadline, {
+        title,
+        htmlTag: titleTag,
+        align: orientation === 'horizontal' ? 'left' : 'center',
+        titleClass,
+      })
+    : undefined;
 
 const connectorFinalClass = cn(
   'w-0.5 h-full border-l border-border',
@@ -132,8 +153,9 @@ const horizontalConnectorRightClass = cn(
         contentClass
       )}
     >
-      {title && <div class={titleClass}>{title}</div>}
-      {content && <div class={textClass} set:html={content} />}
+      {title &&
+        (titleHeadline ? <Headline {...titleHeadline} /> : <div class={titleClass}>{title}</div>)}
+      {content && <TextTag class={textClass} set:html={content} />}
       {actions.length > 0 && (
         <div class={actionsWrapperClass}>
           {actions.map((action) => (

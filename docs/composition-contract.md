@@ -115,6 +115,7 @@ mergeConfigs<ThemeToggleProps>(
 - A flag that picks a format rather than presence is a named enum, not `show*` (LanguageToggle `labelFormat: 'label' | 'code'`).
 - **Child props live in the child's field.** `twoColumnContainer.reverseOnMobile`, not `reverseOnMobile` on the parent.
 - **Child-wrapper props are flat on the parent**, named `<role>Class`, `<role>Align` or `<role>Gap`, where `<role>` is the field or text prop the wrapper holds (`actionsClass`, `buttonsGap`).
+- **A sub-element's HTML tag is the flat prop `<role>Tag`** (`titleTag`, `textTag`). `htmlTag` stays for a block's own root (Container) or a child's own root (Headline).
 - **The parent's own structural choices stay flat** (`imagePosition: 'left' | 'right'`).
 
 ## 6. Spacing and layout vocabulary

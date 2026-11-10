@@ -366,5 +366,64 @@ const metadata = {
     />
   </div>
 
+  <h3>12. Title Tag</h3>
+  <p>
+    <code>titleTag</code> sets the title's semantics only. A heading tag renders the title through
+    Headline with the same look as the default <code>div</code>, so each pair below looks identical.
+    Heading titles are not allowed in selectable grids, where an option cannot hold a heading.
+  </p>
+  <div class="flex flex-wrap gap-6">
+    <div class="max-w-xs" data-doc-section="title-tag-div">
+      <ItemBlock
+        icon={{ name: 'heroicons:user-group', class: 'text-primary' }}
+        title="Our team"
+        content="The people behind the product."
+      />
+    </div>
+    <div class="max-w-xs" data-doc-section="title-tag-h3">
+      <ItemBlock
+        icon={{ name: 'heroicons:user-group', class: 'text-primary' }}
+        title="Our team"
+        titleTag="h3"
+        content="The people behind the product."
+      />
+    </div>
+  </div>
+  <div class="flex flex-wrap gap-6 mt-6">
+    <div class="max-w-xs" data-doc-section="title-tag-div-horizontal">
+      <ItemBlock
+        icon={{ name: 'heroicons:user-group', class: 'text-primary' }}
+        title="Our team"
+        content="The people behind the product."
+        orientation="horizontal"
+      />
+    </div>
+    <div class="max-w-xs" data-doc-section="title-tag-h3-horizontal">
+      <ItemBlock
+        icon={{ name: 'heroicons:user-group', class: 'text-primary' }}
+        title="Our team"
+        titleTag="h3"
+        content="The people behind the product."
+        orientation="horizontal"
+      />
+    </div>
+  </div>
+
+  <h3>13. Text Tag</h3>
+  <p>
+    <code>textTag</code> sets the tag of the element styled by <code>textClass</code>. Use
+    <code>'p'</code> only for plain or inline content: a <code>&lt;p&gt;</code> cannot hold block
+    HTML such as <code>&lt;p&gt;</code> or <code>&lt;ul&gt;</code>, and the browser would break it
+    apart.
+  </p>
+  <div class="max-w-sm" data-doc-section="text-tag">
+    <ItemBlock
+      icon={{ name: 'heroicons:document-text', class: 'text-primary' }}
+      title="Paragraph"
+      content="This text renders as a paragraph."
+      textTag="p"
+    />
+  </div>
+
   <ApiReferenceTable component="Item" category="composite" />
 </Layout>

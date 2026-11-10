@@ -44,3 +44,29 @@ test('actionsClass reaches the actions wrapper', async ({ page }) => {
 
   expect(b!.y).toBeGreaterThanOrEqual(a!.y + a!.height);
 });
+
+for (const suffix of ['', '-horizontal']) {
+  test(`an h3 title keeps the div title's box${suffix}`, async ({ page }) => {
+    await page.goto(PAGE_URL);
+    const div = section(page, `title-tag-div${suffix}`);
+    const h3 = section(page, `title-tag-h3${suffix}`);
+
+    await expect(div.getByRole('heading')).toHaveCount(0);
+    await expect(h3.getByRole('heading', { level: 3, name: 'Our team' })).toBeVisible();
+
+    const [outerA, outerB] = [await div.boundingBox(), await h3.boundingBox()];
+    const [a, b] = [
+      await div.getByText('Our team').boundingBox(),
+      await h3.getByText('Our team').boundingBox(),
+    ];
+    for (const key of ['width', 'height'] as const) expect(b![key]).toBeCloseTo(a![key], 0);
+    expect(b!.x - outerB!.x).toBeCloseTo(a!.x - outerA!.x, 0);
+    expect(b!.y - outerB!.y).toBeCloseTo(a!.y - outerA!.y, 0);
+  });
+}
+
+test('textTag renders the text as a paragraph', async ({ page }) => {
+  await page.goto(PAGE_URL);
+
+  await expect(section(page, 'text-tag').locator('p')).toHaveCount(1);
+});

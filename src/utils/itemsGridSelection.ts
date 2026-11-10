@@ -8,7 +8,7 @@ function fail(message: string): never {
 
 /**
  * Throws on a selectable ItemsGrid config that cannot render a valid option set.
- * `items` must be fully merged (defaults, selected config, item) so leaked `actions` are caught.
+ * `items` must be fully merged (defaults, selected config, item) so leaked `actions` and heading `titleTag`s are caught.
  */
 export function validateItemsGridSelection(
   selection: SelectableSelection,
@@ -28,6 +28,11 @@ export function validateItemsGridSelection(
     codes.add(item.code);
     if (item.actions && item.actions.length > 0) {
       fail(`item "${item.code}" in group "${group}" has actions; options cannot contain buttons`);
+    }
+    if (item.titleTag && item.titleTag !== 'div') {
+      fail(
+        `item "${item.code}" in group "${group}" has a heading title; options cannot contain headings`
+      );
     }
   });
 

@@ -46,3 +46,25 @@ describe('Item actions', () => {
     expect(tags[2]).toMatch(/border-error/);
   });
 });
+
+describe('Item tags', () => {
+  it('renders a div title without Headline by default', async () => {
+    const html = await render({ title: 'Title' });
+
+    expect(html).toMatch(/<div class="font-bold text-lg[^"]*">Title<\/div>/);
+    expect(html).not.toContain('data-headline');
+  });
+
+  it('renders a heading title through Headline', async () => {
+    const html = await render({ title: 'Title', titleTag: 'h3' });
+
+    expect(html).toContain('data-headline');
+    expect(html).toMatch(/<h3 [^>]*>Title<\/h3>/);
+  });
+
+  it('renders the text element with textTag', async () => {
+    const html = await render({ content: 'Text', textTag: 'p' });
+
+    expect(html).toMatch(/<p class="mb-2 md:mb-3">Text<\/p>/);
+  });
+});
