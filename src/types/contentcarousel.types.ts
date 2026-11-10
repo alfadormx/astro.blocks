@@ -9,12 +9,30 @@ export type CarouselItem = Omit<ImageProps, 'class'> & {
   class?: string;
 };
 
-export interface AutoplayConfig {
+interface AutoplayPauseConfig {
+  /** Set to false to turn autoplay off while keeping its config (default: true) */
   enabled?: boolean;
-  delay?: number;
+  /** Pauses while the pointer is over the carousel (default: true) */
   pauseOnHover?: boolean;
+  /** Restarts autoplay 1 s after prev, next, an indicator or a drag (default: true) */
   pauseOnInteraction?: boolean;
 }
+
+export interface StepAutoplayConfig extends AutoplayPauseConfig {
+  /** Advance one slide at a time (default) */
+  mode?: 'step';
+  /** Milliseconds between slides (default: 4000) */
+  delay?: number;
+}
+
+export interface ContinuousAutoplayConfig extends AutoplayPauseConfig {
+  /** Drift the track smoothly; requires `loop` */
+  mode: 'continuous';
+  /** Drift speed in pixels per second (default: 40) */
+  speed?: number;
+}
+
+export type AutoplayConfig = StepAutoplayConfig | ContinuousAutoplayConfig;
 
 export interface ContentCarouselProps extends Omit<HTMLAttributes<'div'>, 'class'> {
   /** Images rendered as slides when no default slot content is provided (default: []). */
@@ -31,7 +49,7 @@ export interface ContentCarouselProps extends Omit<HTMLAttributes<'div'>, 'class
   draggable?: boolean;
   /** Whether the carousel loops infinitely using cloned slides (default: false). */
   loop?: boolean;
-  /** Autoplay behavior: boolean to enable/disable, number as delay in ms, or a full config object (default: false). */
+  /** Autoplay: boolean to enable or disable, a number as step delay in ms, or a step or continuous config. Continuous requires `loop` (default: false). */
   autoplay?: AutoplayConfig | boolean | number;
   /** Positioning strategy used when moving between slides (default: 'transform'). */
   snapFallback?: 'transform' | 'scroll-snap';

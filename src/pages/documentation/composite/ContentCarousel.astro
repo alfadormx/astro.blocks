@@ -146,6 +146,26 @@ const sampleImages = [
   </section>
 
   <section class="mb-16">
+    <h2>Continuous Autoplay</h2>
+    <p class="mb-4">
+      <code>{"autoplay: { mode: 'continuous', speed }"}</code> drifts the track at{' '}
+      <code>speed</code> pixels per second (default 40) instead of stepping. It requires{' '}
+      <code>loop</code>, pauses on hover, focus and the pause button, and does not start with
+      reduced motion. Prev and next snap to the nearest slide in that direction.
+    </p>
+    <div class="border border-border rounded-lg p-4" data-doc-section="continuous">
+      <ContentCarouselBlock
+        items={sampleImages}
+        loop
+        itemClass="basis-1/2 md:basis-1/3"
+        showIndicators={false}
+        controlsPosition="outside"
+        autoplay={{ mode: 'continuous', speed: 60 }}
+      />
+    </div>
+  </section>
+
+  <section class="mb-16">
     <h2>Button Config</h2>
     <p class="mb-4">
       <code>defaultIndicatorButtonConfig</code>, <code>pauseButton</code> and{' '}
@@ -239,7 +259,9 @@ const sampleImages = [
           <code>loop</code>: Enable infinite looping (default: <code>false</code>)
         </li>
         <li>
-          <code>autoplay</code>: Boolean, number (delay in ms), or config object
+          <code>autoplay</code>: Boolean, number (delay in ms), or config object; set{' '}
+          <code>mode: 'continuous'</code> with <code>loop</code> for a smooth drift at{' '}
+          <code>speed</code> px/s
         </li>
         <li>
           <code>snapFallback</code>: <code>'transform'</code> (default) or{' '}

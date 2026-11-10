@@ -1,5 +1,5 @@
 ---
-import type { ContentCarouselProps, AutoplayConfig } from '~/types/contentcarousel.types';
+import type { ContentCarouselProps } from '~/types/contentcarousel.types';
 import Button from '~/components/blocks/primitives/Button.astro';
 import Container from '~/components/blocks/layout/Container.astro';
 import Image from '~/components/blocks/primitives/Image.astro';
@@ -8,6 +8,7 @@ import type { ButtonProps } from '~/types/button.types';
 import type { ImageProps } from '~/types/image.types';
 import type { ContainerProps } from '~/types/container.types';
 import { mergeConfigs } from '~/utils/mergeConfigs';
+import { resolveAutoplay } from '~/utils/contentCarousel';
 
 type Props = ContentCarouselProps;
 
@@ -48,22 +49,7 @@ if (hasSlot) {
 
 const uid = `carousel-${Math.random().toString(36).slice(2, 9)}`;
 
-// Parse autoplay config
-const autoplayConfig: AutoplayConfig = (() => {
-  if (typeof autoplay === 'number')
-    return { enabled: true, delay: autoplay, pauseOnHover: true, pauseOnInteraction: true };
-  if (typeof autoplay === 'boolean')
-    return { enabled: autoplay, delay: 4000, pauseOnHover: true, pauseOnInteraction: true };
-  if (autoplay && typeof autoplay === 'object')
-    return {
-      enabled: true,
-      delay: 4000,
-      pauseOnHover: true,
-      pauseOnInteraction: true,
-      ...autoplay,
-    };
-  return { enabled: false, delay: 4000, pauseOnHover: true, pauseOnInteraction: true };
-})();
+const autoplayConfig = resolveAutoplay(autoplay, loop);
 
 // Button configs
 const internalPrevButton: Partial<ButtonProps> = {
@@ -154,6 +140,8 @@ const wrapperProps = container ? mergedContainer : {};
     data-snap-fallback={snapFallback}
     data-autoplay-enabled={String(autoplayConfig.enabled)}
     data-autoplay-delay={String(autoplayConfig.delay)}
+    data-autoplay-mode={autoplayConfig.mode}
+    data-autoplay-speed={String(autoplayConfig.speed)}
     data-autoplay-pause-hover={String(autoplayConfig.pauseOnHover)}
     data-autoplay-pause-interaction={String(autoplayConfig.pauseOnInteraction)}
     data-initial-index={String(initialIndex)}
@@ -303,6 +291,10 @@ const wrapperProps = container ? mergedContainer : {};
     slides: HTMLElement[];
     realSlides: HTMLElement[];
     currentIndex: number;
+    position: number;
+    rafId: number | null;
+    lastFrame: number | null;
+    isSnapping: boolean;
     isLoop: boolean;
     isDraggable: boolean;
     snapFallback: string;
@@ -345,6 +337,8 @@ const wrapperProps = container ? mergedContainer : {};
     const snapFallback = root.dataset.snapFallback || 'transform';
     const autoplayEnabled = root.dataset.autoplayEnabled === 'true';
     const autoplayDelay = parseInt(root.dataset.autoplayDelay || '4000', 10);
+    const autoplayMode = root.dataset.autoplayMode === 'continuous' ? 'continuous' : 'step';
+    const autoplaySpeed = parseFloat(root.dataset.autoplaySpeed || '40');
     const autoplayPauseHover = root.dataset.autoplayPauseHover === 'true';
     const autoplayPauseInteraction = root.dataset.autoplayPauseInteraction === 'true';
     const initialIndex = parseInt(root.dataset.initialIndex || '0', 10);
@@ -391,12 +385,19 @@ const wrapperProps = container ? mergedContainer : {};
       slides = Array.from(track.children) as HTMLElement[];
     }
 
+    const isContinuous = autoplayEnabled && autoplayMode === 'continuous' && slides !== realSlides;
+    const startIndex = isLoop ? initialIndex + slideCount : initialIndex;
+
     const instance: CarouselInstance = {
       root,
       track,
       slides,
       realSlides,
-      currentIndex: isLoop ? initialIndex + slideCount : initialIndex,
+      currentIndex: startIndex,
+      position: startIndex,
+      rafId: null,
+      lastFrame: null,
+      isSnapping: false,
       isLoop,
       isDraggable,
       snapFallback,
@@ -447,29 +448,32 @@ const wrapperProps = container ? mergedContainer : {};
       debugOverlay.querySelector('[data-debug-threshold]')!.textContent = threshold.toFixed(0);
     }
 
-    // Set position
-    function setPosition(instant = false) {
-      // Calculate actual slide width (supports fractional basis like basis-1/3)
-      const firstSlide = slides[0] as HTMLElement;
-      const slideWidth = firstSlide
-        ? firstSlide.getBoundingClientRect().width
-        : viewport.clientWidth;
-      const offset = -instance.currentIndex * slideWidth * rtlMultiplier;
+    // Actual slide width, so fractional bases like basis-1/3 move one slide at a time
+    function slideWidth() {
+      const first = slides[0];
+      return first ? first.getBoundingClientRect().width : viewport.clientWidth;
+    }
+
+    function writeOffset(index: number, instant: boolean) {
       track.style.transitionDuration = instant ? '0ms' : '';
-      track.style.transform = `translateX(${offset}px)`;
+      track.style.transform = `translateX(${-index * slideWidth() * rtlMultiplier}px)`;
+    }
+
+    function setPosition(instant = false) {
+      instance.position = instance.currentIndex;
+      writeOffset(instance.currentIndex, instant);
 
       if (isDebug) {
         console.log('🎯 setPosition:', {
           currentIndex: instance.currentIndex,
-          slideWidth,
-          offset,
+          slideWidth: slideWidth(),
           instant,
         });
       }
     }
 
     // Update controls
-    function updateControls() {
+    function updateControls(announce = true) {
       const realIndex = isLoop
         ? (instance.currentIndex - slideCount) % slideCount
         : instance.currentIndex;
@@ -507,6 +511,8 @@ const wrapperProps = container ? mergedContainer : {};
           target.setAttribute('aria-selected', isActive.toString());
         });
       }
+
+      if (!announce) return;
 
       // Announce
       if (instance.announcer) {
@@ -565,12 +571,27 @@ const wrapperProps = container ? mergedContainer : {};
         });
       const targetIndex = isLoop ? index + slideCount : index;
       instance.currentIndex = Math.max(0, Math.min(targetIndex, slides.length - 1));
+      if (isContinuous) instance.isSnapping = true;
       setPosition();
+      if (isContinuous) checkClone();
       updateControls();
       if (autoplayEnabled && autoplayPauseInteraction) {
         stopAutoplay();
         resumeAutoplay();
       }
+    }
+
+    // Continuous drift sits between slides; prev and next snap to the next boundary that way.
+    function snapStep(direction: 1 | -1) {
+      stopAutoplay();
+      instance.currentIndex =
+        direction > 0 ? Math.floor(instance.position) + 1 : Math.ceil(instance.position) - 1;
+      instance.isSnapping = true;
+      setPosition();
+      checkClone();
+      updateControls();
+      if (autoplayPauseInteraction) scheduleResume();
+      else resumeAutoplay();
     }
 
     function prev() {
@@ -580,6 +601,10 @@ const wrapperProps = container ? mergedContainer : {};
           slideCount,
           isLoop,
         });
+      if (isContinuous) {
+        snapStep(-1);
+        return;
+      }
       if (isLoop) {
         instance.currentIndex--;
         setPosition();
@@ -602,6 +627,10 @@ const wrapperProps = container ? mergedContainer : {};
           slideCount,
           isLoop,
         });
+      if (isContinuous) {
+        snapStep(1);
+        return;
+      }
       if (isLoop) {
         instance.currentIndex++;
         setPosition();
@@ -617,28 +646,45 @@ const wrapperProps = container ? mergedContainer : {};
       }
     }
 
-    // Check for clone and jump
+    // Jump from a clone back to the matching real slide once the move settles
     function checkClone() {
       if (!isLoop) return;
+      const settle = () => {
+        track.removeEventListener('transitionend', onEnd);
+        clearTimeout(fallback);
+        instance.isSnapping = false;
+        if (instance.currentIndex < slideCount) instance.currentIndex += slideCount;
+        else if (instance.currentIndex >= slideCount * 2) instance.currentIndex -= slideCount;
+        else return;
+        setPosition(true);
+        updateControls();
+      };
+      // Slide content (e.g. a logo's filter transition) bubbles transitionend up to the track.
+      const onEnd = (e: TransitionEvent) => {
+        if (e.target === track && e.propertyName === 'transform') settle();
+      };
+      track.addEventListener('transitionend', onEnd);
+      const fallback = window.setTimeout(settle, 500);
+    }
 
-      track.addEventListener(
-        'transitionend',
-        () => {
-          // Jump from before-clones to real slides
-          if (instance.currentIndex < slideCount) {
-            instance.currentIndex = instance.currentIndex + slideCount;
-            setPosition(true);
-            updateControls();
-          }
-          // Jump from after-clones to real slides
-          else if (instance.currentIndex >= slideCount * 2) {
-            instance.currentIndex = instance.currentIndex - slideCount;
-            setPosition(true);
-            updateControls();
-          }
-        },
-        { once: true }
-      );
+    // A background tab resumes with one huge dt; capping it avoids a jump of many slides.
+    const MAX_FRAME_MS = 50;
+
+    function tick(now: number) {
+      instance.rafId = requestAnimationFrame(tick);
+      const last = instance.lastFrame ?? now;
+      instance.lastFrame = now;
+      if (instance.isSnapping) return;
+      const width = slideWidth();
+      if (width === 0) return;
+      instance.position += (autoplaySpeed * Math.min(now - last, MAX_FRAME_MS)) / 1000 / width;
+      if (instance.position >= slideCount * 2) instance.position -= slideCount;
+      writeOffset(instance.position, true);
+      const nearest = Math.round(instance.position);
+      if (nearest !== instance.currentIndex) {
+        instance.currentIndex = nearest;
+        updateControls(false);
+      }
     }
 
     // Hover and focus pauses are tracked apart from the pause button, so leaving one never
@@ -668,6 +714,12 @@ const wrapperProps = container ? mergedContainer : {};
       if (!autoplayEnabled) return;
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+      if (isContinuous) {
+        instance.lastFrame = null;
+        instance.rafId = requestAnimationFrame(tick);
+        return;
+      }
+
       if (isDebug) console.log('[Carousel] Starting autoplay', { delay: autoplayDelay });
       instance.autoplayTimer = window.setInterval(() => {
         if (isDebug) console.log('[Carousel] Autoplay tick');
@@ -676,6 +728,10 @@ const wrapperProps = container ? mergedContainer : {};
     }
 
     function stopAutoplay() {
+      if (instance.rafId !== null) {
+        cancelAnimationFrame(instance.rafId);
+        instance.rafId = null;
+      }
       if (instance.autoplayTimer !== null) {
         if (isDebug) console.log('[Carousel] Stopping autoplay');
         clearInterval(instance.autoplayTimer);
@@ -734,7 +790,7 @@ const wrapperProps = container ? mergedContainer : {};
       instance.startTime = Date.now();
       track.style.cursor = 'grabbing';
       viewport.setPointerCapture(e.pointerId);
-      if (autoplayEnabled && autoplayPauseInteraction) stopAutoplay();
+      if (autoplayEnabled && (autoplayPauseInteraction || isContinuous)) stopAutoplay();
       updateDebug();
       if (isDebug)
         console.log('[Carousel] PointerDown', {
@@ -765,8 +821,8 @@ const wrapperProps = container ? mergedContainer : {};
       }
 
       if (instance.isDragging) {
-        const slideWidth = viewport.clientWidth;
-        const baseOffset = -instance.currentIndex * slideWidth * rtlMultiplier;
+        const from = isContinuous ? instance.position : instance.currentIndex;
+        const baseOffset = -from * slideWidth() * rtlMultiplier;
         track.style.transitionDuration = '0ms';
         track.style.transform = `translateX(${baseOffset + dx}px)`;
       }
@@ -807,6 +863,11 @@ const wrapperProps = container ? mergedContainer : {};
         if (Math.abs(dx) > threshold || velocity > 0.5) {
           if (dx > 0) prev();
           else next();
+        } else if (isContinuous) {
+          instance.currentIndex = Math.round(instance.position);
+          instance.isSnapping = true;
+          setPosition();
+          checkClone();
         } else {
           setPosition();
         }
@@ -923,7 +984,8 @@ const wrapperProps = container ? mergedContainer : {};
 
     // Window resize
     const resizeObserver = new ResizeObserver(() => {
-      setPosition(true);
+      if (isContinuous) writeOffset(instance.position, true);
+      else setPosition(true);
     });
     resizeObserver.observe(viewport);
 
