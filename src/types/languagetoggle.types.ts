@@ -4,12 +4,14 @@ import type { LayerConfig } from './config.types';
 
 export type LanguageToggleGap = 'none' | 'tight' | 'normal' | 'loose';
 
+export type LanguageToggleLabelFormat = 'label' | 'code';
+
 export interface LanguageToggleProps extends Omit<HTMLAttributes<'div'>, 'class'> {
   /** Layout direction of the language buttons inside the container (default: 'horizontal') */
   orientation?: 'horizontal' | 'vertical';
 
-  /** Whether each language button shows its full label instead of just the language code (default: true) */
-  showLabels?: boolean;
+  /** Button text: the language's full label (`Español`) or its uppercase code (`ES`) (default: 'label') */
+  labelFormat?: LanguageToggleLabelFormat;
 
   /** Base Button props merged into both the active and inactive language buttons; `href`, `label` and `aria-current` come from each language. */
   defaultButtonConfig?: LayerConfig<Omit<ButtonProps, 'href' | 'label' | 'aria-current'>>;
