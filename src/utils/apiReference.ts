@@ -72,31 +72,82 @@ function astroFilePath(
   return path.join(SRC_ROOT, 'components', 'blocks', category, `${componentName}.astro`);
 }
 
-// Reads an interface's own declared members. If it extends a plain-identifier
-// base type that has no doc page of its own (so there's nowhere to link out
-// to — e.g. `GridLayoutProps`, unlike `ButtonProps`), that base's own fields
-// are flattened in too, since inline expansion is the only way to document
-// them. Base types that ARE documented (like `ButtonProps`/`ContainerProps`)
-// are left alone — matches current Header/Logo behavior of not expanding
-// documented or ambient (HTMLAttributes) base types.
+type Field = { name: string; type: string; description: string };
+
+function heritageTarget(
+  heritage: ts.ExpressionWithTypeArguments
+): { base: string; omit: Set<string> } | undefined {
+  const expr = heritage.expression;
+  if (!ts.isIdentifier(expr)) return undefined;
+  if (expr.text !== 'Omit') return { base: expr.text, omit: new Set() };
+  const [target, keys] = heritage.typeArguments ?? [];
+  if (!target || !ts.isTypeReferenceNode(target) || !ts.isIdentifier(target.typeName)) {
+    return undefined;
+  }
+  const parts = keys && ts.isUnionTypeNode(keys) ? keys.types : keys ? [keys] : [];
+  const omit = parts.flatMap((p) =>
+    ts.isLiteralTypeNode(p) && ts.isStringLiteral(p.literal) ? [p.literal.text] : []
+  );
+  return { base: target.typeName.text, omit: new Set(omit) };
+}
+
+// The file declaring `name`: this one, or the sibling `./x.types` it is imported from.
+function declaringSource(sourceFile: ts.SourceFile, name: string): ts.SourceFile {
+  let local = false;
+  let specifier: string | undefined;
+  ts.forEachChild(sourceFile, (node) => {
+    if (ts.isInterfaceDeclaration(node) && node.name.text === name) local = true;
+    if (
+      ts.isImportDeclaration(node) &&
+      ts.isStringLiteral(node.moduleSpecifier) &&
+      node.moduleSpecifier.text.startsWith('./')
+    ) {
+      const bindings = node.importClause?.namedBindings;
+      if (
+        bindings &&
+        ts.isNamedImports(bindings) &&
+        bindings.elements.some((e) => e.name.text === name)
+      ) {
+        specifier = node.moduleSpecifier.text;
+      }
+    }
+  });
+  if (local || !specifier) return sourceFile;
+  const file = path.join(path.dirname(sourceFile.fileName), `${specifier}.ts`);
+  return ts.createSourceFile(file, fs.readFileSync(file, 'utf-8'), ts.ScriptTarget.Latest, true);
+}
+
+// Reads an interface's own declared members. If it extends a base type (plainly or through
+// `Omit<Base, 'a' | 'b'>`) that has no doc page of its own (so there's nowhere to link out
+// to — e.g. `GridLayoutProps` or `FieldBaseProps`, unlike `ButtonProps`), that base's fields
+// are flattened in too, minus omitted keys, since inline expansion is the only way to document
+// them. The base may live in the same file or in a sibling `./x.types` import. Own fields
+// override inherited ones by name. Documented bases (like `ButtonProps`/`ContainerProps`) and
+// ambient ones (HTMLAttributes) are left alone.
 function parseInterfaceFields(
   sourceFile: ts.SourceFile,
   interfaceName: string,
   registry: Record<string, { label: string; href: string }>,
   visited: Set<string> = new Set()
-): { name: string; type: string; description: string }[] {
+): Field[] {
   if (visited.has(interfaceName)) return [];
   visited.add(interfaceName);
 
-  let inheritedFields: { name: string; type: string; description: string }[] = [];
-  const ownFields: { name: string; type: string; description: string }[] = [];
+  let inheritedFields: Field[] = [];
+  const ownFields: Field[] = [];
 
   ts.forEachChild(sourceFile, (node) => {
     if (ts.isInterfaceDeclaration(node) && node.name.text === interfaceName) {
       for (const clause of node.heritageClauses ?? []) {
-        const expr = clause.types[0]?.expression;
-        if (expr && ts.isIdentifier(expr) && !(expr.text in registry)) {
-          inheritedFields = parseInterfaceFields(sourceFile, expr.text, registry, visited);
+        const heritage = clause.types[0];
+        const target = heritage && heritageTarget(heritage);
+        if (target && !(target.base in registry)) {
+          inheritedFields = parseInterfaceFields(
+            declaringSource(sourceFile, target.base),
+            target.base,
+            registry,
+            visited
+          ).filter((f) => !target.omit.has(f.name));
         }
       }
       for (const member of node.members) {
@@ -112,7 +163,8 @@ function parseInterfaceFields(
       }
     }
   });
-  return [...inheritedFields, ...ownFields];
+  const ownNames = new Set(ownFields.map((f) => f.name));
+  return [...inheritedFields.filter((f) => !ownNames.has(f.name)), ...ownFields];
 }
 
 // Returns the type an interface extends, unwrapped by `stripWrapper` (`ButtonProps` for both

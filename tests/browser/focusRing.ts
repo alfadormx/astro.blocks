@@ -19,13 +19,21 @@ export async function expectFocusRing(target: Locator, colour: string): Promise<
     .toContain(colour);
 }
 
-export function emphasisColour(page: Page): Promise<string> {
-  return page.evaluate(() => {
+export function tokenColour(page: Page, className: string): Promise<string> {
+  return page.evaluate((cls) => {
     const probe = document.createElement('div');
-    probe.className = 'bg-emphasis';
+    probe.className = cls;
     document.body.append(probe);
     const colour = getComputedStyle(probe).backgroundColor;
     probe.remove();
     return colour;
-  });
+  }, className);
+}
+
+export function emphasisColour(page: Page): Promise<string> {
+  return tokenColour(page, 'bg-emphasis');
+}
+
+export function primaryColour(page: Page): Promise<string> {
+  return tokenColour(page, 'bg-primary');
 }

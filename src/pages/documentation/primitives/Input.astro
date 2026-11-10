@@ -1,0 +1,134 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import InputBlock from '~/components/blocks/primitives/Input.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+const metadata = {
+  title: {
+    default: 'Input',
+  },
+};
+
+const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
+const variants = ['outline', 'solid', 'ghost'] as const;
+const intents = [
+  'primary',
+  'secondary',
+  'tertiary',
+  'accent',
+  'success',
+  'warning',
+  'error',
+  'neutral',
+] as const;
+const shapes = ['rounded', 'square'] as const;
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Primitives',
+    title: 'Input',
+    subtitle: 'A labelled single-line field with help text, error text and native validation',
+  }}
+>
+  <h3>Basic</h3>
+  <div data-doc-section="basic" class="flex flex-col gap-4 max-w-md">
+    <InputBlock label="Full name" placeholder="Jane Doe" />
+  </div>
+
+  <h3>Help text and hidden label</h3>
+  <div data-doc-section="help" class="flex flex-col gap-4 max-w-md">
+    <InputBlock label="Email" type="email" help="We never share it." />
+    <InputBlock label="Search" hideLabel placeholder="Search (label hidden)" />
+  </div>
+
+  <h3>Types</h3>
+  <div data-doc-section="types" class="flex flex-col gap-4 max-w-md">
+    <InputBlock label="Text" type="text" />
+    <InputBlock label="Email address" type="email" />
+    <InputBlock label="Phone" type="tel" />
+    <InputBlock label="Website" type="url" />
+    <InputBlock label="Quantity" type="number" min={1} max={10} />
+    <InputBlock label="Delivery date" type="date" />
+  </div>
+
+  <h3>Sizes</h3>
+  <div data-doc-section="sizes" class="flex flex-col gap-4 max-w-md">
+    {sizes.map((size) => (
+      <InputBlock label={`Size ${size}`} size={size} />
+    ))}
+  </div>
+
+  <h3>Variants</h3>
+  <div data-doc-section="variants" class="flex flex-col gap-4 max-w-md">
+    {variants.map((variant) => (
+      <InputBlock label={`Variant ${variant}`} variant={variant} />
+    ))}
+  </div>
+
+  <h3>Intents</h3>
+  <div data-doc-section="intents" class="flex flex-col gap-4 max-w-md">
+    {intents.map((intent) => (
+      <InputBlock label={`Intent ${intent}`} intent={intent} />
+    ))}
+  </div>
+
+  <h3>Shapes</h3>
+  <div data-doc-section="shapes" class="flex flex-col gap-4 max-w-md">
+    {shapes.map((shape) => (
+      <InputBlock label={`Shape ${shape}`} shape={shape} />
+    ))}
+  </div>
+
+  <h3>Error</h3>
+  <div data-doc-section="error" class="flex flex-col gap-4 max-w-md">
+    <InputBlock label="Email" type="email" value="jane@" error="Enter a valid email address." />
+  </div>
+
+  <h3>Consumer ARIA</h3>
+  <p>
+    A consumer <code>aria-invalid</code> is kept unless <code>error</code> is set, and a consumer
+    <code>aria-describedby</code> is appended to the generated ids without repeating them.
+  </p>
+  <div data-doc-section="consumer-aria" class="flex flex-col gap-4 max-w-md">
+    <InputBlock id="doc-input-aria-valid" label="Valid" aria-invalid="false" />
+    <InputBlock
+      id="doc-input-aria-error"
+      label="With error"
+      aria-invalid="false"
+      error="Required."
+    />
+    <InputBlock
+      id="doc-input-aria-dup"
+      label="Duplicate reference"
+      help="Shown once."
+      aria-describedby="doc-input-aria-dup-help doc-input-aria-note"
+    />
+    <p id="doc-input-aria-note">External note.</p>
+  </div>
+
+  <h3>Disabled and read-only</h3>
+  <div data-doc-section="states" class="flex flex-col gap-4 max-w-md">
+    <InputBlock label="Disabled" disabled value="Locked" />
+    <InputBlock label="Read-only" readOnly value="ORD-1234" />
+  </div>
+
+  <h3>Native validation</h3>
+  <p>
+    Native attributes such as <code>pattern</code>, <code>min</code> and <code>required</code> pass
+    through to the <code>&lt;input&gt;</code>. A required field shows a <code>*</code> after its
+    label.
+  </p>
+  <div data-doc-section="validation" class="flex flex-col gap-4 max-w-md">
+    <InputBlock
+      label="Postcode"
+      pattern="[0-9]{4}[A-Z]{2}"
+      required
+      help="Four digits, two letters."
+    />
+    <InputBlock label="Email" type="email" required />
+  </div>
+
+  <ApiReferenceTable component="Input" category="primitives" />
+</Layout>

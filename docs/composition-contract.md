@@ -42,6 +42,7 @@ The history of how each rule was reached (findings, reviews, amendments A1–A19
   - When the parent splits an entry across elements, or there is no single list field, `<Noun>` is the block the layer reaches (`defaultButtonConfig`, `defaultImageConfig`, `defaultNavigationTreeHorizontalConfig`).
 - **State layer:** `<state><Noun>Config`. State words are `active`, `inactive`, `selected`, `disabled` and `highlighted`. Never `defaultActive…`.
   - `selected` is a user choice; `highlighted` is an author-chosen emphasis (Pricing `highlightedTierConfig`).
+- `invalid` and `error` are not state words. `error` is content, an instance string; the invalid look and `aria-invalid` follow from it, so there is no `errorXConfig` layer.
 - **"Default" applies to every state.** State layers sit on top of it.
 - **Suffix check:** every `…Config` starts with `default` or a state word, and no instance field ends in `Config`.
 
@@ -221,7 +222,7 @@ export type LayerConfig<T> = T extends unknown ? Partial<Omit<T, PerInstanceKey>
 - declares `Props` inline in its `.astro` file, never in `src/types/`;
 - opens its frontmatter with `// Internal to <Parent>: <why it's split out>`;
 - has no docs page or nav entry;
-- is imported only by its parent.
+- is imported only by its parent. A component shared by several blocks lists every parent in its marker (`// Internal to Input, Select, …: <why>`) and is imported only by those.
 
 ## 13. Types files
 
@@ -245,6 +246,12 @@ Decisions that apply to a family of blocks, not a single prop.
 - Neutral uses the `--color-emphasis` family. `--color-border-emphasis` is decorative and never shows state.
 - Every focus ring colour comes from `focusRingClass(intent)` in `src/utils/intentStyles.ts`, Button included. Button's link variant keeps its `currentColor` base ring.
 - Tabs aren't panels: style the active tab through `tabs.activeItemConfig`.
+
+### Form fields
+
+- Input, Select, Checkbox, CheckboxGroup and TextArea render label, help and error through the internal `Field`, and their classes through `fieldControlClass` in `src/utils/field.ts`. Shared props live in `FieldBaseProps` (`src/types/field.types.ts`).
+- **Required marker.** `required` renders `<span aria-hidden="true" data-field-required>*</span>` after the label text. The native `required` attribute conveys it to assistive tech. There is no marker class prop; restyle it through `labelClass` with `[&_[data-field-required]]:…`.
+- Help and error ids are `<id>-help` and `<id>-error`, listed first in `aria-describedby`, then the consumer's ids, each once. `error` forces `aria-invalid="true"`.
 
 ### Header layout
 

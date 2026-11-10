@@ -46,3 +46,17 @@ describe('inherited props', () => {
     expect(getPropRows('ThemeToggle', 'primitives').inheritsFrom?.label).toBe('Button');
   });
 });
+
+describe('shared field props', () => {
+  it('flattens FieldBaseProps from its own file into the Input table', () => {
+    const names = getPropRows('Input', 'primitives').rows.map((r) => r.name);
+
+    expect(names).toEqual(expect.arrayContaining(['label', 'errorClass', 'type']));
+  });
+
+  it('reads the Input defaults for shared fields', () => {
+    const row = getPropRows('Input', 'primitives').rows.find((r) => r.name === 'size');
+
+    expect(row?.default).toBe("'md'");
+  });
+});
