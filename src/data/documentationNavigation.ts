@@ -66,6 +66,7 @@ export const documentationNavigation: NavigationTreeItem[] = [
       { label: 'Logo', href: '/documentation/primitives/Logo' },
       { label: 'Map', href: '/documentation/primitives/Map' },
       { label: 'ModelViewer', href: '/documentation/primitives/ModelViewer' },
+      { label: 'Select', href: '/documentation/primitives/Select' },
       { label: 'TextArea', href: '/documentation/primitives/TextArea' },
       { label: 'ThemeToggle', href: '/documentation/primitives/ThemeToggle' },
       { label: 'ToggleGroup', href: '/documentation/primitives/ToggleGroup' },
