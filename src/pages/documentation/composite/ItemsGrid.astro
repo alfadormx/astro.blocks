@@ -346,6 +346,36 @@ const metadata = {
     />
   </div>
 
+  <h3>11. Action Defaults</h3>
+  <p>
+    <code>defaultItemConfig.defaultActionConfig</code> styles every action of every item. See the
+    Item page's Action Defaults section for how it merges.
+  </p>
+  <div data-doc-section="default-action-config">
+    <ItemsGridBlock
+      columns={2}
+      defaultItemConfig={{ defaultActionConfig: { variant: 'ghost', intent: 'primary' } }}
+      items={[
+        {
+          icon: { name: 'heroicons:book-open' },
+          title: 'Guides',
+          actions: [
+            { label: 'Read', href: '#' },
+            { label: 'Download', href: '#' },
+          ],
+        },
+        {
+          icon: { name: 'heroicons:play-circle' },
+          title: 'Videos',
+          actions: [
+            { label: 'Watch', href: '#' },
+            { label: 'Subscribe', href: '#' },
+          ],
+        },
+      ]}
+    />
+  </div>
+
   <h3>Selection props</h3>
   <p>
     <code>selection</code> is an <code>ItemsGridSelection</code>: <code>{"{ mode: 'none' }"}</code>

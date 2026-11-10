@@ -328,5 +328,43 @@ const metadata = {
     />
   </div>
 
+  <h3>10. Action Defaults</h3>
+  <p>
+    <code>defaultActionConfig</code> is one layer merged under every action, so one setting styles
+    them all; an action's own values win. Prefer it over <code>defaultItemConfig.actions</code> in a
+    grid, which merges by index and so reaches only the first action.
+  </p>
+  <div class="max-w-sm" data-doc-section="default-action-config">
+    <ItemBlock
+      icon={{ name: 'heroicons:code-bracket', class: 'text-primary' }}
+      title="Open source"
+      content="Read the code, try the demo, or tell us what broke."
+      defaultActionConfig={{ variant: 'outline', intent: 'accent', size: 'sm' }}
+      actions={[
+        { label: 'Docs', href: '#' },
+        { label: 'Demo', href: '#' },
+        { label: 'Report', href: '#', intent: 'error' },
+      ]}
+    />
+  </div>
+
+  <h3>11. Actions Class</h3>
+  <p>
+    <code>actionsClass</code> merges over the actions wrapper's default
+    <code>flex flex-wrap gap-2 md:gap-3 mt-2 md:mt-3</code>. Here the actions stack.
+  </p>
+  <div class="max-w-sm" data-doc-section="actions-class">
+    <ItemBlock
+      icon={{ name: 'heroicons:rocket-launch', class: 'text-primary' }}
+      title="Get started"
+      content="Pick a plan to continue."
+      actionsClass="flex-col items-stretch"
+      actions={[
+        { label: 'Start free', href: '#' },
+        { label: 'Talk to sales', href: '#', variant: 'outline' },
+      ]}
+    />
+  </div>
+
   <ApiReferenceTable component="Item" category="composite" />
 </Layout>

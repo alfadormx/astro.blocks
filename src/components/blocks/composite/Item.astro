@@ -1,6 +1,8 @@
 ---
 import type { ItemProps } from '~/types/item.types';
+import type { ButtonProps } from '~/types/button.types';
 import { cn } from '~/utils/styles';
+import { mergeConfigs } from '~/utils/mergeConfigs';
 import { Icon } from 'astro-icon/components';
 import Button from '~/components/blocks/primitives/Button.astro';
 import Image from '~/components/blocks/primitives/Image.astro';
@@ -21,6 +23,8 @@ const {
   title,
   content,
   actions = [],
+  defaultActionConfig,
+  actionsClass,
   orientation = 'vertical',
   background,
   spacing,
@@ -62,6 +66,8 @@ const hasBody = !!title || !!content || actions.length > 0;
 
 const mergedIconClass = cn(mediaClass, 'shrink-0', icon?.class);
 const mergedImageClass = cn(mediaClass, 'shrink-0', image?.class);
+
+const actionsWrapperClass = cn('flex flex-wrap gap-2 md:gap-3 mt-2 md:mt-3', actionsClass);
 
 const connectorFinalClass = cn(
   'w-0.5 h-full border-l border-border',
@@ -129,9 +135,9 @@ const horizontalConnectorRightClass = cn(
       {title && <div class={titleClass}>{title}</div>}
       {content && <div class={textClass} set:html={content} />}
       {actions.length > 0 && (
-        <div class="flex flex-wrap gap-2 md:gap-3 mt-2 md:mt-3">
+        <div class={actionsWrapperClass}>
           {actions.map((action) => (
-            <Button {...action} />
+            <Button {...mergeConfigs<ButtonProps>({}, defaultActionConfig, action)} />
           ))}
         </div>
       )}

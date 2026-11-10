@@ -4,6 +4,7 @@ import type { SimpleBackgroundProps } from './background.types';
 import type { ButtonProps } from './button.types';
 import type { IconConfig } from './icon.types';
 import type { ImageProps } from './image.types';
+import type { LayerConfig } from './config.types';
 
 export type ItemOrientation = 'vertical' | 'horizontal';
 
@@ -22,6 +23,10 @@ export interface ItemProps {
   content?: string;
   /** Action buttons rendered below/beside the content (default: []). */
   actions?: ButtonProps[];
+  /** Button props merged under every action, overridden by each action's own values. */
+  defaultActionConfig?: LayerConfig<ButtonProps>;
+  /** Classes on the actions wrapper, merged over the default 'flex flex-wrap gap-2 md:gap-3 mt-2 md:mt-3'. */
+  actionsClass?: string;
   /** Orientation of the item: stacked/centered or icon-left/text-right (default: 'vertical'). */
   orientation?: ItemOrientation;
   /** Background configuration for the item; only color backgrounds supported. */
