@@ -966,7 +966,22 @@ const wrapperProps = container ? mergedContainer : {};
       root.addEventListener('mouseleave', onMouseLeave);
     }
 
-    function onFocusIn() {
+    // Focus on a slide outside the view would make the browser scroll the clipped viewport,
+    // which fights the transform; reset the scroll and snap the slide into view instead.
+    function revealFocused(target: EventTarget | null) {
+      viewport.scrollLeft = 0;
+      if (!(target instanceof Element)) return;
+      const slide = target.closest('.carousel-item') as HTMLElement | null;
+      if (!slide || slide.hasAttribute('data-carousel-clone')) return;
+      const view = viewport.getBoundingClientRect();
+      const box = slide.getBoundingClientRect();
+      if (box.left >= view.left - 1 && box.right <= view.right + 1) return;
+      const index = realSlides.indexOf(slide);
+      if (index >= 0) goTo(index);
+    }
+
+    function onFocusIn(e: FocusEvent) {
+      revealFocused(e.target);
       if (!autoplayEnabled) return;
       pausedBy.focus = true;
       stopAutoplay();

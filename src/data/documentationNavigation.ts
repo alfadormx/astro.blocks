@@ -28,6 +28,7 @@ export const documentationNavigation: NavigationTreeItem[] = [
         label: 'ItemsTimelineHorizontal',
         href: '/documentation/composite/ItemsTimelineHorizontal',
       },
+      { label: 'LogoCloud', href: '/documentation/composite/LogoCloud' },
       { label: 'NavigationTree', href: '/documentation/composite/NavigationTree' },
       {
         label: 'NavigationTreeHorizontal',
