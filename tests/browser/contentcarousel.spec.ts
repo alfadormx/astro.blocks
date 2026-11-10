@@ -118,3 +118,13 @@ test('loop clones are hidden and carry no slide label', async ({ page }) => {
     await expect(clone).not.toHaveAttribute('role');
   }
 });
+
+test('loop clones leave each slide id in the DOM once', async ({ page }) => {
+  await page.goto(PAGE_URL);
+  const section = page.locator('[data-doc-section="loop"]');
+  await expect(section.locator('[data-carousel-clone]').first()).toBeAttached();
+  await expect(page.locator('#loop-mountain')).toHaveCount(1);
+  await expect(
+    section.locator('[data-carousel-clone] [id], [data-carousel-clone][id]')
+  ).toHaveCount(0);
+});
