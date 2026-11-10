@@ -34,6 +34,8 @@ Blocks live in `src/components/blocks/`, with prop types in `src/types/*.types.t
 | `TextArea`                      | Rich text body                                                    |
 | `Input`                         | Labelled single-line field with help, error and native validation |
 | `Select`                        | Labelled native single-choice dropdown with placeholder           |
+| `Checkbox`                      | Labelled checkbox with help and error                             |
+| `CheckboxGroup`                 | Fieldset of checkboxes sharing one name                           |
 | `Background`                    | Image or video background with overlay                            |
 | `Video`                         | Video.js player, including YouTube and Vimeo sources              |
 | `Map`                           | Leaflet map                                                       |

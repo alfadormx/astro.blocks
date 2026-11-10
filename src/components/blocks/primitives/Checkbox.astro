@@ -1,0 +1,109 @@
+---
+import Field from '~/components/blocks/primitives/Field.astro';
+import type { CheckboxAttributes } from '~/types/checkbox.types';
+import { CHECKBOX_SIZE, checkboxId, validateCheckbox } from '~/utils/checkbox';
+import { ariaInvalid, describedBy, FIELD_SHAPE, fieldDescriptionIds } from '~/utils/field';
+import { checkedFillClass, focusBorderClass, focusRingClass } from '~/utils/intentStyles';
+import { cn } from '~/utils/styles';
+
+type Props = CheckboxAttributes;
+
+const {
+  label,
+  hideLabel = false,
+  help,
+  error,
+  id: idProp,
+  name,
+  value,
+  checked = false,
+  required = false,
+  disabled = false,
+  size = 'md',
+  intent = 'primary',
+  shape = 'rounded',
+  class: className = '',
+  labelClass = '',
+  fieldClass = '',
+  helpClass = '',
+  errorClass = '',
+  'aria-describedby': consumerDescribedBy,
+  'aria-invalid': consumerInvalid,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  children: _children,
+  ...attrs
+} = Astro.props;
+
+validateCheckbox({ label });
+
+const id = idProp || checkboxId();
+const { helpId, errorId } = fieldDescriptionIds(id);
+const resolvedIntent = error ? 'error' : intent;
+const boxClass = cn(
+  'col-start-1 row-start-1 appearance-none shrink-0 cursor-pointer border-2 border-border bg-background outline-none',
+  'transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-offset-2',
+  CHECKBOX_SIZE[size].box,
+  FIELD_SHAPE[shape],
+  focusRingClass(resolvedIntent),
+  focusBorderClass(resolvedIntent),
+  checkedFillClass(resolvedIntent),
+  error && 'border-error',
+  disabled && 'opacity-50 cursor-not-allowed',
+  fieldClass
+);
+---
+
+<Field
+  id={id}
+  layout="inline"
+  label={label}
+  hideLabel={hideLabel}
+  required={required}
+  disabled={disabled}
+  help={help}
+  error={error}
+  class={className}
+  labelClass={labelClass}
+  helpClass={helpClass}
+  errorClass={errorClass}
+  rootAttrs={{ 'data-checkbox': '' }}
+>
+  <span
+    class="col-start-1 row-start-1 inline-grid place-items-center [&:has(:checked)>[data-checkbox-mark]]:visible"
+    data-checkbox-box
+  >
+    <input
+      id={id}
+      type="checkbox"
+      name={name}
+      value={value}
+      checked={checked}
+      required={required}
+      disabled={disabled}
+      aria-invalid={ariaInvalid(error, consumerInvalid)}
+      aria-describedby={describedBy({
+        helpId: help ? helpId : undefined,
+        errorId: error ? errorId : undefined,
+        consumer: consumerDescribedBy,
+      })}
+      class={boxClass}
+      {...attrs}
+    />
+    <svg
+      aria-hidden="true"
+      data-checkbox-mark
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class={cn(
+        'invisible pointer-events-none col-start-1 row-start-1 text-background',
+        CHECKBOX_SIZE[size].mark
+      )}
+    >
+      <path d="M3.5 8.5l3 3 6-7"></path>
+    </svg>
+  </span>
+</Field>
