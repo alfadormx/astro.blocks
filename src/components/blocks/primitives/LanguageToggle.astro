@@ -99,6 +99,8 @@ const containerClasses = cn('flex', orientationClasses, gapClasses[gap], classNa
         {...buttonConfig}
         href={languageUrl}
         label={labelFormat === 'code' ? lang.code.toUpperCase() : lang.label}
+        aria-label={labelFormat === 'code' ? lang.label : undefined}
+        lang={lang.code}
         aria-current={isActive ? 'page' : undefined}
       />
     );
