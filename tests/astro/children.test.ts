@@ -4,13 +4,25 @@ import ContentCarousel from '~/components/blocks/composite/ContentCarousel.astro
 import Header from '~/components/blocks/composite/Header.astro';
 import NavigationTreeHorizontal from '~/components/blocks/composite/NavigationTreeHorizontal.astro';
 import Modal from '~/components/blocks/layout/Modal.astro';
+import Checkbox from '~/components/blocks/primitives/Checkbox.astro';
+import CheckboxGroup from '~/components/blocks/primitives/CheckboxGroup.astro';
 import Image from '~/components/blocks/primitives/Image.astro';
+import Input from '~/components/blocks/primitives/Input.astro';
 import LanguageToggle from '~/components/blocks/primitives/LanguageToggle.astro';
+import Select from '~/components/blocks/primitives/Select.astro';
 import TextArea from '~/components/blocks/primitives/TextArea.astro';
 import Vector from '~/components/blocks/primitives/Vector.astro';
 
 const blocks = [
   ['TextArea', TextArea, { label: 'Message' }],
+  ['Input', Input, { label: 'Name' }],
+  ['Select', Select, { label: 'Country', options: [{ value: 'nl', label: 'Netherlands' }] }],
+  ['Checkbox', Checkbox, { label: 'Agree' }],
+  [
+    'CheckboxGroup',
+    CheckboxGroup,
+    { label: 'Topics', name: 't', options: [{ label: 'A', value: 'a' }] },
+  ],
   ['Vector', Vector, { src: '<svg xmlns="http://www.w3.org/2000/svg"></svg>' }],
   [
     'Image',

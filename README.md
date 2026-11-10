@@ -31,7 +31,7 @@ Blocks live in `src/components/blocks/`, with prop types in `src/types/*.types.t
 | `Headline`                      | Tagline, title and subtitle with alignment and heading tag        |
 | `Button`                        | Link or button with size, variant, intent, shape, icon or image   |
 | `Image`, `Vector`, `Logo`       | Optimized images, inline SVG and site logo                        |
-| `TextArea`                      | Rich text body                                                    |
+| `TextArea`                      | Labelled multi-line field with help, error and character limit    |
 | `Input`                         | Labelled single-line field with help, error and native validation |
 | `Select`                        | Labelled native single-choice dropdown with placeholder           |
 | `Checkbox`                      | Labelled checkbox with help and error                             |
