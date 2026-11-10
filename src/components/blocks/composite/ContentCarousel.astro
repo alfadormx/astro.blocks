@@ -569,9 +569,7 @@ const wrapperProps = container ? mergedContainer : {};
       updateControls();
       if (autoplayEnabled && autoplayPauseInteraction) {
         stopAutoplay();
-        if (!instance.isAutoplayPaused) {
-          startAutoplay();
-        }
+        resumeAutoplay();
       }
     }
 
@@ -593,7 +591,7 @@ const wrapperProps = container ? mergedContainer : {};
       updateControls();
       if (autoplayEnabled && autoplayPauseInteraction) {
         stopAutoplay();
-        setTimeout(() => startAutoplay(), 1000);
+        scheduleResume();
       }
     }
 
@@ -615,7 +613,7 @@ const wrapperProps = container ? mergedContainer : {};
       updateControls();
       if (autoplayEnabled && autoplayPauseInteraction) {
         stopAutoplay();
-        setTimeout(() => startAutoplay(), 1000);
+        scheduleResume();
       }
     }
 
@@ -643,6 +641,27 @@ const wrapperProps = container ? mergedContainer : {};
       );
     }
 
+    // Hover and focus pauses are tracked apart from the pause button, so leaving one never
+    // overrides another or the user's explicit pause.
+    const pausedBy = { hover: false, focus: false };
+    let resumeTimer: number | null = null;
+
+    function canResume() {
+      return !instance.isAutoplayPaused && !pausedBy.hover && !pausedBy.focus;
+    }
+
+    function resumeAutoplay() {
+      if (canResume()) startAutoplay();
+    }
+
+    function scheduleResume(ms = 1000) {
+      if (resumeTimer !== null) clearTimeout(resumeTimer);
+      resumeTimer = window.setTimeout(() => {
+        resumeTimer = null;
+        resumeAutoplay();
+      }, ms);
+    }
+
     // Autoplay
     function startAutoplay() {
       stopAutoplay();
@@ -666,8 +685,14 @@ const wrapperProps = container ? mergedContainer : {};
 
     function toggleAutoplay() {
       instance.isAutoplayPaused = !instance.isAutoplayPaused;
-      if (instance.isAutoplayPaused) stopAutoplay();
-      else startAutoplay();
+      if (instance.isAutoplayPaused) {
+        stopAutoplay();
+      } else {
+        // Play is an explicit request, and the play button itself holds focus and the pointer.
+        pausedBy.focus = false;
+        pausedBy.hover = false;
+        startAutoplay();
+      }
       instance.pauseBtn?.toggleAttribute('hidden', instance.isAutoplayPaused);
       instance.playBtn?.toggleAttribute('hidden', !instance.isAutoplayPaused);
     }
@@ -792,9 +817,7 @@ const wrapperProps = container ? mergedContainer : {};
       activePointers = Math.max(0, activePointers - 1);
 
       // Restore autoplay after brief delay
-      if (autoplayEnabled && !instance.isAutoplayPaused) {
-        setTimeout(() => startAutoplay(), 1000);
-      }
+      if (autoplayEnabled) scheduleResume();
 
       // Reset dragging flag after a short delay to allow click suppression
       setTimeout(() => {
@@ -867,12 +890,36 @@ const wrapperProps = container ? mergedContainer : {};
 
     root.addEventListener('keydown', onKeyDown);
 
-    if (autoplayEnabled && autoplayPauseHover) {
-      root.addEventListener('mouseenter', stopAutoplay);
-      root.addEventListener('mouseleave', () => {
-        if (!instance.isAutoplayPaused) startAutoplay();
-      });
+    function onMouseEnter() {
+      pausedBy.hover = true;
+      stopAutoplay();
     }
+
+    function onMouseLeave() {
+      pausedBy.hover = false;
+      resumeAutoplay();
+    }
+
+    if (autoplayEnabled && autoplayPauseHover) {
+      root.addEventListener('mouseenter', onMouseEnter);
+      root.addEventListener('mouseleave', onMouseLeave);
+    }
+
+    function onFocusIn() {
+      if (!autoplayEnabled) return;
+      pausedBy.focus = true;
+      stopAutoplay();
+    }
+
+    function onFocusOut(e: FocusEvent) {
+      if (!autoplayEnabled) return;
+      if (e.relatedTarget instanceof Node && root.contains(e.relatedTarget)) return;
+      pausedBy.focus = false;
+      resumeAutoplay();
+    }
+
+    root.addEventListener('focusin', onFocusIn);
+    root.addEventListener('focusout', onFocusOut);
 
     // Window resize
     const resizeObserver = new ResizeObserver(() => {
@@ -889,12 +936,18 @@ const wrapperProps = container ? mergedContainer : {};
     // Cleanup
     instance.cleanup = () => {
       stopAutoplay();
+      if (resumeTimer !== null) clearTimeout(resumeTimer);
       resizeObserver.disconnect();
       if (instance.isDraggable) {
         viewport.removeEventListener('pointerdown', onPointerDown);
         viewport.removeEventListener('pointermove', onPointerMove);
         viewport.removeEventListener('pointerup', onPointerUp);
+        viewport.removeEventListener('pointercancel', onPointerUp);
       }
+      root.removeEventListener('mouseenter', onMouseEnter);
+      root.removeEventListener('mouseleave', onMouseLeave);
+      root.removeEventListener('focusin', onFocusIn);
+      root.removeEventListener('focusout', onFocusOut);
 
       if (instance.prevBtn) instance.prevBtn.removeEventListener('click', prev);
       if (instance.nextBtn) instance.nextBtn.removeEventListener('click', next);
