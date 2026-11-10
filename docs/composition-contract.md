@@ -4,6 +4,8 @@ How a block exposes its children, layers their defaults, names its props and kee
 
 The history of how each rule was reached (findings, reviews, amendments A1–A19) lives in `thoughts/shared/tasks/EPIC-Block-Composition-Standardization/`. This file is the current state; where the two disagree, this file wins.
 
+`tests/unit/compositionContract.test.ts` and `tests/unit/classHooks.test.ts` check the mechanical rules (naming, layer types, `Partial`, `show*`, spacing words, imports, hooks, `!important`). The rest is for design and review.
+
 ## Vocabulary
 
 - **Instance field**: holds the props of one rendered child (`container`) or a list of them (`leftButtons`). It has no suffix.
@@ -109,7 +111,8 @@ mergeConfigs<ThemeToggleProps>(
 
 - **Render on presence.** An optional child renders when its field is present. There are no `show*` flags.
 - A child that renders by default is typed `XProps | false`; `false` hides it (`closeButton?: ButtonProps | false`).
-- Exception: `show*` stays only for generated children that have no instance field (ContentCarousel `showIndicators`).
+- Exception: `show*` stays only for generated parts that have no instance field (ContentCarousel `showIndicators`, TextArea `showCounter`, Map `showMarker`) and for position-derived flags (Item `showConnector*`). The list lives in `SHOW_FLAGS` in `tests/unit/compositionContract.test.ts`; a new flag goes there and here.
+- A flag that picks a format rather than presence is a named enum, not `show*` (LanguageToggle `labelFormat: 'label' | 'code'`).
 - **Child props live in the child's field.** `twoColumnContainer.reverseOnMobile`, not `reverseOnMobile` on the parent.
 - **Child-wrapper props are flat on the parent**, named `<role>Class`, `<role>Align` or `<role>Gap`, where `<role>` is the field or text prop the wrapper holds (`actionsClass`, `buttonsGap`).
 - **The parent's own structural choices stay flat** (`imagePosition: 'left' | 'right'`).
@@ -264,6 +267,7 @@ A category holds identity (`name`, `heading`, `camera`, `triggerButton`), conten
 - [ ] Instance fields use `XProps` / `Omit<XProps, …>`, never `Partial<>`; layers use `LayerConfig<…>`.
 - [ ] No field the block ignores.
 - [ ] Spacing words per rule 6.
-- [ ] Hooks are `data-*`; no `!important` in defaults; `classHooks.test.ts` passes.
+- [ ] Hooks are `data-*`; no `!important` in defaults.
+- [ ] `compositionContract.test.ts` and `classHooks.test.ts` pass.
 - [ ] Titles through Headline with the right `htmlTag`.
 - [ ] Types file imports only relative `./x.types`; no third-party library types in public props.
