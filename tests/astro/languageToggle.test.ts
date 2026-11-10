@@ -14,6 +14,7 @@ const render = async (path: string, props: Record<string, unknown> = {}) => {
 };
 
 const hrefs = (html: string) => [...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]);
+const anchors = (html: string) => html.match(/<a\b[\s\S]*?<\/a>/g) ?? [];
 const activeLabel = (html: string) =>
   html.match(/<a[^>]*aria-current="page"[^>]*>[\s\S]*?<\/a>/)?.[0] ?? '';
 
@@ -60,14 +61,23 @@ describe('LanguageToggle', () => {
     );
   });
 
+  it('marks every language button with its own language', async () => {
+    const links = anchors(await render('/'));
+    expect(links.map((a) => a.match(/\blang="([^"]+)"/)?.[1])).toEqual(
+      I18N.languages.map((l: Language) => l.code)
+    );
+  });
+
   it('shows full labels by default', async () => {
     const html = await render('/');
     for (const lang of I18N.languages as Language[]) expect(html).toContain(lang.label);
   });
 
-  it('shows uppercase codes when labelFormat is code', async () => {
-    const html = await render('/', { labelFormat: 'code' });
-    for (const lang of I18N.languages as Language[])
-      expect(html).toContain(`>${lang.code.toUpperCase()}<`);
+  it('shows codes with the full label as accessible name when labelFormat is code', async () => {
+    const links = anchors(await render('/', { labelFormat: 'code' }));
+    I18N.languages.forEach((lang: Language, i: number) => {
+      expect(links[i]).toContain(`aria-label="${lang.label}"`);
+      expect(links[i]).toContain(`>${lang.code.toUpperCase()}<`);
+    });
   });
 });

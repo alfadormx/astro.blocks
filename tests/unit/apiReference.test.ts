@@ -30,6 +30,15 @@ describe('getPropRows', () => {
 
     expect(row?.link?.label).toBe(label);
   });
+
+  it.each(['defaultButtonConfig', 'activeButtonConfig', 'inactiveButtonConfig'])(
+    'links the LanguageToggle %s row to Button',
+    (name) => {
+      const row = getPropRows('LanguageToggle', 'primitives').rows.find((r) => r.name === name);
+
+      expect(row?.link?.label).toBe('Button');
+    }
+  );
 });
 
 describe('inherited props', () => {

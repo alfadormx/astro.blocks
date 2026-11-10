@@ -56,6 +56,7 @@ const TYPE_LINK_ALIASES: Record<string, string> = {
   ConfiguratorToggleGroup: 'ToggleGroupProps',
   ConfiguratorItemsGrid: 'ItemsGridProps',
   ConfiguratorTextArea: 'TextAreaProps',
+  LanguageButton: 'ButtonProps',
 };
 
 function typesFilePath(componentName: string): string {
