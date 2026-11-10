@@ -2,6 +2,7 @@ import type { NavigationTreeItem } from '~/types/navigationtree.types';
 
 export const documentationNavigation: NavigationTreeItem[] = [
   { label: 'Overview', href: '/documentation' },
+  { label: 'Composing blocks', href: '/documentation/Composing' },
   {
     label: 'Base',
     children: [

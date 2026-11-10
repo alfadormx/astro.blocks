@@ -1,0 +1,161 @@
+---
+import Layout from './_layouts/Layout.astro';
+import CallToActionBlock from '~/components/blocks/composite/CallToAction.astro';
+import ContentCarouselBlock from '~/components/blocks/composite/ContentCarousel.astro';
+import TabsBlock from '~/components/blocks/composite/Tabs.astro';
+
+const metadata = {
+  title: {
+    default: 'Composing blocks',
+  },
+};
+
+const slides = [
+  {
+    src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop',
+    alt: 'Mountain landscape',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=crop',
+    alt: 'Forest path',
+  },
+];
+
+const presenceExample = `<CallToAction headline={{ title: 'No actions' }} />
+
+<CallToAction
+  headline={{ title: 'With actions' }}
+  actions={[{ label: 'Get started' }]}
+/>
+
+<ContentCarousel items={slides} prevButton={false} nextButton={false} />`;
+
+const layersExample = `<Tabs
+  items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
+  defaultItemConfig={{ variant: 'ghost', intent: 'neutral' }}
+  activeItemConfig={{ variant: 'solid', intent: 'primary' }}
+/>`;
+
+const orderExample = `<Tabs
+  items={[{ label: 'Overview' }, { label: 'Pinned', class: 'underline' }]}
+  defaultItemConfig={{ variant: 'ghost', intent: 'neutral' }}
+  activeItemConfig={{ variant: 'solid', intent: 'primary' }}
+/>`;
+
+const classesExample = `<CallToAction
+  headline={{ title: 'Flat card' }}
+  container={{ content: { class: 'shadow-none rounded-none' } }}
+/>`;
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Guide',
+    title: 'Composing blocks',
+    subtitle: 'How every block exposes its children, and how your config reaches them.',
+  }}
+>
+  <p>
+    Blocks are built from other blocks. A Header holds buttons, a Tabs block holds a row of tab
+    buttons, a CallToAction holds a headline and actions. Every block exposes those children the
+    same way, so once you know the pattern you can configure any of them.
+  </p>
+  <p>
+    A prop with no suffix configures <strong>one child</strong> (<code>closeButton</code>,
+    <code>headline</code>) or a list of them (<code>actions</code>, <code>items</code>). A prop
+    ending in <code>Config</code> is a <strong>layer</strong>: settings merged into many children at
+    once (<code>defaultItemConfig</code>, <code>activeItemConfig</code>). The API reference on each
+    block's page links both kinds to the child block's own props.
+  </p>
+
+  <h2>Turning children on and off</h2>
+  <p>
+    An optional child renders when you set its prop, and not otherwise. There are no
+    <code>show…</code> switches. A child that renders by default is hidden by passing
+    <code>false</code>.
+  </p>
+  <pre class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{presenceExample}</code></pre>
+  <div class="flex flex-col gap-6 my-6" data-doc-section="presence">
+    <div data-doc-example="no-actions">
+      <CallToActionBlock headline={{ title: 'No actions', htmlTag: 'h3' }} />
+    </div>
+    <div data-doc-example="with-actions">
+      <CallToActionBlock
+        headline={{ title: 'With actions', htmlTag: 'h3' }}
+        actions={[{ label: 'Get started' }]}
+      />
+    </div>
+    <div class="border border-border rounded-lg overflow-hidden" data-doc-example="no-arrows">
+      <ContentCarouselBlock items={slides} prevButton={false} nextButton={false} />
+    </div>
+  </div>
+
+  <h2>Styling many children at once</h2>
+  <p>
+    A <code>default…Config</code> layer applies to every child in the list, in every state. A state
+    layer such as <code>activeItemConfig</code>, <code>selectedItemConfig</code> or
+    <code>highlightedTierConfig</code> sits on top of it and applies only while the child is in that
+    state. Set the shared look once, then only what changes.
+  </p>
+  <pre class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{layersExample}</code></pre>
+  <div class="my-6" data-doc-section="layers">
+    <TabsBlock
+      items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
+      defaultItemConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeItemConfig={{ variant: 'solid', intent: 'primary' }}
+    >
+      <p slot="panel-0">Overview panel.</p>
+      <p slot="panel-1">API panel.</p>
+      <p slot="panel-2">Examples panel.</p>
+    </TabsBlock>
+  </div>
+
+  <h2>Who wins</h2>
+  <p>Each child is built from these layers, later ones overriding earlier ones:</p>
+  <ol>
+    <li>the block's own internal defaults;</li>
+    <li>
+      the <code>default…Config</code> layer;
+    </li>
+    <li>the state layer, while the child is in that state;</li>
+    <li>
+      the child's own entry (<code>items[n]</code>, <code>closeButton</code>, …).
+    </li>
+  </ol>
+  <p>
+    The child's own entry always wins, so anything you set on it applies in every state. To style a
+    child only while it is active or selected, use the state layer instead. Below, the second tab's
+    <code>underline</code> stays whether it is active or not.
+  </p>
+  <p>
+    Settings that identify a single element, such as <code>id</code>, <code>name</code> and
+    <code>anchorId</code>, can't go in a layer. Set them on the child's own entry.
+  </p>
+  <pre class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{orderExample}</code></pre>
+  <div class="my-6" data-doc-section="order">
+    <TabsBlock
+      items={[{ label: 'Overview' }, { label: 'Pinned', class: 'underline' }]}
+      defaultItemConfig={{ variant: 'ghost', intent: 'neutral' }}
+      activeItemConfig={{ variant: 'solid', intent: 'primary' }}
+    >
+      <p slot="panel-0">Overview panel.</p>
+      <p slot="panel-1">Pinned panel.</p>
+    </TabsBlock>
+  </div>
+
+  <h2>Overriding classes</h2>
+  <p>
+    Classes you pass are added to a block's defaults, never swapped for them. When your class and a
+    default belong to the same group, yours wins: <code>shadow-none</code> removes a default
+    <code>shadow-xl</code>, <code>rounded-none</code> removes a default <code>rounded-md</code>. Use
+    the opposite utility to cancel a default; you never need <code>!</code>.
+  </p>
+  <pre class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{classesExample}</code></pre>
+  <div class="my-6" data-doc-section="classes">
+    <CallToActionBlock
+      headline={{ title: 'Flat card', htmlTag: 'h3' }}
+      container={{ content: { class: 'shadow-none rounded-none' } }}
+    />
+  </div>
+</Layout>
