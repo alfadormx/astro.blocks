@@ -193,11 +193,11 @@ const deeplyNestedNavItems: NavigationTreeItem[] = [
   <p class="text-subtle mb-4">
     Click parent items to expand/collapse children. Active path auto-expanded.
   </p>
-  <div class="border border-border rounded-lg p-6 max-w-md">
+  <div class="border border-border rounded-lg p-6 max-w-md" data-doc-section="toggleable">
     <NavigationTreeBlock
       items={deeplyNestedNavItems}
       expansionStrategy="toggleable"
-      currentPath="/documentation/composite/ItemsGrid"
+      currentPath="/documentation/composite/NavigationTree"
     />
   </div>
 

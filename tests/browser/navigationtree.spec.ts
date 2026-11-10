@@ -8,7 +8,9 @@ async function section(page: Page, name = 'default-config'): Promise<Locator> {
 }
 
 const itemControls = (root: Locator): Locator =>
-  root.locator('[data-nav-item] > div > div > :is(a, button)');
+  root.locator('[data-navigation-tree] :is(a, button, summary)');
+
+const NOT_ROTATED = 'none';
 
 test('defaultItemConfig class reaches every item', async ({ page }) => {
   const root = await section(page);
@@ -30,7 +32,7 @@ test('defaultItemConfig icon renders on leaf items while parents keep the chevro
   page,
 }) => {
   const root = await section(page);
-  const parents = root.locator('[data-has-children="true"] > div > div > button');
+  const parents = root.locator('[data-nav-toggle]');
 
   await expect(
     root.locator('a[href="/documentation/installation"] svg[data-icon="mdi:circle-small"]')
@@ -49,16 +51,64 @@ test('activeItemConfig class overrides the active weight', async ({ page }) => {
   await expect(fallback).toHaveCSS('font-weight', '600');
 });
 
-test('clicking a parent still toggles the expanded icon', async ({ page }) => {
+test('clicking a parent collapses and expands its children and rotates its icon', async ({
+  page,
+}) => {
   const root = await section(page);
-  const parent = root.locator('[data-has-children="true"] > div > div > button').first();
-  const icon = parent.locator('.nav-tree-icon');
+  const details = root.locator('[data-nav-details]').first();
+  const parent = details.locator('> [data-nav-toggle]');
+  const children = details.locator('> [data-nav-children]');
+  const icon = parent.locator('svg');
 
-  await expect(icon).toHaveClass(/\bnav-tree-icon-expanded\b/);
+  await expect(details).toHaveAttribute('open', '');
+  await expect(children).toBeVisible();
+  await expect(icon).not.toHaveCSS('transform', NOT_ROTATED);
+
   await parent.click();
-  await expect(icon).not.toHaveClass(/\bnav-tree-icon-expanded\b/);
+  await expect(details).not.toHaveAttribute('open');
+  await expect(children).toBeHidden();
+  await expect(icon).toHaveCSS('transform', NOT_ROTATED);
+
   await parent.click();
-  await expect(icon).toHaveClass(/\bnav-tree-icon-expanded\b/);
+  await expect(details).toHaveAttribute('open', '');
+  await expect(children).toBeVisible();
+});
+
+test('a collapsed parent keeps its icon unrotated while its ancestor is open', async ({ page }) => {
+  await page.goto(PAGE_URL);
+  const root = page.locator('[data-doc-section="toggleable"]');
+  const closedChild = root
+    .locator('[data-nav-details][open] [data-nav-details]:not([open])')
+    .first();
+
+  await expect(closedChild).toBeAttached();
+  await expect(closedChild.locator('> [data-nav-toggle] svg')).toHaveCSS('transform', NOT_ROTATED);
+});
+
+for (const key of ['Enter', 'Space'] as const) {
+  test(`${key} toggles a focused parent`, async ({ page }) => {
+    const root = await section(page);
+    const details = root.locator('[data-nav-details]').first();
+
+    await details.locator('> [data-nav-toggle]').focus();
+    await page.keyboard.press(key);
+    await expect(details).not.toHaveAttribute('open');
+    await page.keyboard.press(key);
+    await expect(details).toHaveAttribute('open', '');
+  });
+}
+
+test.describe('without JavaScript', () => {
+  test.use({ javaScriptEnabled: false });
+
+  test('clicking a parent toggles its children', async ({ page }) => {
+    const root = await section(page);
+    const details = root.locator('[data-nav-details]').first();
+
+    await details.locator('> [data-nav-toggle]').click();
+    await expect(details).not.toHaveAttribute('open');
+    await expect(details.locator('> [data-nav-children]')).toBeHidden();
+  });
 });
 
 test('icon toggle mode expands only from the chevron and navigates from the label', async ({
@@ -67,7 +117,7 @@ test('icon toggle mode expands only from the chevron and navigates from the labe
   await page.goto(PAGE_URL);
   const root = page.locator('[data-doc-section="icon-toggle"]');
   const parentItem = root.locator('[data-has-children="true"]').first();
-  const control = parentItem.locator('> div > div > a');
+  const control = parentItem.locator('> div > [data-nav-icon-toggle]');
   const wasExpanded = await parentItem.getAttribute('data-expanded');
 
   await control.locator('svg').first().click();
@@ -82,7 +132,7 @@ test('icon toggle mode rotates the chevron of the toggled parent', async ({ page
   await page.goto(PAGE_URL);
   const root = page.locator('[data-doc-section="icon-toggle"]');
   const parentItem = root.locator('[data-has-children="true"]').first();
-  const icon = parentItem.locator('> div > div > a .nav-tree-icon');
+  const icon = parentItem.locator('> div > [data-nav-icon-toggle] .nav-tree-icon');
   const wasExpanded = (await parentItem.getAttribute('data-expanded')) === 'true';
   const expandedClass = /\bnav-tree-icon-expanded\b/;
 
