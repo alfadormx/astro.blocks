@@ -373,6 +373,7 @@ const wrapperProps = container ? mergedContainer : {};
         clone.removeAttribute('role');
         clone.removeAttribute('aria-roledescription');
         clone.removeAttribute('aria-label');
+        [clone, ...clone.querySelectorAll('[id]')].forEach((el) => el.removeAttribute('id'));
         clone.setAttribute('aria-hidden', 'true');
         clone.inert = true;
         return clone;

@@ -4,8 +4,7 @@ import type { ImageProps } from './image.types';
 import type { ContainerProps } from './container.types';
 import type { LayerConfig } from './config.types';
 
-export type CarouselItem = Partial<ImageProps> & {
-  id?: string;
+export type CarouselItem = Omit<ImageProps, 'class'> & {
   /** Classes on the slide wrapper, not the image; style the image with `defaultImageConfig.class`. */
   class?: string;
 };
