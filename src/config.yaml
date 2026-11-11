@@ -84,3 +84,9 @@ analytics:
     googleAnalytics:
       id: 'G-XXXXXXXXXX'
       partytown: true
+
+collections:
+  timezone: 'Europe/Madrid'
+  posts: { preset: post, route: /demos/blog, pageSize: 2 }
+  cases: { preset: caseStudy, route: /demos/work }
+  events: { preset: event, route: /demos/events }

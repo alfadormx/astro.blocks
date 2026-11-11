@@ -1,0 +1,21 @@
+---
+import { I18N } from 'site-config';
+import EntryCardBase from '~/components/blocks/composite/EntryCardBase.astro';
+import type { PostCardProps } from '~/types/postcard.types';
+import { formatDate, localeFor } from '~/utils/entryFormat';
+import { entryStrings } from '~/utils/entryStrings';
+
+type Props = PostCardProps;
+
+const { date, readingTime, readMoreLabel, langCode, ...card } = Astro.props;
+
+const strings = entryStrings(langCode);
+const eyebrow = [
+  formatDate(date, localeFor(langCode, I18N)),
+  readingTime ? strings.minRead(readingTime) : undefined,
+]
+  .filter(Boolean)
+  .join(' · ');
+---
+
+<EntryCardBase {...card} eyebrow={eyebrow} readMoreLabel={readMoreLabel ?? strings.readMore} />

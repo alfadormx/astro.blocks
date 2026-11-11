@@ -1,0 +1,59 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import EventLayoutBlock from '~/components/blocks/composite/EventLayout.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+const metadata = { title: { default: 'EventLayout' } };
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'EventLayout',
+    subtitle: 'The body of an event page: when and where, a Register button, and a map.',
+  }}
+>
+  <h3>1. With registration and map</h3>
+  <p>
+    <code>registrationUrl</code> adds the Register button above the body. Coordinates in
+    <code>location</code> add a Map after it.
+  </p>
+  <div data-doc-section="register">
+    <EventLayoutBlock
+      headline={{ title: 'Collections launch meetup', htmlTag: 'h2' }}
+      start={new Date('2030-03-12T17:00:00Z')}
+      end={new Date('2030-03-12T19:00:00Z')}
+      timezone="Europe/Madrid"
+      location={{
+        name: 'Example Hall',
+        address: 'Gran Vía 1, Madrid',
+        lat: 40.4203,
+        lon: -3.7058,
+      }}
+      registrationUrl="https://example.com/register/launch"
+    >
+      <p>Doors open at six. Bring a laptop if you want to follow along.</p>
+    </EventLayoutBlock>
+  </div>
+
+  <h3>2. Without the button</h3>
+  <p>
+    <code>registerButton: false</code> hides the button even when a URL is set.
+  </p>
+  <div data-doc-section="no-register">
+    <EventLayoutBlock
+      headline={{ title: 'Accessibility webinar', htmlTag: 'h2' }}
+      start={new Date('2026-02-04T15:00:00Z')}
+      end={new Date('2026-02-04T16:00:00Z')}
+      timezone="Europe/Madrid"
+      location={{ name: 'Online' }}
+      registrationUrl="https://example.com/register/webinar"
+      registerButton={false}
+    >
+      <p>The recording is coming soon.</p>
+    </EventLayoutBlock>
+  </div>
+
+  <ApiReferenceTable component="EventLayout" category="composite" />
+</Layout>

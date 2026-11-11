@@ -561,3 +561,9 @@ test.describe('panel slots', () => {
     await expect(panelSection(page).locator('[data-tab-panel]')).toHaveCount(2);
   });
 });
+
+test('the Spanish configurator reads its labels from the es copy', async ({ page }) => {
+  await page.goto('/es/demos/jewellery-configurator');
+  await expect(page.getByRole('heading', { level: 1, name: 'Solitario' })).toBeVisible();
+  await expect(page.getByRole('tab', { name: 'Quilates' })).toBeVisible();
+});

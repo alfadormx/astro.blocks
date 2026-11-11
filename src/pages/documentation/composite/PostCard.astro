@@ -1,0 +1,64 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import PostCardBlock from '~/components/blocks/composite/PostCard.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+const metadata = { title: { default: 'PostCard' } };
+
+const post = {
+  headline: { title: 'Writing in two languages' },
+  href: '/demos/blog/second-post',
+  description: 'Translations live in a folder per language and link by filename.',
+  date: new Date('2026-10-15T12:00:00Z'),
+  readingTime: 2,
+  tags: ['i18n'],
+  image: {
+    src: '~/assets/images/content/dictionary-page.jpg',
+    alt: 'An open dictionary showing the entry for Esperanto',
+  },
+};
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'PostCard',
+    subtitle: 'A blog post card. The title is the one link, and the whole card is its target.',
+  }}
+>
+  <h3>1. Basic</h3>
+  <p>
+    The date and reading time sit above the title. On a collection page, <code>CollectionList</code>{' '}
+    builds these props from each entry, so you rarely write them by hand.
+  </p>
+  <div data-doc-section="basic" class="max-w-sm">
+    <PostCardBlock {...post} />
+  </div>
+
+  <h3>2. Without a cover</h3>
+  <p>
+    Leave out <code>image</code> for a text-only card. <code>readingTime: false</code> hides the
+    reading time.
+  </p>
+  <div data-doc-section="no-cover" class="max-w-sm">
+    <PostCardBlock {...post} image={undefined} readingTime={false} />
+  </div>
+
+  <h3>3. Language</h3>
+  <p>
+    <code>langCode</code> picks the date format and the UI strings. Spanish ships with the library;
+    other languages fall back to English, and <code>readMoreLabel</code> overrides the text.
+  </p>
+  <div data-doc-section="language" class="max-w-sm">
+    <PostCardBlock
+      {...post}
+      headline={{ title: 'Escribir en dos idiomas' }}
+      href="/es/demos/blog/segunda-entrada"
+      description="Las traducciones viven en una carpeta por idioma."
+      langCode="es"
+    />
+  </div>
+
+  <ApiReferenceTable component="PostCard" category="composite" />
+</Layout>

@@ -1,0 +1,24 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import DemoHeader from '../_DemoHeader.astro';
+import Container from '~/components/blocks/layout/Container.astro';
+import Footer from '~/components/blocks/composite/Footer.astro';
+import PostLayout from '~/components/blocks/composite/PostLayout.astro';
+import {
+  collectionEntries,
+  renderEntry,
+} from '../../../../../vendor/integration/collections/pages';
+
+export const getStaticPaths = () => collectionEntries('posts');
+const { Content, langCode, layout, metadata } = await renderEntry(Astro, 'posts');
+---
+
+<Layout langCode={langCode} metadata={metadata}>
+  <DemoHeader langCode={langCode} />
+  <Container>
+    <PostLayout {...layout}>
+      <Content />
+    </PostLayout>
+  </Container>
+  <Footer languageToggle={{}} />
+</Layout>

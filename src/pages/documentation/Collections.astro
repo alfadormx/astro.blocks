@@ -1,0 +1,307 @@
+---
+import Layout from './_layouts/Layout.astro';
+import CollectionListBlock from '~/components/blocks/composite/CollectionList.astro';
+import { getFeatured } from '../../../vendor/integration/collections/pages';
+
+const metadata = { title: { default: 'Collections and copy' } };
+
+const featured = await getFeatured('posts', 3, 'en');
+
+const pre = 'bg-surface p-4 rounded overflow-x-auto text-sm border border-border';
+
+const configExample = `collections:
+  timezone: 'Europe/Madrid'
+  posts:  { preset: post,      route: /blog, pageSize: 9 }
+  cases:  { preset: caseStudy, route: /work }
+  events: { preset: event,     route: /events }`;
+
+const stubExample = `// src/content.config.ts
+import { defineBlocksCollections } from '../vendor/integration/collections/define';
+
+export const collections = defineBlocksCollections();`;
+
+const folderExample = `src/content/posts/
+  en/hello-world.md
+  es/hello-world.md     ← same file name: the Spanish translation
+  en/english-only.md    ← no es file: hidden in Spanish`;
+
+const frontMatterExample = `---
+title: Hola, mundo
+description: Por qué la librería incluye colecciones Markdown.
+date: 2026-10-01
+slug: hola-mundo        # optional: the URL segment in this language
+tags: [anuncio]
+draft: true             # optional: left out of production builds
+cover:
+  src: ~/assets/images/cover.webp
+  alt: Describe the image
+---`;
+
+const listPage = `---
+// src/pages/[...lang]/blog/[...page].astro
+import Layout from '~/layouts/Layout.astro';
+import Header from '~/components/blocks/composite/Header.astro';
+import Footer from '~/components/blocks/composite/Footer.astro';
+import Container from '~/components/blocks/layout/Container.astro';
+import CollectionList from '~/components/blocks/composite/CollectionList.astro';
+import { collectionPages, renderList } from '…/vendor/integration/collections/pages';
+
+export const getStaticPaths = () => collectionPages('posts');
+const { langCode, entries, page } = await renderList(Astro);
+---
+
+<Layout langCode={langCode} metadata={{ title: { default: 'Blog' } }}>
+  <Header themeToggle={{}} />
+  <Container>
+    <CollectionList entries={entries} page={page} langCode={langCode} />
+  </Container>
+  <Footer languageToggle={{}} />
+</Layout>`;
+
+const entryPage = `---
+// src/pages/[...lang]/blog/[slug].astro
+import Layout from '~/layouts/Layout.astro';
+import Header from '~/components/blocks/composite/Header.astro';
+import Footer from '~/components/blocks/composite/Footer.astro';
+import Container from '~/components/blocks/layout/Container.astro';
+import PostLayout from '~/components/blocks/composite/PostLayout.astro';
+import { collectionEntries, renderEntry } from '…/vendor/integration/collections/pages';
+
+export const getStaticPaths = () => collectionEntries('posts');
+const { Content, langCode, layout, metadata } = await renderEntry(Astro, 'posts');
+---
+
+<Layout langCode={langCode} metadata={metadata}>
+  <Header themeToggle={{}} />
+  <Container>
+    <PostLayout {...layout}><Content /></PostLayout>
+  </Container>
+  <Footer languageToggle={{}} />
+</Layout>`;
+
+const featuredExample = `const featured = await getFeatured('posts', 3, langCode);
+<CollectionList entries={featured} />`;
+
+const copyFolder = `src/copy/home/
+  en.yaml           ← the default language defines the keys and their types
+  es.yaml           ← missing keys fall back to en, with a build warning
+  intro.md          ← referenced from a YAML value as ./intro.md`;
+
+const copyPage = `---
+// src/pages/[...lang]/index.astro
+import { localizedPaths, useCopy } from '…/vendor/integration/copy/pages';
+
+export const getStaticPaths = () => localizedPaths();
+const { langCode, copy } = useCopy(Astro, 'home');
+---
+
+<Layout langCode={langCode} metadata={{ title: { default: copy.pageTitle } }}>
+  <Hero headline={{ title: copy.hero.title }} />
+  <Footer disclaimer={copy.footerDisclaimer} />
+</Layout>`;
+
+const nativeExample = `// src/content.config.ts
+import { defineCollection } from 'astro:content';
+import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
+import { defineBlocksCollections } from '../vendor/integration/collections/define';
+
+export const collections = {
+  ...defineBlocksCollections(),
+  notes: defineCollection({
+    loader: glob({ base: 'src/content/notes', pattern: '**/*.md' }),
+    schema: z.object({ title: z.string() }),
+  }),
+};`;
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Guide',
+    title: 'Collections and copy',
+    subtitle:
+      'Write posts, case studies and events in Markdown, and page copy in YAML, in every language.',
+  }}
+>
+  <h2>Declaring a collection</h2>
+  <p>
+    Add a <code>collections</code> section to <code>src/config.yaml</code>. Each collection names a
+    <strong>preset</strong>, which fixes its fields and the blocks that show it. Your editor
+    autocompletes the keys.
+  </p>
+  <pre class={pre}><code>{configExample}</code></pre>
+  <table>
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>Default</th>
+        <th>Meaning</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <code>preset</code>
+        </td>
+        <td>required</td>
+        <td>
+          <code>post</code>, <code>caseStudy</code> or <code>event</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <code>route</code>
+        </td>
+        <td>
+          <code>/&lt;name&gt;</code>
+        </td>
+        <td>URL base the cards link to, without the language prefix</td>
+      </tr>
+      <tr>
+        <td>
+          <code>path</code>
+        </td>
+        <td>
+          <code>src/content/&lt;name&gt;</code>
+        </td>
+        <td>Content folder</td>
+      </tr>
+      <tr>
+        <td>
+          <code>sort</code>
+        </td>
+        <td>
+          <code>date-desc</code>; events <code>start-asc</code>
+        </td>
+        <td>
+          Also <code>date-asc</code>, <code>title-asc</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <code>pageSize</code>
+        </td>
+        <td>none</td>
+        <td>Entries per list page; unset means one page</td>
+      </tr>
+      <tr>
+        <td>
+          <code>timezone</code>
+        </td>
+        <td>
+          <code>UTC</code>
+        </td>
+        <td>Reserved key: the zone event times show in</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    Every preset has <code>title</code>, <code>description</code> (the card excerpt and meta
+    description), <code>cover</code>, <code>ogImage</code>, <code>tags</code>, <code>featured</code>
+    , <code>draft</code> and <code>slug</code>. On top of those:
+  </p>
+  <ul>
+    <li>
+      <code>post</code>: <code>date</code>, <code>updated</code>, <code>author</code>.
+    </li>
+    <li>
+      <code>caseStudy</code>: <code>date</code>, <code>client</code>, <code>results</code> (
+      <code>label</code>, <code>value</code>), <code>location</code>.
+    </li>
+    <li>
+      <code>event</code>: <code>start</code>, <code>end</code>, <code>timezone</code>,{' '}
+      <code>location</code>, <code>registrationUrl</code>.
+    </li>
+  </ul>
+  <p>
+    A <code>location</code> is a name (<code>Online</code>) or an object with <code>name</code>,
+    <code>address</code>, <code>lat</code>, <code>lon</code> and <code>zoom</code>. With
+    coordinates, the entry page shows a map. The site's <code>src/content.config.ts</code> is one
+    line, and
+    <code>getCollection('posts')</code> is typed from the preset:
+  </p>
+  <pre class={pre}><code>{stubExample}</code></pre>
+
+  <h2>Writing content</h2>
+  <p>
+    Put each language in its own folder. Files with the same name are translations of one entry. An
+    entry missing from a language is left out of that language's list and gets no URL there. A
+    collection with no language folders is in the default language only. Mixing language folders and
+    loose files stops the build.
+  </p>
+  <pre class={pre}><code>{folderExample}</code></pre>
+  <p>
+    <code>slug</code> sets the URL segment in that language; it defaults to the file name. The slug
+    <code>page</code> is reserved for pagination. Drafts show in development and are left out of
+    <code>pnpm build</code>. Reading time is computed from the text.
+  </p>
+  <pre class={pre}><code>{frontMatterExample}</code></pre>
+
+  <h2>The two pages</h2>
+  <p>
+    The pages stay yours: use your own layout, header and footer. The helpers handle languages,
+    drafts, sorting, pagination (<code>/blog</code>, <code>/blog/page/2</code>) and the language
+    toggle, which links each translation to its own slug and a missing one to that language's list.
+    They also emit <code>hreflang</code> links for the languages that have the page.
+  </p>
+  <pre class={pre}><code>{listPage}</code></pre>
+  <pre class={pre}><code>{entryPage}</code></pre>
+  <p>
+    Use <code>CaseStudyLayout</code> or <code>EventLayout</code> for the other presets. To link to a
+    list from anywhere, <code>collectionUrl('posts', langCode)</code> returns its URL in that
+    language. See the <a href="/demos/blog">blog</a>, <a href="/demos/work">case study</a> and
+    <a href="/demos/events">event</a> demos. After a build, a warning names any collection whose{' '}
+    <code>route</code> has no entry page.
+  </p>
+
+  <h2>Featured entries</h2>
+  <p>
+    <code>featured: true</code> doesn't change the list order. Use <code>getFeatured</code> for a
+    "Featured" section anywhere:
+  </p>
+  <pre class={pre}><code>{featuredExample}</code></pre>
+  <div class="my-6" data-doc-section="featured">
+    <CollectionListBlock entries={featured} columns={2} />
+  </div>
+
+  <h2>Localising a static page</h2>
+  <p>
+    Write the page once under <code>src/pages/[...lang]/</code>, and its copy in YAML per language.
+    The default-language file defines the keys, and <code>copy</code> is typed from it, so a typo
+    fails <code>astro check</code>. Objects merge key by key; arrays replace as a whole, so a
+    translated list is never half English.
+  </p>
+  <pre class={pre}><code>{copyFolder}</code></pre>
+  <pre class={pre}><code>{copyPage}</code></pre>
+
+  <h2>Markdown files in copy</h2>
+  <p>
+    A YAML value of the form <code>./name.md</code> is replaced with that file, read relative to the
+    YAML. Use it for long sections. It renders as Markdown only in a RichText field; in a plain
+    field such as a title, the raw text shows.
+  </p>
+
+  <h2>RichText fields</h2>
+  <p>
+    Item <code>content</code>, Accordion item <code>content</code>, Footer
+    <code>disclaimer</code> and <code>footnote</code>, and Container item <code>content</code> take
+    Markdown. One line renders inline; paragraphs separated by a blank line, lists and headings
+    render as blocks. HTML still passes through. Titles, labels and <code>alt</code> stay plain
+    text.
+  </p>
+
+  <h2>Past events</h2>
+  <p>
+    Events are sorted upcoming first, then past, with a "Past" badge. That is decided when the site
+    builds, so schedule a daily rebuild (a cron job in your host or CI) to move events into the past
+    on time.
+  </p>
+
+  <h2>Power users</h2>
+  <p>
+    Replace the stub with your own Astro config and spread the library's collections into it, to add
+    collections of your own:
+  </p>
+  <pre class={pre}><code>{nativeExample}</code></pre>
+</Layout>

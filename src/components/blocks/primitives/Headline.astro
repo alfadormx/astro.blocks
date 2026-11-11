@@ -53,7 +53,11 @@ const mergedSubtitleClass = cn(
 <div class={mergedClass} data-headline>
   {anchorId ? <a id={anchorId} /> : null}
   {tagline && <p class={mergedTaglineClass}>{tagline}</p>}
-  {title && <TitleTag class={mergedTitleClass}>{title}</TitleTag>}
+  {title && (
+    <TitleTag class={mergedTitleClass}>
+      {Astro.slots.has('title') ? <slot name="title" /> : title}
+    </TitleTag>
+  )}
   {subtitle && (
     <p class={mergedSubtitleClass} data-subtitle>
       {subtitle}

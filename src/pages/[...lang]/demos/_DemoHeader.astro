@@ -1,0 +1,26 @@
+---
+// Shared by the demo pages: links between the demos in the page's language.
+import { I18N } from 'site-config';
+import Header from '~/components/blocks/composite/Header.astro';
+import { collectionUrl } from '../../../../vendor/integration/collections/pages';
+import { useCopy } from '../../../../vendor/integration/copy/pages';
+
+interface Props {
+  langCode: string;
+}
+
+const { copy } = useCopy(Astro, 'demos');
+const { langCode } = Astro.props;
+const home = I18N.languages.find((l: (typeof I18N.languages)[number]) => l.code === langCode);
+const prefix = home && home.basePath !== '/' ? home.basePath : '';
+
+const items = [
+  { label: copy.home, href: home?.basePath ?? '/' },
+  { label: copy.blog, href: collectionUrl('posts', langCode) },
+  { label: copy.work, href: collectionUrl('cases', langCode) },
+  { label: copy.events, href: collectionUrl('events', langCode) },
+  { label: copy.configurator, href: `${prefix}/demos/jewellery-configurator` },
+];
+---
+
+<Header leftNavigationTreeHorizontal={{ items }} themeToggle={{}} />

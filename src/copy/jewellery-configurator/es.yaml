@@ -1,0 +1,34 @@
+pageTitle: 'Configurador de joyas'
+headline: 'Solitario'
+modelViewerLabel: 'Tu anillo'
+saveLabel: 'Guardar mi diseño'
+model:
+  label: 'Modelo'
+  heading: 'Elige tu modelo'
+  classic: { title: 'Clásico', content: 'Aro fino' }
+  bold: { title: 'Ancho', content: 'Aro ancho' }
+  pave: { title: 'Pavé', content: 'Piedras de acento' }
+carat:
+  label: 'Quilates'
+  heading: 'Elige los quilates'
+color:
+  label: 'Color'
+  heading: 'Elige el color'
+  yellow: 'Oro amarillo'
+  white: 'Oro blanco'
+  rose: 'Oro rosa'
+clarity:
+  label: 'Pureza'
+  heading: 'Elige la pureza'
+extras:
+  label: 'Extras'
+  heading: 'Añade hasta dos extras'
+  giftbox: { title: 'Caja de regalo', content: 'Envuelto y listo para regalar.' }
+  certificate: { title: 'Certificado', content: 'Garantía de la piedra y el metal.' }
+  polish: { title: 'Pulido de por vida', content: 'Limpieza gratis, para siempre.' }
+engraving:
+  label: 'Grabado'
+  heading: 'Graba tu anillo'
+  field: 'Grabado'
+  placeholder: 'Hasta 20 caracteres'
+  help: 'Se ve en el interior del aro.'

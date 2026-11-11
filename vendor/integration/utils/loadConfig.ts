@@ -13,4 +13,7 @@ const loadConfig = async (configPathOrData: string | object) => {
   return configPathOrData;
 };
 
+export const loadConfigSync = (configPath: string): object =>
+  (load(fs.readFileSync(configPath, 'utf8')) as object) ?? {};
+
 export default loadConfig;

@@ -1,0 +1,74 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import PostLayoutBlock from '~/components/blocks/composite/PostLayout.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+const metadata = { title: { default: 'PostLayout' } };
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'PostLayout',
+    subtitle: 'The body of a blog post page: cover, title, meta line, Markdown and tags.',
+  }}
+>
+  <h3>1. Basic</h3>
+  <p>
+    On an entry page, <code>renderEntry</code> returns these props as <code>layout</code> and the
+    rendered Markdown as <code>Content</code>, which goes in the default slot. The body uses the
+    <code>prose</code> class from <code>@tailwindcss/typography</code>, coloured from the theme
+    tokens, so it follows light and dark mode.
+  </p>
+  <div data-doc-section="basic">
+    <PostLayoutBlock
+      headline={{ title: 'Hello, world', htmlTag: 'h2' }}
+      date={new Date('2026-10-01T12:00:00Z')}
+      updated={new Date('2026-10-20T12:00:00Z')}
+      author="Astro Blocks"
+      readingTime={1}
+      tags={['announcement', 'collections']}
+      image={{
+        src: '~/assets/images/content/writing-notebook.jpg',
+        alt: 'A hand writing notes with a pen in a notebook on a wooden desk',
+      }}
+    >
+      <p>Collections let you write content as Markdown files and list them with one block.</p>
+      <h2>What you get</h2>
+      <ul>
+        <li>
+          A typed schema per <strong>preset</strong>.
+        </li>
+        <li>A list page and an entry page, each about ten lines.</li>
+      </ul>
+      <blockquote>
+        <p>Write the content; the blocks handle the rest.</p>
+      </blockquote>
+      <p>
+        Inline <code>code</code> and <a href="/documentation">links</a> use the theme tokens.
+      </p>
+    </PostLayoutBlock>
+  </div>
+
+  <h3>2. Body width</h3>
+  <p>
+    <code>bodyClass</code> merges after <code>prose</code>, so typography modifiers apply: here
+    <code>max-w-none</code> lets the text use the full width, and <code>prose-lg</code> would
+    enlarge it.
+  </p>
+  <div data-doc-section="body-class">
+    <PostLayoutBlock
+      headline={{ title: 'A wide body', htmlTag: 'h2' }}
+      date={new Date('2026-10-01T12:00:00Z')}
+      bodyClass="max-w-none"
+    >
+      <p>
+        This paragraph runs the full width of the layout because <code>bodyClass</code> removed the
+        default reading width.
+      </p>
+    </PostLayoutBlock>
+  </div>
+
+  <ApiReferenceTable component="PostLayout" category="composite" />
+</Layout>

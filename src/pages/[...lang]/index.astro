@@ -8,6 +8,7 @@ import Hero from '~/components/blocks/composite/Hero.astro';
 import ItemsContent from '~/components/blocks/composite/ItemsContent.astro';
 import { documentationNavigation } from '~/data/documentationNavigation';
 import { getGroupChildLabels } from '~/utils/navigationGroups';
+import { collectionUrl } from '../../../vendor/integration/collections/pages';
 import { localizedPaths, useCopy } from '../../../vendor/integration/copy/pages';
 
 type Language = (typeof I18N.languages)[number];
@@ -38,6 +39,23 @@ const layerItems = layers.map(({ group, icon, copyKey }) => ({
     getGroupChildLabels(documentationNavigation, group)
   )}.`,
   orientation: 'vertical' as const,
+}));
+
+const demoItems = [
+  { copy: copy.demos.blog, href: collectionUrl('posts', langCode), icon: 'heroicons:newspaper' },
+  { copy: copy.demos.work, href: collectionUrl('cases', langCode), icon: 'heroicons:briefcase' },
+  { copy: copy.demos.events, href: collectionUrl('events', langCode), icon: 'heroicons:calendar' },
+  {
+    copy: copy.demos.configurator,
+    href: `${basePath === '/' ? '' : basePath}/demos/jewellery-configurator`,
+    icon: 'heroicons:cube-transparent',
+  },
+].map(({ copy: item, href, icon }) => ({
+  icon: { name: icon },
+  title: item.title,
+  content: item.content,
+  orientation: 'vertical' as const,
+  actions: [{ label: item.link, href, variant: 'outline' as const, size: 'sm' as const }],
 }));
 
 const metadata = {
@@ -103,6 +121,16 @@ const metadata = {
       gap: 'tight',
       items: layerItems,
     }}
+  />
+
+  <ItemsContent
+    headline={{
+      tagline: copy.demos.tagline,
+      title: copy.demos.title,
+      subtitle: copy.demos.subtitle,
+      align: 'center',
+    }}
+    itemsGrid={{ columns: 4, gap: 'tight', items: demoItems }}
   />
 
   <CallToAction

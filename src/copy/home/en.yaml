@@ -19,6 +19,26 @@ inside:
   layout:
     title: 'Layout'
     lead: 'Structural containers'
+demos:
+  tagline: 'Demos'
+  title: 'See the blocks in a site'
+  subtitle: 'Pages built from Markdown collections, in English and Spanish, plus a 3D product configurator.'
+  blog:
+    title: 'Blog'
+    content: 'Posts with dates, reading time, tags and pagination.'
+    link: 'Open the blog'
+  work:
+    title: 'Case studies'
+    content: 'Client work with headline results and a map.'
+    link: 'Open the case studies'
+  events:
+    title: 'Events'
+    content: 'Upcoming and past events, each in its own time zone.'
+    link: 'Open the events'
+  configurator:
+    title: 'Ring configurator'
+    content: 'A 3D configurator with choices kept in a shareable code.'
+    link: 'Open the configurator'
 getStarted:
   tagline: 'Get Started'
   title: 'Ready to build?'

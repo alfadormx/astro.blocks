@@ -1,0 +1,110 @@
+---
+import CaseStudyCard from '~/components/blocks/composite/CaseStudyCard.astro';
+import EventCard from '~/components/blocks/composite/EventCard.astro';
+import PostCard from '~/components/blocks/composite/PostCard.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
+import type { ButtonProps } from '~/types/button.types';
+import type { CaseStudyCardProps } from '~/types/casestudycard.types';
+import type { CollectionListProps } from '~/types/collectionlist.types';
+import type { EventCardProps } from '~/types/eventcard.types';
+import type { PostCardProps } from '~/types/postcard.types';
+import { entryStrings, pageStatus } from '~/utils/entryStrings';
+import { gridColumnsClass, gridGapClass } from '~/utils/itemsGrid';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import { cn } from '~/utils/styles';
+
+type Props = CollectionListProps;
+
+const {
+  entries,
+  orientation = 'horizontal',
+  columns = 3,
+  gap = 'normal',
+  class: className,
+  defaultPostCardConfig,
+  defaultCaseStudyCardConfig,
+  defaultEventCardConfig,
+  page,
+  prevButton,
+  nextButton,
+  pageStatusLabel,
+  pagerClass,
+  langCode,
+} = Astro.props;
+
+const strings = entryStrings(langCode);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const withoutPreset = <E extends { preset: string }>({ preset: _preset, ...props }: E) => props;
+const listClass = cn(
+  'm-0 grid list-none p-0 mx-auto',
+  gridColumnsClass(orientation === 'vertical' ? 1 : columns, true),
+  gridGapClass(gap),
+  className
+);
+
+const internalPagerButton: ButtonProps = { variant: 'outline', intent: 'neutral', size: 'sm' };
+const pagerButton = (
+  config: Omit<ButtonProps, 'href'> | false | undefined,
+  label: string,
+  href: string | undefined
+) =>
+  config === false || !href
+    ? undefined
+    : { ...mergeConfigs<ButtonProps>({}, internalPagerButton, { label }, config), href };
+
+const showPager = page !== undefined && page.lastPage > 1;
+const mergedPrev = showPager ? pagerButton(prevButton, strings.prev, page.url.prev) : undefined;
+const mergedNext = showPager ? pagerButton(nextButton, strings.next, page.url.next) : undefined;
+---
+
+<div class="@container w-full">
+  <ul class={listClass} data-collection-list>
+    {entries.map((entry) => (
+      <li class="h-full">
+        {entry.preset === 'post' && (
+          <PostCard
+            {...mergeConfigs<PostCardProps>(
+              {},
+              { langCode },
+              defaultPostCardConfig,
+              withoutPreset(entry)
+            )}
+          />
+        )}
+        {entry.preset === 'caseStudy' && (
+          <CaseStudyCard
+            {...mergeConfigs<CaseStudyCardProps>(
+              {},
+              { langCode },
+              defaultCaseStudyCardConfig,
+              withoutPreset(entry)
+            )}
+          />
+        )}
+        {entry.preset === 'event' && (
+          <EventCard
+            {...mergeConfigs<EventCardProps>(
+              {},
+              { langCode },
+              defaultEventCardConfig,
+              withoutPreset(entry)
+            )}
+          />
+        )}
+      </li>
+    ))}
+  </ul>
+  {showPager && (
+    <nav
+      class={cn('mt-8 flex flex-wrap items-center justify-center gap-4', pagerClass)}
+      aria-label={strings.pagination}
+      data-collection-pager
+    >
+      {mergedPrev && <Button {...mergedPrev} data-collection-pager-prev />}
+      <p class="m-0 text-sm text-emphasis" aria-live="off" data-collection-pager-status>
+        {pageStatus(pageStatusLabel ?? strings.pageOf, page.currentPage, page.lastPage)}
+      </p>
+      {mergedNext && <Button {...mergedNext} data-collection-pager-next />}
+    </nav>
+  )}
+</div>

@@ -3,6 +3,7 @@ import type { NavigationTreeItem } from '~/types/navigationtree.types';
 export const documentationNavigation: NavigationTreeItem[] = [
   { label: 'Overview', href: '/documentation' },
   { label: 'Composing blocks', href: '/documentation/Composing' },
+  { label: 'Collections and copy', href: '/documentation/Collections' },
   {
     label: 'Base',
     children: [
@@ -14,10 +15,15 @@ export const documentationNavigation: NavigationTreeItem[] = [
     label: 'Composite',
     children: [
       { label: 'CallToAction', href: '/documentation/composite/CallToAction' },
+      { label: 'CaseStudyCard', href: '/documentation/composite/CaseStudyCard' },
+      { label: 'CaseStudyLayout', href: '/documentation/composite/CaseStudyLayout' },
+      { label: 'CollectionList', href: '/documentation/composite/CollectionList' },
       { label: 'Configurator', href: '/documentation/composite/Configurator' },
       { label: 'ContactForm', href: '/documentation/composite/ContactForm' },
       { label: 'Content', href: '/documentation/composite/Content' },
       { label: 'ContentCarousel', href: '/documentation/composite/ContentCarousel' },
+      { label: 'EventCard', href: '/documentation/composite/EventCard' },
+      { label: 'EventLayout', href: '/documentation/composite/EventLayout' },
       { label: 'Footer', href: '/documentation/composite/Footer' },
       { label: 'Header', href: '/documentation/composite/Header' },
       { label: 'Hero', href: '/documentation/composite/Hero' },
@@ -35,6 +41,8 @@ export const documentationNavigation: NavigationTreeItem[] = [
         label: 'NavigationTreeHorizontal',
         href: '/documentation/composite/NavigationTreeHorizontal',
       },
+      { label: 'PostCard', href: '/documentation/composite/PostCard' },
+      { label: 'PostLayout', href: '/documentation/composite/PostLayout' },
       { label: 'Pricing', href: '/documentation/composite/Pricing' },
       { label: 'Tabs', href: '/documentation/composite/Tabs' },
       { label: 'Team', href: '/documentation/composite/Team' },

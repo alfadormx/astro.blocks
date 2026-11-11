@@ -32,4 +32,7 @@ export interface LanguageToggleProps extends Omit<HTMLAttributes<'div'>, 'class'
 
   /** Keep the current path when switching language (`/x` → `/es/x`); when false, each button links to that language's basePath (default: true) */
   preservePath?: boolean;
+
+  /** URL per language code; a listed language links there, others follow `preservePath` (default: the collection page helpers' alternates, when the page sets them). */
+  alternates?: Record<string, string>;
 }

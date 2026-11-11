@@ -1,0 +1,63 @@
+---
+// Internal to PostLayout, CaseStudyLayout, EventLayout: cover, title, body typography and tags in one place.
+import Headline from '~/components/blocks/primitives/Headline.astro';
+import Image from '~/components/blocks/primitives/Image.astro';
+import type { EntryLayoutProps } from '~/types/entrylayout.types';
+import type { HeadlineProps } from '~/types/headline.types';
+import type { ImageProps } from '~/types/image.types';
+import { entryStrings } from '~/utils/entryStrings';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import { cn } from '~/utils/styles';
+
+type Props = EntryLayoutProps;
+
+const {
+  headline,
+  image,
+  tags = [],
+  langCode,
+  class: className,
+  bodyClass,
+  tagsClass,
+} = Astro.props;
+
+const internalHeadline: HeadlineProps = { htmlTag: 'h1', class: 'mt-0 mb-4' };
+const internalImage: Partial<ImageProps> = {
+  layout: 'responsive',
+  aspectRatio: 16 / 9,
+  loading: 'eager',
+  class: 'w-full h-auto rounded-lg',
+};
+
+const mergedHeadline = mergeConfigs<HeadlineProps>({}, internalHeadline, headline);
+const mergedImage = image && mergeConfigs<ImageProps>({}, internalImage, image);
+const strings = entryStrings(langCode);
+---
+
+<article class={cn('mx-auto flex w-full max-w-3xl flex-col gap-6', className)} data-entry-layout>
+  {mergedImage && <Image {...mergedImage} />}
+  <header class="flex flex-col gap-2">
+    <Headline {...mergedHeadline} />
+    {Astro.slots.has('header') && (
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-emphasis">
+        <slot name="header" />
+      </div>
+    )}
+  </header>
+  <slot name="before" />
+  <div class={cn('prose', bodyClass)} data-entry-body>
+    <slot />
+  </div>
+  <slot name="after" />
+  {tags.length > 0 && (
+    <ul
+      class={cn('m-0 flex list-none flex-wrap gap-2 p-0 text-sm', tagsClass)}
+      aria-label={strings.tags}
+      data-entry-layout-tags
+    >
+      {tags.map((tag) => (
+        <li class="rounded bg-code-bg px-2 py-0.5 text-normal">{tag}</li>
+      ))}
+    </ul>
+  )}
+</article>

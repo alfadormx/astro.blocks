@@ -1,0 +1,63 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import CaseStudyLayoutBlock from '~/components/blocks/composite/CaseStudyLayout.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+const metadata = { title: { default: 'CaseStudyLayout' } };
+
+const location = {
+  name: 'Amsterdam',
+  address: 'Keizersgracht 1, 1015 CC Amsterdam',
+  lat: 52.3731,
+  lon: 4.8892,
+  zoom: 14,
+};
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'CaseStudyLayout',
+    subtitle: 'The body of a case study page: results above the Markdown, a map below it.',
+  }}
+>
+  <h3>1. Results and map</h3>
+  <p>
+    <code>results</code> renders as a description list above the body. A <code>location</code>
+    with <code>lat</code> and <code>lon</code> adds a Map after it.
+  </p>
+  <div data-doc-section="results-map">
+    <CaseStudyLayoutBlock
+      headline={{ title: 'A ring configurator that sells', htmlTag: 'h2' }}
+      client="Example Jewellers"
+      date={new Date('2026-06-10T12:00:00Z')}
+      results={[
+        { label: 'Conversion', value: '+38%' },
+        { label: 'Returns', value: '−21%' },
+        { label: 'Time on page', value: '3m 40s' },
+      ]}
+      location={location}
+    >
+      <p>The client wanted shoppers to see the ring they were buying, in every metal and stone.</p>
+    </CaseStudyLayoutBlock>
+  </div>
+
+  <h3>2. No map</h3>
+  <p>
+    <code>map: false</code> hides the map even when the location has coordinates.
+  </p>
+  <div data-doc-section="no-map">
+    <CaseStudyLayoutBlock
+      headline={{ title: 'Brand refresh', htmlTag: 'h2' }}
+      client="Example Co."
+      date={new Date('2025-11-20T12:00:00Z')}
+      location={location}
+      map={false}
+    >
+      <p>Semantic colour tokens replaced raw palette values across the site.</p>
+    </CaseStudyLayoutBlock>
+  </div>
+
+  <ApiReferenceTable component="CaseStudyLayout" category="composite" />
+</Layout>

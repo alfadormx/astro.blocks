@@ -4,6 +4,7 @@ import type { ButtonProps } from '~/types/button.types';
 import Button from './Button.astro';
 import { I18N, SITE } from 'site-config';
 import { currentLanguage } from '~/utils/currentLanguage';
+import { applyTrailingSlash, languageUrl } from '~/utils/languageUrl';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 import { cn } from '~/utils/styles';
 
@@ -20,6 +21,7 @@ const {
   class: className,
   gap = 'normal',
   preservePath = true,
+  alternates,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   children: _children,
   ...rest
@@ -59,26 +61,14 @@ const mergedActiveButtonConfig = mergeConfigs(
 const currentPath = Astro.url.pathname;
 const currentLang = currentLanguage(currentPath, I18N);
 
-const applyTrailingSlash = (path: string) => {
-  if (SITE.trailingSlash) {
-    return path.endsWith('/') || path.includes('.') ? path : `${path}/`;
-  }
-  return path.endsWith('/') && path.length > 1 ? path.slice(0, -1) : path;
-};
+const trailingSlash = SITE.trailingSlash ?? false;
+const resolvedAlternates = alternates ?? Astro.locals.blocksAlternates?.toggle;
 
-const buildLanguageUrl = (langBasePath: string) => {
-  if (!preservePath) return applyTrailingSlash(langBasePath);
-
-  const pathWithoutLang =
-    currentLang.basePath === '/'
-      ? currentPath
-      : currentPath.slice(currentLang.basePath.length) || '/';
-
-  return applyTrailingSlash(
-    langBasePath === '/'
-      ? pathWithoutLang
-      : `${langBasePath}${pathWithoutLang === '/' ? '' : pathWithoutLang}`
-  );
+const buildLanguageUrl = (lang: Language) => {
+  const alternate = resolvedAlternates?.[lang.code];
+  if (alternate) return applyTrailingSlash(alternate, trailingSlash);
+  if (!preservePath) return applyTrailingSlash(lang.basePath, trailingSlash);
+  return languageUrl(currentPath, currentLang, lang, trailingSlash);
 };
 
 const orientationClasses = orientation === 'vertical' ? 'flex-col' : 'flex-row';
@@ -91,13 +81,13 @@ const containerClasses = cn('flex', orientationClasses, gapClasses[gap], classNa
 <div class={containerClasses} {...rest} data-language-toggle>
   {I18N.languages.map((lang: Language) => {
     const isActive = currentLang.code === lang.code;
-    const languageUrl = buildLanguageUrl(lang.basePath);
+    const href = buildLanguageUrl(lang);
     const buttonConfig = isActive ? mergedActiveButtonConfig : mergedInactiveButtonConfig;
 
     return (
       <Button
         {...buttonConfig}
-        href={languageUrl}
+        href={href}
         label={labelFormat === 'code' ? lang.code.toUpperCase() : lang.label}
         aria-label={labelFormat === 'code' ? lang.label : undefined}
         lang={lang.code}

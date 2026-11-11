@@ -3,13 +3,17 @@ import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 import type { AstroConfig, AstroIntegration } from 'astro';
 
-import configBuilder, { type Config } from './utils/configBuilder';
+import configBuilder, { type CollectionsConfig, type Config } from './utils/configBuilder';
 import loadConfig from './utils/loadConfig';
+import { collectionRegistryDts } from './collections/registry';
+import { collectionsWithoutEntryPages } from './collections/routes';
 import { copyRegistryDts } from './copy/infer';
 import { loadCopy } from './copy/load';
 
 export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegration => {
   let cfg: AstroConfig;
+  let collections: CollectionsConfig = { entries: {} };
+  let languageBasePaths: string[] = ['/'];
   let copyDts = copyRegistryDts({}, 'en');
   return {
     name: 'site-config',
@@ -24,7 +28,9 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
         const resolvedCopyModuleId = '\0' + copyModuleId;
 
         const rawJsonConfig = (await loadConfig(_themeConfig)) as Config;
-        const { SITE, I18N, METADATA, ANALYTICS } = configBuilder(rawJsonConfig);
+        const { SITE, I18N, METADATA, ANALYTICS, COLLECTIONS } = configBuilder(rawJsonConfig);
+        collections = COLLECTIONS;
+        languageBasePaths = I18N.languages.map((l) => l.basePath);
 
         const copyRoot = fileURLToPath(new URL('src/copy/', config.root));
         const { copy, warnings, files } = loadCopy(
@@ -68,7 +74,8 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
                       `export const SITE = ${JSON.stringify(SITE)};` +
                       `export const I18N = ${JSON.stringify(I18N)};` +
                       `export const METADATA = ${JSON.stringify(METADATA)};` +
-                      `export const ANALYTICS = ${JSON.stringify(ANALYTICS)};`
+                      `export const ANALYTICS = ${JSON.stringify(ANALYTICS)};` +
+                      `export const COLLECTIONS = ${JSON.stringify(COLLECTIONS)};`
                     );
                   }
                   if (id === resolvedCopyModuleId) {
@@ -91,10 +98,20 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
       },
       'astro:config:done': async ({ config, injectTypes }) => {
         cfg = config;
+        injectTypes({ filename: 'collections.d.ts', content: collectionRegistryDts(collections) });
         injectTypes({ filename: 'copy.d.ts', content: copyDts });
       },
-      'astro:build:done': async ({ logger }) => {
+      'astro:build:done': async ({ logger, pages }) => {
         const buildLogger = logger.fork('site-config');
+        for (const [name, route] of collectionsWithoutEntryPages(
+          collections,
+          languageBasePaths,
+          pages.map((p) => p.pathname)
+        )) {
+          buildLogger.warn(
+            `Collection "${name}" has route "${route}" but no page generated its entry URLs`
+          );
+        }
         buildLogger.info('Updating `robots.txt` with `sitemap-index.xml` ...');
 
         try {

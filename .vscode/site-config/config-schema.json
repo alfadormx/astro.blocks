@@ -181,26 +181,66 @@
       },
       "required": ["title", "description"],
       "additionalProperties": false
-    }
-  },
-  "analytics": {
-    "type": "object",
-    "properties": {
-      "vendors": {
-        "type": "object",
-        "properties": {
-          "googleAnalytics": {
-            "type": "object",
-            "properties": {
-              "id": { "type": "string" },
-              "partytown": { "type": "boolean" }
-            },
-            "required": ["id"]
+    },
+    "analytics": {
+      "type": "object",
+      "properties": {
+        "vendors": {
+          "type": "object",
+          "properties": {
+            "googleAnalytics": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "partytown": { "type": "boolean" }
+              },
+              "required": ["id"]
+            }
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
-    "additionalProperties": false
+    "collections": {
+      "type": "object",
+      "description": "Markdown collections, each built from a preset. Keys are collection names; `timezone` is reserved.",
+      "properties": {
+        "timezone": {
+          "type": "string",
+          "description": "IANA time zone for event times (default: UTC)."
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "preset": {
+            "enum": ["post", "caseStudy", "event"],
+            "description": "Schema and blocks the collection uses."
+          },
+          "route": {
+            "type": "string",
+            "pattern": "^/",
+            "description": "URL base the cards link to, without the language prefix."
+          },
+          "path": {
+            "type": "string",
+            "description": "Content folder (default: src/content/<name>)."
+          },
+          "sort": {
+            "enum": ["date-desc", "date-asc", "start-asc", "title-asc"],
+            "description": "List order (default: start-asc for event, else date-desc)."
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Entries per list page; unset means one page."
+          }
+        },
+        "required": ["preset"],
+        "additionalProperties": false
+      }
+    }
   },
-  "required": ["site", "i18n", "metadata"]
+  "required": ["site", "i18n", "metadata"],
+  "additionalProperties": false
 }

@@ -52,7 +52,7 @@ const mergedTopmostContainer = mergeConfigs({}, defaultTopmostContainer, topmost
   <head>
     <CommonMeta />
     <Favicons />
-    <Metadata {...localizedMetadata} />
+    <Metadata {...localizedMetadata} alternates={langCode ? undefined : false} />
     <SiteVerification />
     <Analytics />
 

@@ -1,0 +1,31 @@
+---
+import { I18N } from 'site-config';
+import EntryCardBase from '~/components/blocks/composite/EntryCardBase.astro';
+import type { EventCardProps } from '~/types/eventcard.types';
+import { formatEventRange, localeFor } from '~/utils/entryFormat';
+import { entryStrings } from '~/utils/entryStrings';
+
+type Props = EventCardProps;
+
+const {
+  start,
+  end,
+  timezone = 'UTC',
+  location,
+  past = false,
+  pastLabel,
+  readMoreLabel,
+  langCode,
+  ...card
+} = Astro.props;
+
+const strings = entryStrings(langCode);
+---
+
+<EntryCardBase
+  {...card}
+  eyebrow={formatEventRange(start, end, localeFor(langCode, I18N), timezone)}
+  badge={past ? (pastLabel ?? strings.past) : undefined}
+  footerLead={location?.name}
+  readMoreLabel={readMoreLabel ?? strings.readMore}
+/>

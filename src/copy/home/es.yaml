@@ -19,6 +19,26 @@ inside:
   layout:
     title: 'Maquetación'
     lead: 'Contenedores estructurales'
+demos:
+  tagline: 'Demos'
+  title: 'Los bloques en un sitio'
+  subtitle: 'Páginas creadas con colecciones Markdown, en inglés y español, y un configurador 3D de producto.'
+  blog:
+    title: 'Blog'
+    content: 'Entradas con fecha, tiempo de lectura, etiquetas y paginación.'
+    link: 'Abrir el blog'
+  work:
+    title: 'Casos de estudio'
+    content: 'Trabajos para clientes con resultados destacados y un mapa.'
+    link: 'Abrir los casos de estudio'
+  events:
+    title: 'Eventos'
+    content: 'Eventos próximos y pasados, cada uno en su zona horaria.'
+    link: 'Abrir los eventos'
+  configurator:
+    title: 'Configurador de anillos'
+    content: 'Un configurador 3D que guarda la selección en un código compartible.'
+    link: 'Abrir el configurador'
 getStarted:
   tagline: 'Empieza'
   title: '¿Listo para construir?'
