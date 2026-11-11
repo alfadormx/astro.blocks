@@ -1,0 +1,27 @@
+pageTitle: 'Astro Blocks'
+headerDocsLabel: 'Documentation'
+hero:
+  tagline: 'Component Library'
+  title: 'Astro Blocks'
+  subtitle: 'Composable UI components built with Astro and Tailwind CSS. Pick, customize, ship.'
+  browseDocsLabel: 'Browse Documentation'
+  viewSourceLabel: 'View Source'
+inside:
+  tagline: "What's Inside"
+  title: 'Three layers of components'
+  subtitle: 'From atomic primitives to fully assembled sections — everything composable, nothing opinionated.'
+  primitives:
+    title: 'Primitives'
+    lead: 'Atomic building blocks'
+  composites:
+    title: 'Composites'
+    lead: 'Pre-assembled sections'
+  layout:
+    title: 'Layout'
+    lead: 'Structural containers'
+getStarted:
+  tagline: 'Get Started'
+  title: 'Ready to build?'
+  subtitle: 'Explore the full component reference with live usage examples.'
+  openDocsLabel: 'Open Documentation'
+footerDisclaimer: ./disclaimer.md

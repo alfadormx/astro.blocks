@@ -11,3 +11,14 @@ declare module 'site-config' {
   export const METADATA: MetaDataConfig;
   export const ANALYTICS: AnalyticsConfig;
 }
+
+declare module 'site-copy' {
+  /** Copy per page, then per language code, merged over the default language. */
+  export const COPY: Record<string, Record<string, unknown>>;
+}
+
+// Filled per site by the integration's injected `copy.d.ts`.
+declare namespace AstroBlocks {
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  interface CopyRegistry {}
+}
