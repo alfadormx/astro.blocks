@@ -15,6 +15,7 @@ export const documentationNavigation: NavigationTreeItem[] = [
     children: [
       { label: 'CallToAction', href: '/documentation/composite/CallToAction' },
       { label: 'Configurator', href: '/documentation/composite/Configurator' },
+      { label: 'ContactForm', href: '/documentation/composite/ContactForm' },
       { label: 'Content', href: '/documentation/composite/Content' },
       { label: 'ContentCarousel', href: '/documentation/composite/ContentCarousel' },
       { label: 'Footer', href: '/documentation/composite/Footer' },

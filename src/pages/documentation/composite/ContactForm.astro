@@ -1,0 +1,145 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import ContactFormBlock from '~/components/blocks/composite/ContactForm.astro';
+import MapBlock from '~/components/blocks/primitives/Map.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import type { ContactFormField } from '~/types/contactform.types';
+
+const metadata = { title: { default: 'ContactForm' } };
+
+const customFields: ContactFormField[] = [
+  { control: 'input', name: 'name', label: 'Name', required: true, autocomplete: 'name' },
+  {
+    control: 'input',
+    name: 'email',
+    label: 'Email',
+    type: 'email',
+    required: true,
+    autocomplete: 'email',
+  },
+  {
+    control: 'select',
+    name: 'topic',
+    label: 'Topic',
+    placeholder: 'Choose a topic',
+    required: true,
+    options: [
+      { value: 'sales', label: 'Sales' },
+      { value: 'support', label: 'Support' },
+      { value: 'press', label: 'Press' },
+    ],
+  },
+  {
+    control: 'checkboxGroup',
+    name: 'interests',
+    label: 'Interests',
+    options: [
+      { value: 'updates', label: 'Product updates' },
+      { value: 'events', label: 'Events' },
+      { value: 'hiring', label: 'Hiring' },
+    ],
+  },
+  { control: 'textarea', name: 'message', label: 'Message', required: true, rows: 5 },
+  { control: 'checkbox', name: 'consent', label: 'I agree to be contacted', required: true },
+];
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'ContactForm',
+    subtitle: 'A contact form that posts to a form service or opens the visitor’s mail client.',
+  }}
+>
+  <h3>1. Basic</h3>
+  <p>
+    The default fields post to an endpoint such as Formspree or Basin. Without JavaScript the form
+    posts natively; with it, success and error show inline and take focus. The hidden
+    <code>_gotcha</code> field follows Formspree’s spam-trap convention; set <code>honeypot</code>{' '}
+    to the name your provider drops, or <code>false</code>.
+  </p>
+  <div data-doc-section="basic">
+    <ContactFormBlock
+      headline={{ title: 'Get in touch' }}
+      action={{ type: 'endpoint', url: 'https://formspree.io/f/demo-basic' }}
+    />
+  </div>
+
+  <h3>2. Custom fields</h3>
+  <p>
+    <code>fields</code> takes any form primitive, tagged by <code>control</code>. A provided list
+    replaces the defaults.
+  </p>
+  <div data-doc-section="custom-fields">
+    <ContactFormBlock
+      action={{ type: 'endpoint', url: 'https://formspree.io/f/demo-custom-fields' }}
+      fields={customFields}
+    />
+  </div>
+
+  <h3>3. Shared field config</h3>
+  <p>
+    <code>defaultFieldConfig</code> sets size, intent, shape and label visibility on every field.
+  </p>
+  <div data-doc-section="shared-config">
+    <ContactFormBlock
+      action={{ type: 'endpoint', url: 'https://formspree.io/f/demo-shared-config' }}
+      defaultFieldConfig={{ size: 'lg', shape: 'square' }}
+    />
+  </div>
+
+  <h3>4. Mailto</h3>
+  <p>
+    No service is needed: the visitor’s mail app opens with the message filled in. Without
+    JavaScript the browser falls back to a native <code>text/plain</code> mailto post.
+  </p>
+  <div data-doc-section="mailto">
+    <ContactFormBlock action={{ type: 'mailto', address: 'hello@example.com' }} />
+  </div>
+
+  <h3>5. Aside</h3>
+  <p>
+    Content in the <code>aside</code> slot sits beside the form and stacks below it on mobile.
+  </p>
+  <div data-doc-section="aside">
+    <ContactFormBlock action={{ type: 'endpoint', url: 'https://formspree.io/f/demo-aside' }}>
+      <div slot="aside" class="flex flex-col gap-4">
+        <address class="not-italic">
+          Example Studio
+          <br />
+          Keizersgracht 1<br />
+          1015 CC Amsterdam
+        </address>
+        <ul>
+          <li>Mon–Fri: 9:00–17:00</li>
+          <li>Sat–Sun: closed</li>
+        </ul>
+        <MapBlock lat={52.37} lon={4.89} height="240px" title="Office location" />
+      </div>
+    </ContactFormBlock>
+  </div>
+
+  <h3>6. Aside left</h3>
+  <p>
+    <code>asidePosition="left"</code> puts the aside before the form.
+  </p>
+  <div data-doc-section="aside-left">
+    <ContactFormBlock
+      action={{ type: 'endpoint', url: 'https://formspree.io/f/demo-aside-left' }}
+      asidePosition="left"
+    >
+      <div slot="aside" class="flex flex-col gap-4">
+        <address class="not-italic">
+          Example Studio
+          <br />
+          Keizersgracht 1<br />
+          1015 CC Amsterdam
+        </address>
+        <MapBlock lat={52.37} lon={4.89} height="240px" title="Office location" />
+      </div>
+    </ContactFormBlock>
+  </div>
+
+  <ApiReferenceTable component="ContactForm" category="composite" />
+</Layout>

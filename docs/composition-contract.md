@@ -23,6 +23,7 @@ The history of how each rule was reached (findings, reviews, amendments A1–A19
 
 - When the parent holds the same block more than once, or the child is a generic Button, use `<role><Block>`, role first: `prevButton`, `leftNavigationTreeHorizontal`.
 - Exception: a Button whose role is plain "action" is `action` (one) or `actions` (list).
+- On ContactForm, `action` is the form's submission target (as in HTML's `<form action>`), so its button follows the generic `<role>Button` rule: `submitButton`.
 
 **Why.** The name derives from the child's type with no judgement call, and the missing suffix marks it as an instance.
 
@@ -111,6 +112,7 @@ mergeConfigs<ThemeToggleProps>(
 **Rule.**
 
 - **Render on presence.** An optional child renders when its field is present. There are no `show*` flags.
+- A block may collapse an optional region by slot presence: when `Astro.slots.has(name)` is false it renders a single column instead of an empty one (ContactForm `aside`).
 - A child that renders by default is typed `XProps | false`; `false` hides it (`closeButton?: ButtonProps | false`).
 - Exception: `show*` stays only for generated parts that have no instance field (ContentCarousel `showIndicators`, TextArea `showCounter`, Map `showMarker`) and for position-derived flags (Item `showConnector*`). The list lives in `SHOW_FLAGS` in `tests/unit/compositionContract.test.ts`; a new flag goes there and here.
 - A flag that picks a format rather than presence is a named enum, not `show*` (LanguageToggle `labelFormat: 'label' | 'code'`).
