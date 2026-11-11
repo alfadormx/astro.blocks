@@ -1,0 +1,34 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import CaseStudyCardBlock from '~/components/blocks/composite/CaseStudyCard.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+const metadata = { title: { default: 'CaseStudyCard' } };
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'CaseStudyCard',
+    subtitle: 'A case study card: client, title link, excerpt and tags.',
+  }}
+>
+  <h3>1. Basic</h3>
+  <p>The client sits above the title. The title is the card’s one link.</p>
+  <div data-doc-section="basic" class="max-w-sm">
+    <CaseStudyCardBlock
+      client="Example Jewellers"
+      headline={{ title: 'A ring configurator that sells' }}
+      href="/demos/work/ring-configurator"
+      description="A 3D configurator with shareable codes for an online jeweller."
+      tags={['3d', 'e-commerce']}
+      image={{
+        src: '~/assets/images/content/solitaire-ring.jpg',
+        alt: 'A gold solitaire ring with a round diamond',
+      }}
+    />
+  </div>
+
+  <ApiReferenceTable component="CaseStudyCard" category="composite" />
+</Layout>

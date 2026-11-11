@@ -1,0 +1,61 @@
+---
+import { I18N } from 'site-config';
+import EntryLayoutBase from '~/components/blocks/composite/EntryLayoutBase.astro';
+import Map from '~/components/blocks/primitives/Map.astro';
+import type { CaseStudyLayoutProps } from '~/types/casestudylayout.types';
+import type { MapProps } from '~/types/map.types';
+import { formatDate, localeFor } from '~/utils/entryFormat';
+import { entryStrings } from '~/utils/entryStrings';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import { cn } from '~/utils/styles';
+
+type Props = CaseStudyLayoutProps;
+
+const { client, date, results = [], location, map, resultsClass, ...layout } = Astro.props;
+
+const locale = localeFor(layout.langCode, I18N);
+const strings = entryStrings(layout.langCode);
+const hasCoordinates = location?.lat !== undefined && location?.lon !== undefined;
+const mergedMap =
+  hasCoordinates && map !== false
+    ? {
+        ...mergeConfigs<Omit<MapProps, 'lat' | 'lon'>>(
+          {},
+          { zoom: location!.zoom ?? 13, markerTitle: location!.name, height: '320px' },
+          { title: location!.name },
+          map
+        ),
+        lat: location!.lat!,
+        lon: location!.lon!,
+      }
+    : undefined;
+---
+
+<EntryLayoutBase {...layout}>
+  <Fragment slot="header">
+    <span data-entry-client>{client}</span>
+    <time datetime={date.toISOString()}>{formatDate(date, locale)}</time>
+    {location && <span data-entry-location>{location.name}</span>}
+  </Fragment>
+  {results.length > 0 && (
+    <dl
+      slot="before"
+      class={cn('m-0 grid grid-cols-2 gap-4 sm:grid-cols-3', resultsClass)}
+      aria-label={strings.results}
+      data-case-study-results
+    >
+      {results.map((result) => (
+        <div class="flex flex-col-reverse rounded-lg border border-border p-4">
+          <dt class="text-sm text-emphasis">{result.label}</dt>
+          <dd class="m-0 text-3xl font-bold text-emphasis">{result.value}</dd>
+        </div>
+      ))}
+    </dl>
+  )}
+  <slot />
+  {mergedMap && (
+    <div slot="after" data-entry-map>
+      <Map {...mergedMap} />
+    </div>
+  )}
+</EntryLayoutBase>

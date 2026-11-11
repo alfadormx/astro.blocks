@@ -174,6 +174,7 @@ Named exceptions that stay classes:
 - Child wrappers are configurable through `<role>Class` (rule 5).
 - Skeleton wrappers are fixed. To change the skeleton, use a different block or its typed props.
 - A composite renders titles through Headline, never a raw `<h2>`.
+- A composite whose title is a link (the entry cards) passes the anchor through Headline's `title` slot, which replaces the title text inside the heading tag. Headline still owns the tag and title classes.
 - Headline's `htmlTag` defaults to `'h2'`. Pages pass `'h1'` explicitly. Composites pass `htmlTag` through their `headline` field.
 - Exception: Hero's internal headline default is `{ htmlTag: 'h1' }`, because a hero opens the page. A Hero rendered below the page's first heading passes `headline.htmlTag` explicitly.
 

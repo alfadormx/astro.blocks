@@ -1,0 +1,15 @@
+---
+import EntryCardBase from '~/components/blocks/composite/EntryCardBase.astro';
+import type { CaseStudyCardProps } from '~/types/casestudycard.types';
+import { entryStrings } from '~/utils/entryStrings';
+
+type Props = CaseStudyCardProps;
+
+const { client, readMoreLabel, langCode, ...card } = Astro.props;
+---
+
+<EntryCardBase
+  {...card}
+  eyebrow={client}
+  readMoreLabel={readMoreLabel ?? entryStrings(langCode).readMore}
+/>

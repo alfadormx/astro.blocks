@@ -1,0 +1,34 @@
+pageTitle: 'Jewellery configurator'
+headline: 'Solitaire'
+modelViewerLabel: 'Your ring'
+saveLabel: 'Save my design'
+model:
+  label: 'Model'
+  heading: 'Select your model'
+  classic: { title: 'Classic', content: 'Slim band' }
+  bold: { title: 'Bold', content: 'Wide band' }
+  pave: { title: 'Pavé', content: 'Accent stones' }
+carat:
+  label: 'Carat'
+  heading: 'Select carat'
+color:
+  label: 'Color'
+  heading: 'Select colour'
+  yellow: 'Yellow gold'
+  white: 'White gold'
+  rose: 'Rose gold'
+clarity:
+  label: 'Clarity'
+  heading: 'Select clarity'
+extras:
+  label: 'Extras'
+  heading: 'Add up to two extras'
+  giftbox: { title: 'Gift box', content: 'Wrapped and ready to give.' }
+  certificate: { title: 'Certificate', content: 'Proof of the stone and metal.' }
+  polish: { title: 'Lifetime polish', content: 'Free cleaning, forever.' }
+engraving:
+  label: 'Engraving'
+  heading: 'Engrave your ring'
+  field: 'Engraving'
+  placeholder: 'Up to 20 characters'
+  help: 'Shown on the inside of the band.'

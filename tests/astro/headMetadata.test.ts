@@ -6,13 +6,24 @@ import SiteVerification from '~/components/meta/SiteVerification.astro';
 
 type Component = Parameters<AstroContainer['renderToString']>[0];
 
-const render = async (component: Component, path = '/', props: Record<string, unknown> = {}) => {
+const render = async (
+  component: Component,
+  path = '/',
+  props: Record<string, unknown> = {},
+  locals: Record<string, unknown> = {}
+) => {
   const container = await AstroContainer.create({ astroConfig: { site: SITE.site } });
   return container.renderToString(component, {
     props,
+    locals,
     request: new Request(`http://localhost${path}`),
   });
 };
+
+const hreflangs = (html: string) =>
+  Object.fromEntries(
+    [...html.matchAll(/<link[^>]*hreflang="([^"]+)"[^>]*href="([^"]+)"/g)].map((m) => [m[1], m[2]])
+  );
 
 const canonicalOf = (html: string) =>
   html.match(/<link[^>]*rel="canonical"[^>]*href="([^"]+)"/)?.[1] ??
@@ -66,5 +77,46 @@ describe('Metadata', () => {
     const html = await render(Metadata, '/documentation', { canonical: explicit });
     expect(canonicalOf(html)).toBe(explicit);
     expect(ogUrlOf(html)).toBe(explicit);
+  });
+
+  it('lists every language at the same path on a static page, plus x-default', async () => {
+    expect(hreflangs(await render(Metadata, '/es/pricing'))).toEqual({
+      en: `${SITE.site}/pricing`,
+      es: `${SITE.site}/es/pricing`,
+      'x-default': `${SITE.site}/pricing`,
+    });
+  });
+
+  it('lists only the languages the page helpers report', async () => {
+    const html = await render(
+      Metadata,
+      '/blog/only-en',
+      {},
+      {
+        blocksAlternates: { toggle: { es: '/es/blog' }, hreflang: { en: '/blog/only-en' } },
+      }
+    );
+    expect(hreflangs(html)).toEqual({
+      en: `${SITE.site}/blog/only-en`,
+      'x-default': `${SITE.site}/blog/only-en`,
+    });
+  });
+
+  it('omits x-default when the default language lacks the page', async () => {
+    const html = await render(
+      Metadata,
+      '/es/blog/solo',
+      {},
+      {
+        blocksAlternates: { toggle: {}, hreflang: { es: '/es/blog/solo' } },
+      }
+    );
+    expect(Object.keys(hreflangs(html))).toEqual(['es']);
+  });
+
+  it('emits no hreflang links when alternates is false', async () => {
+    expect(await render(Metadata, '/documentation', { alternates: false })).not.toContain(
+      'hreflang'
+    );
   });
 });

@@ -1,0 +1,104 @@
+---
+// Internal to PostCard, CaseStudyCard, EventCard: one link, focus ring and contrast in one place.
+import Headline from '~/components/blocks/primitives/Headline.astro';
+import Image from '~/components/blocks/primitives/Image.astro';
+import type { EntryCardProps } from '~/types/entrycard.types';
+import type { HeadlineProps } from '~/types/headline.types';
+import type { ImageProps } from '~/types/image.types';
+import { focusRingClass } from '~/utils/intentStyles';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import { cn } from '~/utils/styles';
+
+interface Props extends Omit<EntryCardProps, 'langCode'> {
+  eyebrow?: string;
+  badge?: string;
+  footerLead?: string;
+  readMoreLabel: string;
+}
+
+const {
+  headline,
+  href,
+  description,
+  image,
+  tags = [],
+  class: className,
+  eyebrowClass,
+  tagsClass,
+  eyebrow,
+  badge,
+  footerLead,
+  readMoreLabel,
+} = Astro.props;
+
+const internalHeadline: HeadlineProps = {
+  htmlTag: 'h3',
+  class: 'my-0',
+  titleClass: 'text-xl leading-snug mb-0',
+};
+const internalImage: Partial<ImageProps> = {
+  layout: 'responsive',
+  aspectRatio: 16 / 9,
+  class: 'w-full h-auto',
+};
+
+const mergedHeadline = mergeConfigs<HeadlineProps>({}, internalHeadline, headline);
+const mergedImage = image && mergeConfigs<ImageProps>({}, internalImage, image);
+
+const rootClass = cn(
+  'group relative flex flex-col h-full overflow-hidden rounded-lg border border-border bg-surface',
+  'has-focus-visible:ring-2 has-focus-visible:ring-offset-2 has-focus-visible:ring-offset-background',
+  focusRingClass('primary', 'has-focus-visible'),
+  className
+);
+const hasFooter = Boolean(footerLead) || tags.length > 0;
+---
+
+<article class={rootClass} data-entry-card>
+  {mergedImage && <Image {...mergedImage} />}
+  <div class="flex grow flex-col gap-3 p-5">
+    {(eyebrow || badge) && (
+      <div class="flex flex-wrap items-center gap-2">
+        {eyebrow && (
+          <p class={cn('mb-0 text-sm text-emphasis', eyebrowClass)} data-entry-card-eyebrow>
+            {eyebrow}
+          </p>
+        )}
+        {badge && (
+          <span
+            class="rounded-full border border-border px-2 py-0.5 text-xs font-semibold text-emphasis"
+            data-entry-card-badge
+          >
+            {badge}
+          </span>
+        )}
+      </div>
+    )}
+    <Headline {...mergedHeadline}>
+      <a
+        slot="title"
+        href={href}
+        class="text-normal no-underline outline-none after:absolute after:inset-0 hover:text-normal hover:no-underline group-hover:underline"
+        data-entry-card-link
+      >
+        {mergedHeadline.title}
+      </a>
+    </Headline>
+    {description && <p class="mb-0 text-emphasis">{description}</p>}
+    {hasFooter && (
+      <div class="flex flex-wrap items-center gap-2 text-sm">
+        {footerLead && <span class="text-emphasis">{footerLead}</span>}
+        {tags.length > 0 && (
+          <ul class={cn('m-0 flex list-none flex-wrap gap-2 p-0', tagsClass)} data-entry-card-tags>
+            {tags.map((tag) => (
+              <li class="rounded bg-code-bg px-2 py-0.5 text-xs text-normal">{tag}</li>
+            ))}
+          </ul>
+        )}
+      </div>
+    )}
+    <span class="mt-auto text-sm font-semibold text-normal" aria-hidden="true">
+      {readMoreLabel} →
+    </span>
+  </div>
+</article>

@@ -4,10 +4,15 @@ import { SITE, METADATA, I18N } from 'site-config';
 import type { MetaData } from '~/types/metadata.types';
 import merge from 'lodash.merge';
 import { adaptOpenGraphImages } from '~/utils/images';
+import { currentLanguage } from '~/utils/currentLanguage';
+import { languageUrl } from '~/utils/languageUrl';
 
-export type Props = Partial<MetaData>;
+export type Props = Partial<MetaData> & {
+  /** `false` emits no hreflang links, for pages that exist in one language only. */
+  alternates?: false;
+};
 
-const props = Astro.props;
+const { alternates: alternatesProp, ...props } = Astro.props;
 
 // Deep merge METADATA with props (props take priority)
 const merged = merge({}, METADATA, props) as MetaData;
@@ -90,13 +95,30 @@ const twitter = merged.twitter
     }
   : undefined;
 
-// Language alternates
-const languageAlternates = I18N.languages.map(
-  (lang: { code: string; basePath: string; locale?: string }) => ({
-    href: `${SITE.site}${lang.basePath}`,
-    hrefLang: lang.code,
-  })
-);
+// Language alternates: the page helpers' translations, else every language's prefixed path.
+type Language = (typeof I18N.languages)[number];
+const trailingSlash = SITE.trailingSlash ?? false;
+const currentLang = currentLanguage(Astro.url.pathname, I18N);
+const hreflang: Record<string, string> =
+  Astro.locals.blocksAlternates?.hreflang ??
+  Object.fromEntries(
+    I18N.languages.map((lang: Language) => [
+      lang.code,
+      languageUrl(Astro.url.pathname, currentLang, lang, trailingSlash),
+    ])
+  );
+const absolute = (path: string) => new URL(path, Astro.site ?? Astro.url).href;
+const languageAlternates =
+  alternatesProp === false
+    ? []
+    : [
+        ...I18N.languages
+          .filter((lang: Language) => hreflang[lang.code])
+          .map((lang: Language) => ({ href: absolute(hreflang[lang.code]), hrefLang: lang.code })),
+        ...(hreflang[I18N.default]
+          ? [{ href: absolute(hreflang[I18N.default]), hrefLang: 'x-default' }]
+          : []),
+      ];
 
 // Extended meta and link tags
 const extendedMeta = [

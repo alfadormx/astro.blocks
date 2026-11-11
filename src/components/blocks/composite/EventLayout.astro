@@ -1,0 +1,78 @@
+---
+import { I18N } from 'site-config';
+import EntryLayoutBase from '~/components/blocks/composite/EntryLayoutBase.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
+import Map from '~/components/blocks/primitives/Map.astro';
+import type { ButtonProps } from '~/types/button.types';
+import type { EventLayoutProps } from '~/types/eventlayout.types';
+import type { MapProps } from '~/types/map.types';
+import { formatEventRange, localeFor } from '~/utils/entryFormat';
+import { entryStrings } from '~/utils/entryStrings';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+
+type Props = EventLayoutProps;
+
+const {
+  start,
+  end,
+  timezone = 'UTC',
+  location,
+  registrationUrl,
+  registerButton,
+  map,
+  ...layout
+} = Astro.props;
+
+const strings = entryStrings(layout.langCode);
+const mergedRegisterButton =
+  registrationUrl && registerButton !== false
+    ? {
+        ...mergeConfigs<ButtonProps>(
+          {},
+          { label: strings.register, intent: 'primary', variant: 'solid' },
+          registerButton
+        ),
+        href: registrationUrl,
+      }
+    : undefined;
+
+const hasCoordinates = location?.lat !== undefined && location?.lon !== undefined;
+const mergedMap =
+  hasCoordinates && map !== false
+    ? {
+        ...mergeConfigs<Omit<MapProps, 'lat' | 'lon'>>(
+          {},
+          { zoom: location!.zoom ?? 13, markerTitle: location!.name, height: '320px' },
+          { title: location!.name },
+          map
+        ),
+        lat: location!.lat!,
+        lon: location!.lon!,
+      }
+    : undefined;
+---
+
+<EntryLayoutBase {...layout}>
+  <Fragment slot="header">
+    <time datetime={start.toISOString()} data-entry-when>
+      {formatEventRange(start, end, localeFor(layout.langCode, I18N), timezone)}
+    </time>
+    {location && (
+      <span data-entry-location>
+        {location.name}
+        {location.address && <span> · {location.address}</span>}
+      </span>
+    )}
+  </Fragment>
+  {mergedRegisterButton && (
+    <div slot="before" data-entry-register>
+      <Button {...mergedRegisterButton} />
+    </div>
+  )}
+  <slot />
+  {mergedMap && (
+    <div slot="after" data-entry-map>
+      <Map {...mergedMap} />
+    </div>
+  )}
+</EntryLayoutBase>

@@ -1,0 +1,53 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import EventCardBlock from '~/components/blocks/composite/EventCard.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+const metadata = { title: { default: 'EventCard' } };
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'EventCard',
+    subtitle: 'An event card: date and time in the event’s zone, location, and a past badge.',
+  }}
+>
+  <h3>1. Upcoming</h3>
+  <p>
+    Times show in <code>timezone</code>, with the zone name. On a collection page the helpers pass
+    the event’s own zone, else <code>collections.timezone</code> from <code>config.yaml</code>.
+  </p>
+  <div data-doc-section="upcoming" class="max-w-sm">
+    <EventCardBlock
+      headline={{ title: 'Blocks workshop in New York' }}
+      href="/demos/events/new-york-workshop"
+      description="A hands-on afternoon building a site from the blocks."
+      start={new Date('2030-05-20T17:00:00Z')}
+      end={new Date('2030-05-20T21:00:00Z')}
+      timezone="America/New_York"
+      location={{ name: 'Example Loft, Brooklyn' }}
+      tags={['workshop']}
+    />
+  </div>
+
+  <h3>2. Past</h3>
+  <p>
+    <code>past</code> adds the badge. The page helpers set it at build time, so a static site needs
+    a scheduled rebuild to move events into the past.
+  </p>
+  <div data-doc-section="past" class="max-w-sm">
+    <EventCardBlock
+      headline={{ title: 'Accessibility webinar' }}
+      href="/demos/events/accessibility-webinar"
+      start={new Date('2026-02-04T15:00:00Z')}
+      end={new Date('2026-02-04T16:00:00Z')}
+      timezone="Europe/Madrid"
+      location={{ name: 'Online' }}
+      past
+    />
+  </div>
+
+  <ApiReferenceTable component="EventCard" category="composite" />
+</Layout>

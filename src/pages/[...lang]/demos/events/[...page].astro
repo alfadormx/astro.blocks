@@ -1,0 +1,23 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import DemoHeader from '../_DemoHeader.astro';
+import Container from '~/components/blocks/layout/Container.astro';
+import Footer from '~/components/blocks/composite/Footer.astro';
+import CollectionList from '~/components/blocks/composite/CollectionList.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
+import { collectionPages, renderList } from '../../../../../vendor/integration/collections/pages';
+import { useCopy } from '../../../../../vendor/integration/copy/pages';
+
+export const getStaticPaths = () => collectionPages('events');
+const { langCode, entries, page } = await renderList(Astro);
+const title = useCopy(Astro, 'demos').copy.events;
+---
+
+<Layout langCode={langCode} metadata={{ title: { default: title } }}>
+  <DemoHeader langCode={langCode} />
+  <Container>
+    <Headline title={title} htmlTag="h1" />
+    <CollectionList entries={entries} page={page} langCode={langCode} />
+  </Container>
+  <Footer languageToggle={{}} />
+</Layout>

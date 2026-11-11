@@ -19,9 +19,7 @@ const metadata = {
   <section class="mb-12">
     <h2>Headings</h2>
 
-    <p class="font-bold text-[length:clamp(2rem,1.5rem+2vw,3rem)] leading-[1.2] mt-8 mb-4">
-      Heading 1
-    </p>
+    <p class="font-bold text-[clamp(2rem,1.5rem+2vw,3rem)] leading-[1.2] mt-8 mb-4">Heading 1</p>
     <p class="text-sm text-muted">
       <strong>clamp(2rem, 1.5rem + 2vw, 3rem)</strong> 32px → 48px | Line height: 1.2
     </p>
@@ -119,7 +117,12 @@ const metadata = {
 
   <section class="mb-12">
     <h2>Content Sample</h2>
-    <article class="prose max-w-none">
+    <p>
+      The global element styles below apply anywhere. Markdown bodies in the entry layouts use
+      <code>prose</code> from <code>@tailwindcss/typography</code> instead, coloured from the same
+      tokens: see <a href="/documentation/composite/PostLayout">PostLayout</a>.
+    </p>
+    <article>
       <h3>The Importance of Typography in Web Design</h3>
       <p>
         Typography is one of the most critical aspects of web design. It affects not only the

@@ -1,0 +1,128 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import CollectionListBlock from '~/components/blocks/composite/CollectionList.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import type { CollectionListEntry } from '~/types/collectionlist.types';
+
+const metadata = { title: { default: 'CollectionList' } };
+
+const entries: CollectionListEntry[] = [
+  {
+    preset: 'post',
+    headline: { title: 'Hello, world' },
+    href: '/demos/blog/hello-world',
+    description: 'Why this library ships Markdown collections.',
+    date: new Date('2026-10-01T12:00:00Z'),
+    readingTime: 1,
+    tags: ['announcement'],
+    image: {
+      src: '~/assets/images/content/writing-notebook.jpg',
+      alt: 'A hand writing notes with a pen in a notebook on a wooden desk',
+    },
+  },
+  {
+    preset: 'post',
+    headline: { title: 'Writing in two languages' },
+    href: '/demos/blog/second-post',
+    description: 'Translations live in a folder per language and link by filename.',
+    date: new Date('2026-10-15T12:00:00Z'),
+    readingTime: 2,
+    tags: ['i18n'],
+    image: {
+      src: '~/assets/images/content/dictionary-page.jpg',
+      alt: 'An open dictionary showing the entry for Esperanto',
+    },
+  },
+  {
+    preset: 'post',
+    headline: { title: 'An English-only post' },
+    href: '/demos/blog/third-post',
+    description: 'This entry has no Spanish translation.',
+    date: new Date('2026-11-01T12:00:00Z'),
+    tags: ['i18n'],
+  },
+];
+
+const mixed: CollectionListEntry[] = [
+  entries[0]!,
+  {
+    preset: 'caseStudy',
+    client: 'Example Jewellers',
+    headline: { title: 'A ring configurator that sells' },
+    href: '/demos/work/ring-configurator',
+    description: 'A 3D configurator with shareable codes for an online jeweller.',
+    tags: ['3d'],
+  },
+  {
+    preset: 'event',
+    headline: { title: 'Collections launch meetup' },
+    href: '/demos/events/launch-meetup',
+    description: 'Presets, page helpers and localised copy.',
+    start: new Date('2030-03-12T17:00:00Z'),
+    end: new Date('2030-03-12T19:00:00Z'),
+    timezone: 'Europe/Madrid',
+    location: { name: 'Example Hall' },
+  },
+];
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'CollectionList',
+    subtitle: 'Collection entries as a grid or a list, each rendered by its preset’s card.',
+  }}
+>
+  <h3>1. Grid</h3>
+  <p>
+    On a list page, <code>renderList</code> returns <code>entries</code> and <code>page</code>. Each
+    entry carries its <code>preset</code>, which picks the card. See the
+    <a href="/demos/blog">blog demo</a>.
+  </p>
+  <div data-doc-section="grid">
+    <CollectionListBlock entries={entries} />
+  </div>
+
+  <h3>2. List</h3>
+  <p>
+    <code>orientation: 'vertical'</code> stacks the cards in one column.
+  </p>
+  <div data-doc-section="list">
+    <CollectionListBlock entries={entries.slice(0, 2)} orientation="vertical" gap="tight" />
+  </div>
+
+  <h3>3. Shared card config</h3>
+  <p>
+    <code>defaultPostCardConfig</code> is merged under every post card; an entry's own values win.
+  </p>
+  <div data-doc-section="shared-config">
+    <CollectionListBlock
+      entries={entries}
+      defaultPostCardConfig={{ readMoreLabel: 'Continue reading', readingTime: false }}
+    />
+  </div>
+
+  <h3>4. Pager</h3>
+  <p>
+    The pager renders when <code>page.lastPage</code> is above 1. Page 1 lives at the route, later
+    pages at <code>&lt;route&gt;/page/&lt;n&gt;</code>.
+  </p>
+  <div data-doc-section="pager">
+    <CollectionListBlock
+      entries={entries.slice(0, 2)}
+      page={{ currentPage: 2, lastPage: 3, url: { prev: '/demos/blog', next: '#page-3' } }}
+    />
+  </div>
+
+  <h3>5. Mixed presets</h3>
+  <p>
+    Each entry picks its own card, so one list can mix presets, for example on a home page that
+    shows the latest post, case study and event.
+  </p>
+  <div data-doc-section="mixed">
+    <CollectionListBlock entries={mixed} />
+  </div>
+
+  <ApiReferenceTable component="CollectionList" category="composite" />
+</Layout>

@@ -1,15 +1,24 @@
 ---
 import Layout from '~/layouts/Layout.astro';
+import Footer from '~/components/blocks/composite/Footer.astro';
 import Configurator from '~/components/blocks/composite/Configurator.astro';
 import type { ConfiguratorProps } from '~/types/configurator.types';
 import type { ImageProps } from '~/types/image.types';
 import type { ModelViewerMutation } from '~/types/modelviewer.types';
+import { localizedPaths, useCopy } from '../../../../vendor/integration/copy/pages';
+import DemoHeader from './_DemoHeader.astro';
 
-const metadata = { title: { default: 'Jewellery configurator' } };
+export const getStaticPaths = () => localizedPaths();
+
+type Props = { langCode: string; basePath: string };
+
+const { langCode, copy } = useCopy(Astro, 'jewellery-configurator');
+
+const metadata = { title: { default: copy.pageTitle } };
 
 const modelViewer: ConfiguratorProps['modelViewer'] = {
   src: '/models/ring.glb',
-  label: 'Your ring',
+  label: copy.modelViewerLabel,
   class: 'bg-surface h-auto aspect-video md:aspect-auto md:h-[600px]',
   lighting: 'neutral',
   environment: { src: '/hdr/studio_small_08_1k.hdr', rotation: 90 },
@@ -49,8 +58,8 @@ const categories: ConfiguratorProps['categories'] = [
     name: 'ring-model',
     panel: 'grid',
     mode: 'single',
-    triggerButton: { label: 'Model', icon: { name: 'tabler:rings' } },
-    heading: 'Select your model',
+    triggerButton: { label: copy.model.label, icon: { name: 'tabler:rings' } },
+    heading: copy.model.heading,
     itemsGrid: {
       columns: 3,
       defaultItemConfig: { mediaClass: 'w-full h-auto aspect-square' },
@@ -58,23 +67,20 @@ const categories: ConfiguratorProps['categories'] = [
     options: [
       {
         code: 'classic',
-        title: 'Classic',
-        content: 'Slim band',
+        ...copy.model.classic,
         image: still('classic'),
         selected: true,
         mutations: [{ type: 'model', src: '/models/ring.glb' }],
       },
       {
         code: 'bold',
-        title: 'Bold',
-        content: 'Wide band',
+        ...copy.model.bold,
         image: still('bold'),
         mutations: [{ type: 'model', src: '/models/ring-alt.glb' }],
       },
       {
         code: 'pave',
-        title: 'Pavé',
-        content: 'Accent stones',
+        ...copy.model.pave,
         image: still('pave'),
         mutations: [{ type: 'model', src: '/models/ring-pave.glb' }],
       },
@@ -84,8 +90,8 @@ const categories: ConfiguratorProps['categories'] = [
     name: 'ring-carat',
     panel: 'grid',
     mode: 'single',
-    triggerButton: { label: 'Carat', icon: { name: 'tabler:circle-dot' } },
-    heading: 'Select carat',
+    triggerButton: { label: copy.carat.label, icon: { name: 'tabler:circle-dot' } },
+    heading: copy.carat.heading,
     itemsGrid: { columns: 3 },
     options: [
       {
@@ -116,26 +122,26 @@ const categories: ConfiguratorProps['categories'] = [
     name: 'ring-color',
     panel: 'grid',
     mode: 'single',
-    triggerButton: { label: 'Color', icon: { name: 'tabler:rainbow' } },
-    heading: 'Select colour',
+    triggerButton: { label: copy.color.label, icon: { name: 'tabler:rainbow' } },
+    heading: copy.color.heading,
     itemsGrid: { columns: 3 },
     options: [
       {
         code: 'yellow',
-        title: 'Yellow gold',
+        title: copy.color.yellow,
         image: swatch('yellow'),
         selected: true,
         mutations: [{ type: 'material', material: 'Band', color: '#e6b422', roughness: 0.3 }],
       },
       {
         code: 'white',
-        title: 'White gold',
+        title: copy.color.white,
         image: swatch('white'),
         mutations: [{ type: 'material', material: 'Band', color: '#e5e4e2', roughness: 0.2 }],
       },
       {
         code: 'rose',
-        title: 'Rose gold',
+        title: copy.color.rose,
         image: swatch('rose'),
         mutations: [{ type: 'material', part: 'Band', use: 'RoseGold' }],
       },
@@ -145,8 +151,8 @@ const categories: ConfiguratorProps['categories'] = [
     name: 'ring-clarity',
     panel: 'grid',
     mode: 'single',
-    triggerButton: { label: 'Clarity', icon: { name: 'tabler:diamond' } },
-    heading: 'Select clarity',
+    triggerButton: { label: copy.clarity.label, icon: { name: 'tabler:diamond' } },
+    heading: copy.clarity.heading,
     itemsGrid: { columns: 3 },
     options: [
       { code: 'if', title: 'IF', selected: true, mutations: [cloudiness('#606060', 0)] },
@@ -160,29 +166,29 @@ const categories: ConfiguratorProps['categories'] = [
     panel: 'grid',
     mode: 'multiple',
     max: 2,
-    triggerButton: { label: 'Extras', icon: { name: 'tabler:gift' } },
-    heading: 'Add up to two extras',
+    triggerButton: { label: copy.extras.label, icon: { name: 'tabler:gift' } },
+    heading: copy.extras.heading,
     itemsGrid: { columns: 3 },
     options: [
-      { code: 'giftbox', title: 'Gift box', content: 'Wrapped and ready to give.' },
-      { code: 'certificate', title: 'Certificate', content: 'Proof of the stone and metal.' },
-      { code: 'polish', title: 'Lifetime polish', content: 'Free cleaning, forever.' },
+      { code: 'giftbox', ...copy.extras.giftbox },
+      { code: 'certificate', ...copy.extras.certificate },
+      { code: 'polish', ...copy.extras.polish },
     ],
   },
   {
     name: 'ring-engraving',
     panel: 'text',
-    triggerButton: { label: 'Engraving', icon: { name: 'tabler:signature' } },
-    heading: 'Engrave your ring',
+    triggerButton: { label: copy.engraving.label, icon: { name: 'tabler:signature' } },
+    heading: copy.engraving.heading,
     camera: 'band',
-    fieldLabel: 'Engraving',
+    fieldLabel: copy.engraving.field,
     textArea: {
       maxLength: 20,
-      placeholder: 'Up to 20 characters',
+      placeholder: copy.engraving.placeholder,
       spellcheck: false,
       class: 'p-6',
       shape: 'square',
-      help: 'Shown on the inside of the band.',
+      help: copy.engraving.help,
       labelClass: 'text-xs font-semibold uppercase tracking-widest text-muted',
       fieldClass: 'border border-border',
     },
@@ -243,15 +249,16 @@ const headingClass =
   'm-0 border-b border-border px-4 py-5 text-center text-xs font-semibold uppercase tracking-[0.2em]';
 
 const actions: ConfiguratorProps['actions'] = [
-  { label: 'Save my design', variant: 'outline', intent: 'neutral', shape: 'square' },
+  { label: copy.saveLabel, variant: 'outline', intent: 'neutral', shape: 'square' },
 ];
 ---
 
-<Layout metadata={metadata}>
+<Layout langCode={langCode} metadata={metadata}>
+  <DemoHeader langCode={langCode} />
   <Configurator
     categories={categories}
     modelViewer={modelViewer}
-    headline={{ title: 'Solitaire', htmlTag: 'h1' }}
+    headline={{ title: copy.headline, htmlTag: 'h1' }}
     twoColumnContainer={twoColumnContainer}
     summary={summary}
     summaryClass="mt-1 text-sm uppercase tracking-widest text-muted"
@@ -261,4 +268,5 @@ const actions: ConfiguratorProps['actions'] = [
     defaultItemsGridConfig={defaultItemsGridConfig}
     urlState={{ product: 'RING01' }}
   />
+  <Footer languageToggle={{}} />
 </Layout>

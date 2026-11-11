@@ -5,10 +5,15 @@ import LanguageToggle from '~/components/blocks/primitives/LanguageToggle.astro'
 
 type Language = (typeof I18N.languages)[number];
 
-const render = async (path: string, props: Record<string, unknown> = {}) => {
+const render = async (
+  path: string,
+  props: Record<string, unknown> = {},
+  locals: Record<string, unknown> = {}
+) => {
   const container = await AstroContainer.create();
   return container.renderToString(LanguageToggle, {
     props,
+    locals,
     request: new Request(`http://localhost${path}`),
   });
 };
@@ -79,5 +84,36 @@ describe('LanguageToggle', () => {
       expect(links[i]).toContain(`aria-label="${lang.label}"`);
       expect(links[i]).toContain(`>${lang.code.toUpperCase()}<`);
     });
+  });
+
+  it('links a language listed in alternates to its URL', async () => {
+    const html = await render('/blog/hello', { alternates: { es: '/es/blog/hola' } });
+    expect(hrefs(html)).toContain('/es/blog/hola');
+  });
+
+  it('keeps the path swap for a language missing from alternates', async () => {
+    const html = await render('/blog/hello', { alternates: { es: '/es/blog/hola' } });
+    expect(hrefs(html)).toContain('/blog/hello');
+  });
+
+  it('uses the page helpers alternates from locals when the prop is unset', async () => {
+    const html = await render(
+      '/blog/hello',
+      {},
+      {
+        blocksAlternates: { toggle: { es: '/es/blog' }, hreflang: {} },
+      }
+    );
+    expect(hrefs(html)).toContain('/es/blog');
+  });
+
+  it('prefers the alternates prop over locals', async () => {
+    const html = await render(
+      '/blog/hello',
+      { alternates: { es: '/es/mine' } },
+      { blocksAlternates: { toggle: { es: '/es/blog' }, hreflang: {} } }
+    );
+    expect(hrefs(html)).toContain('/es/mine');
+    expect(hrefs(html)).not.toContain('/es/blog');
   });
 });

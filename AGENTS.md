@@ -25,7 +25,9 @@ The rules most often missed:
 - **Tailwind v4.** Configured in `global.css` (`@theme`); there is no `tailwind.config`. Classes built at runtime need an `@source inline(...)` entry.
 - **Images.** Resolve sources with `findImage()` from `~/utils/images`.
 - **Pages.** Pass `langCode` to `<Layout>` so `<html lang dir>` is right. `metadata.localized` applies in `src/layouts/Layout.astro` only, not in the docs layout.
-- **Browser-only runtimes.** `~/utils/selection.ts` and `~/utils/urlState.ts` run in the browser: import them only from a block's client `<script>`. Read `docs/client-runtimes.md` before using or changing either.
+- **Collections and copy.** Markdown collections are declared by preset under `collections:` in `config.yaml`; their pages call the helpers in `vendor/integration/collections/pages.ts`. Static-page copy lives in `src/copy/<page>/<lang>.yaml`, read with `useCopy`. Read `src/pages/documentation/Collections.astro` before adding either.
+- **Rich text.** A prop that renders formatted text is typed `RichText` and rendered with `renderRichText()` from `~/utils/richText`; plain props stay plain text.
+- **Browser-only runtimes. `~/utils/selection.ts` and `~/utils/urlState.ts` run in the browser: import them only from a block's client `<script>`. Read `docs/client-runtimes.md` before using or changing either.
 
 ## Tests
 

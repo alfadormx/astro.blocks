@@ -1,0 +1,33 @@
+---
+import { I18N } from 'site-config';
+import EntryLayoutBase from '~/components/blocks/composite/EntryLayoutBase.astro';
+import type { PostLayoutProps } from '~/types/postlayout.types';
+import { formatDate, localeFor } from '~/utils/entryFormat';
+import { entryStrings } from '~/utils/entryStrings';
+
+type Props = PostLayoutProps;
+
+const { date, updated, author, readingTime, ...layout } = Astro.props;
+
+const locale = localeFor(layout.langCode, I18N);
+const strings = entryStrings(layout.langCode);
+---
+
+<EntryLayoutBase {...layout}>
+  <Fragment slot="header">
+    <time datetime={date.toISOString()}>{formatDate(date, locale)}</time>
+    {updated && (
+      <span data-entry-updated>
+        {strings.updated}{' '}
+        <time datetime={updated.toISOString()}>{formatDate(updated, locale)}</time>
+      </span>
+    )}
+    {author && (
+      <span data-entry-author>
+        {strings.by} {author}
+      </span>
+    )}
+    {readingTime && <span data-entry-reading-time>{strings.minRead(readingTime)}</span>}
+  </Fragment>
+  <slot />
+</EntryLayoutBase>
