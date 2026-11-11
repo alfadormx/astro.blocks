@@ -1,3 +1,4 @@
+import type { RichText } from './richtext.types';
 import type { SpacingConfig } from './spacing.types';
 import type { BorderConfig } from './border.types';
 import type { SimpleBackgroundProps } from './background.types';
@@ -19,8 +20,8 @@ export interface ItemProps {
   image?: ImageProps;
   /** Title text displayed for the item. Omitted or empty renders no title element. */
   title?: string;
-  /** HTML string displayed below/beside the title. Omitted or empty renders no content element. */
-  content?: string;
+  /** Markdown (RichText) displayed below/beside the title; HTML passes through. Omitted or empty renders no content element. */
+  content?: RichText;
   /** Action buttons rendered below/beside the content (default: []). */
   actions?: ButtonProps[];
   /** Button props merged under every action, overridden by each action's own values. */

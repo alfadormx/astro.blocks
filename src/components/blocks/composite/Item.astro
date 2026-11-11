@@ -4,6 +4,7 @@ import type { ButtonProps } from '~/types/button.types';
 import type { HeadlineProps } from '~/types/headline.types';
 import { cn } from '~/utils/styles';
 import { mergeConfigs } from '~/utils/mergeConfigs';
+import { renderRichText } from '~/utils/richText';
 import { Icon } from 'astro-icon/components';
 import Button from '~/components/blocks/primitives/Button.astro';
 import Image from '~/components/blocks/primitives/Image.astro';
@@ -155,7 +156,7 @@ const horizontalConnectorRightClass = cn(
     >
       {title &&
         (titleHeadline ? <Headline {...titleHeadline} /> : <div class={titleClass}>{title}</div>)}
-      {content && <TextTag class={textClass} set:html={content} />}
+      {content && <TextTag class={textClass} set:html={renderRichText(content)} />}
       {actions.length > 0 && (
         <div class={actionsWrapperClass}>
           {actions.map((action) => (
