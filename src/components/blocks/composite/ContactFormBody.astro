@@ -1,0 +1,155 @@
+---
+// Internal to ContactForm: one form rendered either alone or inside the aside layout.
+import Button from '~/components/blocks/primitives/Button.astro';
+import Checkbox from '~/components/blocks/primitives/Checkbox.astro';
+import CheckboxGroup from '~/components/blocks/primitives/CheckboxGroup.astro';
+import Input from '~/components/blocks/primitives/Input.astro';
+import Select from '~/components/blocks/primitives/Select.astro';
+import TextArea from '~/components/blocks/primitives/TextArea.astro';
+import type { ButtonProps } from '~/types/button.types';
+import type { CheckboxAttributes } from '~/types/checkbox.types';
+import type { CheckboxGroupProps } from '~/types/checkboxgroup.types';
+import type {
+  ContactFormAction,
+  ContactFormField,
+  ContactFormProps,
+} from '~/types/contactform.types';
+import type { InputAttributes } from '~/types/input.types';
+import type { SelectAttributes } from '~/types/select.types';
+import type { TextAreaAttributes } from '~/types/textarea.types';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import { cn } from '~/utils/styles';
+
+interface Props {
+  formId: string;
+  action: ContactFormAction;
+  fields: ContactFormField[];
+  defaultFieldConfig?: ContactFormProps['defaultFieldConfig'];
+  submitButton: ButtonProps;
+  messages: { success: string; error: string; mailto: string };
+  honeypot: string | false;
+  formClass?: string;
+}
+
+const { formId, action, fields, defaultFieldConfig, submitButton, messages, honeypot, formClass } =
+  Astro.props;
+
+type RenderedField =
+  | { control: 'input'; props: InputAttributes }
+  | { control: 'textarea'; props: TextAreaAttributes }
+  | { control: 'select'; props: SelectAttributes }
+  | { control: 'checkbox'; props: CheckboxAttributes }
+  | { control: 'checkboxGroup'; props: CheckboxGroupProps };
+
+function omitControl<T extends { control: string }>(field: T): Omit<T, 'control'> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { control: _control, ...rest } = field;
+  return rest;
+}
+
+function toRendered(field: ContactFormField): RenderedField {
+  const structural = { id: `${formId}-${field.name}` };
+  switch (field.control) {
+    case 'input':
+      return {
+        control: 'input',
+        props: mergeConfigs<InputAttributes>(
+          {},
+          defaultFieldConfig,
+          structural,
+          omitControl(field)
+        ),
+      };
+    case 'textarea':
+      return {
+        control: 'textarea',
+        props: mergeConfigs<TextAreaAttributes>(
+          {},
+          defaultFieldConfig,
+          structural,
+          omitControl(field)
+        ),
+      };
+    case 'select':
+      return {
+        control: 'select',
+        props: mergeConfigs<SelectAttributes>(
+          {},
+          defaultFieldConfig,
+          structural,
+          omitControl(field)
+        ),
+      };
+    case 'checkbox':
+      return {
+        control: 'checkbox',
+        props: mergeConfigs<CheckboxAttributes>(
+          {},
+          defaultFieldConfig,
+          structural,
+          omitControl(field)
+        ),
+      };
+    case 'checkboxGroup':
+      return {
+        control: 'checkboxGroup',
+        props: mergeConfigs<CheckboxGroupProps>({}, defaultFieldConfig, omitControl(field)),
+      };
+  }
+}
+
+const rendered = fields.map(toRendered);
+
+const formAttrs =
+  action.type === 'endpoint'
+    ? { action: action.url, method: 'post' }
+    : {
+        action: `mailto:${action.address}`,
+        method: 'post',
+        enctype: 'text/plain',
+        'data-contact-form-labels': JSON.stringify(
+          Object.fromEntries(fields.map((f) => [f.name, f.label]))
+        ),
+      };
+---
+
+<form
+  {...formAttrs}
+  class={cn('flex flex-col gap-4', formClass)}
+  data-contact-form
+  data-contact-form-state="idle"
+  data-contact-form-mode={action.type}
+  data-contact-form-messages={JSON.stringify(messages)}
+  data-contact-form-honeypot-name={honeypot || undefined}
+>
+  <div class="flex flex-col gap-4" data-contact-form-fields>
+    {rendered.map((f) => (
+      <>
+        {f.control === 'input' && <Input {...f.props} />}
+        {f.control === 'textarea' && <TextArea {...f.props} />}
+        {f.control === 'select' && <Select {...f.props} />}
+        {f.control === 'checkbox' && <Checkbox {...f.props} />}
+        {f.control === 'checkboxGroup' && <CheckboxGroup {...f.props} />}
+      </>
+    ))}
+  </div>
+  {honeypot && (
+    <div
+      class="absolute -start-[10000px] size-px overflow-hidden"
+      aria-hidden="true"
+      data-contact-form-honeypot
+    >
+      <label>
+        Leave this field empty
+        <input type="text" name={honeypot} tabindex="-1" autocomplete="off" />
+      </label>
+    </div>
+  )}
+  <p
+    tabindex="-1"
+    hidden
+    class="text-sm font-medium text-normal focus:outline-none data-[contact-form-status=success]:text-success data-[contact-form-status=error]:text-error"
+    data-contact-form-status
+  ></p>
+  <Button {...submitButton} type="submit" data-contact-form-submit />
+</form>

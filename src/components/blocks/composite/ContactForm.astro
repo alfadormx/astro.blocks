@@ -1,0 +1,181 @@
+---
+import ContactFormBody from '~/components/blocks/composite/ContactFormBody.astro';
+import Container from '~/components/blocks/layout/Container.astro';
+import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
+import type { ButtonProps } from '~/types/button.types';
+import type { ContactFormProps } from '~/types/contactform.types';
+import type { TwoColumnContainerProps } from '~/types/container.types';
+import type { HeadlineProps } from '~/types/headline.types';
+import { contactFormId, defaultContactFields, validateContactForm } from '~/utils/contactForm';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+
+type Props = ContactFormProps;
+
+const {
+  action,
+  fields,
+  defaultFieldConfig,
+  headline,
+  container,
+  submitButton,
+  successMessage = 'Thanks, your message has been sent.',
+  errorMessage = 'Your message could not be sent. Please try again.',
+  mailtoMessage = 'Your mail app should open with the message ready to send.',
+  honeypot = '_gotcha',
+  formClass,
+  asidePosition = 'right',
+  asideClass,
+  twoColumnContainer,
+} = Astro.props;
+
+const resolvedFields = fields ?? defaultContactFields();
+validateContactForm({ action, fields: resolvedFields, honeypot });
+
+const formId = contactFormId();
+
+const internalHeadline: HeadlineProps = { htmlTag: 'h2' };
+const internalSubmitButton: ButtonProps = { label: 'Send', variant: 'solid', intent: 'primary' };
+const internalTwoColumnContainer: Partial<TwoColumnContainerProps> = {
+  htmlTag: 'div',
+  responsive: true,
+  content: { air: 'none' },
+};
+
+const mergedContainer = mergeConfigs({}, container);
+const mergedHeadline = headline && mergeConfigs<HeadlineProps>({}, internalHeadline, headline);
+const mergedSubmitButton = mergeConfigs<ButtonProps>({}, internalSubmitButton, submitButton);
+const mergedTwoColumnContainer = mergeConfigs<TwoColumnContainerProps>(
+  {},
+  internalTwoColumnContainer,
+  twoColumnContainer
+);
+
+const bodyProps = {
+  formId,
+  action,
+  fields: resolvedFields,
+  defaultFieldConfig,
+  submitButton: mergedSubmitButton,
+  messages: { success: successMessage, error: errorMessage, mailto: mailtoMessage },
+  honeypot,
+  formClass,
+};
+
+const hasAside = Astro.slots.has('aside');
+const formSlot = asidePosition === 'left' ? 'right' : 'left';
+const asideSlot = asidePosition === 'left' ? 'left' : 'right';
+---
+
+<Container {...mergedContainer}>
+  {mergedHeadline && <Headline {...mergedHeadline} />}
+  {hasAside ? (
+    <TwoColumnContainer {...mergedTwoColumnContainer}>
+      <div slot={formSlot} data-contact-form-main>
+        <ContactFormBody {...bodyProps} />
+      </div>
+      <div slot={asideSlot} class={asideClass} data-contact-form-aside>
+        <slot name="aside" />
+      </div>
+    </TwoColumnContainer>
+  ) : (
+    <ContactFormBody {...bodyProps} />
+  )}
+</Container>
+
+<script>
+  import {
+    buildMailtoUrl,
+    isHoneypotFilled,
+    mailtoEntries,
+    submitToEndpoint,
+  } from '~/utils/contactForm';
+
+  type State = 'idle' | 'submitting' | 'success' | 'error';
+  type Messages = { success: string; error: string; mailto?: string };
+
+  const ROOT_SELECTOR = 'form[data-contact-form]';
+  const bound = new WeakSet<HTMLFormElement>();
+
+  function parts(form: HTMLFormElement) {
+    return {
+      fields: form.querySelector<HTMLElement>('[data-contact-form-fields]')!,
+      status: form.querySelector<HTMLElement>('[data-contact-form-status]')!,
+      submit: form.querySelector<HTMLButtonElement>('[data-contact-form-submit]')!,
+    };
+  }
+
+  function messagesOf(form: HTMLFormElement): Messages {
+    return JSON.parse(form.dataset.contactFormMessages ?? '{}');
+  }
+
+  function setState(form: HTMLFormElement, state: State): void {
+    const { submit } = parts(form);
+    form.dataset.contactFormState = state;
+    const busy = state === 'submitting';
+    submit.disabled = busy;
+    if (busy) form.setAttribute('aria-busy', 'true');
+    else form.removeAttribute('aria-busy');
+  }
+
+  // State, text and focus come before any mailto navigation, so a navigation that fails or
+  // never returns can't stop the notice from showing.
+  function showResult(form: HTMLFormElement, result: 'success' | 'error', text: string): void {
+    const { fields, status, submit } = parts(form);
+    setState(form, result);
+    if (result === 'success') {
+      fields.hidden = true;
+      submit.hidden = true;
+    }
+    status.dataset.contactFormStatus = result;
+    status.textContent = text;
+    status.hidden = false;
+    status.focus();
+  }
+
+  function openMailto(form: HTMLFormElement, messages: Messages): void {
+    const labels: Record<string, string> = JSON.parse(form.dataset.contactFormLabels ?? '{}');
+    const address = (form.getAttribute('action') ?? '').replace(/^mailto:/, '');
+    const subject =
+      'subject' in labels ? String(new FormData(form).get('subject') ?? '') : undefined;
+    const url = buildMailtoUrl(address, { subject, entries: mailtoEntries(form, labels) });
+    showResult(form, 'success', messages.mailto ?? messages.success);
+    window.location.href = url;
+  }
+
+  async function onSubmit(event: SubmitEvent): Promise<void> {
+    const form = event.currentTarget as HTMLFormElement;
+    event.preventDefault();
+    if (form.dataset.contactFormState === 'submitting') return;
+    const { status } = parts(form);
+    status.hidden = true;
+    const messages = messagesOf(form);
+    if (isHoneypotFilled(form, form.dataset.contactFormHoneypotName)) {
+      showResult(form, 'success', messages.success);
+      return;
+    }
+    if (form.dataset.contactFormMode === 'mailto') {
+      openMailto(form, messages);
+      return;
+    }
+    setState(form, 'submitting');
+    const result = await submitToEndpoint(form.getAttribute('action') ?? '', new FormData(form));
+    showResult(form, result, messages[result]);
+  }
+
+  function bind(form: HTMLFormElement): void {
+    form.addEventListener('submit', onSubmit);
+    form.dataset.contactFormReady = '';
+  }
+
+  function init(): void {
+    document.querySelectorAll<HTMLFormElement>(ROOT_SELECTOR).forEach((form) => {
+      if (bound.has(form)) return;
+      bind(form);
+      bound.add(form);
+    });
+  }
+
+  document.addEventListener('astro:after-swap', init);
+  init();
+</script>
