@@ -1,5 +1,4 @@
 ---
-import type { GetStaticPaths } from 'astro';
 import { I18N, SITE } from 'site-config';
 import Layout from '~/layouts/Layout.astro';
 import Header from '~/components/blocks/composite/Header.astro';
@@ -7,24 +6,18 @@ import Footer from '~/components/blocks/composite/Footer.astro';
 import CallToAction from '~/components/blocks/composite/CallToAction.astro';
 import Hero from '~/components/blocks/composite/Hero.astro';
 import ItemsContent from '~/components/blocks/composite/ItemsContent.astro';
-import { homeCopy } from '~/data/home';
 import { documentationNavigation } from '~/data/documentationNavigation';
 import { getGroupChildLabels } from '~/utils/navigationGroups';
+import { localizedPaths, useCopy } from '../../../vendor/integration/copy/pages';
 
 type Language = (typeof I18N.languages)[number];
 
-export const getStaticPaths = (() =>
-  I18N.languages
-    .filter((lang: Language) => homeCopy[lang.code])
-    .map((lang: Language) => ({
-      params: { lang: lang.basePath === '/' ? undefined : lang.basePath.replace(/^\//, '') },
-      props: { langCode: lang.code, basePath: lang.basePath },
-    }))) satisfies GetStaticPaths;
+export const getStaticPaths = () => localizedPaths();
 
 type Props = { langCode: string; basePath: string };
 
-const { langCode, basePath } = Astro.props;
-const copy = homeCopy[langCode];
+const { basePath } = Astro.props;
+const { langCode, copy } = useCopy(Astro, 'home');
 
 const language = I18N.languages.find((lang: Language) => lang.code === langCode);
 if (!language) {

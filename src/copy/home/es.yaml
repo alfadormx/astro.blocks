@@ -1,0 +1,27 @@
+# `hero.viewSourceLabel` is left out on purpose: it falls back to English with a build warning.
+pageTitle: 'Componentes Astro'
+headerDocsLabel: 'Documentación'
+hero:
+  tagline: 'Biblioteca de componentes'
+  title: 'Astro Blocks'
+  subtitle: 'Componentes de interfaz combinables creados con Astro y Tailwind CSS. Elige, personaliza, publica.'
+  browseDocsLabel: 'Ver documentación'
+inside:
+  tagline: 'Qué incluye'
+  title: 'Tres capas de componentes'
+  subtitle: 'De primitivas atómicas a secciones completas: todo combinable, nada impuesto.'
+  primitives:
+    title: 'Primitivas'
+    lead: 'Piezas básicas'
+  composites:
+    title: 'Compuestos'
+    lead: 'Secciones preensambladas'
+  layout:
+    title: 'Maquetación'
+    lead: 'Contenedores estructurales'
+getStarted:
+  tagline: 'Empieza'
+  title: '¿Listo para construir?'
+  subtitle: 'Explora la referencia completa de componentes con ejemplos en vivo.'
+  openDocsLabel: 'Abrir documentación'
+footerDisclaimer: ./disclaimer.es.md

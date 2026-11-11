@@ -1,12 +1,16 @@
 import fs from 'node:fs';
 import os from 'node:os';
+import { fileURLToPath } from 'node:url';
 import type { AstroConfig, AstroIntegration } from 'astro';
 
 import configBuilder, { type Config } from './utils/configBuilder';
 import loadConfig from './utils/loadConfig';
+import { copyRegistryDts } from './copy/infer';
+import { loadCopy } from './copy/load';
 
 export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegration => {
   let cfg: AstroConfig;
+  let copyDts = copyRegistryDts({}, 'en');
   return {
     name: 'site-config',
 
@@ -16,9 +20,28 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
 
         const virtualModuleId = 'site-config';
         const resolvedVirtualModuleId = '\0' + virtualModuleId;
+        const copyModuleId = 'site-copy';
+        const resolvedCopyModuleId = '\0' + copyModuleId;
 
         const rawJsonConfig = (await loadConfig(_themeConfig)) as Config;
         const { SITE, I18N, METADATA, ANALYTICS } = configBuilder(rawJsonConfig);
+
+        const copyRoot = fileURLToPath(new URL('src/copy/', config.root));
+        const { copy, warnings, files } = loadCopy(
+          copyRoot,
+          I18N.languages.map((l) => l.code),
+          I18N.default
+        );
+        const relative = (file: string) => file.replace(fileURLToPath(config.root), '');
+        for (const { file, keyPath } of warnings) {
+          buildLogger.warn(
+            keyPath
+              ? `Copy key "${keyPath}" missing in ${relative(file)}; using ${I18N.default}`
+              : `Copy file ${relative(file)} missing; using ${I18N.default}`
+          );
+        }
+        for (const file of files) addWatchFile(file);
+        copyDts = copyRegistryDts(copy, I18N.default);
 
         updateConfig({
           site: SITE.site,
@@ -34,6 +57,9 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
                   if (id === virtualModuleId) {
                     return resolvedVirtualModuleId;
                   }
+                  if (id === copyModuleId) {
+                    return resolvedCopyModuleId;
+                  }
                   return null;
                 },
                 load(id) {
@@ -44,6 +70,9 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
                       `export const METADATA = ${JSON.stringify(METADATA)};` +
                       `export const ANALYTICS = ${JSON.stringify(ANALYTICS)};`
                     );
+                  }
+                  if (id === resolvedCopyModuleId) {
+                    return `export const COPY = ${JSON.stringify(copy)};`;
                   }
                   return null;
                 },
@@ -60,8 +89,9 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
           buildLogger.info(`Site config has been loaded.`);
         }
       },
-      'astro:config:done': async ({ config }) => {
+      'astro:config:done': async ({ config, injectTypes }) => {
         cfg = config;
+        injectTypes({ filename: 'copy.d.ts', content: copyDts });
       },
       'astro:build:done': async ({ logger }) => {
         const buildLogger = logger.fork('site-config');

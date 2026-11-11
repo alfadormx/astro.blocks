@@ -1,6 +1,5 @@
 import { readFileSync } from 'node:fs';
 import { load } from 'js-yaml';
-import { homeCopy } from '../../src/data/home';
 
 interface Language {
   code: string;
@@ -12,5 +11,5 @@ const config = load(readFileSync(new URL('../../src/config.yaml', import.meta.ur
   i18n: { languages: Language[] };
 };
 
-export const locales = config.i18n.languages.filter((lang) => homeCopy[lang.code]);
+export const locales = config.i18n.languages;
 export const localePaths = locales.map((lang) => lang.basePath);
