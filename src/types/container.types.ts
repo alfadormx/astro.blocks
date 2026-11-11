@@ -1,3 +1,4 @@
+import type { RichText } from './richtext.types';
 import type { BackgroundProps, SimpleBackgroundProps } from './background.types';
 import type { SpacingConfig } from './spacing.types';
 import type { BorderConfig } from './border.types';
@@ -36,7 +37,8 @@ export interface LayoutConfig {
 }
 export interface ContainerItem {
   id?: string;
-  content?: string; // simple string content; can be expanded to richer types later
+  /** Markdown (RichText); HTML passes through. */
+  content?: RichText;
   class?: string;
   style?: Record<string, string>;
 }

@@ -1,6 +1,7 @@
 ---
 import type { ContainerProps } from '~/types/container.types';
 import Background from '~/components/blocks/primitives/Background.astro';
+import { renderRichText } from '~/utils/richText';
 import { cn } from '~/utils/styles';
 
 type Props = ContainerProps;
@@ -84,7 +85,9 @@ const contentClass = cn(
   ) : null}
   <div class={contentClass}>
     {items && items.length > 0 ? (
-      items.map((item) => <div class={item.class} id={item.id} set:html={item.content} />)
+      items.map((item) => (
+        <div class={item.class} id={item.id} set:html={renderRichText(item.content)} />
+      ))
     ) : (
       <slot />
     )}

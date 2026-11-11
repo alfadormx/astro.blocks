@@ -1,3 +1,4 @@
+import type { RichText } from './richtext.types';
 import type { IconConfig } from './icon.types';
 
 export interface AccordionItem {
@@ -5,8 +6,8 @@ export interface AccordionItem {
   id?: string;
   /** Text shown in the item's summary row */
   title: string;
-  /** Answer body as an HTML string; an `item-${index}` slot replaces it when present */
-  content?: string;
+  /** Answer body as Markdown (RichText); HTML passes through. An `item-${index}` slot replaces it when present */
+  content?: RichText;
 }
 
 export type AccordionTitleTag = 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span';

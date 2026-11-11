@@ -41,7 +41,7 @@ const layers = [
 const layerItems = layers.map(({ group, icon, copyKey }) => ({
   icon: { name: icon },
   title: copy.inside[copyKey].title,
-  content: `<strong>${copy.inside[copyKey].lead}:</strong> ${listFormat.format(
+  content: `**${copy.inside[copyKey].lead}:** ${listFormat.format(
     getGroupChildLabels(documentationNavigation, group)
   )}.`,
   orientation: 'vertical' as const,

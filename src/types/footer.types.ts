@@ -1,3 +1,4 @@
+import type { RichText } from './richtext.types';
 import type { ContainerProps } from './container.types';
 import type { ButtonProps } from './button.types';
 import type { LogoProps } from './logo.types';
@@ -7,14 +8,14 @@ import type { LayerConfig } from './config.types';
 export interface FooterProps {
   /** Props for the Container wrapping the footer content. */
   container?: ContainerProps;
-  /** HTML string rendered as a disclaimer block (e.g. legal or compliance copy). */
-  disclaimer?: string;
+  /** Markdown (RichText) rendered as a disclaimer block (e.g. legal or compliance copy); HTML passes through. */
+  disclaimer?: RichText;
   /** Additional custom classes applied to the disclaimer block. */
   disclaimerClass?: string;
   /** Logo configuration rendered at the top of the footer. */
   logo?: LogoProps;
-  /** HTML string rendered as a footnote (e.g. copyright notice). */
-  footnote?: string;
+  /** Markdown (RichText) rendered as a footnote (e.g. copyright notice); HTML passes through. */
+  footnote?: RichText;
   /** Additional custom classes applied to the footnote block. */
   footnoteClass?: string;
   /** Icon buttons alongside the footnote (e.g. social links). */

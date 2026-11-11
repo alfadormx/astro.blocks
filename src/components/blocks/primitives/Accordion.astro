@@ -3,6 +3,7 @@ import { Icon } from 'astro-icon/components';
 import type { AccordionProps } from '~/types/accordion.types';
 import { nextAccordionName, validateAccordion } from '~/utils/accordion';
 import { focusRingClass } from '~/utils/intentStyles';
+import { renderRichText } from '~/utils/richText';
 import { cn } from '~/utils/styles';
 
 type Props = AccordionProps;
@@ -71,7 +72,11 @@ const contentClasses = cn('pb-4 text-muted', contentClass);
           <slot name={slotName(index)} />
         </div>
       ) : (
-        <div class={contentClasses} data-accordion-content set:html={item.content} />
+        <div
+          class={contentClasses}
+          data-accordion-content
+          set:html={renderRichText(item.content)}
+        />
       )}
     </details>
   ))}

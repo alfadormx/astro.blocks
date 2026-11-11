@@ -8,6 +8,7 @@ import type { ContainerProps } from '~/types/container.types';
 import type { FooterProps } from '~/types/footer.types';
 import type { LanguageToggleProps } from '~/types/languagetoggle.types';
 import { mergeConfigs } from '~/utils/mergeConfigs';
+import { renderRichText } from '~/utils/richText';
 import { cn } from '~/utils/styles';
 
 type Props = FooterProps;
@@ -101,7 +102,7 @@ const languageToggleAlignmentClass = {
   </div>
   {disclaimer && (
     <div class={mergedDisclaimerClass}>
-      <Fragment set:html={disclaimer} />
+      <Fragment set:html={renderRichText(disclaimer)} />
     </div>
   )}
   <div class="md:flex md:items-center md:justify-between pt-6 pb-0 md:pt-8 md:pb-2">
@@ -116,7 +117,7 @@ const languageToggleAlignmentClass = {
     )}
 
     <div class={mergedFootnoteClass}>
-      <Fragment set:html={footnote} />
+      <Fragment set:html={renderRichText(footnote)} />
     </div>
   </div>
 
