@@ -19,15 +19,15 @@ The rules most often missed:
 ## Conventions
 
 - **Imports.** Inside `src/`, import through `~/`. Files in `src/types/` are the exception: relative `./x.types` only.
-- **Site config.** Read site settings from the virtual module: `import { SITE, I18N, METADATA, ANALYTICS } from 'site-config'`. Never import `config.yaml` or `vendor/integration` files directly.
+- **Site config.** Read site settings from the virtual module: `import { SITE, I18N, METADATA, ANALYTICS } from 'site-config'`, never from `config.yaml`. From `vendor/integration`, pages import only the page helpers (`collections/pages.ts`, `copy/pages.ts`) and `src/content.config.ts` only `collections/define.ts`; the rest is the integration's internals.
 - **Colour.** Semantic tokens only (`bg-surface`, `text-muted`, `border-border`, `bg-primary`, …, defined in `src/styles/global.css`), never raw Tailwind colours.
 - **Dark mode.** `dark:` resolves to `[data-theme=dark]` via a custom variant, not to the system preference.
 - **Tailwind v4.** Configured in `global.css` (`@theme`); there is no `tailwind.config`. Classes built at runtime need an `@source inline(...)` entry.
 - **Images.** Resolve sources with `findImage()` from `~/utils/images`.
 - **Pages.** Pass `langCode` to `<Layout>` so `<html lang dir>` is right. `metadata.localized` applies in `src/layouts/Layout.astro` only, not in the docs layout.
-- **Collections and copy.** Markdown collections are declared by preset under `collections:` in `config.yaml`; their pages call the helpers in `vendor/integration/collections/pages.ts`. Static-page copy lives in `src/copy/<page>/<lang>.yaml`, read with `useCopy`. Read `src/pages/documentation/Collections.astro` before adding either.
+- **Collections and copy.** Markdown collections are declared by preset under `collections:` in `config.yaml`; their pages call the collection page helpers. Static-page copy lives in `src/copy/<page>/<lang>.yaml`, read with `useCopy`. Read `src/pages/documentation/Collections.astro` before adding either.
 - **Rich text.** A prop that renders formatted text is typed `RichText` and rendered with `renderRichText()` from `~/utils/richText`; plain props stay plain text.
-- **Browser-only runtimes. `~/utils/selection.ts` and `~/utils/urlState.ts` run in the browser: import them only from a block's client `<script>`. Read `docs/client-runtimes.md` before using or changing either.
+- **Browser-only runtimes.** `~/utils/selection.ts` and `~/utils/urlState.ts` run in the browser: import them only from a block's client `<script>`. Read `docs/client-runtimes.md` before using or changing either.
 
 ## Tests
 
