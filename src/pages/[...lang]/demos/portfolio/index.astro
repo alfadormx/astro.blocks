@@ -1,0 +1,108 @@
+---
+import PortfolioLayout from './_layouts/Layout.astro';
+import Hero from '~/components/blocks/composite/Hero.astro';
+import Testimonials from '~/components/blocks/composite/Testimonials.astro';
+import CallToAction from '~/components/blocks/composite/CallToAction.astro';
+import ItemsContent from '~/components/blocks/composite/ItemsContent.astro';
+import type { ItemProps } from '~/types/item.types';
+import type { Testimonial } from '~/types/testimonials.types';
+import { collectionUrl, getFeatured } from '../../../../../vendor/integration/collections/pages';
+import { localizedPaths, useCopy } from '../../../../../vendor/integration/copy/pages';
+import { portfolioHome } from './_site';
+
+export const getStaticPaths = () => localizedPaths();
+
+type Props = { langCode: string; basePath: string };
+
+const { langCode, copy } = useCopy(Astro, 'portfolio');
+const home = portfolioHome(langCode);
+
+const featured = await getFeatured('cases', 3, langCode);
+const workItems: ItemProps[] = featured.map((entry) => ({
+  image: entry.image,
+  title: entry.headline.title,
+  content: entry.description,
+  orientation: 'vertical',
+  actions: [
+    {
+      label: copy.home.work.view,
+      href: entry.href,
+      variant: 'outline',
+      size: 'sm',
+      'aria-label': `${copy.home.work.view}: ${entry.headline.title}`,
+    },
+  ],
+}));
+
+const testimonials: Testimonial[] = Object.entries(copy.home.testimonials.items).map(
+  ([key, item]) => ({
+    quote: item.quote,
+    author: {
+      name: item.name,
+      role: item.role,
+      avatar: { src: `~/assets/images/demos/portfolio/avatar-${key}.jpg`, alt: '' },
+    },
+  })
+);
+---
+
+<PortfolioLayout langCode={langCode} metadata={{ title: { default: copy.home.pageTitle } }}>
+  <Hero
+    layout="split"
+    headline={{
+      tagline: copy.home.hero.tagline,
+      title: copy.home.hero.title,
+      subtitle: copy.home.hero.subtitle,
+    }}
+    image={{
+      src: '~/assets/images/demos/portfolio/hero.jpg',
+      alt: copy.home.hero.imageAlt,
+      widths: [480, 768, 1024],
+      sizes: '(min-width: 1024px) 50vw, 100vw',
+    }}
+    actions={[
+      {
+        label: copy.home.hero.primary,
+        href: collectionUrl('cases', langCode),
+        intent: 'primary',
+        variant: 'solid',
+        size: 'lg',
+      },
+      { label: copy.home.hero.secondary, href: `${home}/contact`, variant: 'outline', size: 'lg' },
+    ]}
+  />
+  <ItemsContent
+    headline={{ tagline: copy.home.work.tagline, title: copy.home.work.title, align: 'center' }}
+    itemsGrid={{
+      columns: 3,
+      items: workItems,
+      defaultItemConfig: {
+        image: {
+          layout: 'responsive',
+          aspectRatio: 16 / 9,
+          widths: [400, 800],
+          sizes: '(min-width: 1024px) 33vw, 100vw',
+          class: 'w-full h-auto rounded-lg',
+        },
+      },
+    }}
+  />
+  <Testimonials
+    headline={{ tagline: copy.home.testimonials.tagline, title: copy.home.testimonials.title }}
+    testimonials={testimonials}
+    layout="grid"
+    columns={3}
+  />
+  <CallToAction
+    headline={{ title: copy.home.cta.title, subtitle: copy.home.cta.subtitle, align: 'center' }}
+    actions={[
+      {
+        label: copy.home.cta.action,
+        href: `${home}/contact`,
+        intent: 'primary',
+        variant: 'solid',
+        size: 'lg',
+      },
+    ]}
+  />
+</PortfolioLayout>

@@ -47,7 +47,11 @@ const demoItems = [
     href: `${basePath === '/' ? '' : basePath}/demos/saas`,
     icon: 'heroicons:rocket-launch',
   },
-  { copy: copy.demos.work, href: collectionUrl('cases', langCode), icon: 'heroicons:briefcase' },
+  {
+    copy: copy.demos.portfolio,
+    href: `${basePath === '/' ? '' : basePath}/demos/portfolio`,
+    icon: 'heroicons:photo',
+  },
   { copy: copy.demos.events, href: collectionUrl('events', langCode), icon: 'heroicons:calendar' },
   {
     copy: copy.demos.configurator,

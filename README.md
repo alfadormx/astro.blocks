@@ -121,7 +121,8 @@ tests/                 unit/, astro/, browser/
 
 - `/` builds the landing page from `Header`, `Hero`, `ItemsContent`, `CallToAction` and `Footer`.
 - `/demos/saas` is a one-page SaaS product site with a blog, themed by token overrides on `[data-demo='saas']`, in English and Spanish.
-- `/demos/saas/blog`, `/demos/work` and `/demos/events` are collection demos in English and Spanish, one per preset.
+- `/demos/portfolio` is an agency site with home, work, about and contact pages, themed by token overrides on `[data-demo='portfolio']`, in English and Spanish.
+- `/demos/saas/blog`, `/demos/portfolio/work` and `/demos/events` are collection demos in English and Spanish, one per preset.
 - `/demos/jewellery-configurator` is a ring configurator built on `Configurator` and `ModelViewer`, in English and Spanish.
 
 ## Commands
