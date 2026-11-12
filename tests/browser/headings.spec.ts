@@ -7,16 +7,29 @@ import { localePaths } from './locales';
 // R-50: the suculentas demos get their h1 when they're committed.
 const PENDING_DEMOS = new Set(['suculentas', 'suculentas-keyshot']);
 
-const demoPages = readdirSync(new URL('../../src/pages/[...lang]/demos/', import.meta.url))
-  .filter((file) => file.endsWith('.astro') && !file.startsWith('_'))
-  .map((file) => file.replace(/\.astro$/, ''))
-  .filter((name) => !PENDING_DEMOS.has(name))
-  .flatMap((name) => localePaths.map((base) => `${base === '/' ? '' : base}/demos/${name}`));
+const DEMOS_DIR = new URL('../../src/pages/[...lang]/demos/', import.meta.url);
+
+// Static demo routes only: dynamic `[...]` pages are listed in `collectionPages`.
+function staticDemoRoutes(dir: URL, prefix = ''): string[] {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    if (entry.name.startsWith('_') || entry.name.startsWith('[')) return [];
+    if (entry.isDirectory()) {
+      return staticDemoRoutes(new URL(`${entry.name}/`, dir), `${prefix}/${entry.name}`);
+    }
+    if (!entry.name.endsWith('.astro')) return [];
+    const name = entry.name.replace(/\.astro$/, '');
+    return [name === 'index' ? prefix : `${prefix}/${name}`];
+  });
+}
+
+const demoPages = staticDemoRoutes(DEMOS_DIR)
+  .filter((route) => !PENDING_DEMOS.has(route.slice(1)))
+  .flatMap((route) => localePaths.map((base) => `${base === '/' ? '' : base}/demos${route}`));
 
 const collectionPages = [
-  '/demos/blog',
-  '/demos/blog/hello-world',
-  '/es/demos/blog',
+  '/demos/saas/blog',
+  '/demos/saas/blog/hello-world',
+  '/es/demos/saas/blog',
   '/demos/work',
   '/demos/work/ring-configurator',
   '/demos/events',

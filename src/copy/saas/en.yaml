@@ -1,0 +1,157 @@
+pageTitle: 'Driftwave — ship features, not spreadsheets'
+nav:
+  features: 'Features'
+  pricing: 'Pricing'
+  testimonials: 'Customers'
+  faq: 'FAQ'
+  blog: 'Blog'
+  menuLabel: 'Open menu'
+  trial: 'Start free trial'
+hero:
+  tagline: 'Product analytics'
+  title: 'Know what your users do next'
+  subtitle: 'Driftwave turns raw events into answers your whole team can read.'
+  primary: 'Start free trial'
+  secondary: 'See features'
+logos:
+  title: 'Trusted by product teams at'
+  carouselLabel: 'Customer logos'
+  names:
+    a: 'Northwind'
+    b: 'Lumen'
+    c: 'Quanta'
+    d: 'Bramble'
+    e: 'Orbital'
+    f: 'Kestrel'
+features:
+  tagline: 'Features'
+  title: 'Everything you need to understand usage'
+  subtitle: 'From the first click to the hundredth visit, see how people move through your product.'
+  items:
+    funnels:
+      title: 'Funnels'
+      content: 'Find the step where people drop off, and compare it across releases.'
+    retention:
+      title: 'Retention'
+      content: 'See which features bring people back week after week.'
+    segments:
+      title: 'Segments'
+      content: 'Slice any chart by plan, country, device or a property you send.'
+    dashboards:
+      title: 'Dashboards'
+      content: 'Pin the charts your team checks every morning, and share them with a link.'
+    alerts:
+      title: 'Alerts'
+      content: 'Get a message when a metric moves more than you expect.'
+    privacy:
+      title: 'Privacy first'
+      content: 'EU hosting, no cookies by default and a one-click data export.'
+contentA:
+  tagline: 'Answers in minutes'
+  title: 'Ask a question, get a chart'
+  body: 'Pick an event, choose how to break it down, and Driftwave draws the chart. No SQL, no waiting on the data team.'
+  imageAlt: 'Hands pointing at printed charts on a desk'
+  action: 'Try it free'
+contentB:
+  tagline: 'Built for teams'
+  title: 'One source of truth for product, design and growth'
+  body: 'Comment on a chart, tag a teammate, and keep the decision next to the data that drove it.'
+  imageAlt: 'A team working around a table with laptops'
+pricing:
+  tagline: 'Pricing'
+  title: 'Simple plans that grow with you'
+  subtitle: 'Start free and upgrade when your team needs more.'
+  toggleLabel: 'Billing period'
+  monthly: 'Monthly'
+  yearly: 'Yearly'
+  announceMonthly: 'Showing monthly prices'
+  announceYearly: 'Showing yearly prices'
+  perMonth: '/month'
+  perYear: '/year'
+  badge: 'Most popular'
+  tiers:
+    starter:
+      name: 'Starter'
+      description: 'For side projects and early products.'
+      monthly: 0
+      yearly: 0
+      action: 'Start free'
+      features:
+        a: 'Up to 10,000 events a month'
+        b: 'Funnels and retention'
+        c: 'One dashboard'
+    team:
+      name: 'Team'
+      description: 'For product teams shipping every week.'
+      monthly: 49
+      yearly: 490
+      action: 'Start free trial'
+      features:
+        a: 'Up to 1 million events a month'
+        b: 'Unlimited dashboards'
+        c: 'Segments and alerts'
+        d: 'Comments and sharing'
+    scale:
+      name: 'Scale'
+      description: 'For companies with many products.'
+      monthly: 199
+      yearly: 1990
+      action: 'Talk to sales'
+      features:
+        a: 'Unlimited events'
+        b: 'Single sign-on'
+        c: 'Data warehouse sync'
+        d: 'Priority support'
+testimonials:
+  tagline: 'Customers'
+  title: 'Teams that ship with Driftwave'
+  carouselLabel: 'Customer testimonials'
+  items:
+    a:
+      quote: 'We found the step losing half our sign-ups in an afternoon. The fix shipped the same week.'
+      name: 'Ana Ruiz'
+      role: 'Product lead, Northwind'
+    b:
+      quote: 'Our designers open Driftwave before Figma now. It settles debates fast.'
+      name: 'Tom Becker'
+      role: 'Head of design, Lumen'
+    c:
+      quote: 'Setup took ten minutes, and the retention chart paid for the year on its own.'
+      name: 'Priya Natarajan'
+      role: 'Founder, Quanta'
+    d:
+      quote: 'Alerts caught a broken checkout on a Sunday before any customer emailed us.'
+      name: 'Marco Bianchi'
+      role: 'Engineering manager, Bramble'
+faq:
+  tagline: 'FAQ'
+  title: 'Questions, answered'
+  items:
+    trial:
+      question: 'How does the free trial work?'
+      answer: 'You get every **Team** feature for 14 days. No credit card is needed, and you can stay on Starter afterwards.'
+    install:
+      question: 'How do I send events?'
+      answer: 'Add our script tag or use one of the SDKs. Most teams see their first events within *five minutes*.'
+    data:
+      question: 'Where is my data stored?'
+      answer: 'In the EU by default. Scale plans can choose a region.'
+    cancel:
+      question: 'Can I cancel any time?'
+      answer: 'Yes. Cancel from your settings and you keep access until the end of the billing period.'
+    migrate:
+      question: 'Can I import data from another tool?'
+      answer: 'Yes. Upload a CSV export, or ask us and we will help you move it.'
+    discount:
+      question: 'Do you offer discounts?'
+      answer: 'Yearly billing saves two months. Non-profits and schools get 50% off.'
+cta:
+  tagline: 'Ready when you are'
+  title: 'Try Driftwave free for 14 days'
+  subtitle: 'No credit card. Cancel any time.'
+  primary: 'Start free trial'
+blog:
+  title: 'Blog'
+  subtitle: 'Notes from the Driftwave team.'
+footer:
+  footnote: '© 2026 Driftwave, a fictional company.'

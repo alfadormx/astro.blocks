@@ -42,7 +42,11 @@ const layerItems = layers.map(({ group, icon, copyKey }) => ({
 }));
 
 const demoItems = [
-  { copy: copy.demos.blog, href: collectionUrl('posts', langCode), icon: 'heroicons:newspaper' },
+  {
+    copy: copy.demos.saas,
+    href: `${basePath === '/' ? '' : basePath}/demos/saas`,
+    icon: 'heroicons:rocket-launch',
+  },
   { copy: copy.demos.work, href: collectionUrl('cases', langCode), icon: 'heroicons:briefcase' },
   { copy: copy.demos.events, href: collectionUrl('events', langCode), icon: 'heroicons:calendar' },
   {

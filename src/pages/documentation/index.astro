@@ -133,4 +133,23 @@ const groups = documentationNavigation.filter((entry) => entry.children?.length)
       />
     </Fragment>
   ))}
+
+  <h2>See it in a site</h2>
+  <p>Demo sites built only from these blocks, themed with token overrides.</p>
+  <ItemsGrid
+    columns={3}
+    gap="tight"
+    defaultItemConfig={{
+      orientation: 'vertical',
+      icon: { name: 'heroicons:rocket-launch', class: 'text-accent' },
+    }}
+    items={[
+      {
+        title: 'SaaS landing',
+        content:
+          'Hero, logos, features, pricing, testimonials, FAQ and a blog, with anchor navigation.',
+        actions: [{ label: 'Open', href: '/demos/saas', variant: 'ghost', intent: 'primary' }],
+      },
+    ]}
+  />
 </Layout>

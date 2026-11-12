@@ -1,0 +1,157 @@
+pageTitle: 'Driftwave — lanza funciones, no hojas de cálculo'
+nav:
+  features: 'Funciones'
+  pricing: 'Precios'
+  testimonials: 'Clientes'
+  faq: 'Preguntas'
+  blog: 'Blog'
+  menuLabel: 'Abrir menú'
+  trial: 'Prueba gratis'
+hero:
+  tagline: 'Analítica de producto'
+  title: 'Descubre qué harán tus usuarios después'
+  subtitle: 'Driftwave convierte eventos en respuestas que todo tu equipo entiende.'
+  primary: 'Prueba gratis'
+  secondary: 'Ver funciones'
+logos:
+  title: 'Equipos de producto que confían en nosotros'
+  carouselLabel: 'Logotipos de clientes'
+  names:
+    a: 'Northwind'
+    b: 'Lumen'
+    c: 'Quanta'
+    d: 'Bramble'
+    e: 'Orbital'
+    f: 'Kestrel'
+features:
+  tagline: 'Funciones'
+  title: 'Todo lo que necesitas para entender el uso'
+  subtitle: 'Del primer clic a la centésima visita, mira cómo se mueve la gente por tu producto.'
+  items:
+    funnels:
+      title: 'Embudos'
+      content: 'Encuentra el paso donde la gente abandona y compáralo entre versiones.'
+    retention:
+      title: 'Retención'
+      content: 'Descubre qué funciones hacen volver a la gente semana tras semana.'
+    segments:
+      title: 'Segmentos'
+      content: 'Divide cualquier gráfico por plan, país, dispositivo o una propiedad que envíes.'
+    dashboards:
+      title: 'Paneles'
+      content: 'Fija los gráficos que tu equipo mira cada mañana y compártelos con un enlace.'
+    alerts:
+      title: 'Alertas'
+      content: 'Recibe un aviso cuando una métrica se mueve más de lo esperado.'
+    privacy:
+      title: 'Privacidad ante todo'
+      content: 'Alojamiento en la UE, sin cookies por defecto y exportación de datos en un clic.'
+contentA:
+  tagline: 'Respuestas en minutos'
+  title: 'Haz una pregunta, obtén un gráfico'
+  body: 'Elige un evento, decide cómo desglosarlo y Driftwave dibuja el gráfico. Sin SQL y sin esperar al equipo de datos.'
+  imageAlt: 'Manos señalando gráficos impresos sobre una mesa'
+  action: 'Pruébalo gratis'
+contentB:
+  tagline: 'Hecho para equipos'
+  title: 'Una sola fuente de verdad para producto, diseño y crecimiento'
+  body: 'Comenta un gráfico, menciona a un compañero y guarda la decisión junto a los datos que la motivaron.'
+  imageAlt: 'Un equipo trabajando con portátiles alrededor de una mesa'
+pricing:
+  tagline: 'Precios'
+  title: 'Planes sencillos que crecen contigo'
+  subtitle: 'Empieza gratis y mejora cuando tu equipo lo necesite.'
+  toggleLabel: 'Periodo de facturación'
+  monthly: 'Mensual'
+  yearly: 'Anual'
+  announceMonthly: 'Mostrando precios mensuales'
+  announceYearly: 'Mostrando precios anuales'
+  perMonth: '/mes'
+  perYear: '/año'
+  badge: 'El más popular'
+  tiers:
+    starter:
+      name: 'Starter'
+      description: 'Para proyectos personales y productos que empiezan.'
+      monthly: 0
+      yearly: 0
+      action: 'Empieza gratis'
+      features:
+        a: 'Hasta 10.000 eventos al mes'
+        b: 'Embudos y retención'
+        c: 'Un panel'
+    team:
+      name: 'Team'
+      description: 'Para equipos de producto que publican cada semana.'
+      monthly: 49
+      yearly: 490
+      action: 'Prueba gratis'
+      features:
+        a: 'Hasta 1 millón de eventos al mes'
+        b: 'Paneles ilimitados'
+        c: 'Segmentos y alertas'
+        d: 'Comentarios y enlaces compartidos'
+    scale:
+      name: 'Scale'
+      description: 'Para empresas con muchos productos.'
+      monthly: 199
+      yearly: 1990
+      action: 'Habla con ventas'
+      features:
+        a: 'Eventos ilimitados'
+        b: 'Inicio de sesión único'
+        c: 'Sincronización con el almacén de datos'
+        d: 'Soporte prioritario'
+testimonials:
+  tagline: 'Clientes'
+  title: 'Equipos que lanzan con Driftwave'
+  carouselLabel: 'Opiniones de clientes'
+  items:
+    a:
+      quote: 'Encontramos en una tarde el paso que perdía la mitad de los registros. El arreglo salió esa misma semana.'
+      name: 'Ana Ruiz'
+      role: 'Responsable de producto, Northwind'
+    b:
+      quote: 'Nuestros diseñadores abren Driftwave antes que Figma. Zanja los debates enseguida.'
+      name: 'Tom Becker'
+      role: 'Director de diseño, Lumen'
+    c:
+      quote: 'La configuración llevó diez minutos, y el gráfico de retención pagó el año entero.'
+      name: 'Priya Natarajan'
+      role: 'Fundadora, Quanta'
+    d:
+      quote: 'Las alertas detectaron un pago roto un domingo, antes de que escribiera ningún cliente.'
+      name: 'Marco Bianchi'
+      role: 'Responsable de ingeniería, Bramble'
+faq:
+  tagline: 'Preguntas'
+  title: 'Preguntas frecuentes'
+  items:
+    trial:
+      question: '¿Cómo funciona la prueba gratuita?'
+      answer: 'Tienes todas las funciones de **Team** durante 14 días. No necesitas tarjeta y después puedes quedarte en Starter.'
+    install:
+      question: '¿Cómo envío eventos?'
+      answer: 'Añade nuestra etiqueta de script o usa uno de los SDK. La mayoría de equipos ve sus primeros eventos en *cinco minutos*.'
+    data:
+      question: '¿Dónde se guardan mis datos?'
+      answer: 'En la UE por defecto. Los planes Scale pueden elegir región.'
+    cancel:
+      question: '¿Puedo cancelar cuando quiera?'
+      answer: 'Sí. Cancela desde los ajustes y conservas el acceso hasta el final del periodo de facturación.'
+    migrate:
+      question: '¿Puedo importar datos de otra herramienta?'
+      answer: 'Sí. Sube una exportación CSV o pídenos ayuda para moverlos.'
+    discount:
+      question: '¿Ofrecéis descuentos?'
+      answer: 'La facturación anual ahorra dos meses. Las ONG y los centros educativos tienen un 50 % de descuento.'
+cta:
+  tagline: 'Cuando quieras'
+  title: 'Prueba Driftwave gratis durante 14 días'
+  subtitle: 'Sin tarjeta. Cancela cuando quieras.'
+  primary: 'Prueba gratis'
+blog:
+  title: 'Blog'
+  subtitle: 'Notas del equipo de Driftwave.'
+footer:
+  footnote: '© 2026 Driftwave, una empresa ficticia.'

@@ -205,3 +205,41 @@ test.describe('zones at 390px', () => {
     });
   }
 });
+
+const offset = (page: Page) =>
+  page.evaluate(() => document.documentElement.style.getPropertyValue('--scroll-padding-top'));
+
+test('a sticky header inside its own scroll box sets no document scroll offset', async ({
+  page,
+}) => {
+  await page.goto(PAGE_URL);
+  await expect(page.locator('[data-header]').first()).toHaveAttribute('data-header-ready', '');
+  expect(await offset(page)).toBe('');
+});
+
+test('a page-level sticky header sets the scroll offset to its height', async ({ page }) => {
+  await page.goto('/demos/saas');
+  const header = page.locator('[data-header]').first();
+  await expect(header).toHaveAttribute('data-header-ready', '');
+  const height = await header.evaluate((h) => (h as HTMLElement).offsetHeight);
+  await expect.poll(() => offset(page)).toBe(`${height}px`);
+});
+
+test('the scroll offset follows the header height on resize', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/demos/saas');
+  const header = page.locator('[data-header]').first();
+  await expect(header).toHaveAttribute('data-header-ready', '');
+  await page.setViewportSize({ width: 360, height: 800 });
+  const height = await header.evaluate((h) => (h as HTMLElement).offsetHeight);
+  await expect.poll(() => offset(page)).toBe(`${height}px`);
+});
+
+test('re-running init after astro:after-swap keeps a single offset', async ({ page }) => {
+  await page.goto('/demos/saas');
+  const header = page.locator('[data-header]').first();
+  await expect(header).toHaveAttribute('data-header-ready', '');
+  const before = await offset(page);
+  await page.evaluate(() => document.dispatchEvent(new Event('astro:after-swap')));
+  await expect.poll(() => offset(page)).toBe(before);
+});

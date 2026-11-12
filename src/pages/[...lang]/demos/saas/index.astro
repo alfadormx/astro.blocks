@@ -1,0 +1,191 @@
+---
+import SaasLayout from './_layouts/Layout.astro';
+import Hero from '~/components/blocks/composite/Hero.astro';
+import LogoCloud from '~/components/blocks/composite/LogoCloud.astro';
+import ItemsContent from '~/components/blocks/composite/ItemsContent.astro';
+import Content from '~/components/blocks/composite/Content.astro';
+import Pricing from '~/components/blocks/composite/Pricing.astro';
+import Testimonials from '~/components/blocks/composite/Testimonials.astro';
+import CallToAction from '~/components/blocks/composite/CallToAction.astro';
+import type { ItemProps } from '~/types/item.types';
+import type { PricingTier } from '~/types/pricing.types';
+import type { Testimonial } from '~/types/testimonials.types';
+import { renderRichText } from '~/utils/richText';
+import { localizedPaths, useCopy } from '../../../../../vendor/integration/copy/pages';
+import { FEATURE_ICONS, saasHome, saasLogos } from './_site';
+
+export const getStaticPaths = () => localizedPaths();
+
+type Props = { langCode: string; basePath: string };
+
+const { langCode, copy } = useCopy(Astro, 'saas');
+const home = saasHome(langCode);
+const metadata = { title: { default: copy.pageTitle } };
+const currency = langCode === 'en' ? 'USD' : 'EUR';
+
+const featureItems: ItemProps[] = Object.entries(copy.features.items).map(([key, item]) => ({
+  icon: { name: FEATURE_ICONS[key as keyof typeof FEATURE_ICONS] },
+  title: item.title,
+  content: item.content,
+  orientation: 'vertical',
+}));
+
+const tiers: PricingTier[] = Object.entries(copy.pricing.tiers).map(([key, tier]) => ({
+  name: tier.name,
+  description: tier.description,
+  price: { monthly: tier.monthly, yearly: tier.yearly },
+  currency,
+  period: { monthly: copy.pricing.perMonth, yearly: copy.pricing.perYear },
+  features: Object.values(tier.features),
+  action: { label: tier.action, href: `${home}#pricing` },
+  highlighted: key === 'team',
+  badge: key === 'team' ? copy.pricing.badge : undefined,
+}));
+
+const testimonials: Testimonial[] = Object.values(copy.testimonials.items).map((item) => ({
+  quote: item.quote,
+  author: { name: item.name, role: item.role },
+}));
+
+const faqItems: ItemProps[] = Object.values(copy.faq.items).map((item) => ({
+  title: item.question,
+  content: item.answer,
+}));
+---
+
+<SaasLayout langCode={langCode} metadata={metadata}>
+  <Hero
+    headline={{ tagline: copy.hero.tagline, title: copy.hero.title, subtitle: copy.hero.subtitle }}
+    container={{
+      minHeight: 'min-h-[80vh]',
+      background: { video: '/videos/demos/saas/hero.mp4', overlayClass: 'bg-base/70' },
+    }}
+    actions={[
+      {
+        label: copy.hero.primary,
+        href: `${home}#pricing`,
+        intent: 'primary',
+        variant: 'solid',
+        size: 'lg',
+        shape: 'pill',
+      },
+      {
+        label: copy.hero.secondary,
+        href: `${home}#features`,
+        variant: 'outline',
+        size: 'lg',
+        shape: 'pill',
+      },
+    ]}
+  />
+
+  <LogoCloud
+    headline={{ title: copy.logos.title, titleClass: 'text-base font-semibold text-muted' }}
+    logos={saasLogos(copy.logos.names)}
+    layout="marquee"
+    contentCarousel={{ ariaLabel: copy.logos.carouselLabel }}
+    container={{ class: 'bg-surface', content: { air: 'tight' } }}
+  />
+
+  <ItemsContent
+    headline={{
+      tagline: copy.features.tagline,
+      title: copy.features.title,
+      subtitle: copy.features.subtitle,
+      align: 'center',
+      anchorId: 'features',
+    }}
+    itemsGrid={{ columns: 3, gap: 'normal', items: featureItems }}
+  />
+
+  <Content
+    headline={{ tagline: copy.contentA.tagline, title: copy.contentA.title }}
+    image={{ src: '~/assets/images/demos/saas/content-a.jpg', alt: copy.contentA.imageAlt }}
+    action={{ label: copy.contentA.action, href: `${home}#pricing`, intent: 'primary' }}
+  >
+    <Fragment set:html={renderRichText(copy.contentA.body)} />
+  </Content>
+
+  <Content
+    headline={{ tagline: copy.contentB.tagline, title: copy.contentB.title }}
+    image={{ src: '~/assets/images/demos/saas/content-b.jpg', alt: copy.contentB.imageAlt }}
+    imagePosition="left"
+    container={{
+      background: {
+        image: '~/assets/images/demos/saas/background.jpg',
+        attachment: 'fixed',
+        overlayClass: 'bg-base/80 backdrop-blur-xl',
+      },
+    }}
+  >
+    <Fragment set:html={renderRichText(copy.contentB.body)} />
+  </Content>
+
+  <Pricing
+    headline={{
+      tagline: copy.pricing.tagline,
+      title: copy.pricing.title,
+      subtitle: copy.pricing.subtitle,
+      anchorId: 'pricing',
+    }}
+    tiers={tiers}
+    toggleGroup={{
+      label: copy.pricing.toggleLabel,
+      options: [{ label: copy.pricing.monthly, selected: true }, { label: copy.pricing.yearly }],
+    }}
+    billingAnnouncement={{
+      monthly: copy.pricing.announceMonthly,
+      yearly: copy.pricing.announceYearly,
+    }}
+  />
+
+  <Testimonials
+    headline={{
+      tagline: copy.testimonials.tagline,
+      title: copy.testimonials.title,
+      anchorId: 'testimonials',
+    }}
+    testimonials={testimonials}
+    layout="carousel"
+    contentCarousel={{ ariaLabel: copy.testimonials.carouselLabel }}
+    container={{ background: { class: 'bg-linear-to-b from-background to-surface' } }}
+  />
+
+  <ItemsContent
+    headline={{
+      tagline: copy.faq.tagline,
+      title: copy.faq.title,
+      align: 'center',
+      anchorId: 'faq',
+    }}
+    itemsGrid={{
+      columns: 2,
+      gap: 'loose',
+      items: faqItems,
+      defaultItemConfig: { orientation: 'vertical' },
+    }}
+    container={{ class: 'bg-surface' }}
+  />
+
+  <CallToAction
+    headline={{
+      tagline: copy.cta.tagline,
+      title: copy.cta.title,
+      subtitle: copy.cta.subtitle,
+      align: 'center',
+    }}
+    container={{
+      background: { image: '~/assets/images/demos/saas/cta.jpg', overlayClass: 'bg-base/60' },
+    }}
+    actions={[
+      {
+        label: copy.cta.primary,
+        href: `${home}#pricing`,
+        intent: 'primary',
+        variant: 'solid',
+        size: 'lg',
+        shape: 'pill',
+      },
+    ]}
+  />
+</SaasLayout>

@@ -22,11 +22,11 @@ inside:
 demos:
   tagline: 'Demos'
   title: 'Los bloques en un sitio'
-  subtitle: 'Páginas creadas con colecciones Markdown, en inglés y español, y un configurador 3D de producto.'
-  blog:
-    title: 'Blog'
-    content: 'Entradas con fecha, tiempo de lectura, etiquetas y paginación.'
-    link: 'Abrir el blog'
+  subtitle: 'Una landing de producto, páginas creadas con colecciones Markdown y un configurador 3D de producto, en inglés y español.'
+  saas:
+    title: 'Landing SaaS'
+    content: 'Un sitio de producto en una página, con precios, opiniones, preguntas frecuentes y un blog.'
+    link: 'Abrir la demo SaaS'
   work:
     title: 'Casos de estudio'
     content: 'Trabajos para clientes con resultados destacados y un mapa.'

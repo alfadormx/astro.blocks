@@ -16,7 +16,6 @@ const prefix = home && home.basePath !== '/' ? home.basePath : '';
 
 const items = [
   { label: copy.home, href: home?.basePath ?? '/' },
-  { label: copy.blog, href: collectionUrl('posts', langCode) },
   { label: copy.work, href: collectionUrl('cases', langCode) },
   { label: copy.events, href: collectionUrl('events', langCode) },
   { label: copy.configurator, href: `${prefix}/demos/jewellery-configurator` },
