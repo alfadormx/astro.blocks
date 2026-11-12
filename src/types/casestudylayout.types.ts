@@ -1,3 +1,4 @@
+import type { CarouselItem, ContentCarouselProps } from './contentcarousel.types';
 import type { EntryLayoutProps, EntryLocation } from './entrylayout.types';
 import type { MapProps } from './map.types';
 
@@ -12,6 +13,10 @@ export interface CaseStudyLayoutProps extends EntryLayoutProps {
   location?: EntryLocation;
   /** Map shown when `location` has coordinates; `false` hides it (default: zoom from the location or 13, height '320px'). */
   map?: Omit<MapProps, 'lat' | 'lon'> | false;
+  /** Images shown as a carousel after the body, before the map; renders only when non-empty. */
+  gallery?: CarouselItem[];
+  /** Configuration for the gallery ContentCarousel (default: { ariaLabel: per-language "Project gallery", defaultImageConfig: { layout: 'responsive', aspectRatio: 16 / 9, widths: [640, 960, 1280], sizes: '(min-width: 768px) 768px, 100vw' } }). */
+  contentCarousel?: Omit<ContentCarouselProps, 'items'>;
   /** Classes on the results list (`data-case-study-results`). */
   resultsClass?: string;
 }

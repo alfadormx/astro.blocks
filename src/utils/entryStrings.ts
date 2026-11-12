@@ -11,6 +11,7 @@ const en = {
   pageOf: 'Page {current} of {last}',
   tags: 'Tags',
   results: 'Results',
+  gallery: 'Project gallery',
 };
 
 export type EntryStrings = typeof en;
@@ -30,6 +31,7 @@ const STRINGS: Record<string, EntryStrings> = {
     pageOf: 'Página {current} de {last}',
     tags: 'Etiquetas',
     results: 'Resultados',
+    gallery: 'Galería del proyecto',
   },
 };
 

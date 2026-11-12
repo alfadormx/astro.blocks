@@ -1,8 +1,10 @@
 ---
 import { I18N } from 'site-config';
+import ContentCarousel from '~/components/blocks/composite/ContentCarousel.astro';
 import EntryLayoutBase from '~/components/blocks/composite/EntryLayoutBase.astro';
 import Map from '~/components/blocks/primitives/Map.astro';
 import type { CaseStudyLayoutProps } from '~/types/casestudylayout.types';
+import type { ContentCarouselProps } from '~/types/contentcarousel.types';
 import type { MapProps } from '~/types/map.types';
 import { formatDate, localeFor } from '~/utils/entryFormat';
 import { entryStrings } from '~/utils/entryStrings';
@@ -11,7 +13,17 @@ import { cn } from '~/utils/styles';
 
 type Props = CaseStudyLayoutProps;
 
-const { client, date, results = [], location, map, resultsClass, ...layout } = Astro.props;
+const {
+  client,
+  date,
+  results = [],
+  location,
+  map,
+  resultsClass,
+  gallery = [],
+  contentCarousel,
+  ...layout
+} = Astro.props;
 
 const locale = localeFor(layout.langCode, I18N);
 const strings = entryStrings(layout.langCode);
@@ -29,6 +41,19 @@ const mergedMap =
         lon: location!.lon!,
       }
     : undefined;
+const mergedContentCarousel = mergeConfigs<Omit<ContentCarouselProps, 'items'>>(
+  {},
+  {
+    ariaLabel: strings.gallery,
+    defaultImageConfig: {
+      layout: 'responsive',
+      aspectRatio: 16 / 9,
+      widths: [640, 960, 1280],
+      sizes: '(min-width: 768px) 768px, 100vw',
+    },
+  },
+  contentCarousel
+);
 ---
 
 <EntryLayoutBase {...layout}>
@@ -53,6 +78,11 @@ const mergedMap =
     </dl>
   )}
   <slot />
+  {gallery.length > 0 && (
+    <div slot="after" data-case-study-gallery>
+      <ContentCarousel {...mergedContentCarousel} items={gallery} />
+    </div>
+  )}
   {mergedMap && (
     <div slot="after" data-entry-map>
       <Map {...mergedMap} />

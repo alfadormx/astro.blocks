@@ -31,6 +31,38 @@ describe('CaseStudyCard', () => {
 });
 
 describe('CaseStudyLayout', () => {
+  const gallery = [
+    { src: 'https://images.unsplash.com/photo-1?w=10', alt: 'A', width: 800, height: 450 },
+    { src: 'https://images.unsplash.com/photo-2?w=10', alt: 'B', width: 800, height: 450 },
+  ];
+
+  it('renders the gallery as a carousel labelled in the layout language', async () => {
+    expect(await layout({ gallery })).toMatch(/data-carousel[\s\S]*?aria-label="Project gallery"/);
+    expect(await layout({ gallery, langCode: 'es' })).toContain(
+      'aria-label="Galería del proyecto"'
+    );
+  });
+
+  it('renders no carousel when the gallery is empty or absent', async () => {
+    expect(await layout({ gallery: [] })).not.toContain('data-carousel');
+    expect(await layout()).not.toContain('data-carousel');
+  });
+
+  it('places the gallery after the body and before the map', async () => {
+    const html = await layout({ gallery, location: { name: 'Here', lat: 1, lon: 2 } });
+    const body = html.indexOf('data-entry-body');
+    const carousel = html.indexOf('data-case-study-gallery');
+    const map = html.indexOf('data-entry-map');
+    expect(body).toBeLessThan(carousel);
+    expect(carousel).toBeLessThan(map);
+  });
+
+  it('lets contentCarousel override the gallery label', async () => {
+    expect(await layout({ gallery, contentCarousel: { ariaLabel: 'Shots' } })).toContain(
+      'aria-label="Shots"'
+    );
+  });
+
   it('renders results as a description list, value over label', async () => {
     const html = await layout({ results: [{ label: 'Conversion', value: '+38%' }] });
     expect(html).toMatch(/<dl[^>]*data-case-study-results/);
