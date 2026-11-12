@@ -262,6 +262,24 @@ var metadata = {
     </ModalBlock>
   </div>
 
+  <h3>Links Close the Modal</h3>
+  <p class="mb-4">
+    Following a link inside a modal closes it, so in-page anchors aren't left covered. Links that
+    open elsewhere, such as a new tab, leave it open.
+  </p>
+  <div class="p-8 bg-muted rounded-lg" data-doc-section="link-closes">
+    <Button data-modal-trigger="modal-link" label="Open Menu" />
+    <ModalBlock id="modal-link" size="sm">
+      <div class="flex flex-col gap-2 p-6">
+        <a href="#link-closes-target">Jump to the target</a>
+        <a href="#link-closes-target" target="_blank">
+          Open the target in a new tab
+        </a>
+      </div>
+    </ModalBlock>
+    <p id="link-closes-target">Target</p>
+  </div>
+
   <!-- API Reference -->
   <h3>API Reference</h3>
   <div class="overflow-x-auto">

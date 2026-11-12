@@ -137,6 +137,20 @@ const mergedCloseButton =
         }
       }
 
+      // Following a link in this tab closes its modal, so an in-page anchor is not left covered.
+      // Clicks that open elsewhere or are cancelled leave the user here, so the modal stays.
+      const link = target.closest<HTMLAnchorElement>('a[href]');
+      if (
+        link &&
+        !e.defaultPrevented &&
+        !(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) &&
+        link.target !== '_blank' &&
+        !link.hasAttribute('download')
+      ) {
+        const modal = link.closest('[data-modal]');
+        if (modal) (modal as HTMLElement).style.display = 'none';
+      }
+
       // Backdrop clicked (not modal content)
       if (target.hasAttribute('data-modal')) {
         const modal = target as HTMLElement;
