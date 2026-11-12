@@ -17,9 +17,11 @@ export type Props = {
   langCode?: string;
   metadata?: Partial<MetaData>;
   topmostContainer?: Partial<ContainerProps>;
+  /** Demo name rendered as `data-demo` on `<html>`, scoping a demo's token overrides. */
+  demo?: string;
 };
 
-const { langCode, metadata, topmostContainer } = Astro.props;
+const { langCode, metadata, topmostContainer, demo } = Astro.props;
 
 // Find the language configuration
 const currentLang =
@@ -48,7 +50,7 @@ const mergedTopmostContainer = mergeConfigs({}, defaultTopmostContainer, topmost
 ---
 
 <!doctype html>
-<html lang={htmlLang} dir={htmlDir}>
+<html lang={htmlLang} dir={htmlDir} data-demo={demo}>
   <head>
     <CommonMeta />
     <Favicons />
