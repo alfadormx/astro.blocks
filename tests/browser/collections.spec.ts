@@ -72,17 +72,17 @@ test.describe('blog demo', () => {
 
 test.describe('case study demo', () => {
   test('lists case studies in both languages', async ({ page }) => {
-    await page.goto('/demos/work');
+    await page.goto('/demos/portfolio/work');
     await expect(cardLinks(page)).toHaveCount(3);
-    await page.goto('/es/demos/work');
-    await expect(cardLinks(page)).toHaveCount(2);
+    await page.goto('/es/demos/portfolio/work');
+    await expect(cardLinks(page)).toHaveCount(3);
   });
 
   test('shows a map only on the entry with coordinates', async ({ page }) => {
-    await page.goto('/demos/work/ring-configurator');
+    await page.goto('/demos/portfolio/work/ring-configurator');
     await expect(page.locator('[data-entry-map]')).toHaveCount(1);
     await expect(page.locator('[data-case-study-results] dd')).toHaveCount(3);
-    await page.goto('/demos/work/docs-site');
+    await page.goto('/demos/portfolio/work/docs-site');
     await expect(page.locator('[data-entry-map]')).toHaveCount(0);
   });
 });
@@ -134,7 +134,10 @@ const BODY_PARTS = {
 };
 
 const EXTRA_PARTS: Record<string, [string, string]> = {
-  'case study result label': ['/demos/work/ring-configurator', '[data-case-study-results] dt'],
+  'case study result label': [
+    '/demos/portfolio/work/ring-configurator',
+    '[data-case-study-results] dt',
+  ],
   'event location': ['/demos/events/launch-meetup', '[data-entry-location]'],
   'pager status': ['/demos/saas/blog', '[data-collection-pager-status]'],
   'past badge': ['/demos/events', '[data-entry-card-badge]'],
@@ -190,7 +193,7 @@ test.describe('demo links', () => {
         .evaluateAll((as) => as.map((a) => a.getAttribute('href')!));
       expect(hrefs).toEqual([
         `${prefix}/demos/saas`,
-        `${prefix}/demos/work`,
+        `${prefix}/demos/portfolio`,
         `${prefix}/demos/events`,
         `${prefix}/demos/jewellery-configurator`,
       ]);
@@ -198,27 +201,24 @@ test.describe('demo links', () => {
     });
   }
 
-  test('the demo header links between the demos in the page language', async ({ page }) => {
-    await page.goto('/es/demos/work');
+  test('the demo header links between the remaining demos in the page language', async ({
+    page,
+  }) => {
+    await page.goto('/es/demos/events');
     const nav = page.locator('header nav').first();
-    await expect(nav.getByRole('link')).toHaveText([
-      'Inicio',
-      'Trabajos',
-      'Eventos',
-      'Configurador',
-    ]);
+    await expect(nav.getByRole('link')).toHaveText(['Inicio', 'Eventos', 'Configurador']);
     await expect(nav.getByRole('link', { name: 'Eventos' })).toHaveAttribute(
       'href',
       '/es/demos/events'
     );
-    await expect(page.getByRole('heading', { level: 1, name: 'Trabajos' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'Eventos' })).toBeVisible();
   });
 });
 
 test.describe('cover images', () => {
   for (const [href, selector] of [
-    ['/demos/work', '[data-entry-card] img'],
-    ['/demos/work/ring-configurator', '[data-entry-layout] img'],
+    ['/demos/portfolio/work', '[data-entry-card] img'],
+    ['/demos/portfolio/work/ring-configurator', '[data-entry-layout] img'],
   ]) {
     test(`crop to 16:9 on ${href}, whatever the source ratio`, async ({ page }) => {
       await page.goto(href);

@@ -1,0 +1,83 @@
+studio: 'Atelier North'
+nav:
+  work: 'Work'
+  about: 'About'
+  contact: 'Contact'
+  menuLabel: 'Open menu'
+footer:
+  footnote: 'Atelier North is a fictional studio. Photos from [Pexels](https://www.pexels.com).'
+home:
+  pageTitle: 'Atelier North — design and code for brands that ship'
+  hero:
+    tagline: 'Design & engineering studio'
+    title: 'We build sites people remember'
+    subtitle: 'Brand, product and web work for teams who care about the details.'
+    primary: 'See our work'
+    secondary: 'Start a project'
+    imageAlt: 'A designer at a white desk, seen from above, sketching beside a tablet and flowers'
+  work:
+    tagline: 'Selected work'
+    title: 'Recent projects'
+    view: 'View case'
+  testimonials:
+    tagline: 'Clients'
+    title: 'What our clients say'
+    items:
+      a:
+        quote: 'They turned a vague brief into a site our customers actually use. Sales followed.'
+        name: 'Maya Okafor'
+        role: 'Founder, Example Jewellers'
+      b:
+        quote: 'Clear plans, honest estimates and no surprises at launch. Rare in this business.'
+        name: 'Lucas Meyer'
+        role: 'CTO, Example Studio'
+      c:
+        quote: 'Our new design system cut weeks off every release. The team still talks about it.'
+        name: 'Sofia Marín'
+        role: 'Head of product, Example Co.'
+  cta:
+    title: 'Have a project in mind?'
+    subtitle: 'Tell us about it. We reply within two working days.'
+    action: 'Get in touch'
+about:
+  pageTitle: 'About — Atelier North'
+  title: 'A small studio, on purpose'
+  subtitle: 'Four people, one room, and a habit of finishing what we start.'
+  imageAlt: 'A bright studio desk with a laptop, a white chair and pencils in a cup'
+  body: |
+    We started Atelier North to work on fewer projects and do them properly. Every client works with the people who design and build their site, from the first call to launch day.
+
+    We care about **fast pages**, **readable type** and **accessible interfaces**, and we write the code we hand over as if we had to maintain it ourselves.
+  team:
+    title: 'The team'
+    members:
+      ana:
+        name: 'Ana Ortega'
+        role: 'Creative director'
+        photoAlt: 'Ana Ortega, smiling, in glasses and a denim jacket'
+      ben:
+        name: 'Ben Hollis'
+        role: 'Lead engineer'
+        photoAlt: 'Ben Hollis, in glasses and a white T-shirt'
+      chloe:
+        name: 'Chloe Varga'
+        role: 'Product designer'
+        photoAlt: 'Chloe Varga, with long fair hair and a blue top'
+      dan:
+        name: 'Dan Moreno'
+        role: 'Front-end developer'
+        photoAlt: 'Dan Moreno, arms crossed, in a blue T-shirt'
+contact:
+  pageTitle: 'Contact — Atelier North'
+  title: 'Start a project'
+  subtitle: 'Tell us what you are building and when you need it. We reply within two working days.'
+  fields:
+    name: 'Name'
+    email: 'Email'
+    company: 'Company'
+    message: 'Tell us about the project'
+  submit: 'Send'
+  mailtoMessage: 'Your mail app should open with the message ready to send.'
+work:
+  title: 'Work'
+  pageTitle: 'Work — Atelier North'

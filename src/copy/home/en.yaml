@@ -22,15 +22,15 @@ inside:
 demos:
   tagline: 'Demos'
   title: 'See the blocks in a site'
-  subtitle: 'A product landing page, pages built from Markdown collections and a 3D product configurator, in English and Spanish.'
+  subtitle: 'A product landing page, an agency portfolio, pages built from Markdown collections and a 3D product configurator, in English and Spanish.'
   saas:
     title: 'SaaS landing'
     content: 'A one-page product site with pricing, testimonials, FAQ and a blog.'
     link: 'Open the SaaS demo'
-  work:
-    title: 'Case studies'
-    content: 'Client work with headline results and a map.'
-    link: 'Open the case studies'
+  portfolio:
+    title: 'Portfolio'
+    content: 'An agency site with case studies, project galleries, a team page and a contact form.'
+    link: 'Open the portfolio'
   events:
     title: 'Events'
     content: 'Upcoming and past events, each in its own time zone.'

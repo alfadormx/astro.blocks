@@ -1,0 +1,83 @@
+studio: 'Atelier North'
+nav:
+  work: 'Proyectos'
+  about: 'Estudio'
+  contact: 'Contacto'
+  menuLabel: 'Abrir menú'
+footer:
+  footnote: 'Atelier North es un estudio ficticio. Fotos de [Pexels](https://www.pexels.com).'
+home:
+  pageTitle: 'Atelier North — diseño y código para marcas que lanzan'
+  hero:
+    tagline: 'Estudio de diseño e ingeniería'
+    title: 'Creamos sitios que se recuerdan'
+    subtitle: 'Marca, producto y web para equipos que cuidan los detalles.'
+    primary: 'Ver proyectos'
+    secondary: 'Empezar un proyecto'
+    imageAlt: 'Una diseñadora en un escritorio blanco, vista desde arriba, dibujando junto a una tableta y flores'
+  work:
+    tagline: 'Proyectos destacados'
+    title: 'Proyectos recientes'
+    view: 'Ver caso'
+  testimonials:
+    tagline: 'Clientes'
+    title: 'Lo que dicen nuestros clientes'
+    items:
+      a:
+        quote: 'Convirtieron un encargo difuso en un sitio que nuestros clientes usan de verdad. Las ventas llegaron después.'
+        name: 'Maya Okafor'
+        role: 'Fundadora, Example Jewellers'
+      b:
+        quote: 'Planes claros, estimaciones honestas y ninguna sorpresa en el lanzamiento. Algo raro en este oficio.'
+        name: 'Lucas Meyer'
+        role: 'CTO, Example Studio'
+      c:
+        quote: 'El nuevo sistema de diseño nos ahorró semanas en cada versión. El equipo aún habla de ello.'
+        name: 'Sofía Marín'
+        role: 'Directora de producto, Example Co.'
+  cta:
+    title: '¿Tienes un proyecto en mente?'
+    subtitle: 'Cuéntanoslo. Respondemos en dos días laborables.'
+    action: 'Escríbenos'
+about:
+  pageTitle: 'Estudio — Atelier North'
+  title: 'Un estudio pequeño, a propósito'
+  subtitle: 'Cuatro personas, una sala y la costumbre de terminar lo que empezamos.'
+  imageAlt: 'Un escritorio luminoso con un portátil, una silla blanca y lápices en un vaso'
+  body: |
+    Fundamos Atelier North para trabajar en menos proyectos y hacerlos bien. Cada cliente trabaja con las personas que diseñan y construyen su sitio, desde la primera llamada hasta el lanzamiento.
+
+    Nos importan las **páginas rápidas**, la **tipografía legible** y las **interfaces accesibles**, y escribimos el código que entregamos como si tuviéramos que mantenerlo nosotros.
+  team:
+    title: 'El equipo'
+    members:
+      ana:
+        name: 'Ana Ortega'
+        role: 'Directora creativa'
+        photoAlt: 'Ana Ortega, sonriente, con gafas y chaqueta vaquera'
+      ben:
+        name: 'Ben Hollis'
+        role: 'Ingeniero principal'
+        photoAlt: 'Ben Hollis, con gafas y camiseta blanca'
+      chloe:
+        name: 'Chloe Varga'
+        role: 'Diseñadora de producto'
+        photoAlt: 'Chloe Varga, con pelo largo y claro y una blusa azul'
+      dan:
+        name: 'Dan Moreno'
+        role: 'Desarrollador front-end'
+        photoAlt: 'Dan Moreno, de brazos cruzados, con camiseta azul'
+contact:
+  pageTitle: 'Contacto — Atelier North'
+  title: 'Empieza un proyecto'
+  subtitle: 'Cuéntanos qué estás construyendo y para cuándo lo necesitas. Respondemos en dos días laborables.'
+  fields:
+    name: 'Nombre'
+    email: 'Correo electrónico'
+    company: 'Empresa'
+    message: 'Háblanos del proyecto'
+  submit: 'Enviar'
+  mailtoMessage: 'Tu aplicación de correo debería abrirse con el mensaje listo para enviar.'
+work:
+  title: 'Proyectos'
+  pageTitle: 'Proyectos — Atelier North'

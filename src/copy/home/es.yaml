@@ -22,15 +22,15 @@ inside:
 demos:
   tagline: 'Demos'
   title: 'Los bloques en un sitio'
-  subtitle: 'Una landing de producto, páginas creadas con colecciones Markdown y un configurador 3D de producto, en inglés y español.'
+  subtitle: 'Una landing de producto, el portfolio de una agencia, páginas creadas con colecciones Markdown y un configurador 3D de producto, en inglés y español.'
   saas:
     title: 'Landing SaaS'
     content: 'Un sitio de producto en una página, con precios, opiniones, preguntas frecuentes y un blog.'
     link: 'Abrir la demo SaaS'
-  work:
-    title: 'Casos de estudio'
-    content: 'Trabajos para clientes con resultados destacados y un mapa.'
-    link: 'Abrir los casos de estudio'
+  portfolio:
+    title: 'Portfolio'
+    content: 'El sitio de una agencia con casos de estudio, galerías de proyectos, una página de equipo y un formulario de contacto.'
+    link: 'Abrir el portfolio'
   events:
     title: 'Eventos'
     content: 'Eventos próximos y pasados, cada uno en su zona horaria.'

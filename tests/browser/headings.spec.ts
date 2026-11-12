@@ -30,8 +30,9 @@ const collectionPages = [
   '/demos/saas/blog',
   '/demos/saas/blog/hello-world',
   '/es/demos/saas/blog',
-  '/demos/work',
-  '/demos/work/ring-configurator',
+  '/demos/portfolio/work',
+  '/demos/portfolio/work/ring-configurator',
+  '/es/demos/portfolio/work/renovacion-de-marca',
   '/demos/events',
   '/demos/events/launch-meetup',
 ];
