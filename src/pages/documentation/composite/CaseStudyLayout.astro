@@ -59,5 +59,34 @@ const location = {
     </CaseStudyLayoutBlock>
   </div>
 
+  <h3>3. Gallery</h3>
+  <p>
+    <code>gallery</code> renders a ContentCarousel after the body; <code>contentCarousel</code>{' '}
+    configures it.
+  </p>
+  <div data-doc-section="gallery">
+    <CaseStudyLayoutBlock
+      headline={{ title: 'Brand refresh', htmlTag: 'h2' }}
+      client="Example Co."
+      date={new Date('2025-11-20T12:00:00Z')}
+      gallery={[
+        {
+          src: '~/assets/images/demos/portfolio/brand-refresh-1.jpg',
+          alt: 'Wireframe sketches in a spiral notebook, next to a phone',
+        },
+        {
+          src: '~/assets/images/demos/portfolio/brand-refresh-2.jpg',
+          alt: 'Close-up of hand-drawn wireframes',
+        },
+        {
+          src: '~/assets/images/demos/portfolio/brand-refresh-3.jpg',
+          alt: 'A laptop screen showing a grid of images',
+        },
+      ]}
+    >
+      <p>Semantic colour tokens replaced raw palette values across the site.</p>
+    </CaseStudyLayoutBlock>
+  </div>
+
   <ApiReferenceTable component="CaseStudyLayout" category="composite" />
 </Layout>

@@ -223,6 +223,7 @@ function toLayout(
         date: study.date,
         results: study.results,
         location: study.location,
+        gallery: study.gallery,
       } satisfies CaseStudyLayoutProps;
     }
     case 'event': {

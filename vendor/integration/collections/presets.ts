@@ -40,6 +40,7 @@ export const caseStudySchema = baseEntrySchema.extend({
   client: z.string(),
   results: z.array(z.object({ label: z.string(), value: z.string() })).optional(),
   location: locationSchema.optional(),
+  gallery: z.array(imageSchema).optional(),
 });
 
 export const eventSchema = baseEntrySchema.extend({
