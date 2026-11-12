@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Plus+Jakarta+Sans:wght@500..800&display=swap');
+
+[data-demo='saas'] {
+  --font-title: 'Plus Jakarta Sans', sans-serif;
+  --font-subtitle: 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --color-primary: var(--color-mauve);
+  --color-primary-hover: var(--color-mauve-600);
+  --color-secondary: var(--color-pink);
+  --color-secondary-hover: var(--color-pink-600);
+  --color-accent: var(--color-teal);
+  --color-accent-hover: var(--color-teal-600);
+  --color-interactive: var(--color-mauve);
+  --color-interactive-hover: var(--color-mauve-600);
+  --color-muted: var(--color-subtext1);
+
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+}
+
+[data-demo='saas'][data-theme='dark'] {
+  --color-secondary: var(--color-flamingo);
+}

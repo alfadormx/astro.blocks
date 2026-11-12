@@ -87,6 +87,6 @@ analytics:
 
 collections:
   timezone: 'Europe/Madrid'
-  posts: { preset: post, route: /demos/blog, pageSize: 2 }
+  posts: { preset: post, route: /demos/saas/blog, pageSize: 2 }
   cases: { preset: caseStudy, route: /demos/work }
   events: { preset: event, route: /demos/events }

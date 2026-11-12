@@ -79,7 +79,12 @@ const topClasses = cn(
 );
 ---
 
-<div class={topClasses} {...attrs} data-header>
+<div
+  class={topClasses}
+  {...attrs}
+  data-header
+  data-header-sticky={isSticky || isFloating ? '' : undefined}
+>
   <Container {...mergedContainerConfig}>
     <div class={cn('flex flex-wrap items-center gap-y-2', className)} data-header-row>
       <!-- Left Zone: leftButtons + leftNavigationTreeHorizontal -->
@@ -120,33 +125,63 @@ const topClasses = cn(
 </div>
 
 <script>
-  (function () {
-    const initHeaderScroll = () => {
-      const header = document.querySelector('[data-header]');
-      if (!header) return;
-      if (window.__headerScrollInitialized) return;
+  const OFFSET_VAR = '--scroll-padding-top';
 
-      const handleScroll = () => {
-        const headerHeight = (header as HTMLElement).offsetHeight;
-        if (window.scrollY > headerHeight) {
-          header.setAttribute('data-scrolled', 'true');
-        } else {
-          header.removeAttribute('data-scrolled');
-        }
-      };
-
-      // Initial check
-      handleScroll();
-
-      // Listen to scroll
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      window.__headerScrollInitialized = true;
-    };
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initHeaderScroll);
-    } else {
-      initHeaderScroll();
+  // A sticky header inside its own scroll box covers nothing the document scrolls to.
+  function scrollsWithDocument(el: HTMLElement): boolean {
+    for (let node = el.parentElement; node && node !== document.body; node = node.parentElement) {
+      const { overflowY } = getComputedStyle(node);
+      if (overflowY === 'auto' || overflowY === 'scroll') return false;
     }
-  })();
+    return true;
+  }
+
+  function initHeaders() {
+    window.__headerOffsetObserver?.disconnect();
+    window.__headerOffsetObserver = undefined;
+    document.documentElement.style.removeProperty(OFFSET_VAR);
+
+    const headers = [...document.querySelectorAll<HTMLElement>('[data-header]')];
+    const sticky = headers.filter(
+      (h) => h.hasAttribute('data-header-sticky') && scrollsWithDocument(h)
+    );
+
+    if (sticky.length) {
+      let frame = 0;
+      const write = () => {
+        frame = 0;
+        const height = Math.max(...sticky.map((h) => h.offsetHeight));
+        document.documentElement.style.setProperty(OFFSET_VAR, `${height}px`);
+      };
+      const observer = new ResizeObserver(() => {
+        if (!frame) frame = requestAnimationFrame(write);
+      });
+      sticky.forEach((h) => observer.observe(h));
+      window.__headerOffsetObserver = observer;
+      write();
+    }
+
+    headers.forEach((h) => (h.dataset.headerReady = ''));
+  }
+
+  function initHeaderScroll() {
+    const header = document.querySelector<HTMLElement>('[data-header]');
+    if (!header || window.__headerScrollInitialized) return;
+    const handleScroll = () => {
+      if (window.scrollY > header.offsetHeight) header.setAttribute('data-scrolled', 'true');
+      else header.removeAttribute('data-scrolled');
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.__headerScrollInitialized = true;
+  }
+
+  function init() {
+    initHeaders();
+    initHeaderScroll();
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+  document.addEventListener('astro:after-swap', initHeaders);
 </script>

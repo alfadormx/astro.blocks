@@ -7,22 +7,22 @@ const toggleLink = (page: Page, code: string) =>
 
 test.describe('blog demo', () => {
   test('lists posts in English and Spanish', async ({ page }) => {
-    await page.goto('/demos/blog');
+    await page.goto('/demos/saas/blog');
     await expect(cardLinks(page).first()).toBeVisible();
-    await page.goto('/es/demos/blog');
+    await page.goto('/es/demos/saas/blog');
     await expect(page.getByRole('link', { name: 'Hola, mundo', exact: true })).toBeVisible();
   });
 
   test('leaves an untranslated post out of the Spanish list', async ({ page, request }) => {
-    await page.goto('/es/demos/blog');
+    await page.goto('/es/demos/saas/blog');
     await expect(page.getByRole('link', { name: 'An English-only post' })).toHaveCount(0);
-    expect((await request.get('/es/demos/blog/third-post')).status()).toBe(404);
+    expect((await request.get('/es/demos/saas/blog/third-post')).status()).toBe(404);
   });
 
   test('makes each card one tab stop named by its title, and Enter follows it', async ({
     page,
   }) => {
-    await page.goto('/es/demos/blog');
+    await page.goto('/es/demos/saas/blog');
     const links = cardLinks(page);
     await expect(links).toHaveCount(2);
     const first = links.first();
@@ -39,34 +39,34 @@ test.describe('blog demo', () => {
   });
 
   test('switches language to the translated slug', async ({ page }) => {
-    await page.goto('/demos/blog/hello-world');
-    await expect(toggleLink(page, 'es')).toHaveAttribute('href', '/es/demos/blog/hola-mundo');
+    await page.goto('/demos/saas/blog/hello-world');
+    await expect(toggleLink(page, 'es')).toHaveAttribute('href', '/es/demos/saas/blog/hola-mundo');
     await toggleLink(page, 'es').focus();
     await page.keyboard.press('Enter');
     await expect(page.getByRole('heading', { level: 1, name: 'Hola, mundo' })).toBeVisible();
   });
 
   test('sends a missing translation to the other language list', async ({ page }) => {
-    await page.goto('/demos/blog/third-post');
-    await expect(toggleLink(page, 'es')).toHaveAttribute('href', '/es/demos/blog');
+    await page.goto('/demos/saas/blog/third-post');
+    await expect(toggleLink(page, 'es')).toHaveAttribute('href', '/es/demos/saas/blog');
   });
 
   test('switches a later list page to page 1 where the other language has fewer pages', async ({
     page,
   }) => {
-    await page.goto('/demos/blog/page/2');
-    await expect(toggleLink(page, 'es')).toHaveAttribute('href', '/es/demos/blog');
+    await page.goto('/demos/saas/blog/page/2');
+    await expect(toggleLink(page, 'es')).toHaveAttribute('href', '/es/demos/saas/blog');
   });
 
   test('pages the list from /page/2 and never serves /page/1', async ({ page, request }) => {
-    await page.goto('/demos/blog');
+    await page.goto('/demos/saas/blog');
     const pager = page.locator('[data-collection-pager]');
     await expect(pager.getByRole('link')).toHaveText([/Next/]);
     await pager.getByRole('link', { name: /Next/ }).click();
-    await expect(page).toHaveURL(/\/demos\/blog\/page\/2$/);
+    await expect(page).toHaveURL(/\/demos\/saas\/blog\/page\/2$/);
     await expect(pager).toContainText('Page 2 of 2');
     await expect(pager.getByRole('link')).toHaveText([/Previous/]);
-    expect((await request.get('/demos/blog/page/1')).status()).toBe(404);
+    expect((await request.get('/demos/saas/blog/page/1')).status()).toBe(404);
   });
 });
 
@@ -136,7 +136,7 @@ const BODY_PARTS = {
 const EXTRA_PARTS: Record<string, [string, string]> = {
   'case study result label': ['/demos/work/ring-configurator', '[data-case-study-results] dt'],
   'event location': ['/demos/events/launch-meetup', '[data-entry-location]'],
-  'pager status': ['/demos/blog', '[data-collection-pager-status]'],
+  'pager status': ['/demos/saas/blog', '[data-collection-pager-status]'],
   'past badge': ['/demos/events', '[data-entry-card-badge]'],
 };
 
@@ -154,7 +154,7 @@ for (const theme of ['light', 'dark']) {
 
     for (const [part, selector] of Object.entries(BODY_PARTS)) {
       test(`post body ${part} reaches 4.5:1`, async ({ page }) => {
-        await page.goto('/demos/blog/hello-world');
+        await page.goto('/demos/saas/blog/hello-world');
         await setTheme(page);
         expect(await contrastRatio(page.locator(selector).first())).toBeGreaterThanOrEqual(4.5);
       });
@@ -170,7 +170,7 @@ for (const theme of ['light', 'dark']) {
 
     for (const [part, selector] of Object.entries(CARD_PARTS)) {
       test(`card ${part} reaches 4.5:1`, async ({ page }) => {
-        await page.goto('/demos/blog');
+        await page.goto('/demos/saas/blog');
         await setTheme(page);
         expect(await contrastRatio(page.locator(selector).first())).toBeGreaterThanOrEqual(4.5);
       });
@@ -189,7 +189,7 @@ test.describe('demo links', () => {
         .locator('a[href*="/demos/"]')
         .evaluateAll((as) => as.map((a) => a.getAttribute('href')!));
       expect(hrefs).toEqual([
-        `${prefix}/demos/blog`,
+        `${prefix}/demos/saas`,
         `${prefix}/demos/work`,
         `${prefix}/demos/events`,
         `${prefix}/demos/jewellery-configurator`,
@@ -203,7 +203,6 @@ test.describe('demo links', () => {
     const nav = page.locator('header nav').first();
     await expect(nav.getByRole('link')).toHaveText([
       'Inicio',
-      'Blog',
       'Trabajos',
       'Eventos',
       'Configurador',

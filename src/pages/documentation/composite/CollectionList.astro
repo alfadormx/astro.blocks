@@ -10,7 +10,7 @@ const entries: CollectionListEntry[] = [
   {
     preset: 'post',
     headline: { title: 'Hello, world' },
-    href: '/demos/blog/hello-world',
+    href: '/demos/saas/blog/hello-world',
     description: 'Why this library ships Markdown collections.',
     date: new Date('2026-10-01T12:00:00Z'),
     readingTime: 1,
@@ -23,7 +23,7 @@ const entries: CollectionListEntry[] = [
   {
     preset: 'post',
     headline: { title: 'Writing in two languages' },
-    href: '/demos/blog/second-post',
+    href: '/demos/saas/blog/second-post',
     description: 'Translations live in a folder per language and link by filename.',
     date: new Date('2026-10-15T12:00:00Z'),
     readingTime: 2,
@@ -36,7 +36,7 @@ const entries: CollectionListEntry[] = [
   {
     preset: 'post',
     headline: { title: 'An English-only post' },
-    href: '/demos/blog/third-post',
+    href: '/demos/saas/blog/third-post',
     description: 'This entry has no Spanish translation.',
     date: new Date('2026-11-01T12:00:00Z'),
     tags: ['i18n'],
@@ -78,7 +78,7 @@ const mixed: CollectionListEntry[] = [
   <p>
     On a list page, <code>renderList</code> returns <code>entries</code> and <code>page</code>. Each
     entry carries its <code>preset</code>, which picks the card. See the
-    <a href="/demos/blog">blog demo</a>.
+    <a href="/demos/saas/blog">blog demo</a>.
   </p>
   <div data-doc-section="grid">
     <CollectionListBlock entries={entries} />
@@ -111,7 +111,7 @@ const mixed: CollectionListEntry[] = [
   <div data-doc-section="pager">
     <CollectionListBlock
       entries={entries.slice(0, 2)}
-      page={{ currentPage: 2, lastPage: 3, url: { prev: '/demos/blog', next: '#page-3' } }}
+      page={{ currentPage: 2, lastPage: 3, url: { prev: '/demos/saas/blog', next: '#page-3' } }}
     />
   </div>
 
