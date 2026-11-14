@@ -41,17 +41,10 @@ const externalUrl = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=
 </div>
 
 <script>
-  import L from 'leaflet';
-  import 'leaflet/dist/leaflet.css';
-
-  // Fix default marker icon paths broken by Vite's asset bundling.
-  // Must delete _getIconUrl first so mergeOptions actually takes effect.
+  import type * as Leaflet from 'leaflet';
   import iconUrl from 'leaflet/dist/images/marker-icon.png?url';
   import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png?url';
   import shadowUrl from 'leaflet/dist/images/marker-shadow.png?url';
-
-  delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)['_getIconUrl'];
-  L.Icon.Default.mergeOptions({ iconUrl, iconRetinaUrl, shadowUrl });
 
   type MapConfig = {
     lat: number;
@@ -61,6 +54,8 @@ const externalUrl = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=
     showMarker: boolean;
     markerTitle?: string;
   };
+
+  const ROOT_MARGIN = '200px';
 
   const tileUrls: Record<string, string> = {
     mapnik: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -82,23 +77,67 @@ const externalUrl = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=
     topo: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://opentopomap.org">OpenTopoMap</a>',
   };
 
-  document.querySelectorAll<HTMLElement>('[data-map-config]').forEach((el) => {
-    const config: MapConfig = JSON.parse(el.dataset.mapConfig ?? '{}');
-    const { lat, lon, zoom, layer, showMarker, markerTitle } = config;
+  let leaflet: Promise<typeof Leaflet> | undefined;
 
+  function loadLeaflet(): Promise<typeof Leaflet> {
+    leaflet ??= Promise.all([import('leaflet'), import('leaflet/dist/leaflet.css')])
+      .then(([mod]) => {
+        const L = (mod as { default?: typeof Leaflet }).default ?? mod;
+        // Vite's asset bundling breaks the default marker paths; _getIconUrl must go first
+        // or mergeOptions has no effect.
+        delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)['_getIconUrl'];
+        L.Icon.Default.mergeOptions({ iconUrl, iconRetinaUrl, shadowUrl });
+        return L;
+      })
+      .catch((err) => {
+        leaflet = undefined;
+        throw err;
+      });
+    return leaflet;
+  }
+
+  async function buildMap(el: HTMLElement): Promise<void> {
+    const L = await loadLeaflet();
+    const { lat, lon, zoom, layer, showMarker, markerTitle }: MapConfig = JSON.parse(
+      el.dataset.mapConfig ?? '{}'
+    );
     const map = L.map(el).setView([lat, lon], zoom);
-
     L.tileLayer(tileUrls[layer] ?? tileUrls.mapnik, {
       attribution: tileAttributions[layer] ?? tileAttributions.mapnik,
       subdomains: tileSubdomains[layer] ?? 'abc',
       maxZoom: 19,
     }).addTo(map);
-
     if (showMarker) {
       const marker = L.marker([lat, lon]).addTo(map);
-      if (markerTitle) {
-        marker.bindPopup(markerTitle).openPopup();
-      }
+      if (markerTitle) marker.bindPopup(markerTitle).openPopup();
     }
-  });
+    el.dataset.mapReady = '';
+  }
+
+  const seen = new WeakSet<HTMLElement>();
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        const el = entry.target as HTMLElement;
+        observer.unobserve(el);
+        buildMap(el).catch((err) => {
+          console.error(err);
+          observer.observe(el);
+        });
+      }
+    },
+    { rootMargin: ROOT_MARGIN }
+  );
+
+  function initMaps(): void {
+    document.querySelectorAll<HTMLElement>('[data-map-config]').forEach((el) => {
+      if (seen.has(el)) return;
+      seen.add(el);
+      observer.observe(el);
+    });
+  }
+
+  initMaps();
+  document.addEventListener('astro:after-swap', initMaps);
 </script>

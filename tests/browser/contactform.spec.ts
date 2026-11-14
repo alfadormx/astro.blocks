@@ -219,9 +219,10 @@ test.describe('ContactForm aside', () => {
   });
 
   for (const name of ['aside', 'aside-left']) {
-    test(`a Map in the ${name} demo initialises`, async ({ page }) => {
+    test(`a Map in the ${name} demo initialises once scrolled into view`, async ({ page }) => {
       const map = section(page, name).locator('[data-map-config]');
-      await expect(map).toBeVisible();
+      await map.scrollIntoViewIfNeeded();
+      await expect(map).toHaveAttribute('data-map-ready', '');
       await expect(map).toHaveClass(/leaflet-container/);
     });
   }
