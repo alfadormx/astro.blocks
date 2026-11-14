@@ -8,7 +8,6 @@ import Hero from '~/components/blocks/composite/Hero.astro';
 import ItemsContent from '~/components/blocks/composite/ItemsContent.astro';
 import { documentationNavigation } from '~/data/documentationNavigation';
 import { getGroupChildLabels } from '~/utils/navigationGroups';
-import { collectionUrl } from '../../../vendor/integration/collections/pages';
 import { localizedPaths, useCopy } from '../../../vendor/integration/copy/pages';
 
 type Language = (typeof I18N.languages)[number];
@@ -52,7 +51,11 @@ const demoItems = [
     href: `${basePath === '/' ? '' : basePath}/demos/portfolio`,
     icon: 'heroicons:photo',
   },
-  { copy: copy.demos.events, href: collectionUrl('events', langCode), icon: 'heroicons:calendar' },
+  {
+    copy: copy.demos.local,
+    href: `${basePath === '/' ? '' : basePath}/demos/local`,
+    icon: 'heroicons:map-pin',
+  },
   {
     copy: copy.demos.configurator,
     href: `${basePath === '/' ? '' : basePath}/demos/jewellery-configurator`,

@@ -1,19 +1,19 @@
 ---
-title: Encuentro de lanzamiento de colecciones
-description: Un repaso a presets, ayudantes de página y textos localizados, con tiempo para preguntas.
+title: Cata de otoño
+description: Prueba los panes y la bollería de la nueva temporada con café de tres de nuestros orígenes.
 start: 2030-03-12T18:00:00+01:00
 end: 2030-03-12T20:00:00+01:00
 slug: encuentro-de-lanzamiento
-tags: [encuentro]
+tags: [cata]
 location:
-  name: Sala Example
-  address: Gran Vía 1, Madrid
-  lat: 40.4203
+  name: Olmo Café & Panadería
+  address: Calle del Pez 12, Madrid
+  lat: 40.4227
   lon: -3.7058
 registrationUrl: https://example.com/register/launch
 cover:
-  src: ~/assets/images/content/conference-audience.jpg
-  alt: Público sentado en una gran sala de conferencias
+  src: ~/assets/images/demos/local/event-tasting.jpg
+  alt: Un mostrador de pastelería con tartas, pasteles y rosquillas
 ---
 
-Las puertas abren a las seis. Trae un portátil si quieres seguirlo.
+Las puertas abren a las seis. Hay veinte plazas, así que inscríbete antes.

@@ -21,14 +21,14 @@ const metadata = { title: { default: 'EventCard' } };
   </p>
   <div data-doc-section="upcoming" class="max-w-sm">
     <EventCardBlock
-      headline={{ title: 'Blocks workshop in New York' }}
-      href="/demos/events/new-york-workshop"
-      description="A hands-on afternoon building a site from the blocks."
+      headline={{ title: 'New York bagel workshop' }}
+      href="/demos/local/events/new-york-workshop"
+      description="Our guest baker from Brooklyn shows how to boil, seed and bake a proper bagel."
       start={new Date('2030-05-20T17:00:00Z')}
       end={new Date('2030-05-20T21:00:00Z')}
       timezone="America/New_York"
       location={{ name: 'Example Loft, Brooklyn' }}
-      tags={['workshop']}
+      tags={['workshop', 'guest']}
     />
   </div>
 
@@ -39,8 +39,8 @@ const metadata = { title: { default: 'EventCard' } };
   </p>
   <div data-doc-section="past" class="max-w-sm">
     <EventCardBlock
-      headline={{ title: 'Accessibility webinar' }}
-      href="/demos/events/accessibility-webinar"
+      headline={{ title: 'Online sourdough class' }}
+      href="/demos/local/events/accessibility-webinar"
       start={new Date('2026-02-04T15:00:00Z')}
       end={new Date('2026-02-04T16:00:00Z')}
       timezone="Europe/Madrid"

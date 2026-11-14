@@ -1,12 +1,12 @@
 ---
 import Layout from '~/layouts/Layout.astro';
 import Footer from '~/components/blocks/composite/Footer.astro';
+import Header from '~/components/blocks/composite/Header.astro';
 import Configurator from '~/components/blocks/composite/Configurator.astro';
 import type { ConfiguratorProps } from '~/types/configurator.types';
 import type { ImageProps } from '~/types/image.types';
 import type { ModelViewerMutation } from '~/types/modelviewer.types';
 import { localizedPaths, useCopy } from '../../../../vendor/integration/copy/pages';
-import DemoHeader from './_DemoHeader.astro';
 
 export const getStaticPaths = () => localizedPaths();
 
@@ -254,7 +254,12 @@ const actions: ConfiguratorProps['actions'] = [
 ---
 
 <Layout langCode={langCode} metadata={metadata}>
-  <DemoHeader langCode={langCode} />
+  <Header
+    leftNavigationTreeHorizontal={{
+      items: [{ label: copy.homeLabel, href: Astro.props.basePath }],
+    }}
+    themeToggle={{}}
+  />
   <Configurator
     categories={categories}
     modelViewer={modelViewer}
