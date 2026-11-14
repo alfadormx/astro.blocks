@@ -89,19 +89,19 @@ test.describe('case study demo', () => {
 
 test.describe('event demo', () => {
   test('lists upcoming events first, then past ones with a badge', async ({ page }) => {
-    await page.goto('/demos/events');
+    await page.goto('/demos/local/events');
     await expect(cardLinks(page)).toHaveText([
-      'Collections launch meetup',
-      'Blocks workshop in New York',
-      'Accessibility webinar',
-      'Autumn documentation sprint',
+      'Autumn tasting evening',
+      'New York bagel workshop',
+      'Online sourdough class',
+      'Latte-art workshop',
     ]);
     const badges = page.locator('[data-entry-card]').locator('[data-entry-card-badge]');
     await expect(badges).toHaveText(['Past', 'Past']);
   });
 
   test('shows New York times in the event zone', async ({ page }) => {
-    await page.goto('/demos/events');
+    await page.goto('/demos/local/events');
     await expect(
       page
         .locator('[data-entry-card]', { hasText: 'New York' })
@@ -110,7 +110,7 @@ test.describe('event demo', () => {
   });
 
   test('links the Register button to the registration URL', async ({ page }) => {
-    await page.goto('/demos/events/launch-meetup');
+    await page.goto('/demos/local/events/launch-meetup');
     await expect(page.locator('[data-entry-register] a')).toHaveAttribute(
       'href',
       'https://example.com/register/launch'
@@ -119,7 +119,7 @@ test.describe('event demo', () => {
   });
 
   test('localises the Register label', async ({ page }) => {
-    await page.goto('/es/demos/events/encuentro-de-lanzamiento');
+    await page.goto('/es/demos/local/events/encuentro-de-lanzamiento');
     await expect(page.locator('[data-entry-register] a')).toHaveAccessibleName('Inscribirse');
   });
 });
@@ -138,9 +138,9 @@ const EXTRA_PARTS: Record<string, [string, string]> = {
     '/demos/portfolio/work/ring-configurator',
     '[data-case-study-results] dt',
   ],
-  'event location': ['/demos/events/launch-meetup', '[data-entry-location]'],
+  'event location': ['/demos/local/events/launch-meetup', '[data-entry-location]'],
   'pager status': ['/demos/saas/blog', '[data-collection-pager-status]'],
-  'past badge': ['/demos/events', '[data-entry-card-badge]'],
+  'past badge': ['/demos/local/events', '[data-entry-card-badge]'],
 };
 
 const CARD_PARTS = {
@@ -194,23 +194,27 @@ test.describe('demo links', () => {
       expect(hrefs).toEqual([
         `${prefix}/demos/saas`,
         `${prefix}/demos/portfolio`,
-        `${prefix}/demos/events`,
+        `${prefix}/demos/local`,
         `${prefix}/demos/jewellery-configurator`,
       ]);
       for (const href of hrefs) expect((await request.get(href)).status(), href).toBe(200);
     });
   }
 
-  test('the demo header links between the remaining demos in the page language', async ({
-    page,
-  }) => {
-    await page.goto('/es/demos/events');
-    const nav = page.locator('header nav').first();
-    await expect(nav.getByRole('link')).toHaveText(['Inicio', 'Eventos', 'Configurador']);
-    await expect(nav.getByRole('link', { name: 'Eventos' })).toHaveAttribute(
-      'href',
-      '/es/demos/events'
-    );
+  test('the local demo header marks Events current on the events list', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/es/demos/local/events');
+    const nav = page.locator('[data-header] nav').first();
+    await expect(nav.getByRole('link')).toHaveText([
+      'Servicios',
+      'Nosotros',
+      'Opiniones',
+      'Visítanos',
+      'Eventos',
+    ]);
+    const events = nav.getByRole('link', { name: 'Eventos' });
+    await expect(events).toHaveAttribute('href', '/es/demos/local/events');
+    await expect(events).toHaveAttribute('aria-current', 'page');
     await expect(page.getByRole('heading', { level: 1, name: 'Eventos' })).toBeVisible();
   });
 });

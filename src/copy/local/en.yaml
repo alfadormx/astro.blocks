@@ -1,0 +1,99 @@
+business:
+  name: 'Olmo Café & Bakery'
+  street: 'Calle del Pez 12'
+  postalCode: '28004'
+  locality: 'Madrid'
+  phoneLabel: '+34 910 000 000'
+nav:
+  services: 'Services'
+  about: 'About'
+  reviews: 'Reviews'
+  visit: 'Visit'
+  events: 'Events'
+  cta: 'Visit us'
+  menuLabel: 'Open menu'
+footer:
+  footnote: '**Olmo Café & Bakery** · Calle del Pez 12, 28004 Madrid · +34 910 000 000<br>A fictional business. Photos from [Pexels](https://www.pexels.com).'
+home:
+  pageTitle: 'Olmo Café & Bakery — coffee and bread in Malasaña, Madrid'
+  description: 'A neighbourhood café and bakery in Malasaña, Madrid: speciality coffee, sourdough bread, pastries and breakfast, seven days a week but Sunday.'
+  hero:
+    tagline: 'Malasaña, Madrid'
+    title: 'Fresh bread, good coffee, since 1998'
+    subtitle: 'A neighbourhood bakery that opens early, bakes everything on site and knows most customers by name.'
+    primary: 'See the menu'
+    secondary: 'Visit us'
+  services:
+    tagline: 'What we do'
+    title: 'From the oven and the bar'
+    items:
+      coffee:
+        title: 'Speciality coffee'
+        content: 'Single-origin beans roasted in Madrid, pulled as espresso or brewed by hand.'
+        imageAlt: 'A barista pouring latte art into a white cup'
+      bread:
+        title: 'Sourdough bread'
+        content: 'Slow-fermented loaves from our own starter, out of the oven by eight every morning.'
+        imageAlt: 'A seeded sourdough loaf, partly sliced, on a wooden board'
+      pastries:
+        title: 'Pastries'
+        content: 'Butter croissants, napolitanas and a seasonal tart that changes every week.'
+        imageAlt: 'A golden croissant on a wooden board'
+      breakfast:
+        title: 'Breakfast'
+        content: 'Toast with tomato and olive oil, eggs, yoghurt and fruit, served until noon.'
+        imageAlt: 'Avocado toast with greens on a white plate'
+  about:
+    tagline: 'Our story'
+    title: 'A neighbourhood bakery'
+    body: |
+      Olmo opened in 1998 as a two-oven bakery on Calle del Pez. The ovens are newer now, but the bread is still shaped by hand each night and baked before the street wakes up.
+
+      We added the coffee bar in 2012, when the neighbours kept asking for somewhere to sit. Today it is the place people meet before work, after school and on slow Saturday mornings.
+    imageAlt: 'A baker shaping dough on a floured table'
+  stats:
+    items:
+      founded: { title: '1998', content: 'Baking since' }
+      loaves: { title: '400+', content: 'Loaves a day' }
+      origins: { title: '6', content: 'Coffee origins' }
+      rating: { title: '4.8', content: 'Average review' }
+  reviews:
+    tagline: 'Reviews'
+    title: 'What the neighbours say'
+    sourceLabel: 'Google'
+    ratingLabel: '{rating} out of 5'
+    items:
+      a:
+        quote: 'The best sourdough in the neighbourhood, and the croissants sell out by ten for a reason.'
+        name: 'Lucía M.'
+        rating: 5
+      b:
+        quote: 'My daily stop before work. The flat white is consistent and the staff remember my order.'
+        name: 'Tom R.'
+        rating: 5
+      c:
+        quote: 'Lovely breakfast and a calm room. It gets busy at weekends, so come early.'
+        name: 'Andrea G.'
+        rating: 4
+  visit:
+    tagline: 'Visit'
+    title: 'Come by or write to us'
+    subtitle: 'For large orders, celebration cakes or anything else, send us a message and we will reply within a day.'
+    addressTitle: 'Address'
+    hoursTitle: 'Opening hours'
+    hours: |
+      - Monday to Friday: 7:30–19:00
+      - Saturday: 8:30–14:00
+      - Sunday: closed
+    phoneTitle: 'Phone'
+    mapTitle: 'Map of Olmo Café & Bakery'
+    fields:
+      name: 'Name'
+      email: 'Email'
+      phone: 'Phone'
+      message: 'Message'
+    submit: 'Send'
+    mailtoMessage: 'Your mail app should open with the message ready to send.'
+events:
+  title: 'Events'
+  pageTitle: 'Events — Olmo Café & Bakery'

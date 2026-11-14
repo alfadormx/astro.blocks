@@ -33,8 +33,9 @@ const collectionPages = [
   '/demos/portfolio/work',
   '/demos/portfolio/work/ring-configurator',
   '/es/demos/portfolio/work/renovacion-de-marca',
-  '/demos/events',
-  '/demos/events/launch-meetup',
+  '/demos/local/events',
+  '/demos/local/events/launch-meetup',
+  '/es/demos/local/events/encuentro-de-lanzamiento',
 ];
 
 for (const href of [...localePaths, ...demoPages, ...collectionPages, ...docsPages]) {

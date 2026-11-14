@@ -1,18 +1,18 @@
 ---
-title: Collections launch meetup
-description: A walk through presets, page helpers and localised copy, with time for questions.
+title: Autumn tasting evening
+description: Taste the new season's breads and pastries with coffee from three of our origins.
 start: 2030-03-12T18:00:00+01:00
 end: 2030-03-12T20:00:00+01:00
-tags: [meetup]
+tags: [tasting]
 location:
-  name: Example Hall
-  address: Gran Vía 1, Madrid
-  lat: 40.4203
+  name: Olmo Café & Bakery
+  address: Calle del Pez 12, Madrid
+  lat: 40.4227
   lon: -3.7058
 registrationUrl: https://example.com/register/launch
 cover:
-  src: ~/assets/images/content/conference-audience.jpg
-  alt: An audience seated in a large conference hall
+  src: ~/assets/images/demos/local/event-tasting.jpg
+  alt: A pastry counter laid out with cakes, tarts and doughnuts
 ---
 
-Doors open at six. Bring a laptop if you want to follow along.
+Doors open at six. Places are limited to twenty, so please register first.

@@ -22,7 +22,7 @@ inside:
 demos:
   tagline: 'Demos'
   title: 'Los bloques en un sitio'
-  subtitle: 'Una landing de producto, el portfolio de una agencia, páginas creadas con colecciones Markdown y un configurador 3D de producto, en inglés y español.'
+  subtitle: 'Una landing de producto, el portfolio de una agencia, una cafetería de barrio y un configurador 3D de producto, en inglés y español.'
   saas:
     title: 'Landing SaaS'
     content: 'Un sitio de producto en una página, con precios, opiniones, preguntas frecuentes y un blog.'
@@ -31,10 +31,10 @@ demos:
     title: 'Portfolio'
     content: 'El sitio de una agencia con casos de estudio, galerías de proyectos, una página de equipo y un formulario de contacto.'
     link: 'Abrir el portfolio'
-  events:
-    title: 'Eventos'
-    content: 'Eventos próximos y pasados, cada uno en su zona horaria.'
-    link: 'Abrir los eventos'
+  local:
+    title: 'Negocio local'
+    content: 'Una cafetería y panadería con servicios, opiniones, horario, mapa, formulario de contacto y eventos.'
+    link: 'Abrir la cafetería'
   configurator:
     title: 'Configurador de anillos'
     content: 'Un configurador 3D que guarda la selección en un código compartible.'

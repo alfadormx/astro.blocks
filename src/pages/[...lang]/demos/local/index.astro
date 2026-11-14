@@ -1,0 +1,177 @@
+---
+import LocalLayout from './_layouts/Layout.astro';
+import Hero from '~/components/blocks/composite/Hero.astro';
+import ItemsContent from '~/components/blocks/composite/ItemsContent.astro';
+import ItemsGrid from '~/components/blocks/composite/ItemsGrid.astro';
+import Content from '~/components/blocks/composite/Content.astro';
+import Testimonials from '~/components/blocks/composite/Testimonials.astro';
+import ContactForm from '~/components/blocks/composite/ContactForm.astro';
+import MapBlock from '~/components/blocks/primitives/Map.astro';
+import type { ItemProps } from '~/types/item.types';
+import type { Testimonial } from '~/types/testimonials.types';
+import { renderRichText } from '~/utils/richText';
+import { localizedPaths, useCopy } from '../../../../../vendor/integration/copy/pages';
+import { CONTACT_ADDRESS, GEO, PHONE, localBusinessJsonLd, localHome } from './_site';
+
+export const getStaticPaths = () => localizedPaths();
+
+type Props = { langCode: string; basePath: string };
+
+const { langCode, copy } = useCopy(Astro, 'local');
+const { home: c, business } = copy;
+const homeUrl = localHome(langCode);
+const address = `${business.street}<br>${business.postalCode} ${business.locality}`;
+
+const metadata = {
+  title: { default: c.pageTitle },
+  description: c.description,
+  structuredData: localBusinessJsonLd(business, new URL(homeUrl, Astro.site ?? Astro.url).href),
+};
+
+const services: ItemProps[] = Object.entries(c.services.items).map(([key, item]) => ({
+  title: item.title,
+  content: item.content,
+  image: { src: `~/assets/images/demos/local/service-${key}.jpg`, alt: item.imageAlt },
+}));
+
+const stats: ItemProps[] = Object.values(c.stats.items);
+
+const testimonials: Testimonial[] = Object.values(c.reviews.items).map((review) => ({
+  quote: review.quote,
+  author: { name: review.name },
+  rating: review.rating as Testimonial['rating'],
+  source: { label: c.reviews.sourceLabel, href: 'https://example.com/reviews' },
+}));
+
+const visitItems: ItemProps[] = [
+  { icon: { name: 'heroicons:map-pin' }, title: c.visit.addressTitle, content: address },
+  { icon: { name: 'heroicons:clock' }, title: c.visit.hoursTitle, content: c.visit.hours },
+  {
+    icon: { name: 'heroicons:phone' },
+    title: c.visit.phoneTitle,
+    actions: [{ label: business.phoneLabel, href: `tel:${PHONE}`, variant: 'outline', size: 'sm' }],
+  },
+];
+---
+
+<LocalLayout langCode={langCode} metadata={metadata}>
+  <Hero
+    container={{
+      background: { image: '~/assets/images/demos/local/hero.jpg' },
+      minHeight: 'min-h-[70vh]',
+    }}
+    headline={{ tagline: c.hero.tagline, title: c.hero.title, subtitle: c.hero.subtitle }}
+    actions={[
+      {
+        label: c.hero.primary,
+        href: `${homeUrl}#services`,
+        intent: 'primary',
+        variant: 'solid',
+        size: 'lg',
+      },
+      { label: c.hero.secondary, href: `${homeUrl}#visit`, variant: 'outline', size: 'lg' },
+    ]}
+  />
+  <ItemsContent
+    headline={{
+      tagline: c.services.tagline,
+      title: c.services.title,
+      align: 'center',
+      anchorId: 'services',
+    }}
+    itemsGrid={{
+      columns: 4,
+      items: services,
+      defaultItemConfig: {
+        orientation: 'vertical',
+        image: {
+          layout: 'responsive',
+          aspectRatio: 4 / 3,
+          widths: [400, 800],
+          sizes: '(min-width: 1024px) 25vw, 100vw',
+          class: 'w-full h-auto rounded-lg',
+        },
+      },
+    }}
+  />
+  <Content
+    headline={{ tagline: c.about.tagline, title: c.about.title, anchorId: 'about' }}
+    image={{ src: '~/assets/images/demos/local/about.jpg', alt: c.about.imageAlt }}
+  >
+    <Fragment set:html={renderRichText(c.about.body)} />
+  </Content>
+  <ItemsContent
+    itemsGrid={{
+      columns: 4,
+      items: stats,
+      defaultItemConfig: {
+        orientation: 'vertical',
+        class: 'text-center items-center',
+        titleClass: 'font-title text-4xl text-primary',
+        textClass: 'text-muted',
+      },
+    }}
+  />
+  <Testimonials
+    headline={{ tagline: c.reviews.tagline, title: c.reviews.title, anchorId: 'reviews' }}
+    testimonials={testimonials}
+    layout="grid"
+    columns={3}
+    defaultTestimonialConfig={{ ratingLabel: c.reviews.ratingLabel }}
+  />
+  <ContactForm
+    headline={{
+      tagline: c.visit.tagline,
+      title: c.visit.title,
+      subtitle: c.visit.subtitle,
+      anchorId: 'visit',
+    }}
+    action={{ type: 'mailto', address: CONTACT_ADDRESS }}
+    fields={[
+      {
+        control: 'input',
+        name: 'name',
+        label: c.visit.fields.name,
+        required: true,
+        autocomplete: 'name',
+      },
+      {
+        control: 'input',
+        name: 'email',
+        type: 'email',
+        label: c.visit.fields.email,
+        required: true,
+        autocomplete: 'email',
+      },
+      {
+        control: 'input',
+        name: 'phone',
+        type: 'tel',
+        label: c.visit.fields.phone,
+        autocomplete: 'tel',
+      },
+      {
+        control: 'textarea',
+        name: 'message',
+        label: c.visit.fields.message,
+        required: true,
+        rows: 5,
+      },
+    ]}
+    submitButton={{ label: c.visit.submit }}
+    mailtoMessage={c.visit.mailtoMessage}
+    asideClass="flex flex-col gap-8"
+  >
+    <Fragment slot="aside">
+      <ItemsGrid columns={1} items={visitItems} defaultItemConfig={{ orientation: 'horizontal' }} />
+      <MapBlock
+        lat={GEO.lat}
+        lon={GEO.lon}
+        zoom={16}
+        height="280px"
+        title={c.visit.mapTitle}
+        markerTitle={business.name}
+      />
+    </Fragment>
+  </ContactForm>
+</LocalLayout>

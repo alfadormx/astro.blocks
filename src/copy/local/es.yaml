@@ -1,0 +1,99 @@
+business:
+  name: 'Olmo Café & Panadería'
+  street: 'Calle del Pez 12'
+  postalCode: '28004'
+  locality: 'Madrid'
+  phoneLabel: '+34 910 000 000'
+nav:
+  services: 'Servicios'
+  about: 'Nosotros'
+  reviews: 'Opiniones'
+  visit: 'Visítanos'
+  events: 'Eventos'
+  cta: 'Visítanos'
+  menuLabel: 'Abrir menú'
+footer:
+  footnote: '**Olmo Café & Panadería** · Calle del Pez 12, 28004 Madrid · +34 910 000 000<br>Un negocio ficticio. Fotos de [Pexels](https://www.pexels.com).'
+home:
+  pageTitle: 'Olmo Café & Panadería — café y pan en Malasaña, Madrid'
+  description: 'Una cafetería y panadería de barrio en Malasaña, Madrid: café de especialidad, pan de masa madre, bollería y desayunos, todos los días menos el domingo.'
+  hero:
+    tagline: 'Malasaña, Madrid'
+    title: 'Pan recién hecho y buen café desde 1998'
+    subtitle: 'Una panadería de barrio que abre temprano, lo hornea todo en casa y conoce a casi todos sus clientes por su nombre.'
+    primary: 'Ver la carta'
+    secondary: 'Visítanos'
+  services:
+    tagline: 'Lo que hacemos'
+    title: 'Del horno y de la barra'
+    items:
+      coffee:
+        title: 'Café de especialidad'
+        content: 'Granos de origen único tostados en Madrid, en espresso o en filtro.'
+        imageAlt: 'Un barista dibujando latte art en una taza blanca'
+      bread:
+        title: 'Pan de masa madre'
+        content: 'Hogazas de fermentación lenta con nuestra propia masa madre, fuera del horno antes de las ocho.'
+        imageAlt: 'Una hogaza de masa madre con semillas, en parte cortada, sobre una tabla'
+      pastries:
+        title: 'Bollería'
+        content: 'Cruasanes de mantequilla, napolitanas y una tarta de temporada que cambia cada semana.'
+        imageAlt: 'Un cruasán dorado sobre una tabla de madera'
+      breakfast:
+        title: 'Desayunos'
+        content: 'Tostada con tomate y aceite, huevos, yogur y fruta, hasta el mediodía.'
+        imageAlt: 'Tostada de aguacate con brotes en un plato blanco'
+  about:
+    tagline: 'Nuestra historia'
+    title: 'Una panadería de barrio'
+    body: |
+      Olmo abrió en 1998 como una panadería con dos hornos en la calle del Pez. Los hornos son más nuevos, pero el pan se sigue formando a mano cada noche y sale antes de que despierte la calle.
+
+      En 2012 añadimos la barra de café, porque los vecinos pedían un sitio donde sentarse. Hoy es donde la gente queda antes del trabajo, a la salida del colegio y los sábados por la mañana.
+    imageAlt: 'Un panadero formando masa sobre una mesa enharinada'
+  stats:
+    items:
+      founded: { title: '1998', content: 'Horneando desde' }
+      loaves: { title: '400+', content: 'Hogazas al día' }
+      origins: { title: '6', content: 'Orígenes de café' }
+      rating: { title: '4,8', content: 'Valoración media' }
+  reviews:
+    tagline: 'Opiniones'
+    title: 'Lo que dicen los vecinos'
+    sourceLabel: 'Google'
+    ratingLabel: '{rating} de 5'
+    items:
+      a:
+        quote: 'La mejor masa madre del barrio, y por algo los cruasanes se acaban antes de las diez.'
+        name: 'Lucía M.'
+        rating: 5
+      b:
+        quote: 'Mi parada diaria antes del trabajo. El flat white siempre está bien y se acuerdan de lo que pido.'
+        name: 'Tom R.'
+        rating: 5
+      c:
+        quote: 'Buen desayuno y un local tranquilo. Los fines de semana se llena, así que mejor ir pronto.'
+        name: 'Andrea G.'
+        rating: 4
+  visit:
+    tagline: 'Visítanos'
+    title: 'Pásate o escríbenos'
+    subtitle: 'Para pedidos grandes, tartas de celebración o cualquier otra cosa, mándanos un mensaje y te respondemos en un día.'
+    addressTitle: 'Dirección'
+    hoursTitle: 'Horario'
+    hours: |
+      - De lunes a viernes: 7:30–19:00
+      - Sábado: 8:30–14:00
+      - Domingo: cerrado
+    phoneTitle: 'Teléfono'
+    mapTitle: 'Mapa de Olmo Café & Panadería'
+    fields:
+      name: 'Nombre'
+      email: 'Correo electrónico'
+      phone: 'Teléfono'
+      message: 'Mensaje'
+    submit: 'Enviar'
+    mailtoMessage: 'Tu aplicación de correo debería abrirse con el mensaje listo para enviar.'
+events:
+  title: 'Eventos'
+  pageTitle: 'Eventos — Olmo Café & Panadería'
