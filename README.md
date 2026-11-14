@@ -77,6 +77,12 @@ Blocks live in `src/components/blocks/`, with prop types in `src/types/*.types.t
 
 `Metadata`, `CommonMeta`, `Favicons`, `Analytics` and `SiteVerification` are wired into `src/layouts/Layout.astro` and read from the site config.
 
+`metadata.structuredData` takes one schema.org object or an array of them, and `Metadata` emits each as its own `<script type="application/ld+json">` in `<head>`. It is page-only: it is not read from `config.yaml` or `metadata.localized`, where arrays would merge by index.
+
+```astro
+<Layout metadata={{ structuredData: { '@context': 'https://schema.org', '@type': 'CafeOrCoffeeShop', name: 'Olmo' } }}>
+```
+
 ## Conventions
 
 - **Props, not markup.** Composites take the props of the blocks they contain, for example `headline: HeadlineProps` or `actions: ButtonProps[]`.

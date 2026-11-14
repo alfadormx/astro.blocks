@@ -120,3 +120,32 @@ describe('Metadata', () => {
     );
   });
 });
+
+const ldScripts = (html: string) =>
+  [...html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map(
+    (m) => JSON.parse(m[1])
+  );
+
+describe('Metadata structuredData', () => {
+  it('emits no JSON-LD script without structuredData', async () => {
+    expect(await render(Metadata)).not.toContain('application/ld+json');
+  });
+
+  it('emits one JSON-LD script for a single object', async () => {
+    const data = { '@context': 'https://schema.org', '@type': 'CafeOrCoffeeShop', name: 'Olmo' };
+    expect(ldScripts(await render(Metadata, '/', { structuredData: data }))).toEqual([data]);
+  });
+
+  it('emits one JSON-LD script per object in an array', async () => {
+    const a = { '@type': 'Organization', name: 'A' };
+    const b = { '@type': 'WebSite', name: 'B' };
+    expect(ldScripts(await render(Metadata, '/', { structuredData: [a, b] }))).toEqual([a, b]);
+  });
+
+  it('keeps a value containing </script> inside its own script element', async () => {
+    const data = { name: '</script><script>alert(1)</script>' };
+    const html = await render(Metadata, '/', { structuredData: data });
+    expect(html).not.toContain('</script><script>alert(1)');
+    expect(ldScripts(html)).toEqual([data]);
+  });
+});
