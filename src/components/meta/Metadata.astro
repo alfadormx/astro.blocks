@@ -27,6 +27,9 @@ const pagePath =
     : Astro.url.pathname.replace(/\/+$/, '');
 const canonical = merged.canonical ?? new URL(pagePath, Astro.site ?? Astro.url).href;
 const charset = merged.charset ?? 'UTF-8';
+const structuredData = props.structuredData ? [props.structuredData].flat() : [];
+// `<` escaped so a value can't close the script element or open a comment.
+const jsonLd = (value: unknown) => JSON.stringify(value).replace(/</g, '\\u003c');
 
 // Robots
 const robots = {
@@ -159,3 +162,6 @@ const extendedLinks = [
 
 {merged.theme?.color && <meta name="theme-color" content={merged.theme.color} />}
 {merged.theme?.colorScheme && <meta name="color-scheme" content={merged.theme.colorScheme} />}
+{structuredData.map((data) => (
+  <script is:inline type="application/ld+json" set:html={jsonLd(data)} />
+))}

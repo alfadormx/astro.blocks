@@ -21,6 +21,9 @@ export interface MetaData {
 
   theme?: MetaDataTheme;
 
+  /** schema.org JSON-LD objects, one `<script type="application/ld+json">` each. Page-only: not read from config. */
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+
   localized?: Record<string, MetaDataLocalized>;
 }
 
