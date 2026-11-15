@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  docSchema,
   eventSchema,
   locationSchema,
   postSchema,
@@ -52,5 +53,15 @@ describe('eventSchema', () => {
         registrationUrl: 'nope',
       }).success
     ).toBe(false);
+  });
+});
+
+describe('docSchema', () => {
+  const base = { title: 'T', description: 'D' };
+
+  it('requires section and order', () => {
+    expect(docSchema.safeParse({ ...base, order: 1 }).success).toBe(false);
+    expect(docSchema.safeParse({ ...base, section: 'guides' }).success).toBe(false);
+    expect(docSchema.safeParse({ ...base, section: 'guides', order: 1 }).success).toBe(true);
   });
 });

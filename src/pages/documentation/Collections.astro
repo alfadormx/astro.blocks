@@ -109,7 +109,7 @@ import { defineBlocksCollections } from '../vendor/integration/collections/defin
 export const collections = {
   ...defineBlocksCollections(),
   notes: defineCollection({
-    loader: glob({ base: 'src/content/notes', pattern: '**/*.md' }),
+    loader: glob({ base: 'src/content/notes', pattern: '**/*.{md,mdx}' }),
     schema: z.object({ title: z.string() }),
   }),
 };`;
@@ -121,7 +121,7 @@ export const collections = {
     tagline: 'Guide',
     title: 'Collections and copy',
     subtitle:
-      'Write posts, case studies and events in Markdown, and page copy in YAML, in every language.',
+      'Write posts, case studies, events and docs in Markdown or MDX, and page copy in YAML, in every language.',
   }}
 >
   <h2>Declaring a collection</h2>
@@ -146,7 +146,7 @@ export const collections = {
         </td>
         <td>required</td>
         <td>
-          <code>post</code>, <code>caseStudy</code> or <code>event</code>
+          <code>post</code>, <code>caseStudy</code>, <code>event</code> or <code>doc</code>
         </td>
       </tr>
       <tr>
@@ -172,10 +172,10 @@ export const collections = {
           <code>sort</code>
         </td>
         <td>
-          <code>date-desc</code>; events <code>start-asc</code>
+          <code>date-desc</code>; events <code>start-asc</code>; docs <code>order-asc</code>
         </td>
         <td>
-          Also <code>date-asc</code>, <code>title-asc</code>
+          Also <code>date-asc</code>, <code>title-asc</code>, <code>order-asc</code>
         </td>
       </tr>
       <tr>
@@ -213,6 +213,9 @@ export const collections = {
       <code>event</code>: <code>start</code>, <code>end</code>, <code>timezone</code>,{' '}
       <code>location</code>, <code>registrationUrl</code>.
     </li>
+    <li>
+      <code>doc</code>: <code>section</code>, <code>order</code>.
+    </li>
   </ul>
   <p>
     A <code>location</code> is a name (<code>Online</code>) or an object with <code>name</code>,
@@ -225,12 +228,16 @@ export const collections = {
 
   <h2>Writing content</h2>
   <p>
-    Put each language in its own folder. Files with the same name are translations of one entry. An
-    entry missing from a language is left out of that language's list and gets no URL there. A
-    collection with no language folders is in the default language only. Mixing language folders and
-    loose files stops the build.
+    Entries are <code>.md</code> or <code>.mdx</code> files. Put each language in its own folder.
+    Files with the same name are translations of one entry. An entry missing from a language is left
+    out of that language's list and gets no URL there. A collection with no language folders is in
+    the default language only. Mixing language folders and loose files stops the build.
   </p>
   <pre class={pre}><code>{folderExample}</code></pre>
+  <p>
+    An <code>.mdx</code> entry can import blocks and render them inline, and import any file as text
+    with <code>?raw</code>.
+  </p>
   <p>
     <code>slug</code> sets the URL segment in that language; it defaults to the file name. The slug
     <code>page</code> is reserved for pagination. Drafts show in development and are left out of
@@ -254,6 +261,12 @@ export const collections = {
     <a href="/demos/portfolio/work">case study</a> and
     <a href="/demos/local/events">event</a> demos. After a build, a warning names any collection
     whose <code>route</code> has no entry page.
+  </p>
+  <p>
+    A <code>doc</code> collection has no list page and no card. Its keys can contain folders (
+    <code>guides/install</code>), so its entry page is <code>[...slug].astro</code>.
+    <code>collectionIndex('docs', langCode)</code> returns its entries in sort order, each with its
+    URL, for building a sidebar or previous/next links.
   </p>
 
   <h2>Featured entries</h2>

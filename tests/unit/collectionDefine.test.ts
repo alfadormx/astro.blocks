@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { languageLayout } from '../../vendor/integration/collections/define';
+import { entryId, languageLayout } from '../../vendor/integration/collections/define';
 
 function folder(files: string[]): string {
   const dir = mkdtempSync(join(tmpdir(), 'collection-'));
@@ -33,5 +33,19 @@ describe('languageLayout', () => {
     expect(() => languageLayout('posts', folder(['drafts/a.md']), ['en', 'es'])).toThrow(
       /mixes language folders and loose files/
     );
+  });
+});
+
+describe('entryId', () => {
+  it('strips .md from a markdown entry path', () => {
+    expect(entryId('en/a.md')).toBe('en/a');
+  });
+
+  it('strips .mdx from an mdx entry path', () => {
+    expect(entryId('guides/b.mdx')).toBe('guides/b');
+  });
+
+  it('strips only the final extension', () => {
+    expect(entryId('en/x.mdx.md')).toBe('en/x.mdx');
   });
 });

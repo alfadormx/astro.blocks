@@ -51,5 +51,15 @@ export const eventSchema = baseEntrySchema.extend({
   registrationUrl: z.url().optional(),
 });
 
-export const presetSchemas = { post: postSchema, caseStudy: caseStudySchema, event: eventSchema };
+export const docSchema = baseEntrySchema.extend({
+  section: z.string(),
+  order: z.number(),
+});
+
+export const presetSchemas = {
+  post: postSchema,
+  caseStudy: caseStudySchema,
+  event: eventSchema,
+  doc: docSchema,
+};
 export type PresetSchemas = typeof presetSchemas;

@@ -46,9 +46,16 @@ export interface AnalyticsConfig {
   };
 }
 
-export type PresetName = 'post' | 'caseStudy' | 'event';
-const PRESETS: PresetName[] = ['post', 'caseStudy', 'event'];
-export type CollectionSort = 'date-desc' | 'date-asc' | 'start-asc' | 'title-asc';
+export type PresetName = 'post' | 'caseStudy' | 'event' | 'doc';
+const PRESETS: PresetName[] = ['post', 'caseStudy', 'event', 'doc'];
+export type CollectionSort = 'date-desc' | 'date-asc' | 'start-asc' | 'title-asc' | 'order-asc';
+
+const DEFAULT_SORT: Record<PresetName, CollectionSort> = {
+  post: 'date-desc',
+  caseStudy: 'date-desc',
+  event: 'start-asc',
+  doc: 'order-asc',
+};
 
 export interface RawCollectionSettings {
   preset: PresetName;
@@ -67,7 +74,7 @@ export interface CollectionSettings {
   route?: string;
   /** Content folder relative to the project root (default: `src/content/<name>`). */
   path: string;
-  /** Resolved sort (default: `start-asc` for `event`, else `date-desc`). */
+  /** Resolved sort (default: `start-asc` for `event`, `order-asc` for `doc`, else `date-desc`). */
   sort: CollectionSort;
   pageSize?: number;
 }
@@ -155,7 +162,7 @@ export const getCollections = (config: Config): CollectionsConfig => {
       preset: raw.preset,
       route: raw.route,
       path: raw.path ?? `src/content/${name}`,
-      sort: raw.sort ?? (raw.preset === 'event' ? 'start-asc' : 'date-desc'),
+      sort: raw.sort ?? DEFAULT_SORT[raw.preset],
       pageSize: raw.pageSize,
     };
   }

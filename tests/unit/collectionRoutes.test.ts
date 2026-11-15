@@ -25,6 +25,22 @@ describe('collectionsWithoutEntryPages', () => {
     ).toEqual([['posts', '/demos/blog']]);
   });
 
+  it('counts a nested doc entry as an entry page', () => {
+    const docs = {
+      entries: {
+        docs: {
+          preset: 'doc' as const,
+          route: '/demos/docs',
+          path: 'z',
+          sort: 'order-asc' as const,
+        },
+      },
+    };
+    expect(
+      collectionsWithoutEntryPages(docs, ['/', '/es'], ['demos/docs/guides/introduction'])
+    ).toEqual([]);
+  });
+
   it('skips collections without a route', () => {
     expect(collectionsWithoutEntryPages(config, ['/'], []).map(([name]) => name)).toEqual([
       'posts',
@@ -56,5 +72,12 @@ describe('getCollections', () => {
         },
       },
     });
+  });
+
+  it('defaults a doc collection to order-asc', async () => {
+    const { getCollections } = await import('../../vendor/integration/utils/configBuilder');
+    expect(getCollections({ collections: { docs: { preset: 'doc' } } }).entries.docs.sort).toBe(
+      'order-asc'
+    );
   });
 });

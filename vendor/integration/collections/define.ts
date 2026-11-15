@@ -27,6 +27,11 @@ export function languageLayout(name: string, dir: string, languageCodes: string[
   return folders.length > 0 ? 'multi' : 'single';
 }
 
+/** Astro's default id uses front-matter `slug`; translations link by file path instead. */
+export function entryId(file: string): string {
+  return file.replace(/\.mdx?$/, '');
+}
+
 export function defineBlocksCollections({
   config = 'src/config.yaml',
   root = process.cwd(),
@@ -43,8 +48,7 @@ export function defineBlocksCollections({
       loader: glob({
         base: dir,
         pattern: '**/*.{md,mdx}',
-        // Astro's default id uses front-matter `slug`; translations link by file path instead.
-        generateId: ({ entry }) => entry.replace(/\.mdx?$/, ''),
+        generateId: ({ entry }) => entryId(entry),
       }),
       schema: presetSchemas[settings.preset],
     });
