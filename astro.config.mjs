@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import site_config from './vendor/integration';
 import icon from 'astro-icon';
+import mdx from '@astrojs/mdx';
 
 import tailwindcss from '@tailwindcss/vite';
 
@@ -20,6 +21,7 @@ export default defineConfig({
         'flat-color-icons': ['*'],
       },
     }),
+    mdx(),
   ],
 
   vite: {

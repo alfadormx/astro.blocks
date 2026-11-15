@@ -7,6 +7,7 @@ export interface RawEntryData {
   date?: Date;
   start?: Date;
   end?: Date;
+  order?: number;
 }
 
 export interface RawEntry {
@@ -94,6 +95,11 @@ export function sortEntries<E extends RawEntry>(
       return by((a, b) => time(a.data.date) - time(b.data.date));
     case 'title-asc':
       return by((a, b) => a.data.title.localeCompare(b.data.title));
+    case 'order-asc':
+      return by(
+        (a, b) =>
+          (a.data.order ?? 0) - (b.data.order ?? 0) || a.data.title.localeCompare(b.data.title)
+      );
     case 'start-asc': {
       const upcoming = list.filter((l) => !isPast(l.entry, now));
       const past = list.filter((l) => isPast(l.entry, now));

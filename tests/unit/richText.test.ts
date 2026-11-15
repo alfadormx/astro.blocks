@@ -14,6 +14,12 @@ describe('renderRichText', () => {
     expect(renderRichText('- a\n- b')).toMatch(/^<ul>\s*<li>a<\/li>\s*<li>b<\/li>\s*<\/ul>/);
   });
 
+  it('escapes < inside a fenced code block', () => {
+    const html = renderRichText('```sh\nlumen --width <px>\n```');
+    expect(html).toContain('<pre><code class="language-sh">');
+    expect(html).toContain('&lt;px&gt;');
+  });
+
   it('passes inline HTML through unchanged', () => {
     expect(renderRichText('<strong>x</strong> y')).toBe('<strong>x</strong> y');
   });

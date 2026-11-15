@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { entryId } from '../../vendor/integration/collections/define';
 import {
   assertNoReservedSlug,
   entryAlternates,
@@ -90,6 +91,32 @@ describe('sortEntries', () => {
         'date-desc'
       )
     ).toEqual(['new', 'old']);
+  });
+
+  it('orders order-asc by order, then title', () => {
+    expect(
+      sorted(
+        [
+          entry('en/third', { order: 2, title: 'B' }),
+          entry('en/first', { order: 1, title: 'Z' }),
+          entry('en/second', { order: 2, title: 'A' }),
+        ],
+        'order-asc'
+      )
+    ).toEqual(['first', 'second', 'third']);
+  });
+
+  it('orders md and mdx entries together by order, then title', () => {
+    expect(
+      sorted(
+        [
+          entry(entryId('en/c.mdx'), { order: 2, title: 'B' }),
+          entry(entryId('en/a.md'), { order: 1, title: 'Z' }),
+          entry(entryId('en/b.md'), { order: 2, title: 'A' }),
+        ],
+        'order-asc'
+      )
+    ).toEqual(['a', 'b', 'c']);
   });
 
   it('orders title-asc alphabetically', () => {

@@ -34,10 +34,18 @@ export interface BlocksEntry<P extends PresetName = PresetName> {
   data: PresetData[P];
 }
 
+export interface DocEntryData {
+  headline: { title: string };
+  description: string;
+  section: string;
+  langCode: string;
+}
+
 interface LayoutByPreset {
   post: PostLayoutProps;
   caseStudy: CaseStudyLayoutProps;
   event: EventLayoutProps;
+  doc: DocEntryData;
 }
 
 export interface ListProps {
@@ -89,6 +97,27 @@ export function collectionUrl(name: CollectionName, langCode: string): string {
     I18N.languages.find((l: Lang) => l.code === langCode) ??
     I18N.languages.find((l: Lang) => l.code === I18N.default)!;
   return listUrl(lang.basePath, settingsOf(name).route, 1, SITE.trailingSlash ?? false);
+}
+
+export interface IndexEntry<P extends PresetName = PresetName> {
+  key: string;
+  href: string;
+  data: PresetData[P];
+}
+
+/** Every entry in `langCode`, in the collection's sort order, with its URL. */
+export async function collectionIndex<N extends CollectionName>(
+  name: N,
+  langCode: string
+): Promise<IndexEntry<PresetOf<N>>[]> {
+  const all = await linked(name);
+  const { route } = settingsOf(name);
+  const lang = I18N.languages.find((l: Lang) => l.code === langCode)!;
+  return inLang(all, langCode).map((l) => ({
+    key: l.key,
+    href: entryUrl(lang.basePath, route, l.slug, SITE.trailingSlash ?? false),
+    data: l.entry.data as PresetData[PresetOf<N>],
+  }));
 }
 
 /** `getStaticPaths` for `[...page].astro`: one path per language per list page. */
@@ -156,6 +185,8 @@ function toCardEntry(name: string, l: LinkedEntry<BlocksEntry>): CollectionListE
         past: isPast(l.entry, BUILD_NOW),
       };
     }
+    case 'doc':
+      throw new Error(`Collection "${name}" uses the doc preset, which has no card or list page`);
   }
 }
 
@@ -195,7 +226,7 @@ function toLayout(
   name: string,
   l: LinkedEntry<BlocksEntry>,
   readingTime: number
-): PostLayoutProps | CaseStudyLayoutProps | EventLayoutProps {
+): PostLayoutProps | CaseStudyLayoutProps | EventLayoutProps | DocEntryData {
   const { preset } = settingsOf(name);
   const data = l.entry.data;
   const base = {
@@ -237,17 +268,27 @@ function toLayout(
         registrationUrl: event.registrationUrl,
       } satisfies EventLayoutProps;
     }
+    case 'doc': {
+      const doc = data as PresetData['doc'];
+      return {
+        headline: base.headline,
+        description: doc.description,
+        section: doc.section,
+        langCode: l.langCode,
+      } satisfies DocEntryData;
+    }
   }
 }
 
 function metadataOf(preset: PresetName, data: BlocksEntry['data']): Partial<MetaData> {
   const image = data.ogImage ?? data.cover;
   const post = preset === 'post' ? (data as PresetData['post']) : undefined;
+  const article = preset === 'post' || preset === 'doc';
   return {
     title: { default: data.title },
     description: data.description,
     openGraph: {
-      type: post ? 'article' : 'website',
+      type: article ? 'article' : 'website',
       description: data.description,
       ...(image ? { images: [{ url: image.src, alt: image.alt }] } : {}),
       ...(post
