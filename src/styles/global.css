@@ -214,6 +214,21 @@
     }
   }
 
+  /* CodeBlock: own spacing (no `prose` needed); check icon replaces the copy icon while copied. */
+  [data-code-block] pre[data-code] {
+    margin: 0;
+    padding: 1rem;
+  }
+  [data-code-block-check] {
+    display: none;
+  }
+  [data-code-block-copied] [data-code-block-check] {
+    display: block;
+  }
+  [data-code-block-copied] [data-code-block-copy] > svg:not([data-code-block-check]) {
+    display: none;
+  }
+
   [data-subtitle] {
     font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem); /* 18px → 22px */
     line-height: 1.5;
@@ -335,6 +350,23 @@
   [data-header] * {
     @apply transition-colors duration-300 ease-in-out;
     transition-property: color, background-color, width, transform, backdrop-filter;
+  }
+
+  /* Shiki output (CodeBlock and MDX). `defaultColor: false` leaves only variables, so the theme
+     follows `data-theme`. `pre[data-code]` outranks `.prose :where(pre)`. */
+  pre[data-code],
+  pre[data-code] span {
+    color: var(--shiki-light);
+  }
+  pre[data-code] {
+    background-color: var(--shiki-light-bg);
+  }
+  [data-theme='dark'] pre[data-code],
+  [data-theme='dark'] pre[data-code] span {
+    color: var(--shiki-dark);
+  }
+  [data-theme='dark'] pre[data-code] {
+    background-color: var(--shiki-dark-bg);
   }
 }
 

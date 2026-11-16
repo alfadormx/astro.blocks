@@ -5,6 +5,7 @@ import icon from 'astro-icon';
 import mdx from '@astrojs/mdx';
 
 import tailwindcss from '@tailwindcss/vite';
+import { shikiConfig } from './src/utils/codeHighlight.ts';
 
 const siteConfig = { config: './src/config.yaml' };
 
@@ -23,6 +24,8 @@ export default defineConfig({
     }),
     mdx(),
   ],
+
+  markdown: { shikiConfig },
 
   vite: {
     plugins: [tailwindcss()],

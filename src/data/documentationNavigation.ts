@@ -69,6 +69,7 @@ export const documentationNavigation: NavigationTreeItem[] = [
       { label: 'Button', href: '/documentation/primitives/Button' },
       { label: 'Checkbox', href: '/documentation/primitives/Checkbox' },
       { label: 'CheckboxGroup', href: '/documentation/primitives/CheckboxGroup' },
+      { label: 'CodeBlock', href: '/documentation/primitives/CodeBlock' },
       { label: 'ContentCarouselItem', href: '/documentation/primitives/ContentCarouselItem' },
       { label: 'Headline', href: '/documentation/primitives/Headline' },
       { label: 'Image', href: '/documentation/primitives/Image' },
