@@ -304,6 +304,10 @@ const deeplyNestedNavItems: NavigationTreeItem[] = [
   <div class="border border-border rounded-lg p-6 max-w-xs" data-doc-section="current-path">
     <NavigationTreeBlock items={nestedNavItems} expansionStrategy="active-only" />
   </div>
+  <p>
+    The active link carries <code>aria-current="page"</code>; a parent rendered as a
+    <code>&lt;summary&gt;</code> toggle keeps the active look without it.
+  </p>
 
   <h3>Data Structure Example</h3>
   <pre class="bg-surface p-4 rounded overflow-x-auto text-sm border border-border"><code>{JSON.stringify(nestedNavItems, null, 2)}</code></pre>

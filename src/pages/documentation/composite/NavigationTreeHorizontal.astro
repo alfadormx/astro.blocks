@@ -114,6 +114,27 @@ const itemsWithDropdowns = [
     />
   </div>
 
+  <h3>Current Page</h3>
+  <p>
+    The item whose <code>href</code> matches <code>currentPath</code> (default: the page URL) gets
+    <code>aria-current="page"</code> and <code>activeItemConfig</code>; the rest get
+    <code>inactiveItemConfig</code>. Matching is exact, so a hash link such as
+    <code>/#pricing</code> is never current. A parent is not marked for a current child, and a
+    click-mode parent, being a button, keeps the look without <code>aria-current</code>.
+  </p>
+  <div class="space-y-4" data-doc-section="current-path">
+    <div class="border border-border rounded-lg p-6">
+      <NavigationTreeHorizontalBlock items={itemsWithDropdowns} currentPath="/about" />
+    </div>
+    <div class="border border-border rounded-lg p-6">
+      <NavigationTreeHorizontalBlock
+        items={itemsWithDropdowns}
+        currentPath="/services/design"
+        activeItemConfig={{ class: 'underline' }}
+      />
+    </div>
+  </div>
+
   <!-- Example 4: Dropdown Position -->
   <h3>Dropdown Position</h3>
   <p>Control dropdown alignment: left (default), center, or right.</p>

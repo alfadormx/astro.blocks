@@ -123,3 +123,27 @@ test('the Blog nav link opens the blog list and its section links return to the 
   await page.locator('[data-header] nav').first().locator('a[href$="#pricing"]').click();
   await expect(page).toHaveURL(/\/es\/demos\/saas#pricing$/);
 });
+
+const headerNav = (page: Page) => page.locator('[data-header] nav[data-nav-trigger]');
+
+for (const base of localePaths) {
+  const blog = `${prefixOf(base)}/demos/saas/blog`;
+
+  test(`header nav marks Blog as the current page on ${blog}`, async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto(blog);
+    const current = headerNav(page).locator('[aria-current="page"]');
+    await expect(current).toHaveCount(1);
+    await expect(current).toHaveAttribute('href', blog);
+    await expect(page.locator('#saas-menu [aria-current="page"]')).toHaveAttribute('href', blog);
+  });
+
+  test(`header nav marks no section anchor as current on ${prefixOf(base)}/demos/saas`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto(`${prefixOf(base)}/demos/saas`);
+    await expect(headerNav(page).locator('a').first()).toBeAttached();
+    await expect(headerNav(page).locator('[aria-current]')).toHaveCount(0);
+  });
+}
