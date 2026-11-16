@@ -41,6 +41,7 @@ export const documentationNavigation: NavigationTreeItem[] = [
         label: 'NavigationTreeHorizontal',
         href: '/documentation/composite/NavigationTreeHorizontal',
       },
+      { label: 'Pager', href: '/documentation/composite/Pager' },
       { label: 'PostCard', href: '/documentation/composite/PostCard' },
       { label: 'PostLayout', href: '/documentation/composite/PostLayout' },
       { label: 'Pricing', href: '/documentation/composite/Pricing' },

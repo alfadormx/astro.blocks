@@ -52,7 +52,7 @@ describe('CollectionList', () => {
       entries: [post('One')],
       page: { currentPage: 1, lastPage: 1, url: {} },
     });
-    expect(html).not.toContain('data-collection-pager');
+    expect(html).not.toContain('data-pager');
   });
 
   it('renders only the pager directions that exist', async () => {
@@ -62,7 +62,8 @@ describe('CollectionList', () => {
     });
     expect(html).toMatch(/<nav[^>]*aria-label="Pagination"/);
     expect(html).toContain('href="/blog/page/2"');
-    expect(html).not.toContain('data-collection-pager-prev');
+    expect(html).not.toContain('data-pager-link="prev"');
+    expect(html).not.toMatch(/<svg/);
     expect(html).toContain('Page 1 of 2');
   });
 
@@ -84,7 +85,7 @@ describe('CollectionList', () => {
       page: { currentPage: 2, lastPage: 3, url: { prev: '/blog', next: '/blog/page/3' } },
       prevButton: false,
     });
-    expect(html).not.toContain('data-collection-pager-prev');
-    expect(html).toContain('data-collection-pager-next');
+    expect(html).not.toContain('data-pager-link="prev"');
+    expect(html).toContain('data-pager-link="next"');
   });
 });

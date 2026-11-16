@@ -113,6 +113,7 @@ mergeConfigs<ThemeToggleProps>(
 
 - **Render on presence.** An optional child renders when its field is present. There are no `show*` flags.
 - A block may collapse an optional region by slot presence: when `Astro.slots.has(name)` is false it renders a single column instead of an empty one (ContactForm `aside`).
+- A block whose optional children are all absent may render nothing at all, slot included (Pager with neither `prevButton` nor `nextButton`).
 - A child that renders by default is typed `XProps | false`; `false` hides it (`closeButton?: ButtonProps | false`).
 - Exception: `show*` stays only for generated parts that have no instance field (ContentCarousel `showIndicators`, TextArea `showCounter`, Map `showMarker`) and for position-derived flags (Item `showConnector*`). The list lives in `SHOW_FLAGS` in `tests/unit/compositionContract.test.ts`; a new flag goes there and here.
 - A flag that picks a format rather than presence is a named enum, not `show*` (LanguageToggle `labelFormat: 'label' | 'code'`).

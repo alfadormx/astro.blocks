@@ -71,6 +71,7 @@ Blocks live in `src/components/blocks/`, with prop types in `src/types/*.types.t
 | `Tabs`                                         | Horizontal or vertical tabbed panels                                      |
 | `Configurator`                                 | Product configurator with shareable URL state                             |
 | `CollectionList`                               | Grid or list of collection entries with a pager                           |
+| `Pager`                                        | Labelled previous / next links                                            |
 | `PostCard`, `CaseStudyCard`, `EventCard`       | One card per collection preset; the title is the card's link              |
 | `PostLayout`, `CaseStudyLayout`, `EventLayout` | Entry page body: meta line, Markdown in `prose`, tags, map or Register    |
 
