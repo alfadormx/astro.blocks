@@ -1,0 +1,117 @@
+---
+import { Code } from 'astro:components';
+import { Icon } from 'astro-icon/components';
+import Button from '~/components/blocks/primitives/Button.astro';
+import type { ButtonProps } from '~/types/button.types';
+import type { CodeBlockProps } from '~/types/codeblock.types';
+import { shikiConfig } from '~/utils/codeHighlight';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import { cn } from '~/utils/styles';
+
+type Props = CodeBlockProps;
+
+const internalCopyButton: Partial<ButtonProps> = {
+  icon: { name: 'heroicons:clipboard-document' },
+  variant: 'ghost',
+  intent: 'neutral',
+  size: 'sm',
+  'aria-label': 'Copy code',
+};
+
+const {
+  code,
+  lang = 'plaintext',
+  title,
+  copyButton,
+  copiedMessage = 'Copied',
+  class: className = '',
+} = Astro.props;
+
+const mergedCopyButton =
+  copyButton === false ? undefined : mergeConfigs({}, internalCopyButton, copyButton);
+
+// Astro's highlighter drops one trailing line break; the script restores it on copy.
+const trailingNewline = /(?:\r\n|\r|\n)$/.test(code);
+---
+
+<figure
+  class={cn(
+    'm-0 min-w-0 overflow-hidden contain-inline-size rounded border border-border text-sm',
+    className
+  )}
+  data-code-block
+  data-code-block-message={copiedMessage}
+  data-code-block-trailing-newline={trailingNewline ? '' : undefined}
+>
+  {title && (
+    <figcaption class="flex items-center justify-between gap-2 border-b border-border bg-surface px-4 py-1 font-mono text-xs text-emphasis">
+      <span>{title}</span>
+      {mergedCopyButton && (
+        <Button {...mergedCopyButton} data-code-block-copy>
+          <Icon name="heroicons:check" class="size-4" aria-hidden="true" data-code-block-check />
+        </Button>
+      )}
+    </figcaption>
+  )}
+  <div class="relative">
+    <Code code={code} lang={lang as never} {...shikiConfig} />
+    {!title && mergedCopyButton && (
+      <div class="absolute top-2 right-2">
+        <Button {...mergedCopyButton} data-code-block-copy>
+          <Icon name="heroicons:check" class="size-4" aria-hidden="true" data-code-block-check />
+        </Button>
+      </div>
+    )}
+  </div>
+  <span class="sr-only" aria-live="polite" aria-atomic="true" data-code-block-status></span>
+</figure>
+
+<script>
+  const ROOT_SELECTOR = '[data-code-block]';
+  const RESET_MS = 2000;
+
+  const bound = new WeakSet<HTMLElement>();
+  const timers = new WeakMap<HTMLElement, number>();
+
+  function reset(root: HTMLElement): void {
+    const status = root.querySelector<HTMLElement>('[data-code-block-status]');
+    if (status) status.textContent = '';
+    delete root.dataset.codeBlockCopied;
+    timers.delete(root);
+  }
+
+  async function copy(root: HTMLElement): Promise<void> {
+    const rendered = root.querySelector('pre code')?.textContent ?? '';
+    const text = 'codeBlockTrailingNewline' in root.dataset ? `${rendered}\n` : rendered;
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      return; // Insecure context or denied permission: no announcement.
+    }
+    window.clearTimeout(timers.get(root));
+    const status = root.querySelector<HTMLElement>('[data-code-block-status]');
+    if (status) status.textContent = root.dataset.codeBlockMessage ?? 'Copied';
+    root.dataset.codeBlockCopied = '';
+    // Clearing lets an identical second copy announce again.
+    timers.set(
+      root,
+      window.setTimeout(() => reset(root), RESET_MS)
+    );
+  }
+
+  function bind(root: HTMLElement): void {
+    root.querySelector('[data-code-block-copy]')?.addEventListener('click', () => void copy(root));
+    root.dataset.codeBlockReady = '';
+  }
+
+  function init(): void {
+    document.querySelectorAll<HTMLElement>(ROOT_SELECTOR).forEach((root) => {
+      if (bound.has(root)) return;
+      bind(root);
+      bound.add(root);
+    });
+  }
+
+  document.addEventListener('astro:after-swap', init);
+  init();
+</script>

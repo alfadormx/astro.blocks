@@ -18,4 +18,11 @@ describe('mdx entry', () => {
   it('renders the text of a file imported with ?raw', async () => {
     expect(await render()).toContain('mdx-raw-import-proof');
   });
+
+  it('renders fenced code with the data-code hook and both theme variables', async () => {
+    const pre = (await render()).match(/<pre[^>]*data-code[^>]*>/)?.[0] ?? '';
+    expect(pre).toContain('--shiki-light-bg');
+    expect(pre).toContain('--shiki-dark-bg');
+    expect(pre).not.toMatch(/[;"]\s*color:/);
+  });
 });
