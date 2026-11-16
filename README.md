@@ -90,6 +90,7 @@ Blocks live in `src/components/blocks/`, with prop types in `src/types/*.types.t
 - **Props, not markup.** Composites take the props of the blocks they contain, for example `headline: HeadlineProps` or `actions: ButtonProps[]`.
 - **Layered defaults.** `default*Config` props set shared config for repeated children, and `selected*Config` or `active*Config` props layer state on top.
 - **Rich text.** Fields typed `RichText` (Item, Accordion, Footer and Container content) take Markdown; one line renders inline, and HTML passes through.
+- **Whitespace.** Write prose as Markdown (MDX pages, copy YAML, `RichText`). Astro's default `compressHTML: "jsx"` drops a line break next to a tag in `.astro` templates, so end that line with `{' '}`.
 - **Style tokens.** Buttons and items share an `intent`, `variant`, `size` and `shape` vocabulary. Colors come from `src/styles/colors.css`.
 - **Internal sub-components stay internal.** Files that open with `// Internal to <Parent>` (or a list of parents) declare `Props` inline, have no docs page and are imported only by the parents they list; use a parent instead.
 

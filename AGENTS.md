@@ -27,6 +27,7 @@ The rules most often missed:
 - **Pages.** Pass `langCode` to `<Layout>` so `<html lang dir>` is right. `metadata.localized` applies in `src/layouts/Layout.astro` only, not in the docs layout.
 - **Collections and copy.** Markdown collections are declared by preset under `collections:` in `config.yaml`; their pages call the collection page helpers. Static-page copy lives in `src/copy/<page>/<lang>.yaml`, read with `useCopy`. Read `src/pages/documentation/Collections.astro` before adding either.
 - **Rich text.** A prop that renders formatted text is typed `RichText` and rendered with `renderRichText()` from `~/utils/richText`; plain props stay plain text.
+- **Whitespace.** Write prose as Markdown (MDX pages, copy YAML, `RichText`). Astro's default `compressHTML: "jsx"` drops a line break next to a tag in `.astro` templates, so end that line with `{' '}`.
 - **Browser-only runtimes.** `~/utils/selection.ts` and `~/utils/urlState.ts` run in the browser: import them only from a block's client `<script>`. Read `docs/client-runtimes.md` before using or changing either.
 
 ## Tests
