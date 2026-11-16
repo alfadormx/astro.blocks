@@ -16,4 +16,10 @@ describe('Map', () => {
   it('is never ready on the server', async () => {
     expect(await render({ lat: 1, lon: 2 })).not.toContain('data-map-ready');
   });
+
+  it('keeps the spaces in the attribution', async () => {
+    expect(await render({ lat: 1, lon: 2 })).toMatch(
+      /&copy;\s<a[^>]*>OpenStreetMap<\/a> contributors &mdash;\s<a[^>]*>View larger map &rarr;<\/a>/
+    );
+  });
 });
