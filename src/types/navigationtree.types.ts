@@ -30,7 +30,7 @@ export interface NavigationTreeProps {
   defaultItemConfig?: LayerConfig<Omit<ButtonProps, 'as'>>;
   /** Button config merged over `defaultItemConfig` on non-active items. */
   inactiveItemConfig?: LayerConfig<Omit<ButtonProps, 'as'>>;
-  /** Button config merged over `defaultItemConfig` on the active item. */
+  /** Button config merged over `defaultItemConfig` on the active item; the active item also gets `aria-current="page"` when it renders as a link, which this layer or the item can override. */
   activeItemConfig?: LayerConfig<Omit<ButtonProps, 'as'>>;
   /** The strategy that decides whether an item's children are shown (default: `'active-only'`). */
   expansionStrategy?: ExpansionStrategy;

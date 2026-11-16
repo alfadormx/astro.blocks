@@ -2,6 +2,7 @@
 import type { ButtonProps } from '~/types/button.types';
 import Button from '~/components/blocks/primitives/Button.astro';
 import type { NavigationTreeItem, NavigationTreeProps } from '~/types/navigationtree.types';
+import { isCurrentPath } from '~/utils/currentPath';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 import { cn } from '~/utils/styles';
 
@@ -38,20 +39,11 @@ const internalActiveItemConfig: Partial<ButtonProps> = {
   class: 'font-semibold',
 };
 
-// Utility functions
-const normalizePath = (path: string) => path.replace(/\/$/, '') || '/';
-const normalizedCurrentPath = normalizePath(currentPath);
+const internalCurrentPageConfig: Partial<ButtonProps> = { 'aria-current': 'page' };
 
-// Check if current item or any child is active
-const isActiveOrHasActiveChild = (item: NavigationTreeItem): boolean => {
-  if (item.href && normalizePath(item.href) === normalizedCurrentPath) {
-    return true;
-  }
-  if (item.children) {
-    return item.children.some((child) => isActiveOrHasActiveChild(child));
-  }
-  return false;
-};
+const isActiveOrHasActiveChild = (item: NavigationTreeItem): boolean =>
+  isCurrentPath(item.href, currentPath) ||
+  (item.children?.some((child) => isActiveOrHasActiveChild(child)) ?? false);
 
 // Determine if children should be shown based on expansion strategy
 const shouldShowChildren = (
@@ -84,6 +76,7 @@ const shouldShowChildren = (
 const buildItemConfig = (
   buttonProps: ButtonProps,
   isActive: boolean,
+  isCurrentPage: boolean,
   hasChildren: boolean,
   isExpanded: boolean
 ): Partial<ButtonProps> => {
@@ -91,6 +84,7 @@ const buildItemConfig = (
     {},
     { class: 'justify-start' },
     isActive ? internalActiveItemConfig : internalItemConfig,
+    isCurrentPage ? internalCurrentPageConfig : undefined,
     defaultItemConfig,
     isActive ? activeItemConfig : inactiveItemConfig,
     hasChildren
@@ -114,15 +108,22 @@ const buildItemConfig = (
   <ul class="list-none m-0 p-0 space-y-1">
     {items.map((item) => {
       const { children, ...buttonProps } = item;
-      const isActive = item.href ? normalizePath(item.href) === normalizedCurrentPath : false;
+      const isActive = isCurrentPath(item.href, currentPath);
       const hasActiveChild = children
         ? children.some((child) => isActiveOrHasActiveChild(child))
         : false;
       const hasChildren = children && children.length > 0;
       const isExpanded = shouldShowChildren(item, isActive, hasActiveChild);
-
-      const itemConfig = buildItemConfig(buttonProps, isActive, !!hasChildren, isExpanded);
+      // A disclosure parent renders as <summary>, which can't be "the current page".
       const isDisclosure = hasChildren && toggleMode === 'button';
+
+      const itemConfig = buildItemConfig(
+        buttonProps,
+        isActive,
+        isActive && !isDisclosure,
+        !!hasChildren,
+        isExpanded
+      );
       const subtree = hasChildren && (
         <Astro.self
           items={children!}

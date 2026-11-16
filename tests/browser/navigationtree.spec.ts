@@ -153,6 +153,8 @@ test('current path detection expands the parent of the page and labels the activ
 
   await expect(active).toBeVisible();
   await expect(active).toHaveText('NavigationTree');
+  await expect(active).toHaveAttribute('aria-current', 'page');
+  await expect(root.locator('[aria-current="page"]')).toHaveCount(1);
   await expect(root.locator('[data-nav-details]:has(a[href="' + PAGE_URL + '"])')).toHaveAttribute(
     'open',
     ''

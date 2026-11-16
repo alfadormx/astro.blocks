@@ -4,6 +4,7 @@ import type { ButtonProps } from '~/types/button.types';
 import type { NavigationTreeItem } from '~/types/navigationtree.types';
 import { cn } from '~/utils/styles';
 import Button from '~/components/blocks/primitives/Button.astro';
+import { isCurrentPath } from '~/utils/currentPath';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 
 type Props = NavigationTreeHorizontalProps;
@@ -15,35 +16,40 @@ const dropdownPositionClasses = {
   right: 'right-0',
 } as const;
 
-// Configuration: Default button config for nav items
-const defaultItemButtonConfig: Partial<ButtonProps> = {
-  variant: 'ghost',
-  intent: 'neutral',
-  iconPosition: 'right',
+const internalItemConfig: Partial<ButtonProps> = { iconPosition: 'right' };
+const internalChildConfig: Partial<ButtonProps> = {
+  size: 'sm',
+  width: 'full',
+  class: 'justify-start px-4 py-2',
 };
+const internalActiveItemConfig: Partial<ButtonProps> = { variant: 'ghost', intent: 'primary' };
+const internalInactiveItemConfig: Partial<ButtonProps> = { variant: 'ghost', intent: 'neutral' };
+const internalCurrentPageConfig: Partial<ButtonProps> = { 'aria-current': 'page' };
 
 // Extract props
 const {
   items = [],
+  currentPath = Astro.url.pathname,
   trigger = 'hover',
   dropdownPosition = 'left',
   class: className = '',
   itemClass = '',
   dropdownClass = '',
   defaultItemConfig,
+  activeItemConfig,
+  inactiveItemConfig,
   iconName = 'heroicons:chevron-down',
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   children: _children,
   ...attrs
 } = Astro.props;
 
-const defaultChildButtonConfig: Partial<ButtonProps> = {
-  variant: 'ghost',
-  intent: 'neutral',
-  size: 'sm',
-  width: 'full',
-  class: 'justify-start px-4 py-2',
-};
+const stateLayers = (isActive: boolean, isLink: boolean) => [
+  isActive ? internalActiveItemConfig : internalInactiveItemConfig,
+  isActive && isLink ? internalCurrentPageConfig : undefined,
+  defaultItemConfig,
+  isActive ? activeItemConfig : inactiveItemConfig,
+];
 
 // Build classes
 const defaultNavClass = 'flex flex-row items-center gap-1';
@@ -63,16 +69,18 @@ const dropdownPanelClass = cn(
   {items.map((item: NavigationTreeItem) => {
     const { children, ...buttonProps } = item;
     const hasChildren = children && children.length > 0;
-    const mergedItemConfig = mergeConfigs(
+    // A click-mode parent loses its href below, so it renders as a <button>.
+    const isToggle = !!hasChildren && trigger === 'click';
+    const isActive = isCurrentPath(item.href, currentPath);
+    const mergedItemConfig = mergeConfigs<Partial<ButtonProps>>(
       {},
-      defaultItemButtonConfig,
-      defaultItemConfig || {},
+      internalItemConfig,
+      ...stateLayers(isActive, !isToggle),
       hasChildren ? { icon: { name: iconName } } : {},
       buttonProps
     );
 
-    // For items with children, remove href to prevent navigation
-    if (hasChildren && trigger === 'click') {
+    if (isToggle) {
       mergedItemConfig.href = undefined;
     }
 
@@ -86,10 +94,10 @@ const dropdownPanelClass = cn(
               {children!.map((child: NavigationTreeItem) => {
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 const { children: _, ...childProps } = child;
-                const mergedChildConfig = mergeConfigs(
+                const mergedChildConfig = mergeConfigs<Partial<ButtonProps>>(
                   {},
-                  defaultChildButtonConfig,
-                  defaultItemConfig,
+                  internalChildConfig,
+                  ...stateLayers(isCurrentPath(child.href, currentPath), true),
                   childProps
                 );
 
