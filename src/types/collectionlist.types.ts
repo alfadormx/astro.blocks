@@ -42,7 +42,7 @@ export interface CollectionListProps {
   nextButton?: Omit<ButtonProps, 'href'> | false;
   /** Pager status text; `{current}` and `{last}` are replaced (default: per-language "Page {current} of {last}"). */
   pageStatusLabel?: string;
-  /** Classes on the pager (`data-collection-pager`). */
+  /** Classes on the pager (`data-pager`). */
   pagerClass?: string;
   /** Language of the pager's UI strings (default: the site's default language). */
   langCode?: string;

@@ -60,7 +60,7 @@ test.describe('blog demo', () => {
 
   test('pages the list from /page/2 and never serves /page/1', async ({ page, request }) => {
     await page.goto('/demos/saas/blog');
-    const pager = page.locator('[data-collection-pager]');
+    const pager = page.locator('[data-pager]');
     await expect(pager.getByRole('link')).toHaveText([/Next/]);
     await pager.getByRole('link', { name: /Next/ }).click();
     await expect(page).toHaveURL(/\/demos\/saas\/blog\/page\/2$/);

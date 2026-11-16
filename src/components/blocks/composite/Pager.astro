@@ -1,0 +1,90 @@
+---
+import Button from '~/components/blocks/primitives/Button.astro';
+import type { ButtonProps } from '~/types/button.types';
+import type { PagerProps } from '~/types/pager.types';
+import { entryStrings } from '~/utils/entryStrings';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import { cn } from '~/utils/styles';
+
+type Props = PagerProps;
+
+const {
+  prevButton,
+  nextButton,
+  defaultButtonConfig,
+  ariaLabel,
+  langCode,
+  gap = 'normal',
+  class: className,
+  id,
+} = Astro.props;
+
+const strings = entryStrings(langCode);
+
+const gapClasses = { none: 'gap-0', tight: 'gap-1', normal: 'gap-4', loose: 'gap-6' } as const;
+
+const internalShared: ButtonProps = {
+  variant: 'outline',
+  intent: 'neutral',
+  orientation: 'horizontal',
+  class: 'max-w-full',
+};
+
+// Two-line links invert Button's hierarchy: a small "Previous" over a prominent page title.
+const internalTitled: ButtonProps = {
+  labelClass: 'text-xs font-normal text-muted',
+  subtitleClass: 'text-sm font-semibold opacity-100',
+};
+
+const internalPrev: ButtonProps = {
+  icon: { name: 'heroicons:arrow-left' },
+  iconPosition: 'left',
+  iconClass: 'rtl:-scale-x-100',
+};
+
+// `[&>span]` is Button's text column, its tag's only direct child span.
+const internalNext: ButtonProps = {
+  icon: { name: 'heroicons:arrow-right' },
+  iconPosition: 'right',
+  iconClass: 'rtl:-scale-x-100',
+  class: 'ms-auto text-end [&>span]:items-end',
+};
+
+const link = (
+  instance: ButtonProps | undefined,
+  internal: ButtonProps,
+  label: string,
+  rel: 'prev' | 'next'
+) => {
+  if (!instance) return undefined;
+  const titled = !!(instance.subtitle ?? defaultButtonConfig?.subtitle);
+  return {
+    ...mergeConfigs<ButtonProps>(
+      {},
+      internalShared,
+      internal,
+      titled ? internalTitled : undefined,
+      { label },
+      defaultButtonConfig,
+      instance
+    ),
+    rel,
+  };
+};
+
+const prev = link(prevButton, internalPrev, strings.prev, 'prev');
+const next = link(nextButton, internalNext, strings.next, 'next');
+---
+
+{(prev || next) && (
+  <nav
+    id={id}
+    class={cn('flex flex-wrap items-center', gapClasses[gap], className)}
+    aria-label={ariaLabel ?? strings.pagination}
+    data-pager
+  >
+    {prev && <Button {...prev} data-pager-link="prev" />}
+    <slot />
+    {next && <Button {...next} data-pager-link="next" />}
+  </nav>
+)}

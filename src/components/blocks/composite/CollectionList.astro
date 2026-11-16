@@ -1,8 +1,8 @@
 ---
 import CaseStudyCard from '~/components/blocks/composite/CaseStudyCard.astro';
 import EventCard from '~/components/blocks/composite/EventCard.astro';
+import Pager from '~/components/blocks/composite/Pager.astro';
 import PostCard from '~/components/blocks/composite/PostCard.astro';
-import Button from '~/components/blocks/primitives/Button.astro';
 import type { ButtonProps } from '~/types/button.types';
 import type { CaseStudyCardProps } from '~/types/casestudycard.types';
 import type { CollectionListProps } from '~/types/collectionlist.types';
@@ -42,19 +42,29 @@ const listClass = cn(
   className
 );
 
-const internalPagerButton: ButtonProps = { variant: 'outline', intent: 'neutral', size: 'sm' };
+// Pager defaults CollectionList doesn't use: arrows and inline-end "next".
+// An empty icon name overrides Pager's arrow; the consumer's config can still set an icon.
+const internalPagerButton: ButtonProps = {
+  variant: 'outline',
+  intent: 'neutral',
+  size: 'sm',
+  icon: { name: '' },
+};
 const pagerButton = (
   config: Omit<ButtonProps, 'href'> | false | undefined,
   label: string,
-  href: string | undefined
+  href: string | undefined,
+  internal?: ButtonProps
 ) =>
   config === false || !href
     ? undefined
-    : { ...mergeConfigs<ButtonProps>({}, internalPagerButton, { label }, config), href };
+    : { ...mergeConfigs<ButtonProps>({}, internalPagerButton, internal, { label }, config), href };
 
 const showPager = page !== undefined && page.lastPage > 1;
 const mergedPrev = showPager ? pagerButton(prevButton, strings.prev, page.url.prev) : undefined;
-const mergedNext = showPager ? pagerButton(nextButton, strings.next, page.url.next) : undefined;
+const mergedNext = showPager
+  ? pagerButton(nextButton, strings.next, page.url.next, { class: 'ms-0' })
+  : undefined;
 ---
 
 <div class="@container w-full">
@@ -95,16 +105,16 @@ const mergedNext = showPager ? pagerButton(nextButton, strings.next, page.url.ne
     ))}
   </ul>
   {showPager && (
-    <nav
-      class={cn('mt-8 flex flex-wrap items-center justify-center gap-4', pagerClass)}
-      aria-label={strings.pagination}
-      data-collection-pager
+    <Pager
+      prevButton={mergedPrev}
+      nextButton={mergedNext}
+      ariaLabel={strings.pagination}
+      langCode={langCode}
+      class={cn('mt-8 justify-center', pagerClass)}
     >
-      {mergedPrev && <Button {...mergedPrev} data-collection-pager-prev />}
       <p class="m-0 text-sm text-emphasis" aria-live="off" data-collection-pager-status>
         {pageStatus(pageStatusLabel ?? strings.pageOf, page.currentPage, page.lastPage)}
       </p>
-      {mergedNext && <Button {...mergedNext} data-collection-pager-next />}
-    </nav>
+    </Pager>
   )}
 </div>
