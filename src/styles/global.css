@@ -26,7 +26,7 @@
 
   /* content colors */
   --color-normal: var(--color-text);
-  --color-muted: var(--color-subtext0);
+  --color-muted: var(--color-subtext1);
   --color-emphasis: var(--color-subtext1);
 
   /* status colors */
