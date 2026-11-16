@@ -30,12 +30,6 @@ const internalShared: ButtonProps = {
   class: 'max-w-full',
 };
 
-// Two-line links invert Button's hierarchy: a small "Previous" over a prominent page title.
-const internalTitled: ButtonProps = {
-  labelClass: 'text-xs font-normal text-muted',
-  subtitleClass: 'text-sm font-semibold opacity-100',
-};
-
 const internalPrev: ButtonProps = {
   icon: { name: 'heroicons:arrow-left' },
   iconPosition: 'left',
@@ -58,16 +52,31 @@ const link = (
 ) => {
   if (!instance) return undefined;
   const titled = !!(instance.subtitle ?? defaultButtonConfig?.subtitle);
+
+  // Merge base config first to determine the final intent
+  const mergedWithDefaults = mergeConfigs<ButtonProps>(
+    {},
+    internalShared,
+    internal,
+    { label },
+    defaultButtonConfig,
+    instance
+  );
+
+  // Now apply title styling based on the determined intent
+  if (titled) {
+    const isPrimary =
+      mergedWithDefaults.intent === 'primary' || mergedWithDefaults.intent === 'secondary';
+    return {
+      ...mergedWithDefaults,
+      labelClass: cn('text-xs font-normal', isPrimary ? 'text-bg-background' : 'text-muted'),
+      subtitleClass: 'text-sm font-semibold opacity-100',
+      rel,
+    };
+  }
+
   return {
-    ...mergeConfigs<ButtonProps>(
-      {},
-      internalShared,
-      internal,
-      titled ? internalTitled : undefined,
-      { label },
-      defaultButtonConfig,
-      instance
-    ),
+    ...mergedWithDefaults,
     rel,
   };
 };
