@@ -24,6 +24,7 @@ export const documentationNavigation: NavigationTreeItem[] = [
       { label: 'ContentCarousel', href: '/documentation/composite/ContentCarousel' },
       { label: 'EventCard', href: '/documentation/composite/EventCard' },
       { label: 'EventLayout', href: '/documentation/composite/EventLayout' },
+      { label: 'Example', href: '/documentation/composite/Example' },
       { label: 'Footer', href: '/documentation/composite/Footer' },
       { label: 'Header', href: '/documentation/composite/Header' },
       { label: 'Hero', href: '/documentation/composite/Hero' },
