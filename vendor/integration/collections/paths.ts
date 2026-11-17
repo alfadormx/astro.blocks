@@ -175,13 +175,14 @@ export function assertNoReservedSlug(linked: LinkedEntry[], collection: string):
   }
 }
 
-/** Toggle: each translation's URL, else that language's list. hreflang: translations only. */
+/** Toggle: each translation's URL, else that language's list, else its home. hreflang: translations only. */
 export function entryAlternates(
   key: string,
   linked: LinkedEntry[],
   langs: Lang[],
   route: string,
-  trailingSlash: boolean
+  trailingSlash: boolean,
+  langsWithList: ReadonlySet<string>
 ): Alternates {
   const toggle: Record<string, string> = {};
   const hreflang: Record<string, string> = {};
@@ -194,8 +195,10 @@ export function entryAlternates(
         translation.slug,
         trailingSlash
       );
-    } else {
+    } else if (langsWithList.has(lang.code)) {
       toggle[lang.code] = listUrl(lang.basePath, route, 1, trailingSlash);
+    } else {
+      toggle[lang.code] = withTrailingSlash(lang.basePath, trailingSlash);
     }
   }
   return { toggle, hreflang };

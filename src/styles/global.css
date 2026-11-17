@@ -391,3 +391,5 @@
 @source inline('{md:,}mb-{1,2,3}');
 @source inline('mt-{2,3}');
 @source inline('{md:,}mt-{2,3}');
+@source inline('bg-{red,maroon,peach,yellow,lime,green,emerald,teal,cyan,sky,sapphire,blue,lavender,mauve,pink,flamingo,rosewater,slate,gray,zinc,neutral,stone}{,-50,-100,-200,-300,-400,-500,-600,-700,-800,-900,-950}');
+@source inline('bg-{text,subtext1,subtext0,overlay2,overlay1,overlay0,surface2,surface1,surface0,base,mantle,crust,black,white}');

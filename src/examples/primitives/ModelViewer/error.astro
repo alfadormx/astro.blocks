@@ -1,0 +1,10 @@
+---
+import ModelViewer from '~/components/blocks/primitives/ModelViewer.astro';
+---
+
+<ModelViewer
+  src="/models/missing.glb"
+  label="Missing model"
+  height="200px"
+  messages={{ loadFailed: 'This product preview is unavailable right now.' }}
+/>

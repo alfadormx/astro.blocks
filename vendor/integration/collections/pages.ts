@@ -320,12 +320,20 @@ export async function renderEntry<N extends CollectionName>(astro: AstroGlobal, 
   const { Content } = await render(current.entry as never);
   const readingTime = readingMinutes(current.entry.body);
 
+  const langsWithList = new Set<string>(
+    preset === 'doc'
+      ? []
+      : I18N.languages
+          .filter((l: Lang) => pagesFor(collection, all, l).length > 0)
+          .map((l: Lang) => l.code)
+  );
   astro.locals.blocksAlternates = entryAlternates(
     key,
     all,
     I18N.languages,
     route,
-    SITE.trailingSlash ?? false
+    SITE.trailingSlash ?? false,
+    langsWithList
   );
 
   return {

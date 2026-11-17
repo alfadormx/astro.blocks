@@ -1,0 +1,10 @@
+---
+import Video from '~/components/blocks/primitives/Video.astro';
+---
+
+<Video
+  autoplay
+  hideControls
+  loop
+  source={{ provider: 'html5', sources: [{ src: '/videos/flower.mp4', type: 'video/mp4' }] }}
+/>

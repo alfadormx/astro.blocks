@@ -1,0 +1,175 @@
+---
+title: ModelViewer
+description: An interactive three.js view of a GLB or glTF model
+section: primitives
+order: 14
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import Basic from '~/examples/primitives/ModelViewer/basic.astro';
+import basicSource from '~/examples/primitives/ModelViewer/basic.astro?raw';
+import Gltf from '~/examples/primitives/ModelViewer/gltf.astro';
+import gltfSource from '~/examples/primitives/ModelViewer/gltf.astro?raw';
+import Camera from '~/examples/primitives/ModelViewer/camera.astro';
+import cameraSource from '~/examples/primitives/ModelViewer/camera.astro?raw';
+import Autorotate from '~/examples/primitives/ModelViewer/autorotate.astro';
+import autorotateSource from '~/examples/primitives/ModelViewer/autorotate.astro?raw';
+import Lighting from '~/examples/primitives/ModelViewer/lighting.astro';
+import lightingSource from '~/examples/primitives/ModelViewer/lighting.astro?raw';
+import Environment from '~/examples/primitives/ModelViewer/environment.astro';
+import environmentSource from '~/examples/primitives/ModelViewer/environment.astro?raw';
+import EnvironmentSpin from '~/examples/primitives/ModelViewer/environment-spin.astro';
+import environmentSpinSource from '~/examples/primitives/ModelViewer/environment-spin.astro?raw';
+import Bloom from '~/examples/primitives/ModelViewer/bloom.astro';
+import bloomSource from '~/examples/primitives/ModelViewer/bloom.astro?raw';
+import Configurator from '~/examples/primitives/ModelViewer/configurator.astro';
+import configuratorSource from '~/examples/primitives/ModelViewer/configurator.astro?raw';
+import Warnings from '~/examples/primitives/ModelViewer/warnings.astro';
+import warningsSource from '~/examples/primitives/ModelViewer/warnings.astro?raw';
+import ErrorExample from '~/examples/primitives/ModelViewer/error.astro';
+import errorSource from '~/examples/primitives/ModelViewer/error.astro?raw';
+
+Renders a `.glb` or `.gltf` model. three.js is fetched only when a viewer comes near the viewport, so pages without one never load it. Compressed models (Draco, meshopt, KTX2) are not supported.
+
+## Basic
+
+Drag to orbit and scroll to zoom. The camera frames the model from its bounds.
+
+<Example name="basic" source={basicSource}>
+  <Basic />
+</Example>
+
+## glTF with external resources
+
+A `.gltf` loads its `.bin` and textures relative to `src`.
+
+<Example name="gltf" source={gltfSource}>
+  <Gltf />
+</Example>
+
+## Camera framing
+
+Set `cameraPosition`, `cameraTarget` and `fov` to frame the model deliberately. Any value left out is still derived from the model's bounds.
+
+<Example name="camera" source={cameraSource}>
+  <Camera />
+</Example>
+
+## Autorotate
+
+`autoRotate` spins the model, pausing while the user drags it. It is ignored when the visitor prefers reduced motion.
+
+<Example name="autorotate" source={autorotateSource}>
+  <Autorotate />
+</Example>
+
+## Lighting and shadow
+
+Pick a `lighting` preset and tune `exposure`. Add `shadow` to ground the model.
+
+<Example name="lighting" source={lightingSource}>
+  <Lighting />
+</Example>
+
+## Environment
+
+Set `environment.src` to a `.hdr` file to light and reflect the model from a real studio instead of the generated one. `environment.rotation` turns it, in degrees, to place the highlights.
+
+Pair an HDR with `lighting="neutral"`: the preset still sets the key light, shadow and environment intensity, but its blur only applies to the generated environment. Tune overall brightness with `exposure`. The HDR is never drawn behind the model, so set a background with `class`. If the file fails to load, the viewer falls back to the generated environment.
+
+<Example name="environment" source={environmentSource}>
+  <Environment />
+</Example>
+
+`environment.autoRotate` spins the environment so reflections move across the piece while the model and camera stay still; `environment.autoRotateSpeed` uses the same scale as `autoRotateSpeed`. It keeps turning while the user drags and is ignored when the visitor prefers reduced motion.
+
+<Example name="environment-spin" source={environmentSpinSource}>
+  <EnvironmentSpin />
+</Example>
+
+## Bloom
+
+Set `bloom` to make the highlights on stones glow. Only diamond-like materials (index of refraction 2 or more) glow; metal and everything else stay as they are. It draws the scene a second time and adds post-processing passes on every frame while the view moves, so use it where the sparkle matters.
+
+Only stone highlights brighter than white, before tone mapping, glow. Pair it with `lighting="neutral"` and an HDR `environment`; the dimmer presets leave little bright enough to glow. `exposure` brightens the glow with the rest of the image but does not change which highlights glow. The canvas stays transparent. The glow does not animate on its own; glints move as the camera or environment turns.
+
+<Example name="bloom" source={bloomSource}>
+  <Bloom />
+</Example>
+
+## Configurator
+
+Pair the viewer with selection blocks such as ToggleGroup and TextArea to build a product configurator. Pick a style to load another model file, a band finish to recolour the ring, and a carat to switch which stone is shown. Typing an engraving moves the camera to the band once.
+
+<Example name="configurator" source={configuratorSource}>
+  <Configurator />
+</Example>
+
+## Selections
+
+`selections` is keyed by selection group name, then by option code, and maps each code to a list of `ModelViewerMutation`s applied while that code is selected. Every change starts again from the model as loaded and applies the groups in declaration order, so when two groups set the same property the later one wins. Clearing a group's selection reverts what it changed. Group keys must not be integer-like, because JavaScript would reorder them. A group on a `text` selection only supports `camera`, since its codes are free input. Names match the glTF file as authored, so check them in the file rather than in three.js.
+
+A `material` edit changes every mesh that uses the named glTF material. Colours are `#rgb` or `#rrggbb` in sRGB; `metalness` and `roughness` run from 0 to 1.
+
+Some exporters, such as KeyShot, write one material per mesh, named `Gold_1`, `Gold_2` and so on. When a model loads, materials whose names differ only by a trailing `_<n>` and whose glTF definitions are identical are merged into one. A material name also matches its family, the name without that suffix, so `material: 'Gold'` reaches every `Gold_<n>` mesh, and each original name still works.
+
+```json
+{
+  "type": "material",
+  "material": "Band",
+  "color": "#e5e4e2",
+  "metalness": 1,
+  "roughness": 0.2
+}
+```
+
+A `material` swap with `use` assigns another material from the same file to a named part, such as a variant that no mesh uses by default.
+
+```json
+{
+  "type": "material",
+  "part": "Band",
+  "use": "RoseGold"
+}
+```
+
+`visible` shows the listed glTF nodes and their children. While a group has a selection, every part its options list is hidden first, so exactly the selected option's parts are shown; parts the group never lists are left alone.
+
+```json
+{
+  "type": "visible",
+  "parts": ["Stone_Medium"]
+}
+```
+
+`model` replaces the file. The last selected model mutation wins, falling back to `src`. The current model stays on screen until the new one has loaded, the camera keeps its position, and the other groups are applied to the new model. If the file fails to load, the current model stays. The files should share part and material names.
+
+```json
+{
+  "type": "model",
+  "src": "/models/ring-alt.glb"
+}
+```
+
+## Camera presets
+
+`cameraPresets` names camera positions as a `position` and `target` in model units, plus an optional `fov`. A group's `camera` names the preset to move to when that group changes after a different group did, so typing more into the same field never fights the visitor's orbiting. The camera eases over about 600 ms, or jumps when the visitor prefers reduced motion, and dragging stops the move where it is. Applying a preset turns off `autoRotate`.
+
+## Development warnings
+
+Malformed configuration throws at build time. Problems that depend on the page or the model file log a single `[ModelViewer]` warning each in development and nothing in production: a group that is not declared on the page, `options` on a text group, a material or part missing from the model, and a model file that fails to load. The viewer keeps rendering either way. This example names things that do not exist; open the console and pick the options.
+
+<Example name="warnings" source={warningsSource}>
+  <Warnings />
+</Example>
+
+## Failure message
+
+When WebGL is unavailable or the model cannot be loaded, the viewer shows the matching `messages` text instead of a blank area. This example points at a missing file.
+
+<Example name="error" source={errorSource}>
+  <ErrorExample />
+</Example>
+
+<ApiReferenceTable component="ModelViewer" category="primitives" />

@@ -1,0 +1,25 @@
+---
+import ModelViewer from '~/components/blocks/primitives/ModelViewer.astro';
+
+const hdr = '/hdr/studio_small_08_1k.hdr';
+---
+
+<div class="grid gap-4 md:grid-cols-2">
+  <ModelViewer
+    src="/models/ring-pave.glb"
+    label="A pavé ring without bloom"
+    lighting="neutral"
+    environment={{ src: hdr }}
+    shadow
+    height="300px"
+  />
+  <ModelViewer
+    src="/models/ring-pave.glb"
+    label="A pavé ring with glowing highlights"
+    lighting="neutral"
+    environment={{ src: hdr }}
+    shadow
+    bloom
+    height="300px"
+  />
+</div>

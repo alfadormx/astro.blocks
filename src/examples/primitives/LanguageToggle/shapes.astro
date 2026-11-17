@@ -1,0 +1,18 @@
+---
+import LanguageToggle from '~/components/blocks/primitives/LanguageToggle.astro';
+---
+
+<div class="flex flex-col gap-6">
+  <div class="flex items-center gap-4">
+    <span class="w-20 text-sm text-muted">rounded</span>
+    <LanguageToggle preservePath={false} defaultButtonConfig={{ shape: 'rounded' }} />
+  </div>
+  <div class="flex items-center gap-4">
+    <span class="w-20 text-sm text-muted">square</span>
+    <LanguageToggle preservePath={false} defaultButtonConfig={{ shape: 'square' }} />
+  </div>
+  <div class="flex items-center gap-4">
+    <span class="w-20 text-sm text-muted">pill</span>
+    <LanguageToggle preservePath={false} defaultButtonConfig={{ shape: 'pill' }} />
+  </div>
+</div>

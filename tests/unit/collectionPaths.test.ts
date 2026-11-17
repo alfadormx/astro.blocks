@@ -228,15 +228,37 @@ describe('entryAlternates', () => {
   );
 
   it('links each translation to its own slug', () => {
-    expect(entryAlternates('hello', linked, langs, '/blog', false).toggle).toEqual({
+    expect(
+      entryAlternates('hello', linked, langs, '/blog', false, new Set(['en', 'es'])).toggle
+    ).toEqual({
       en: '/blog/hello',
       es: '/es/blog/hola',
     });
   });
 
   it('sends the toggle for a missing translation to that language list, and leaves it out of hreflang', () => {
-    const { toggle, hreflang } = entryAlternates('only-en', linked, langs, '/blog', false);
+    const { toggle, hreflang } = entryAlternates(
+      'only-en',
+      linked,
+      langs,
+      '/blog',
+      false,
+      new Set(['en', 'es'])
+    );
     expect(toggle.es).toBe('/es/blog');
+    expect(hreflang).toEqual({ en: '/blog/only-en' });
+  });
+
+  it('sends the toggle for a missing translation to that language home when it has no list', () => {
+    const { toggle, hreflang } = entryAlternates(
+      'only-en',
+      linked,
+      langs,
+      '/blog',
+      false,
+      new Set(['en'])
+    );
+    expect(toggle.es).toBe('/es');
     expect(hreflang).toEqual({ en: '/blog/only-en' });
   });
 });

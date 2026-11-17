@@ -1,0 +1,15 @@
+---
+import CheckboxGroup from '~/components/blocks/primitives/CheckboxGroup.astro';
+---
+
+<div class="flex flex-col gap-4 max-w-md">
+  <CheckboxGroup
+    label="Extras"
+    name="extras"
+    defaultOptionConfig={{ intent: 'success', shape: 'square' }}
+    options={[
+      { label: 'Installation', value: 'installation', checked: true },
+      { label: 'Take away the old one', value: 'takeaway' },
+    ]}
+  />
+</div>

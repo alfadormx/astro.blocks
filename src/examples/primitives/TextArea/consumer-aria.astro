@@ -1,0 +1,22 @@
+---
+import TextArea from '~/components/blocks/primitives/TextArea.astro';
+---
+
+<div class="flex flex-col gap-4 max-w-md">
+  <TextArea id="doc-aria-valid" label="Valid" aria-invalid="false" rows={2} />
+  <TextArea
+    id="doc-aria-error"
+    label="With error"
+    aria-invalid="false"
+    error="Required."
+    rows={2}
+  />
+  <TextArea
+    id="doc-aria-dup"
+    label="Duplicate reference"
+    help="Shown once."
+    aria-describedby="doc-aria-dup-help doc-aria-note"
+    rows={2}
+  />
+  <p id="doc-aria-note">External note.</p>
+</div>

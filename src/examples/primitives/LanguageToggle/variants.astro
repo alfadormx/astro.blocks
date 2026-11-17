@@ -1,0 +1,22 @@
+---
+import LanguageToggle from '~/components/blocks/primitives/LanguageToggle.astro';
+---
+
+<div class="flex flex-col gap-6">
+  <div class="flex items-center gap-4">
+    <span class="w-20 text-sm text-muted">solid</span>
+    <LanguageToggle preservePath={false} defaultButtonConfig={{ variant: 'solid' }} />
+  </div>
+  <div class="flex items-center gap-4">
+    <span class="w-20 text-sm text-muted">outline</span>
+    <LanguageToggle preservePath={false} defaultButtonConfig={{ variant: 'outline' }} />
+  </div>
+  <div class="flex items-center gap-4">
+    <span class="w-20 text-sm text-muted">ghost</span>
+    <LanguageToggle preservePath={false} defaultButtonConfig={{ variant: 'ghost' }} />
+  </div>
+  <div class="flex items-center gap-4">
+    <span class="w-20 text-sm text-muted">link</span>
+    <LanguageToggle preservePath={false} defaultButtonConfig={{ variant: 'link' }} />
+  </div>
+</div>

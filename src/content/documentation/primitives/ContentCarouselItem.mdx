@@ -1,0 +1,21 @@
+---
+title: ContentCarouselItem
+description: A slide wrapper used as default-slot content inside the ContentCarousel block.
+section: primitives
+order: 7
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import Basic from '~/examples/primitives/ContentCarouselItem/basic.astro';
+import basicSource from '~/examples/primitives/ContentCarouselItem/basic.astro?raw';
+
+`ContentCarouselItem` wraps arbitrary slide content (images, text, buttons, or other blocks) in a `Container` and tags it with the `carousel-item` class the `ContentCarousel` block relies on to detect slides passed via its default slot. It's only needed when slotting custom content — carousels built from the `items` array prop render their own slides automatically.
+
+## Slotted slides inside ContentCarousel
+
+<Example name="basic" source={basicSource}>
+  <Basic />
+</Example>
+
+<ApiReferenceTable component="ContentCarouselItem" category="primitives" />

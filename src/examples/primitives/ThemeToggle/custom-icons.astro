@@ -1,0 +1,14 @@
+---
+import ThemeToggle from '~/components/blocks/primitives/ThemeToggle.astro';
+---
+
+<div class="flex flex-wrap gap-4">
+  <ThemeToggle icon={{ name: 'heroicons:moon' }} variant="solid" intent="primary" size="lg" />
+  <ThemeToggle
+    icon={{ name: 'heroicons:light-bulb' }}
+    variant="outline"
+    intent="accent"
+    size="lg"
+    shape="pill"
+  />
+</div>

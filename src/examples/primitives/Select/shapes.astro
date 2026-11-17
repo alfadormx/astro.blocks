@@ -1,0 +1,17 @@
+---
+import Select from '~/components/blocks/primitives/Select.astro';
+
+const countries = [
+  { value: 'nl', label: 'Netherlands' },
+  { value: 'be', label: 'Belgium' },
+  { value: 'de', label: 'Germany' },
+  { value: 'fr', label: 'France' },
+];
+const shapes = ['rounded', 'square'] as const;
+---
+
+<div class="flex flex-col gap-4 max-w-md">
+  {shapes.map((shape) => (
+    <Select label={`Shape ${shape}`} shape={shape} options={countries} />
+  ))}
+</div>
