@@ -1,0 +1,31 @@
+---
+import FourColumnContainer from '~/components/blocks/layout/FourColumnContainer.astro';
+---
+
+<FourColumnContainer
+  containerWidthType="full"
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-8' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  spacing={{ margin: 'mb-8' }}
+>
+  <div slot="left" class="bg-blue text-white p-6 rounded text-center">
+    <h3>Column 1</h3>
+    <p>First column</p>
+  </div>
+  <div slot="centerLeft" class="bg-green text-white p-6 rounded text-center">
+    <h3>Column 2</h3>
+    <p>Second column</p>
+  </div>
+  <div slot="centerRight" class="bg-mauve text-white p-6 rounded text-center">
+    <h3>Column 3</h3>
+    <p>Third column</p>
+  </div>
+  <div slot="right" class="bg-peach text-white p-6 rounded text-center">
+    <h3>Column 4</h3>
+    <p>Fourth column</p>
+  </div>
+</FourColumnContainer>

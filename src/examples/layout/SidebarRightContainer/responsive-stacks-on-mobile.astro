@@ -1,0 +1,25 @@
+---
+import SidebarRightContainer from '~/components/blocks/layout/SidebarRightContainer.astro';
+---
+
+<SidebarRightContainer
+  htmlTag="section"
+  containerWidthType="full"
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-8' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  responsive={true}
+  spacing={{ margin: 'mb-8' }}
+>
+  <div slot="main" class="bg-red text-white p-6 rounded">
+    <h3 class="text-lg font-bold mb-2">Main Content</h3>
+    <p class="text-sm">Main content appears first on mobile.</p>
+  </div>
+  <div slot="sidebar" class="bg-peach text-white p-6 rounded">
+    <h3 class="text-lg font-bold mb-2">Sidebar</h3>
+    <p class="text-sm">This sidebar appears below on mobile devices.</p>
+  </div>
+</SidebarRightContainer>

@@ -1,0 +1,27 @@
+---
+import ThreeColumnContainer from '~/components/blocks/layout/ThreeColumnContainer.astro';
+---
+
+<ThreeColumnContainer
+  containerWidthType="full"
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-8' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  spacing={{ margin: 'mb-8' }}
+>
+  <div slot="left" class="bg-blue text-white p-6 rounded text-center">
+    <h3>Column 1</h3>
+    <p>First column content.</p>
+  </div>
+  <div slot="center" class="bg-green text-white p-6 rounded text-center">
+    <h3>Column 2</h3>
+    <p>Second column content.</p>
+  </div>
+  <div slot="right" class="bg-mauve text-white p-6 rounded text-center">
+    <h3>Column 3</h3>
+    <p>Third column content.</p>
+  </div>
+</ThreeColumnContainer>

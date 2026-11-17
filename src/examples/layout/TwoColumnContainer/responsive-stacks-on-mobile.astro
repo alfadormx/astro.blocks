@@ -1,0 +1,24 @@
+---
+import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
+---
+
+<TwoColumnContainer
+  containerWidthType="full"
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-8' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  responsive={true}
+  spacing={{ margin: 'mb-8' }}
+>
+  <div slot="left" class="bg-peach text-white p-6 rounded">
+    <h3>Column 1</h3>
+    <p>This layout stacks vertically on mobile, side-by-side on desktop.</p>
+  </div>
+  <div slot="right" class="bg-red text-white p-6 rounded">
+    <h3>Column 2</h3>
+    <p>Set responsive=true for mobile-friendly layouts.</p>
+  </div>
+</TwoColumnContainer>

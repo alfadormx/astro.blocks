@@ -1,0 +1,27 @@
+---
+import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
+---
+
+<TwoColumnContainer
+  containerWidthType="full"
+  background={{
+    image: 'https://images.pexels.com/photos/370799/pexels-photo-370799.jpeg',
+    class: 'bg-cover bg-center',
+  }}
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-12' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  spacing={{ margin: 'mb-8' }}
+>
+  <div slot="left" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
+    <h3>Left Content</h3>
+    <p>Content over a background image with glassmorphism effect.</p>
+  </div>
+  <div slot="right" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
+    <h3>Right Content</h3>
+    <p>Both columns have semi-transparent backgrounds.</p>
+  </div>
+</TwoColumnContainer>

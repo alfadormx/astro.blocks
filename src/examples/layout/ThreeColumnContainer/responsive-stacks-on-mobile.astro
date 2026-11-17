@@ -1,0 +1,28 @@
+---
+import ThreeColumnContainer from '~/components/blocks/layout/ThreeColumnContainer.astro';
+---
+
+<ThreeColumnContainer
+  containerWidthType="full"
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-8' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  responsive={true}
+  spacing={{ margin: 'mb-8' }}
+>
+  <div slot="left" class="bg-peach text-white p-6 rounded text-center">
+    <h3>Mobile Friendly</h3>
+    <p>Stacks vertically on small screens.</p>
+  </div>
+  <div slot="center" class="bg-red text-white p-6 rounded text-center">
+    <h3>Tablet Ready</h3>
+    <p>Responsive by default.</p>
+  </div>
+  <div slot="right" class="bg-pink text-white p-6 rounded text-center">
+    <h3>Desktop Optimized</h3>
+    <p>Three columns on larger screens.</p>
+  </div>
+</ThreeColumnContainer>

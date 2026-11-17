@@ -1,0 +1,86 @@
+---
+import ThreeColumnContainer from '~/components/blocks/layout/ThreeColumnContainer.astro';
+---
+
+<ThreeColumnContainer
+  containerWidthType="full"
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-12' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  gap="normal"
+  spacing={{ margin: 'mb-8' }}
+>
+  <div slot="left" class="border-2 border-gray-300 rounded-lg p-6">
+    <h3>Basic</h3>
+    <div class="text-3xl font-bold mb-4">
+      $9<span class="text-lg text-gray-600">/mo</span>
+    </div>
+    <ul>
+      <li class="flex items-start gap-2">
+        <span class="text-green-600">✓</span>
+        <span>5 Projects</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="text-green-600">✓</span>
+        <span>Basic Support</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="text-green-600">✓</span>
+        <span>1 GB Storage</span>
+      </li>
+    </ul>
+    <button class="w-full bg-gray-200 text-gray-800 py-2 rounded hover:bg-gray-300">
+      Get Started
+    </button>
+  </div>
+  <div slot="center" class="border-2 border-blue rounded-lg p-6 shadow-lg transform scale-105">
+    <div class="text-xs bg-blue text-white px-2 py-1 rounded inline-block mb-2">POPULAR</div>
+    <h3>Pro</h3>
+    <div class="text-3xl font-bold mb-4">
+      $29<span class="text-lg text-gray-600">/mo</span>
+    </div>
+    <ul>
+      <li class="flex items-start gap-2">
+        <span class="text-green-600">✓</span>
+        <span>Unlimited Projects</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="text-green-600">✓</span>
+        <span>Priority Support</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="text-green-600">✓</span>
+        <span>10 GB Storage</span>
+      </li>
+    </ul>
+    <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+      Get Started
+    </button>
+  </div>
+  <div slot="right" class="border-2 border-gray-300 rounded-lg p-6">
+    <h3>Enterprise</h3>
+    <div class="text-3xl font-bold mb-4">
+      $99<span class="text-lg text-gray-600">/mo</span>
+    </div>
+    <ul>
+      <li class="flex items-start gap-2">
+        <span class="text-green-600">✓</span>
+        <span>Unlimited Everything</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="text-green-600">✓</span>
+        <span>24/7 Support</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="text-green-600">✓</span>
+        <span>Unlimited Storage</span>
+      </li>
+    </ul>
+    <button class="w-full bg-gray-200 text-gray-800 py-2 rounded hover:bg-gray-300">
+      Contact Sales
+    </button>
+  </div>
+</ThreeColumnContainer>

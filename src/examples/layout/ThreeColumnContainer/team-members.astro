@@ -1,0 +1,34 @@
+---
+import ThreeColumnContainer from '~/components/blocks/layout/ThreeColumnContainer.astro';
+---
+
+<ThreeColumnContainer
+  containerWidthType="full"
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-12' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  gap="loose"
+  spacing={{ margin: 'mb-8' }}
+>
+  <div slot="left" class="text-center">
+    <div class="w-32 h-32 bg-blue rounded-full mx-auto mb-4"></div>
+    <h3 class="text-xl font-bold mb-1">John Doe</h3>
+    <p class="text-gray-600 mb-2">CEO & Founder</p>
+    <p class="text-sm">Leading the company with vision and passion.</p>
+  </div>
+  <div slot="center" class="text-center">
+    <div class="w-32 h-32 bg-green rounded-full mx-auto mb-4"></div>
+    <h3 class="text-xl font-bold mb-1">Jane Smith</h3>
+    <p class="text-gray-600 mb-2">CTO</p>
+    <p class="text-sm">Building innovative technical solutions.</p>
+  </div>
+  <div slot="right" class="text-center">
+    <div class="w-32 h-32 bg-mauve rounded-full mx-auto mb-4"></div>
+    <h3 class="text-xl font-bold mb-1">Mike Johnson</h3>
+    <p class="text-gray-600 mb-2">Lead Designer</p>
+    <p class="text-sm">Creating beautiful user experiences.</p>
+  </div>
+</ThreeColumnContainer>

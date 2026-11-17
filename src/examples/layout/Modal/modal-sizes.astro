@@ -1,0 +1,46 @@
+---
+import Modal from '~/components/blocks/layout/Modal.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
+---
+
+<div class="flex flex-wrap gap-4">
+  <Button data-modal-trigger="modal-sm" size="sm" label="Small" />
+  <Button data-modal-trigger="modal-md" size="sm" label="Medium" />
+  <Button data-modal-trigger="modal-lg" size="sm" label="Large" />
+  <Button data-modal-trigger="modal-xl" size="sm" label="Extra Large" />
+  <Button data-modal-trigger="modal-full" size="sm" label="Full Screen" />
+  <Modal id="modal-sm" size="sm">
+    <div class="p-6">
+      <h3>Small Modal</h3>
+      <p class="text-sm text-muted">Compact modal for simple messages.</p>
+    </div>
+  </Modal>
+
+  <Modal id="modal-md" size="md">
+    <div class="p-6">
+      <h3>Medium Modal</h3>
+      <p class="text-muted">Default size for most use cases.</p>
+    </div>
+  </Modal>
+
+  <Modal id="modal-lg" size="lg">
+    <div class="p-6">
+      <h3>Large Modal</h3>
+      <p class="text-muted">More space for complex content or forms.</p>
+    </div>
+  </Modal>
+
+  <Modal id="modal-xl" size="xl">
+    <div class="p-6">
+      <h3>Extra Large Modal</h3>
+      <p class="text-muted">Maximum width for detailed content.</p>
+    </div>
+  </Modal>
+
+  <Modal id="modal-full" size="full">
+    <div class="p-8">
+      <h3>Full Screen Modal</h3>
+      <p class="text-muted">Takes up the entire viewport, ideal for immersive experiences.</p>
+    </div>
+  </Modal>
+</div>

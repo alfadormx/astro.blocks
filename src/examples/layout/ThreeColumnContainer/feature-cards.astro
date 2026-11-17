@@ -1,0 +1,31 @@
+---
+import ThreeColumnContainer from '~/components/blocks/layout/ThreeColumnContainer.astro';
+---
+
+<ThreeColumnContainer
+  containerWidthType="full"
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-12' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  gap="loose"
+  spacing={{ margin: 'mb-8' }}
+>
+  <div slot="left" class="text-center">
+    <div class="text-5xl mb-4">🚀</div>
+    <h3>Fast Performance</h3>
+    <p class="text-gray-600">Lightning-fast load times and optimized performance.</p>
+  </div>
+  <div slot="center" class="text-center">
+    <div class="text-5xl mb-4">🔒</div>
+    <h3>Secure</h3>
+    <p class="text-gray-600">Enterprise-grade security for your peace of mind.</p>
+  </div>
+  <div slot="right" class="text-center">
+    <div class="text-5xl mb-4">💡</div>
+    <h3>Easy to Use</h3>
+    <p class="text-gray-600">Intuitive interface that anyone can master.</p>
+  </div>
+</ThreeColumnContainer>

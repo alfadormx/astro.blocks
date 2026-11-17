@@ -1,0 +1,53 @@
+---
+import SidebarLeftContainer from '~/components/blocks/layout/SidebarLeftContainer.astro';
+---
+
+<SidebarLeftContainer
+  htmlTag="section"
+  containerWidthType="full"
+  background={{ class: 'bg-gradient-to-r from-purple to-pink' }}
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-12' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  spacing={{ margin: 'mb-8' }}
+>
+  <div slot="sidebar" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
+    <h3>Quick Links</h3>
+    <ul>
+      <li>
+        <a href="#" class="text-purple hover:underline">
+          Getting Started
+        </a>
+      </li>
+      <li>
+        <a href="#" class="text-purple hover:underline">
+          Documentation
+        </a>
+      </li>
+      <li>
+        <a href="#" class="text-purple hover:underline">
+          API Reference
+        </a>
+      </li>
+      <li>
+        <a href="#" class="text-purple hover:underline">
+          Support
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div slot="main" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
+    <h2 class="text-2xl font-bold mb-4">Welcome to Our Platform</h2>
+    <p class="mb-4">
+      Discover powerful features designed to streamline your workflow and boost productivity.
+    </p>
+    <p class="mb-4">
+      Our intuitive interface makes it easy to get started, while advanced features give you the
+      flexibility you need as you grow.
+    </p>
+    <button class="bg-purple text-white px-6 py-2 rounded hover:bg-purple-700">Get Started</button>
+  </div>
+</SidebarLeftContainer>
