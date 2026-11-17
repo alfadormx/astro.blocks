@@ -1,0 +1,25 @@
+---
+import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
+---
+
+<TwoColumnContainer
+  containerWidthType="full"
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-8' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  responsive={true}
+  ratio="3:2"
+  spacing={{ margin: 'mb-8' }}
+>
+  <div slot="left" class="bg-peach text-white p-6 rounded">
+    <h3>Wide column (3)</h3>
+    <p>Three fifths of the width from the breakpoint up.</p>
+  </div>
+  <div slot="right" class="bg-red text-white p-6 rounded">
+    <h3>Narrow column (2)</h3>
+    <p>Two fifths of the width.</p>
+  </div>
+</TwoColumnContainer>

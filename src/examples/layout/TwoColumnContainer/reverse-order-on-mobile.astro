@@ -1,0 +1,26 @@
+---
+import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
+---
+
+<TwoColumnContainer
+  containerWidthType="full"
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-8' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  responsive={true}
+  reverseOnMobile={true}
+  spacing={{ margin: 'mb-8' }}
+>
+  <div slot="left" class="bg-mauve text-white p-6 rounded">
+    <h3>Image/Visual (Column 1)</h3>
+    <p>On desktop, this appears on the left. On mobile, it appears SECOND (below).</p>
+  </div>
+  <div slot="right" class="bg-cyan text-white p-6 rounded">
+    <h3>Content (Column 2)</h3>
+    <p>On desktop, this appears on the right. On mobile, it appears FIRST (on top).</p>
+    <p class="mt-2 text-sm">Perfect for showing content before images on mobile!</p>
+  </div>
+</TwoColumnContainer>

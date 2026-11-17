@@ -1,0 +1,25 @@
+---
+import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
+---
+
+<TwoColumnContainer
+  containerWidthType="full"
+  background={{ class: 'bg-gradient-to-r from-purple to-pink' }}
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-8' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  gap="loose"
+  spacing={{ margin: 'mb-8' }}
+>
+  <div slot="left" class="bg-white p-6 rounded shadow-lg">
+    <h3>Feature 1</h3>
+    <p>Larger gap between columns (loose).</p>
+  </div>
+  <div slot="right" class="bg-white p-6 rounded shadow-lg">
+    <h3>Feature 2</h3>
+    <p>With gradient background.</p>
+  </div>
+</TwoColumnContainer>

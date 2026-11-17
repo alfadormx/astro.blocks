@@ -1,0 +1,20 @@
+---
+import Modal from '~/components/blocks/layout/Modal.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
+---
+
+<Button data-modal-trigger="modal-custom" label="Open Custom Modal" />
+<Modal
+  id="modal-custom"
+  size="md"
+  backdropClass="bg-gradient-to-br from-blue-500/20 to-purple-500/20"
+  class="border-2 border-primary bg-linear-to-br from-background to-muted"
+>
+  <div class="p-6">
+    <h3>Custom Styled Modal</h3>
+    <p class="text-muted mb-4">
+      This modal has custom backdrop and content styling applied through class props.
+    </p>
+    <Button data-modal-close label="Close" />
+  </div>
+</Modal>

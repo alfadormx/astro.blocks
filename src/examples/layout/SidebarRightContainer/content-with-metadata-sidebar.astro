@@ -1,0 +1,64 @@
+---
+import SidebarRightContainer from '~/components/blocks/layout/SidebarRightContainer.astro';
+---
+
+<SidebarRightContainer
+  htmlTag="section"
+  containerWidthType="full"
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-12' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  spacing={{ margin: 'mb-8' }}
+>
+  <div slot="main" class="bg-white p-6 rounded border border-gray">
+    <h2>Article Title: Modern Web Development</h2>
+    <p>
+      The landscape of web development has changed dramatically over the past few years. Modern
+      frameworks, tools, and best practices have emerged to help developers build better
+      applications faster.
+    </p>
+    <p>
+      From component-based architectures to server-side rendering, the ecosystem continues to
+      evolve. Understanding these patterns is essential for building scalable, maintainable
+      applications.
+    </p>
+    <p>
+      Performance optimization, accessibility, and user experience remain critical factors in
+      successful web development projects.
+    </p>
+  </div>
+  <div slot="sidebar" class="space-y-4">
+    <div class="bg-blue p-4 rounded border border-blue">
+      <h4 class="font-semibold mb-2 text-white">Metadata</h4>
+      <dl class="text-sm space-y-1">
+        <div>
+          <dt class="text-white">Author:</dt>
+          <dd class="font-medium">Jane Smith</dd>
+        </div>
+        <div>
+          <dt class="text-white">Published:</dt>
+          <dd class="font-medium">Dec 25, 2025</dd>
+        </div>
+        <div>
+          <dt class="text-white">Category:</dt>
+          <dd class="font-medium">Technology</dd>
+        </div>
+        <div>
+          <dt class="text-white">Reading Time:</dt>
+          <dd class="font-medium">5 min</dd>
+        </div>
+      </dl>
+    </div>
+    <div class="bg-green p-4 rounded border border-green">
+      <h4 class="text-green">Tags</h4>
+      <div class="flex flex-wrap gap-2">
+        <span class="px-2 py-1 bg-green text-white text-xs rounded">JavaScript</span>
+        <span class="px-2 py-1 bg-green text-white text-xs rounded">React</span>
+        <span class="px-2 py-1 bg-green text-white text-xs rounded">Astro</span>
+      </div>
+    </div>
+  </div>
+</SidebarRightContainer>

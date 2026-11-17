@@ -1,0 +1,40 @@
+---
+import Modal from '~/components/blocks/layout/Modal.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
+---
+
+<div class="flex flex-wrap gap-4">
+  <Button data-modal-trigger="modal-no-backdrop" size="sm" label="No Backdrop Close" />
+  <Button data-modal-trigger="modal-no-escape" size="sm" label="No ESC Close" />
+  <Button data-modal-trigger="modal-no-close-btn" size="sm" label="No Close Button" />
+
+  <Modal id="modal-no-backdrop" closeOnBackdrop={false} size="sm">
+    <div class="p-6">
+      <h3>Persistent Modal</h3>
+      <p class="text-sm text-muted mb-4">
+        Clicking the backdrop won't close this modal. Use the button or ESC key.
+      </p>
+      <Button data-modal-close size="sm" label="Close" />
+    </div>
+  </Modal>
+
+  <Modal id="modal-no-escape" closeOnEscape={false} size="sm">
+    <div class="p-6">
+      <h3>No ESC Close</h3>
+      <p class="text-sm text-muted mb-4">
+        ESC key won't close this modal. Use the button or click backdrop.
+      </p>
+      <Button data-modal-close size="sm" label="Close" />
+    </div>
+  </Modal>
+
+  <Modal id="modal-no-close-btn" closeButton={false} size="sm">
+    <div class="p-6">
+      <h3>No Close Button</h3>
+      <p class="text-sm text-muted mb-4">
+        No automatic close button. Provide your own close mechanism.
+      </p>
+      <Button data-modal-close size="sm" label="Custom Close Button" />
+    </div>
+  </Modal>
+</div>
