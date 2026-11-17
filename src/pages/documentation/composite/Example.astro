@@ -1,0 +1,166 @@
+---
+import Layout from '../_layouts/Layout.astro';
+import Example from '~/components/blocks/composite/Example.astro';
+import CodeBlock from '~/components/blocks/primitives/CodeBlock.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+
+const metadata = {
+  title: {
+    default: 'Example',
+  },
+};
+
+const basicExample = `---
+import Button from '~/components/blocks/primitives/Button.astro';
+---
+
+<Button>Click me</Button>`;
+
+const coloredExample = `---
+import Button from '~/components/blocks/primitives/Button.astro';
+---
+
+<Button intent="primary">Primary</Button>
+<Button intent="success">Success</Button>`;
+---
+
+<Layout
+  metadata={metadata}
+  headline={{
+    tagline: 'Composite',
+    title: 'Example',
+    subtitle: 'Live documentation examples with preview and synchronized source code',
+  }}
+>
+  <p>
+    The <code>Example</code> component renders documentation examples with live previews and
+    synchronized source code from a single Astro file. This prevents drift between preview and code
+    display.
+  </p>
+
+  <h2>Basic Usage</h2>
+
+  <h3>In `.astro` Files</h3>
+  <CodeBlock
+    code={`import Example from '~/components/blocks/composite/Example.astro';
+import MyComponent from '~/components/blocks/MyComponent.astro';
+import sourceCode from '~/examples/my-category/MyComponent/example.astro?raw';
+
+<Example source={sourceCode} name="basic">
+  <MyComponent />
+</Example>`}
+    lang="astro"
+  />
+
+  <h3>In `.mdx` Files</h3>
+  <CodeBlock
+    code={`import Example from '~/components/blocks/composite/Example.astro';
+import MyComponent from '~/components/blocks/MyComponent.astro';
+import sourceCode from '~/examples/my-category/MyComponent/example.astro?raw';
+
+<Example source={sourceCode} name="basic">
+  <MyComponent />
+</Example>`}
+    lang="mdx"
+  />
+
+  <h2>Source Display Rules</h2>
+
+  <p>
+    By default, <code>Example</code> shows the entire example file including imports. Imports point
+    at the library's public paths and demonstrate production-ready code.
+  </p>
+
+  <p>
+    For didactic examples that prioritize clarity over completeness, use
+    <code>sourceType="template-only"</code> to show only the component template, hiding imports:
+  </p>
+
+  <CodeBlock
+    code={`<Example source={sourceCode} sourceType="template-only">
+  <MyComponent />
+</Example>`}
+    lang="astro"
+  />
+
+  <h2>Props Reference</h2>
+
+  <ul>
+    <li>
+      <code>source?: string</code> — Raw source string (from <code>?raw</code> import, prioritized)
+    </li>
+    <li>
+      <code>sourceFile?: string</code> — Fallback path (Astro files only)
+    </li>
+    <li>
+      <code>sourceType?: 'full' | 'template-only'</code> — Display scope (default: 'full')
+    </li>
+    <li>
+      <code>code?: boolean | false</code> — Show CodeBlock (default: true)
+    </li>
+    <li>
+      <code>defaultCodeBlockConfig?: LayerConfig&lt;Omit&lt;CodeBlockProps, 'code'&gt;&gt;</code> —
+      CodeBlock customization
+    </li>
+    <li>
+      <code>name?: string</code> — Section identifier for <code>data-doc-section</code>
+    </li>
+    <li>
+      <code>class?: string</code> — Wrapper class
+    </li>
+    <li>
+      <code>container?: Omit&lt;ContainerProps, 'children' | 'default'&gt;</code> — Container
+      configuration
+    </li>
+    <li>
+      <code>defaultContainerConfig?: LayerConfig&lt;...&gt;</code> — Default Container config
+    </li>
+    <li>
+      <code>exampleSlot?: {'{ class?: string }'}</code> — Preview wrapper config
+    </li>
+    <li>
+      <code>defaultExampleSlotConfig?: LayerConfig&lt;...&gt;</code> — Default preview wrapper
+      config
+    </li>
+  </ul>
+
+  <h2>Browser Test Scoping</h2>
+
+  <p>
+    Each example is wrapped with <code>data-doc-section="&lt;name&gt;"</code>, enabling browser
+    tests to isolate examples by section. Use this in Playwright specs:
+  </p>
+
+  <CodeBlock
+    code={`const example = page.locator('[data-doc-section="basic"]');
+await expect(example.locator('button')).toBeVisible();`}
+    lang="typescript"
+  />
+
+  <h2>Examples</h2>
+
+  <h3>1. Basic Button</h3>
+  <Example source={basicExample} name="basic" code>
+    <div>
+      <Button>Click me</Button>
+    </div>
+  </Example>
+
+  <h3>2. Colored Buttons</h3>
+  <Example source={coloredExample} name="colored">
+    <div class="flex gap-2">
+      <Button intent="primary">Primary</Button>
+      <Button intent="success">Success</Button>
+    </div>
+  </Example>
+
+  <h3>3. Visual Only (No Code)</h3>
+  <Example source={basicExample} name="visual-only" code={false}>
+    <div>
+      <Button>No source shown</Button>
+    </div>
+  </Example>
+
+  <ApiReferenceTable component="Example" category="composite" />
+</Layout>

@@ -1,0 +1,156 @@
+---
+import Container from '~/components/blocks/layout/Container.astro';
+import CodeBlock from '~/components/blocks/primitives/CodeBlock.astro';
+import type { CodeBlockProps } from '~/types/codeblock.types';
+import type { ExampleProps } from '~/types/example.types';
+import type { ContainerAir } from '~/types/container.types';
+import { mergeConfigs } from '~/utils/mergeConfigs';
+import { cn } from '~/utils/styles';
+
+type Props = ExampleProps;
+
+const {
+  source,
+  sourceFile,
+  sourceType = 'full',
+  code = true,
+  defaultCodeBlockConfig,
+  name,
+  class: className,
+  container,
+  defaultContainerConfig,
+  exampleSlot,
+  defaultExampleSlotConfig,
+} = Astro.props;
+
+/**
+ * Process source code: optionally filter to template-only by removing leading imports.
+ * Assumes imports are at the top of the file, contiguous, before the actual component content.
+ * Also removes the frontmatter delimiter (---).
+ */
+function processSource(src: string, type: 'full' | 'template-only'): string {
+  if (type === 'template-only') {
+    // Remove lines starting with 'import' or 'export', and also skip frontmatter (--- markers)
+    // Keep only the template/component body.
+    const lines = src.split('\n');
+    let startIdx = 0;
+    let inFrontmatter = false;
+
+    for (let i = 0; i < lines.length; i++) {
+      const trimmed = lines[i].trim();
+
+      // Handle frontmatter
+      if (trimmed === '---') {
+        if (inFrontmatter) {
+          // End of frontmatter
+          inFrontmatter = false;
+        } else {
+          // Start of frontmatter
+          inFrontmatter = true;
+        }
+        continue;
+      }
+
+      // Skip lines that are still in frontmatter or are imports
+      if (
+        inFrontmatter ||
+        (trimmed && trimmed.startsWith('import ')) ||
+        (trimmed && trimmed.startsWith('export '))
+      ) {
+        startIdx = i + 1;
+        continue;
+      }
+
+      // Found the start of actual content
+      if (trimmed) {
+        startIdx = i;
+        break;
+      }
+    }
+
+    return lines.slice(startIdx).join('\n').trim();
+  }
+  return src;
+}
+
+// Resolve source: prop takes priority
+let resolvedSource = source;
+if (!resolvedSource && sourceFile) {
+  // For Astro files using path fallback, attempt to read the file at import time.
+  // Note: This requires the file path to be resolvable. For MDX users, source prop via ?raw is required.
+  try {
+    const { default: file } = await import(sourceFile);
+    resolvedSource = file;
+  } catch (err) {
+    console.warn(`Example: unable to resolve sourceFile "${sourceFile}":`, err);
+  }
+}
+
+if (!resolvedSource) {
+  throw new Error('Example: either source or sourceFile prop is required');
+}
+
+const processedSource = processSource(resolvedSource, sourceType);
+
+// Internal CodeBlock defaults
+const internalCodeBlockDefaults: Partial<CodeBlockProps> = {
+  lang: 'astro',
+};
+
+const mergedCodeBlockConfig = mergeConfigs({}, internalCodeBlockDefaults, defaultCodeBlockConfig);
+
+const sectionName = name || 'example';
+
+// Spread the merged config but filter out 'code' to avoid duplication
+const restCodeBlockConfig = Object.fromEntries(
+  Object.entries(mergedCodeBlockConfig).filter(([key]) => key !== 'code')
+);
+
+// Internal Container defaults: balanced padding (same horizontal and vertical)
+// The 'tight' air normally has vertical padding (py-8/12/16) larger than horizontal,
+// but for Example we want them balanced. We override with a custom content config.
+const internalContainerDefaults = {
+  border: {
+    width: 'border',
+    color: 'border-border',
+    radius: 'rounded-lg',
+  },
+  content: {
+    air: 'none' as ContainerAir,
+    class: 'px-4 py-4 md:px-6 md:py-6 lg:px-8 lg:py-8',
+  },
+};
+
+const mergedContainerConfig = mergeConfigs(
+  {},
+  internalContainerDefaults,
+  defaultContainerConfig,
+  container
+);
+
+// Internal example slot defaults
+const internalExampleSlotDefaults = {
+  class: 'rounded-md border border-border/50 bg-surface p-4',
+};
+
+const mergedExampleSlotConfig = mergeConfigs(
+  {},
+  internalExampleSlotDefaults,
+  defaultExampleSlotConfig,
+  exampleSlot
+);
+
+const exampleSlotClass = cn(mergedExampleSlotConfig.class);
+---
+
+<Container {...mergedContainerConfig} class={className}>
+  <div data-doc-section={sectionName} class={exampleSlotClass}>
+    <slot />
+  </div>
+
+  {code !== false && (
+    <div class="mt-4">
+      <CodeBlock code={processedSource} title={sectionName} {...restCodeBlockConfig} />
+    </div>
+  )}
+</Container>
