@@ -43,9 +43,11 @@ export interface Alternates {
 
 export type LanguageLayout = 'multi' | 'single';
 
-/** Any id with a language folder (`en/hello`) makes the collection multi-language. */
-export function layoutOf(entries: RawEntry[]): LanguageLayout {
-  return entries.some((e) => e.id.includes('/')) ? 'multi' : 'single';
+/** An id whose first folder is a language code (`en/hello`) makes the collection multi-language. */
+export function layoutOf(entries: RawEntry[], languageCodes: string[]): LanguageLayout {
+  return entries.some((e) => e.id.includes('/') && languageCodes.includes(e.id.split('/')[0]))
+    ? 'multi'
+    : 'single';
 }
 
 /** `en/hello` → { lang: 'en', key: 'hello' }; single-language ids use `defaultLang`. */
@@ -61,9 +63,10 @@ export function parseEntryId(
 
 export function linkEntries<E extends RawEntry>(
   entries: E[],
-  defaultLang: string
+  defaultLang: string,
+  languageCodes: string[]
 ): LinkedEntry<E>[] {
-  const layout = layoutOf(entries);
+  const layout = layoutOf(entries, languageCodes);
   return entries.map((entry) => {
     const { lang, key } = parseEntryId(entry.id, layout, defaultLang);
     return { key, langCode: lang, slug: entry.data.slug ?? key, entry };

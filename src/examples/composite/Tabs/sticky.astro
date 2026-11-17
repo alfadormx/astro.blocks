@@ -1,0 +1,30 @@
+---
+import Tabs from '~/components/blocks/composite/Tabs.astro';
+---
+
+<Tabs
+  items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
+  defaultItemConfig={{ variant: 'ghost', intent: 'neutral' }}
+  activeItemConfig={{ variant: 'solid', intent: 'primary' }}
+  tabList={{
+    layout: 'grid',
+    columns: 3,
+    wrapperClass: 'sticky top-0 bg-background',
+  }}
+>
+  <div slot="panel-0">
+    {Array.from({ length: 12 }, (_, i) => (
+      <p>Overview paragraph {i + 1}.</p>
+    ))}
+  </div>
+  <div slot="panel-1">
+    {Array.from({ length: 12 }, (_, i) => (
+      <p>API paragraph {i + 1}.</p>
+    ))}
+  </div>
+  <div slot="panel-2">
+    {Array.from({ length: 12 }, (_, i) => (
+      <p>Examples paragraph {i + 1}.</p>
+    ))}
+  </div>
+</Tabs>

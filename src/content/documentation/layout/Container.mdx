@@ -1,0 +1,165 @@
+---
+title: Container
+description: A flexible container component with layout and background options.
+section: layout
+order: 1
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import WidthFullBoxed from '~/examples/layout/Container/width-full-boxed.astro';
+import widthFullBoxedSource from '~/examples/layout/Container/width-full-boxed.astro?raw';
+import WidthFullBoxedHalf from '~/examples/layout/Container/width-full-boxed-half.astro';
+import widthFullBoxedHalfSource from '~/examples/layout/Container/width-full-boxed-half.astro?raw';
+import WidthFullFull from '~/examples/layout/Container/width-full-full.astro';
+import widthFullFullSource from '~/examples/layout/Container/width-full-full.astro?raw';
+import WidthBoxed from '~/examples/layout/Container/width-boxed.astro';
+import widthBoxedSource from '~/examples/layout/Container/width-boxed.astro?raw';
+import WidthCustom from '~/examples/layout/Container/width-custom.astro';
+import widthCustomSource from '~/examples/layout/Container/width-custom.astro?raw';
+import BackgroundImage from '~/examples/layout/Container/background-image.astro';
+import backgroundImageSource from '~/examples/layout/Container/background-image.astro?raw';
+import BackgroundVideo from '~/examples/layout/Container/background-video.astro';
+import backgroundVideoSource from '~/examples/layout/Container/background-video.astro?raw';
+import BackgroundColor from '~/examples/layout/Container/background-color.astro';
+import backgroundColorSource from '~/examples/layout/Container/background-color.astro?raw';
+import BackgroundGradient from '~/examples/layout/Container/background-gradient.astro';
+import backgroundGradientSource from '~/examples/layout/Container/background-gradient.astro?raw';
+import LayoutFlexRow from '~/examples/layout/Container/layout-flex-row.astro';
+import layoutFlexRowSource from '~/examples/layout/Container/layout-flex-row.astro?raw';
+import LayoutFlexColumn from '~/examples/layout/Container/layout-flex-column.astro';
+import layoutFlexColumnSource from '~/examples/layout/Container/layout-flex-column.astro?raw';
+import LayoutGrid2 from '~/examples/layout/Container/layout-grid-2.astro';
+import layoutGrid2Source from '~/examples/layout/Container/layout-grid-2.astro?raw';
+import LayoutGrid3 from '~/examples/layout/Container/layout-grid-3.astro';
+import layoutGrid3Source from '~/examples/layout/Container/layout-grid-3.astro?raw';
+import LayoutGridResponsive from '~/examples/layout/Container/layout-grid-responsive.astro';
+import layoutGridResponsiveSource from '~/examples/layout/Container/layout-grid-responsive.astro?raw';
+import MinHeightTop from '~/examples/layout/Container/min-height-top.astro';
+import minHeightTopSource from '~/examples/layout/Container/min-height-top.astro?raw';
+import MinHeightCenter from '~/examples/layout/Container/min-height-center.astro';
+import minHeightCenterSource from '~/examples/layout/Container/min-height-center.astro?raw';
+import MinHeightFullCenter from '~/examples/layout/Container/min-height-full-center.astro';
+import minHeightFullCenterSource from '~/examples/layout/Container/min-height-full-center.astro?raw';
+
+The Container block provides flexible layout control with support for various width configurations and rich background options.
+
+## Container and content width
+
+Control how your container and content are sized using `containerWidthType` and the `content` object.
+
+- **containerWidthType**: Controls the outer container (background/section) width.
+- **content.widthType**: Controls the inner content width (only when containerWidthType is `full`).
+- **content.boxWidth**: Custom max-width for boxed content (default: `max-w-[var(--container-max-width)]`).
+
+### 1. Full-bleed background, boxed content (default max-width)
+
+<Example name="width-full-boxed" source={widthFullBoxedSource}>
+  <WidthFullBoxed />
+</Example>
+
+### 2. Full-bleed background, boxed content (custom 50% width)
+
+<Example name="width-full-boxed-half" source={widthFullBoxedHalfSource}>
+  <WidthFullBoxedHalf />
+</Example>
+
+### 3. Full-bleed background, full-width content
+
+<Example name="width-full-full" source={widthFullFullSource}>
+  <WidthFullFull />
+</Example>
+
+### 4. Boxed container (background and content boxed)
+
+<Example name="width-boxed" source={widthBoxedSource}>
+  <WidthBoxed />
+</Example>
+
+### 5. Custom container width (background and content custom)
+
+<Example name="width-custom" source={widthCustomSource}>
+  <WidthCustom />
+</Example>
+
+## Backgrounds
+
+Add visual richness with background images, videos, colors, or gradients using the `background` prop object.
+
+### 1. Background Image (with parallax effect)
+
+<Example name="background-image" source={backgroundImageSource}>
+  <BackgroundImage />
+</Example>
+
+### 2. Background Video
+
+<Example name="background-video" source={backgroundVideoSource}>
+  <BackgroundVideo />
+</Example>
+
+### 3. Background Color
+
+<Example name="background-color" source={backgroundColorSource}>
+  <BackgroundColor />
+</Example>
+
+### 4. Background Gradient
+
+<Example name="background-gradient" source={backgroundGradientSource}>
+  <BackgroundGradient />
+</Example>
+
+## Layout
+
+Control how child elements are arranged using the `layout` prop with Flexbox or Grid.
+
+### 1. Flex Row (Horizontal)
+
+<Example name="layout-flex-row" source={layoutFlexRowSource}>
+  <LayoutFlexRow />
+</Example>
+
+### 2. Flex Column (Vertical)
+
+<Example name="layout-flex-column" source={layoutFlexColumnSource}>
+  <LayoutFlexColumn />
+</Example>
+
+### 3. Grid - 2 Columns
+
+<Example name="layout-grid-2" source={layoutGrid2Source}>
+  <LayoutGrid2 />
+</Example>
+
+### 4. Grid - 3 Columns
+
+<Example name="layout-grid-3" source={layoutGrid3Source}>
+  <LayoutGrid3 />
+</Example>
+
+### 5. Responsive Grid (2 cols mobile, 4 cols desktop)
+
+<Example name="layout-grid-responsive" source={layoutGridResponsiveSource}>
+  <LayoutGridResponsive />
+</Example>
+
+### 6. Min Height with Default Alignment (Top)
+
+<Example name="min-height-top" source={minHeightTopSource}>
+  <MinHeightTop />
+</Example>
+
+### 7. Min Height with Vertical Center
+
+<Example name="min-height-center" source={minHeightCenterSource}>
+  <MinHeightCenter />
+</Example>
+
+### 8. Min Height with Full Center (Both Axes)
+
+<Example name="min-height-full-center" source={minHeightFullCenterSource}>
+  <MinHeightFullCenter />
+</Example>
+
+<ApiReferenceTable component="Container" category="layout" />

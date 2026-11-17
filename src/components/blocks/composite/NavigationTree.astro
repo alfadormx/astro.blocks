@@ -14,6 +14,7 @@ const {
   currentPath = Astro.url.pathname,
   level = 0,
   class: className = '',
+  childrenClass,
   iconName = 'mdi:chevron-right',
   rotateIconOnExpand = true,
   defaultItemConfig,
@@ -38,6 +39,8 @@ const internalActiveItemConfig: Partial<ButtonProps> = {
   iconPosition: 'left',
   class: 'font-semibold',
 };
+
+const childrenWrapperClass = cn('pl-4', childrenClass);
 
 const internalCurrentPageConfig: Partial<ButtonProps> = { 'aria-current': 'page' };
 
@@ -129,6 +132,7 @@ const buildItemConfig = (
           items={children!}
           currentPath={currentPath}
           level={level + 1}
+          childrenClass={childrenClass}
           iconName={iconName}
           rotateIconOnExpand={rotateIconOnExpand}
           toggleMode={toggleMode}
@@ -148,7 +152,7 @@ const buildItemConfig = (
             data-rotate-icon={rotateIconOnExpand ? '' : undefined}
           >
             <Button {...itemConfig} as="summary" data-nav-toggle />
-            <div class="pl-4" data-nav-children>
+            <div class={childrenWrapperClass} data-nav-children>
               {subtree}
             </div>
           </details>
@@ -161,7 +165,11 @@ const buildItemConfig = (
         >
           <Button {...itemConfig} data-nav-icon-toggle={hasChildren ? '' : undefined} />
           {hasChildren && (
-            <div class="pl-4" data-nav-children style={isExpanded ? '' : 'display: none;'}>
+            <div
+              class={childrenWrapperClass}
+              data-nav-children
+              style={isExpanded ? '' : 'display: none;'}
+            >
               {subtree}
             </div>
           )}

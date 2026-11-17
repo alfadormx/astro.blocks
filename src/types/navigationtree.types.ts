@@ -20,6 +20,8 @@ export interface NavigationTreeProps {
   level?: number;
   /** Additional CSS class(es) applied to the root `<nav>` element (default: `''`). */
   class?: string;
+  /** Classes merged onto the wrapper around each item's children, at every depth (default: `'pl-4'`). */
+  childrenClass?: string;
   /** The icon name shown on items that have children (default: `'mdi:chevron-right'`). */
   iconName?: string;
   /** Whether the expand icon rotates when its item is expanded (default: `true`). */

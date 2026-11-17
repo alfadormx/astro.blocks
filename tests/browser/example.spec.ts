@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-const PAGE_URL = 'http://localhost:3000/documentation/Example';
+const PAGE_URL = '/documentation/composite/Example';
 
 test.describe('Example component', () => {
   test('preview renders with correct section scoping', async ({ page }) => {
@@ -47,19 +47,13 @@ test.describe('Example component', () => {
   test('code={false} hides the CodeBlock', async ({ page }) => {
     await page.goto(PAGE_URL);
 
-    // Find the visual-only section
     const visualSection = page.locator('[data-doc-section="visual-only"]');
     await expect(visualSection).toBeVisible();
 
-    // We should have fewer code blocks than sections (because visual-only has no code)
-    const allCodeBlocks = page.locator('[data-code-block]');
-    const count = await allCodeBlocks.count();
-
-    // We should have fewer code blocks than sections (because visual-only has no code)
-    const sections = page.locator('[data-doc-section]');
-    const sectionCount = await sections.count();
-
-    expect(count).toBeLessThan(sectionCount);
+    // The preview and its CodeBlock are siblings inside the Example wrapper.
+    const example = (name: string) => page.locator(`[data-doc-section="${name}"]`).locator('..');
+    await expect(example('visual-only').locator('[data-code-block]')).toHaveCount(0);
+    await expect(example('colored').locator('[data-code-block]')).toHaveCount(1);
   });
 
   test('renders all section scopes with preview and code', async ({ page }) => {

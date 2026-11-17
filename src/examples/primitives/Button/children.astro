@@ -1,0 +1,13 @@
+---
+import Button from '~/components/blocks/primitives/Button.astro';
+import type { NavigationTreeItem } from '~/types/navigationtree.types';
+
+const menuItem: NavigationTreeItem = {
+  label: 'Products',
+  children: [{ label: 'Laptops', href: '/products/laptops' }],
+};
+---
+
+<div class="flex flex-wrap gap-4">
+  <Button {...menuItem} />
+</div>

@@ -1,0 +1,16 @@
+---
+import Button from '~/components/blocks/primitives/Button.astro';
+---
+
+<div class="flex flex-col gap-4">
+  <div class="flex flex-wrap gap-4">
+    <Button label="Rounded" shape="rounded" />
+    <Button label="Square" shape="square" />
+    <Button label="Pill" shape="pill" />
+  </div>
+  <div class="flex flex-wrap items-center gap-4">
+    <Button icon={{ name: 'heroicons:plus' }} shape="rounded" />
+    <Button icon={{ name: 'heroicons:plus' }} shape="square" />
+    <Button icon={{ name: 'heroicons:plus' }} shape="pill" />
+  </div>
+</div>

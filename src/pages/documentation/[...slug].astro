@@ -1,0 +1,32 @@
+---
+import Layout from './_layouts/Layout.astro';
+import {
+  collectionEntries,
+  renderEntry,
+  type EntryProps,
+} from '../../../vendor/integration/collections/pages';
+import { sectionLabel } from './_sections';
+
+// This route has no `lang` param: keep only `slug` (`primitives/Button`).
+export async function getStaticPaths() {
+  const paths = await collectionEntries('documentation');
+  return paths.map(({ params, props }: { params: { slug: string }; props: EntryProps }) => ({
+    params: { slug: params.slug },
+    props,
+  }));
+}
+
+const { Content, langCode, layout, metadata } = await renderEntry(Astro, 'documentation');
+---
+
+<Layout
+  langCode={langCode}
+  metadata={metadata}
+  headline={{
+    tagline: sectionLabel(layout.section),
+    title: layout.headline.title,
+    subtitle: layout.description,
+  }}
+>
+  <Content />
+</Layout>

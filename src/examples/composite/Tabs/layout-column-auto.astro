@@ -1,0 +1,20 @@
+---
+import Tabs from '~/components/blocks/composite/Tabs.astro';
+---
+
+<Tabs
+  items={[{ label: 'Overview' }, { label: 'API' }, { label: 'Examples' }]}
+  defaultItemConfig={{ variant: 'ghost', intent: 'neutral', width: 'auto' }}
+  activeItemConfig={{ variant: 'solid', intent: 'primary' }}
+  tabList={{ layout: 'column', spacing: { padding: 'p-2', gap: 'gap-2' } }}
+>
+  <div slot="panel-0">
+    <p>Overview panel content.</p>
+  </div>
+  <div slot="panel-1">
+    <p>API panel content.</p>
+  </div>
+  <div slot="panel-2">
+    <p>Examples panel content.</p>
+  </div>
+</Tabs>

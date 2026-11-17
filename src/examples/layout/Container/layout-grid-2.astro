@@ -1,0 +1,20 @@
+---
+import Container from '~/components/blocks/layout/Container.astro';
+---
+
+<Container
+  containerWidthType="full"
+  layout={{ type: 'grid', class: 'grid-cols-2 gap-6' }}
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-8' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  spacing={{ margin: 'mb-8' }}
+>
+  <div class="bg-blue text-white p-6 rounded">Column 1</div>
+  <div class="bg-green text-white p-6 rounded">Column 2</div>
+  <div class="bg-mauve text-white p-6 rounded">Column 3</div>
+  <div class="bg-peach text-white p-6 rounded">Column 4</div>
+</Container>

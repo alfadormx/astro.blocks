@@ -34,3 +34,19 @@ describe('NavigationTree current page', () => {
     expect(tags[0]).toMatch(/href="\/docs"/);
   });
 });
+
+describe('NavigationTree childrenClass', () => {
+  it('merges onto every children wrapper over the default indent', async () => {
+    const nested = [
+      { label: 'A', children: [{ label: 'B', children: [{ label: 'C', href: '/c' }] }] },
+    ];
+    const html = await render('/', {
+      items: nested,
+      childrenClass: 'pl-2 border-l',
+      expansionStrategy: 'always',
+    });
+    const wrappers = html.match(/<div class="[^"]*"[^>]*data-nav-children/g) ?? [];
+    expect(wrappers).toHaveLength(2);
+    for (const w of wrappers) expect(w).toMatch(/class="pl-2 border-l"/);
+  });
+});

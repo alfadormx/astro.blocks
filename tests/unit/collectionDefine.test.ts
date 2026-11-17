@@ -25,13 +25,17 @@ describe('languageLayout', () => {
   it('rejects language folders mixed with loose files', () => {
     const dir = folder(['en/a.md', 'b.md']);
     expect(() => languageLayout('posts', dir, ['en', 'es'])).toThrow(
-      `Collection "posts" mixes language folders and loose files in ${dir}`
+      `Collection "posts" mixes language folders with other files or folders in ${dir}`
     );
   });
 
-  it('rejects a folder that is not a configured language', () => {
-    expect(() => languageLayout('posts', folder(['drafts/a.md']), ['en', 'es'])).toThrow(
-      /mixes language folders and loose files/
+  it('reads non-language folders as a single-language collection', () => {
+    expect(languageLayout('docs', folder(['guides/a.md', 'b.md']), ['en', 'es'])).toBe('single');
+  });
+
+  it('rejects language folders mixed with other folders', () => {
+    expect(() => languageLayout('posts', folder(['en/a.md', 'guides/b.md']), ['en', 'es'])).toThrow(
+      /mixes language folders with other files or folders/
     );
   });
 });

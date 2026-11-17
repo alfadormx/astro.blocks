@@ -14,17 +14,20 @@ export type BlocksCollections = {
 
 export type LanguageLayout = 'multi' | 'single';
 
-/** Language folders only → `multi`; loose Markdown files only → `single`; anything else throws. */
+/** Language folders only → `multi`; no language folders → `single` (other folders are part of the key); a mix throws. */
 export function languageLayout(name: string, dir: string, languageCodes: string[]): LanguageLayout {
   if (!fs.existsSync(dir)) return 'single';
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   const folders = entries.filter((e) => e.isDirectory());
   const files = entries.filter((e) => e.isFile() && /\.mdx?$/.test(e.name));
-  const foreignFolder = folders.some((f) => !languageCodes.includes(f.name));
-  if ((folders.length > 0 && files.length > 0) || foreignFolder) {
-    throw new Error(`Collection "${name}" mixes language folders and loose files in ${dir}`);
+  const languageFolders = folders.filter((f) => languageCodes.includes(f.name));
+  if (languageFolders.length === 0) return 'single';
+  if (files.length > 0 || languageFolders.length < folders.length) {
+    throw new Error(
+      `Collection "${name}" mixes language folders with other files or folders in ${dir}`
+    );
   }
-  return folders.length > 0 ? 'multi' : 'single';
+  return 'multi';
 }
 
 /** Astro's default id uses front-matter `slug`; translations link by file path instead. */
