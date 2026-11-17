@@ -41,7 +41,8 @@ describe('parseEntryId', () => {
 describe('linkEntries', () => {
   const linked = linkEntries(
     [entry('en/hello'), entry('es/hello', { slug: 'hola' }), entry('en/only-en')],
-    'en'
+    'en',
+    ['en', 'es']
   );
 
   it('links translations by filename', () => {
@@ -57,9 +58,14 @@ describe('linkEntries', () => {
   });
 
   it('treats a collection without language folders as the default language', () => {
-    expect(linkEntries([entry('a'), entry('b')], 'en').map((l) => l.langCode)).toEqual([
-      'en',
-      'en',
+    expect(
+      linkEntries([entry('a'), entry('b')], 'en', ['en', 'es']).map((l) => l.langCode)
+    ).toEqual(['en', 'en']);
+  });
+
+  it('keeps section folders in the key of a single-language collection', () => {
+    expect(linkEntries([entry('primitives/Button')], 'en', ['en', 'es'])).toMatchObject([
+      { key: 'primitives/Button', langCode: 'en', slug: 'primitives/Button' },
     ]);
   });
 });
@@ -79,7 +85,7 @@ describe('filterDrafts', () => {
 describe('sortEntries', () => {
   const now = new Date('2026-06-01T00:00:00Z');
   const sorted = (entries: RawEntry[], sort: Parameters<typeof sortEntries>[1]) =>
-    sortEntries(linkEntries(entries, 'en'), sort, now).map((l) => l.key);
+    sortEntries(linkEntries(entries, 'en', ['en', 'es']), sort, now).map((l) => l.key);
 
   it('orders date-desc newest first', () => {
     expect(
@@ -208,16 +214,17 @@ describe('paginate', () => {
 
 describe('assertNoReservedSlug', () => {
   it('names the collection in the reserved-slug error', () => {
-    expect(() => assertNoReservedSlug(linkEntries([entry('en/page')], 'en'), 'posts')).toThrow(
-      'slug `page` is reserved in collection `posts`'
-    );
+    expect(() =>
+      assertNoReservedSlug(linkEntries([entry('en/page')], 'en', ['en', 'es']), 'posts')
+    ).toThrow('slug `page` is reserved in collection `posts`');
   });
 });
 
 describe('entryAlternates', () => {
   const linked = linkEntries(
     [entry('en/hello'), entry('es/hello', { slug: 'hola' }), entry('en/only-en')],
-    'en'
+    'en',
+    ['en', 'es']
   );
 
   it('links each translation to its own slug', () => {

@@ -1,0 +1,23 @@
+---
+import Container from '~/components/blocks/layout/Container.astro';
+---
+
+<Container
+  containerWidthType="full"
+  minHeight="min-h-64"
+  background={{
+    image: 'https://images.pexels.com/photos/370799/pexels-photo-370799.jpeg',
+    attachment: 'fixed',
+  }}
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-12' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  spacing={{ margin: 'mb-8' }}
+>
+  <p class="text-center py-8 rounded bg-surface/80">
+    Full-width container with a <b>fixed</b> background image (parallax effect).
+  </p>
+</Container>

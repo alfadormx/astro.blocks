@@ -9,16 +9,20 @@ import Analytics from '~/components/meta/Analytics.astro';
 import Metadata from '~/components/meta/Metadata.astro';
 import SiteVerification from '~/components/meta/SiteVerification.astro';
 import Container from '~/components/blocks/layout/Container.astro';
-import SidebarLeftContainer from '~/components/blocks/layout/SidebarLeftContainer.astro';
 import type { MetaData } from '~/types/metadata.types';
 import type { ContainerProps } from '~/types/container.types';
 import type { HeadlineProps } from '~/types/headline.types';
+import type { NavigationTreeItem, NavigationTreeProps } from '~/types/navigationtree.types';
 import Headline from '~/components/blocks/primitives/Headline.astro';
 import NavigationTree from '~/components/blocks/composite/NavigationTree.astro';
-import { documentationNavigation } from '~/data/documentationNavigation';
 import Header from '~/components/blocks/composite/Header.astro';
+import Pager from '~/components/blocks/composite/Pager.astro';
+import Modal from '~/components/blocks/layout/Modal.astro';
 import { mergeConfigs } from '~/utils/mergeConfigs';
 import merge from 'lodash.merge';
+import { docLinks } from '../_site';
+import { DOCS_HOME, currentSection, fullTree, neighbours, type DocLink } from '../_nav';
+import { sections } from '../_sections';
 
 export type Props = {
   langCode?: string;
@@ -58,15 +62,43 @@ const defaultMetadata = {
 };
 
 const defaultTopmostContainer = {
-  spacing: { padding: 'pb-16' },
-  content: { widthType: 'boxed' },
+  content: { widthType: 'full', air: 'none' },
 } as ContainerProps;
 
-const defaultHeadline: HeadlineProps = { htmlTag: 'h1' };
+const defaultHeadline: HeadlineProps = {
+  htmlTag: 'h1',
+  class: 'mt-0 mb-10 border-b border-border pb-6',
+  titleClass: 'text-4xl',
+};
 
 const mergedMetadata = merge({}, defaultMetadata, metadata);
 const mergedTopmostContainer = mergeConfigs({}, defaultTopmostContainer, topmostContainer);
 const mergedHeadline = mergeConfigs({}, defaultHeadline, headline);
+
+const links = await docLinks();
+const path = Astro.url.pathname;
+const section = currentSection(links, path);
+
+// Groups read as bold headings with the chevron on the right; pages are small and muted.
+const group = (item: NavigationTreeItem): NavigationTreeItem => ({
+  ...item,
+  iconPosition: 'right',
+  class: 'justify-between font-semibold text-normal',
+});
+const tree: NavigationTreeItem[] = [
+  { label: 'Overview', href: DOCS_HOME },
+  ...fullTree(links, sections).map(group),
+];
+const docsNav: NavigationTreeProps = {
+  items: tree,
+  expansionStrategy: 'always',
+  childrenClass: 'ml-3 pl-2 border-l border-border',
+  defaultItemConfig: { size: 'sm', class: 'py-1' },
+  inactiveItemConfig: { class: 'font-normal text-muted hover:text-normal' },
+  activeItemConfig: { variant: 'ghost', intent: 'primary', class: 'bg-primary/10' },
+};
+const { previous, next } = neighbours(links, path);
+const pagerButton = (l?: DocLink) => (l ? { href: l.href, subtitle: l.title } : undefined);
 ---
 
 <!doctype html>
@@ -118,16 +150,71 @@ const mergedHeadline = mergeConfigs({}, defaultHeadline, headline);
   </head>
   <body>
     <Container {...mergedTopmostContainer}>
-      <Header themeToggle={{}} />
-      <Headline {...mergedHeadline} />
-      <SidebarLeftContainer>
-        <div slot="sidebar">
-          <NavigationTree items={documentationNavigation} expansionStrategy="always" />
-        </div>
-        <div slot="main">
-          <slot />
-        </div>
-      </SidebarLeftContainer>
+      <Header
+        isSticky
+        class="grid grid-cols-[auto_auto_1fr] gap-x-2"
+        logo={{
+          label: 'AstroBlocks',
+          href: DOCS_HOME,
+          icon: { name: 'heroicons:cube' },
+          labelClass: 'text-lg font-bold',
+        }}
+        container={{
+          content: { widthType: 'full' },
+          background: { class: 'bg-background' },
+          border: { width: 'border-b', color: 'border-border' },
+          spacing: { padding: 'py-2 px-4' },
+        }}
+        leftButtons={[
+          {
+            'data-modal-trigger': 'docs-menu',
+            'aria-label': 'Open documentation menu',
+            icon: { name: 'heroicons:bars-3' },
+            class: 'md:hidden',
+          },
+        ]}
+        themeToggle={{}}
+      />
+      <Modal id="docs-menu" position="left" size="sm" class="p-4 pt-16">
+        <NavigationTree {...docsNav} />
+      </Modal>
+      <Container
+        htmlTag="div"
+        content={{ widthType: 'full', air: 'none' }}
+        layout={{ type: 'grid', class: 'grid-cols-1 md:grid-cols-[17rem_minmax(0,1fr)]' }}
+      >
+        {/* 57px: the sticky header (py-2, a 40px button, a 1px border). */}
+        <aside
+          class="hidden md:block sticky top-[57px] self-start h-[calc(100vh-57px)] overflow-y-auto border-r border-border p-4"
+          data-docs-sidebar
+        >
+          <NavigationTree {...docsNav} />
+        </aside>
+        <main class="min-w-0 px-4 py-10 md:px-10">
+          <div class="mx-auto max-w-5xl">
+            <Headline {...mergedHeadline} />
+            <slot />
+            {section && (
+              <Pager
+                id="docs-pager"
+                langCode={htmlLang}
+                ariaLabel="Documentation pages"
+                prevButton={pagerButton(previous)}
+                nextButton={pagerButton(next)}
+                class="mt-16 border-t border-border pt-8"
+              />
+            )}
+          </div>
+        </main>
+      </Container>
     </Container>
+    <script>
+      // Bring the current page into view in the sidebar without scrolling the window.
+      const sidebar = document.querySelector<HTMLElement>('[data-docs-sidebar]');
+      const current = sidebar?.querySelector<HTMLElement>('[aria-current="page"]');
+      if (sidebar && current) {
+        sidebar.scrollTop = current.offsetTop - sidebar.clientHeight / 2;
+      }
+    </script>
   </body>
 </html>

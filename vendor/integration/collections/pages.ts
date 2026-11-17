@@ -76,7 +76,11 @@ function settingsOf(name: string): CollectionSettings & { route: string } {
 
 async function linked(name: string): Promise<LinkedEntry<BlocksEntry>[]> {
   const entries = (await getCollection(name as CollectionKey)) as unknown as BlocksEntry[];
-  const all = linkEntries(filterDrafts(entries, import.meta.env.PROD), I18N.default);
+  const all = linkEntries(
+    filterDrafts(entries, import.meta.env.PROD),
+    I18N.default,
+    I18N.languages.map((l: Lang) => l.code)
+  );
   assertNoReservedSlug(all, name);
   return sortEntries(all, settingsOf(name).sort, BUILD_NOW);
 }

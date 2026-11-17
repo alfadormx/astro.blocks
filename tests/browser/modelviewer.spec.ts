@@ -120,7 +120,7 @@ test.describe('ModelViewer', () => {
   });
 
   test('does not request three.js until a viewer nears the viewport', async ({ page }) => {
-    await page.setViewportSize({ width: 1280, height: 300 });
+    await page.setViewportSize({ width: 1280, height: 200 });
     const requested: string[] = [];
     page.on('request', (request) => requested.push(request.url()));
     await page.goto(PAGE_URL);
@@ -128,7 +128,7 @@ test.describe('ModelViewer', () => {
 
     const firstTop = await viewer(page, 'basic').evaluate((el) => el.getBoundingClientRect().top);
     expect(firstTop, 'fixture: first viewer must start below the lazy margin').toBeGreaterThan(
-      300 + ROOT_MARGIN_PX
+      200 + ROOT_MARGIN_PX
     );
     expect(requested.filter((url) => SCENE_REQUEST.test(url))).toEqual([]);
     await expect(viewer(page, 'basic')).toHaveAttribute('data-model-viewer-state', 'idle');

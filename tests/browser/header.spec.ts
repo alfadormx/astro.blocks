@@ -150,7 +150,7 @@ test.describe('zones at 390px', () => {
   test('zones wider than half the row push the logo instead of running under it', async ({
     page,
   }) => {
-    await page.goto('/documentation');
+    await page.goto('/');
     await page
       .locator('[data-header-row]')
       .first()
@@ -214,6 +214,11 @@ test('a sticky header inside its own scroll box sets no document scroll offset',
 }) => {
   await page.goto(PAGE_URL);
   await expect(page.locator('[data-header]').first()).toHaveAttribute('data-header-ready', '');
+  // Drop the docs shell's own page-level sticky header, then re-run init on the demos alone.
+  await page.evaluate(() => {
+    document.querySelector('[data-header]')!.remove();
+    document.dispatchEvent(new Event('astro:after-swap'));
+  });
   expect(await offset(page)).toBe('');
 });
 

@@ -1,0 +1,43 @@
+---
+import Button from '~/components/blocks/primitives/Button.astro';
+---
+
+<div class="flex flex-wrap items-start gap-4">
+  <Button
+    label="Horizontal Image"
+    image={{
+      src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4',
+      alt: 'Mountain landscape',
+      width: 64,
+      height: 64,
+    }}
+  />
+  <Button
+    orientation="vertical"
+    label="Vertical Image"
+    image={{
+      src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4',
+      alt: 'Mountain landscape',
+      width: 64,
+      height: 64,
+    }}
+  />
+  <Button
+    label="Image Right"
+    iconPosition="right"
+    image={{
+      src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4',
+      alt: 'Mountain landscape',
+      width: 64,
+      height: 64,
+    }}
+  />
+  <Button
+    image={{
+      src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4',
+      alt: 'Mountain landscape',
+      width: 64,
+      height: 64,
+    }}
+  />
+</div>

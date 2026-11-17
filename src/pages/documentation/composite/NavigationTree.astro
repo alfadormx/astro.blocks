@@ -297,6 +297,21 @@ const deeplyNestedNavItems: NavigationTreeItem[] = [
     />
   </div>
 
+  <h4>Children Wrapper</h4>
+  <p>
+    <code>childrenClass</code> styles the wrapper around every level of children, here a guide line
+    as in a docs sidebar.
+  </p>
+  <div class="border border-border rounded-lg p-6 max-w-xs" data-doc-section="children-class">
+    <NavigationTreeBlock
+      items={nestedNavItems}
+      currentPath="/documentation/composite/NavigationTree"
+      expansionStrategy="always"
+      childrenClass="ml-3 pl-2 border-l border-border"
+      defaultItemConfig={{ size: 'sm' }}
+    />
+  </div>
+
   <h3>Current Path Detection</h3>
   <p>
     Current path: <code class="bg-surface px-2 py-1 rounded text-sm">{Astro.url.pathname}</code>
