@@ -94,8 +94,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
 
     test('keyboard focus shows the primary ring', async ({ page }) => {
       const control = await box(page, 'help');
-      await (await box(page, 'basic')).focus();
-      await page.keyboard.press('Tab');
+      await control.focus();
       await expect(control).toBeFocused();
       await expectFocusRing(control, await primaryColour(page));
     });

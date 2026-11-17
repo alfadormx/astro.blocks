@@ -1,0 +1,65 @@
+---
+title: Map
+description: Interactive Leaflet map powered by OpenStreetMap — no API key required
+section: primitives
+order: 13
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import Default from '~/examples/primitives/Map/default.astro';
+import defaultSource from '~/examples/primitives/Map/default.astro?raw';
+import Popup from '~/examples/primitives/Map/popup.astro';
+import popupSource from '~/examples/primitives/Map/popup.astro?raw';
+import Humanitarian from '~/examples/primitives/Map/humanitarian.astro';
+import humanitarianSource from '~/examples/primitives/Map/humanitarian.astro?raw';
+import Topo from '~/examples/primitives/Map/topo.astro';
+import topoSource from '~/examples/primitives/Map/topo.astro?raw';
+import Overview from '~/examples/primitives/Map/overview.astro';
+import overviewSource from '~/examples/primitives/Map/overview.astro?raw';
+
+The Map component renders a fully interactive map using [Leaflet.js](https://leafletjs.com) and OpenStreetMap tiles. No API key is ever required. Supports markers with optional popup labels, three free tile layers, and fully configurable dimensions.
+
+Leaflet and its tiles load only when a map comes within 200px of the viewport. Once a map is ready, the block sets `data-map-ready`. A map inside a hidden or zero-size container (a closed modal, a collapsed accordion) never intersects, so it doesn't load until it's shown.
+
+## Default — marker at location (Paris)
+
+Provide `lat` and `lon`. A marker is placed at the given coordinates by default. `zoom` defaults to `13`.
+
+<Example name="default" source={defaultSource}>
+  <Default />
+</Example>
+
+## Marker with popup label
+
+Add `markerTitle` to display a popup label on the marker when the map loads.
+
+<Example name="popup" source={popupSource}>
+  <Popup />
+</Example>
+
+## Humanitarian tile layer
+
+Use `layer="humanitarian"` for a high-contrast tile style provided by the HOT (Humanitarian OpenStreetMap Team).
+
+<Example name="humanitarian" source={humanitarianSource}>
+  <Humanitarian />
+</Example>
+
+## Topographic layer — no marker
+
+Use `layer="topo"` for terrain elevation rendering. Set `showMarker={false}` for a pin-free area view.
+
+<Example name="topo" source={topoSource}>
+  <Topo />
+</Example>
+
+## Wide area overview
+
+Low zoom level to show a country or region rather than a specific location.
+
+<Example name="overview" source={overviewSource}>
+  <Overview />
+</Example>
+
+<ApiReferenceTable component="Map" category="primitives" />

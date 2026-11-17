@@ -1,0 +1,12 @@
+---
+import Input from '~/components/blocks/primitives/Input.astro';
+---
+
+<div class="flex flex-col gap-4 max-w-md">
+  <Input label="Text" type="text" />
+  <Input label="Email address" type="email" />
+  <Input label="Phone" type="tel" />
+  <Input label="Website" type="url" />
+  <Input label="Quantity" type="number" min={1} max={10} />
+  <Input label="Delivery date" type="date" />
+</div>

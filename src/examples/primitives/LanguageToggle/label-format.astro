@@ -1,0 +1,14 @@
+---
+import LanguageToggle from '~/components/blocks/primitives/LanguageToggle.astro';
+---
+
+<div class="flex flex-col gap-6">
+  <div>
+    <p class="text-sm text-muted mb-2">Full labels (default)</p>
+    <LanguageToggle preservePath={false} />
+  </div>
+  <div>
+    <p class="text-sm text-muted mb-2">Language codes only</p>
+    <LanguageToggle preservePath={false} labelFormat="code" />
+  </div>
+</div>

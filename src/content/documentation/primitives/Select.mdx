@@ -1,0 +1,93 @@
+---
+title: Select
+description: A labelled native dropdown for one choice, with an optional placeholder
+section: primitives
+order: 15
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import Basic from '~/examples/primitives/Select/basic.astro';
+import basicSource from '~/examples/primitives/Select/basic.astro?raw';
+import Placeholder from '~/examples/primitives/Select/placeholder.astro';
+import placeholderSource from '~/examples/primitives/Select/placeholder.astro?raw';
+import Help from '~/examples/primitives/Select/help.astro';
+import helpSource from '~/examples/primitives/Select/help.astro?raw';
+import Sizes from '~/examples/primitives/Select/sizes.astro';
+import sizesSource from '~/examples/primitives/Select/sizes.astro?raw';
+import Variants from '~/examples/primitives/Select/variants.astro';
+import variantsSource from '~/examples/primitives/Select/variants.astro?raw';
+import Intents from '~/examples/primitives/Select/intents.astro';
+import intentsSource from '~/examples/primitives/Select/intents.astro?raw';
+import Shapes from '~/examples/primitives/Select/shapes.astro';
+import shapesSource from '~/examples/primitives/Select/shapes.astro?raw';
+import ErrorExample from '~/examples/primitives/Select/error.astro';
+import errorSource from '~/examples/primitives/Select/error.astro?raw';
+import States from '~/examples/primitives/Select/states.astro';
+import statesSource from '~/examples/primitives/Select/states.astro?raw';
+import Required from '~/examples/primitives/Select/required.astro';
+import requiredSource from '~/examples/primitives/Select/required.astro?raw';
+
+## Basic
+
+<Example name="basic" source={basicSource}>
+  <Basic />
+</Example>
+
+## Placeholder
+
+<Example name="placeholder" source={placeholderSource}>
+  <Placeholder />
+</Example>
+
+## Help text and hidden label
+
+<Example name="help" source={helpSource}>
+  <Help />
+</Example>
+
+## Sizes
+
+<Example name="sizes" source={sizesSource}>
+  <Sizes />
+</Example>
+
+## Variants
+
+<Example name="variants" source={variantsSource}>
+  <Variants />
+</Example>
+
+## Intents
+
+<Example name="intents" source={intentsSource}>
+  <Intents />
+</Example>
+
+## Shapes
+
+<Example name="shapes" source={shapesSource}>
+  <Shapes />
+</Example>
+
+## Error
+
+<Example name="error" source={errorSource}>
+  <ErrorExample />
+</Example>
+
+## Disabled
+
+<Example name="states" source={statesSource}>
+  <States />
+</Example>
+
+## Required
+
+With a `placeholder` and `required`, the field is invalid until a choice is made.
+
+<Example name="required" source={requiredSource}>
+  <Required />
+</Example>
+
+<ApiReferenceTable component="Select" category="primitives" />

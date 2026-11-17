@@ -1,0 +1,31 @@
+---
+import LanguageToggle from '~/components/blocks/primitives/LanguageToggle.astro';
+---
+
+<div class="flex flex-col gap-6">
+  <div class="flex items-center gap-4">
+    <span class="w-32 text-sm text-muted">primary/neutral</span>
+    <LanguageToggle
+      preservePath={false}
+      activeButtonConfig={{ intent: 'primary' }}
+      inactiveButtonConfig={{ intent: 'neutral' }}
+    />
+  </div>
+  <div class="flex items-center gap-4">
+    <span class="w-32 text-sm text-muted">accent/secondary</span>
+    <LanguageToggle
+      preservePath={false}
+      activeButtonConfig={{ intent: 'accent' }}
+      inactiveButtonConfig={{ intent: 'secondary' }}
+    />
+  </div>
+  <div class="flex items-center gap-4">
+    <span class="w-32 text-sm text-muted">success/neutral</span>
+    <LanguageToggle
+      preservePath={false}
+      defaultButtonConfig={{ variant: 'outline' }}
+      activeButtonConfig={{ intent: 'success' }}
+      inactiveButtonConfig={{ intent: 'neutral' }}
+    />
+  </div>
+</div>

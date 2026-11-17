@@ -1,0 +1,13 @@
+---
+import CheckboxGroup from '~/components/blocks/primitives/CheckboxGroup.astro';
+
+const interests = [
+  { label: 'Laptops', value: 'laptops' },
+  { label: 'Phones', value: 'phones' },
+  { label: 'Televisions', value: 'televisions' },
+];
+---
+
+<div class="flex flex-col gap-4 max-w-md">
+  <CheckboxGroup label="Interests" name="interests-disabled" disabled options={interests} />
+</div>

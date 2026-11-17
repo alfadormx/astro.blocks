@@ -1,0 +1,7 @@
+---
+import CodeBlock from '~/components/blocks/primitives/CodeBlock.astro';
+
+const code = '---\nconst title = "Home";\n---\n\n<h1>{title}</h1>\n';
+---
+
+<CodeBlock lang="astro" title="src/pages/index.astro" code={code} />

@@ -1,0 +1,35 @@
+---
+title: Background
+description: An absolutely-positioned background layer for images, video, or color, with an optional overlay and slotted content on top.
+section: primitives
+order: 2
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import ImageExample from '~/examples/primitives/Background/image.astro';
+import imageSource from '~/examples/primitives/Background/image.astro?raw';
+import Color from '~/examples/primitives/Background/color.astro';
+import colorSource from '~/examples/primitives/Background/color.astro?raw';
+import Overlay from '~/examples/primitives/Background/overlay.astro';
+import overlaySource from '~/examples/primitives/Background/overlay.astro?raw';
+
+## Image background
+
+<Example name="image" source={imageSource}>
+  <ImageExample />
+</Example>
+
+## Color background
+
+<Example name="color" source={colorSource}>
+  <Color />
+</Example>
+
+## Image background with overlay
+
+<Example name="overlay" source={overlaySource}>
+  <Overlay />
+</Example>
+
+<ApiReferenceTable component="Background" category="primitives" />

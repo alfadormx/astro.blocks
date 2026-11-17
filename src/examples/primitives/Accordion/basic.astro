@@ -1,0 +1,22 @@
+---
+import Accordion from '~/components/blocks/primitives/Accordion.astro';
+import type { AccordionItem } from '~/types/accordion.types';
+
+const items: AccordionItem[] = [
+  {
+    id: 'shipping',
+    title: 'How long does shipping take?',
+    content: '<p>Orders ship within two working days.</p>',
+  },
+  {
+    title: 'Can I return an item?',
+    content: '<p>Yes, within 30 days of delivery.</p>',
+  },
+  {
+    title: 'Do you ship abroad?',
+    content: '<p>We ship to every country in the EU.</p>',
+  },
+];
+---
+
+<Accordion items={items} />

@@ -1,0 +1,20 @@
+---
+import ToggleGroup from '~/components/blocks/primitives/ToggleGroup.astro';
+---
+
+<ToggleGroup
+  group="togglegroup-doc-font"
+  label="Engraving font"
+  appearance="cell"
+  variant="outline"
+  options={['serif', 'script'].map((code) => ({
+    code,
+    label: code === 'serif' ? 'Serif' : 'Script',
+    hideLabel: true,
+    image: {
+      src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4',
+      width: 96,
+      height: 48,
+    },
+  }))}
+/>

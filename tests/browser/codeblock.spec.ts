@@ -3,7 +3,7 @@ import { contrastRatio } from './contrast';
 
 const PAGE_URL = '/documentation/primitives/CodeBlock';
 
-// Must match `basicSample` in src/pages/documentation/primitives/CodeBlock.astro.
+// Must match `code` in src/examples/primitives/CodeBlock/basic.astro.
 const BASIC = 'export function greet(name: string): string {\n  return `Hello, ${name}!`;\n}\n';
 
 function section(page: Page, name: string): Locator {

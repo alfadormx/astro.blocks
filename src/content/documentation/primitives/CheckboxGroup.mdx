@@ -1,0 +1,69 @@
+---
+title: CheckboxGroup
+description: A labelled set of checkboxes sharing one form name, on a native fieldset
+section: primitives
+order: 5
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import Basic from '~/examples/primitives/CheckboxGroup/basic.astro';
+import basicSource from '~/examples/primitives/CheckboxGroup/basic.astro?raw';
+import Help from '~/examples/primitives/CheckboxGroup/help.astro';
+import helpSource from '~/examples/primitives/CheckboxGroup/help.astro?raw';
+import Horizontal from '~/examples/primitives/CheckboxGroup/horizontal.astro';
+import horizontalSource from '~/examples/primitives/CheckboxGroup/horizontal.astro?raw';
+import Gap from '~/examples/primitives/CheckboxGroup/gap.astro';
+import gapSource from '~/examples/primitives/CheckboxGroup/gap.astro?raw';
+import ErrorExample from '~/examples/primitives/CheckboxGroup/error.astro';
+import errorSource from '~/examples/primitives/CheckboxGroup/error.astro?raw';
+import Custom from '~/examples/primitives/CheckboxGroup/custom.astro';
+import customSource from '~/examples/primitives/CheckboxGroup/custom.astro?raw';
+import Disabled from '~/examples/primitives/CheckboxGroup/disabled.astro';
+import disabledSource from '~/examples/primitives/CheckboxGroup/disabled.astro?raw';
+
+## Basic
+
+<Example name="basic" source={basicSource}>
+  <Basic />
+</Example>
+
+## Help text
+
+<Example name="help" source={helpSource}>
+  <Help />
+</Example>
+
+## Horizontal
+
+<Example name="horizontal" source={horizontalSource}>
+  <Horizontal />
+</Example>
+
+## Gap
+
+<Example name="gap" source={gapSource}>
+  <Gap />
+</Example>
+
+## Error
+
+<Example name="error" source={errorSource}>
+  <ErrorExample />
+</Example>
+
+## Option layer
+
+`defaultOptionConfig` is merged into every option, under the option's own fields.
+
+<Example name="custom" source={customSource}>
+  <Custom />
+</Example>
+
+## Disabled
+
+<Example name="disabled" source={disabledSource}>
+  <Disabled />
+</Example>
+
+<ApiReferenceTable component="CheckboxGroup" category="primitives" />

@@ -1,0 +1,75 @@
+---
+title: CodeBlock
+description: Highlighted code with a copy button, themed for light and dark.
+section: primitives
+order: 6
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import Basic from '~/examples/primitives/CodeBlock/basic.astro';
+import basicSource from '~/examples/primitives/CodeBlock/basic.astro?raw';
+import Title from '~/examples/primitives/CodeBlock/title.astro';
+import titleSource from '~/examples/primitives/CodeBlock/title.astro?raw';
+import NoCopy from '~/examples/primitives/CodeBlock/no-copy.astro';
+import noCopySource from '~/examples/primitives/CodeBlock/no-copy.astro?raw';
+import LongLines from '~/examples/primitives/CodeBlock/long-lines.astro';
+import longLinesSource from '~/examples/primitives/CodeBlock/long-lines.astro?raw';
+import Tokens from '~/examples/primitives/CodeBlock/tokens.astro';
+import tokensSource from '~/examples/primitives/CodeBlock/tokens.astro?raw';
+import Escape from '~/examples/primitives/CodeBlock/escape.astro';
+import escapeSource from '~/examples/primitives/CodeBlock/escape.astro?raw';
+
+## Basic
+
+Pass the source as `code` and a Shiki language id as `lang`. The copy button copies the rendered text, so Windows line endings (`\r\n`) are copied as `\n`.
+
+<Example name="basic" source={basicSource}>
+  <Basic />
+</Example>
+
+## Title
+
+A `title` renders as a filename caption, with the copy button beside it.
+
+<Example name="title" source={titleSource}>
+  <Title />
+</Example>
+
+## No copy button
+
+Set `copyButton` to `false` to hide the button.
+
+<Example name="no-copy" source={noCopySource}>
+  <NoCopy />
+</Example>
+
+## Long lines
+
+Long lines scroll inside the block, never the page. The code area is keyboard-focusable, so the arrow keys scroll it.
+
+<Example name="long-lines" source={longLinesSource}>
+  <LongLines />
+</Example>
+
+## Token colours
+
+The block uses GitHub's light and dark themes and follows the site theme toggle. MDX fenced code blocks use the same themes.
+
+<Example name="tokens" source={tokensSource}>
+  <Tokens />
+</Example>
+
+## Escaping
+
+The source renders as text, so markup is shown, not interpreted.
+
+<Example name="escape" source={escapeSource}>
+  <Escape />
+</Example>
+
+## Several files
+
+For several files side by side, compose `Tabs` with one `CodeBlock` per panel.
+
+<ApiReferenceTable component="CodeBlock" category="primitives" />

@@ -1,0 +1,18 @@
+---
+import Vector from '~/components/blocks/primitives/Vector.astro';
+
+const demoSvg = 'https://www.svgrepo.com/show/513167/basketball.svg';
+---
+
+<div class="flex gap-12">
+  <div class="w-32">
+    <div class="text-primary">
+      <Vector src={demoSvg} ariaLabel="With currentColor" />
+    </div>
+    <p class="text-xs mt-2 text-center">With currentColor</p>
+  </div>
+  <div class="w-32">
+    <Vector src={demoSvg} preserveColors ariaLabel="Original colors" />
+    <p class="text-xs mt-2 text-center">Original colors</p>
+  </div>
+</div>

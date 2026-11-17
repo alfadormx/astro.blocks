@@ -1,0 +1,60 @@
+---
+const families = [
+  'red',
+  'maroon',
+  'peach',
+  'yellow',
+  'lime',
+  'green',
+  'emerald',
+  'teal',
+  'cyan',
+  'sky',
+  'sapphire',
+  'blue',
+  'lavender',
+  'mauve',
+  'pink',
+  'flamingo',
+  'rosewater',
+  'slate',
+  'gray',
+  'zinc',
+  'neutral',
+  'stone',
+];
+const shades = [
+  '',
+  '-50',
+  '-100',
+  '-200',
+  '-300',
+  '-400',
+  '-500',
+  '-600',
+  '-700',
+  '-800',
+  '-900',
+  '-950',
+];
+---
+
+<div class="overflow-x-auto">
+  <div class="grid grid-cols-13 gap-2 min-w-max">
+    <span></span>
+    {shades.map((shade) => (
+      <span class="text-sm text-muted">{shade ? shade.slice(1) : 'base'}</span>
+    ))}
+    {families.map((family) => (
+      <>
+        <span class="capitalize">{family}</span>
+        {shades.map((shade) => (
+          <span
+            title={`${family}${shade}`}
+            class={`size-12 rounded border border-border bg-${family}${shade}`}
+          />
+        ))}
+      </>
+    ))}
+  </div>
+</div>

@@ -1,0 +1,20 @@
+---
+import Checkbox from '~/components/blocks/primitives/Checkbox.astro';
+
+const intents = [
+  'primary',
+  'secondary',
+  'tertiary',
+  'accent',
+  'success',
+  'warning',
+  'error',
+  'neutral',
+] as const;
+---
+
+<div class="flex flex-col gap-4 max-w-md">
+  {intents.map((intent) => (
+    <Checkbox label={`Intent ${intent}`} intent={intent} checked />
+  ))}
+</div>

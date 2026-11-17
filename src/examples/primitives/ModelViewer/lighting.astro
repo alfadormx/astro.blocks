@@ -1,0 +1,17 @@
+---
+import ModelViewer from '~/components/blocks/primitives/ModelViewer.astro';
+
+const presets = ['studio', 'neutral', 'soft'] as const;
+---
+
+<div class="grid gap-4 md:grid-cols-3">
+  {presets.map((preset) => (
+    <ModelViewer
+      src="/models/water-bottle/WaterBottle.gltf"
+      label={`A water bottle under ${preset} lighting`}
+      lighting={preset}
+      shadow
+      height="300px"
+    />
+  ))}
+</div>

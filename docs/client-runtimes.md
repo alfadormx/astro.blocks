@@ -1,6 +1,6 @@
 # Client runtimes
 
-Most of `src/utils/` runs at build time, in frontmatter. The two modules here run in the browser only: import them from a block's client `<script>`, never from frontmatter.
+Most of `src/utils/` runs at build time, in frontmatter. The two modules here run in the browser only: import them from a block's client `<script>` (or, for `selection.ts`, a doc example's client `<script>` under `src/examples/`), never from frontmatter.
 
 ## Selection (`src/utils/selection.ts`)
 
