@@ -1,0 +1,17 @@
+---
+import CallToActionBlock from '~/components/blocks/composite/CallToAction.astro';
+---
+
+<CallToActionBlock
+  headline={{
+    tagline: 'Call to Action',
+    title: 'Shared button styling',
+    subtitle: 'Both buttons take size, shape, and variant from one place.',
+  }}
+  defaultActionConfig={{ size: 'lg', shape: 'pill', variant: 'solid' }}
+  actionsClass="md:justify-start"
+  actions={[
+    { label: 'Get template', intent: 'primary' },
+    { label: 'Subscribe Now', intent: 'secondary' },
+  ]}
+/>
