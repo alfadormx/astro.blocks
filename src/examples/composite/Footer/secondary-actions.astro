@@ -1,0 +1,24 @@
+---
+import FooterBlock from '~/components/blocks/composite/Footer.astro';
+---
+
+<FooterBlock
+  logo={{ label: 'My Brand' }}
+  secondaryButtons={[
+    { label: 'Privacy', href: '#', variant: 'link', size: 'sm' },
+    { label: 'Terms', href: '#', variant: 'link', size: 'sm' },
+  ]}
+  disclaimer="Prices and availability are subject to change without notice."
+  socialButtons={[
+    { icon: { name: 'heroicons:globe-alt' }, href: '#', variant: 'ghost', intent: 'neutral' },
+    {
+      icon: { name: 'heroicons:chat-bubble-left-right' },
+      href: '#',
+      variant: 'ghost',
+      intent: 'neutral',
+    },
+  ]}
+  footnote="© 2026 My Brand. All rights reserved."
+  languageToggle={{ preservePath: false }}
+  languageToggleAlign="center"
+/>

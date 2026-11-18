@@ -1,0 +1,71 @@
+---
+title: Pager
+description: A labelled previous / next navigation with the page title on each link.
+section: composite
+order: 23
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import Both from '~/examples/composite/Pager/both.astro';
+import bothSource from '~/examples/composite/Pager/both.astro?raw';
+import LoneNext from '~/examples/composite/Pager/lone-next.astro';
+import loneNextSource from '~/examples/composite/Pager/lone-next.astro?raw';
+import LonePrev from '~/examples/composite/Pager/lone-prev.astro';
+import lonePrevSource from '~/examples/composite/Pager/lone-prev.astro?raw';
+import LongTitles from '~/examples/composite/Pager/long-titles.astro';
+import longTitlesSource from '~/examples/composite/Pager/long-titles.astro?raw';
+import CustomLabels from '~/examples/composite/Pager/custom-labels.astro';
+import customLabelsSource from '~/examples/composite/Pager/custom-labels.astro?raw';
+import Slot from '~/examples/composite/Pager/slot.astro';
+import slotSource from '~/examples/composite/Pager/slot.astro?raw';
+
+## Previous and next
+
+`prevButton` and `nextButton` are Buttons; each renders when set. Its `subtitle` is the page title, shown under a small "Previous" or "Next".
+
+<Example name="both" source={bothSource}>
+  <Both />
+</Example>
+
+## Next only
+
+A lone next link sits at the inline end: right in left-to-right text, left in right-to-left.
+
+<Example name="lone-next" source={loneNextSource}>
+  <LoneNext />
+</Example>
+
+## Previous only
+
+A lone previous link sits at the inline start.
+
+<Example name="lone-prev" source={lonePrevSource}>
+  <LonePrev />
+</Example>
+
+## Long titles
+
+The row wraps, and a long title wraps inside its link.
+
+<Example name="long-titles" source={longTitlesSource}>
+  <LongTitles />
+</Example>
+
+## Custom labels
+
+`ariaLabel` names the landmark; each link's `label` replaces the built-in text. `defaultButtonConfig` is merged under both links.
+
+<Example name="custom-labels" source={customLabelsSource}>
+  <CustomLabels />
+</Example>
+
+## Slot
+
+The default slot renders between the links. Here the row is centred, and `class: 'ms-0'` on `nextButton` cancels its inline-end default.
+
+<Example name="slot" source={slotSource}>
+  <Slot />
+</Example>
+
+<ApiReferenceTable component="Pager" category="composite" />

@@ -1,0 +1,43 @@
+---
+title: Footer
+description: Site footer with logo, links, disclaimer, social icons, and language toggle.
+section: composite
+order: 12
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import Basic from '~/examples/composite/Footer/basic.astro';
+import basicSource from '~/examples/composite/Footer/basic.astro?raw';
+import SecondaryActions from '~/examples/composite/Footer/secondary-actions.astro';
+import secondaryActionsSource from '~/examples/composite/Footer/secondary-actions.astro?raw';
+import LanguageToggle from '~/examples/composite/Footer/language-toggle.astro';
+import languageToggleSource from '~/examples/composite/Footer/language-toggle.astro?raw';
+
+Footer component combining a logo, secondary link actions, an optional disclaimer, social icon buttons, a footnote, and an optional language toggle.
+
+## Basic footer
+
+Simple footer with logo, social icon buttons, and a copyright footnote.
+
+<Example name="basic" source={basicSource}>
+  <Basic />
+</Example>
+
+## Secondary actions, disclaimer and language toggle
+
+Footer with link-style secondary actions next to the logo, a disclaimer block, and a language toggle row.
+
+<Example name="secondary-actions" source={secondaryActionsSource}>
+  <SecondaryActions />
+</Example>
+
+## Language toggle styling
+
+`languageToggle.defaultButtonConfig` is merged over the footer's link-style default, so it reaches every language button.
+
+<Example name="language-toggle" source={languageToggleSource}>
+  <LanguageToggle />
+</Example>
+
+<ApiReferenceTable component="Footer" category="composite" />

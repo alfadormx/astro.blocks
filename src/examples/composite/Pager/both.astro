@@ -1,0 +1,11 @@
+---
+import PagerBlock from '~/components/blocks/composite/Pager.astro';
+
+const prev = { href: '/documentation/composite/NavigationTreeHorizontal' };
+const next = { href: '/documentation/composite/PostCard' };
+---
+
+<PagerBlock
+  prevButton={{ ...prev, subtitle: 'NavigationTreeHorizontal' }}
+  nextButton={{ ...next, subtitle: 'PostCard' }}
+/>
