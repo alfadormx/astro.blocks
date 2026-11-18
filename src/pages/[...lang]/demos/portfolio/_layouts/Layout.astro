@@ -4,10 +4,24 @@ import BaseLayout from '~/layouts/Layout.astro';
 import Header from '~/components/blocks/composite/Header.astro';
 import Footer from '~/components/blocks/composite/Footer.astro';
 import NavigationTree from '~/components/blocks/composite/NavigationTree.astro';
+import ContactForm from '~/components/blocks/composite/ContactForm.astro';
+import ItemsGrid from '~/components/blocks/composite/ItemsGrid.astro';
 import ModalBlock from '~/components/blocks/layout/Modal.astro';
+import Container from '~/components/blocks/layout/Container.astro';
+import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
 import type { MetaData } from '~/types/metadata.types';
 import { useCopy } from '../../../../../../vendor/integration/copy/pages';
-import { portfolioHome, portfolioNav } from '../_site';
+import {
+  CONTACT_ADDRESS,
+  INK_LINKS,
+  MONO_LABEL,
+  ON_INK,
+  footerColumns,
+  portfolioHome,
+  portfolioNav,
+  wordmark,
+} from '../_site';
 
 interface Props {
   langCode: string;
@@ -17,15 +31,24 @@ interface Props {
 const { langCode, metadata } = Astro.props;
 const { copy } = useCopy(Astro, 'portfolio');
 const nav = portfolioNav(langCode, Astro.url.pathname, copy.nav);
-const logo = { href: portfolioHome(langCode), label: copy.studio };
+const brand = wordmark(copy.studio);
 ---
 
 <BaseLayout langCode={langCode} metadata={metadata} demo="portfolio">
   <Header
     isSticky
     container={{ background: { class: 'bg-background/80 backdrop-blur' } }}
-    logo={logo}
-    leftButtons={[
+    logo={{
+      href: portfolioHome(langCode),
+      vector: { src: brand, ariaLabel: copy.studio },
+      class: 'order-first h-4 w-44 md:h-5 md:w-52 text-normal',
+    }}
+    rightNavigationTreeHorizontal={{
+      items: nav,
+      class: 'hidden lg:flex',
+      defaultItemConfig: { class: 'text-lg font-normal' },
+    }}
+    rightButtons={[
       {
         'data-modal-trigger': 'portfolio-menu',
         'aria-label': copy.nav.menuLabel,
@@ -33,12 +56,78 @@ const logo = { href: portfolioHome(langCode), label: copy.studio };
         class: 'lg:hidden',
       },
     ]}
-    leftNavigationTreeHorizontal={{ items: nav, class: 'hidden lg:flex' }}
-    themeToggle={{}}
   />
-  <ModalBlock id="portfolio-menu" position="left" size="sm" class="p-6 pt-16">
+  <ModalBlock id="portfolio-menu" position="right" size="sm" class="p-6 pt-16">
     <NavigationTree items={nav} />
   </ModalBlock>
   <slot />
-  <Footer logo={logo} languageToggle={{}} footnote={copy.footer.footnote} />
+  <Container
+    htmlTag="div"
+    class={`bg-tertiary ${ON_INK} ${INK_LINKS}`}
+    spacing={{ padding: 'pt-16 pb-0 md:pt-24 md:pb-0 lg:pt-24 lg:pb-0' }}
+  >
+    <TwoColumnContainer ratio="2:3" gap="loose">
+      <div slot="left">
+        <Headline
+          title={copy.footer.newsletter}
+          htmlTag="h2"
+          class="mt-0 mb-6"
+          titleClass={`text-xl md:text-2xl font-normal tracking-tight mb-0 ${ON_INK}`}
+        />
+        <ContactForm
+          action={{ type: 'mailto', address: CONTACT_ADDRESS }}
+          fields={[
+            {
+              control: 'input',
+              name: 'email',
+              type: 'email',
+              label: copy.footer.emailLabel,
+              placeholder: copy.footer.emailLabel,
+              required: true,
+              autocomplete: 'email',
+            },
+          ]}
+          defaultFieldConfig={{ hideLabel: true, shape: 'square' }}
+          submitButton={{
+            label: copy.footer.subscribe,
+            labelClass: 'sr-only',
+            icon: { name: 'heroicons:arrow-right' },
+            intent: 'neutral',
+            variant: 'solid',
+            shape: 'square',
+            class:
+              'bg-background text-normal hover:bg-background/90 dark:bg-normal dark:text-background',
+          }}
+          mailtoMessage={copy.footer.mailtoMessage}
+          container={{ content: { air: 'none', widthType: 'full' } }}
+          formClass="flex-row items-start max-w-sm"
+        />
+      </div>
+      <ItemsGrid
+        slot="right"
+        columns={4}
+        gap="normal"
+        class="@3xl:grid-cols-4"
+        items={footerColumns(nav, copy.footer)}
+        defaultItemConfig={{
+          orientation: 'horizontal',
+          class: 'items-start text-left',
+          contentClass: 'items-start text-left',
+          titleClass: `${MONO_LABEL} normal-case mb-3 opacity-70 ${ON_INK}`,
+          textClass: `leading-snug mb-0 ${ON_INK}`,
+        }}
+      />
+    </TwoColumnContainer>
+  </Container>
+  <Footer
+    container={{
+      class: `bg-tertiary ${ON_INK}`,
+      spacing: { padding: 'px-4 pb-6 md:px-8 lg:px-12' },
+    }}
+    logo={{ class: 'hidden' }}
+    languageToggle={{ defaultButtonConfig: { class: ON_INK } }}
+    languageToggleAlign="left"
+    footnote={copy.footer.footnote}
+    footnoteClass={`text-xs opacity-70 ${ON_INK} ${INK_LINKS}`}
+  />
 </BaseLayout>

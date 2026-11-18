@@ -5,7 +5,7 @@ date: 2026-03-02
 client: Example Studio
 featured: true
 slug: sitio-de-documentacion
-tags: [i18n, docs]
+tags: [Diseño web, Desarrollo web]
 cover:
   src: ~/assets/images/content/code-on-laptop.jpg
   alt: Código en la pantalla de un portátil, con un segundo monitor detrás

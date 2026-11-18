@@ -4,7 +4,7 @@ description: New tokens, dark mode and a component audit for an existing site.
 date: 2025-11-20
 client: Example Co.
 featured: true
-tags: [design-system]
+tags: [Branding, Design system]
 cover:
   src: ~/assets/images/demos/portfolio/brand-refresh-cover.jpg
   alt: A desktop monitor showing a page layout of large images

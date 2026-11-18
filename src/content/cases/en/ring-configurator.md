@@ -4,7 +4,7 @@ description: A 3D configurator with shareable codes for an online jeweller.
 date: 2026-06-10
 client: Example Jewellers
 featured: true
-tags: [3d, e-commerce]
+tags: [3D, E-commerce]
 cover:
   src: ~/assets/images/content/solitaire-ring.jpg
   alt: A gold solitaire ring with a round diamond

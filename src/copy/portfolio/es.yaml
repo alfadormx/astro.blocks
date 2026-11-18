@@ -1,44 +1,49 @@
 studio: 'Atelier North'
 nav:
+  home: 'Inicio'
   work: 'Proyectos'
   about: 'Estudio'
   contact: 'Contacto'
   menuLabel: 'Abrir menú'
 footer:
+  newsletter: 'Suscríbete a nuestro boletín'
+  emailLabel: 'Tu correo'
+  subscribe: 'Suscribirse'
+  mailtoMessage: 'Tu aplicación de correo debería abrirse con la suscripción lista para enviar.'
+  addressTitle: 'Dirección'
+  address: 'Keizersgracht 1, 1015 CC Ámsterdam'
+  contactTitle: 'Contacto'
+  sitemapTitle: 'Mapa del sitio'
+  socialsTitle: 'Redes'
   footnote: 'Atelier North es un estudio ficticio. Fotos de [Pexels](https://www.pexels.com).'
 home:
   pageTitle: 'Atelier North — diseño y código para marcas que lanzan'
   hero:
     tagline: 'Estudio de diseño e ingeniería'
-    title: 'Creamos sitios que se recuerdan'
-    subtitle: 'Marca, producto y web para equipos que cuidan los detalles.'
-    primary: 'Ver proyectos'
-    secondary: 'Empezar un proyecto'
-    imageAlt: 'Una diseñadora en un escritorio blanco, vista desde arriba, dibujando junto a una tableta y flores'
+    title: 'Atelier North es un estudio independiente de marca, producto y diseño web que hace trabajo sereno y cuidadoso para equipos de comercio, cultura, tecnología y edición, desde el primer boceto hasta el lanzamiento y los años siguientes.'
   work:
     tagline: 'Proyectos destacados'
-    title: 'Proyectos recientes'
-    view: 'Ver caso'
-  testimonials:
-    tagline: 'Clientes'
-    title: 'Lo que dicen nuestros clientes'
+    all: 'Todos los proyectos'
+  impact:
+    tagline: 'Impacto en cifras'
     items:
-      a:
-        quote: 'Convirtieron un encargo difuso en un sitio que nuestros clientes usan de verdad. Las ventas llegaron después.'
-        name: 'Maya Okafor'
-        role: 'Fundadora, Example Jewellers'
-      b:
-        quote: 'Planes claros, estimaciones honestas y ninguna sorpresa en el lanzamiento. Algo raro en este oficio.'
-        name: 'Lucas Meyer'
-        role: 'CTO, Example Studio'
-      c:
-        quote: 'El nuevo sistema de diseño nos ahorró semanas en cada versión. El equipo aún habla de ello.'
-        name: 'Sofía Marín'
-        role: 'Directora de producto, Example Co.'
+      projects:
+        value: '60+'
+        label: 'Proyectos lanzados'
+      brands:
+        value: '30+'
+        label: 'Marcas creadas o renovadas'
+      years:
+        value: '12'
+        label: 'Años trabajando juntos'
+  testimonial:
+    tagline: 'Opiniones de clientes'
+    quote: 'Convirtieron un encargo difuso en un sitio que nuestros clientes usan de verdad. Planes claros, estimaciones honestas y ninguna sorpresa en el lanzamiento. Las ventas llegaron después.'
+    name: 'Maya Okafor'
+    role: 'Fundadora, Example Jewellers'
   cta:
-    title: '¿Tienes un proyecto en mente?'
-    subtitle: 'Cuéntanoslo. Respondemos en dos días laborables.'
-    action: 'Escríbenos'
+    text: 'Diseñamos marcas y construimos sitios a medida: tiendas, portfolios, publicaciones, productos y documentación. Cada cliente trabaja con quienes hacen el trabajo, de la estrategia y el diseño al código y el cuidado tras el lanzamiento.'
+    action: 'Saber más'
 about:
   pageTitle: 'Estudio — Atelier North'
   title: 'Un estudio pequeño, a propósito'
@@ -69,7 +74,7 @@ about:
         photoAlt: 'Dan Moreno, de brazos cruzados, con camiseta azul'
 contact:
   pageTitle: 'Contacto — Atelier North'
-  title: 'Empieza un proyecto'
+  title: 'Contacto'
   subtitle: 'Cuéntanos qué estás construyendo y para cuándo lo necesitas. Respondemos en dos días laborables.'
   fields:
     name: 'Nombre'
@@ -77,6 +82,9 @@ contact:
     company: 'Empresa'
     message: 'Háblanos del proyecto'
   submit: 'Enviar'
+  mailTitle: 'Escríbenos'
+  addressTitle: 'Dirección'
+  callTitle: 'Llámanos'
   mailtoMessage: 'Tu aplicación de correo debería abrirse con el mensaje listo para enviar.'
 work:
   title: 'Proyectos'

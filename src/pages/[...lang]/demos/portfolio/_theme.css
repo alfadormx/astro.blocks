@@ -1,29 +1,55 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fustat:wght@300..700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
+/* Ink on paper: near-black type and buttons on an off-white page, square corners, mono labels.
+   Tertiary is the ink band behind the footer; it stays dark in both themes. */
 [data-demo='portfolio'] {
-  --font-title: 'Fraunces', serif;
-  --font-subtitle: 'Inter', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-title: 'Fustat', sans-serif;
+  --font-subtitle: 'Fustat', sans-serif;
+  --font-body: 'Fustat', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
 
-  --color-primary: var(--color-peach-900);
-  --color-primary-hover: var(--color-peach-950);
-  --color-secondary: var(--color-rosewater-800);
-  --color-secondary-hover: var(--color-rosewater-900);
-  --color-accent: var(--color-peach-700);
-  --color-accent-hover: var(--color-peach-800);
-  --color-interactive: var(--color-peach-900);
-  --color-interactive-hover: var(--color-peach-950);
+  --container-max-width: 100rem;
 
-  --radius-md: 0.25rem;
-  --radius-lg: 0.375rem;
-  --radius-xl: 0.5rem;
+  --color-background: color-mix(in oklch, white 97%, black);
+  --color-surface: white;
+  --color-normal: color-mix(in oklch, black 90%, white);
+  --color-muted: color-mix(in oklch, black 55%, white);
+  --color-emphasis: color-mix(in oklch, black 55%, white);
+  --color-border: color-mix(in oklch, black 18%, white);
+  --color-border-emphasis: color-mix(in oklch, black 45%, white);
+
+  --color-primary: var(--color-normal);
+  --color-primary-hover: black;
+  --color-secondary: var(--color-muted);
+  --color-secondary-hover: var(--color-normal);
+  --color-tertiary: color-mix(in oklch, black 90%, white);
+  --color-tertiary-hover: black;
+  --color-interactive: var(--color-normal);
+  --color-interactive-hover: black;
+  --color-link: var(--color-normal);
+  --color-link-hover: black;
+
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
 }
 
 [data-demo='portfolio'][data-theme='dark'] {
-  --color-primary: var(--color-peach);
-  --color-primary-hover: var(--color-peach-400);
-  --color-interactive: var(--color-peach);
-  --color-interactive-hover: var(--color-peach-400);
-  --color-secondary: var(--color-rosewater);
-  --color-accent: var(--color-peach-300);
+  --color-background: color-mix(in oklch, black 88%, white);
+  --color-surface: color-mix(in oklch, black 82%, white);
+  --color-normal: color-mix(in oklch, white 94%, black);
+  --color-muted: color-mix(in oklch, white 62%, black);
+  --color-emphasis: color-mix(in oklch, white 62%, black);
+  --color-border: color-mix(in oklch, white 22%, black);
+  --color-border-emphasis: color-mix(in oklch, white 45%, black);
+  --color-primary-hover: white;
+  --color-tertiary: black;
+  --color-interactive-hover: white;
+  --color-link-hover: white;
+}
+
+[data-demo='portfolio'] ::selection {
+  background-color: var(--color-normal);
+  color: var(--color-background);
 }

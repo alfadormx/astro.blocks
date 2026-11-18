@@ -4,7 +4,7 @@ description: A bilingual documentation site with localised copy and language-awa
 date: 2026-03-02
 client: Example Studio
 featured: true
-tags: [i18n, docs]
+tags: [Web design, Web development]
 cover:
   src: ~/assets/images/content/code-on-laptop.jpg
   alt: Code on a laptop screen, with a second monitor behind it

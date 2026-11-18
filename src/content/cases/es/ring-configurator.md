@@ -5,7 +5,7 @@ date: 2026-06-10
 client: Example Jewellers
 featured: true
 slug: configurador-de-anillos
-tags: [3d, comercio]
+tags: [3D, Comercio electrónico]
 cover:
   src: ~/assets/images/content/solitaire-ring.jpg
   alt: Un anillo solitario de oro con un diamante redondo

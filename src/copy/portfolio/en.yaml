@@ -1,44 +1,49 @@
 studio: 'Atelier North'
 nav:
+  home: 'Home'
   work: 'Work'
   about: 'About'
   contact: 'Contact'
   menuLabel: 'Open menu'
 footer:
+  newsletter: 'Subscribe to our newsletter'
+  emailLabel: 'Your email'
+  subscribe: 'Subscribe'
+  mailtoMessage: 'Your mail app should open with the subscription ready to send.'
+  addressTitle: 'Address'
+  address: 'Keizersgracht 1, 1015 CC Amsterdam'
+  contactTitle: 'Contact us'
+  sitemapTitle: 'Sitemap'
+  socialsTitle: 'Socials'
   footnote: 'Atelier North is a fictional studio. Photos from [Pexels](https://www.pexels.com).'
 home:
   pageTitle: 'Atelier North — design and code for brands that ship'
   hero:
     tagline: 'Design & engineering studio'
-    title: 'We build sites people remember'
-    subtitle: 'Brand, product and web work for teams who care about the details.'
-    primary: 'See our work'
-    secondary: 'Start a project'
-    imageAlt: 'A designer at a white desk, seen from above, sketching beside a tablet and flowers'
+    title: 'Atelier North is an independent studio for brand, product and web design, building calm, careful work for teams in retail, culture, technology and publishing, from the first sketch to launch day and the years after.'
   work:
-    tagline: 'Selected work'
-    title: 'Recent projects'
-    view: 'View case'
-  testimonials:
-    tagline: 'Clients'
-    title: 'What our clients say'
+    tagline: 'Selected projects'
+    all: 'All projects'
+  impact:
+    tagline: 'Impact in numbers'
     items:
-      a:
-        quote: 'They turned a vague brief into a site our customers actually use. Sales followed.'
-        name: 'Maya Okafor'
-        role: 'Founder, Example Jewellers'
-      b:
-        quote: 'Clear plans, honest estimates and no surprises at launch. Rare in this business.'
-        name: 'Lucas Meyer'
-        role: 'CTO, Example Studio'
-      c:
-        quote: 'Our new design system cut weeks off every release. The team still talks about it.'
-        name: 'Sofia Marín'
-        role: 'Head of product, Example Co.'
+      projects:
+        value: '60+'
+        label: 'Projects shipped'
+      brands:
+        value: '30+'
+        label: 'Brands built or rebuilt'
+      years:
+        value: '12'
+        label: 'Years working together'
+  testimonial:
+    tagline: 'Client testimonials'
+    quote: 'They turned a vague brief into a site our customers actually use. Clear plans, honest estimates and no surprises at launch. Sales followed.'
+    name: 'Maya Okafor'
+    role: 'Founder, Example Jewellers'
   cta:
-    title: 'Have a project in mind?'
-    subtitle: 'Tell us about it. We reply within two working days.'
-    action: 'Get in touch'
+    text: 'We design brands and build sites to order: shops, portfolios, publications, products and documentation. Every client works with the people who make the work, from strategy and design to code and care after launch.'
+    action: 'Learn more'
 about:
   pageTitle: 'About — Atelier North'
   title: 'A small studio, on purpose'
@@ -69,7 +74,7 @@ about:
         photoAlt: 'Dan Moreno, arms crossed, in a blue T-shirt'
 contact:
   pageTitle: 'Contact — Atelier North'
-  title: 'Start a project'
+  title: 'Contact us'
   subtitle: 'Tell us what you are building and when you need it. We reply within two working days.'
   fields:
     name: 'Name'
@@ -77,6 +82,9 @@ contact:
     company: 'Company'
     message: 'Tell us about the project'
   submit: 'Send'
+  mailTitle: 'Mail us'
+  addressTitle: 'Address'
+  callTitle: 'Call'
   mailtoMessage: 'Your mail app should open with the message ready to send.'
 work:
   title: 'Work'

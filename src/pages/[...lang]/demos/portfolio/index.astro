@@ -2,13 +2,18 @@
 import PortfolioLayout from './_layouts/Layout.astro';
 import Hero from '~/components/blocks/composite/Hero.astro';
 import Testimonials from '~/components/blocks/composite/Testimonials.astro';
-import CallToAction from '~/components/blocks/composite/CallToAction.astro';
-import ItemsContent from '~/components/blocks/composite/ItemsContent.astro';
+import CollectionList from '~/components/blocks/composite/CollectionList.astro';
+import ItemsGrid from '~/components/blocks/composite/ItemsGrid.astro';
+import Container from '~/components/blocks/layout/Container.astro';
+import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
+import type { HeadlineProps } from '~/types/headline.types';
 import type { ItemProps } from '~/types/item.types';
-import type { Testimonial } from '~/types/testimonials.types';
+import { cn } from '~/utils/styles';
 import { collectionUrl, getFeatured } from '../../../../../vendor/integration/collections/pages';
 import { localizedPaths, useCopy } from '../../../../../vendor/integration/copy/pages';
-import { portfolioHome } from './_site';
+import { ARROW_LINK, MONO_LABEL, PROJECT_CARD, asProjects, portfolioHome } from './_site';
 
 export const getStaticPaths = () => localizedPaths();
 
@@ -17,92 +22,98 @@ type Props = { langCode: string; basePath: string };
 const { langCode, copy } = useCopy(Astro, 'portfolio');
 const home = portfolioHome(langCode);
 
-const featured = await getFeatured('cases', 3, langCode);
-const workItems: ItemProps[] = featured.map((entry) => ({
-  image: entry.image,
-  title: entry.headline.title,
-  content: entry.description,
-  orientation: 'vertical',
-  actions: [
-    {
-      label: copy.home.work.view,
-      href: entry.href,
-      variant: 'outline',
-      size: 'sm',
-      'aria-label': `${copy.home.work.view}: ${entry.headline.title}`,
-    },
-  ],
-}));
+const SECTION_LABEL: HeadlineProps = {
+  htmlTag: 'h2',
+  align: 'left',
+  class: 'mt-0 mb-6 md:mb-8',
+  titleClass: `${MONO_LABEL} mb-0`,
+};
 
-const testimonials: Testimonial[] = Object.entries(copy.home.testimonials.items).map(
-  ([key, item]) => ({
-    quote: item.quote,
-    author: {
-      name: item.name,
-      role: item.role,
-      avatar: { src: `~/assets/images/demos/portfolio/avatar-${key}.jpg`, alt: '' },
-    },
-  })
-);
+const projects = asProjects(await getFeatured('cases', 6, langCode));
+
+const stats: ItemProps[] = Object.values(copy.home.impact.items).map((stat) => ({
+  title: stat.value,
+  content: stat.label,
+}));
 ---
 
 <PortfolioLayout langCode={langCode} metadata={{ title: { default: copy.home.pageTitle } }}>
   <Hero
-    layout="split"
     headline={{
       tagline: copy.home.hero.tagline,
       title: copy.home.hero.title,
-      subtitle: copy.home.hero.subtitle,
+      align: 'left',
+      class: 'my-0 max-w-5xl space-y-3',
+      taglineClass: MONO_LABEL,
+      titleClass: 'text-3xl md:text-5xl font-medium tracking-tighter leading-[1.05] mb-0',
     }}
-    image={{
-      src: '~/assets/images/demos/portfolio/hero.jpg',
-      alt: copy.home.hero.imageAlt,
-      widths: [480, 768, 1024],
-      sizes: '(min-width: 1024px) 50vw, 100vw',
-    }}
-    actions={[
-      {
-        label: copy.home.hero.primary,
-        href: collectionUrl('cases', langCode),
-        intent: 'primary',
-        variant: 'solid',
-        size: 'lg',
-      },
-      { label: copy.home.hero.secondary, href: `${home}/contact`, variant: 'outline', size: 'lg' },
-    ]}
+    container={{ minHeight: 'min-h-[calc(100svh-4.5rem)]' }}
   />
-  <ItemsContent
-    headline={{ tagline: copy.home.work.tagline, title: copy.home.work.title, align: 'center' }}
-    itemsGrid={{
-      columns: 3,
-      items: workItems,
-      defaultItemConfig: {
-        image: {
-          layout: 'responsive',
-          aspectRatio: 16 / 9,
-          widths: [400, 800],
-          sizes: '(min-width: 1024px) 33vw, 100vw',
-          class: 'w-full h-auto rounded-lg',
+
+  <Container>
+    <Headline {...SECTION_LABEL} title={copy.home.work.tagline} />
+    <CollectionList
+      entries={projects}
+      langCode={langCode}
+      columns={3}
+      gap="tight"
+      defaultCaseStudyCardConfig={PROJECT_CARD}
+    />
+    <Button
+      {...ARROW_LINK}
+      label={copy.home.work.all}
+      href={collectionUrl('cases', langCode)}
+      align="right"
+      class={cn(ARROW_LINK.class, 'mt-12 md:mt-16')}
+    />
+  </Container>
+
+  <Container>
+    <TwoColumnContainer ratio="1:1" gap="loose">
+      <Headline slot="left" {...SECTION_LABEL} title={copy.home.impact.tagline} />
+      <ItemsGrid
+        slot="right"
+        columns={1}
+        gap="none"
+        items={stats}
+        defaultItemConfig={{
+          orientation: 'horizontal',
+          class: 'items-start text-left border-b border-border-emphasis py-8 first:pt-0',
+          contentClass: 'items-start text-left',
+          titleClass: 'text-6xl md:text-7xl font-light tracking-tighter leading-none mb-6',
+          textClass: `${MONO_LABEL} text-normal mb-0`,
+        }}
+      />
+    </TwoColumnContainer>
+  </Container>
+
+  <Testimonials
+    headline={{ ...SECTION_LABEL, title: copy.home.testimonial.tagline }}
+    testimonials={[
+      {
+        quote: copy.home.testimonial.quote,
+        author: {
+          name: copy.home.testimonial.name,
+          role: copy.home.testimonial.role,
+          avatar: { src: '~/assets/images/demos/portfolio/avatar-a.jpg', alt: '' },
         },
       },
+    ]}
+    columns={1}
+    container={{ content: { boxWidth: 'max-w-4xl' } }}
+    defaultTestimonialConfig={{
+      class: 'gap-16 md:gap-24 bg-transparent border-border-emphasis p-6 md:p-8',
+      quoteClass: 'text-xl md:text-2xl leading-snug tracking-tight text-normal',
     }}
   />
-  <Testimonials
-    headline={{ tagline: copy.home.testimonials.tagline, title: copy.home.testimonials.title }}
-    testimonials={testimonials}
-    layout="grid"
-    columns={3}
-  />
-  <CallToAction
-    headline={{ title: copy.home.cta.title, subtitle: copy.home.cta.subtitle, align: 'center' }}
-    actions={[
-      {
-        label: copy.home.cta.action,
-        href: `${home}/contact`,
-        intent: 'primary',
-        variant: 'solid',
-        size: 'lg',
-      },
-    ]}
-  />
+
+  <Container>
+    <Headline
+      subtitle={copy.home.cta.text}
+      align="left"
+      class="mt-0 mb-10 md:mb-14"
+      subtitleClass="text-2xl md:text-4xl text-normal tracking-tight leading-[1.15] max-w-6xl"
+    />
+    <Button {...ARROW_LINK} label={copy.home.cta.action} href={`${home}/about`} align="left" />
+  </Container>
 </PortfolioLayout>
