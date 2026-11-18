@@ -1,0 +1,99 @@
+---
+title: Example
+description: Live documentation examples with preview and synchronized source code.
+section: composite
+order: 11
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import Basic from '~/examples/composite/Example/basic.astro';
+import basicSource from '~/examples/composite/Example/basic.astro?raw';
+import Colored from '~/examples/composite/Example/colored.astro';
+import coloredSource from '~/examples/composite/Example/colored.astro?raw';
+import VisualOnly from '~/examples/composite/Example/visual-only.astro';
+import visualOnlySource from '~/examples/composite/Example/visual-only.astro?raw';
+
+The `Example` component renders documentation examples with live previews and synchronized source code from a single Astro file. This prevents drift between preview and code display.
+
+## Basic usage
+
+### In `.astro` files
+
+```astro
+import Example from '~/components/blocks/composite/Example.astro'; import MyComponent from
+'~/components/blocks/MyComponent.astro'; import sourceCode from
+'~/examples/my-category/MyComponent/example.astro?raw';
+<Example source={sourceCode} name="basic">
+  <MyComponent />
+</Example>
+```
+
+### In `.mdx` files
+
+```mdx
+import Example from '~/components/blocks/composite/Example.astro';
+import MyComponent from '~/components/blocks/MyComponent.astro';
+import sourceCode from '~/examples/my-category/MyComponent/example.astro?raw';
+
+<Example source={sourceCode} name="basic">
+  <MyComponent />
+</Example>
+```
+
+## Source display rules
+
+By default, `Example` shows the entire example file including imports. Imports point at the library's public paths and demonstrate production-ready code.
+
+For didactic examples that prioritize clarity over completeness, use `sourceType="template-only"` to show only the component template, hiding imports:
+
+```astro
+<Example source={sourceCode} sourceType="template-only">
+  <MyComponent />
+</Example>
+```
+
+## Props reference
+
+- `source?: string` — Raw source string (from `?raw` import, prioritized)
+- `sourceFile?: string` — Fallback path (Astro files only)
+- `sourceType?: 'full' | 'template-only'` — Display scope (default: `'full'`)
+- `code?: boolean | false` — Show CodeBlock (default: `true`)
+- `defaultCodeBlockConfig?: LayerConfig<Omit<CodeBlockProps, 'code'>>` — CodeBlock customization
+- `name?: string` — Section identifier for `data-doc-section`
+- `class?: string` — Wrapper class
+- `container?: Omit<ContainerProps, 'children' | 'default'>` — Container configuration
+- `defaultContainerConfig?: LayerConfig<...>` — Default Container config
+- `exampleSlot?: { class?: string }` — Preview wrapper config
+- `defaultExampleSlotConfig?: LayerConfig<...>` — Default preview wrapper config
+
+## Browser test scoping
+
+Each example is wrapped with `data-doc-section="<name>"`, enabling browser tests to isolate examples by section. Use this in Playwright specs:
+
+```ts
+const example = page.locator('[data-doc-section="basic"]');
+await expect(example.locator('button')).toBeVisible();
+```
+
+## Examples
+
+### Basic button
+
+<Example name="basic" source={basicSource}>
+  <Basic />
+</Example>
+
+### Colored buttons
+
+<Example name="colored" source={coloredSource}>
+  <Colored />
+</Example>
+
+### Visual only (no code)
+
+<Example name="visual-only" source={visualOnlySource} code={false}>
+  <VisualOnly />
+</Example>
+
+<ApiReferenceTable component="Example" category="composite" />

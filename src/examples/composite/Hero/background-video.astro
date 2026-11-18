@@ -1,0 +1,30 @@
+---
+import Hero from '~/components/blocks/composite/Hero.astro';
+import type { ButtonProps } from '~/types/button.types';
+
+const actions: ButtonProps[] = [
+  {
+    label: 'Get started',
+    intent: 'primary',
+    icon: { name: 'heroicons:arrow-right' },
+    iconPosition: 'right',
+  },
+  { label: 'View source', intent: 'secondary', variant: 'outline' },
+];
+const defaultActionConfig = { size: 'lg', shape: 'pill', variant: 'solid' } as const;
+---
+
+<Hero
+  container={{
+    minHeight: 'min-h-[80vh]',
+    background: { video: 'https://www.pexels.com/download/video/2646392/' },
+  }}
+  headline={{
+    tagline: 'Hero',
+    title: 'Copy over motion',
+    subtitle: 'A full-bleed background video with an overlay for contrast.',
+    htmlTag: 'h2',
+  }}
+  defaultActionConfig={defaultActionConfig}
+  actions={actions}
+/>
