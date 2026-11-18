@@ -1,5 +1,6 @@
 ---
 import SidebarLeftContainer from '~/components/blocks/layout/SidebarLeftContainer.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
 ---
 
 <SidebarLeftContainer
@@ -15,57 +16,62 @@ import SidebarLeftContainer from '~/components/blocks/layout/SidebarLeftContaine
   spacing={{ margin: 'mb-8' }}
 >
   <div slot="sidebar" class="space-y-6">
-    <div class="bg-white p-6 rounded border border-gray-300">
-      <h3 class="text-lg font-bold mb-3">About the Author</h3>
-      <div class="w-20 h-20 bg-blue rounded-full mx-auto mb-3"></div>
-      <p class="text-sm text-gray text-center">
+    <div class="bg-surface p-6 rounded border border-border">
+      <Headline title="About the Author" htmlTag="h4" class="my-0" titleClass="mb-3 text-lg" />
+      <div class="w-20 h-20 bg-primary rounded-full mx-auto mb-3"></div>
+      <p class="text-sm text-muted text-center">
         John Doe is a software engineer with 10 years of experience.
       </p>
     </div>
-    <div class="bg-white p-6 rounded border border-gray-300">
-      <h3 class="text-lg font-bold mb-3">Categories</h3>
+    <div class="bg-surface p-6 rounded border border-border">
+      <Headline title="Categories" htmlTag="h4" class="my-0" titleClass="mb-3 text-lg" />
       <ul>
         <li>
-          <a href="#" class="text-blue hover:underline">
+          <a href="#" class="text-link hover:underline">
             Technology (24)
           </a>
         </li>
         <li>
-          <a href="#" class="text-blue hover:underline">
+          <a href="#" class="text-link hover:underline">
             Design (18)
           </a>
         </li>
         <li>
-          <a href="#" class="text-blue hover:underline">
+          <a href="#" class="text-link hover:underline">
             Business (12)
           </a>
         </li>
       </ul>
     </div>
-    <div class="bg-white p-6 rounded border border-gray-300">
-      <h3 class="text-lg font-bold mb-3">Recent Posts</h3>
+    <div class="bg-surface p-6 rounded border border-border">
+      <Headline title="Recent Posts" htmlTag="h4" class="my-0" titleClass="mb-3 text-lg" />
       <ul>
         <li>
-          <a href="#" class="text-sm text-blue hover:underline">
+          <a href="#" class="text-sm text-link hover:underline">
             Getting Started with Astro
           </a>
         </li>
         <li>
-          <a href="#" class="text-sm text-blue hover:underline">
+          <a href="#" class="text-sm text-link hover:underline">
             Tailwind CSS Tips
           </a>
         </li>
         <li>
-          <a href="#" class="text-sm text-blue hover:underline">
+          <a href="#" class="text-sm text-link hover:underline">
             Modern Web Development
           </a>
         </li>
       </ul>
     </div>
   </div>
-  <div slot="main" class="bg-white p-8 rounded border border-gray-300">
-    <h2 class="text-3xl font-bold mb-4">Building Modern Web Applications</h2>
-    <div class="text-sm text-gray mb-6">Published on December 24, 2025 • 5 min read</div>
+  <div slot="main" class="bg-surface p-8 rounded border border-border">
+    <Headline
+      title="Building Modern Web Applications"
+      htmlTag="h4"
+      class="my-0"
+      titleClass="mb-4 text-3xl"
+    />
+    <div class="text-sm text-muted mb-6">Published on December 24, 2025 • 5 min read</div>
     <p class="mb-4">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco

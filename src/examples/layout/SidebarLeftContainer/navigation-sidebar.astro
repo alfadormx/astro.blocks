@@ -1,5 +1,6 @@
 ---
 import SidebarLeftContainer from '~/components/blocks/layout/SidebarLeftContainer.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
 ---
 
 <SidebarLeftContainer
@@ -13,37 +14,37 @@ import SidebarLeftContainer from '~/components/blocks/layout/SidebarLeftContaine
   border={{ width: 'border', color: 'border-border' }}
   spacing={{ margin: 'mb-8' }}
 >
-  <div slot="sidebar" class="bg-blue p-6 rounded">
-    <h3 class="text-white">Navigation</h3>
+  <div slot="sidebar" class="bg-primary text-background p-6 rounded">
+    <p class="font-semibold">Navigation</p>
     <nav>
-      <a href="#" class="block py-2 px-3 bg-white text-blue rounded">
+      <a href="#" class="block py-2 px-3 bg-background text-primary rounded">
         Dashboard
       </a>
-      <a href="#" class="block py-2 px-3 text-white hover:bg-gray rounded">
+      <a href="#" class="block py-2 px-3 hover:bg-primary-hover rounded">
         Projects
       </a>
-      <a href="#" class="block py-2 px-3 text-white hover:bg-gray rounded">
+      <a href="#" class="block py-2 px-3 hover:bg-primary-hover rounded">
         Team
       </a>
-      <a href="#" class="block py-2 px-3 text-white hover:bg-gray rounded">
+      <a href="#" class="block py-2 px-3 hover:bg-primary-hover rounded">
         Settings
       </a>
     </nav>
   </div>
-  <div slot="main" class="bg-white p-6 rounded border border-gray-300">
-    <h2>Dashboard Overview</h2>
+  <div slot="main" class="bg-surface p-6 rounded border border-border">
+    <Headline title="Dashboard Overview" htmlTag="h4" class="my-0" titleClass="mb-4 text-2xl" />
     <p>
       Welcome to your dashboard. Here you can manage your projects, view team activity, and
       configure settings.
     </p>
     <div class="grid grid-cols-2 gap-4 mt-6">
-      <div class="bg-blue p-4 rounded">
-        <div class="text-2xl font-bold text-white">24</div>
-        <div class="text-sm text-white">Active Projects</div>
+      <div class="bg-primary text-background p-4 rounded">
+        <div class="text-2xl font-bold">24</div>
+        <div class="text-sm">Active Projects</div>
       </div>
-      <div class="bg-green p-4 rounded">
-        <div class="text-2xl font-bold text-white">156</div>
-        <div class="text-sm text-white">Completed Tasks</div>
+      <div class="bg-success text-background p-4 rounded">
+        <div class="text-2xl font-bold">156</div>
+        <div class="text-sm">Completed Tasks</div>
       </div>
     </div>
   </div>

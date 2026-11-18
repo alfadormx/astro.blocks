@@ -1,5 +1,8 @@
 ---
 import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
+import Image from '~/components/blocks/primitives/Image.astro';
 ---
 
 <TwoColumnContainer
@@ -13,18 +16,20 @@ import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.as
   spacing={{ margin: 'mb-8' }}
 >
   <div slot="left">
-    <img
-      src="https://images.pexels.com/photos/1170686/pexels-photo-1170686.jpeg?auto=compress&cs=tinysrgb&w=600"
-      alt="Sample"
+    <Image
+      src="~/assets/images/demos/saas/content-a.jpg"
+      alt="Hands over printed charts"
+      width={600}
+      height={400}
       class="w-full h-full object-cover rounded"
     />
   </div>
   <div slot="right" class="flex flex-col justify-center">
-    <h3 class="text-2xl font-bold mb-4">About Our Product</h3>
+    <Headline title="About Our Product" htmlTag="h4" class="my-0" titleClass="mb-4 text-2xl" />
     <p class="mb-4">
       This is a common pattern for landing pages - image on one side, content on the other.
     </p>
     <p class="mb-4">Perfect for features, about sections, or product showcases.</p>
-    <button class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Learn More</button>
+    <Button label="Learn More" align="left" />
   </div>
 </TwoColumnContainer>

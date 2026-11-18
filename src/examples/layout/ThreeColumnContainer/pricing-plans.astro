@@ -1,5 +1,7 @@
 ---
 import ThreeColumnContainer from '~/components/blocks/layout/ThreeColumnContainer.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
 ---
 
 <ThreeColumnContainer
@@ -13,74 +15,70 @@ import ThreeColumnContainer from '~/components/blocks/layout/ThreeColumnContaine
   gap="normal"
   spacing={{ margin: 'mb-8' }}
 >
-  <div slot="left" class="border-2 border-gray-300 rounded-lg p-6">
-    <h3>Basic</h3>
+  <div slot="left" class="border-2 border-border rounded-lg p-6">
+    <Headline title="Basic" htmlTag="h4" class="my-0" titleClass="mb-2 text-xl" />
     <div class="text-3xl font-bold mb-4">
-      $9<span class="text-lg text-gray-600">/mo</span>
+      $9<span class="text-lg text-muted">/mo</span>
     </div>
     <ul>
       <li class="flex items-start gap-2">
-        <span class="text-green-600">✓</span>
+        <span class="text-success">✓</span>
         <span>5 Projects</span>
       </li>
       <li class="flex items-start gap-2">
-        <span class="text-green-600">✓</span>
+        <span class="text-success">✓</span>
         <span>Basic Support</span>
       </li>
       <li class="flex items-start gap-2">
-        <span class="text-green-600">✓</span>
+        <span class="text-success">✓</span>
         <span>1 GB Storage</span>
       </li>
     </ul>
-    <button class="w-full bg-gray-200 text-gray-800 py-2 rounded hover:bg-gray-300">
-      Get Started
-    </button>
+    <Button label="Get Started" intent="neutral" width="full" class="mt-4" />
   </div>
-  <div slot="center" class="border-2 border-blue rounded-lg p-6 shadow-lg transform scale-105">
-    <div class="text-xs bg-blue text-white px-2 py-1 rounded inline-block mb-2">POPULAR</div>
-    <h3>Pro</h3>
+  <div slot="center" class="border-2 border-primary rounded-lg p-6 shadow-lg transform scale-105">
+    <div class="text-xs bg-primary text-background px-2 py-1 rounded inline-block mb-2">
+      POPULAR
+    </div>
+    <Headline title="Pro" htmlTag="h4" class="my-0" titleClass="mb-2 text-xl" />
     <div class="text-3xl font-bold mb-4">
-      $29<span class="text-lg text-gray-600">/mo</span>
+      $29<span class="text-lg text-muted">/mo</span>
     </div>
     <ul>
       <li class="flex items-start gap-2">
-        <span class="text-green-600">✓</span>
+        <span class="text-success">✓</span>
         <span>Unlimited Projects</span>
       </li>
       <li class="flex items-start gap-2">
-        <span class="text-green-600">✓</span>
+        <span class="text-success">✓</span>
         <span>Priority Support</span>
       </li>
       <li class="flex items-start gap-2">
-        <span class="text-green-600">✓</span>
+        <span class="text-success">✓</span>
         <span>10 GB Storage</span>
       </li>
     </ul>
-    <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-      Get Started
-    </button>
+    <Button label="Get Started" width="full" class="mt-4" />
   </div>
-  <div slot="right" class="border-2 border-gray-300 rounded-lg p-6">
-    <h3>Enterprise</h3>
+  <div slot="right" class="border-2 border-border rounded-lg p-6">
+    <Headline title="Enterprise" htmlTag="h4" class="my-0" titleClass="mb-2 text-xl" />
     <div class="text-3xl font-bold mb-4">
-      $99<span class="text-lg text-gray-600">/mo</span>
+      $99<span class="text-lg text-muted">/mo</span>
     </div>
     <ul>
       <li class="flex items-start gap-2">
-        <span class="text-green-600">✓</span>
+        <span class="text-success">✓</span>
         <span>Unlimited Everything</span>
       </li>
       <li class="flex items-start gap-2">
-        <span class="text-green-600">✓</span>
+        <span class="text-success">✓</span>
         <span>24/7 Support</span>
       </li>
       <li class="flex items-start gap-2">
-        <span class="text-green-600">✓</span>
+        <span class="text-success">✓</span>
         <span>Unlimited Storage</span>
       </li>
     </ul>
-    <button class="w-full bg-gray-200 text-gray-800 py-2 rounded hover:bg-gray-300">
-      Contact Sales
-    </button>
+    <Button label="Contact Sales" intent="neutral" width="full" class="mt-4" />
   </div>
 </ThreeColumnContainer>

@@ -1,5 +1,7 @@
 ---
 import SidebarRightContainer from '~/components/blocks/layout/SidebarRightContainer.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
 ---
 
 <SidebarRightContainer
@@ -13,38 +15,34 @@ import SidebarRightContainer from '~/components/blocks/layout/SidebarRightContai
   border={{ width: 'border', color: 'border-border' }}
   spacing={{ margin: 'mb-8' }}
 >
-  <div slot="main" class="bg-white p-6 rounded border border-gray">
-    <h2>Project Details</h2>
+  <div slot="main" class="bg-surface p-6 rounded border border-border">
+    <Headline title="Project Details" htmlTag="h4" class="my-0" titleClass="mb-4 text-2xl" />
     <p>
       This is a comprehensive overview of the current project status, including milestones,
       deliverables, and team assignments.
     </p>
     <div class="grid grid-cols-3 gap-4 mt-6">
-      <div class="bg-blue p-4 rounded">
-        <div class="text-2xl font-bold text-white">8</div>
-        <div class="text-sm text-white">Tasks Completed</div>
+      <div class="bg-primary text-background p-4 rounded">
+        <div class="text-2xl font-bold">8</div>
+        <div class="text-sm">Tasks Completed</div>
       </div>
-      <div class="bg-yellow p-4 rounded">
-        <div class="text-2xl font-bold text-white">5</div>
-        <div class="text-sm text-white">In Progress</div>
+      <div class="bg-warning text-background p-4 rounded">
+        <div class="text-2xl font-bold">5</div>
+        <div class="text-sm">In Progress</div>
       </div>
-      <div class="bg-gray p-4 rounded">
-        <div class="text-2xl font-bold text-white">12</div>
-        <div class="text-sm text-white">Pending</div>
+      <div class="bg-tertiary text-background p-4 rounded">
+        <div class="text-2xl font-bold">12</div>
+        <div class="text-sm">Pending</div>
       </div>
     </div>
   </div>
-  <div slot="sidebar" class="bg-mauve p-6 rounded">
-    <h3 class="text-lg font-bold mb-4 text-white">Actions</h3>
+  <div slot="sidebar" class="bg-surface border border-border p-6 rounded">
+    <Headline title="Actions" htmlTag="h4" class="my-0" titleClass="mb-4 text-lg" />
     <nav class="space-y-2">
-      <button class="w-full text-left py-2 px-3 bg-white text-mauve rounded">Edit Project</button>
-      <button class="w-full text-left py-2 px-3 hover:bg-mauve text-white rounded">Add Task</button>
-      <button class="w-full text-left py-2 px-3 hover:bg-mauve text-white rounded">
-        Assign Team
-      </button>
-      <button class="w-full text-left py-2 px-3 hover:bg-mauve text-white rounded">
-        Export Report
-      </button>
+      <Button label="Edit Project" variant="ghost" width="full" class="justify-start" />
+      <Button label="Add Task" variant="ghost" width="full" class="justify-start" />
+      <Button label="Assign Team" variant="ghost" width="full" class="justify-start" />
+      <Button label="Export Report" variant="ghost" width="full" class="justify-start" />
     </nav>
   </div>
 </SidebarRightContainer>

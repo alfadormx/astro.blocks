@@ -1,5 +1,6 @@
 ---
 import SidebarRightContainer from '~/components/blocks/layout/SidebarRightContainer.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
 ---
 
 <SidebarRightContainer
@@ -13,8 +14,13 @@ import SidebarRightContainer from '~/components/blocks/layout/SidebarRightContai
   border={{ width: 'border', color: 'border-border' }}
   spacing={{ margin: 'mb-8' }}
 >
-  <div slot="main" class="bg-white p-6 rounded border border-gray">
-    <h2>Article Title: Modern Web Development</h2>
+  <div slot="main" class="bg-surface p-6 rounded border border-border">
+    <Headline
+      title="Article Title: Modern Web Development"
+      htmlTag="h4"
+      class="my-0"
+      titleClass="mb-4 text-2xl"
+    />
     <p>
       The landscape of web development has changed dramatically over the past few years. Modern
       frameworks, tools, and best practices have emerged to help developers build better
@@ -31,33 +37,38 @@ import SidebarRightContainer from '~/components/blocks/layout/SidebarRightContai
     </p>
   </div>
   <div slot="sidebar" class="space-y-4">
-    <div class="bg-blue p-4 rounded border border-blue">
-      <h4 class="font-semibold mb-2 text-white">Metadata</h4>
+    <div class="bg-primary text-background p-4 rounded border border-primary">
+      <Headline
+        title="Metadata"
+        htmlTag="h4"
+        class="my-0"
+        titleClass="mb-2 text-base text-background"
+      />
       <dl class="text-sm space-y-1">
         <div>
-          <dt class="text-white">Author:</dt>
+          <dt>Author:</dt>
           <dd class="font-medium">Jane Smith</dd>
         </div>
         <div>
-          <dt class="text-white">Published:</dt>
+          <dt>Published:</dt>
           <dd class="font-medium">Dec 25, 2025</dd>
         </div>
         <div>
-          <dt class="text-white">Category:</dt>
+          <dt>Category:</dt>
           <dd class="font-medium">Technology</dd>
         </div>
         <div>
-          <dt class="text-white">Reading Time:</dt>
+          <dt>Reading Time:</dt>
           <dd class="font-medium">5 min</dd>
         </div>
       </dl>
     </div>
-    <div class="bg-green p-4 rounded border border-green">
-      <h4 class="text-green">Tags</h4>
+    <div class="bg-success/10 p-4 rounded border border-success">
+      <Headline title="Tags" htmlTag="h4" class="my-0" titleClass="mb-2 text-base text-success" />
       <div class="flex flex-wrap gap-2">
-        <span class="px-2 py-1 bg-green text-white text-xs rounded">JavaScript</span>
-        <span class="px-2 py-1 bg-green text-white text-xs rounded">React</span>
-        <span class="px-2 py-1 bg-green text-white text-xs rounded">Astro</span>
+        <span class="px-2 py-1 bg-success text-background text-xs rounded">JavaScript</span>
+        <span class="px-2 py-1 bg-success text-background text-xs rounded">React</span>
+        <span class="px-2 py-1 bg-success text-background text-xs rounded">Astro</span>
       </div>
     </div>
   </div>
