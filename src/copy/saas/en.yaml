@@ -1,20 +1,18 @@
 pageTitle: 'Driftwave — ship features, not spreadsheets'
 nav:
-  features: 'Features'
+  features: 'Product'
   pricing: 'Pricing'
   testimonials: 'Customers'
   faq: 'FAQ'
   blog: 'Blog'
   menuLabel: 'Open menu'
-  trial: 'Start free trial'
+  trial: 'Get started'
 hero:
-  tagline: 'Product analytics'
   title: 'Know what your users do next'
-  subtitle: 'Driftwave turns raw events into answers your whole team can read.'
-  primary: 'Start free trial'
-  secondary: 'See features'
+  subtitle: 'Driftwave turns raw events into answers your whole team can read, from the first click to the hundredth visit.'
+  primary: 'Get started'
+  imageAlt: 'Hands pointing at printed charts on a desk'
 logos:
-  title: 'Trusted by product teams at'
   carouselLabel: 'Customer logos'
   names:
     a: 'Northwind'
@@ -23,10 +21,58 @@ logos:
     d: 'Bramble'
     e: 'Orbital'
     f: 'Kestrel'
+workflow:
+  title: 'From event to answer'
+  subtitle: 'Five steps from a click to a decision.'
+  imageAltA: 'Hands pointing at printed charts on a desk'
+  imageAltB: 'A team working around a table with laptops'
+  steps:
+    track:
+      title: 'Track events'
+      content: 'Add one script tag and every click, view and sign-up flows in.'
+    funnel:
+      title: 'Build a funnel'
+      content: 'Pick the steps that matter and see how many people make it through.'
+    dropoff:
+      title: 'Spot the drop-off'
+      content: 'The step that loses people is highlighted, with the segments hit hardest.'
+    share:
+      title: 'Share the chart'
+      content: 'Pin it to a dashboard and send the link to the people who can fix it.'
+    watch:
+      title: 'Watch it recover'
+      content: 'Set an alert and see the next release move the number.'
+teams:
+  title: 'One source of truth for every team'
+  subtitle: 'Product, design and growth read the same numbers, from one workspace.'
+  table: |
+    | Team | Dashboards | Weekly viewers | Last change |
+    | --- | --- | --- | --- |
+    | Product | 12 | 48 | Today |
+    | Design | 7 | 21 | Yesterday |
+    | Growth | 15 | 36 | Today |
+    | Engineering | 9 | 30 | Monday |
+    | Support | 4 | 18 | Friday |
+
+    _Updated every hour._
+stats:
+  a:
+    value: '4.2B'
+    label: 'Events tracked every month'
+  b:
+    value: '2,300'
+    label: 'Product teams'
+  c:
+    value: '99.99%'
+    label: 'Uptime over the last year'
+quote:
+  text: 'We found the step losing half our sign-ups in an afternoon. The fix shipped the same week, and Driftwave showed us it worked before the retro.'
+  name: 'Ana Ruiz'
+  role: 'Product lead, Northwind'
+  imageAlt: 'Portrait of Ana Ruiz'
 features:
-  tagline: 'Features'
   title: 'Everything you need to understand usage'
-  subtitle: 'From the first click to the hundredth visit, see how people move through your product.'
+  subtitle: 'Everyone reads the same numbers, nobody waits on a query.'
   items:
     funnels:
       title: 'Funnels'
@@ -44,23 +90,11 @@ features:
       title: 'Alerts'
       content: 'Get a message when a metric moves more than you expect.'
     privacy:
-      title: 'Privacy first'
-      content: 'EU hosting, no cookies by default and a one-click data export.'
-contentA:
-  tagline: 'Answers in minutes'
-  title: 'Ask a question, get a chart'
-  body: 'Pick an event, choose how to break it down, and Driftwave draws the chart. No SQL, no waiting on the data team.'
-  imageAlt: 'Hands pointing at printed charts on a desk'
-  action: 'Try it free'
-contentB:
-  tagline: 'Built for teams'
-  title: 'One source of truth for product, design and growth'
-  body: 'Comment on a chart, tag a teammate, and keep the decision next to the data that drove it.'
-  imageAlt: 'A team working around a table with laptops'
+      title: 'Exports'
+      content: 'Send any chart to a spreadsheet, or sync raw events to your warehouse.'
 pricing:
-  tagline: 'Pricing'
-  title: 'Simple plans that grow with you'
-  subtitle: 'Start free and upgrade when your team needs more.'
+  title: 'Simple pricing'
+  subtitle: 'Start free. Upgrade when your team needs more.'
   toggleLabel: 'Billing period'
   monthly: 'Monthly'
   yearly: 'Yearly'
@@ -68,14 +102,13 @@ pricing:
   announceYearly: 'Showing yearly prices'
   perMonth: '/month'
   perYear: '/year'
-  badge: 'Most popular'
   tiers:
     starter:
       name: 'Starter'
       description: 'For side projects and early products.'
       monthly: 0
       yearly: 0
-      action: 'Start free'
+      action: 'Get started'
       features:
         a: 'Up to 10,000 events a month'
         b: 'Funnels and retention'
@@ -85,7 +118,7 @@ pricing:
       description: 'For product teams shipping every week.'
       monthly: 49
       yearly: 490
-      action: 'Start free trial'
+      action: 'Get started'
       features:
         a: 'Up to 1 million events a month'
         b: 'Unlimited dashboards'
@@ -96,36 +129,34 @@ pricing:
       description: 'For companies with many products.'
       monthly: 199
       yearly: 1990
-      action: 'Talk to sales'
+      action: 'Contact sales'
       features:
         a: 'Unlimited events'
         b: 'Single sign-on'
         c: 'Data warehouse sync'
         d: 'Priority support'
-testimonials:
-  tagline: 'Customers'
-  title: 'Teams that ship with Driftwave'
-  carouselLabel: 'Customer testimonials'
+stories:
+  title: 'Customer stories'
+  subtitle: 'Teams that stopped guessing.'
   items:
     a:
-      quote: 'We found the step losing half our sign-ups in an afternoon. The fix shipped the same week.'
-      name: 'Ana Ruiz'
-      role: 'Product lead, Northwind'
+      value: '3×'
+      label: 'faster release decisions at Northwind'
+      imageAlt: 'Hands pointing at printed charts on a desk'
     b:
-      quote: 'Our designers open Driftwave before Figma now. It settles debates fast.'
-      name: 'Tom Becker'
-      role: 'Head of design, Lumen'
+      value: '40%'
+      label: 'fewer sign-up drop-offs at Lumen'
+      imageAlt: 'A team working around a table with laptops'
     c:
-      quote: 'Setup took ten minutes, and the retention chart paid for the year on its own.'
-      name: 'Priya Natarajan'
-      role: 'Founder, Quanta'
-    d:
-      quote: 'Alerts caught a broken checkout on a Sunday before any customer emailed us.'
-      name: 'Marco Bianchi'
-      role: 'Engineering manager, Bramble'
+      value: '10 min'
+      label: 'from install to first chart at Quanta'
+      imageAlt: 'A starfield over a dark sky'
+posts:
+  title: 'From the blog'
+  subtitle: 'Notes on measuring what matters.'
+  action: 'All posts'
 faq:
-  tagline: 'FAQ'
-  title: 'Questions, answered'
+  title: 'Questions'
   items:
     trial:
       question: 'How does the free trial work?'
@@ -142,16 +173,22 @@ faq:
     migrate:
       question: 'Can I import data from another tool?'
       answer: 'Yes. Upload a CSV export, or ask us and we will help you move it.'
-    discount:
-      question: 'Do you offer discounts?'
-      answer: 'Yearly billing saves two months. Non-profits and schools get 50% off.'
+privacy:
+  title: 'Privacy first'
+  subtitle: 'Driftwave hosts your data in the EU, sets no cookies by default, and lets you export or delete everything in one click.'
+  points:
+    a: 'EU hosting'
+    b: 'No cookies by default'
+    c: 'One-click export'
+    d: 'Single sign-on'
 cta:
-  tagline: 'Ready when you are'
-  title: 'Try Driftwave free for 14 days'
-  subtitle: 'No credit card. Cancel any time.'
-  primary: 'Start free trial'
+  title: 'Your next release, already measured'
+  primary: 'Get started'
 blog:
   title: 'Blog'
   subtitle: 'Notes from the Driftwave team.'
 footer:
   footnote: '© 2026 Driftwave, a fictional company.'
+  github: 'Driftwave on GitHub'
+  x: 'Driftwave on X'
+  linkedin: 'Driftwave on LinkedIn'

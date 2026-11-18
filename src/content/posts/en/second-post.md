@@ -2,6 +2,7 @@
 title: Writing in two languages
 description: Translations live in a folder per language and link by filename.
 date: 2026-10-15
+featured: true
 updated: 2026-10-20
 author: Astro Blocks
 tags: [i18n]

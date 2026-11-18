@@ -1,18 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Plus+Jakarta+Sans:wght@500..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300..700&display=swap');
 
+/* Primary is the near-black ink of buttons and body text; tertiary → secondary → accent
+   is the night-to-peach "dusk" gradient behind the hero, the closing CTA and the footer. */
 [data-demo='saas'] {
-  --font-title: 'Plus Jakarta Sans', sans-serif;
-  --font-subtitle: 'Inter', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-title: 'Libre Franklin', sans-serif;
+  --font-subtitle: 'Libre Franklin', sans-serif;
+  --font-body: 'Libre Franklin', sans-serif;
 
-  --color-primary: var(--color-mauve);
-  --color-primary-hover: var(--color-mauve-600);
-  --color-secondary: var(--color-pink);
-  --color-secondary-hover: var(--color-pink-600);
-  --color-accent: var(--color-teal);
-  --color-accent-hover: var(--color-teal-600);
-  --color-interactive: var(--color-mauve);
-  --color-interactive-hover: var(--color-mauve-600);
+  --color-primary: color-mix(in oklch, var(--color-mauve-950) 30%, black);
+  --color-primary-hover: color-mix(in oklch, var(--color-mauve-950) 45%, black);
+  --color-secondary: var(--color-mauve-700);
+  --color-secondary-hover: var(--color-mauve-800);
+  --color-tertiary: color-mix(in oklch, var(--color-mauve-950) 45%, black);
+  --color-tertiary-hover: color-mix(in oklch, var(--color-mauve-950) 60%, black);
+  --color-accent: var(--color-peach-200);
+  --color-accent-hover: var(--color-peach-300);
+  --color-interactive: var(--color-primary);
+  --color-interactive-hover: var(--color-primary-hover);
+  --color-link: var(--color-mauve-700);
+
+  --color-background: color-mix(in oklch, var(--color-base) 25%, white);
+  --color-normal: color-mix(in oklch, var(--color-text) 35%, black);
 
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
@@ -20,5 +28,16 @@
 }
 
 [data-demo='saas'][data-theme='dark'] {
-  --color-secondary: var(--color-flamingo);
+  --color-background: var(--color-base);
+  --color-normal: var(--color-text);
+  --color-primary: var(--color-mauve-100);
+  --color-primary-hover: var(--color-mauve-50);
+  --color-interactive: var(--color-primary);
+  --color-interactive-hover: var(--color-primary-hover);
+  --color-link: var(--color-mauve-200);
+}
+
+[data-demo='saas'] ::selection {
+  background-color: color-mix(in srgb, var(--color-secondary) 12%, var(--color-background));
+  color: var(--color-normal);
 }

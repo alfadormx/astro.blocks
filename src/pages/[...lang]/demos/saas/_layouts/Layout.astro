@@ -7,7 +7,7 @@ import NavigationTree from '~/components/blocks/composite/NavigationTree.astro';
 import ModalBlock from '~/components/blocks/layout/Modal.astro';
 import type { MetaData } from '~/types/metadata.types';
 import { useCopy } from '../../../../../../vendor/integration/copy/pages';
-import { saasCta, saasNav } from '../_site';
+import { ON_DUSK, SAAS_BRAND, saasCta, saasNav } from '../_site';
 
 interface Props {
   langCode: string;
@@ -22,22 +22,41 @@ const nav = saasNav(langCode, copy.nav);
 <BaseLayout langCode={langCode} metadata={metadata} demo="saas">
   <Header
     isSticky
-    container={{ background: { class: 'bg-background/80 backdrop-blur' } }}
+    container={{ background: { class: 'bg-tertiary' }, class: ON_DUSK }}
+    logo={{ vector: { src: SAAS_BRAND }, class: `h-7 w-36 ${ON_DUSK}` }}
     leftButtons={[
       {
         'data-modal-trigger': 'saas-menu',
         'aria-label': copy.nav.menuLabel,
         icon: { name: 'heroicons:bars-3' },
-        class: 'lg:hidden',
+        class: `lg:hidden ${ON_DUSK}`,
       },
     ]}
-    leftNavigationTreeHorizontal={{ items: nav, class: 'hidden lg:flex' }}
-    themeToggle={{}}
+    leftNavigationTreeHorizontal={{
+      items: nav,
+      class: 'hidden lg:flex',
+      defaultItemConfig: { class: `${ON_DUSK} hover:bg-background/10 dark:hover:bg-normal/10` },
+    }}
+    themeToggle={{ class: ON_DUSK }}
     rightButtons={[saasCta(langCode, copy.nav)]}
   />
   <ModalBlock id="saas-menu" position="left" size="sm" class="p-6 pt-16">
     <NavigationTree items={nav} />
   </ModalBlock>
   <slot />
-  <Footer languageToggle={{}} footnote={copy.footer.footnote} />
+  <Footer
+    container={{ background: { class: 'bg-tertiary' }, class: ON_DUSK }}
+    logo={{ vector: { src: SAAS_BRAND }, class: `h-7 w-36 ${ON_DUSK}` }}
+    secondaryButtons={nav.map((item) => ({ label: item.label, href: item.href }))}
+    defaultSecondaryButtonConfig={{ variant: 'link', intent: 'neutral', class: ON_DUSK }}
+    socialButtons={[
+      { icon: { name: 'tabler:brand-linkedin' }, 'aria-label': copy.footer.linkedin, href: '#' },
+      { icon: { name: 'tabler:brand-x' }, 'aria-label': copy.footer.x, href: '#' },
+      { icon: { name: 'tabler:brand-github' }, 'aria-label': copy.footer.github, href: '#' },
+    ]}
+    defaultSocialButtonConfig={{ variant: 'ghost', intent: 'neutral', class: ON_DUSK }}
+    languageToggle={{ defaultButtonConfig: { class: ON_DUSK } }}
+    footnote={copy.footer.footnote}
+    footnoteClass={`text-sm ${ON_DUSK}`}
+  />
 </BaseLayout>

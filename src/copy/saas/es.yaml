@@ -1,20 +1,18 @@
 pageTitle: 'Driftwave — lanza funciones, no hojas de cálculo'
 nav:
-  features: 'Funciones'
+  features: 'Producto'
   pricing: 'Precios'
   testimonials: 'Clientes'
   faq: 'Preguntas'
   blog: 'Blog'
   menuLabel: 'Abrir menú'
-  trial: 'Prueba gratis'
+  trial: 'Empezar'
 hero:
-  tagline: 'Analítica de producto'
   title: 'Descubre qué harán tus usuarios después'
-  subtitle: 'Driftwave convierte eventos en respuestas que todo tu equipo entiende.'
-  primary: 'Prueba gratis'
-  secondary: 'Ver funciones'
+  subtitle: 'Driftwave convierte eventos en respuestas que todo tu equipo entiende, del primer clic a la centésima visita.'
+  primary: 'Empezar'
+  imageAlt: 'Manos señalando gráficos impresos sobre una mesa'
 logos:
-  title: 'Equipos de producto que confían en nosotros'
   carouselLabel: 'Logotipos de clientes'
   names:
     a: 'Northwind'
@@ -23,10 +21,58 @@ logos:
     d: 'Bramble'
     e: 'Orbital'
     f: 'Kestrel'
+workflow:
+  title: 'Del evento a la respuesta'
+  subtitle: 'Cinco pasos de un clic a una decisión.'
+  imageAltA: 'Manos señalando gráficos impresos sobre una mesa'
+  imageAltB: 'Un equipo trabajando alrededor de una mesa con portátiles'
+  steps:
+    track:
+      title: 'Registra eventos'
+      content: 'Añade una etiqueta de script y cada clic, visita y registro empieza a llegar.'
+    funnel:
+      title: 'Crea un embudo'
+      content: 'Elige los pasos que importan y mira cuánta gente llega al final.'
+    dropoff:
+      title: 'Encuentra el abandono'
+      content: 'El paso que pierde gente aparece destacado, con los segmentos más afectados.'
+    share:
+      title: 'Comparte el gráfico'
+      content: 'Fíjalo en un panel y envía el enlace a quien puede arreglarlo.'
+    watch:
+      title: 'Mira cómo se recupera'
+      content: 'Crea una alerta y mira cómo la próxima versión mueve la cifra.'
+teams:
+  title: 'Una única fuente de verdad para cada equipo'
+  subtitle: 'Producto, diseño y crecimiento leen las mismas cifras, desde un solo espacio.'
+  table: |
+    | Equipo | Paneles | Lectores semanales | Último cambio |
+    | --- | --- | --- | --- |
+    | Producto | 12 | 48 | Hoy |
+    | Diseño | 7 | 21 | Ayer |
+    | Crecimiento | 15 | 36 | Hoy |
+    | Ingeniería | 9 | 30 | Lunes |
+    | Soporte | 4 | 18 | Viernes |
+
+    _Se actualiza cada hora._
+stats:
+  a:
+    value: '4.200 M'
+    label: 'Eventos registrados cada mes'
+  b:
+    value: '2.300'
+    label: 'Equipos de producto'
+  c:
+    value: '99,99 %'
+    label: 'Disponibilidad durante el último año'
+quote:
+  text: 'Encontramos el paso que perdía la mitad de los registros en una tarde. El arreglo salió esa misma semana, y Driftwave nos mostró que funcionaba antes de la retrospectiva.'
+  name: 'Ana Ruiz'
+  role: 'Responsable de producto, Northwind'
+  imageAlt: 'Retrato de Ana Ruiz'
 features:
-  tagline: 'Funciones'
   title: 'Todo lo que necesitas para entender el uso'
-  subtitle: 'Del primer clic a la centésima visita, mira cómo se mueve la gente por tu producto.'
+  subtitle: 'Todos leen las mismas cifras, nadie espera una consulta.'
   items:
     funnels:
       title: 'Embudos'
@@ -44,23 +90,11 @@ features:
       title: 'Alertas'
       content: 'Recibe un aviso cuando una métrica se mueve más de lo esperado.'
     privacy:
-      title: 'Privacidad ante todo'
-      content: 'Alojamiento en la UE, sin cookies por defecto y exportación de datos en un clic.'
-contentA:
-  tagline: 'Respuestas en minutos'
-  title: 'Haz una pregunta, obtén un gráfico'
-  body: 'Elige un evento, decide cómo desglosarlo y Driftwave dibuja el gráfico. Sin SQL y sin esperar al equipo de datos.'
-  imageAlt: 'Manos señalando gráficos impresos sobre una mesa'
-  action: 'Pruébalo gratis'
-contentB:
-  tagline: 'Hecho para equipos'
-  title: 'Una sola fuente de verdad para producto, diseño y crecimiento'
-  body: 'Comenta un gráfico, menciona a un compañero y guarda la decisión junto a los datos que la motivaron.'
-  imageAlt: 'Un equipo trabajando con portátiles alrededor de una mesa'
+      title: 'Exportaciones'
+      content: 'Envía cualquier gráfico a una hoja de cálculo o sincroniza los eventos con tu almacén de datos.'
 pricing:
-  tagline: 'Precios'
-  title: 'Planes sencillos que crecen contigo'
-  subtitle: 'Empieza gratis y mejora cuando tu equipo lo necesite.'
+  title: 'Precios sencillos'
+  subtitle: 'Empieza gratis. Mejora cuando tu equipo lo necesite.'
   toggleLabel: 'Periodo de facturación'
   monthly: 'Mensual'
   yearly: 'Anual'
@@ -68,14 +102,13 @@ pricing:
   announceYearly: 'Mostrando precios anuales'
   perMonth: '/mes'
   perYear: '/año'
-  badge: 'El más popular'
   tiers:
     starter:
       name: 'Starter'
       description: 'Para proyectos personales y productos que empiezan.'
       monthly: 0
       yearly: 0
-      action: 'Empieza gratis'
+      action: 'Empezar'
       features:
         a: 'Hasta 10.000 eventos al mes'
         b: 'Embudos y retención'
@@ -85,7 +118,7 @@ pricing:
       description: 'Para equipos de producto que publican cada semana.'
       monthly: 49
       yearly: 490
-      action: 'Prueba gratis'
+      action: 'Empezar'
       features:
         a: 'Hasta 1 millón de eventos al mes'
         b: 'Paneles ilimitados'
@@ -102,30 +135,28 @@ pricing:
         b: 'Inicio de sesión único'
         c: 'Sincronización con el almacén de datos'
         d: 'Soporte prioritario'
-testimonials:
-  tagline: 'Clientes'
-  title: 'Equipos que lanzan con Driftwave'
-  carouselLabel: 'Opiniones de clientes'
+stories:
+  title: 'Historias de clientes'
+  subtitle: 'Equipos que dejaron de adivinar.'
   items:
     a:
-      quote: 'Encontramos en una tarde el paso que perdía la mitad de los registros. El arreglo salió esa misma semana.'
-      name: 'Ana Ruiz'
-      role: 'Responsable de producto, Northwind'
+      value: '3×'
+      label: 'decisiones de lanzamiento más rápidas en Northwind'
+      imageAlt: 'Manos señalando gráficos impresos sobre una mesa'
     b:
-      quote: 'Nuestros diseñadores abren Driftwave antes que Figma. Zanja los debates enseguida.'
-      name: 'Tom Becker'
-      role: 'Director de diseño, Lumen'
+      value: '40 %'
+      label: 'menos abandonos en el registro en Lumen'
+      imageAlt: 'Un equipo trabajando alrededor de una mesa con portátiles'
     c:
-      quote: 'La configuración llevó diez minutos, y el gráfico de retención pagó el año entero.'
-      name: 'Priya Natarajan'
-      role: 'Fundadora, Quanta'
-    d:
-      quote: 'Las alertas detectaron un pago roto un domingo, antes de que escribiera ningún cliente.'
-      name: 'Marco Bianchi'
-      role: 'Responsable de ingeniería, Bramble'
+      value: '10 min'
+      label: 'de la instalación al primer gráfico en Quanta'
+      imageAlt: 'Un campo de estrellas sobre un cielo oscuro'
+posts:
+  title: 'Del blog'
+  subtitle: 'Notas sobre medir lo que importa.'
+  action: 'Todas las entradas'
 faq:
-  tagline: 'Preguntas'
-  title: 'Preguntas frecuentes'
+  title: 'Preguntas'
   items:
     trial:
       question: '¿Cómo funciona la prueba gratuita?'
@@ -142,16 +173,22 @@ faq:
     migrate:
       question: '¿Puedo importar datos de otra herramienta?'
       answer: 'Sí. Sube una exportación CSV o pídenos ayuda para moverlos.'
-    discount:
-      question: '¿Ofrecéis descuentos?'
-      answer: 'La facturación anual ahorra dos meses. Las ONG y los centros educativos tienen un 50 % de descuento.'
+privacy:
+  title: 'Privacidad ante todo'
+  subtitle: 'Driftwave aloja tus datos en la UE, no usa cookies por defecto y te deja exportar o borrar todo en un clic.'
+  points:
+    a: 'Alojamiento en la UE'
+    b: 'Sin cookies por defecto'
+    c: 'Exportación en un clic'
+    d: 'Inicio de sesión único'
 cta:
-  tagline: 'Cuando quieras'
-  title: 'Prueba Driftwave gratis durante 14 días'
-  subtitle: 'Sin tarjeta. Cancela cuando quieras.'
-  primary: 'Prueba gratis'
+  title: 'Tu próxima versión, ya medida'
+  primary: 'Empezar'
 blog:
   title: 'Blog'
   subtitle: 'Notas del equipo de Driftwave.'
 footer:
   footnote: '© 2026 Driftwave, una empresa ficticia.'
+  github: 'Driftwave en GitHub'
+  x: 'Driftwave en X'
+  linkedin: 'Driftwave en LinkedIn'
