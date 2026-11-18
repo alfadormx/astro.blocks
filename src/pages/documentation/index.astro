@@ -3,7 +3,9 @@ import Layout from './_layouts/Layout.astro';
 import ItemsGrid from '~/components/blocks/composite/ItemsGrid.astro';
 import { I18N } from 'site-config';
 import { collectionIndex } from '../../../vendor/integration/collections/pages';
-import { sections } from './_sections';
+import { sections, type SectionKey } from './_sections';
+import type { ItemProps } from '~/types/item.types';
+import type { LayerConfig } from '~/types/config.types';
 
 const metadata = {
   title: {
@@ -12,9 +14,55 @@ const metadata = {
 };
 
 const entries = await collectionIndex('documentation', I18N.default);
+
+// Guides and base tokens are where a newcomer starts, so they lead the page instead of the catalogue.
+const START_HERE: readonly SectionKey[] = ['guides', 'base'];
+const startHere = START_HERE.flatMap((key) => entries.filter((e) => e.data.section === key));
+
 const groups = sections
+  .filter((section) => !START_HERE.includes(section.key))
   .map((section) => ({ section, entries: entries.filter((e) => e.data.section === section.key) }))
   .filter((g) => g.entries.length);
+
+// Each item is a single Button carrying label and subtitle, so the whole card is one link.
+const linkItem: LayerConfig<ItemProps> = {
+  orientation: 'horizontal',
+  class: 'h-full',
+  contentClass: 'w-full h-full',
+  actionsClass: 'mt-0 md:mt-0 h-full',
+  defaultActionConfig: {
+    variant: 'outline',
+    intent: 'neutral',
+    width: 'full',
+    class: 'h-full items-start justify-start text-left font-normal',
+    labelClass: 'text-normal',
+    subtitleClass: 'text-sm text-muted',
+  },
+};
+
+const demos = [
+  {
+    title: 'SaaS landing',
+    description:
+      'Hero, logos, features, pricing, testimonials, FAQ and a blog, with anchor navigation.',
+    href: '/demos/saas',
+    image: '~/assets/images/demos/saas/content-a.jpg',
+  },
+  {
+    title: 'Portfolio',
+    description:
+      'Hero, case study galleries, team, testimonials and a contact form across several pages.',
+    href: '/demos/portfolio',
+    image: '~/assets/images/demos/portfolio/hero.jpg',
+  },
+  {
+    title: 'Local business',
+    description:
+      'Hero, services, reviews, opening hours, a lazy map beside a contact form, and events.',
+    href: '/demos/local',
+    image: '~/assets/images/demos/local/hero.jpg',
+  },
+];
 ---
 
 <Layout
@@ -25,12 +73,36 @@ const groups = sections
     subtitle: 'Every block in the library, grouped by type.',
   }}
 >
-  <p>
-    Browse the full component library below. Each card links to that component's documentation page,
-    with live examples and a generated API reference. New to the library? Start with
-    <a href="/documentation/guides/Composing">Composing blocks</a>, which explains how every block
-    exposes and configures its children.
-  </p>
+  <h2>Start here</h2>
+  <ItemsGrid
+    columns={2}
+    gap="tight"
+    class="mb-12"
+    defaultItemConfig={linkItem}
+    items={startHere.map((e) => ({
+      actions: [{ label: e.data.title, subtitle: e.data.description, href: e.href }],
+    }))}
+  />
+
+  <h2>See it in a site</h2>
+  <p>Demo sites built only from these blocks, themed with token overrides.</p>
+  <ItemsGrid
+    columns={3}
+    gap="tight"
+    class="mb-12"
+    defaultItemConfig={linkItem}
+    items={demos.map((demo) => ({
+      actions: [
+        {
+          label: demo.title,
+          subtitle: demo.description,
+          href: demo.href,
+          image: { src: demo.image, alt: '', width: 480, height: 270, layout: 'cover' },
+          imageSize: 'aspect-video w-full object-cover rounded',
+        },
+      ],
+    }))}
+  />
 
   {groups.map(({ section, entries }) => (
     <Fragment>
@@ -39,54 +111,20 @@ const groups = sections
       <ItemsGrid
         columns={3}
         gap="tight"
+        class="mb-12"
         defaultItemConfig={{
-          orientation: 'vertical',
-          icon: { name: 'heroicons:cube', class: 'text-accent' },
+          ...linkItem,
+          defaultActionConfig: {
+            ...linkItem.defaultActionConfig,
+            variant: 'ghost',
+            labelClass: 'text-link',
+            class: 'h-full items-start justify-start text-left font-normal px-2 py-1',
+          },
         }}
         items={entries.map((e) => ({
-          title: e.data.title,
-          content: e.data.description,
-          actions: [
-            {
-              label: 'View',
-              href: e.href,
-              variant: 'ghost' as const,
-              intent: 'primary' as const,
-            },
-          ],
+          actions: [{ label: e.data.title, subtitle: e.data.description, href: e.href }],
         }))}
       />
     </Fragment>
   ))}
-
-  <h2>See it in a site</h2>
-  <p>Demo sites built only from these blocks, themed with token overrides.</p>
-  <ItemsGrid
-    columns={3}
-    gap="tight"
-    defaultItemConfig={{
-      orientation: 'vertical',
-      icon: { name: 'heroicons:rocket-launch', class: 'text-accent' },
-    }}
-    items={[
-      {
-        title: 'SaaS landing',
-        content:
-          'Hero, logos, features, pricing, testimonials, FAQ and a blog, with anchor navigation.',
-        actions: [{ label: 'Open', href: '/demos/saas', variant: 'ghost', intent: 'primary' }],
-      },
-      {
-        title: 'Portfolio',
-        content:
-          'Hero, case study galleries, team, testimonials and a contact form across several pages.',
-        actions: [{ label: 'Open', href: '/demos/portfolio', variant: 'ghost', intent: 'primary' }],
-      },
-      {
-        title: 'Local business',
-        content:
-          'Hero, services, reviews, opening hours, a lazy map beside a contact form, and events.',
-        actions: [{ label: 'Open', href: '/demos/local', variant: 'ghost', intent: 'primary' }],
-      },
-    ]}
-  />
 </Layout>
