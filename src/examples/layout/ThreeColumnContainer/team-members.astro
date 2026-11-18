@@ -16,19 +16,31 @@ import Headline from '~/components/blocks/primitives/Headline.astro';
 >
   <div slot="left" class="text-center">
     <div class="w-32 h-32 bg-primary rounded-full mx-auto mb-4"></div>
-    <Headline title="John Doe" htmlTag="h4" class="my-0" titleClass="mb-1 text-lg" />
+    <Headline title="John Doe" htmlTag="h4" align="center" class="my-0" titleClass="mb-1 text-lg" />
     <p class="text-muted mb-2">CEO & Founder</p>
     <p class="text-sm">Leading the company with vision and passion.</p>
   </div>
   <div slot="center" class="text-center">
     <div class="w-32 h-32 bg-success rounded-full mx-auto mb-4"></div>
-    <Headline title="Jane Smith" htmlTag="h4" class="my-0" titleClass="mb-1 text-lg" />
+    <Headline
+      title="Jane Smith"
+      htmlTag="h4"
+      align="center"
+      class="my-0"
+      titleClass="mb-1 text-lg"
+    />
     <p class="text-muted mb-2">CTO</p>
     <p class="text-sm">Building innovative technical solutions.</p>
   </div>
   <div slot="right" class="text-center">
     <div class="w-32 h-32 bg-secondary rounded-full mx-auto mb-4"></div>
-    <Headline title="Mike Johnson" htmlTag="h4" class="my-0" titleClass="mb-1 text-lg" />
+    <Headline
+      title="Mike Johnson"
+      htmlTag="h4"
+      align="center"
+      class="my-0"
+      titleClass="mb-1 text-lg"
+    />
     <p class="text-muted mb-2">Lead Designer</p>
     <p class="text-sm">Creating beautiful user experiences.</p>
   </div>

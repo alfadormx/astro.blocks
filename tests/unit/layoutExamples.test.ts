@@ -73,11 +73,7 @@ const RAW_COLOUR = new RegExp(
   String.raw`(?<![\w-])(?:${UTILITY})-(?:${[...PALETTE, ...TAILWIND, ...FIXED].join('|')})(?:-\d{2,3})?(?:/\d+)?(?![\w-])`,
   'g'
 );
-// `text-base` is a font size, not the `base` palette colour.
-const NOT_COLOUR = new Set(['text-base']);
-
-const rawColours = (source: string) =>
-  [...source.matchAll(RAW_COLOUR)].map((m) => m[0]).filter((c) => !NOT_COLOUR.has(c));
+const rawColours = (source: string) => [...source.matchAll(RAW_COLOUR)].map((m) => m[0]);
 
 const BARE_ELEMENT = /<(img|button|h[1-6])\b/g;
 const bareElements = (source: string) => [...source.matchAll(BARE_ELEMENT)].map((m) => m[0]);
@@ -93,6 +89,7 @@ describe('raw colour matcher', () => {
     'bg-white/90',
     'text-green-600',
     'bg-mauve-600',
+    'text-base',
   ])('flags %s', (token) => {
     expect(rawColours(`class="${token}"`)).toEqual([token.replace(/^hover:/, '')]);
   });
@@ -108,7 +105,6 @@ describe('raw colour matcher', () => {
     'text-background',
     'bg-linear-to-br',
     'from-primary/20',
-    'text-base',
     'text-lg',
     'shadow-lg',
     'to-surface',
