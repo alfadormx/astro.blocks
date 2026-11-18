@@ -5,61 +5,71 @@ business:
   locality: 'Madrid'
   phoneLabel: '+34 910 000 000'
 nav:
-  services: 'Servicios'
-  about: 'Nosotros'
+  services: 'Lo que horneamos'
+  about: 'Nuestra historia'
+  gallery: 'Galería'
   reviews: 'Opiniones'
   visit: 'Visítanos'
+  contact: 'Contacto'
   events: 'Eventos'
-  cta: 'Visítanos'
   menuLabel: 'Abrir menú'
 footer:
-  footnote: '**Olmo Café & Panadería** · Calle del Pez 12, 28004 Madrid · +34 910 000 000<br>Un negocio ficticio. Fotos de [Pexels](https://www.pexels.com).'
+  footnote: 'Un negocio ficticio. Fotos de [Pexels](https://www.pexels.com).'
+  instagram: 'Instagram'
+  facebook: 'Facebook'
 home:
   pageTitle: 'Olmo Café & Panadería — café y pan en Malasaña, Madrid'
   description: 'Una cafetería y panadería de barrio en Malasaña, Madrid: café de especialidad, pan de masa madre, bollería y desayunos, todos los días menos el domingo.'
   hero:
-    tagline: 'Malasaña, Madrid'
+    tagline: 'Panadería y café en Malasaña, Madrid'
     title: 'Pan recién hecho y buen café desde 1998'
-    subtitle: 'Una panadería de barrio que abre temprano, lo hornea todo en casa y conoce a casi todos sus clientes por su nombre.'
-    primary: 'Ver la carta'
-    secondary: 'Visítanos'
+    subtitle: 'Masa madre lenta, bollería de mantequilla y café de especialidad, horneados cada noche en nuestro obrador de la calle del Pez.'
+    primary: 'Ver lo que horneamos'
+    secondary: 'Cómo llegar'
+    chips:
+      rating: '4,8 en Google'
+      family: 'Negocio familiar desde 1998'
+      open: 'Recién hecho desde las 7:30'
   services:
-    tagline: 'Lo que hacemos'
+    tagline: 'Lo que horneamos'
     title: 'Del horno y de la barra'
+    subtitle: 'Todo se amasa, se forma y se hornea aquí mismo, cada día.'
     items:
-      coffee:
-        title: 'Café de especialidad'
-        content: 'Granos de origen único tostados en Madrid, en espresso o en filtro.'
-        imageAlt: 'Un barista dibujando latte art en una taza blanca'
       bread:
         title: 'Pan de masa madre'
         content: 'Hogazas de fermentación lenta con nuestra propia masa madre, fuera del horno antes de las ocho.'
-        imageAlt: 'Una hogaza de masa madre con semillas, en parte cortada, sobre una tabla'
       pastries:
-        title: 'Bollería'
-        content: 'Cruasanes de mantequilla, napolitanas y una tarta de temporada que cambia cada semana.'
-        imageAlt: 'Un cruasán dorado sobre una tabla de madera'
+        title: 'Bollería de mantequilla'
+        content: 'Cruasanes, napolitanas y una tarta de temporada que cambia cada semana.'
+      coffee:
+        title: 'Café de especialidad'
+        content: 'Granos de origen único tostados en Madrid, en espresso o en filtro.'
       breakfast:
         title: 'Desayunos'
         content: 'Tostada con tomate y aceite, huevos, yogur y fruta, hasta el mediodía.'
-        imageAlt: 'Tostada de aguacate con brotes en un plato blanco'
   about:
-    tagline: 'Nuestra historia'
-    title: 'Una panadería de barrio'
+    tagline: 'Desde 1998'
+    title: 'Nuestra historia'
     body: |
       Olmo abrió en 1998 como una panadería con dos hornos en la calle del Pez. Los hornos son más nuevos, pero el pan se sigue formando a mano cada noche y sale antes de que despierte la calle.
 
       En 2012 añadimos la barra de café, porque los vecinos pedían un sitio donde sentarse. Hoy es donde la gente queda antes del trabajo, a la salida del colegio y los sábados por la mañana.
     imageAlt: 'Un panadero formando masa sobre una mesa enharinada'
-  stats:
-    items:
-      founded: { title: '1998', content: 'Horneando desde' }
-      loaves: { title: '400+', content: 'Hogazas al día' }
-      origins: { title: '6', content: 'Orígenes de café' }
-      rating: { title: '4,8', content: 'Valoración media' }
+  gallery:
+    tagline: 'Detrás del mostrador'
+    title: 'En imágenes'
+    images:
+      bread: 'Una hogaza de masa madre con semillas, en parte cortada, sobre una tabla'
+      pastries: 'Un cruasán dorado sobre una tabla de madera'
+      tasting: 'Un mostrador de pastelería con tartas y rosquillas'
+      coffee: 'Un barista dibujando latte art en una taza blanca'
+      breakfast: 'Tostada de aguacate con brotes en un plato blanco'
   reviews:
     tagline: 'Opiniones'
-    title: 'Lo que dicen los vecinos'
+    title: 'En sus palabras'
+    score: '4,8'
+    scoreLabel: '★★★★★  en las opiniones de Google'
+    allReviews: 'Ver todas las opiniones en Google'
     sourceLabel: 'Google'
     ratingLabel: '{rating} de 5'
     items:
@@ -75,18 +85,51 @@ home:
         quote: 'Buen desayuno y un local tranquilo. Los fines de semana se llena, así que mejor ir pronto.'
         name: 'Andrea G.'
         rating: 4
+  upcoming:
+    tagline: 'Próximamente'
+    title: 'Eventos en Olmo'
+    subtitle: 'Talleres, catas y madrugones en el obrador. Las plazas son limitadas, así que apúntate pronto.'
+    all: 'Ver todos los eventos'
+  events:
+    title: '¿Preparas una celebración?'
+    subtitle: 'Catas, tartas de cumpleaños, desayunos de empresa o una tarde privada: mira lo que viene o escríbenos para pedir presupuesto.'
+    action: 'Pedir presupuesto'
+  faq:
+    tagline: 'Conviene saber'
+    title: 'Preguntas frecuentes'
+    items:
+      order:
+        question: '¿Puedo encargar pan o tartas con antelación?'
+        answer: 'Sí. Encarga el pan antes de las 18:00 del día anterior y las tartas de celebración con al menos 48 horas, en la tienda, por teléfono o con el formulario de abajo.'
+      gluten:
+        question: '¿Tenéis opciones sin gluten?'
+        answer: 'Horneamos un pan de trigo sarraceno los martes y viernes, pero todo sale de la misma cocina, así que no podemos garantizar que no tenga trazas.'
+      laptop:
+        question: '¿Puedo trabajar en la cafetería?'
+        answer: 'Entre semana, sí: hay wifi y una mesa larga junto a la ventana. Los fines de semana reservamos las mesas para desayunar.'
+      parking:
+        question: '¿Dónde puedo aparcar cerca?'
+        answer: 'Malasaña es casi todo peatonal. El aparcamiento más cercano está en la calle de San Bernardo, a cinco minutos andando; el metro de Noviciado está aún más cerca.'
   visit:
-    tagline: 'Visítanos'
-    title: 'Pásate o escríbenos'
-    subtitle: 'Para pedidos grandes, tartas de celebración o cualquier otra cosa, mándanos un mensaje y te respondemos en un día.'
-    addressTitle: 'Dirección'
+    tagline: 'Información práctica'
+    title: 'Visítanos'
     hoursTitle: 'Horario'
-    hours: |
-      - De lunes a viernes: 7:30–19:00
-      - Sábado: 8:30–14:00
-      - Domingo: cerrado
-    phoneTitle: 'Teléfono'
+    days:
+      mon: { day: 'Lunes', hours: '07:30 – 19:00' }
+      tue: { day: 'Martes', hours: '07:30 – 19:00' }
+      wed: { day: 'Miércoles', hours: '07:30 – 19:00' }
+      thu: { day: 'Jueves', hours: '07:30 – 19:00' }
+      fri: { day: 'Viernes', hours: '07:30 – 19:00' }
+      sat: { day: 'Sábado', hours: '08:30 – 14:00' }
+      sun: { day: 'Domingo', hours: 'Cerrado' }
+    findTitle: 'Dónde estamos'
+    directions: 'Cómo llegar'
+    call: 'Llámanos'
     mapTitle: 'Mapa de Olmo Café & Panadería'
+  contact:
+    tagline: 'Escríbenos'
+    title: 'Hablemos'
+    subtitle: '¿Un pedido grande, una tarta de celebración o una pregunta? Déjanos un mensaje y te respondemos en un día laborable.'
     fields:
       name: 'Nombre'
       email: 'Correo electrónico'

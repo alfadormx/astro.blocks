@@ -1,29 +1,57 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Work+Sans:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gelasio:ital,wght@0,400..700;1,400..700&family=Inter:wght@400..700&display=swap');
 
+/* Bakehouse: cream page, white cards, dark-brown type and a rust-amber primary.
+   Tertiary is the espresso band behind the header, the hero, the event banner and the footer;
+   it stays dark in both themes. Warning is the amber of the review stars. */
 [data-demo='local'] {
-  --font-title: 'DM Serif Display', serif;
-  --font-subtitle: 'Work Sans', sans-serif;
-  --font-body: 'Work Sans', sans-serif;
+  --font-title: 'Gelasio', Georgia, serif;
+  --font-subtitle: 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
 
-  --color-primary: var(--color-green-900);
-  --color-primary-hover: var(--color-green-950);
-  --color-secondary: var(--color-stone-700);
-  --color-secondary-hover: var(--color-stone-800);
-  --color-accent: var(--color-maroon-700);
-  --color-accent-hover: var(--color-maroon-800);
-  --color-interactive: var(--color-green-900);
-  --color-interactive-hover: var(--color-green-950);
+  --color-background: color-mix(in oklch, var(--color-yellow-50) 22%, white);
+  --color-surface: white;
+  --color-normal: color-mix(in oklch, var(--color-yellow-950) 45%, black);
+  --color-muted: color-mix(in oklch, var(--color-stone-800) 65%, var(--color-yellow-950));
+  --color-emphasis: color-mix(in oklch, var(--color-stone-800) 65%, var(--color-yellow-950));
+  --color-border: color-mix(in oklch, var(--color-yellow-100) 45%, white);
+  --color-border-emphasis: color-mix(in oklch, var(--color-yellow-100) 80%, white);
 
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
+  --color-primary: color-mix(in oklch, var(--color-peach-950) 60%, var(--color-yellow-950));
+  --color-primary-hover: color-mix(in oklch, var(--color-primary) 80%, black);
+  --color-secondary: var(--color-primary);
+  --color-secondary-hover: var(--color-primary-hover);
+  --color-tertiary: color-mix(in oklch, var(--color-yellow-950) 28%, black);
+  --color-tertiary-hover: color-mix(in oklch, var(--color-yellow-950) 20%, black);
+  --color-accent: color-mix(in oklch, var(--color-peach-500) 55%, var(--color-yellow-500));
+  --color-accent-hover: var(--color-peach-500);
+  --color-interactive: var(--color-primary);
+  --color-interactive-hover: var(--color-primary-hover);
+  --color-link: var(--color-primary);
+  --color-link-hover: var(--color-primary-hover);
+  --color-warning: var(--color-accent);
+
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
 }
 
 [data-demo='local'][data-theme='dark'] {
-  --color-primary: var(--color-green-300);
-  --color-primary-hover: var(--color-green-200);
-  --color-interactive: var(--color-green-300);
-  --color-interactive-hover: var(--color-green-200);
-  --color-secondary: var(--color-stone-300);
-  --color-accent: var(--color-maroon-300);
+  --color-background: color-mix(in oklch, var(--color-yellow-950) 22%, black);
+  --color-surface: color-mix(in oklch, var(--color-yellow-950) 32%, black);
+  --color-normal: color-mix(in oklch, var(--color-yellow-50) 40%, white);
+  --color-muted: color-mix(in oklch, var(--color-yellow-100) 80%, white);
+  --color-emphasis: color-mix(in oklch, var(--color-yellow-100) 80%, white);
+  --color-border: color-mix(in oklch, var(--color-yellow-950) 50%, black);
+  --color-border-emphasis: color-mix(in oklch, var(--color-yellow-950) 70%, black);
+
+  --color-primary: var(--color-accent);
+  --color-primary-hover: color-mix(in oklch, var(--color-accent) 85%, white);
+  --color-tertiary: color-mix(in oklch, var(--color-yellow-950) 14%, black);
+  --color-link: var(--color-accent);
+  --color-link-hover: var(--color-primary-hover);
+}
+
+[data-demo='local'] ::selection {
+  background-color: color-mix(in srgb, var(--color-accent) 30%, var(--color-background));
+  color: var(--color-normal);
 }

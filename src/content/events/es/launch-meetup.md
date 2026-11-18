@@ -5,6 +5,7 @@ start: 2030-03-12T18:00:00+01:00
 end: 2030-03-12T20:00:00+01:00
 slug: encuentro-de-lanzamiento
 tags: [cata]
+featured: true
 location:
   name: Olmo Café & Panadería
   address: Calle del Pez 12, Madrid

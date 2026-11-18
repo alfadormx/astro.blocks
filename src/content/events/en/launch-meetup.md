@@ -4,6 +4,7 @@ description: Taste the new season's breads and pastries with coffee from three o
 start: 2030-03-12T18:00:00+01:00
 end: 2030-03-12T20:00:00+01:00
 tags: [tasting]
+featured: true
 location:
   name: Olmo Café & Bakery
   address: Calle del Pez 12, Madrid
