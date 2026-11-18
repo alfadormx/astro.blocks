@@ -19,7 +19,9 @@ if (!chromiumInstalled()) {
   process.exit(0);
 }
 
-const result = spawnSync('pnpm', ['exec', 'playwright', 'test'], { stdio: 'inherit' });
+const result = spawnSync('pnpm', ['exec', 'playwright', 'test', ...process.argv.slice(2)], {
+  stdio: 'inherit',
+});
 
 if (result.error) {
   console.error(result.error.message);
