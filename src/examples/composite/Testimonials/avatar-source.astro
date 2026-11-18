@@ -1,0 +1,41 @@
+---
+import Testimonials from '~/components/blocks/composite/Testimonials.astro';
+import type { Testimonial } from '~/types/testimonials.types';
+
+const testimonials: Testimonial[] = [
+  {
+    quote: 'Setup took ten minutes. We shipped our new landing page the same afternoon.',
+    rating: 5,
+    author: {
+      name: 'Ana Ruiz',
+      role: 'Marketing lead, Northwind',
+      avatar: {
+        src: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=96&h=96&fit=crop&crop=faces',
+        width: 48,
+        height: 48,
+      },
+    },
+    source: { label: 'G2', href: 'https://www.g2.com/' },
+  },
+  {
+    quote:
+      'The blocks fit our design system without fighting it.\n\nOur designers stopped filing tickets about spacing.',
+    author: {
+      name: 'Sam Okafor',
+      role: 'Front-end engineer',
+      avatar: {
+        src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop&crop=faces',
+        width: 48,
+        height: 48,
+      },
+    },
+  },
+  {
+    quote: 'Docs are clear, and every example is live. That alone saved us days.',
+    author: { name: 'Lee Chen' },
+    source: { label: 'Product Hunt', href: 'https://www.producthunt.com/' },
+  },
+];
+---
+
+<Testimonials testimonials={testimonials} />

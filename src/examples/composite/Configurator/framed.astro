@@ -1,0 +1,67 @@
+---
+import Configurator from '~/components/blocks/composite/Configurator.astro';
+import type { ConfiguratorProps } from '~/types/configurator.types';
+
+const modelViewer: ConfiguratorProps['modelViewer'] = {
+  src: '/models/ring.glb',
+  label: 'A configurable ring',
+  class: 'rounded-lg bg-surface',
+  height: '320px',
+  cameraPresets: { band: { position: [0, -0.9, 2.4], target: [0, -0.6, 0], fov: 35 } },
+};
+
+const metalOptions = [
+  {
+    code: 'yellow',
+    label: 'Yellow gold',
+    selected: true,
+    mutations: [{ type: 'material', material: 'Band', color: '#e6b422', roughness: 0.3 }],
+  },
+  {
+    code: 'white',
+    label: 'White gold',
+    mutations: [{ type: 'material', material: 'Band', color: '#e5e4e2', roughness: 0.2 }],
+  },
+  {
+    code: 'rose',
+    label: 'Rose gold',
+    mutations: [{ type: 'material', part: 'Band', use: 'RoseGold' }],
+  },
+] satisfies Extract<ConfiguratorProps['categories'][number], { panel: 'toggle' }>['options'];
+
+const categories: ConfiguratorProps['categories'] = [
+  {
+    name: 'configurator-doc-framed-metal',
+    panel: 'toggle',
+    triggerButton: { label: 'Metal' },
+    heading: 'Choose your metal',
+    options: metalOptions,
+  },
+  {
+    name: 'configurator-doc-framed-stone',
+    panel: 'grid',
+    mode: 'single',
+    triggerButton: { label: 'Stone' },
+    heading: 'Choose a stone size',
+    options: [
+      { code: 'small', title: '0.25 ct', mutations: [{ type: 'visible', parts: ['Stone_Small'] }] },
+      {
+        code: 'medium',
+        title: '0.5 ct',
+        selected: true,
+        mutations: [{ type: 'visible', parts: ['Stone_Medium'] }],
+      },
+      { code: 'large', title: '1 ct', mutations: [{ type: 'visible', parts: ['Stone_Large'] }] },
+    ],
+  },
+];
+---
+
+<Configurator
+  categories={categories}
+  modelViewer={modelViewer}
+  headline={{ title: 'Solitaire' }}
+  summary={{ categories: ['configurator-doc-framed-stone'], separator: ' ' }}
+  summaryClass="mt-1 text-sm uppercase tracking-widest text-muted"
+  actions={[{ label: 'Save my design', variant: 'outline', intent: 'neutral' }]}
+/>

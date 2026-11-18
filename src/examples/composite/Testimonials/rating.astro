@@ -1,0 +1,25 @@
+---
+import Testimonials from '~/components/blocks/composite/Testimonials.astro';
+import type { Testimonial } from '~/types/testimonials.types';
+
+const testimonials: Testimonial[] = [
+  {
+    quote: 'Setup took ten minutes. We shipped our new landing page the same afternoon.',
+    author: { name: 'Ana Ruiz', role: 'Marketing lead, Northwind' },
+    rating: 5,
+  },
+  {
+    quote:
+      'The blocks fit our design system without fighting it.\n\nOur designers stopped filing tickets about spacing.',
+    author: { name: 'Sam Okafor', role: 'Front-end engineer' },
+    rating: 4,
+  },
+  {
+    quote: 'Docs are clear, and every example is live. That alone saved us days.',
+    author: { name: 'Lee Chen' },
+    rating: 3,
+  },
+];
+---
+
+<Testimonials testimonials={testimonials} />
