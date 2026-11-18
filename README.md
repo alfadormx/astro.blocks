@@ -102,7 +102,7 @@ Blocks live in `src/components/blocks/`, with prop types in `src/types/*.types.t
 
 `collections:` in `config.yaml` declares Markdown collections by preset (`post`, `caseStudy`, `event`). Content goes in `src/content/<name>/<lang>/*.md`, and `src/content.config.ts` is a one-line stub, so `getCollection('<name>')` is typed with no schema to write. Each collection needs two short pages, a list and an entry, built with the helpers in `vendor/integration/collections/pages.ts`.
 
-Static-page copy lives in `src/copy/<page>/<lang>.yaml`. The default-language file defines the typed keys, and a key missing in another language falls back with a build warning. The guide at `/documentation/Collections` covers both.
+Static-page copy lives in `src/copy/<page>/<lang>.yaml`. The default-language file defines the typed keys, and a key missing in another language falls back with a build warning. The guide at `/documentation/guides/Collections` covers both.
 
 ## Project structure
 
@@ -114,11 +114,11 @@ src/
 ├── config.yaml        site configuration
 ├── content.config.ts  collections stub (reads config.yaml)
 ├── content/           Markdown collections, one folder per language
+│   └── documentation/ docs pages, one MDX entry per block
 ├── copy/              static-page copy, one YAML per language
 ├── layouts/           page layout
 ├── pages/
-│   ├── [...lang]/     landing page and demos, one route for all locales
-│   └── documentation/ block reference
+│   └── [...lang]/     landing page and demos, one route for all locales
 ├── styles/            global styles and color tokens
 ├── types/             prop types per block
 └── utils/             shared helpers

@@ -228,6 +228,8 @@ export type LayerConfig<T> = T extends unknown ? Partial<Omit<T, PerInstanceKey>
 - has no docs page or nav entry;
 - is imported only by its parent. A component shared by several blocks lists every parent in its marker (`// Internal to Input, Select, …: <why>`) and is imported only by those.
 
+A public block's docs page is `src/content/documentation/<section>/<Block>.mdx`; the sidebar, pager, Overview and API type links all read it.
+
 ## 13. Types files
 
 - Every file under `src/types/`, `.d.ts` included, imports only through relative `./x.types`. Never `~/utils`, never the `~` alias.

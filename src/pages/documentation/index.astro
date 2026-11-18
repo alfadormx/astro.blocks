@@ -1,7 +1,9 @@
 ---
 import Layout from './_layouts/Layout.astro';
 import ItemsGrid from '~/components/blocks/composite/ItemsGrid.astro';
-import { documentationNavigation } from '~/data/documentationNavigation';
+import { I18N } from 'site-config';
+import { collectionIndex } from '../../../vendor/integration/collections/pages';
+import { sections } from './_sections';
 
 const metadata = {
   title: {
@@ -9,90 +11,10 @@ const metadata = {
   },
 };
 
-const descriptions: Record<string, string> = {
-  // Groups
-  Base: 'Foundational design tokens the rest of the library is built on.',
-  Composite: 'Higher-level blocks that compose primitives into ready-made sections.',
-  Layout: 'Structural containers that arrange content on the page.',
-  Primitives: 'The smallest building blocks, used directly or inside composites.',
-  Utilities: 'Browser-side helpers that sit beside the blocks, such as URL state.',
-
-  // Base
-  Colors: 'The semantic color tokens and how they map across light and dark themes.',
-  Typography: 'Heading, body, and inline text scales with their global element styles.',
-
-  // Composite
-  CallToAction: 'A headline paired with action buttons to drive a single conversion.',
-  CaseStudyCard: 'A case study card: client, title link, excerpt and tags.',
-  CaseStudyLayout:
-    'A case study page body: client and date, a results row, Markdown, and a map when located.',
-  CollectionList:
-    'A grid or list of collection entries that picks each card from its preset, with a pager.',
-  Configurator: 'A 3D product configurator with tabbed choices, a live summary and shareable URLs.',
-  ContactForm:
-    'A contact form that posts to a form service or opens a mail client, with an optional aside.',
-  Content: 'A headline, prose body, and image arranged as an editorial section.',
-  ContentCarousel: 'A horizontally scrollable set of content slides.',
-  EventCard: 'An event card: date and time in the event’s zone, location, and a past badge.',
-  EventLayout: 'An event page body: date range and venue, a Register button, Markdown, and a map.',
-  Example: 'A documentation example with live preview and synchronized source code.',
-  Footer: 'A site footer with link columns, social icons, and a legal line.',
-  Header: 'A site header with navigation, logo, and theme controls.',
-  Hero: 'The opening section of a page: a headline and actions, centered or beside an image or video.',
-  Item: 'A single icon, title, and body unit used by every items block.',
-  ItemsContent: 'A headline above a grid of items, for feature or FAQ sections.',
-  ItemsGrid:
-    'A responsive grid that renders a list of items, sizing its columns to the container it sits in.',
-  ItemsTimeline: 'A vertical sequence of items joined by connector lines.',
-  ItemsTimelineHorizontal: 'A horizontal sequence of items joined by connector lines.',
-  NavigationTree: 'A nested vertical navigation list with expandable groups.',
-  NavigationTreeHorizontal: 'A horizontal navigation bar with dropdown groups.',
-  Pager: 'A labelled previous / next navigation with the page title on each link.',
-  PostCard: 'A blog post card: cover, date and reading time, title link, excerpt and tags.',
-  PostLayout:
-    'A blog post page body: cover, title, date, author and reading time, Markdown and tags.',
-  Pricing:
-    'Pricing tiers with feature checklists, a highlighted tier and a monthly or yearly billing toggle.',
-  Tabs: 'A tabbed panel switcher for grouping related content.',
-  Team: 'People cards with a photo, name, role and social links, in two to four columns.',
-  Testimonials: 'Customer quotes with author, star rating and source, in a grid or a carousel.',
-
-  // Layout
-  Container: 'The outermost section wrapper, controlling width and background.',
-  FourColumnContainer: 'A four-column responsive layout region.',
-  Modal: 'An overlay dialog with a backdrop and dismiss controls.',
-  SidebarLeftContainer: 'A two-region layout with a sidebar on the left.',
-  SidebarRightContainer: 'A two-region layout with a sidebar on the right.',
-  ThreeColumnContainer: 'A three-column responsive layout region.',
-  TwoColumnContainer: 'A two-column responsive layout region.',
-
-  // Primitives
-  Accordion: 'Collapsible sections on native details and summary, one or many open at a time.',
-  Background: 'Color, gradient, image, and video backgrounds for any section.',
-  Button: 'A button or link with sizes, variants, intents, and icon slots.',
-  Checkbox: 'A labelled checkbox with help and error text.',
-  CheckboxGroup: 'A labelled set of checkboxes sharing one form name, on a native fieldset.',
-  CodeBlock: 'Highlighted code with a copy button, themed for light and dark.',
-  ContentCarouselItem: 'A single slide within a content carousel.',
-  Headline: 'A tagline, title, and subtitle group with alignment options.',
-  Image: 'An optimized image with sizing, ratio, and fit controls.',
-  Input: 'A labelled single-line field for text, email, phone, URL, number or date.',
-  LanguageToggle: 'A control for switching between configured site languages.',
-  Logo: 'The site logo, rendered as text, an image, or a vector.',
-  Map: 'An embedded map pinned to a location.',
-  ModelViewer: 'An interactive 3D model with orbit, zoom, framing and lighting presets.',
-  Select: 'A labelled native dropdown for one choice, with an optional placeholder.',
-  TextArea: 'A labelled multi-line text field with help text and a character limit.',
-  ThemeToggle: 'A control for switching between light and dark themes.',
-  ToggleGroup: 'A compact set of mutually exclusive options as radios or cells.',
-  Vector: 'An inline SVG icon or illustration.',
-  Video: 'An embedded or self-hosted video player.',
-
-  // Utilities
-  CombinationCode: "Encodes a configurator's selections into one shareable code kept in the URL.",
-};
-
-const groups = documentationNavigation.filter((entry) => entry.children?.length);
+const entries = await collectionIndex('documentation', I18N.default);
+const groups = sections
+  .map((section) => ({ section, entries: entries.filter((e) => e.data.section === section.key) }))
+  .filter((g) => g.entries.length);
 ---
 
 <Layout
@@ -106,14 +28,14 @@ const groups = documentationNavigation.filter((entry) => entry.children?.length)
   <p>
     Browse the full component library below. Each card links to that component's documentation page,
     with live examples and a generated API reference. New to the library? Start with
-    <a href="/documentation/Composing">Composing blocks</a>, which explains how every block exposes
-    and configures its children.
+    <a href="/documentation/guides/Composing">Composing blocks</a>, which explains how every block
+    exposes and configures its children.
   </p>
 
-  {groups.map((group) => (
+  {groups.map(({ section, entries }) => (
     <Fragment>
-      <h2>{group.label}</h2>
-      <p>{descriptions[group.label ?? ''] ?? ''}</p>
+      <h2>{section.label}</h2>
+      <p>{section.description}</p>
       <ItemsGrid
         columns={3}
         gap="tight"
@@ -121,13 +43,13 @@ const groups = documentationNavigation.filter((entry) => entry.children?.length)
           orientation: 'vertical',
           icon: { name: 'heroicons:cube', class: 'text-accent' },
         }}
-        items={(group.children ?? []).map((child) => ({
-          title: child.label ?? '',
-          content: descriptions[child.label ?? ''] ?? '',
+        items={entries.map((e) => ({
+          title: e.data.title,
+          content: e.data.description,
           actions: [
             {
               label: 'View',
-              href: child.href,
+              href: e.href,
               variant: 'ghost' as const,
               intent: 'primary' as const,
             },

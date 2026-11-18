@@ -11,6 +11,10 @@ const siteConfig = { config: './src/config.yaml' };
 
 // https://astro.build/config
 export default defineConfig({
+  redirects: {
+    '/documentation/Composing': '/documentation/guides/Composing',
+    '/documentation/Collections': '/documentation/guides/Collections',
+  },
   integrations: [
     site_config(siteConfig),
     icon({

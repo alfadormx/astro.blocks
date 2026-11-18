@@ -6,8 +6,7 @@ import Footer from '~/components/blocks/composite/Footer.astro';
 import CallToAction from '~/components/blocks/composite/CallToAction.astro';
 import Hero from '~/components/blocks/composite/Hero.astro';
 import ItemsContent from '~/components/blocks/composite/ItemsContent.astro';
-import { documentationNavigation } from '~/data/documentationNavigation';
-import { getGroupChildLabels } from '~/utils/navigationGroups';
+import { collectionIndex } from '../../../vendor/integration/collections/pages';
 import { localizedPaths, useCopy } from '../../../vendor/integration/copy/pages';
 
 type Language = (typeof I18N.languages)[number];
@@ -25,18 +24,20 @@ if (!language) {
 }
 const listFormat = new Intl.ListFormat(language.locale, { type: 'conjunction' });
 
+const docs = await collectionIndex('documentation', I18N.default);
+const titlesIn = (section: string) =>
+  docs.filter((e) => e.data.section === section).map((e) => e.data.title);
+
 const layers = [
-  { group: 'Primitives', icon: 'heroicons:squares-2x2', copyKey: 'primitives' },
-  { group: 'Composite', icon: 'heroicons:rectangle-stack', copyKey: 'composites' },
-  { group: 'Layout', icon: 'heroicons:view-columns', copyKey: 'layout' },
+  { section: 'primitives', icon: 'heroicons:squares-2x2', copyKey: 'primitives' },
+  { section: 'composite', icon: 'heroicons:rectangle-stack', copyKey: 'composites' },
+  { section: 'layout', icon: 'heroicons:view-columns', copyKey: 'layout' },
 ] as const;
 
-const layerItems = layers.map(({ group, icon, copyKey }) => ({
+const layerItems = layers.map(({ section, icon, copyKey }) => ({
   icon: { name: icon },
   title: copy.inside[copyKey].title,
-  content: `**${copy.inside[copyKey].lead}:** ${listFormat.format(
-    getGroupChildLabels(documentationNavigation, group)
-  )}.`,
+  content: `**${copy.inside[copyKey].lead}:** ${listFormat.format(titlesIn(section))}.`,
   orientation: 'vertical' as const,
 }));
 
