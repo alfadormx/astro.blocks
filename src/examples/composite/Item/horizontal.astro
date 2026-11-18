@@ -1,0 +1,13 @@
+---
+import Item from '~/components/blocks/composite/Item.astro';
+---
+
+<div class="max-w-md">
+  <Item
+    icon={{ name: 'heroicons:bolt', class: 'text-success' }}
+    title="Horizontal Layout"
+    content="The icon sits to the left, with the title and content left-aligned beside it."
+    actions={[{ label: 'Learn More', intent: 'success', size: 'sm' }]}
+    orientation="horizontal"
+  />
+</div>

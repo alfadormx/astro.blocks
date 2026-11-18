@@ -1,0 +1,27 @@
+---
+import ItemsTimeline from '~/components/blocks/composite/ItemsTimeline.astro';
+---
+
+<ItemsTimeline
+  gap="loose"
+  items={[
+    {
+      icon: { name: 'heroicons:book-open', class: 'text-primary' },
+      title: 'Learn the Basics',
+      content: 'Get familiar with fundamental concepts and core features.',
+      actions: [{ label: 'Start Tutorial', intent: 'primary' }],
+    },
+    {
+      icon: { name: 'heroicons:beaker', class: 'text-accent' },
+      title: 'Practice',
+      content: 'Apply your knowledge through hands-on exercises and examples.',
+      actions: [{ label: 'View Examples', intent: 'accent' }],
+    },
+    {
+      icon: { name: 'heroicons:trophy', class: 'text-warning' },
+      title: 'Master',
+      content: 'Become proficient through advanced techniques and patterns.',
+      actions: [{ label: 'Advanced Guide', intent: 'secondary' }],
+    },
+  ]}
+/>

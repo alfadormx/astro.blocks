@@ -1,0 +1,16 @@
+---
+import Item from '~/components/blocks/composite/Item.astro';
+---
+
+<div class="max-w-sm">
+  <Item
+    icon={{ name: 'heroicons:rocket-launch', class: 'text-primary' }}
+    title="Get started"
+    content="Pick a plan to continue."
+    actionsClass="flex-col items-stretch"
+    actions={[
+      { label: 'Start free', href: '#' },
+      { label: 'Talk to sales', href: '#', variant: 'outline' },
+    ]}
+  />
+</div>

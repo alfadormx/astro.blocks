@@ -1,0 +1,19 @@
+---
+import ItemsGridBlock from '~/components/blocks/composite/ItemsGrid.astro';
+---
+
+<ItemsGridBlock
+  columns={3}
+  selection={{ mode: 'single', group: 'itemsgrid-doc-single', label: 'Size' }}
+  items={[
+    { code: 'size-s', icon: { name: 'heroicons:cube' }, title: 'Small', content: '30 × 30 cm' },
+    {
+      code: 'size-m',
+      icon: { name: 'heroicons:cube' },
+      title: 'Medium',
+      content: '45 × 45 cm',
+      selected: true,
+    },
+    { code: 'size-l', icon: { name: 'heroicons:cube' }, title: 'Large', content: '60 × 60 cm' },
+  ]}
+/>

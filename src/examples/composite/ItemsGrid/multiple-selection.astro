@@ -1,0 +1,20 @@
+---
+import ItemsGridBlock from '~/components/blocks/composite/ItemsGrid.astro';
+---
+
+<ItemsGridBlock
+  columns={4}
+  selection={{
+    mode: 'multiple',
+    group: 'itemsgrid-doc-multiple',
+    label: 'Extras',
+    min: 1,
+    max: 2,
+  }}
+  items={[
+    { code: 'wifi', icon: { name: 'heroicons:wifi' }, title: 'Wi-Fi', selected: true },
+    { code: 'parking', icon: { name: 'heroicons:truck' }, title: 'Parking' },
+    { code: 'breakfast', icon: { name: 'heroicons:cake' }, title: 'Breakfast' },
+    { code: 'pool', icon: { name: 'heroicons:sun' }, title: 'Pool' },
+  ]}
+/>

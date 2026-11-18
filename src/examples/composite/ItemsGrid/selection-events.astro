@@ -1,0 +1,50 @@
+---
+import ItemsGridBlock from '~/components/blocks/composite/ItemsGrid.astro';
+---
+
+<ItemsGridBlock
+  columns={3}
+  selection={{ mode: 'single', group: 'itemsgrid-doc-events', label: 'Delivery' }}
+  items={[
+    { code: 'standard', icon: { name: 'heroicons:truck' }, title: 'Standard' },
+    { code: 'express', icon: { name: 'heroicons:bolt' }, title: 'Express' },
+    { code: 'pickup', icon: { name: 'heroicons:building-storefront' }, title: 'Pickup' },
+  ]}
+/>
+<div
+  data-selection-group="itemsgrid-doc-events"
+  data-selection-mode="single"
+  class="mt-4 flex items-center gap-4"
+>
+  <button
+    type="button"
+    data-selection-external="pickup"
+    class="px-3 py-1 border border-border rounded"
+  >
+    Select Pickup externally
+  </button>
+  <output data-selection-log class="font-mono text-sm">
+    No change yet
+  </output>
+</div>
+
+<script>
+  import { publish, subscribe } from '~/utils/selection';
+
+  const SECTION = '[data-doc-section="selection-events"]';
+  const GROUP = 'itemsgrid-doc-events';
+
+  function initLog(): void {
+    const log = document.querySelector<HTMLOutputElement>(`${SECTION} [data-selection-log]`);
+    const button = document.querySelector<HTMLButtonElement>(
+      `${SECTION} [data-selection-external]`
+    );
+    if (!log || !button) return;
+    subscribe(GROUP, (detail) => (log.textContent = JSON.stringify(detail)));
+    // onclick, not addEventListener: re-running initLog replaces the handler instead of stacking it.
+    button.onclick = () => publish(button, [{ code: button.dataset.selectionExternal! }]);
+  }
+
+  document.addEventListener('astro:after-swap', initLog);
+  initLog();
+</script>
