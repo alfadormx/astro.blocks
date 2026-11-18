@@ -73,9 +73,9 @@ test.describe('blog demo', () => {
 test.describe('case study demo', () => {
   test('lists case studies in both languages', async ({ page }) => {
     await page.goto('/demos/portfolio/work');
-    await expect(cardLinks(page)).toHaveCount(3);
+    await expect(cardLinks(page)).toHaveCount(6);
     await page.goto('/es/demos/portfolio/work');
-    await expect(cardLinks(page)).toHaveCount(3);
+    await expect(cardLinks(page)).toHaveCount(6);
   });
 
   test('shows a map only on the entry with coordinates', async ({ page }) => {

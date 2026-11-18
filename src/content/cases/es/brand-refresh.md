@@ -5,7 +5,7 @@ date: 2025-11-20
 client: Example Co.
 featured: true
 slug: renovacion-de-marca
-tags: [sistema-de-diseño]
+tags: [Marca, Sistema de diseño]
 cover:
   src: ~/assets/images/demos/portfolio/brand-refresh-cover.jpg
   alt: Un monitor de escritorio que muestra una maqueta de imágenes grandes

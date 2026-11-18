@@ -23,6 +23,7 @@ const members: TeamMember[] = Object.entries(copy.about.team.members).map(([key,
   <Content
     headline={{ title: copy.about.title, subtitle: copy.about.subtitle, htmlTag: 'h1' }}
     image={{ src: '~/assets/images/demos/portfolio/about.jpg', alt: copy.about.imageAlt }}
+    twoColumnContainer={{ content: { class: 'items-center' } }}
   >
     <Fragment set:html={renderRichText(copy.about.body)} />
   </Content>

@@ -63,10 +63,10 @@ test('an entry page marks Work as the current section', async ({ page }) => {
   ).toHaveAttribute('href', '/demos/portfolio/work');
 });
 
-test('the home page features three case studies, each linking to its entry', async ({ page }) => {
+test('the home page features six case studies, each linking to its entry', async ({ page }) => {
   await page.goto('/demos/portfolio');
   const links = page.locator('a[href^="/demos/portfolio/work/"]');
-  await expect(links).toHaveCount(3);
+  await expect(links).toHaveCount(6);
   for (const href of await links.evaluateAll((as) => as.map((a) => a.getAttribute('href')!))) {
     expect((await page.request.get(href)).status(), href).toBe(200);
   }
@@ -96,7 +96,9 @@ test('the case gallery is operable from the keyboard', async ({ page }) => {
 
 test('the contact form fields are labelled', async ({ page }) => {
   await page.goto('/demos/portfolio/contact');
-  const form = page.locator('form[data-contact-form]');
+  const form = page
+    .locator('form[data-contact-form]')
+    .filter({ has: page.locator('[name="message"]') });
   for (const name of ['Name', 'Email', 'Company']) {
     await expect(form.getByRole('textbox', { name, exact: false })).toBeVisible();
   }
@@ -111,7 +113,7 @@ for (const theme of ['light', 'dark'] as const) {
       '[data-hero-copy] h1',
       '[data-headline] [data-subtitle]',
       '[data-testimonial] blockquote',
-      '[data-hero-copy] a[href$="/work"]',
+      '[data-entry-card-link]',
     ]) {
       const targets = page.locator(selector);
       await expect(targets.first()).toBeAttached();
