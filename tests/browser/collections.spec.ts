@@ -92,7 +92,9 @@ test.describe('event demo', () => {
     await page.goto('/demos/local/events');
     await expect(cardLinks(page)).toHaveText([
       'Autumn tasting evening',
+      'Celebration-cake class',
       'New York bagel workshop',
+      'Breakfast with the bakers',
       'Online sourdough class',
       'Latte-art workshop',
     ]);
@@ -206,10 +208,12 @@ test.describe('demo links', () => {
     await page.goto('/es/demos/local/events');
     const nav = page.locator('[data-header] nav').first();
     await expect(nav.getByRole('link')).toHaveText([
-      'Servicios',
-      'Nosotros',
+      'Lo que horneamos',
+      'Nuestra historia',
+      'Galería',
       'Opiniones',
       'Visítanos',
+      'Contacto',
       'Eventos',
     ]);
     const events = nav.getByRole('link', { name: 'Eventos' });
