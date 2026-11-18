@@ -2,6 +2,7 @@
 title: Escribir en dos idiomas
 description: Las traducciones viven en una carpeta por idioma y se enlazan por nombre de archivo.
 date: 2026-10-15
+featured: true
 updated: 2026-10-20
 author: Astro Blocks
 slug: segunda-entrada

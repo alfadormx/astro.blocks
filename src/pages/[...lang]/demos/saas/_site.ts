@@ -1,5 +1,6 @@
 import { I18N } from 'site-config';
 import type { ButtonProps } from '~/types/button.types';
+import type { CollectionListProps } from '~/types/collectionlist.types';
 import type { LogoCloudLogo } from '~/types/logocloud.types';
 import type { NavigationTreeItem } from '~/types/navigationtree.types';
 import { collectionUrl } from '../../../../../vendor/integration/collections/pages';
@@ -10,14 +11,31 @@ type NavCopy = SaasCopy['nav'];
 
 export const ANCHORS = ['features', 'pricing', 'testimonials', 'faq'] as const;
 
-export const FEATURE_ICONS: Record<keyof SaasCopy['features']['items'], string> = {
-  funnels: 'heroicons:funnel',
-  retention: 'heroicons:arrow-path',
-  segments: 'heroicons:chart-pie',
-  dashboards: 'heroicons:squares-2x2',
-  alerts: 'heroicons:bell-alert',
-  privacy: 'heroicons:shield-check',
+export const STEP_ICONS: Record<keyof SaasCopy['workflow']['steps'], string> = {
+  track: 'heroicons:cursor-arrow-rays',
+  funnel: 'heroicons:funnel',
+  dropoff: 'heroicons:arrow-trending-down',
+  share: 'heroicons:share',
+  watch: 'heroicons:bell-alert',
 };
+
+/** Light, tightly tracked section titles over a grey second line. */
+export const SECTION_HEADLINE = {
+  titleClass: 'text-4xl md:text-[2.6rem] font-normal tracking-tight leading-[1.1]',
+  subtitleClass: 'text-4xl md:text-[2.6rem] tracking-tight leading-[1.1] text-emphasis max-w-3xl',
+};
+
+/** Text on the dusk gradient: light in both themes, since the gradient stays dark. */
+export const ON_DUSK = 'text-background dark:text-normal';
+
+/** Post cards on the landing page and the blog list: white, rounded, with the light title weight. */
+export const POST_CARD: CollectionListProps['defaultPostCardConfig'] = {
+  class: 'rounded-3xl bg-background',
+  headline: { titleClass: 'text-xl font-normal tracking-tight leading-snug mb-0' },
+};
+
+export const DUSK_BACKGROUND =
+  'bg-linear-to-b from-tertiary from-35% via-secondary via-75% to-accent';
 
 export function saasHome(langCode: string): string {
   const lang = I18N.languages.find((l: Language) => l.code === langCode);
@@ -38,8 +56,10 @@ export function saasCta(langCode: string, nav: NavCopy): ButtonProps {
     label: nav.trial,
     href: `${saasHome(langCode)}#pricing`,
     variant: 'solid',
-    intent: 'primary',
+    intent: 'neutral',
     size: 'sm',
+    icon: { name: 'heroicons:arrow-right' },
+    iconPosition: 'right',
   };
 }
 
@@ -51,6 +71,9 @@ const SHAPES: Record<string, string> = {
   e: '<path d="M4 18a12 12 0 0 1 24 0z"/>',
   f: '<path d="M9 10h14a6 6 0 0 1 0 12H9a6 6 0 0 1 0-12z"/>',
 };
+
+/** The Driftwave wordmark in `currentColor`, so the header and footer can set its colour. */
+export const SAAS_BRAND = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 32"><g fill="currentColor"><path d="M4 20c4-8 8-8 12 0s8 8 12 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><text x="38" y="23" font-family="'Libre Franklin', sans-serif" font-size="21" font-weight="500">Driftwave</text></g></svg>`;
 
 export function saasLogos(names: Record<string, string>): LogoCloudLogo[] {
   return Object.entries(names).map(([key, name]) => ({
