@@ -1,0 +1,41 @@
+---
+title: CaseStudyLayout
+description: 'The body of a case study page: results above the Markdown, a map below it.'
+section: composite
+order: 3
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import ResultsMap from '~/examples/composite/CaseStudyLayout/results-map.astro';
+import resultsMapSource from '~/examples/composite/CaseStudyLayout/results-map.astro?raw';
+import NoMap from '~/examples/composite/CaseStudyLayout/no-map.astro';
+import noMapSource from '~/examples/composite/CaseStudyLayout/no-map.astro?raw';
+import Gallery from '~/examples/composite/CaseStudyLayout/gallery.astro';
+import gallerySource from '~/examples/composite/CaseStudyLayout/gallery.astro?raw';
+
+## Results and map
+
+`results` renders as a description list above the body. A `location` with `lat` and `lon` adds a Map after it.
+
+<Example name="results-map" source={resultsMapSource}>
+  <ResultsMap />
+</Example>
+
+## No map
+
+`map: false` hides the map even when the location has coordinates.
+
+<Example name="no-map" source={noMapSource}>
+  <NoMap />
+</Example>
+
+## Gallery
+
+`gallery` renders a ContentCarousel after the body; `contentCarousel` configures it.
+
+<Example name="gallery" source={gallerySource}>
+  <Gallery />
+</Example>
+
+<ApiReferenceTable component="CaseStudyLayout" category="composite" />

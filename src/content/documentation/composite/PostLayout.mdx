@@ -1,0 +1,31 @@
+---
+title: PostLayout
+description: 'The body of a blog post page: cover, title, meta line, Markdown and tags.'
+section: composite
+order: 25
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import Basic from '~/examples/composite/PostLayout/basic.astro';
+import basicSource from '~/examples/composite/PostLayout/basic.astro?raw';
+import BodyClass from '~/examples/composite/PostLayout/body-class.astro';
+import bodyClassSource from '~/examples/composite/PostLayout/body-class.astro?raw';
+
+## Basic
+
+On an entry page, `renderEntry` returns these props as `layout` and the rendered Markdown as `Content`, which goes in the default slot. The body uses the `prose` class from `@tailwindcss/typography`, coloured from the theme tokens, so it follows light and dark mode.
+
+<Example name="basic" source={basicSource}>
+  <Basic />
+</Example>
+
+## Body width
+
+`bodyClass` merges after `prose`, so typography modifiers apply: here `max-w-none` lets the text use the full width, and `prose-lg` would enlarge it.
+
+<Example name="body-class" source={bodyClassSource}>
+  <BodyClass />
+</Example>
+
+<ApiReferenceTable component="PostLayout" category="composite" />

@@ -1,0 +1,15 @@
+---
+import EventCard from '~/components/blocks/composite/EventCard.astro';
+---
+
+<div class="max-w-sm">
+  <EventCard
+    headline={{ title: 'Online sourdough class' }}
+    href="/demos/local/events/accessibility-webinar"
+    start={new Date('2026-02-04T15:00:00Z')}
+    end={new Date('2026-02-04T16:00:00Z')}
+    timezone="Europe/Madrid"
+    location={{ name: 'Online' }}
+    past
+  />
+</div>
