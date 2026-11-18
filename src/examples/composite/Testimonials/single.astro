@@ -1,0 +1,13 @@
+---
+import Testimonials from '~/components/blocks/composite/Testimonials.astro';
+import type { Testimonial } from '~/types/testimonials.types';
+
+const testimonials: Testimonial[] = [
+  {
+    quote: 'One quote can carry a whole section when it is the right one.',
+    author: { name: 'Jordan Blake' },
+  },
+];
+---
+
+<Testimonials testimonials={testimonials} columns={1} />

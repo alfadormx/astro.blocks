@@ -1,0 +1,93 @@
+---
+title: LogoCloud
+description: A row of partner or customer logos, as inline SVG or images, optionally linked.
+section: composite
+order: 20
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import Basic from '~/examples/composite/LogoCloud/basic.astro';
+import basicSource from '~/examples/composite/LogoCloud/basic.astro?raw';
+import Links from '~/examples/composite/LogoCloud/links.astro';
+import linksSource from '~/examples/composite/LogoCloud/links.astro?raw';
+import Vector from '~/examples/composite/LogoCloud/vector.astro';
+import vectorSource from '~/examples/composite/LogoCloud/vector.astro?raw';
+import Grayscale from '~/examples/composite/LogoCloud/grayscale.astro';
+import grayscaleSource from '~/examples/composite/LogoCloud/grayscale.astro?raw';
+import Gap from '~/examples/composite/LogoCloud/gap.astro';
+import gapSource from '~/examples/composite/LogoCloud/gap.astro?raw';
+import Marquee from '~/examples/composite/LogoCloud/marquee.astro';
+import marqueeSource from '~/examples/composite/LogoCloud/marquee.astro?raw';
+import MarqueeGrayscale from '~/examples/composite/LogoCloud/marquee-grayscale.astro';
+import marqueeGrayscaleSource from '~/examples/composite/LogoCloud/marquee-grayscale.astro?raw';
+import MarqueeLinks from '~/examples/composite/LogoCloud/marquee-links.astro';
+import marqueeLinksSource from '~/examples/composite/LogoCloud/marquee-links.astro?raw';
+
+## Basic
+
+The default `layout="static"` wraps and centres the logos in a row. Each logo takes its `name` as its text alternative. The optional `headline` renders as an `h2`.
+
+<Example name="basic" source={basicSource}>
+  <Basic />
+</Example>
+
+## Links
+
+With `href` a logo becomes a link that opens in the same tab and shows a focus ring when reached with the keyboard.
+
+<Example name="links" source={linksSource}>
+  <Links />
+</Example>
+
+## Image and vector
+
+Each logo sets exactly one of `image` (Image props) and `vector` (Vector props). A vector is recoloured to the text colour, so it follows the theme. To keep its brand colours, set `preserveColors`.
+
+<Example name="vector" source={vectorSource}>
+  <Vector />
+</Example>
+
+## Grayscale
+
+`grayscale` desaturates every logo; each regains its colour on hover and keyboard focus. A recoloured vector is already one colour, so the effect is only visible on images and on vectors with `preserveColors`.
+
+<Example name="grayscale" source={grayscaleSource}>
+  <Grayscale />
+</Example>
+
+## Gap and width
+
+`gap` sets the space between logos; `logosClass` styles their wrapper, here narrowing it so the logos wrap into more rows.
+
+<Example name="gap" source={gapSource}>
+  <Gap />
+</Example>
+
+## Marquee
+
+`layout="marquee"` drifts the logos through a looping ContentCarousel at 40 pixels per second; set `contentCarousel.autoplay.speed` to change it. The strip pauses on hover, on keyboard focus and with its pause button. With reduced motion it stays still, and the arrows move it by hand. A marquee needs at least 6 logos.
+
+<Example name="marquee" source={marqueeSource}>
+  <Marquee />
+</Example>
+
+## Marquee in grayscale
+
+Brand-coloured vectors in a grayscale marquee; each regains its colour on hover.
+
+<Example name="marquee-grayscale" source={marqueeGrayscaleSource}>
+  <MarqueeGrayscale />
+</Example>
+
+## Linked marquee
+
+Linked logos in a slower marquee. Tabbing through them pauses the strip and brings each focused logo into view.
+
+<Example name="marquee-links" source={marqueeLinksSource}>
+  <MarqueeLinks />
+</Example>
+
+Without JavaScript the marquee shows the first view of logos and its arrows do nothing. The pause control that WCAG 2.2.2 asks for also exists only while JavaScript runs, so use `layout="static"` where that matters.
+
+<ApiReferenceTable component="LogoCloud" category="composite" />

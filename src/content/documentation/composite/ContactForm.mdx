@@ -1,0 +1,71 @@
+---
+title: ContactForm
+description: A contact form that posts to a form service or opens the visitor’s mail client.
+section: composite
+order: 6
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import Basic from '~/examples/composite/ContactForm/basic.astro';
+import basicSource from '~/examples/composite/ContactForm/basic.astro?raw';
+import CustomFields from '~/examples/composite/ContactForm/custom-fields.astro';
+import customFieldsSource from '~/examples/composite/ContactForm/custom-fields.astro?raw';
+import SharedConfig from '~/examples/composite/ContactForm/shared-config.astro';
+import sharedConfigSource from '~/examples/composite/ContactForm/shared-config.astro?raw';
+import Mailto from '~/examples/composite/ContactForm/mailto.astro';
+import mailtoSource from '~/examples/composite/ContactForm/mailto.astro?raw';
+import Aside from '~/examples/composite/ContactForm/aside.astro';
+import asideSource from '~/examples/composite/ContactForm/aside.astro?raw';
+import AsideLeft from '~/examples/composite/ContactForm/aside-left.astro';
+import asideLeftSource from '~/examples/composite/ContactForm/aside-left.astro?raw';
+
+## Basic
+
+The default fields post to an endpoint such as Formspree or Basin. Without JavaScript the form posts natively; with it, success and error show inline and take focus. The hidden `_gotcha` field follows Formspree’s spam-trap convention; set `honeypot` to the name your provider drops, or `false`.
+
+<Example name="basic" source={basicSource}>
+  <Basic />
+</Example>
+
+## Custom fields
+
+`fields` takes any form primitive, tagged by `control`. A provided list replaces the defaults.
+
+<Example name="custom-fields" source={customFieldsSource}>
+  <CustomFields />
+</Example>
+
+## Shared field config
+
+`defaultFieldConfig` sets size, intent, shape and label visibility on every field.
+
+<Example name="shared-config" source={sharedConfigSource}>
+  <SharedConfig />
+</Example>
+
+## Mailto
+
+No service is needed: the visitor’s mail app opens with the message filled in. Without JavaScript the browser falls back to a native `text/plain` mailto post.
+
+<Example name="mailto" source={mailtoSource}>
+  <Mailto />
+</Example>
+
+## Aside
+
+Content in the `aside` slot sits beside the form and stacks below it on mobile.
+
+<Example name="aside" source={asideSource}>
+  <Aside />
+</Example>
+
+## Aside left
+
+`asidePosition="left"` puts the aside before the form.
+
+<Example name="aside-left" source={asideLeftSource}>
+  <AsideLeft />
+</Example>
+
+<ApiReferenceTable component="ContactForm" category="composite" />

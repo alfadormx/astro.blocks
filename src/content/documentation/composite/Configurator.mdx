@@ -1,0 +1,132 @@
+---
+title: Configurator
+description: A product configurator assembled from ModelViewer, Tabs and selection blocks.
+section: composite
+order: 5
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import ToggleText from '~/examples/composite/Configurator/toggle-text.astro';
+import toggleTextSource from '~/examples/composite/Configurator/toggle-text.astro?raw';
+import Grid from '~/examples/composite/Configurator/grid.astro';
+import gridSource from '~/examples/composite/Configurator/grid.astro?raw';
+import Layering from '~/examples/composite/Configurator/layering.astro';
+import layeringSource from '~/examples/composite/Configurator/layering.astro?raw';
+import Intent from '~/examples/composite/Configurator/intent.astro';
+import intentSource from '~/examples/composite/Configurator/intent.astro?raw';
+import IntentNeutral from '~/examples/composite/Configurator/intent-neutral.astro';
+import intentNeutralSource from '~/examples/composite/Configurator/intent-neutral.astro?raw';
+import Framed from '~/examples/composite/Configurator/framed.astro';
+import framedSource from '~/examples/composite/Configurator/framed.astro?raw';
+import HeadlineActions from '~/examples/composite/Configurator/headline-actions.astro';
+import headlineActionsSource from '~/examples/composite/Configurator/headline-actions.astro?raw';
+import Headings from '~/examples/composite/Configurator/headings.astro';
+import headingsSource from '~/examples/composite/Configurator/headings.astro?raw';
+import Described from '~/examples/composite/Configurator/described.astro';
+import describedSource from '~/examples/composite/Configurator/described.astro?raw';
+import PanelClass from '~/examples/composite/Configurator/panel-class.astro';
+import panelClassSource from '~/examples/composite/Configurator/panel-class.astro?raw';
+
+Configurator puts a ModelViewer and a live summary in the left column and a tabbed choice panel in the right one. Each category becomes one tab and one selection group: a `toggle` category renders a ToggleGroup, a `grid` category an ItemsGrid in selection mode, and a `text` category a TextArea. Options carry the scene `mutations` they apply, so the viewer's `selections` map is built for you. See the [jewellery configurator demo](/demos/jewellery-configurator) for the full experience.
+
+## Category types
+
+`ConfiguratorToggleCategory` (`panel: 'toggle'`) takes ToggleGroup `options`. `ConfiguratorGridCategory` (`panel: 'grid'`) takes ItemsGrid items as `options`, each with a required `code`, and a `mode` of `'single'` or `'multiple'`; `min` and `max` exist only for `'multiple'`. `ConfiguratorTextCategory` (`panel: 'text'`) takes `value` and an optional `fieldLabel`; without it the heading names the field and no label is shown. `maxLength`, `placeholder` and every other TextArea prop or native `<textarea>` attribute go in `textArea`. Every category has a `name` (its selection group), a `heading` that names the panel, an optional `triggerButton` Button config for its tab (its `label` defaults to the heading), and an optional `camera` key of `modelViewer.cameraPresets`. A category's panel config goes in `toggleGroup`, `itemsGrid` or `textArea`, matching its `panel`. The rule: a category holds what Configurator reads or assembles (`name`, `panel`, `heading`, `camera`, `triggerButton`, `options`, `value`, `mode` / `min` / `max`, `fieldLabel`); everything passed to the child untouched goes in `toggleGroup`, `itemsGrid` or `textArea`. A configurator holds at most 12 categories.
+
+## Toggle and text panels
+
+The metal toggle recolours the band. Typing an engraving moves the camera to the `band` preset, because the text category sets `camera`.
+
+<Example name="toggle-text" source={toggleTextSource}>
+  <ToggleText />
+</Example>
+
+## Grid panels
+
+A `'single'` grid switches which stone is visible. A `'multiple'` grid with `max: 2` disables the remaining option once two are selected.
+
+<Example name="grid" source={gridSource}>
+  <Grid />
+</Example>
+
+## Defaults layering
+
+Each panel's config is merged in three layers: the configurator's internal defaults, then the block-level `defaultToggleGroupConfig`, `defaultItemsGridConfig` or `defaultTextAreaConfig`, then the category's own `toggleGroup`, `itemsGrid` or `textArea`. The block-level defaults take any child prop except per-instance keys (`id`, `name`, `anchorId`), the fields Configurator fills from the category (toggle: `group`, `label`, `labelledBy`, `options`; grid: `items`, `selection`; text: `group`, `label`, `hideLabel`, `value`) and, in `defaultTextAreaConfig`, `error`. For example, `intent` (see _One intent across panels_) or `maxLength` and `placeholder` in `defaultTextAreaConfig`. A field set on a `triggerButton` applies in every state, so style the active tab through `tabs.activeItemConfig`. Triggers merge through Tabs: `tabs.defaultItemConfig` under every trigger, `tabs.activeItemConfig` over the active one, and each category's `triggerButton` last. Here `defaultToggleGroupConfig` asks for radio rows, the style category overrides it with outline cells, and `tabs.defaultItemConfig` makes every tab small and ghost; the active tab keeps the outlined style from the internal `tabs.activeItemConfig`.
+
+<Example name="layering" source={layeringSource}>
+  <Layering />
+</Example>
+
+## One intent across panels
+
+`intent` colours the selected state and focus ring of every panel kind. Setting it in `defaultToggleGroupConfig`, `defaultItemsGridConfig` and `defaultTextAreaConfig` gives toggle, grid and text panels the same colour. Tabs aren't panels: colour the active tab with `tabs.activeItemConfig`.
+
+<Example name="intent" source={intentSource}>
+  <Intent />
+</Example>
+
+## Neutral intent
+
+`neutral` selects with the emphasis colour in every panel kind.
+
+<Example name="intent-neutral" source={intentNeutralSource}>
+  <IntentNeutral />
+</Example>
+
+## Summary
+
+The line under the viewer is derived from the current selections. By default it lists the label of every selected option: toggle options by `label`, grid options by `title` (falling back to `code`). Categories appear in tab order and options in declaration order, whatever order they were picked in. Text is shown in quotes, empty categories are skipped, and the parts are joined with `·`. `summary.categories` and `summary.separator` change which categories are listed, their order and the joiner (see _Title, summary and actions_). The summary is an `aria-live="polite"` region, so screen readers announce changes.
+
+## URL state
+
+Set `urlState` to keep the selections in the page URL as a combination code, so a configuration can be shared or bookmarked and the back button steps through changes. The code lists the categories in tab order, with an optional leading `product` segment; the query parameter defaults to `code` and can be changed with `param`. Only the first configurator with `urlState` on a page binds to the URL, so this page leaves it off.
+
+**Append categories only.** Once codes are shared, never remove or reorder categories, or old codes will decode into the wrong groups. Option codes and `product` must match `[A-Za-z0-9]+`.
+
+```astro
+<Configurator categories={categories} modelViewer={modelViewer} urlState={{ product: 'RING01' }} />
+<!-- ?code=RING01-bold-large-rose-vvs1-giftbox-Mia -->
+```
+
+## Title, summary and actions
+
+`headline.title` names the product under the viewer, and `actions` renders Buttons under the summary line. `summary.categories` picks which categories the summary lists and in which order, `summary.separator` joins them, and `summaryClass` styles the line. URL state and the viewer still use every category. Here the summary lists only the stone, so the metal is left out of it.
+
+<Example name="framed" source={framedSource}>
+  <Framed />
+</Example>
+
+## Headline and shared action config
+
+`headline` renders a full Headline under the viewer. `defaultActionConfig` is merged under every action, and `actionsClass` styles the wrapper around them. Style the left column through `twoColumnContainer.leftColumn.class` and the panels through `tabs.panelClass`.
+
+<Example name="headline-actions" source={headlineActionsSource}>
+  <HeadlineActions />
+</Example>
+
+## Heading and field label
+
+`headingClass` adds classes to every panel heading, after its defaults. A text category with `fieldLabel` shows that label above its field, while the heading stays the panel's name. A category without `triggerButton` uses its heading as the tab label, as the metal tab here does; set `triggerButton: { label: 'Metal' }` for a short tab.
+
+<Example name="headings" source={headingsSource}>
+  <Headings />
+</Example>
+
+## Extra field description
+
+A native `aria-describedby` in `textArea` is added after the field's own help and counter.
+
+<Example name="described" source={describedSource}>
+  <Described />
+</Example>
+
+## Panel layout
+
+`tabs.panelClass` lays out each panel's heading and control, which are its direct children.
+
+<Example name="panel-class" source={panelClassSource}>
+  <PanelClass />
+</Example>
+
+<ApiReferenceTable component="Configurator" category="composite" />
