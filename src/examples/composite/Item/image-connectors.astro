@@ -1,0 +1,40 @@
+---
+import Item from '~/components/blocks/composite/Item.astro';
+import type { ImageProps } from '~/types/image.types';
+
+const image: ImageProps = {
+  src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4',
+  alt: 'Mountain landscape',
+  width: 96,
+  height: 96,
+};
+---
+
+<div class="space-y-8">
+  <div>
+    <p class="text-sm font-semibold">Vertical connector (horizontal layout)</p>
+    <div class="max-w-md">
+      <Item
+        image={image}
+        title="Step 1"
+        content="An image under showConnector."
+        orientation="horizontal"
+        showConnector
+      />
+      <Item
+        image={image}
+        title="Step 2"
+        content="The last step has no connector."
+        orientation="horizontal"
+      />
+    </div>
+  </div>
+  <div>
+    <p class="text-sm font-semibold">Horizontal connector (vertical layout)</p>
+    <div class="flex flex-row items-start">
+      <Item image={image} title="First" />
+      <Item image={image} title="Middle" showConnectorLeft showConnectorRight />
+      <Item image={image} title="Last" showConnectorLeft />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+---
+import ItemsContent from '~/components/blocks/composite/ItemsContent.astro';
+---
+
+<ItemsContent
+  headline={{
+    tagline: 'Features',
+    title: 'Main Features of this block',
+    subtitle: 'This block can be reused to display different sets of items with a headline.',
+  }}
+  itemsGrid={{
+    columns: 3,
+    defaultItemConfig: {
+      orientation: 'vertical',
+      background: { class: 'bg-elevated rounded-md shadow-xl p-3' },
+    },
+    items: [
+      {
+        icon: { name: 'flat-color-icons:checkmark' },
+        title: 'Modern and Professional Design',
+        content:
+          'This block features a clean and modern design that fits well with various website styles.',
+      },
+      {
+        icon: { name: 'flat-color-icons:iphone' },
+        title: 'Responsive and Mobile-Friendly',
+        content:
+          'This block is designed to be fully responsive and works well on all devices, including mobile phones and tablets.',
+      },
+      {
+        icon: { name: 'flat-color-icons:settings' },
+        title: 'Customizability',
+        content: 'This block can be easily customized to fit your specific needs and branding.',
+      },
+      {
+        icon: { name: 'flat-color-icons:light-at-the-end-of-tunnel' },
+        title: 'Fast and Lightweight',
+        content:
+          'This block is optimized for performance, ensuring fast load times and a smooth user experience.',
+      },
+      {
+        icon: { name: 'flat-color-icons:flash-on' },
+        title: 'Easy Integration',
+        content:
+          'This block can be easily integrated into existing Astro projects with minimal effort.',
+      },
+      {
+        icon: { name: 'flat-color-icons:medium-priority' },
+        title: 'Accessible Design',
+        content:
+          'This block follows best practices for accessibility, ensuring that all users can access and interact with the content.',
+      },
+    ],
+  }}
+/>

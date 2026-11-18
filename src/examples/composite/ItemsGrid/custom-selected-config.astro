@@ -1,0 +1,27 @@
+---
+import ItemsGridBlock from '~/components/blocks/composite/ItemsGrid.astro';
+---
+
+<div class="space-y-4">
+  <p id="itemsgrid-custom-heading" class="font-semibold">
+    Wood
+  </p>
+  <ItemsGridBlock
+    columns={3}
+    selection={{
+      mode: 'single',
+      group: 'itemsgrid-doc-custom',
+      labelledBy: 'itemsgrid-custom-heading',
+    }}
+    defaultItemConfig={{ spacing: { padding: 'p-4' }, border: { radius: 'rounded-lg' } }}
+    selectedItemConfig={{
+      background: { class: 'bg-accent/10' },
+      border: { color: 'border-accent' },
+    }}
+    items={[
+      { code: 'oak', icon: { name: 'heroicons:swatch' }, title: 'Oak', selected: true },
+      { code: 'walnut', icon: { name: 'heroicons:swatch' }, title: 'Walnut' },
+      { code: 'ash', icon: { name: 'heroicons:swatch' }, title: 'Ash' },
+    ]}
+  />
+</div>

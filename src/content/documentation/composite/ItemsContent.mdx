@@ -1,0 +1,35 @@
+---
+title: ItemsContent
+description: Showcase of the ItemsContent composite block with various Item configurations.
+section: composite
+order: 16
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import Default from '~/examples/composite/ItemsContent/default.astro';
+import defaultSource from '~/examples/composite/ItemsContent/default.astro?raw';
+import ColumnsIconConfig from '~/examples/composite/ItemsContent/columns-icon-config.astro';
+import columnsIconConfigSource from '~/examples/composite/ItemsContent/columns-icon-config.astro?raw';
+import VerticalElevated from '~/examples/composite/ItemsContent/vertical-elevated.astro';
+import verticalElevatedSource from '~/examples/composite/ItemsContent/vertical-elevated.astro?raw';
+
+## Default ItemsContent configuration
+
+<Example name="default" source={defaultSource}>
+  <Default />
+</Example>
+
+## Overridden column count and default item icon config
+
+<Example name="columns-icon-config" source={columnsIconConfigSource}>
+  <ColumnsIconConfig />
+</Example>
+
+## Grid with vertical layout and elevated background
+
+<Example name="vertical-elevated" source={verticalElevatedSource}>
+  <VerticalElevated />
+</Example>
+
+<ApiReferenceTable component="ItemsContent" category="composite" />

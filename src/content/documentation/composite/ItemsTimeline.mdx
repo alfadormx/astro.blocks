@@ -1,0 +1,63 @@
+---
+title: ItemsTimeline
+description: Showcase of the ItemsTimeline composite block for sequential content presentation.
+section: composite
+order: 18
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import Vertical from '~/examples/composite/ItemsTimeline/vertical.astro';
+import verticalSource from '~/examples/composite/ItemsTimeline/vertical.astro?raw';
+import Tight from '~/examples/composite/ItemsTimeline/tight.astro';
+import tightSource from '~/examples/composite/ItemsTimeline/tight.astro?raw';
+import Dashed from '~/examples/composite/ItemsTimeline/dashed.astro';
+import dashedSource from '~/examples/composite/ItemsTimeline/dashed.astro?raw';
+import Actions from '~/examples/composite/ItemsTimeline/actions.astro';
+import actionsSource from '~/examples/composite/ItemsTimeline/actions.astro?raw';
+import Dotted from '~/examples/composite/ItemsTimeline/dotted.astro';
+import dottedSource from '~/examples/composite/ItemsTimeline/dotted.astro?raw';
+
+The ItemsTimeline component displays items in a vertical timeline format with connecting lines, perfect for steps, processes, roadmaps, and chronological content.
+
+## Vertical Timeline (Default)
+
+Classic vertical timeline with solid connectors and normal spacing.
+
+<Example name="vertical" source={verticalSource}>
+  <Vertical />
+</Example>
+
+## Vertical Timeline - Tight Spacing
+
+Compact timeline with reduced spacing between items.
+
+<Example name="tight" source={tightSource}>
+  <Tight />
+</Example>
+
+## Vertical Timeline - Dashed Connectors
+
+Timeline with dashed connector lines for a different visual style.
+
+<Example name="dashed" source={dashedSource}>
+  <Dashed />
+</Example>
+
+## Vertical Timeline with Actions
+
+Timeline items can include action buttons.
+
+<Example name="actions" source={actionsSource}>
+  <Actions />
+</Example>
+
+## Dotted Connectors
+
+Timeline with dotted connector style for subtle visual effect.
+
+<Example name="dotted" source={dottedSource}>
+  <Dotted />
+</Example>
+
+<ApiReferenceTable component="ItemsTimeline" category="composite" />

@@ -1,0 +1,50 @@
+---
+import ItemsGridBlock from '~/components/blocks/composite/ItemsGrid.astro';
+---
+
+<ItemsGridBlock
+  columns={3}
+  items={[
+    {
+      icon: { name: 'heroicons:sun' },
+      title: 'No customization',
+      content: 'Icon configuration is default.',
+    },
+    {
+      icon: {
+        name: 'heroicons:sparkles',
+        class: 'bg-accent text-background p-2 rounded-full',
+      },
+      title: 'Icon customization',
+      content: 'Icon as been given a background, padding and rounded corners.',
+    },
+    {
+      icon: { name: 'heroicons:bolt', class: 'text-success' },
+      title: 'Vertical Layout with action',
+      content: 'You shall see a button below.',
+      actions: [{ label: 'Learn More', intent: 'success' }],
+    },
+    {
+      icon: { name: 'heroicons:sun' },
+      title: 'No customization',
+      content: 'Icon configuration is default.',
+      orientation: 'horizontal',
+    },
+    {
+      icon: {
+        name: 'heroicons:sparkles',
+        class: 'bg-accent text-background p-2 rounded-full',
+      },
+      title: 'Icon customization',
+      content: 'Icon as been given a background, padding and rounded corners.',
+      orientation: 'horizontal',
+    },
+    {
+      icon: { name: 'heroicons:bolt', class: 'text-success' },
+      title: 'Horizontal Layout with action',
+      content: 'You shall see a button below.',
+      actions: [{ label: 'Learn More', intent: 'success' }],
+      orientation: 'horizontal',
+    },
+  ]}
+/>
