@@ -5,6 +5,10 @@ export type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
 export type ModalPosition = 'center' | 'top' | 'bottom' | 'left' | 'right';
 
 export interface ModalProps extends Omit<HTMLAttributes<'div'>, 'class'> {
+  /**
+   * Id that `data-modal-trigger` and `data-modal-close` buttons target.
+   * @default generated
+   */
   id?: string;
   open?: boolean;
   size?: ModalSize;

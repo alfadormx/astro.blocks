@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildBlockRegistry, getPropRows, stripWrapper } from '~/utils/apiReference';
+import { buildBlockRegistry, getPropRows, parseDefaults, stripWrapper } from '~/utils/apiReference';
 
 describe('stripWrapper', () => {
   it.each([
@@ -93,5 +93,40 @@ describe('buildBlockRegistry', () => {
     for (const section of ['base', 'primitives', 'layout', 'composite']) {
       expect(hrefs.some((h) => h.startsWith(`/documentation/${section}/`))).toBe(true);
     }
+  });
+});
+
+describe('API reference defaults', () => {
+  it('shows the @default tag of the Modal id instead of its initializer', () => {
+    const row = getPropRows('Modal', 'layout').rows.find((r) => r.name === 'id');
+
+    expect(row?.default).toBe('generated');
+  });
+
+  it('keeps @default tag text out of the Modal id description', () => {
+    const row = getPropRows('Modal', 'layout').rows.find((r) => r.name === 'id');
+
+    expect(row?.description).not.toBe('');
+    expect(row?.description).not.toContain('@default');
+    expect(row?.description).not.toContain('generated\n');
+  });
+
+  it.each([
+    ['template with substitutions', 'id = `x-${n}`', 'computed'],
+    ['call expression', 'id = makeId()', 'computed'],
+    ['string literal', "size = 'md'", "'md'"],
+    ['number', 'delay = 300', '300'],
+    ['negative number', 'offset = -1', '-1'],
+    ['boolean', 'open = false', 'false'],
+    ['null', 'value = null', 'null'],
+    ['plain template', 'tag = `h2`', '`h2`'],
+    ['identifier', 'items = EMPTY', 'EMPTY'],
+    ['property access', 'currentPath = Astro.url.pathname', 'Astro.url.pathname'],
+    ['object literal', 'layout = { type: "grid" }', '{ type: "grid" }'],
+    ['array literal', 'items = []', '[]'],
+  ])('renders a %s default as %s', (_kind, binding, expected) => {
+    const defaults = parseDefaults(`---\nconst { ${binding} } = Astro.props;\n---`);
+
+    expect(Object.values(defaults)[0]).toBe(expected);
   });
 });
