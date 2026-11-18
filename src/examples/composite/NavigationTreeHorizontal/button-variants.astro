@@ -1,0 +1,47 @@
+---
+import NavigationTreeHorizontalBlock from '~/components/blocks/composite/NavigationTreeHorizontal.astro';
+import type { NavigationTreeItem } from '~/types/navigationtree.types';
+
+const items: NavigationTreeItem[] = [
+  { label: 'Home', href: '/' },
+  {
+    label: 'Products',
+    children: [
+      { label: 'Product 1', href: '/products/1' },
+      { label: 'Product 2', href: '/products/2' },
+      { label: 'Product 3', href: '/products/3' },
+    ],
+  },
+  {
+    label: 'Services',
+    children: [
+      { label: 'Consulting', href: '/services/consulting' },
+      { label: 'Development', href: '/services/development' },
+      { label: 'Design', href: '/services/design' },
+    ],
+  },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+];
+---
+
+<div class="space-y-6">
+  <div class="space-y-2">
+    <p class="text-sm font-semibold">Ghost (default)</p>
+    <NavigationTreeHorizontalBlock items={items} defaultItemConfig={{ variant: 'ghost' }} />
+  </div>
+  <div class="space-y-2">
+    <p class="text-sm font-semibold">Solid</p>
+    <NavigationTreeHorizontalBlock
+      items={items}
+      defaultItemConfig={{ variant: 'solid', intent: 'primary' }}
+    />
+  </div>
+  <div class="space-y-2">
+    <p class="text-sm font-semibold">Outline</p>
+    <NavigationTreeHorizontalBlock
+      items={items}
+      defaultItemConfig={{ variant: 'outline', intent: 'accent' }}
+    />
+  </div>
+</div>

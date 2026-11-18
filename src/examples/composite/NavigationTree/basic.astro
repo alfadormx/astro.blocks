@@ -1,0 +1,23 @@
+---
+import NavigationTreeBlock from '~/components/blocks/composite/NavigationTree.astro';
+import type { NavigationTreeItem } from '~/types/navigationtree.types';
+
+const items: NavigationTreeItem[] = [
+  {
+    label: 'Getting Started',
+    href: '/documentation',
+  },
+  {
+    label: 'Components',
+    href: '/documentation/components',
+  },
+  {
+    label: 'About',
+    href: '/about',
+  },
+];
+---
+
+<div class="max-w-xs">
+  <NavigationTreeBlock items={items} />
+</div>

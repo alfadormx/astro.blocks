@@ -1,0 +1,19 @@
+---
+import FooterBlock from '~/components/blocks/composite/Footer.astro';
+---
+
+<FooterBlock
+  logo={{
+    image: {
+      src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+      alt: 'Logo',
+      width: 48,
+      height: 48,
+    },
+  }}
+  socialButtons={[
+    { icon: { name: 'heroicons:globe-alt' }, href: '#', variant: 'ghost', intent: 'neutral' },
+    { icon: { name: 'heroicons:envelope' }, href: '#', variant: 'ghost', intent: 'neutral' },
+  ]}
+  footnote="© 2026 My Brand. All rights reserved."
+/>

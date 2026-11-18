@@ -1,0 +1,48 @@
+---
+import NavigationTreeBlock from '~/components/blocks/composite/NavigationTree.astro';
+import type { NavigationTreeItem } from '~/types/navigationtree.types';
+
+const items: NavigationTreeItem[] = [
+  {
+    label: 'Getting Started',
+    href: '/documentation',
+    children: [
+      { label: 'Installation', href: '/documentation/installation' },
+      { label: 'Configuration', href: '/documentation/configuration' },
+      { label: 'Quick Start', href: '/documentation/quick-start' },
+    ],
+  },
+  {
+    label: 'Components',
+    href: '/documentation/components',
+    children: [
+      { label: 'Buttons', href: '/documentation/components/buttons' },
+      { label: 'Forms', href: '/documentation/components/forms' },
+      { label: 'Cards', href: '/documentation/components/cards' },
+    ],
+  },
+  {
+    label: 'Composite',
+    href: '/documentation/composite',
+    children: [{ label: 'NavigationTree', href: '/documentation/composite/NavigationTree' }],
+  },
+  {
+    label: 'Layout',
+    href: '/documentation/layout',
+    children: [
+      { label: 'Grid System', href: '/documentation/layout/grid' },
+      { label: 'Containers', href: '/documentation/layout/containers' },
+    ],
+  },
+];
+---
+
+<div class="max-w-xs">
+  <NavigationTreeBlock
+    items={items}
+    currentPath="/documentation/composite/NavigationTree"
+    expansionStrategy="always"
+    defaultItemConfig={{ class: 'tracking-wide', icon: { name: 'mdi:circle-small' } }}
+    activeItemConfig={{ class: 'underline' }}
+  />
+</div>

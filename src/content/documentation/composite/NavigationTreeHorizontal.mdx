@@ -1,0 +1,127 @@
+---
+title: NavigationTreeHorizontal
+description: Horizontal navigation menu with dropdown support.
+section: composite
+order: 22
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import Basic from '~/examples/composite/NavigationTreeHorizontal/basic.astro';
+import basicSource from '~/examples/composite/NavigationTreeHorizontal/basic.astro?raw';
+import Hover from '~/examples/composite/NavigationTreeHorizontal/hover.astro';
+import hoverSource from '~/examples/composite/NavigationTreeHorizontal/hover.astro?raw';
+import Click from '~/examples/composite/NavigationTreeHorizontal/click.astro';
+import clickSource from '~/examples/composite/NavigationTreeHorizontal/click.astro?raw';
+import IconLeft from '~/examples/composite/NavigationTreeHorizontal/icon-left.astro';
+import iconLeftSource from '~/examples/composite/NavigationTreeHorizontal/icon-left.astro?raw';
+import DropdownClass from '~/examples/composite/NavigationTreeHorizontal/dropdown-class.astro';
+import dropdownClassSource from '~/examples/composite/NavigationTreeHorizontal/dropdown-class.astro?raw';
+import DefaultIcon from '~/examples/composite/NavigationTreeHorizontal/default-icon.astro';
+import defaultIconSource from '~/examples/composite/NavigationTreeHorizontal/default-icon.astro?raw';
+import IconName from '~/examples/composite/NavigationTreeHorizontal/icon-name.astro';
+import iconNameSource from '~/examples/composite/NavigationTreeHorizontal/icon-name.astro?raw';
+import CurrentPath from '~/examples/composite/NavigationTreeHorizontal/current-path.astro';
+import currentPathSource from '~/examples/composite/NavigationTreeHorizontal/current-path.astro?raw';
+import DropdownPosition from '~/examples/composite/NavigationTreeHorizontal/dropdown-position.astro';
+import dropdownPositionSource from '~/examples/composite/NavigationTreeHorizontal/dropdown-position.astro?raw';
+import CustomStyling from '~/examples/composite/NavigationTreeHorizontal/custom-styling.astro';
+import customStylingSource from '~/examples/composite/NavigationTreeHorizontal/custom-styling.astro?raw';
+import ButtonVariants from '~/examples/composite/NavigationTreeHorizontal/button-variants.astro';
+import buttonVariantsSource from '~/examples/composite/NavigationTreeHorizontal/button-variants.astro?raw';
+
+Horizontal navigation component with dropdown menus for items with children. Supports hover and click trigger modes.
+
+## Basic horizontal menu
+
+Simple horizontal navigation without dropdowns.
+
+<Example name="basic" source={basicSource}>
+  <Basic />
+</Example>
+
+## Hover dropdowns (default)
+
+Dropdown menus appear on hover.
+
+<Example name="hover" source={hoverSource}>
+  <Hover />
+</Example>
+
+## Click dropdowns
+
+Dropdown menus appear on click. Click outside or press Escape to close.
+
+<Example name="click" source={clickSource}>
+  <Click />
+</Example>
+
+## Icon position
+
+Parent chevrons sit after the label by default; set `defaultItemConfig.iconPosition` to move them.
+
+<Example name="icon-left" source={iconLeftSource}>
+  <IconLeft />
+</Example>
+
+## Dropdown class
+
+`dropdownClass` styles the panel; a display utility in it doesn't open the dropdown.
+
+<Example name="dropdown-class" source={dropdownClassSource}>
+  <DropdownClass />
+</Example>
+
+## Default icon and chevron
+
+Parents keep their chevron over `defaultItemConfig.icon`; set `iconName` to change it.
+
+<Example name="default-icon" source={defaultIconSource}>
+  <DefaultIcon />
+</Example>
+
+<Example name="icon-name" source={iconNameSource}>
+  <IconName />
+</Example>
+
+## Current page
+
+The item whose `href` matches `currentPath` (default: the page URL) gets `aria-current="page"` and `activeItemConfig`; the rest get `inactiveItemConfig`. Matching is exact, so a hash link such as `/#pricing` is never current. A parent is not marked for a current child, and a click-mode parent, being a button, keeps the look without `aria-current`.
+
+<Example name="current-path" source={currentPathSource}>
+  <CurrentPath />
+</Example>
+
+## Dropdown position
+
+Control dropdown alignment: left (default), center, or right.
+
+<Example name="dropdown-position" source={dropdownPositionSource}>
+  <DropdownPosition />
+</Example>
+
+## Custom styling
+
+Customize appearance with default item configuration and custom classes.
+
+<Example name="custom-styling" source={customStylingSource}>
+  <CustomStyling />
+</Example>
+
+## Button variants
+
+Use different button variants for the navigation items.
+
+<Example name="button-variants" source={buttonVariantsSource}>
+  <ButtonVariants />
+</Example>
+
+## Usage notes
+
+**Structure.** Each item in the `items` array follows the ButtonProps interface. Items with a `children` array render as dropdown menus.
+
+**Trigger modes.** Hover: dropdowns appear on mouse hover (best for desktop). Click: dropdowns appear on click and close when clicking outside or pressing Escape (better for touch devices).
+
+**Depth limitation.** This component is designed for 1–2 levels (parent → children). For deeply nested navigation, use the vertical NavigationTree component instead.
+
+<ApiReferenceTable component="NavigationTreeHorizontal" category="composite" />

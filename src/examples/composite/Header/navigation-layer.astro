@@ -1,0 +1,17 @@
+---
+import HeaderBlock from '~/components/blocks/composite/Header.astro';
+import type { NavigationTreeItem } from '~/types/navigationtree.types';
+
+const navItems: NavigationTreeItem[] = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+];
+---
+
+<HeaderBlock
+  leftNavigationTreeHorizontal={{ items: navItems }}
+  rightNavigationTreeHorizontal={{ items: navItems }}
+  defaultNavigationTreeHorizontalConfig={{
+    defaultItemConfig: { intent: 'primary', variant: 'ghost' },
+  }}
+/>
