@@ -1,0 +1,106 @@
+---
+title: Collections and copy
+description: Write posts, case studies, events and docs in Markdown or MDX, and page copy in YAML, in every language.
+section: guides
+order: 2
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import CodeBlock from '~/components/blocks/primitives/CodeBlock.astro';
+import Featured from '~/examples/guides/Collections/featured.astro';
+import featuredSource from '~/examples/guides/Collections/featured.astro?raw';
+import {
+  configExample,
+  stubExample,
+  folderExample,
+  frontMatterExample,
+  listPage,
+  entryPage,
+  copyFolder,
+  copyPage,
+  nativeExample,
+} from '~/examples/guides/Collections/snippets';
+
+## Declaring a collection
+
+Add a `collections` section to `src/config.yaml`. Each collection names a **preset**, which fixes its fields and the blocks that show it. Your editor autocompletes the keys.
+
+<CodeBlock code={configExample} lang="yaml" title="src/config.yaml" />
+
+| Key        | Default                                           | Meaning                                                 |
+| ---------- | ------------------------------------------------- | ------------------------------------------------------- |
+| `preset`   | required                                          | `post`, `caseStudy`, `event` or `doc`                   |
+| `route`    | `/<name>`                                         | URL base the cards link to, without the language prefix |
+| `path`     | `src/content/<name>`                              | Content folder                                          |
+| `sort`     | `date-desc`; events `start-asc`; docs `order-asc` | Also `date-asc`, `title-asc`, `order-asc`               |
+| `pageSize` | none                                              | Entries per list page; unset means one page             |
+| `timezone` | `UTC`                                             | Reserved key: the zone event times show in              |
+
+Every preset has `title`, `description` (the card excerpt and meta description), `cover`, `ogImage`, `tags`, `featured`, `draft` and `slug`. On top of those:
+
+- `post`: `date`, `updated`, `author`.
+- `caseStudy`: `date`, `client`, `results` (`label`, `value`), `location`.
+- `event`: `start`, `end`, `timezone`, `location`, `registrationUrl`.
+- `doc`: `section`, `order`.
+
+A `location` is a name (`Online`) or an object with `name`, `address`, `lat`, `lon` and `zoom`. With coordinates, the entry page shows a map. The site's `src/content.config.ts` is one line, and `getCollection('posts')` is typed from the preset:
+
+<CodeBlock code={stubExample} lang="ts" title="src/content.config.ts" />
+
+## Writing content
+
+Entries are `.md` or `.mdx` files. Put each language in its own folder. Files with the same name are translations of one entry. An entry missing from a language is left out of that language's list and gets no URL there. A collection with no language folders is in the default language only, and its subfolders become part of each key (`guides/install`). Mixing language folders with other files or folders stops the build.
+
+<CodeBlock code={folderExample} lang="plaintext" />
+
+An `.mdx` entry can import blocks and render them inline, and import any file as text with `?raw`.
+
+`slug` sets the URL segment in that language; it defaults to the file name. The slug `page` is reserved for pagination. Drafts show in development and are left out of `pnpm build`. Reading time is computed from the text.
+
+<CodeBlock code={frontMatterExample} lang="yaml" title="src/content/posts/es/hello-world.md" />
+
+## The two pages
+
+The pages stay yours: use your own layout, header and footer. The helpers handle languages, drafts, sorting, pagination (`/blog`, `/blog/page/2`) and the language toggle, which links each translation to its own slug and a missing one to that language's list. They also emit `hreflang` links for the languages that have the page.
+
+<CodeBlock code={listPage} lang="astro" title="src/pages/[...lang]/blog/[...page].astro" />
+
+<CodeBlock code={entryPage} lang="astro" title="src/pages/[...lang]/blog/[slug].astro" />
+
+Use `CaseStudyLayout` or `EventLayout` for the other presets. To link to a list from anywhere, `collectionUrl('posts', langCode)` returns its URL in that language. See the [blog](/demos/saas/blog), [case study](/demos/portfolio/work) and [event](/demos/local/events) demos. After a build, a warning names any collection whose `route` has no entry page.
+
+A `doc` collection has no list page and no card. This site's `documentation` collection is single-language, and its keys are `<section>/<Block>` (`primitives/Button`), so its entry page is `src/pages/documentation/[...slug].astro`. That route has no `lang` param, so its `getStaticPaths` keeps only `slug` from `collectionEntries('documentation')`. `collectionIndex('documentation', langCode)` returns the entries in sort order, each with its URL, and feeds the docs sidebar and previous/next links. An entry's `section` must match its folder, and a `slug` is rejected: a docs URL is its file path. Guides live in `guides/` like any other section; the old `/documentation/Composing` and `/documentation/Collections` URLs redirect there.
+
+## Featured entries
+
+`featured: true` doesn't change the list order. Use `getFeatured` for a "Featured" section anywhere:
+
+<Example name="featured" source={featuredSource}>
+  <Featured />
+</Example>
+
+## Localising a static page
+
+Write the page once under `src/pages/[...lang]/`, and its copy in YAML per language. The default-language file defines the keys, and `copy` is typed from it, so a typo fails `astro check`. Objects merge key by key; arrays replace as a whole, so a translated list is never half English.
+
+<CodeBlock code={copyFolder} lang="plaintext" />
+
+<CodeBlock code={copyPage} lang="astro" title="src/pages/[...lang]/index.astro" />
+
+## Markdown files in copy
+
+A YAML value of the form `./name.md` is replaced with that file, read relative to the YAML. Use it for long sections. It renders as Markdown only in a RichText field; in a plain field such as a title, the raw text shows.
+
+## RichText fields
+
+Item `content`, Accordion item `content`, Footer `disclaimer` and `footnote`, and Container item `content` take Markdown. One line renders inline; paragraphs separated by a blank line, lists and headings render as blocks. HTML still passes through. Titles, labels and `alt` stay plain text.
+
+## Past events
+
+Events are sorted upcoming first, then past, with a "Past" badge. That is decided when the site builds, so schedule a daily rebuild (a cron job in your host or CI) to move events into the past on time.
+
+## Power users
+
+Replace the stub with your own Astro config and spread the library's collections into it, to add collections of your own:
+
+<CodeBlock code={nativeExample} lang="ts" title="src/content.config.ts" />

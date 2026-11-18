@@ -28,43 +28,6 @@ export function orderLinks(links: DocLink[], sections: readonly Section[]): DocL
     );
 }
 
-/**
- * Static pages from the hand-kept tree that aren't collection entries yet.
- * A group's label names its section; top-level pages other than Overview are guides.
- * `order` is the 1-based position in the group, so migrated entries keep their place.
- */
-export function staticLinks(
-  nav: NavigationTreeItem[],
-  entryHrefs: Set<string>,
-  sections: readonly Section[]
-): DocLink[] {
-  const toLinks = (items: NavigationTreeItem[], section: SectionKey): DocLink[] =>
-    items.flatMap((item, i) => {
-      if (!item.href) return [];
-      const href = trimSlash(item.href);
-      if (entryHrefs.has(href)) return [];
-      return [
-        {
-          key: href.slice(DOCS_HOME.length + 1),
-          href,
-          title: item.label ?? '',
-          section,
-          order: i + 1,
-        },
-      ];
-    });
-  const guides = nav.filter((i) => !i.children && i.href && trimSlash(i.href) !== DOCS_HOME);
-  const groups = nav.filter((i) => i.children);
-  return [
-    ...toLinks(guides, 'guides'),
-    ...groups.flatMap((group) => {
-      const section = sections.find((s) => s.label === group.label);
-      if (!section) throw new Error(`Docs nav group "${group.label}" matches no section`);
-      return toLinks(group.children ?? [], section.key);
-    }),
-  ];
-}
-
 /** The entry's section; throws, naming the entry, on an unknown section, a mismatched folder or a `slug`. */
 export function assertEntry(
   key: string,

@@ -1,8 +1,6 @@
 import ts from 'typescript';
 import fs from 'node:fs';
 import path from 'node:path';
-import { documentationNavigation } from '~/data/documentationNavigation';
-import type { NavigationTreeItem } from '~/types/navigationtree.types';
 
 const SRC_ROOT = path.join(process.cwd(), 'src');
 
@@ -14,23 +12,20 @@ export interface PropRow {
   link?: { label: string; href: string };
 }
 
-function flattenNav(
-  items: NavigationTreeItem[],
-  acc: Record<string, { label: string; href: string }> = {}
-): Record<string, { label: string; href: string }> {
-  for (const item of items) {
-    if (item.href && item.label) {
-      acc[`${item.label}Props`] = { label: item.label, href: item.href };
-    }
-    if (item.children) flattenNav(item.children, acc);
-  }
-  return acc;
-}
+const DOCS_ROOT = path.join(SRC_ROOT, 'content', 'documentation');
 
-// Flattens ALL categories (base/composite/layout/primitives) — a link target
-// can be any category (e.g. Header.container -> layout/Container).
+// Every docs entry is a link target, whatever its section (Header.container -> layout/Container).
 export function buildBlockRegistry(): Record<string, { label: string; href: string }> {
-  return flattenNav(documentationNavigation);
+  const registry: Record<string, { label: string; href: string }> = {};
+  for (const section of fs.readdirSync(DOCS_ROOT, { withFileTypes: true })) {
+    if (!section.isDirectory()) continue;
+    for (const file of fs.readdirSync(path.join(DOCS_ROOT, section.name))) {
+      const name = file.replace(/\.mdx?$/, '');
+      if (name === file) continue;
+      registry[`${name}Props`] = { label: name, href: `/documentation/${section.name}/${name}` };
+    }
+  }
+  return registry;
 }
 
 // Components whose Props interface lives in another component's types file.

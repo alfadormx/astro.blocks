@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getPropRows, stripWrapper } from '~/utils/apiReference';
+import { buildBlockRegistry, getPropRows, stripWrapper } from '~/utils/apiReference';
 
 describe('stripWrapper', () => {
   it.each([
@@ -77,5 +77,21 @@ describe('Omit of shared field props', () => {
     const row = getPropRows('CheckboxGroup', 'primitives').rows.find((r) => r.name === 'options');
 
     expect(row?.link?.label).toBe('Checkbox');
+  });
+});
+
+describe('buildBlockRegistry', () => {
+  it('maps each docs entry file to a Props link at its file path', () => {
+    expect(buildBlockRegistry().ContainerProps).toEqual({
+      label: 'Container',
+      href: '/documentation/layout/Container',
+    });
+  });
+
+  it('covers every section folder', () => {
+    const hrefs = Object.values(buildBlockRegistry()).map((l) => l.href);
+    for (const section of ['base', 'primitives', 'layout', 'composite']) {
+      expect(hrefs.some((h) => h.startsWith(`/documentation/${section}/`))).toBe(true);
+    }
   });
 });

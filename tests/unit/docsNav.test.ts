@@ -5,11 +5,9 @@ import {
   fullTree,
   neighbours,
   orderLinks,
-  staticLinks,
   type DocLink,
 } from '../../src/pages/documentation/_nav';
 import { sections, type SectionKey } from '../../src/pages/documentation/_sections';
-import type { NavigationTreeItem } from '../../src/types/navigationtree.types';
 
 const link = (section: SectionKey, key: string, order: number): DocLink => ({
   key: `${section}/${key}`,
@@ -42,61 +40,6 @@ describe('orderLinks', () => {
   it('drops links in an unknown section', () => {
     const stray = { ...colors, section: 'blog' as SectionKey };
     expect(orderLinks([stray, button], sections)).toEqual([button]);
-  });
-});
-
-describe('staticLinks', () => {
-  const nav: NavigationTreeItem[] = [
-    { label: 'Overview', href: '/documentation' },
-    { label: 'Composing blocks', href: '/documentation/Composing' },
-    { label: 'Collections and copy', href: '/documentation/Collections' },
-    {
-      label: 'Primitives',
-      children: [
-        { label: 'Accordion', href: '/documentation/primitives/Accordion' },
-        { label: 'Background', href: '/documentation/primitives/Background' },
-        { label: 'Button', href: '/documentation/primitives/Button' },
-      ],
-    },
-  ];
-  const links = staticLinks(nav, new Set(['/documentation/primitives/Button']), sections);
-
-  it('maps top-level pages other than Overview to guides, in order', () => {
-    expect(links.filter((l) => l.section === 'guides')).toEqual([
-      {
-        key: 'Composing',
-        href: '/documentation/Composing',
-        title: 'Composing blocks',
-        section: 'guides',
-        order: 1,
-      },
-      {
-        key: 'Collections',
-        href: '/documentation/Collections',
-        title: 'Collections and copy',
-        section: 'guides',
-        order: 2,
-      },
-    ]);
-  });
-
-  it("gives a group child its group's section and its 1-based position", () => {
-    expect(links.find((l) => l.title === 'Background')).toMatchObject({
-      key: 'primitives/Background',
-      section: 'primitives',
-      order: 2,
-    });
-  });
-
-  it('skips Overview and pages that are already entries', () => {
-    expect(links.map((l) => l.href)).not.toContain('/documentation');
-    expect(links.map((l) => l.title)).not.toContain('Button');
-  });
-
-  it('throws on a group label that matches no section', () => {
-    expect(() => staticLinks([{ label: 'Extras', children: [] }], new Set(), sections)).toThrow(
-      'Docs nav group "Extras" matches no section'
-    );
   });
 });
 

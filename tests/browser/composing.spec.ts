@@ -1,6 +1,6 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 
-const PAGE_URL = '/documentation/Composing';
+const PAGE_URL = '/documentation/guides/Composing';
 
 const section = (page: Page, name: string) => page.locator(`[data-doc-section="${name}"]`);
 
