@@ -1,0 +1,21 @@
+---
+import CaseStudyLayout from '~/components/blocks/composite/CaseStudyLayout.astro';
+
+const location = {
+  name: 'Amsterdam',
+  address: 'Keizersgracht 1, 1015 CC Amsterdam',
+  lat: 52.3731,
+  lon: 4.8892,
+  zoom: 14,
+};
+---
+
+<CaseStudyLayout
+  headline={{ title: 'Brand refresh', htmlTag: 'h2' }}
+  client="Example Co."
+  date={new Date('2025-11-20T12:00:00Z')}
+  location={location}
+  map={false}
+>
+  <p>Semantic colour tokens replaced raw palette values across the site.</p>
+</CaseStudyLayout>

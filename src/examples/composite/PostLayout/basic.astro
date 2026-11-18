@@ -1,0 +1,31 @@
+---
+import PostLayout from '~/components/blocks/composite/PostLayout.astro';
+---
+
+<PostLayout
+  headline={{ title: 'Hello, world', htmlTag: 'h2' }}
+  date={new Date('2026-10-01T12:00:00Z')}
+  updated={new Date('2026-10-20T12:00:00Z')}
+  author="Astro Blocks"
+  readingTime={1}
+  tags={['announcement', 'collections']}
+  image={{
+    src: '~/assets/images/content/writing-notebook.jpg',
+    alt: 'A hand writing notes with a pen in a notebook on a wooden desk',
+  }}
+>
+  <p>Collections let you write content as Markdown files and list them with one block.</p>
+  <h2>What you get</h2>
+  <ul>
+    <li>
+      A typed schema per <strong>preset</strong>.
+    </li>
+    <li>A list page and an entry page, each about ten lines.</li>
+  </ul>
+  <blockquote>
+    <p>Write the content; the blocks handle the rest.</p>
+  </blockquote>
+  <p>
+    Inline <code>code</code> and <a href="/documentation">links</a> use the theme tokens.
+  </p>
+</PostLayout>

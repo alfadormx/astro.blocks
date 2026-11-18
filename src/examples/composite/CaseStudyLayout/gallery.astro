@@ -1,0 +1,25 @@
+---
+import CaseStudyLayout from '~/components/blocks/composite/CaseStudyLayout.astro';
+---
+
+<CaseStudyLayout
+  headline={{ title: 'Brand refresh', htmlTag: 'h2' }}
+  client="Example Co."
+  date={new Date('2025-11-20T12:00:00Z')}
+  gallery={[
+    {
+      src: '~/assets/images/demos/portfolio/brand-refresh-1.jpg',
+      alt: 'Wireframe sketches in a spiral notebook, next to a phone',
+    },
+    {
+      src: '~/assets/images/demos/portfolio/brand-refresh-2.jpg',
+      alt: 'Close-up of hand-drawn wireframes',
+    },
+    {
+      src: '~/assets/images/demos/portfolio/brand-refresh-3.jpg',
+      alt: 'A laptop screen showing a grid of images',
+    },
+  ]}
+>
+  <p>Semantic colour tokens replaced raw palette values across the site.</p>
+</CaseStudyLayout>

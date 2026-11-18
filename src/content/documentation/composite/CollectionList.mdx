@@ -1,0 +1,61 @@
+---
+title: CollectionList
+description: Collection entries as a grid or a list, each rendered by its preset’s card.
+section: composite
+order: 4
+---
+
+import Example from '~/components/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/components/meta/ApiReferenceTable.astro';
+import Grid from '~/examples/composite/CollectionList/grid.astro';
+import gridSource from '~/examples/composite/CollectionList/grid.astro?raw';
+import List from '~/examples/composite/CollectionList/list.astro';
+import listSource from '~/examples/composite/CollectionList/list.astro?raw';
+import SharedConfig from '~/examples/composite/CollectionList/shared-config.astro';
+import sharedConfigSource from '~/examples/composite/CollectionList/shared-config.astro?raw';
+import Pager from '~/examples/composite/CollectionList/pager.astro';
+import pagerSource from '~/examples/composite/CollectionList/pager.astro?raw';
+import Mixed from '~/examples/composite/CollectionList/mixed.astro';
+import mixedSource from '~/examples/composite/CollectionList/mixed.astro?raw';
+
+## Grid
+
+On a list page, `renderList` returns `entries` and `page`. Each entry carries its `preset`, which picks the card. See the [blog demo](/demos/saas/blog).
+
+<Example name="grid" source={gridSource}>
+  <Grid />
+</Example>
+
+## List
+
+`orientation: 'vertical'` stacks the cards in one column.
+
+<Example name="list" source={listSource}>
+  <List />
+</Example>
+
+## Shared card config
+
+`defaultPostCardConfig` is merged under every post card; an entry's own values win.
+
+<Example name="shared-config" source={sharedConfigSource}>
+  <SharedConfig />
+</Example>
+
+## Pager
+
+The pager renders when `page.lastPage` is above 1. Page 1 lives at the route, later pages at `<route>/page/<n>`.
+
+<Example name="pager" source={pagerSource}>
+  <Pager />
+</Example>
+
+## Mixed presets
+
+Each entry picks its own card, so one list can mix presets, for example on a home page that shows the latest post, case study and event.
+
+<Example name="mixed" source={mixedSource}>
+  <Mixed />
+</Example>
+
+<ApiReferenceTable component="CollectionList" category="composite" />
