@@ -1,11 +1,13 @@
 ---
 import SidebarRightContainer from '~/components/blocks/layout/SidebarRightContainer.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
 ---
 
 <SidebarRightContainer
   htmlTag="section"
   containerWidthType="full"
-  background={{ class: 'bg-gradient-to-r from-cyan to-blue' }}
+  background={{ class: 'bg-linear-to-r from-info to-primary' }}
   content={{
     widthType: 'boxed',
     spacing: { padding: 'py-12' },
@@ -14,8 +16,8 @@ import SidebarRightContainer from '~/components/blocks/layout/SidebarRightContai
   border={{ width: 'border', color: 'border-border' }}
   spacing={{ margin: 'mb-8' }}
 >
-  <div slot="main" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
-    <h2>Premium Features</h2>
+  <div slot="main" class="bg-surface/90 backdrop-blur p-6 rounded shadow-lg">
+    <Headline title="Premium Features" htmlTag="h4" class="my-0" titleClass="mb-4 text-2xl" />
     <p>
       Unlock advanced capabilities designed for power users and teams. Get access to exclusive
       features that streamline your workflow.
@@ -26,27 +28,27 @@ import SidebarRightContainer from '~/components/blocks/layout/SidebarRightContai
       <li>✓ Custom integrations</li>
       <li>✓ Team collaboration tools</li>
     </ul>
-    <button class="bg-cyan text-white px-6 py-2 rounded hover:bg-cyan">Upgrade Now</button>
+    <Button label="Upgrade Now" intent="secondary" />
   </div>
-  <div slot="sidebar" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
-    <h3 class="text-lg font-bold mb-4">Pricing</h3>
+  <div slot="sidebar" class="bg-surface/90 backdrop-blur p-6 rounded shadow-lg">
+    <Headline title="Pricing" htmlTag="h4" class="my-0" titleClass="mb-4 text-lg" />
     <div class="text-center mb-4">
-      <div class="text-3xl font-bold text-cyan">$49</div>
-      <div class="text-sm text-gray">per month</div>
+      <div class="text-3xl font-bold text-info">$49</div>
+      <div class="text-sm text-muted">per month</div>
     </div>
     <ul class="space-y-2 text-sm">
       <li>
-        <a href="#" class="text-gray hover:underline">
+        <a href="#" class="text-muted hover:underline">
           Compare Plans
         </a>
       </li>
       <li>
-        <a href="#" class="text-gray hover:underline">
+        <a href="#" class="text-muted hover:underline">
           FAQ
         </a>
       </li>
       <li>
-        <a href="#" class="text-gray hover:underline">
+        <a href="#" class="text-muted hover:underline">
           Contact Sales
         </a>
       </li>

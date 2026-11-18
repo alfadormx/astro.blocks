@@ -4,7 +4,7 @@ import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.as
 
 <TwoColumnContainer
   containerWidthType="full"
-  background={{ class: 'bg-gradient-to-r from-purple to-pink' }}
+  background={{ class: 'bg-linear-to-r from-tertiary to-accent' }}
   content={{
     widthType: 'boxed',
     spacing: { padding: 'py-8' },
@@ -14,12 +14,12 @@ import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.as
   gap="loose"
   spacing={{ margin: 'mb-8' }}
 >
-  <div slot="left" class="bg-white p-6 rounded shadow-lg">
-    <h3>Feature 1</h3>
+  <div slot="left" class="bg-surface p-6 rounded shadow-lg">
+    <p class="font-semibold">Feature 1</p>
     <p>Larger gap between columns (loose).</p>
   </div>
-  <div slot="right" class="bg-white p-6 rounded shadow-lg">
-    <h3>Feature 2</h3>
+  <div slot="right" class="bg-surface p-6 rounded shadow-lg">
+    <p class="font-semibold">Feature 2</p>
     <p>With gradient background.</p>
   </div>
 </TwoColumnContainer>

@@ -1,5 +1,6 @@
 ---
 import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
 ---
 
 <TwoColumnContainer
@@ -13,40 +14,40 @@ import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.as
   spacing={{ margin: 'mb-8' }}
 >
   <div slot="left" class="space-y-4">
-    <h3 class="text-xl font-bold mb-4">Free Plan</h3>
+    <Headline title="Free Plan" htmlTag="h4" class="my-0" titleClass="mb-4 text-xl" />
     <div class="flex items-start gap-2">
-      <span class="text-green-600">✓</span>
+      <span class="text-success">✓</span>
       <span>Basic features</span>
     </div>
     <div class="flex items-start gap-2">
-      <span class="text-green-600">✓</span>
+      <span class="text-success">✓</span>
       <span>Up to 5 users</span>
     </div>
     <div class="flex items-start gap-2">
-      <span class="text-red-600">✗</span>
+      <span class="text-error">✗</span>
       <span>Advanced analytics</span>
     </div>
     <div class="flex items-start gap-2">
-      <span class="text-red-600">✗</span>
+      <span class="text-error">✗</span>
       <span>Priority support</span>
     </div>
   </div>
   <div slot="right" class="space-y-4">
-    <h3 class="text-xl font-bold mb-4">Pro Plan</h3>
+    <Headline title="Pro Plan" htmlTag="h4" class="my-0" titleClass="mb-4 text-xl" />
     <div class="flex items-start gap-2">
-      <span class="text-green-600">✓</span>
+      <span class="text-success">✓</span>
       <span>All features</span>
     </div>
     <div class="flex items-start gap-2">
-      <span class="text-green-600">✓</span>
+      <span class="text-success">✓</span>
       <span>Unlimited users</span>
     </div>
     <div class="flex items-start gap-2">
-      <span class="text-green-600">✓</span>
+      <span class="text-success">✓</span>
       <span>Advanced analytics</span>
     </div>
     <div class="flex items-start gap-2">
-      <span class="text-green-600">✓</span>
+      <span class="text-success">✓</span>
       <span>Priority support</span>
     </div>
   </div>

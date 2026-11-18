@@ -1,5 +1,6 @@
 ---
 import SidebarLeftContainer from '~/components/blocks/layout/SidebarLeftContainer.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
 ---
 
 <SidebarLeftContainer
@@ -13,11 +14,11 @@ import SidebarLeftContainer from '~/components/blocks/layout/SidebarLeftContaine
   border={{ width: 'border', color: 'border-border' }}
   spacing={{ margin: 'mb-8' }}
 >
-  <div slot="sidebar" class="bg-white p-6 rounded border border-border">
-    <h3>Filters</h3>
+  <div slot="sidebar" class="bg-surface p-6 rounded border border-border">
+    <Headline title="Filters" htmlTag="h4" class="my-0" titleClass="mb-3 text-lg" />
     <div class="space-y-4">
       <div>
-        <h4>Category</h4>
+        <p class="font-semibold mb-2">Category</p>
         <label class="flex items-center gap-2">
           <input type="checkbox" />
           <span>Electronics</span>
@@ -32,7 +33,7 @@ import SidebarLeftContainer from '~/components/blocks/layout/SidebarLeftContaine
         </label>
       </div>
       <div>
-        <h4>Price Range</h4>
+        <p class="font-semibold mb-2">Price Range</p>
         <label class="flex items-center gap-2">
           <input type="radio" name="price" />
           <span>Under $50</span>
@@ -49,20 +50,20 @@ import SidebarLeftContainer from '~/components/blocks/layout/SidebarLeftContaine
     </div>
   </div>
   <div slot="main" class="space-y-4">
-    <div class="bg-white p-6 rounded border border-gray-300">
-      <h3>Product 1</h3>
-      <p class="text-gray mb-2">High-quality wireless headphones with noise cancellation.</p>
-      <div class="text-xl font-bold text-blue">$89.99</div>
+    <div class="bg-surface p-6 rounded border border-border">
+      <p class="font-semibold">Product 1</p>
+      <p class="text-muted mb-2">High-quality wireless headphones with noise cancellation.</p>
+      <div class="text-xl font-bold text-link">$89.99</div>
     </div>
-    <div class="bg-white p-6 rounded border border-gray-300">
-      <h3>Product 2</h3>
-      <p class="text-gray mb-2">Premium laptop stand with adjustable height.</p>
-      <div class="text-xl font-bold text-blue">$49.99</div>
+    <div class="bg-surface p-6 rounded border border-border">
+      <p class="font-semibold">Product 2</p>
+      <p class="text-muted mb-2">Premium laptop stand with adjustable height.</p>
+      <div class="text-xl font-bold text-link">$49.99</div>
     </div>
-    <div class="bg-white p-6 rounded border border-gray-300">
-      <h3>Product 3</h3>
-      <p class="text-gray mb-2">Ergonomic mechanical keyboard for productivity.</p>
-      <div class="text-xl font-bold text-blue">$129.99</div>
+    <div class="bg-surface p-6 rounded border border-border">
+      <p class="font-semibold">Product 3</p>
+      <p class="text-muted mb-2">Ergonomic mechanical keyboard for productivity.</p>
+      <div class="text-xl font-bold text-link">$129.99</div>
     </div>
   </div>
 </SidebarLeftContainer>

@@ -1,5 +1,6 @@
 ---
 import SidebarRightContainer from '~/components/blocks/layout/SidebarRightContainer.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
 ---
 
 <SidebarRightContainer
@@ -14,72 +15,77 @@ import SidebarRightContainer from '~/components/blocks/layout/SidebarRightContai
   gap="loose"
   spacing={{ margin: 'mb-8' }}
 >
-  <div slot="main" class="bg-white p-8 rounded border border-gray">
-    <h2 class="text-3xl font-bold mb-4">API Authentication Guide</h2>
-    <div class="text-sm text-gray mb-6">Last updated: December 25, 2025</div>
+  <div slot="main" class="bg-surface p-8 rounded border border-border">
+    <Headline
+      title="API Authentication Guide"
+      htmlTag="h4"
+      class="my-0"
+      titleClass="mb-4 text-3xl"
+    />
+    <div class="text-sm text-muted mb-6">Last updated: December 25, 2025</div>
     <p>
       Learn how to authenticate your API requests securely using our authentication system. This
       guide covers OAuth 2.0, API keys, and best practices for secure integration.
     </p>
-    <h2 class="text-xl font-bold mb-3 mt-6">Getting Started</h2>
+    <Headline title="Getting Started" htmlTag="h4" class="mt-6 mb-0" titleClass="mb-2 text-xl" />
     <p>
       Before making API calls, you'll need to obtain credentials from your developer dashboard.
       Choose the authentication method that best fits your use case.
     </p>
-    <h2 class="text-xl font-bold mb-3 mt-6">API Keys</h2>
+    <Headline title="API Keys" htmlTag="h4" class="mt-6 mb-0" titleClass="mb-2 text-xl" />
     <p>
       API keys are simple to use and perfect for server-to-server communication. Keep your keys
       secure and never expose them in client-side code.
     </p>
   </div>
   <div slot="sidebar" class="space-y-6">
-    <div class="bg-white p-6 rounded border border-gray">
-      <h3 class="text-lg font-bold mb-3">On This Page</h3>
+    <div class="bg-surface p-6 rounded border border-border">
+      <Headline title="On This Page" htmlTag="h4" class="my-0" titleClass="mb-3 text-lg" />
       <ul class="space-y-2">
         <li>
-          <a href="#" class="text-sm text-blue hover:underline">
+          <a href="#" class="text-sm text-link hover:underline">
             Getting Started
           </a>
         </li>
         <li>
-          <a href="#" class="text-sm text-blue hover:underline">
+          <a href="#" class="text-sm text-link hover:underline">
             API Keys
           </a>
         </li>
         <li>
-          <a href="#" class="text-sm text-blue hover:underline">
+          <a href="#" class="text-sm text-link hover:underline">
             OAuth 2.0
           </a>
         </li>
         <li>
-          <a href="#" class="text-sm text-blue hover:underline">
+          <a href="#" class="text-sm text-link hover:underline">
             Best Practices
           </a>
         </li>
       </ul>
     </div>
-    <div class="bg-white p-6 rounded border border-gray">
-      <h3 class="text-lg font-bold mb-3">Related Docs</h3>
+    <div class="bg-surface p-6 rounded border border-border">
+      <Headline title="Related Docs" htmlTag="h4" class="my-0" titleClass="mb-3 text-lg" />
       <ul class="space-y-2">
         <li>
-          <a href="#" class="text-sm text-blue hover:underline">
+          <a href="#" class="text-sm text-link hover:underline">
             Rate Limiting
           </a>
         </li>
         <li>
-          <a href="#" class="text-sm text-blue hover:underline">
+          <a href="#" class="text-sm text-link hover:underline">
             Error Handling
           </a>
         </li>
         <li>
-          <a href="#" class="text-sm text-blue hover:underline">
+          <a href="#" class="text-sm text-link hover:underline">
             Webhooks
           </a>
         </li>
       </ul>
     </div>
-    <div class="bg-yellow p-4 rounded border border-yellow">
-      <p class="text-xs text-white">
+    <div class="bg-warning/10 p-4 rounded border border-warning">
+      <p class="text-xs text-normal">
         <strong>Note:</strong> API v1 will be deprecated on June 1, 2026.
       </p>
     </div>

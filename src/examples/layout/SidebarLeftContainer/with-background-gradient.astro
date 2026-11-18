@@ -1,11 +1,13 @@
 ---
 import SidebarLeftContainer from '~/components/blocks/layout/SidebarLeftContainer.astro';
+import Button from '~/components/blocks/primitives/Button.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
 ---
 
 <SidebarLeftContainer
   htmlTag="section"
   containerWidthType="full"
-  background={{ class: 'bg-gradient-to-r from-purple to-pink' }}
+  background={{ class: 'bg-linear-to-r from-tertiary to-accent' }}
   content={{
     widthType: 'boxed',
     spacing: { padding: 'py-12' },
@@ -14,33 +16,38 @@ import SidebarLeftContainer from '~/components/blocks/layout/SidebarLeftContaine
   border={{ width: 'border', color: 'border-border' }}
   spacing={{ margin: 'mb-8' }}
 >
-  <div slot="sidebar" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
-    <h3>Quick Links</h3>
+  <div slot="sidebar" class="bg-surface/90 backdrop-blur p-6 rounded shadow-lg">
+    <p class="font-semibold">Quick Links</p>
     <ul>
       <li>
-        <a href="#" class="text-purple hover:underline">
+        <a href="#" class="text-link hover:underline">
           Getting Started
         </a>
       </li>
       <li>
-        <a href="#" class="text-purple hover:underline">
+        <a href="#" class="text-link hover:underline">
           Documentation
         </a>
       </li>
       <li>
-        <a href="#" class="text-purple hover:underline">
+        <a href="#" class="text-link hover:underline">
           API Reference
         </a>
       </li>
       <li>
-        <a href="#" class="text-purple hover:underline">
+        <a href="#" class="text-link hover:underline">
           Support
         </a>
       </li>
     </ul>
   </div>
-  <div slot="main" class="bg-white/90 backdrop-blur p-6 rounded shadow-lg">
-    <h2 class="text-2xl font-bold mb-4">Welcome to Our Platform</h2>
+  <div slot="main" class="bg-surface/90 backdrop-blur p-6 rounded shadow-lg">
+    <Headline
+      title="Welcome to Our Platform"
+      htmlTag="h4"
+      class="my-0"
+      titleClass="mb-4 text-2xl"
+    />
     <p class="mb-4">
       Discover powerful features designed to streamline your workflow and boost productivity.
     </p>
@@ -48,6 +55,6 @@ import SidebarLeftContainer from '~/components/blocks/layout/SidebarLeftContaine
       Our intuitive interface makes it easy to get started, while advanced features give you the
       flexibility you need as you grow.
     </p>
-    <button class="bg-purple text-white px-6 py-2 rounded hover:bg-purple-700">Get Started</button>
+    <Button label="Get Started" intent="tertiary" />
   </div>
 </SidebarLeftContainer>
