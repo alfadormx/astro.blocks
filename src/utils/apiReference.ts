@@ -67,7 +67,7 @@ function astroFilePath(
   return path.join(SRC_ROOT, 'components', 'blocks', category, `${componentName}.astro`);
 }
 
-type Field = { name: string; type: string; description: string };
+type Field = { name: string; type: string; description: string; jsdocDefault?: string };
 
 function heritageTarget(
   heritage: ts.ExpressionWithTypeArguments
@@ -148,11 +148,17 @@ function parseInterfaceFields(
       for (const member of node.members) {
         if (ts.isPropertySignature(member) && member.name && member.type) {
           const jsDocs = ts.getJSDocCommentsAndTags(member);
-          const description = jsDocs.length ? (jsDocs[0].comment?.toString() ?? '') : '';
+          const description = jsDocs.length
+            ? (ts.getTextOfJSDocComment(jsDocs[0].comment) ?? '')
+            : '';
+          const defaultTag = ts.getJSDocTags(member).find((tag) => tag.tagName.text === 'default');
           ownFields.push({
             name: member.name.getText(sourceFile),
             type: member.type.getText(sourceFile),
-            description,
+            description: description.trim(),
+            jsdocDefault: defaultTag
+              ? ts.getTextOfJSDocComment(defaultTag.comment)?.trim()
+              : undefined,
           });
         }
       }
@@ -183,8 +189,27 @@ function findExtendsIdentifier(
   return result;
 }
 
+// Defaults a reader can take at face value; anything else (`modal-${Math.random()…}`,
+// `makeId()`) would print implementation detail, so it reads `computed`.
+function isVerbatimDefault(node: ts.Expression): boolean {
+  if (ts.isParenthesizedExpression(node)) return isVerbatimDefault(node.expression);
+  if (ts.isPrefixUnaryExpression(node)) return ts.isNumericLiteral(node.operand);
+  if (ts.isPropertyAccessExpression(node)) return isVerbatimDefault(node.expression);
+  return (
+    ts.isStringLiteral(node) ||
+    ts.isNumericLiteral(node) ||
+    ts.isNoSubstitutionTemplateLiteral(node) ||
+    ts.isIdentifier(node) ||
+    ts.isObjectLiteralExpression(node) ||
+    ts.isArrayLiteralExpression(node) ||
+    node.kind === ts.SyntaxKind.TrueKeyword ||
+    node.kind === ts.SyntaxKind.FalseKeyword ||
+    node.kind === ts.SyntaxKind.NullKeyword
+  );
+}
+
 // Scans `const { name = <literal> } = Astro.props` for real runtime defaults.
-function parseDefaults(astroSourceText: string): Record<string, string> {
+export function parseDefaults(astroSourceText: string): Record<string, string> {
   const defaults: Record<string, string> = {};
   const frontmatterMatch = astroSourceText.match(/^---\n([\s\S]*?)\n---/);
   const frontmatter = frontmatterMatch ? frontmatterMatch[1] : astroSourceText;
@@ -207,7 +232,9 @@ function parseDefaults(astroSourceText: string): Record<string, string> {
       for (const el of decl.name.elements) {
         if (ts.isBindingElement(el) && el.initializer) {
           const name = (el.propertyName ?? el.name).getText(sourceFile);
-          defaults[name] = el.initializer.getText(sourceFile);
+          defaults[name] = isVerbatimDefault(el.initializer)
+            ? el.initializer.getText(sourceFile)
+            : 'computed';
         }
       }
     }
@@ -256,7 +283,7 @@ export function getPropRows(
     return {
       name: field.name,
       type: field.type,
-      default: defaults[field.name] ?? '',
+      default: field.jsdocDefault ?? defaults[field.name] ?? '',
       description: field.description,
       link: registry[TYPE_LINK_ALIASES[linkKey] ?? linkKey],
     };
