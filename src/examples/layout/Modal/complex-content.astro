@@ -1,6 +1,9 @@
 ---
 import Modal from '~/components/blocks/layout/Modal.astro';
 import Button from '~/components/blocks/primitives/Button.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
+import Input from '~/components/blocks/primitives/Input.astro';
+import TextArea from '~/components/blocks/primitives/TextArea.astro';
 ---
 
 <Button
@@ -10,41 +13,11 @@ import Button from '~/components/blocks/primitives/Button.astro';
 />
 <Modal id="modal-complex" size="lg">
   <div class="p-6">
-    <h3>Contact Form</h3>
+    <Headline title="Contact Form" htmlTag="h2" class="my-0" titleClass="text-xl" />
     <form class="space-y-4">
-      <div>
-        <label for="name" class="block text-sm font-medium mb-2">
-          Name
-        </label>
-        <input
-          type="text"
-          id="name"
-          class="w-full px-3 py-2 border border-border rounded-md bg-background"
-          placeholder="Enter your name"
-        />
-      </div>
-      <div>
-        <label for="email" class="block text-sm font-medium mb-2">
-          Email
-        </label>
-        <input
-          type="email"
-          id="email"
-          class="w-full px-3 py-2 border border-border rounded-md bg-background"
-          placeholder="Enter your email"
-        />
-      </div>
-      <div>
-        <label for="message" class="block text-sm font-medium mb-2">
-          Message
-        </label>
-        <textarea
-          id="message"
-          rows="4"
-          class="w-full px-3 py-2 border border-border rounded-md bg-background"
-          placeholder="Enter your message"
-        ></textarea>
-      </div>
+      <Input label="Name" name="name" placeholder="Enter your name" />
+      <Input label="Email" name="email" type="email" placeholder="Enter your email" />
+      <TextArea label="Message" name="message" rows={4} placeholder="Enter your message" />
       <div class="flex gap-2 pt-4">
         <Button icon={{ name: 'heroicons:paper-airplane' }} label="Send Message" />
         <Button data-modal-close variant="outline" label="Cancel" />

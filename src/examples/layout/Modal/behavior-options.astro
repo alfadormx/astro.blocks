@@ -1,6 +1,7 @@
 ---
 import Modal from '~/components/blocks/layout/Modal.astro';
 import Button from '~/components/blocks/primitives/Button.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
 ---
 
 <div class="flex flex-wrap gap-4">
@@ -10,7 +11,7 @@ import Button from '~/components/blocks/primitives/Button.astro';
 
   <Modal id="modal-no-backdrop" closeOnBackdrop={false} size="sm">
     <div class="p-6">
-      <h3>Persistent Modal</h3>
+      <Headline title="Persistent Modal" htmlTag="h2" class="my-0" titleClass="text-xl" />
       <p class="text-sm text-muted mb-4">
         Clicking the backdrop won't close this modal. Use the button or ESC key.
       </p>
@@ -20,7 +21,7 @@ import Button from '~/components/blocks/primitives/Button.astro';
 
   <Modal id="modal-no-escape" closeOnEscape={false} size="sm">
     <div class="p-6">
-      <h3>No ESC Close</h3>
+      <Headline title="No ESC Close" htmlTag="h2" class="my-0" titleClass="text-xl" />
       <p class="text-sm text-muted mb-4">
         ESC key won't close this modal. Use the button or click backdrop.
       </p>
@@ -30,7 +31,7 @@ import Button from '~/components/blocks/primitives/Button.astro';
 
   <Modal id="modal-no-close-btn" closeButton={false} size="sm">
     <div class="p-6">
-      <h3>No Close Button</h3>
+      <Headline title="No Close Button" htmlTag="h2" class="my-0" titleClass="text-xl" />
       <p class="text-sm text-muted mb-4">
         No automatic close button. Provide your own close mechanism.
       </p>

@@ -1,6 +1,7 @@
 ---
 import Modal from '~/components/blocks/layout/Modal.astro';
 import Button from '~/components/blocks/primitives/Button.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
 ---
 
 <div class="flex flex-wrap gap-4">
@@ -11,35 +12,35 @@ import Button from '~/components/blocks/primitives/Button.astro';
   <Button data-modal-trigger="modal-right" size="sm" label="Right" />
   <Modal id="modal-center" position="center" size="sm">
     <div class="p-6">
-      <h3>Center Position</h3>
+      <Headline title="Center Position" htmlTag="h2" class="my-0" titleClass="text-xl" />
       <p class="text-sm text-muted">Default centered position.</p>
     </div>
   </Modal>
 
   <Modal id="modal-top" position="top" size="sm">
     <div class="p-6">
-      <h3>Top Position</h3>
+      <Headline title="Top Position" htmlTag="h2" class="my-0" titleClass="text-xl" />
       <p class="text-sm text-muted">Appears at the top of the screen.</p>
     </div>
   </Modal>
 
   <Modal id="modal-bottom" position="bottom" size="sm">
     <div class="p-6">
-      <h3>Bottom Position</h3>
+      <Headline title="Bottom Position" htmlTag="h2" class="my-0" titleClass="text-xl" />
       <p class="text-sm text-muted">Appears at the bottom of the screen.</p>
     </div>
   </Modal>
 
   <Modal id="modal-left" position="left" size="sm">
     <div class="p-6">
-      <h3>Left Position</h3>
+      <Headline title="Left Position" htmlTag="h2" class="my-0" titleClass="text-xl" />
       <p class="text-sm text-muted">Slides in from the left side.</p>
     </div>
   </Modal>
 
   <Modal id="modal-right" position="right" size="sm">
     <div class="p-6">
-      <h3>Right Position</h3>
+      <Headline title="Right Position" htmlTag="h2" class="my-0" titleClass="text-xl" />
       <p class="text-sm text-muted">Slides in from the right side.</p>
     </div>
   </Modal>
