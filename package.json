@@ -8,6 +8,7 @@
     "preview": "astro preview --host",
     "astro": "astro",
     "check": "pnpm run check:astro && pnpm run check:lint && pnpm run check:prettier && pnpm run test:unit && pnpm run test:astro && pnpm run test:browser",
+    "check:quick": "node scripts/check-quick.mjs",
     "check:astro": "astro check",
     "check:lint": "eslint .",
     "check:prettier": "prettier --check .",
