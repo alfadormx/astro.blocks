@@ -121,7 +121,7 @@ export interface ConfiguratorProps {
   defaultToggleGroupConfig?: LayerConfig<ConfiguratorToggleGroup>;
   /** TextArea config merged under every text category's `textArea`; `error` is per category (default: { rows: 2 }). */
   defaultTextAreaConfig?: LayerConfig<Omit<ConfiguratorTextArea, 'error'>>;
-  /** Tabs config for the choice panel; style every trigger with `tabs.defaultItemConfig` (default: grid tab list, full-width triggers, outlined primary active tab). */
+  /** Tabs config for the choice panel; style every trigger with `tabs.defaultItemConfig`, and set `tabs.tabList.sticky` to keep the tab bar below a sticky Header (default: grid tab list, full-width triggers, outlined primary active tab). */
   tabs?: Omit<TabsProps, 'items'>;
   /** TwoColumnContainer for the two panes (default: { responsive: true }). */
   twoColumnContainer?: TwoColumnContainerProps;

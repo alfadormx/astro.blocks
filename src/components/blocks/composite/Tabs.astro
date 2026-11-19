@@ -65,11 +65,23 @@ const tabStateClass = isFill ? 'flex w-full' : undefined;
 
 const internalFillDefaults: Partial<ButtonProps> = isFill ? { width: 'full' } : {};
 
+// Literal so Tailwind scans it. The offset is the sticky Header's height, removed by
+// Header when none is sticky, hence the 0px fallback.
+const stickyClass = tabList?.sticky
+  ? cn(
+      'sticky top-(--scroll-padding-top,0px) z-10 bg-background',
+      orientation === 'vertical' && 'self-start'
+    )
+  : undefined;
+
 const TabListWrapper = isGrid ? 'div' : Fragment;
-const tabListWrapperProps = isGrid ? { class: cn('@container', tabList?.wrapperClass) } : {};
+const tabListWrapperProps = isGrid
+  ? { class: cn('@container', stickyClass, tabList?.wrapperClass) }
+  : {};
 
 const tabListClass = cn(
   layoutClass,
+  !isGrid && stickyClass,
   tabList?.background?.class,
   tabList?.spacing?.padding,
   tabList?.spacing?.margin,

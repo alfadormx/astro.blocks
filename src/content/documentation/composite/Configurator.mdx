@@ -99,7 +99,7 @@ Set `urlState` to keep the selections in the page URL as a combination code, so 
 
 ## Headline and shared action config
 
-`headline` renders a full Headline under the viewer. `defaultActionConfig` is merged under every action, and `actionsClass` styles the wrapper around them. Style the left column through `twoColumnContainer.leftColumn.class` and the panels through `tabs.panelClass`.
+`headline` renders a full Headline under the viewer. `defaultActionConfig` is merged under every action, and `actionsClass` styles the wrapper around them. Style the left column through `twoColumnContainer.leftColumn.class` and the panels through `tabs.panelClass`. Set `tabs.tabList.sticky` to keep the tab bar in view under a sticky Header; add `md:top-0` to `tabs.tabList.wrapperClass` when the right column becomes its own scroll box from `md` up.
 
 <Example name="headline-actions" source={headlineActionsSource}>
   <HeadlineActions />
