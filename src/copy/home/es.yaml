@@ -1,15 +1,27 @@
 # `hero.viewSourceLabel` is left out on purpose: it falls back to English with a build warning.
 pageTitle: 'Componentes Astro'
 headerDocsLabel: 'Documentación'
+nav:
+  layers: 'Componentes'
+  demos: 'Demos'
+  guides: 'Guías'
+  github: 'GitHub'
+  menuLabel: 'Abrir menú'
 hero:
-  tagline: 'Biblioteca de componentes'
-  title: 'Astro Blocks'
-  subtitle: 'Componentes de interfaz combinables creados con Astro y Tailwind CSS. Elige, personaliza, publica.'
+  title: 'Sitios completos, hechos con bloques honestos.'
+  subtitle: 'Primitivas, composiciones y contenedores de maquetación para Astro y Tailwind CSS. Configúralos con props, dales tema con tokens y publica HTML estático.'
   browseDocsLabel: 'Ver documentación'
+stats:
+  title: 'Piezas pequeñas, sitios completos.'
+  subtitle: 'Cada demo de este sitio se monta con los mismos bloques, configurados con props y con tema por tokens, sin CSS propio de página.'
+  primitives: 'primitivas'
+  composites: 'composiciones'
+  layout: 'contenedores de maquetación'
+  demos: 'sitios de demo'
 inside:
-  tagline: 'Qué incluye'
   title: 'Tres capas de componentes'
   subtitle: 'De primitivas atómicas a secciones completas: todo combinable, nada impuesto.'
+  count: '{count} bloques'
   primitives:
     title: 'Primitivas'
     lead: 'Piezas básicas'
@@ -20,7 +32,6 @@ inside:
     title: 'Maquetación'
     lead: 'Contenedores estructurales'
 demos:
-  tagline: 'Demos'
   title: 'Los bloques en un sitio'
   subtitle: 'Una landing de producto, el portfolio de una agencia, una cafetería de barrio y una joyería con un configurador 3D, en inglés y español.'
   saas:
@@ -40,8 +51,11 @@ demos:
     content: 'Una joyería con colecciones, un configurador 3D de anillos con diseños compartibles y un mapa de la tienda.'
     link: 'Abrir la tienda'
 getStarted:
-  tagline: 'Empieza'
   title: '¿Listo para construir?'
   subtitle: 'Explora la referencia completa de componentes con ejemplos en vivo.'
   openDocsLabel: 'Abrir documentación'
+guides:
+  title: 'Empieza por las guías'
+  subtitle: 'Dos lecturas cortas sobre cómo encajan los bloques y dónde vive el contenido.'
+  read: 'Leer la guía'
 footerDisclaimer: ./disclaimer.es.md

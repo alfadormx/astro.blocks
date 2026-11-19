@@ -1,15 +1,27 @@
 pageTitle: 'Astro Blocks'
 headerDocsLabel: 'Documentation'
+nav:
+  layers: 'Components'
+  demos: 'Demos'
+  guides: 'Guides'
+  github: 'GitHub'
+  menuLabel: 'Open menu'
 hero:
-  tagline: 'Component Library'
-  title: 'Astro Blocks'
-  subtitle: 'Composable UI components built with Astro and Tailwind CSS. Pick, customize, ship.'
-  browseDocsLabel: 'Browse Documentation'
-  viewSourceLabel: 'View Source'
+  title: 'Whole sites, built from honest blocks.'
+  subtitle: 'Primitives, composites and layout containers for Astro and Tailwind CSS. Configure them with props, theme them with tokens, ship static HTML.'
+  browseDocsLabel: 'Browse documentation'
+  viewSourceLabel: 'View source'
+stats:
+  title: 'Small parts, complete sites.'
+  subtitle: 'Every demo here is assembled from the same blocks, set up through props and themed with tokens, with no page-level CSS.'
+  primitives: 'primitives'
+  composites: 'composites'
+  layout: 'layout containers'
+  demos: 'demo sites'
 inside:
-  tagline: "What's Inside"
   title: 'Three layers of components'
-  subtitle: 'From atomic primitives to fully assembled sections — everything composable, nothing opinionated.'
+  subtitle: 'From atomic primitives to fully assembled sections: everything composable, nothing opinionated.'
+  count: '{count} blocks'
   primitives:
     title: 'Primitives'
     lead: 'Atomic building blocks'
@@ -20,7 +32,6 @@ inside:
     title: 'Layout'
     lead: 'Structural containers'
 demos:
-  tagline: 'Demos'
   title: 'See the blocks in a site'
   subtitle: 'A product landing page, an agency portfolio, a local café and a jewellery store with a 3D configurator, in English and Spanish.'
   saas:
@@ -40,8 +51,11 @@ demos:
     content: 'A fine-jewellery shop with collections, a 3D ring configurator with shareable designs, and a store map.'
     link: 'Open the shop'
 getStarted:
-  tagline: 'Get Started'
   title: 'Ready to build?'
   subtitle: 'Explore the full component reference with live usage examples.'
   openDocsLabel: 'Open Documentation'
+guides:
+  title: 'Start with the guides'
+  subtitle: 'Two short reads on how blocks fit together and where content lives.'
+  read: 'Read the guide'
 footerDisclaimer: ./disclaimer.md
