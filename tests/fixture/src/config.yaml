@@ -1,0 +1,29 @@
+site:
+  name: 'Fixture'
+  site: 'https://fixture.example'
+  base: '/'
+  trailingSlash: false
+
+i18n:
+  default: 'en'
+  languages:
+    - code: 'en'
+      locale: 'en-US'
+      basePath: '/'
+      direction: 'ltr'
+      label: 'English'
+    - code: 'es'
+      locale: 'es-ES'
+      basePath: '/es'
+      direction: 'ltr'
+      label: 'Español'
+
+metadata:
+  title:
+    default: 'Fixture'
+    template: '%s | Fixture'
+  description: 'Container test fixture.'
+  author: 'Fixture Author'
+  twitter:
+    cardType: 'summary_large_image'
+    image: '/twitter-image.png'

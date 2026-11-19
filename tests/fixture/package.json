@@ -1,0 +1,9 @@
+{
+  "name": "blocks-fixture",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@iconify-json/heroicons": "*",
+    "@iconify-json/mdi": "*"
+  }
+}
