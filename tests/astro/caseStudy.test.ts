@@ -42,8 +42,8 @@ describe('CaseStudyLayout', () => {
   it('crops local gallery images to 16:9 without a fixed px height', async () => {
     const html = await layout({
       gallery: [
-        { src: '~/assets/images/demos/portfolio/brand-refresh-1.jpg', alt: 'A' },
-        { src: '~/assets/images/demos/portfolio/brand-refresh-2.jpg', alt: 'B' },
+        { src: '~/assets/images/hero.jpg', alt: 'A' },
+        { src: '~/assets/images/hero.jpg', alt: 'B' },
       ],
     });
     const styles = imgStyles(html);

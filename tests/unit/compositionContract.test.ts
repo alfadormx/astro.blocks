@@ -47,15 +47,6 @@ const integrationFiles = files('integration/', /\.ts$/).map((path) => ({
   source: read(path),
 }));
 
-const siteEntryFiles = [
-  ...files('pages/', /\.(astro|ts)$/),
-  ...files('examples/', /\.(astro|ts)$/),
-  'content.config.ts',
-  '../astro.config.mjs',
-].map((path) => ({ path, source: read(path) }));
-
-const DEEP_LIBRARY_PATH = /src\/integration|^~\/(utils\/(selection|urlState)|integration\/)/;
-
 function fields(source: string): { name: string; type: string }[] {
   return [...source.matchAll(/^\s+(\w+)\??:\s*([^;]*);/gm)].map((m) => ({
     name: m[1],
@@ -98,15 +89,6 @@ describe('composition contract', () => {
           .map((s) => `${f.path}: ${s}`)
       ),
     ];
-    expect(bad).toEqual([]);
-  });
-
-  it('site code reaches the library through #blocks entry points', () => {
-    const bad = siteEntryFiles.flatMap((f) =>
-      specifiers(f.source)
-        .filter((s) => DEEP_LIBRARY_PATH.test(s))
-        .map((s) => `${f.path}: ${s}`)
-    );
     expect(bad).toEqual([]);
   });
 

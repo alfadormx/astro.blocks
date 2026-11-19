@@ -48,7 +48,7 @@ describe('Metadata', () => {
   it('emits the configured author and no placeholder author', async () => {
     const html = await render(Metadata);
     expect(html).toMatch(
-      /<meta[^>]*name="author"[^>]*content="alFadorMX"|<meta[^>]*content="alFadorMX"[^>]*name="author"/
+      /<meta[^>]*name="author"[^>]*content="Fixture Author"|<meta[^>]*content="Fixture Author"[^>]*name="author"/
     );
     expect(html).not.toContain('Your Name');
   });

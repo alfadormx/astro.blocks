@@ -10,9 +10,7 @@ describe('ContentCarousel', () => {
     const container = await AstroContainer.create();
     const html = await container.renderToString(ContentCarousel, {
       props: {
-        items: [
-          { src: '~/assets/images/demos/portfolio/brand-refresh-1.jpg', alt: 'Brand refresh' },
-        ],
+        items: [{ src: '~/assets/images/hero.jpg', alt: 'Brand refresh' }],
       },
     });
     const styles = imgStyles(html);

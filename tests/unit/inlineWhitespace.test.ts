@@ -23,7 +23,7 @@ const CLOSES_INLINE = new RegExp(String.raw`</(?:${TAGS})>$`);
 const ENDS_IN_TEXT = /(?:[\p{L}\p{N}.,;:!?)]|&[a-z]+;)$/u;
 const STARTS_WITH_TEXT = /^(?:[\p{L}\p{N}]|&[a-z]+;)/u;
 
-const ROOTS = ['components/', 'layouts/', 'pages/[...lang]/'];
+const ROOTS = ['components/', 'layouts/'];
 
 const root = new URL('../../src/', import.meta.url);
 const read = (path: string) => readFileSync(new URL(path, root), 'utf8');

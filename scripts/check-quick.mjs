@@ -37,6 +37,16 @@ if (changed.length)
 
 // `--changed` follows imports from the changed files to the tests that depend on them.
 run('unit tests', 'pnpm', ['exec', 'vitest', 'run', '--changed', 'HEAD', '--passWithNoTests']);
+run('site tests', 'pnpm', [
+  'exec',
+  'vitest',
+  'run',
+  '--changed',
+  'HEAD',
+  '--passWithNoTests',
+  '--config',
+  'vitest.site.config.ts',
+]);
 run('astro tests', 'pnpm', [
   'exec',
   'vitest',

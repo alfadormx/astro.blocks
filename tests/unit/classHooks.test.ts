@@ -78,23 +78,22 @@ function styleClasses(source: string): string[] {
 }
 
 describe('class hooks', () => {
-  it.each(['styles/blocks.css', 'styles/global.css'])('%s selects only allowed classes', (file) => {
+  it.each(['styles/blocks.css'])('%s selects only allowed classes', (file) => {
     const css = read(file).replace(/@(?:source|custom-variant)[^;]*;/g, '');
     expect(selectorClasses(css).filter((c) => !ALLOWED.has(c))).toEqual([]);
   });
 
-  it.each([
-    ...files('components/', '.astro'),
-    ...files('layouts/', '.astro'),
-    ...files('pages/', '.astro'),
-  ])('%s scripts and styles select only allowed classes', (file) => {
-    const source = read(file);
-    expect(
-      [...scriptClasses(source), ...styleClasses(source)].filter((c) => !ALLOWED.has(c))
-    ).toEqual([]);
-  });
+  it.each([...files('components/', '.astro'), ...files('layouts/', '.astro')])(
+    '%s scripts and styles select only allowed classes',
+    (file) => {
+      const source = read(file);
+      expect(
+        [...scriptClasses(source), ...styleClasses(source)].filter((c) => !ALLOWED.has(c))
+      ).toEqual([]);
+    }
+  );
 
-  it.each([...files('utils/', '.ts'), ...files('layouts/', '.ts'), ...files('pages/', '.ts')])(
+  it.each([...files('utils/', '.ts'), ...files('layouts/', '.ts')])(
     '%s selects only allowed classes',
     (file) => {
       expect(codeClasses(read(file)).filter((c) => !ALLOWED.has(c))).toEqual([]);
