@@ -83,7 +83,8 @@ const INTENT_CLASSES: Record<Variant, Record<Intent, string>> = {
     neutral: `border-2 border-border text-normal hover:bg-surface ${focusRingClass('neutral')}`,
   },
   ghost: {
-    primary: `text-primary hover:bg-primary/10 ${focusRingClass('primary')}`,
+    // Light-theme blue primary is 4.0:1 on the page; darkening at the element keeps demo theme overrides of --color-primary working.
+    primary: `text-[color:color-mix(in_oklch,var(--color-primary)_85%,black)] dark:text-primary hover:bg-primary/10 ${focusRingClass('primary')}`,
     secondary: `text-secondary hover:bg-secondary/10 ${focusRingClass('secondary')}`,
     tertiary: `text-tertiary hover:bg-tertiary/10 ${focusRingClass('tertiary')}`,
     accent: `text-accent hover:bg-accent/10 ${focusRingClass('accent')}`,

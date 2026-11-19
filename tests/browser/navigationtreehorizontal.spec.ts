@@ -1,4 +1,5 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
+import { contrastRatio } from './contrast';
 
 const PAGE_URL = '/documentation/composite/NavigationTreeHorizontal';
 
@@ -205,6 +206,18 @@ test('a vertical-tree toggle closes an open click-mode dropdown', async ({ page 
   await page.mouse.move(0, 0);
   await expect(dropdown).toBeHidden();
 });
+
+for (const mode of ['light', 'dark'] as const) {
+  test(`current item text reaches 4.5:1 contrast in the ${mode} theme`, async ({ page }) => {
+    await page.emulateMedia({ colorScheme: mode });
+    const root = await section(page, 'current-path');
+    await expect(page.locator('html')).toHaveAttribute('data-theme', mode);
+    const current = root.locator('[aria-current="page"]').first();
+
+    await expect(current).toHaveText('About');
+    expect(await contrastRatio(current)).toBeGreaterThanOrEqual(4.5);
+  });
+}
 
 test('click trigger still toggles after a view-transition swap', async ({ page }) => {
   const root = await section(page, 'click');
