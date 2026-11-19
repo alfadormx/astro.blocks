@@ -79,7 +79,7 @@ if (!resolvedSource && sourceFile) {
   // For Astro files using path fallback, attempt to read the file at import time.
   // Note: This requires the file path to be resolvable. For MDX users, source prop via ?raw is required.
   try {
-    const { default: file } = await import(sourceFile);
+    const { default: file } = await import(/* @vite-ignore */ sourceFile);
     resolvedSource = file;
   } catch (err) {
     console.warn(`Example: unable to resolve sourceFile "${sourceFile}":`, err);
