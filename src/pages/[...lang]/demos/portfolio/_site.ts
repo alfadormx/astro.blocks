@@ -3,7 +3,7 @@ import type { ButtonProps } from '~/types/button.types';
 import type { CollectionListEntry, CollectionListProps } from '~/types/collectionlist.types';
 import type { ItemProps } from '~/types/item.types';
 import type { NavigationTreeItem } from '~/types/navigationtree.types';
-import { collectionUrl } from '../../../../../vendor/integration/collections/pages';
+import { collectionUrl } from '#blocks/collections';
 
 type Language = (typeof I18N.languages)[number];
 type PortfolioCopy = AstroBlocks.CopyRegistry['portfolio'];

@@ -27,6 +27,9 @@ declare module 'site-images' {
   export default images;
 }
 
+/** Side-effect import of the site's stylesheet (`blocks({ css })`), or the library CSS. */
+declare module 'site-styles' {}
+
 // Filled per site by the integration's injected types (`collections.d.ts`, `copy.d.ts`).
 declare namespace AstroBlocks {
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type

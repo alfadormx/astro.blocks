@@ -2,7 +2,7 @@ import type { ShikiConfig } from 'astro';
 
 type Transformer = NonNullable<ShikiConfig['transformers']>[number];
 
-/** Marks every highlighted `<pre>` so `global.css` can theme it by `[data-theme]`. */
+/** Marks every highlighted `<pre>` so `blocks.css` can theme it by `[data-theme]`. */
 export const codeTransformer: Transformer = {
   name: 'astro-blocks:data-code',
   pre(node) {

@@ -9,7 +9,7 @@ import Button from '~/components/blocks/primitives/Button.astro';
 import Logo from '~/components/blocks/primitives/Logo.astro';
 import Select from '~/components/blocks/primitives/Select.astro';
 import ToggleGroup from '~/components/blocks/primitives/ToggleGroup.astro';
-import { localizedPaths, useCopy } from '../../../../../vendor/integration/copy/pages';
+import { localizedPaths, useCopy } from '#blocks/copy';
 import { DEMOS, type Demo } from './_demos';
 
 type LangPath = { params: { lang?: string }; props: { langCode: string; basePath: string } };

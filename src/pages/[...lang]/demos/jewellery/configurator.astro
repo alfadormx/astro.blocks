@@ -4,7 +4,7 @@ import Configurator from '~/components/blocks/composite/Configurator.astro';
 import type { ConfiguratorProps } from '~/types/configurator.types';
 import type { ImageProps } from '~/types/image.types';
 import type { ModelViewerMutation } from '~/types/modelviewer.types';
-import { localizedPaths, useCopy } from '../../../../../vendor/integration/copy/pages';
+import { localizedPaths, useCopy } from '#blocks/copy';
 
 export const getStaticPaths = () => localizedPaths();
 

@@ -2,10 +2,7 @@
 import SaasLayout from '../_layouts/Layout.astro';
 import Container from '~/components/blocks/layout/Container.astro';
 import PostLayout from '~/components/blocks/composite/PostLayout.astro';
-import {
-  collectionEntries,
-  renderEntry,
-} from '../../../../../../vendor/integration/collections/pages';
+import { collectionEntries, renderEntry } from '#blocks/collections';
 
 export const getStaticPaths = () => collectionEntries('posts');
 const { Content, langCode, layout, metadata } = await renderEntry(Astro, 'posts');

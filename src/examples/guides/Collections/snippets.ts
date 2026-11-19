@@ -4,7 +4,7 @@ export const configExample = `collections:
   cases:  { preset: caseStudy, route: /work }
   events: { preset: event,     route: /events }`;
 
-export const stubExample = `import { defineBlocksCollections } from '../vendor/integration/collections/define';
+export const stubExample = `import { defineBlocksCollections } from '#blocks/content';
 
 export const collections = defineBlocksCollections();`;
 
@@ -31,7 +31,7 @@ import Header from '~/components/blocks/composite/Header.astro';
 import Footer from '~/components/blocks/composite/Footer.astro';
 import Container from '~/components/blocks/layout/Container.astro';
 import CollectionList from '~/components/blocks/composite/CollectionList.astro';
-import { collectionPages, renderList } from '…/vendor/integration/collections/pages';
+import { collectionPages, renderList } from '#blocks/collections';
 
 export const getStaticPaths = () => collectionPages('posts');
 const { langCode, entries, page } = await renderList(Astro);
@@ -51,7 +51,7 @@ import Header from '~/components/blocks/composite/Header.astro';
 import Footer from '~/components/blocks/composite/Footer.astro';
 import Container from '~/components/blocks/layout/Container.astro';
 import PostLayout from '~/components/blocks/composite/PostLayout.astro';
-import { collectionEntries, renderEntry } from '…/vendor/integration/collections/pages';
+import { collectionEntries, renderEntry } from '#blocks/collections';
 
 export const getStaticPaths = () => collectionEntries('posts');
 const { Content, langCode, layout, metadata } = await renderEntry(Astro, 'posts');
@@ -71,7 +71,7 @@ export const copyFolder = `src/copy/home/
   intro.md          ← referenced from a YAML value as ./intro.md`;
 
 export const copyPage = `---
-import { localizedPaths, useCopy } from '…/vendor/integration/copy/pages';
+import { localizedPaths, useCopy } from '#blocks/copy';
 
 export const getStaticPaths = () => localizedPaths();
 const { langCode, copy } = useCopy(Astro, 'home');
@@ -85,7 +85,7 @@ const { langCode, copy } = useCopy(Astro, 'home');
 export const nativeExample = `import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
-import { defineBlocksCollections } from '../vendor/integration/collections/define';
+import { defineBlocksCollections } from '#blocks/content';
 
 export const collections = {
   ...defineBlocksCollections(),

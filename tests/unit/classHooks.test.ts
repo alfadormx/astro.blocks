@@ -78,8 +78,8 @@ function styleClasses(source: string): string[] {
 }
 
 describe('class hooks', () => {
-  it('global.css selects only allowed classes', () => {
-    const css = read('styles/global.css').replace(/@(?:source|custom-variant)[^;]*;/g, '');
+  it.each(['styles/blocks.css', 'styles/global.css'])('%s selects only allowed classes', (file) => {
+    const css = read(file).replace(/@(?:source|custom-variant)[^;]*;/g, '');
     expect(selectorClasses(css).filter((c) => !ALLOWED.has(c))).toEqual([]);
   });
 

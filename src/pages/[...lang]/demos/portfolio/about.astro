@@ -4,7 +4,7 @@ import Content from '~/components/blocks/composite/Content.astro';
 import Team from '~/components/blocks/composite/Team.astro';
 import type { TeamMember } from '~/types/team.types';
 import { renderRichText } from '~/utils/richText';
-import { localizedPaths, useCopy } from '../../../../../vendor/integration/copy/pages';
+import { localizedPaths, useCopy } from '#blocks/copy';
 
 export const getStaticPaths = () => localizedPaths();
 

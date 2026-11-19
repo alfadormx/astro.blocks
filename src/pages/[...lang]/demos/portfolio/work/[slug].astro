@@ -2,10 +2,7 @@
 import PortfolioLayout from '../_layouts/Layout.astro';
 import Container from '~/components/blocks/layout/Container.astro';
 import CaseStudyLayout from '~/components/blocks/composite/CaseStudyLayout.astro';
-import {
-  collectionEntries,
-  renderEntry,
-} from '../../../../../../vendor/integration/collections/pages';
+import { collectionEntries, renderEntry } from '#blocks/collections';
 
 export const getStaticPaths = () => collectionEntries('cases');
 const { Content, langCode, layout, metadata } = await renderEntry(Astro, 'cases');

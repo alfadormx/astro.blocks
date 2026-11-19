@@ -4,7 +4,7 @@ import ContactForm from '~/components/blocks/composite/ContactForm.astro';
 import ItemsContent from '~/components/blocks/composite/ItemsContent.astro';
 import ItemsGrid from '~/components/blocks/composite/ItemsGrid.astro';
 import MapBlock from '~/components/blocks/primitives/Map.astro';
-import { localizedPaths, useCopy } from '../../../../../vendor/integration/copy/pages';
+import { localizedPaths, useCopy } from '#blocks/copy';
 import { CONTACT_ADDRESS, GEO, LABEL, PHONE, SECTION_HEADLINE } from './_site';
 
 export const getStaticPaths = () => localizedPaths();

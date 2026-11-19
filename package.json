@@ -5,7 +5,13 @@
     "#components/*": "./src/components/*",
     "#utils/*": "./src/utils/*.ts",
     "#types/*": "./src/types/*.ts",
-    "#styles/*": "./src/styles/*"
+    "#styles/*": "./src/styles/*",
+    "#blocks/integration": "./vendor/integration/index.ts",
+    "#blocks/collections": "./vendor/integration/collections/pages.ts",
+    "#blocks/content": "./vendor/integration/collections/define.ts",
+    "#blocks/copy": "./vendor/integration/copy/pages.ts",
+    "#blocks/selection": "./src/utils/selection.ts",
+    "#blocks/url-state": "./src/utils/urlState.ts"
   },
   "version": "0.0.1",
   "scripts": {

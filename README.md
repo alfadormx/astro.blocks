@@ -96,13 +96,15 @@ Blocks live in `src/components/blocks/`, with prop types in `src/types/*.types.t
 
 ## Site configuration
 
-`src/config.yaml` holds the site name and URL, i18n languages, default metadata, theme color, favicons and analytics. It is exposed to components through the `site-config` virtual module from `vendor/integration`.
+`src/config.yaml` holds the site name and URL, i18n languages, default metadata, theme color, favicons and analytics. It is exposed to components through the `site-config` virtual module from the integration (`#blocks/integration`).
+
+`astro.config.mjs` registers the library with one integration, `blocks({ config: './src/config.yaml', css: './src/styles/global.css' })`. It serves the `site-config` virtual module, hands the site stylesheet to layouts through `site-styles`, and registers Tailwind, MDX, astro-icon (every installed `@iconify-json/*` set), the Shiki config and the `three` pre-bundling. Add an icon set by installing `@iconify-json/<set>`.
 
 ### Collections and copy
 
-`collections:` in `config.yaml` declares Markdown collections by preset (`post`, `caseStudy`, `event`). Content goes in `src/content/<name>/<lang>/*.md`, and `src/content.config.ts` is a one-line stub, so `getCollection('<name>')` is typed with no schema to write. Each collection needs two short pages, a list and an entry, built with the helpers in `vendor/integration/collections/pages.ts`.
+`collections:` in `config.yaml` declares Markdown collections by preset (`post`, `caseStudy`, `event`). Content goes in `src/content/<name>/<lang>/*.md`, and `src/content.config.ts` is a one-line stub, so `getCollection('<name>')` is typed with no schema to write. Each collection needs two short pages, a list and an entry, built with the helpers from `#blocks/collections`.
 
-Static-page copy lives in `src/copy/<page>/<lang>.yaml`. The default-language file defines the typed keys, and a key missing in another language falls back with a build warning. The guide at `/documentation/guides/Collections` covers both.
+Static-page copy lives in `src/copy/<page>/<lang>.yaml`, read with the helpers from `#blocks/copy`. The default-language file defines the typed keys, and a key missing in another language falls back with a build warning. The guide at `/documentation/guides/Collections` covers both.
 
 ## Project structure
 
@@ -122,7 +124,7 @@ src/
 ├── styles/            global styles and color tokens
 ├── types/             prop types per block
 └── utils/             shared helpers
-vendor/integration/    site-config integration, collection and copy helpers
+vendor/integration/    blocks() integration, collection and copy helpers
 tests/                 unit/, astro/, browser/
 ```
 

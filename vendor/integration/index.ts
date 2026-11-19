@@ -1,7 +1,12 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
+import mdx from '@astrojs/mdx';
+import tailwindcss from '@tailwindcss/vite';
 import type { AstroConfig, AstroIntegration } from 'astro';
+import icon from 'astro-icon';
+
+import { shikiConfig } from '#utils/codeHighlight';
 
 import configBuilder, { type CollectionsConfig, type Config } from './utils/configBuilder';
 import loadConfig from './utils/loadConfig';
@@ -10,26 +15,53 @@ import { collectionsWithoutEntryPages } from './collections/routes';
 import { copyRegistryDts } from './copy/infer';
 import { loadCopy } from './copy/load';
 
-export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegration => {
+// Deps reached only via dynamic import are discovered late; Vite then reloads the page mid-test.
+const THREE_DEPS = [
+  'three',
+  'three/addons/controls/OrbitControls.js',
+  'three/addons/loaders/GLTFLoader.js',
+  'three/addons/loaders/HDRLoader.js',
+  'three/addons/environments/RoomEnvironment.js',
+  'three/addons/postprocessing/EffectComposer.js',
+  'three/addons/postprocessing/RenderPass.js',
+  'three/addons/postprocessing/UnrealBloomPass.js',
+  'three/addons/postprocessing/OutputPass.js',
+  'three/addons/postprocessing/ShaderPass.js',
+];
+
+export interface BlocksOptions {
+  /** Site config YAML, relative to the project root. */
+  config?: string;
+  /** The site's Tailwind root stylesheet, relative to the project root. It must `@import` the library CSS. Defaults to the library CSS alone. */
+  css?: string;
+}
+
+const LIBRARY_CSS = fileURLToPath(new URL('../../src/styles/blocks.css', import.meta.url));
+
+export default function blocks({
+  config: configPath = 'src/config.yaml',
+  css,
+}: BlocksOptions = {}): AstroIntegration {
   let cfg: AstroConfig;
   let collections: CollectionsConfig = { entries: {} };
   let languageBasePaths: string[] = ['/'];
   let copyDts = copyRegistryDts({}, 'en');
   return {
-    name: 'site-config',
+    name: 'astro-blocks',
 
     hooks: {
       'astro:config:setup': async ({ config, logger, updateConfig, addWatchFile }) => {
-        const buildLogger = logger.fork('site-config');
-
         const virtualModuleId = 'site-config';
         const resolvedVirtualModuleId = '\0' + virtualModuleId;
         const copyModuleId = 'site-copy';
         const resolvedCopyModuleId = '\0' + copyModuleId;
         const imagesModuleId = 'site-images';
         const resolvedImagesModuleId = '\0' + imagesModuleId;
+        const stylesModuleId = 'site-styles';
+        const resolvedStylesModuleId = '\0' + stylesModuleId;
+        const cssFile = css ? fileURLToPath(new URL(css, config.root)) : LIBRARY_CSS;
 
-        const rawJsonConfig = (await loadConfig(_themeConfig)) as Config;
+        const rawJsonConfig = (await loadConfig(configPath)) as Config;
         const { SITE, I18N, METADATA, ANALYTICS, COLLECTIONS } = configBuilder(rawJsonConfig);
         collections = COLLECTIONS;
         languageBasePaths = I18N.languages.map((l) => l.basePath);
@@ -42,7 +74,7 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
         );
         const relative = (file: string) => file.replace(fileURLToPath(config.root), '');
         for (const { file, keyPath } of warnings) {
-          buildLogger.warn(
+          logger.warn(
             keyPath
               ? `Copy key "${keyPath}" missing in ${relative(file)}; using ${I18N.default}`
               : `Copy file ${relative(file)} missing; using ${I18N.default}`
@@ -51,14 +83,33 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
         for (const file of files) addWatchFile(file);
         copyDts = copyRegistryDts(copy, I18N.default);
 
+        const registered = (name: string) => config.integrations.some((i) => i.name === name);
+        const hasTailwind = ((config.vite.plugins ?? []) as unknown[])
+          .flat(Infinity)
+          .some(
+            (p) =>
+              !!p &&
+              typeof p === 'object' &&
+              'name' in p &&
+              String(p.name).startsWith('@tailwindcss/vite')
+          );
+
         updateConfig({
           site: SITE.site,
           base: SITE.base,
 
           trailingSlash: SITE.trailingSlash ? 'always' : 'never',
 
+          integrations: [
+            ...(registered('@astrojs/mdx') ? [] : [mdx()]),
+            ...(registered('astro-icon') ? [] : [icon()]),
+          ],
+          markdown: { shikiConfig },
+
           vite: {
+            optimizeDeps: { include: THREE_DEPS },
             plugins: [
+              ...(hasTailwind ? [] : [tailwindcss()]),
               {
                 name: 'vite-plugin-site-config',
                 resolveId(id) {
@@ -70,6 +121,9 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
                   }
                   if (id === imagesModuleId) {
                     return resolvedImagesModuleId;
+                  }
+                  if (id === stylesModuleId) {
+                    return resolvedStylesModuleId;
                   }
                   return null;
                 },
@@ -89,6 +143,9 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
                   if (id === resolvedImagesModuleId) {
                     return `export default import.meta.glob('/src/assets/images/**/*.{jpeg,jpg,png,tiff,webp,gif,svg,JPEG,JPG,PNG,TIFF,WEBP,GIF,SVG}');`;
                   }
+                  if (id === resolvedStylesModuleId) {
+                    return `import ${JSON.stringify(cssFile)};`;
+                  }
                   return null;
                 },
               },
@@ -96,13 +153,8 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
           },
         });
 
-        if (typeof _themeConfig === 'string') {
-          addWatchFile(new URL(_themeConfig, config.root));
-
-          buildLogger.info(`Site config \`${_themeConfig}\` has been loaded.`);
-        } else {
-          buildLogger.info(`Site config has been loaded.`);
-        }
+        addWatchFile(new URL(configPath, config.root));
+        logger.info(`Site config \`${configPath}\` has been loaded.`);
       },
       'astro:config:done': async ({ config, injectTypes }) => {
         cfg = config;
@@ -110,17 +162,16 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
         injectTypes({ filename: 'copy.d.ts', content: copyDts });
       },
       'astro:build:done': async ({ logger, pages }) => {
-        const buildLogger = logger.fork('site-config');
         for (const [name, route] of collectionsWithoutEntryPages(
           collections,
           languageBasePaths,
           pages.map((p) => p.pathname)
         )) {
-          buildLogger.warn(
+          logger.warn(
             `Collection "${name}" has route "${route}" but no page generated its entry URLs`
           );
         }
-        buildLogger.info('Updating `robots.txt` with `sitemap-index.xml` ...');
+        logger.info('Updating `robots.txt` with `sitemap-index.xml` ...');
 
         try {
           const outDir = cfg.outDir;
@@ -167,4 +218,4 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
       },
     },
   };
-};
+}

@@ -4,7 +4,7 @@ entry    = 1*(A-Z / a-z / 0-9)
 text     = encodeURIComponent(text) with "-" → %2D and "." → %2E`;
 
 export const usage = `<script>
-  import { connectUrlState } from '~/utils/urlState';
+  import { connectUrlState } from '#blocks/url-state';
 
   const disconnect = connectUrlState({
     spec: {
