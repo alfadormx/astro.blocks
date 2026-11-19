@@ -47,6 +47,10 @@ test.describe('rendering', () => {
     const hero = section(page, 'background-video');
     await expect(hero.locator('video[aria-hidden="true"]')).toHaveCount(1);
     await expect(hero.locator('.bg-base\\/60')).toHaveCount(1);
+    const sources = hero.locator('video source');
+    await expect(sources).toHaveCount(2);
+    await expect(sources.nth(0)).toHaveAttribute('type', 'video/webm');
+    await expect(sources.nth(1)).toHaveAttribute('type', 'video/mp4');
   });
 
   test('split-right puts the media right of the copy', async ({ page }) => {

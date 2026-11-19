@@ -17,7 +17,12 @@ const defaultActionConfig = { size: 'lg', shape: 'pill', variant: 'solid' } as c
 <Hero
   container={{
     minHeight: 'min-h-[80vh]',
-    background: { video: 'https://www.pexels.com/download/video/2646392/' },
+    background: {
+      video: [
+        { src: '/videos/demos/jewellery/hero.webm', type: 'video/webm' },
+        { src: '/videos/demos/jewellery/hero.mp4', type: 'video/mp4' },
+      ],
+    },
   }}
   headline={{
     tagline: 'Hero',

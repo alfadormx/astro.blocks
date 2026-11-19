@@ -1,7 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 
 const PAGE_URL = '/documentation/composite/Hero';
-const PEXELS = /^https:\/\/www\.pexels\.com\/download\/video\//;
 
 const root = (page: Page) =>
   page.locator('[data-doc-section="background-video"] [data-background-video]');
@@ -15,12 +14,6 @@ async function open(page: Page) {
   await expect(bg).toHaveAttribute('data-background-ready', '');
   return bg;
 }
-
-test.beforeEach(async ({ page }) => {
-  await page.route(PEXELS, (route) =>
-    route.fulfill({ path: 'public/videos/flower.mp4', contentType: 'video/mp4' })
-  );
-});
 
 test('the controls have accessible names', async ({ page }) => {
   const bg = await open(page);

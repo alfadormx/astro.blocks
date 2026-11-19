@@ -53,7 +53,13 @@ const testimonials: Testimonial[] = Object.values(c.testimonials.items).map((t) 
   <Hero
     layout="centered"
     container={{
-      background: { video: '/videos/demos/jewellery/hero.mp4', overlayClass: 'bg-tertiary/60' },
+      background: {
+        video: [
+          { src: '/videos/demos/jewellery/hero.webm', type: 'video/webm' },
+          { src: '/videos/demos/jewellery/hero.mp4', type: 'video/mp4' },
+        ],
+        overlayClass: 'bg-tertiary/60',
+      },
       class: 'bg-tertiary',
       minHeight: 'min-h-[85svh]',
     }}
