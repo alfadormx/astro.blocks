@@ -1,0 +1,54 @@
+---
+import Item from '@alfadormx/blocks/composite/Item.astro';
+---
+
+<div class="space-y-8">
+  <div>
+    <p class="text-sm font-semibold">Vertical connector (horizontal layout)</p>
+    <div class="max-w-md">
+      <Item
+        icon={{ name: 'heroicons:arrow-down-tray', class: 'text-primary' }}
+        title="Step 1: Download"
+        content="Get started by downloading the template."
+        orientation="horizontal"
+        showConnector
+      />
+      <Item
+        icon={{ name: 'heroicons:pencil-square', class: 'text-secondary' }}
+        title="Step 2: Customize"
+        content="Add your own content and styles."
+        orientation="horizontal"
+        showConnector
+      />
+      <Item
+        icon={{ name: 'heroicons:check-circle', class: 'text-success' }}
+        title="Step 3: Done"
+        content="Ship it!"
+        orientation="horizontal"
+      />
+    </div>
+  </div>
+  <div>
+    <p class="text-sm font-semibold">Horizontal connector (vertical layout)</p>
+    <div class="flex flex-row items-start">
+      <Item
+        icon={{ name: 'heroicons:user-plus', class: 'text-primary' }}
+        title="Sign Up"
+        content="Create your account."
+      />
+      <Item
+        icon={{ name: 'heroicons:envelope', class: 'text-secondary' }}
+        title="Verify"
+        content="Confirm your email."
+        showConnectorLeft
+        showConnectorRight
+      />
+      <Item
+        icon={{ name: 'heroicons:rocket-launch', class: 'text-success' }}
+        title="Launch"
+        content="You're all set."
+        showConnectorLeft
+      />
+    </div>
+  </div>
+</div>

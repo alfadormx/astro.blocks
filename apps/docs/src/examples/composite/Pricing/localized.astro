@@ -1,0 +1,52 @@
+---
+import Pricing from '@alfadormx/blocks/composite/Pricing.astro';
+import type { PricingTier } from '@alfadormx/blocks/types/pricing';
+
+const starter: PricingTier = {
+  name: 'Starter',
+  description: 'For individuals getting started.',
+  price: { monthly: 9 },
+  features: ['1 project', '5 GB storage', { label: 'Priority support', included: false }],
+  action: { label: 'Start free trial', href: '#' },
+};
+
+const pro: PricingTier = {
+  name: 'Pro',
+  description: 'For growing teams.',
+  price: { monthly: 29 },
+  features: ['10 projects', '50 GB storage', 'Priority support'],
+  action: { label: 'Start free trial', href: '#' },
+  highlighted: true,
+  badge: 'Most popular',
+};
+
+const team: PricingTier = {
+  name: 'Team',
+  description: 'For larger teams.',
+  price: { monthly: 79 },
+  features: ['Unlimited projects', '500 GB storage', 'Priority support'],
+  action: { label: 'Start free trial', href: '#' },
+};
+
+const starterYearly: PricingTier = { ...starter, price: { monthly: 9, yearly: 90 } };
+const proYearly: PricingTier = { ...pro, price: { monthly: 29, yearly: 290 } };
+const teamYearly: PricingTier = { ...team, price: { monthly: 79, yearly: 790 } };
+---
+
+<Pricing
+  headline={{ tagline: 'Precios', title: 'Planes para cada equipo' }}
+  tiers={[starterYearly, proYearly, teamYearly]}
+  toggleGroup={{
+    label: 'Periodo de facturación',
+    options: [{ label: 'Mensual', selected: true }, { label: 'Anual' }],
+  }}
+  billingAnnouncement={{
+    monthly: 'Mostrando precios mensuales',
+    yearly: 'Mostrando precios anuales',
+  }}
+  defaultTierConfig={{
+    period: { monthly: '/mes', yearly: '/año' },
+    includedLabel: 'Incluido',
+    excludedLabel: 'No incluido',
+  }}
+/>

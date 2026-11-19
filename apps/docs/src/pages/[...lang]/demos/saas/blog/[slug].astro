@@ -1,0 +1,17 @@
+---
+import SaasLayout from '../_layouts/Layout.astro';
+import Container from '@alfadormx/blocks/layout/Container.astro';
+import PostLayout from '@alfadormx/blocks/composite/PostLayout.astro';
+import { collectionEntries, renderEntry } from '@alfadormx/blocks/collections';
+
+export const getStaticPaths = () => collectionEntries('posts');
+const { Content, langCode, layout, metadata } = await renderEntry(Astro, 'posts');
+---
+
+<SaasLayout langCode={langCode} metadata={metadata}>
+  <Container>
+    <PostLayout {...layout}>
+      <Content />
+    </PostLayout>
+  </Container>
+</SaasLayout>

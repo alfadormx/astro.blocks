@@ -1,0 +1,29 @@
+---
+title: CallToAction
+description: A headline paired with action buttons to drive a single conversion.
+section: composite
+order: 1
+---
+
+import Example from '@alfadormx/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/pages/documentation/_api/ApiReferenceTable.astro';
+import Default from '~/examples/composite/CallToAction/default.astro';
+import defaultSource from '~/examples/composite/CallToAction/default.astro?raw';
+import SharedActionDefaults from '~/examples/composite/CallToAction/shared-action-defaults.astro';
+import sharedActionDefaultsSource from '~/examples/composite/CallToAction/shared-action-defaults.astro?raw';
+
+## Default configuration
+
+<Example name="default" source={defaultSource}>
+  <Default />
+</Example>
+
+## Shared action defaults
+
+`defaultActionConfig` is merged under every action, so each entry only lists what differs. `actionsClass` styles the wrapper around the buttons.
+
+<Example name="shared-action-defaults" source={sharedActionDefaultsSource}>
+  <SharedActionDefaults />
+</Example>
+
+<ApiReferenceTable component="CallToAction" category="composite" />

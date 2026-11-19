@@ -1,0 +1,82 @@
+---
+import JewelleryLayout from './_layouts/Layout.astro';
+import Container from '@alfadormx/blocks/layout/Container.astro';
+import Headline from '@alfadormx/blocks/primitives/Headline.astro';
+import ItemsGrid from '@alfadormx/blocks/composite/ItemsGrid.astro';
+import Tabs from '@alfadormx/blocks/composite/Tabs.astro';
+import type { ItemProps } from '@alfadormx/blocks/types/item';
+import { localizedPaths, useCopy } from '@alfadormx/blocks/copy';
+import { LABEL, RING_PRESETS, SECTION_HEADLINE, configuratorUrl } from './_site';
+
+export const getStaticPaths = () => localizedPaths();
+
+type Props = { langCode: string; basePath: string };
+
+const { langCode, copy } = useCopy(Astro, 'jewellery');
+const { collections: c } = copy;
+
+const isPreset = (key: string): key is keyof typeof RING_PRESETS =>
+  Object.hasOwn(RING_PRESETS, key);
+
+const categories = Object.values(c.tabs).map((tab) => ({
+  label: tab.label,
+  items: Object.entries(tab.products).map(([key, product]): ItemProps => ({
+    title: product.title,
+    content: product.content,
+    image: {
+      src: `~/assets/images/demos/jewellery/product-${key}.jpg`,
+      alt: product.imageAlt,
+      width: 600,
+      height: 800,
+    },
+    ...(isPreset(key) && {
+      actions: [{ label: c.designLabel, href: configuratorUrl(langCode, RING_PRESETS[key]) }],
+    }),
+  })),
+}));
+---
+
+<JewelleryLayout langCode={langCode} metadata={{ title: { default: c.pageTitle } }}>
+  <Container>
+    <Headline
+      {...SECTION_HEADLINE}
+      tagline={c.tagline}
+      title={c.title}
+      subtitle={c.subtitle}
+      htmlTag="h1"
+    />
+    <Tabs
+      items={categories.map(({ label }) => ({ label }))}
+      tabList={{ layout: 'grid', columns: 3, spacing: { gap: 'gap-0', margin: 'mb-10' } }}
+      defaultItemConfig={{
+        variant: 'ghost',
+        intent: 'neutral',
+        shape: 'square',
+        class: `rounded-none border-b border-border hover:bg-transparent ${LABEL}`,
+      }}
+      activeItemConfig={{
+        variant: 'ghost',
+        intent: 'neutral',
+        class: 'border-b-2 border-b-emphasis',
+      }}
+    >
+      {categories.map(({ items }, i) => (
+        <ItemsGrid
+          slot={`panel-${i}`}
+          columns={3}
+          gap="normal"
+          items={items}
+          defaultItemConfig={{
+            orientation: 'vertical',
+            class: 'items-start text-left gap-3',
+            contentClass: 'items-start text-left',
+            mediaClass: 'w-full aspect-3/4 object-cover',
+            titleClass: 'font-title text-2xl font-medium mb-1',
+            textClass: 'text-sm text-muted mb-0',
+            defaultActionConfig: { variant: 'link', intent: 'primary', class: `${LABEL} px-0` },
+          }}
+        />
+      ))}
+    </Tabs>
+  </Container>
+</JewelleryLayout>

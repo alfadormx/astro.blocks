@@ -1,0 +1,8 @@
+---
+import CodeBlock from '@alfadormx/blocks/primitives/CodeBlock.astro';
+
+// Must match `BASIC` in tests/browser/codeblock.spec.ts.
+const code = 'export function greet(name: string): string {\n  return `Hello, ${name}!`;\n}\n';
+---
+
+<CodeBlock lang="ts" code={code} />

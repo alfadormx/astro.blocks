@@ -1,0 +1,8 @@
+---
+import CodeBlock from '@alfadormx/blocks/primitives/CodeBlock.astro';
+
+const code =
+  "// Keywords, strings, numbers, types, calls, a regex and a < comparison.\ninterface Point {\n  x: number;\n  y: number;\n}\n\nconst limit = 42;\nconst pattern = /^[a-z]+$/i;\n\nexport async function check(point: Point, label = 'origin'): Promise<boolean> {\n  const ok = point.x < limit && pattern.test(label);\n  console.log(`checked ${label}`, ok);\n  return ok;\n}\n";
+---
+
+<CodeBlock lang="ts" code={code} />

@@ -1,0 +1,14 @@
+---
+import LanguageToggle from '@alfadormx/blocks/primitives/LanguageToggle.astro';
+---
+
+<div class="flex flex-col gap-6">
+  <div>
+    <p class="text-sm text-muted mb-2">Horizontal (default)</p>
+    <LanguageToggle preservePath={false} orientation="horizontal" />
+  </div>
+  <div>
+    <p class="text-sm text-muted mb-2">Vertical</p>
+    <LanguageToggle preservePath={false} orientation="vertical" />
+  </div>
+</div>

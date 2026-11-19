@@ -1,0 +1,11 @@
+---
+import TextArea from '@alfadormx/blocks/primitives/TextArea.astro';
+
+const shapes = ['rounded', 'square'] as const;
+---
+
+<div class="flex flex-col gap-4 max-w-md">
+  {shapes.map((shape) => (
+    <TextArea label={`Shape ${shape}`} shape={shape} rows={2} />
+  ))}
+</div>

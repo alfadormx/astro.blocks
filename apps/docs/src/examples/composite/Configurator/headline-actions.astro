@@ -1,0 +1,50 @@
+---
+import Configurator from '@alfadormx/blocks/composite/Configurator.astro';
+import type { ConfiguratorProps } from '@alfadormx/blocks/types/configurator';
+
+const modelViewer: ConfiguratorProps['modelViewer'] = {
+  src: '/models/ring.glb',
+  label: 'A configurable ring',
+  class: 'rounded-lg bg-surface',
+  height: '320px',
+  cameraPresets: { band: { position: [0, -0.9, 2.4], target: [0, -0.6, 0], fov: 35 } },
+};
+
+const metalOptions = [
+  {
+    code: 'yellow',
+    label: 'Yellow gold',
+    selected: true,
+    mutations: [{ type: 'material', material: 'Band', color: '#e6b422', roughness: 0.3 }],
+  },
+  {
+    code: 'white',
+    label: 'White gold',
+    mutations: [{ type: 'material', material: 'Band', color: '#e5e4e2', roughness: 0.2 }],
+  },
+  {
+    code: 'rose',
+    label: 'Rose gold',
+    mutations: [{ type: 'material', part: 'Band', use: 'RoseGold' }],
+  },
+] satisfies Extract<ConfiguratorProps['categories'][number], { panel: 'toggle' }>['options'];
+
+const categories: ConfiguratorProps['categories'] = [
+  {
+    name: 'configurator-doc-headline-metal',
+    panel: 'toggle',
+    triggerButton: { label: 'Metal' },
+    heading: 'Choose your metal',
+    options: metalOptions,
+  },
+];
+---
+
+<Configurator
+  categories={categories}
+  modelViewer={modelViewer}
+  headline={{ tagline: 'Ring', title: 'Solitaire', subtitle: 'Hand-set in Antwerp' }}
+  defaultActionConfig={{ variant: 'outline', intent: 'neutral' }}
+  actionsClass="flex"
+  actions={[{ label: 'Save my design' }, { label: 'Share' }]}
+/>

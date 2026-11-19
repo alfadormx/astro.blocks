@@ -1,0 +1,31 @@
+---
+import HeaderBlock from '@alfadormx/blocks/composite/Header.astro';
+import type { NavigationTreeItem } from '@alfadormx/blocks/types/navigationtree';
+
+const navItems: NavigationTreeItem[] = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+];
+---
+
+<div class="space-y-6">
+  <div>
+    <p class="text-sm font-semibold">Using SITE.name (default)</p>
+    <HeaderBlock rightNavigationTreeHorizontal={{ items: navItems }} />
+  </div>
+  <div>
+    <p class="text-sm font-semibold">Custom text</p>
+    <HeaderBlock logo={{ label: 'My Brand' }} rightNavigationTreeHorizontal={{ items: navItems }} />
+  </div>
+  <div>
+    <p class="text-sm font-semibold">Custom styling with logo</p>
+    <HeaderBlock
+      logo={{
+        label: 'Styled Brand',
+        labelClass: '!text-2xl !font-extrabold !text-primary',
+        class: 'hover:scale-105 transition-transform',
+      }}
+      rightNavigationTreeHorizontal={{ items: navItems }}
+    />
+  </div>
+</div>

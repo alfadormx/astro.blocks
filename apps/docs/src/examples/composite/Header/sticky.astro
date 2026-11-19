@@ -1,0 +1,35 @@
+---
+import HeaderBlock from '@alfadormx/blocks/composite/Header.astro';
+import type { NavigationTreeItem } from '@alfadormx/blocks/types/navigationtree';
+
+const navItems: NavigationTreeItem[] = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+];
+---
+
+<div class="h-96 overflow-y-scroll">
+  <HeaderBlock
+    isSticky
+    themeToggle={{}}
+    logo={{
+      image: {
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+        alt: 'Logo',
+        width: 48,
+        height: 48,
+      },
+    }}
+    rightNavigationTreeHorizontal={{ items: navItems }}
+    container={{
+      background: { class: 'bg-background/10 backdrop-blur-sm' },
+      border: { width: 'border-b', color: 'border-border' },
+    }}
+  />
+  <div class="p-8 bg-elevated/50">
+    <p>Scroll down to see the sticky header in action...</p>
+    <div class="h-200 flex items-center justify-center">
+      <p class="text-muted">Content area</p>
+    </div>
+  </div>
+</div>

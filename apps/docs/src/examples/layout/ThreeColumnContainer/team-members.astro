@@ -1,0 +1,47 @@
+---
+import ThreeColumnContainer from '@alfadormx/blocks/layout/ThreeColumnContainer.astro';
+import Headline from '@alfadormx/blocks/primitives/Headline.astro';
+---
+
+<ThreeColumnContainer
+  containerWidthType="full"
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-12' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  gap="loose"
+  spacing={{ margin: 'mb-8' }}
+>
+  <div slot="left" class="text-center">
+    <div class="w-32 h-32 bg-primary rounded-full mx-auto mb-4"></div>
+    <Headline title="John Doe" htmlTag="h4" align="center" class="my-0" titleClass="mb-1 text-lg" />
+    <p class="text-muted mb-2">CEO & Founder</p>
+    <p class="text-sm">Leading the company with vision and passion.</p>
+  </div>
+  <div slot="center" class="text-center">
+    <div class="w-32 h-32 bg-success rounded-full mx-auto mb-4"></div>
+    <Headline
+      title="Jane Smith"
+      htmlTag="h4"
+      align="center"
+      class="my-0"
+      titleClass="mb-1 text-lg"
+    />
+    <p class="text-muted mb-2">CTO</p>
+    <p class="text-sm">Building innovative technical solutions.</p>
+  </div>
+  <div slot="right" class="text-center">
+    <div class="w-32 h-32 bg-secondary rounded-full mx-auto mb-4"></div>
+    <Headline
+      title="Mike Johnson"
+      htmlTag="h4"
+      align="center"
+      class="my-0"
+      titleClass="mb-1 text-lg"
+    />
+    <p class="text-muted mb-2">Lead Designer</p>
+    <p class="text-sm">Creating beautiful user experiences.</p>
+  </div>
+</ThreeColumnContainer>

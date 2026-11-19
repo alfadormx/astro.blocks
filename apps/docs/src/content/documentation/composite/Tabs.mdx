@@ -1,0 +1,130 @@
+---
+title: Tabs
+description: Tab navigation with configurable tab buttons and panel content.
+section: composite
+order: 27
+---
+
+import Example from '@alfadormx/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/pages/documentation/_api/ApiReferenceTable.astro';
+import Horizontal from '~/examples/composite/Tabs/horizontal.astro';
+import horizontalSource from '~/examples/composite/Tabs/horizontal.astro?raw';
+import Vertical from '~/examples/composite/Tabs/vertical.astro';
+import verticalSource from '~/examples/composite/Tabs/vertical.astro?raw';
+import LayoutRow from '~/examples/composite/Tabs/layout-row.astro';
+import layoutRowSource from '~/examples/composite/Tabs/layout-row.astro?raw';
+import LayoutColumn from '~/examples/composite/Tabs/layout-column.astro';
+import layoutColumnSource from '~/examples/composite/Tabs/layout-column.astro?raw';
+import LayoutColumnAuto from '~/examples/composite/Tabs/layout-column-auto.astro';
+import layoutColumnAutoSource from '~/examples/composite/Tabs/layout-column-auto.astro?raw';
+import LayoutGrid from '~/examples/composite/Tabs/layout-grid.astro';
+import layoutGridSource from '~/examples/composite/Tabs/layout-grid.astro?raw';
+import Many from '~/examples/composite/Tabs/many.astro';
+import manySource from '~/examples/composite/Tabs/many.astro?raw';
+import Sticky from '~/examples/composite/Tabs/sticky.astro';
+import stickySource from '~/examples/composite/Tabs/sticky.astro?raw';
+import StickyRow from '~/examples/composite/Tabs/sticky-row.astro';
+import stickyRowSource from '~/examples/composite/Tabs/sticky-row.astro?raw';
+import PanelClass from '~/examples/composite/Tabs/panel-class.astro';
+import panelClassSource from '~/examples/composite/Tabs/panel-class.astro?raw';
+
+## Horizontal (default)
+
+<Example name="horizontal" source={horizontalSource}>
+  <Horizontal />
+</Example>
+
+## Vertical
+
+<Example name="vertical" source={verticalSource}>
+  <Vertical />
+</Example>
+
+## Tab list layout: row
+
+`tabList.layout` is independent of `orientation`. Here a vertical Tabs keeps its tab list beside the panel, while the triggers themselves run in a row.
+
+<Example name="layout-row" source={layoutRowSource}>
+  <LayoutRow />
+</Example>
+
+## Tab list layout: column
+
+The mirror case: a horizontal Tabs whose triggers are stacked in a column above the panel. Each trigger spans the full width of the tab list.
+
+<Example name="layout-column" source={layoutColumnSource}>
+  <LayoutColumn />
+</Example>
+
+## Tab list layout: column, content-sized triggers
+
+Set `width: 'auto'` on `defaultItemConfig` (or on an item) to keep triggers as wide as their own label instead of filling the tab list.
+
+<Example name="layout-column-auto" source={layoutColumnAutoSource}>
+  <LayoutColumnAuto />
+</Example>
+
+## Tab list layout: grid
+
+`tabList.layout: 'grid'` arranges the triggers as tiles. The column count is read from the width of the tab list's own container, not the viewport, so the same config adapts inside a narrow panel. `tabList.columns` applies only in this layout, and the count never drops below two columns. Each tile fills its grid cell, so every tile has the same size.
+
+Grid is meant for `orientation="horizontal"`. In `orientation="vertical"` the tab list sits in an `auto` grid track, where a size container has no intrinsic width to measure, so the tile grid collapses; use `layout: 'row'` or `layout: 'column'` there.
+
+<Example name="layout-grid" source={layoutGridSource} exampleSlot={{ class: 'max-w-lg' }}>
+  <LayoutGrid />
+</Example>
+
+## Any number of tabs
+
+The panel count follows the item count — there is no cap. Twelve items render twelve triggers and twelve `panel-0` … `panel-11` slots, each with its own tabpanel id and ARIA wiring.
+
+<Example name="many" source={manySource} exampleSlot={{ class: 'max-w-lg' }}>
+  <Many />
+</Example>
+
+## Sticky tab list
+
+`tabList.sticky` keeps the triggers in view while the panels scroll. Under a sticky Header the tab list stops directly below it: Header publishes its height as `--scroll-padding-top` and the tab list's default `top` reads it, falling back to `0` when no Header is sticky. The box below is its own scroll box under the docs page's sticky Header, so it cancels the offset with `top-0`; scroll it and the triggers stay at the top.
+
+The flag adds `sticky top-(--scroll-padding-top,0px) z-10 bg-background`, plus `self-start` in vertical orientation. In grid layout they land on the `@container` wrapper, so cancel them from `tabList.wrapperClass`; in row and column layouts they land on the tab list, so cancel them from `tabList.class`. Use `top-0` when the tabs sit in their own scroll box under a page-level sticky Header (`md:top-0` if that box only exists from a breakpoint up), and swap `bg-background` for the section's background, such as `bg-surface`, to avoid a visible band.
+
+<Example
+  name="sticky"
+  source={stickySource}
+  exampleSlot={{ class: 'max-w-lg max-h-80 overflow-y-auto p-0' }}
+>
+  <Sticky />
+</Example>
+
+## Sticky row tab list
+
+`sticky` works in every layout; outside grid the defaults land on the tab list itself, as described above.
+
+<Example
+  name="sticky-row"
+  source={stickyRowSource}
+  exampleSlot={{ class: 'max-w-lg max-h-80 overflow-y-auto p-0' }}
+>
+  <StickyRow />
+</Example>
+
+## Panel styling
+
+`panelClass` lands on every panel. Display utilities such as `flex` are safe: inactive panels stay hidden.
+
+<Example name="panel-class" source={panelClassSource} exampleSlot={{ class: 'max-w-lg' }}>
+  <PanelClass />
+</Example>
+
+<ApiReferenceTable component="Tabs" category="composite" />
+
+Panel content is any element placed in the matching `panel-0`, `panel-1`, ... slots — see the Horizontal/Vertical examples above. Style every panel with `panelClass`.
+
+## Accessibility
+
+- The tab list is a single tab stop: `Tab` lands on the active tab and leaves to the panel content.
+- Arrow keys follow the tab list's axis: Left/Right for `row` and `grid` layouts, Up/Down for `column`. Left/Right are swapped in right-to-left documents.
+- Home and End jump to the first and last tab.
+- Focus wraps at both ends, and moving focus activates the tab.
+- Disabled tabs are skipped.
+- The layout sets `aria-orientation` on the tab list; grid layouts are navigated as a single row in reading order.

@@ -1,0 +1,48 @@
+---
+import ItemsGridBlock from '@alfadormx/blocks/composite/ItemsGrid.astro';
+---
+
+<div class="space-y-8">
+  <ItemsGridBlock
+    columns={3}
+    items={[
+      {
+        icon: { name: 'heroicons:sun' },
+        title: 'Wide container',
+        content: 'Three columns once the container passes 48rem.',
+      },
+      {
+        icon: { name: 'heroicons:sparkles' },
+        title: 'Wide container',
+        content: 'Three columns once the container passes 48rem.',
+      },
+      {
+        icon: { name: 'heroicons:bolt' },
+        title: 'Wide container',
+        content: 'Three columns once the container passes 48rem.',
+      },
+    ]}
+  />
+  <div class="max-w-sm">
+    <ItemsGridBlock
+      columns={3}
+      items={[
+        {
+          icon: { name: 'heroicons:sun' },
+          title: 'Narrow container',
+          content: 'Same columns, but the container is under 32rem.',
+        },
+        {
+          icon: { name: 'heroicons:sparkles' },
+          title: 'Narrow container',
+          content: 'Same columns, but the container is under 32rem.',
+        },
+        {
+          icon: { name: 'heroicons:bolt' },
+          title: 'Narrow container',
+          content: 'Same columns, but the container is under 32rem.',
+        },
+      ]}
+    />
+  </div>
+</div>

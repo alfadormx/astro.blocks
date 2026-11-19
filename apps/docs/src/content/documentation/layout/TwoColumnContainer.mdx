@@ -1,0 +1,81 @@
+---
+title: TwoColumnContainer
+description: A pre-built layout wrapper for two equal columns. Responsive by default (stacks on mobile, side-by-side on desktop).
+section: layout
+order: 7
+---
+
+import Example from '@alfadormx/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/pages/documentation/_api/ApiReferenceTable.astro';
+import BasicTwoColumnLayout from '~/examples/layout/TwoColumnContainer/basic-two-column-layout.astro';
+import basicTwoColumnLayoutSource from '~/examples/layout/TwoColumnContainer/basic-two-column-layout.astro?raw';
+import WithBackgroundImage from '~/examples/layout/TwoColumnContainer/with-background-image.astro';
+import withBackgroundImageSource from '~/examples/layout/TwoColumnContainer/with-background-image.astro?raw';
+import WithBackgroundColorCustomGap from '~/examples/layout/TwoColumnContainer/with-background-color-custom-gap.astro';
+import withBackgroundColorCustomGapSource from '~/examples/layout/TwoColumnContainer/with-background-color-custom-gap.astro?raw';
+import ResponsiveStacksOnMobile from '~/examples/layout/TwoColumnContainer/responsive-stacks-on-mobile.astro';
+import responsiveStacksOnMobileSource from '~/examples/layout/TwoColumnContainer/responsive-stacks-on-mobile.astro?raw';
+import ReverseOrderOnMobile from '~/examples/layout/TwoColumnContainer/reverse-order-on-mobile.astro';
+import reverseOrderOnMobileSource from '~/examples/layout/TwoColumnContainer/reverse-order-on-mobile.astro?raw';
+import ImageText from '~/examples/layout/TwoColumnContainer/image-text.astro';
+import imageTextSource from '~/examples/layout/TwoColumnContainer/image-text.astro?raw';
+import FeatureComparison from '~/examples/layout/TwoColumnContainer/feature-comparison.astro';
+import featureComparisonSource from '~/examples/layout/TwoColumnContainer/feature-comparison.astro?raw';
+import ColumnRatio from '~/examples/layout/TwoColumnContainer/column-ratio.astro';
+import columnRatioSource from '~/examples/layout/TwoColumnContainer/column-ratio.astro?raw';
+
+## Basic Examples
+
+### 1. Basic Two Column Layout
+
+<Example name="basic-two-column-layout" source={basicTwoColumnLayoutSource}>
+  <BasicTwoColumnLayout />
+</Example>
+
+### 2. With Background Image
+
+<Example name="with-background-image" source={withBackgroundImageSource}>
+  <WithBackgroundImage />
+</Example>
+
+### 3. With Background Color & Custom Gap
+
+<Example name="with-background-color-custom-gap" source={withBackgroundColorCustomGapSource}>
+  <WithBackgroundColorCustomGap />
+</Example>
+
+### 4. Responsive (Stacks on Mobile)
+
+<Example name="responsive-stacks-on-mobile" source={responsiveStacksOnMobileSource}>
+  <ResponsiveStacksOnMobile />
+</Example>
+
+### 5. Reverse Order on Mobile
+
+<Example name="reverse-order-on-mobile" source={reverseOrderOnMobileSource}>
+  <ReverseOrderOnMobile />
+</Example>
+
+## Practical Use Cases
+
+### 6. Image + Text
+
+<Example name="image-text" source={imageTextSource}>
+  <ImageText />
+</Example>
+
+### 7. Feature Comparison
+
+<Example name="feature-comparison" source={featureComparisonSource}>
+  <FeatureComparison />
+</Example>
+
+### 8. Column Ratio
+
+`ratio` sets the column widths, left to right: `'1:1'` (the default), `'3:2'` or `'2:1'`. With `responsive` it applies from `breakpoint` up, and the columns still stack below it.
+
+<Example name="column-ratio" source={columnRatioSource}>
+  <ColumnRatio />
+</Example>
+
+<ApiReferenceTable component="TwoColumnContainer" category="layout" />

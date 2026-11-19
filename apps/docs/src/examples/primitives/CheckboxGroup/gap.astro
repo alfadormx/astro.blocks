@@ -1,0 +1,21 @@
+---
+import CheckboxGroup from '@alfadormx/blocks/primitives/CheckboxGroup.astro';
+
+const interests = [
+  { label: 'Laptops', value: 'laptops' },
+  { label: 'Phones', value: 'phones' },
+  { label: 'Televisions', value: 'televisions' },
+];
+const gaps = ['none', 'tight', 'normal', 'loose'] as const;
+---
+
+<div class="flex flex-col gap-6 max-w-md">
+  {gaps.map((gap) => (
+    <CheckboxGroup
+      label={`Gap ${gap}`}
+      name={`interests-gap-${gap}`}
+      optionsGap={gap}
+      options={interests}
+    />
+  ))}
+</div>

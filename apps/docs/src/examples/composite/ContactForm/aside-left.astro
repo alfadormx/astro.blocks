@@ -1,0 +1,19 @@
+---
+import ContactForm from '@alfadormx/blocks/composite/ContactForm.astro';
+import MapBlock from '@alfadormx/blocks/primitives/Map.astro';
+---
+
+<ContactForm
+  action={{ type: 'endpoint', url: 'https://formspree.io/f/demo-aside-left' }}
+  asidePosition="left"
+>
+  <div slot="aside" class="flex flex-col gap-4">
+    <address class="not-italic">
+      Example Studio
+      <br />
+      Keizersgracht 1<br />
+      1015 CC Amsterdam
+    </address>
+    <MapBlock lat={52.37} lon={4.89} height="240px" title="Office location" />
+  </div>
+</ContactForm>

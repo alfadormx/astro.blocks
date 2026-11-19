@@ -1,0 +1,20 @@
+---
+import Button from '@alfadormx/blocks/primitives/Button.astro';
+---
+
+<div class="flex flex-wrap gap-4">
+  <Button label="Left Icon" icon={{ name: 'heroicons:arrow-left' }} iconPosition="left" />
+  <Button label="Right Icon" icon={{ name: 'heroicons:arrow-right' }} iconPosition="right" />
+  <Button
+    label="Download"
+    icon={{ name: 'heroicons:arrow-down-tray' }}
+    iconPosition="left"
+    intent="success"
+  />
+  <Button
+    label="External Link"
+    icon={{ name: 'heroicons:arrow-top-right-on-square' }}
+    iconPosition="right"
+    intent="secondary"
+  />
+</div>

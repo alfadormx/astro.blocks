@@ -1,0 +1,72 @@
+---
+import HeaderBlock from '@alfadormx/blocks/composite/Header.astro';
+import type { NavigationTreeItem } from '@alfadormx/blocks/types/navigationtree';
+
+const navItems: NavigationTreeItem[] = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+];
+---
+
+<div class="space-y-6">
+  <div>
+    <p class="text-sm font-semibold">Tight</p>
+    <HeaderBlock
+      themeToggle={{}}
+      buttonsGap="tight"
+      logo={{
+        image: {
+          src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+          alt: 'Logo',
+          width: 48,
+          height: 48,
+        },
+      }}
+      rightNavigationTreeHorizontal={{ items: navItems }}
+      rightButtons={[
+        { label: 'Login', variant: 'outline', size: 'sm' },
+        { label: 'Sign Up', variant: 'solid', size: 'sm' },
+      ]}
+    />
+  </div>
+  <div>
+    <p class="text-sm font-semibold">Normal (default)</p>
+    <HeaderBlock
+      themeToggle={{}}
+      buttonsGap="normal"
+      logo={{
+        image: {
+          src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+          alt: 'Logo',
+          width: 48,
+          height: 48,
+        },
+      }}
+      rightNavigationTreeHorizontal={{ items: navItems }}
+      rightButtons={[
+        { label: 'Login', variant: 'outline', size: 'sm' },
+        { label: 'Sign Up', variant: 'solid', size: 'sm' },
+      ]}
+    />
+  </div>
+  <div>
+    <p class="text-sm font-semibold">Loose</p>
+    <HeaderBlock
+      themeToggle={{}}
+      buttonsGap="loose"
+      logo={{
+        image: {
+          src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+          alt: 'Logo',
+          width: 48,
+          height: 48,
+        },
+      }}
+      rightNavigationTreeHorizontal={{ items: navItems }}
+      rightButtons={[
+        { label: 'Login', variant: 'outline', size: 'sm' },
+        { label: 'Sign Up', variant: 'solid', size: 'sm' },
+      ]}
+    />
+  </div>
+</div>

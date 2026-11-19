@@ -1,0 +1,14 @@
+---
+import ToggleGroup from '@alfadormx/blocks/primitives/ToggleGroup.astro';
+---
+
+<ToggleGroup
+  group="togglegroup-doc-basic"
+  label="Delivery"
+  options={[
+    { code: 'standard', label: 'Standard', selected: true },
+    { code: 'express', label: 'Express' },
+    { code: 'same-day', label: 'Same day', disabled: true },
+    { code: 'pickup', label: 'Pickup' },
+  ]}
+/>

@@ -1,0 +1,159 @@
+---
+title: NavigationTree
+description: Recursive navigation component with collapsible tree structure.
+section: composite
+order: 21
+---
+
+import Example from '@alfadormx/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/pages/documentation/_api/ApiReferenceTable.astro';
+import Basic from '~/examples/composite/NavigationTree/basic.astro';
+import basicSource from '~/examples/composite/NavigationTree/basic.astro?raw';
+import AlwaysExpanded from '~/examples/composite/NavigationTree/always-expanded.astro';
+import alwaysExpandedSource from '~/examples/composite/NavigationTree/always-expanded.astro?raw';
+import ActiveOnly from '~/examples/composite/NavigationTree/active-only.astro';
+import activeOnlySource from '~/examples/composite/NavigationTree/active-only.astro?raw';
+import FirstLevel from '~/examples/composite/NavigationTree/first-level.astro';
+import firstLevelSource from '~/examples/composite/NavigationTree/first-level.astro?raw';
+import MaxDepth from '~/examples/composite/NavigationTree/max-depth.astro';
+import maxDepthSource from '~/examples/composite/NavigationTree/max-depth.astro?raw';
+import Toggleable from '~/examples/composite/NavigationTree/toggleable.astro';
+import toggleableSource from '~/examples/composite/NavigationTree/toggleable.astro?raw';
+import ButtonToggle from '~/examples/composite/NavigationTree/button-toggle.astro';
+import buttonToggleSource from '~/examples/composite/NavigationTree/button-toggle.astro?raw';
+import IconToggle from '~/examples/composite/NavigationTree/icon-toggle.astro';
+import iconToggleSource from '~/examples/composite/NavigationTree/icon-toggle.astro?raw';
+import CustomIcons from '~/examples/composite/NavigationTree/custom-icons.astro';
+import customIconsSource from '~/examples/composite/NavigationTree/custom-icons.astro?raw';
+import ButtonStyling from '~/examples/composite/NavigationTree/button-styling.astro';
+import buttonStylingSource from '~/examples/composite/NavigationTree/button-styling.astro?raw';
+import DefaultConfig from '~/examples/composite/NavigationTree/default-config.astro';
+import defaultConfigSource from '~/examples/composite/NavigationTree/default-config.astro?raw';
+import ActiveWeight from '~/examples/composite/NavigationTree/active-weight.astro';
+import activeWeightSource from '~/examples/composite/NavigationTree/active-weight.astro?raw';
+import ChildrenClass from '~/examples/composite/NavigationTree/children-class.astro';
+import childrenClassSource from '~/examples/composite/NavigationTree/children-class.astro?raw';
+import CurrentPath from '~/examples/composite/NavigationTree/current-path.astro';
+import currentPathSource from '~/examples/composite/NavigationTree/current-path.astro?raw';
+
+## Basic navigation
+
+A flat list with no nesting.
+
+<Example name="basic" source={basicSource}>
+  <Basic />
+</Example>
+
+## Expansion strategies
+
+### Always expanded
+
+All children visible at all times.
+
+<Example name="always-expanded" source={alwaysExpandedSource}>
+  <AlwaysExpanded />
+</Example>
+
+### Active only (default)
+
+Only shows children of active items.
+
+<Example name="active-only" source={activeOnlySource}>
+  <ActiveOnly />
+</Example>
+
+### First level only
+
+Shows only root-level items, no children.
+
+<Example name="first-level" source={firstLevelSource}>
+  <FirstLevel />
+</Example>
+
+### Depth limited (`maxDepth={1}`)
+
+Expands children up to the specified depth.
+
+<Example name="max-depth" source={maxDepthSource}>
+  <MaxDepth />
+</Example>
+
+### Toggleable (interactive)
+
+Click parent items to expand or collapse children. The active path is expanded automatically.
+
+<Example name="toggleable" source={toggleableSource}>
+  <Toggleable />
+</Example>
+
+## Toggle modes
+
+### Button toggle (default, mobile-friendly)
+
+The entire button toggles children. Good for touch devices with larger tap targets.
+
+<Example name="button-toggle" source={buttonToggleSource}>
+  <ButtonToggle />
+</Example>
+
+### Icon toggle only
+
+Only the icon toggles children; the button navigates to its `href`. This provides separate controls for navigation and expansion.
+
+<Example name="icon-toggle" source={iconToggleSource}>
+  <IconToggle />
+</Example>
+
+## Custom configuration
+
+### Custom icons
+
+<Example name="custom-icons" source={customIconsSource}>
+  <CustomIcons />
+</Example>
+
+### Custom button styling
+
+<Example name="button-styling" source={buttonStylingSource}>
+  <ButtonStyling />
+</Example>
+
+### Default item styling
+
+Default-config `class` and `icon` reach every item.
+
+`defaultItemConfig` reaches every item; `inactiveItemConfig` / `activeItemConfig` layer on top.
+
+Parents keep the `iconName` chevron over the default icon.
+
+<Example name="default-config" source={defaultConfigSource}>
+  <DefaultConfig />
+</Example>
+
+### Active item weight
+
+The active item is semi-bold by default. `activeItemConfig.class` can change its weight.
+
+<Example name="active-weight" source={activeWeightSource}>
+  <ActiveWeight />
+</Example>
+
+### Children wrapper
+
+`childrenClass` styles the wrapper around every level of children, here a guide line as in a docs sidebar.
+
+<Example name="children-class" source={childrenClassSource}>
+  <ChildrenClass />
+</Example>
+
+## Current path detection
+
+Without `currentPath`, the tree matches against the page URL.
+
+<Example name="current-path" source={currentPathSource}>
+  <CurrentPath />
+</Example>
+
+The active link carries `aria-current="page"`; a parent rendered as a `<summary>` toggle keeps the active look without it.
+
+<ApiReferenceTable component="NavigationTree" category="composite" />

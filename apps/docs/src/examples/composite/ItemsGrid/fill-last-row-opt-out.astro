@@ -1,0 +1,21 @@
+---
+import ItemsGridBlock from '@alfadormx/blocks/composite/ItemsGrid.astro';
+---
+
+<ItemsGridBlock
+  columns={2}
+  responsive={false}
+  fillLastRow
+  gap="tight"
+  defaultItemConfig={{
+    border: { width: 'border', color: 'border-border' },
+    spacing: { padding: 'p-4' },
+  }}
+  items={[
+    { title: 'One' },
+    { title: 'Two' },
+    { title: 'Three' },
+    { title: 'Four' },
+    { title: 'Five', class: 'col-span-1' },
+  ]}
+/>

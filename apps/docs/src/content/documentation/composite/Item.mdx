@@ -1,0 +1,161 @@
+---
+title: Item
+description: Single icon/title/content/actions block — the building block behind ItemsGrid, ItemsTimeline, and ItemsTimelineHorizontal.
+section: composite
+order: 15
+---
+
+import Example from '@alfadormx/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/pages/documentation/_api/ApiReferenceTable.astro';
+import BasicVertical from '~/examples/composite/Item/basic-vertical.astro';
+import basicVerticalSource from '~/examples/composite/Item/basic-vertical.astro?raw';
+import Horizontal from '~/examples/composite/Item/horizontal.astro';
+import horizontalSource from '~/examples/composite/Item/horizontal.astro?raw';
+import Connectors from '~/examples/composite/Item/connectors.astro';
+import connectorsSource from '~/examples/composite/Item/connectors.astro?raw';
+import OptionalText from '~/examples/composite/Item/optional-text.astro';
+import optionalTextSource from '~/examples/composite/Item/optional-text.astro?raw';
+import Image from '~/examples/composite/Item/image.astro';
+import imageSource from '~/examples/composite/Item/image.astro?raw';
+import ImageConnectors from '~/examples/composite/Item/image-connectors.astro';
+import imageConnectorsSource from '~/examples/composite/Item/image-connectors.astro?raw';
+import CustomTypography from '~/examples/composite/Item/custom-typography.astro';
+import customTypographySource from '~/examples/composite/Item/custom-typography.astro?raw';
+import ConnectorClass from '~/examples/composite/Item/connector-class.astro';
+import connectorClassSource from '~/examples/composite/Item/connector-class.astro?raw';
+import SpacingMargin from '~/examples/composite/Item/spacing-margin.astro';
+import spacingMarginSource from '~/examples/composite/Item/spacing-margin.astro?raw';
+import DefaultActionConfig from '~/examples/composite/Item/default-action-config.astro';
+import defaultActionConfigSource from '~/examples/composite/Item/default-action-config.astro?raw';
+import ActionsClass from '~/examples/composite/Item/actions-class.astro';
+import actionsClassSource from '~/examples/composite/Item/actions-class.astro?raw';
+import TitleTagDiv from '~/examples/composite/Item/title-tag-div.astro';
+import titleTagDivSource from '~/examples/composite/Item/title-tag-div.astro?raw';
+import TitleTagH3 from '~/examples/composite/Item/title-tag-h3.astro';
+import titleTagH3Source from '~/examples/composite/Item/title-tag-h3.astro?raw';
+import TitleTagDivHorizontal from '~/examples/composite/Item/title-tag-div-horizontal.astro';
+import titleTagDivHorizontalSource from '~/examples/composite/Item/title-tag-div-horizontal.astro?raw';
+import TitleTagH3Horizontal from '~/examples/composite/Item/title-tag-h3-horizontal.astro';
+import titleTagH3HorizontalSource from '~/examples/composite/Item/title-tag-h3-horizontal.astro?raw';
+import TextTag from '~/examples/composite/Item/text-tag.astro';
+import textTagSource from '~/examples/composite/Item/text-tag.astro?raw';
+
+Item renders an optional icon or image, an optional title, optional content, and action buttons, in either a vertical (stacked, centered) or horizontal (icon-left, text-right) layout. It renders only what it is given. It also supports optional connector lines, used to build timeline UIs.
+
+## Basic Vertical Item
+
+Default layout: icon, title, and content stacked and centered.
+
+<Example name="basic-vertical" source={basicVerticalSource}>
+  <BasicVertical />
+</Example>
+
+## Horizontal Layout
+
+Icon on the left, title and content left-aligned on the right.
+
+<Example name="horizontal" source={horizontalSource}>
+  <Horizontal />
+</Example>
+
+## Connector Lines
+
+Connector lines link items together to build timeline UIs. Use `showConnector` on a horizontal item for a vertical connecting line (as used by ItemsTimeline), or `showConnectorLeft`/`showConnectorRight` on a vertical item for a horizontal connecting line (as used by ItemsTimelineHorizontal).
+
+<Example name="connectors" source={connectorsSource}>
+  <Connectors />
+</Example>
+
+## Optional Text
+
+`title` and `content` are both optional. Item renders only what it is given — an omitted or empty value produces no element and no reserved space.
+
+<Example name="optional-text" source={optionalTextSource}>
+  <OptionalText />
+</Example>
+
+## Image Instead of Icon
+
+`image` carries the Image primitive's configuration and renders in the same media slot as `icon`. The two are mutually exclusive — when both are supplied the image wins. `image.alt` is required at runtime; the Image primitive throws without it. Supply `width`/`height` or an `aspectRatio`, or the optimizer logs an error. The default box is `size-8 md:size-10 lg:size-12`, which fixes both axes — pass `image.class` to override it or to add `object-*` handling for a non-square source.
+
+<Example name="image" source={imageSource}>
+  <Image />
+</Example>
+
+## Image With Connectors
+
+Images work under every connector variant, so ItemsTimeline and ItemsTimelineHorizontal can render image-led steps.
+
+<Example name="image-connectors" source={imageConnectorsSource}>
+  <ImageConnectors />
+</Example>
+
+## Custom Typography and Media Size
+
+`titleClass`, `textClass` and `mediaClass` replace the default title typography, content spacing and icon or image sizes. They do not merge with the defaults, so set every class you need. `icon.class` and `image.class` still merge on top of `mediaClass`.
+
+<Example name="custom-typography" source={customTypographySource}>
+  <CustomTypography />
+</Example>
+
+## Connector Class
+
+`connectorClass` styles every visible connector line in either layout. Hidden sides stay transparent.
+
+<Example name="connector-class" source={connectorClassSource}>
+  <ConnectorClass />
+</Example>
+
+## Spacing margin
+
+`spacing.margin` lands on the item root next to `spacing.padding`.
+
+<Example name="spacing-margin" source={spacingMarginSource}>
+  <SpacingMargin />
+</Example>
+
+## Action Defaults
+
+`defaultActionConfig` is one layer merged under every action, so one setting styles them all; an action's own values win. Prefer it over `defaultItemConfig.actions` in a grid, which merges by index and so reaches only the first action.
+
+<Example name="default-action-config" source={defaultActionConfigSource}>
+  <DefaultActionConfig />
+</Example>
+
+## Actions Class
+
+`actionsClass` merges over the actions wrapper's default `flex flex-wrap gap-2 md:gap-3 mt-2 md:mt-3`. Here the actions stack.
+
+<Example name="actions-class" source={actionsClassSource}>
+  <ActionsClass />
+</Example>
+
+## Title Tag
+
+`titleTag` sets the title's semantics only. A heading tag renders the title through Headline with the same look as the default `div`, so each pair below looks identical. Heading titles are not allowed in selectable grids, where an option cannot hold a heading.
+
+<Example name="title-tag-div" source={titleTagDivSource}>
+  <TitleTagDiv />
+</Example>
+
+<Example name="title-tag-h3" source={titleTagH3Source}>
+  <TitleTagH3 />
+</Example>
+
+<Example name="title-tag-div-horizontal" source={titleTagDivHorizontalSource}>
+  <TitleTagDivHorizontal />
+</Example>
+
+<Example name="title-tag-h3-horizontal" source={titleTagH3HorizontalSource}>
+  <TitleTagH3Horizontal />
+</Example>
+
+## Text Tag
+
+`textTag` sets the tag of the element styled by `textClass`. Use `'p'` only for plain or inline content: a `<p>` cannot hold block HTML such as `<p>` or `<ul>`, and the browser would break it apart.
+
+<Example name="text-tag" source={textTagSource}>
+  <TextTag />
+</Example>
+
+<ApiReferenceTable component="Item" category="composite" />

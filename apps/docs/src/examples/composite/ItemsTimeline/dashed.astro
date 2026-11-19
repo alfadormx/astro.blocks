@@ -1,0 +1,29 @@
+---
+import ItemsTimeline from '@alfadormx/blocks/composite/ItemsTimeline.astro';
+---
+
+<ItemsTimeline
+  connectorStyle="dashed"
+  items={[
+    {
+      icon: { name: 'heroicons:light-bulb', class: 'text-warning' },
+      title: 'Ideation',
+      content: 'Brainstorm and conceptualize your project vision.',
+    },
+    {
+      icon: { name: 'heroicons:pencil', class: 'text-info' },
+      title: 'Planning',
+      content: 'Create detailed roadmaps and specifications.',
+    },
+    {
+      icon: { name: 'heroicons:code-bracket', class: 'text-primary' },
+      title: 'Development',
+      content: 'Build and iterate on your product.',
+    },
+    {
+      icon: { name: 'heroicons:paper-airplane', class: 'text-success' },
+      title: 'Launch',
+      content: 'Deploy to production and go live!',
+    },
+  ]}
+/>

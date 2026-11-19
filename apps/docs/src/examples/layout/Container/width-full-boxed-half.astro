@@ -1,0 +1,18 @@
+---
+import Container from '@alfadormx/blocks/layout/Container.astro';
+---
+
+<Container
+  containerWidthType="full"
+  content={{
+    widthType: 'boxed',
+    boxWidth: 'max-w-1/2',
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  spacing={{ margin: 'mb-8' }}
+>
+  <p class="text-center py-8">
+    Full-width container, boxed content at <b>50%</b> width.
+  </p>
+</Container>

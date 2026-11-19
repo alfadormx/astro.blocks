@@ -1,8 +1,0 @@
----
-import CollectionListBlock from '~/components/blocks/composite/CollectionList.astro';
-import { getFeatured } from '#blocks/collections';
-
-const featured = await getFeatured('posts', 3, 'en');
----
-
-<CollectionListBlock entries={featured} columns={2} />

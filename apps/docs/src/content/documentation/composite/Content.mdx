@@ -1,0 +1,57 @@
+---
+title: Content
+description: A headline, prose body, and image arranged as an editorial section.
+section: composite
+order: 7
+---
+
+import Example from '@alfadormx/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/pages/documentation/_api/ApiReferenceTable.astro';
+import Default from '~/examples/composite/Content/default.astro';
+import defaultSource from '~/examples/composite/Content/default.astro?raw';
+import ImageLeft from '~/examples/composite/Content/image-left.astro';
+import imageLeftSource from '~/examples/composite/Content/image-left.astro?raw';
+import TwoColumn from '~/examples/composite/Content/two-column.astro';
+import twoColumnSource from '~/examples/composite/Content/two-column.astro?raw';
+import ItemsGrid from '~/examples/composite/Content/items-grid.astro';
+import itemsGridSource from '~/examples/composite/Content/items-grid.astro?raw';
+import ImageColumn from '~/examples/composite/Content/image-column.astro';
+import imageColumnSource from '~/examples/composite/Content/image-column.astro?raw';
+
+## Default
+
+The default Content configuration, with one action and a list of items.
+
+<Example name="default" source={defaultSource}>
+  <Default />
+</Example>
+
+## Image on the left
+
+<Example name="image-left" source={imageLeftSource}>
+  <ImageLeft />
+</Example>
+
+## Two-column layout
+
+<Example name="two-column" source={twoColumnSource}>
+  <TwoColumn />
+</Example>
+
+## Items grid
+
+`itemsGrid` holds the items and the grid config; the grid renders when its `items` is non-empty.
+
+<Example name="items-grid" source={itemsGridSource}>
+  <ItemsGrid />
+</Example>
+
+## Image column
+
+`imageClass` styles the wrapper around the image column; `image.class` styles the Image itself.
+
+<Example name="image-column" source={imageColumnSource}>
+  <ImageColumn />
+</Example>
+
+<ApiReferenceTable component="Content" category="composite" />

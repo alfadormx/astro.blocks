@@ -1,0 +1,31 @@
+---
+import ItemsTimeline from '@alfadormx/blocks/composite/ItemsTimeline.astro';
+---
+
+<ItemsTimeline
+  items={[
+    {
+      icon: { name: 'heroicons:arrow-down-tray', class: 'text-primary' },
+      title: 'Step 1: Download',
+      content:
+        "Kickstart with GitHub! Either fork the Super template or simply click 'Use this template'. Your canvas awaits, ready for your digital masterpiece.",
+    },
+    {
+      icon: { name: 'heroicons:pencil-square', class: 'text-secondary' },
+      title: 'Step 2: Add content',
+      content:
+        "Pour your vision into it. Add images, text, and all that jazz to breathe life into your digital space. Remember, it's the content that tells your story.",
+    },
+    {
+      icon: { name: 'heroicons:paint-brush', class: 'text-accent' },
+      title: 'Step 3: Customize styles',
+      content:
+        'Give it your personal touch. Tailor colors, fonts, and layouts until it feels just right. Your unique flair, amplified by Super!',
+    },
+    {
+      icon: { name: 'heroicons:check-circle', class: 'text-success' },
+      title: 'Ready!',
+      content: 'Your site is live and ready to share with the world. Time to celebrate!',
+    },
+  ]}
+/>

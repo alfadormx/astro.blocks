@@ -1,0 +1,21 @@
+---
+import Modal from '@alfadormx/blocks/layout/Modal.astro';
+import Button from '@alfadormx/blocks/primitives/Button.astro';
+import Headline from '@alfadormx/blocks/primitives/Headline.astro';
+---
+
+<Button
+  data-modal-trigger="modal-basic"
+  label="Open Modal"
+  icon={{ name: 'heroicons:information-circle' }}
+/>
+<Modal id="modal-basic">
+  <div class="p-6">
+    <Headline title="Modal Title" htmlTag="h2" class="my-0" titleClass="text-xl" />
+    <p class="text-muted mb-4">
+      This is a basic modal with default settings. Click the backdrop, press ESC, or click the close
+      button to dismiss.
+    </p>
+    <Button data-modal-close label="Close" />
+  </div>
+</Modal>

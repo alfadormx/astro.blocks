@@ -1,0 +1,21 @@
+---
+title: CaseStudyCard
+description: 'A case study card: client, title link, excerpt and tags.'
+section: composite
+order: 2
+---
+
+import Example from '@alfadormx/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/pages/documentation/_api/ApiReferenceTable.astro';
+import Basic from '~/examples/composite/CaseStudyCard/basic.astro';
+import basicSource from '~/examples/composite/CaseStudyCard/basic.astro?raw';
+
+## Basic
+
+The client sits above the title. The title is the card’s one link.
+
+<Example name="basic" source={basicSource}>
+  <Basic />
+</Example>
+
+<ApiReferenceTable component="CaseStudyCard" category="composite" />

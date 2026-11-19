@@ -1,0 +1,17 @@
+---
+import LocalLayout from '../_layouts/Layout.astro';
+import Container from '@alfadormx/blocks/layout/Container.astro';
+import EventLayout from '@alfadormx/blocks/composite/EventLayout.astro';
+import { collectionEntries, renderEntry } from '@alfadormx/blocks/collections';
+
+export const getStaticPaths = () => collectionEntries('events');
+const { Content, langCode, layout, metadata } = await renderEntry(Astro, 'events');
+---
+
+<LocalLayout langCode={langCode} metadata={metadata}>
+  <Container>
+    <EventLayout {...layout}>
+      <Content />
+    </EventLayout>
+  </Container>
+</LocalLayout>

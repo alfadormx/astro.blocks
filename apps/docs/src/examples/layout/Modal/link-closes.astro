@@ -1,0 +1,15 @@
+---
+import Modal from '@alfadormx/blocks/layout/Modal.astro';
+import Button from '@alfadormx/blocks/primitives/Button.astro';
+---
+
+<Button data-modal-trigger="modal-link" label="Open Menu" />
+<Modal id="modal-link" size="sm">
+  <div class="flex flex-col gap-2 p-6">
+    <a href="#link-closes-target">Jump to the target</a>
+    <a href="#link-closes-target" target="_blank">
+      Open the target in a new tab
+    </a>
+  </div>
+</Modal>
+<p id="link-closes-target">Target</p>

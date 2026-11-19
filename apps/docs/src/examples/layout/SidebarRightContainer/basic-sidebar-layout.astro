@@ -1,0 +1,24 @@
+---
+import SidebarRightContainer from '@alfadormx/blocks/layout/SidebarRightContainer.astro';
+---
+
+<SidebarRightContainer
+  htmlTag="section"
+  containerWidthType="full"
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-8' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  spacing={{ margin: 'mb-8' }}
+>
+  <div slot="main" class="bg-success text-background p-6 rounded">
+    <p class="font-semibold">Main Content</p>
+    <p>3/4 width main content area</p>
+  </div>
+  <div slot="sidebar" class="bg-primary text-background p-6 rounded">
+    <p class="font-semibold">Sidebar</p>
+    <p>1/4 width sidebar content</p>
+  </div>
+</SidebarRightContainer>

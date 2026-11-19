@@ -1,0 +1,55 @@
+---
+import ItemsContent from '@alfadormx/blocks/composite/ItemsContent.astro';
+---
+
+<ItemsContent
+  headline={{
+    tagline: 'Features',
+    title: 'Main Features of this block',
+    subtitle: 'This block can be reused to display different sets of items with a headline.',
+  }}
+  itemsGrid={{
+    columns: 3,
+    defaultItemConfig: {
+      icon: { class: 'bg-accent text-background p-2 rounded-full' },
+      orientation: 'horizontal',
+    },
+    items: [
+      {
+        icon: { name: 'heroicons:check-circle' },
+        title: 'Modern and Professional Design',
+        content:
+          'This block features a clean and modern design that fits well with various website styles.',
+      },
+      {
+        icon: { name: 'heroicons:device-phone-mobile' },
+        title: 'Responsive and Mobile-Friendly',
+        content:
+          'This block is designed to be fully responsive and works well on all devices, including mobile phones and tablets.',
+      },
+      {
+        icon: { name: 'heroicons:adjustments-horizontal' },
+        title: 'Customizability',
+        content: 'This block can be easily customized to fit your specific needs and branding.',
+      },
+      {
+        icon: { name: 'heroicons:sparkles' },
+        title: 'Fast and Lightweight',
+        content:
+          'This block is optimized for performance, ensuring fast load times and a smooth user experience.',
+      },
+      {
+        icon: { name: 'heroicons:bolt' },
+        title: 'Easy Integration',
+        content:
+          'This block can be easily integrated into existing Astro projects with minimal effort.',
+      },
+      {
+        icon: { name: 'heroicons:shield-check' },
+        title: 'Accessible Design',
+        content:
+          'This block follows best practices for accessibility, ensuring that all users can access and interact with the content.',
+      },
+    ],
+  }}
+/>

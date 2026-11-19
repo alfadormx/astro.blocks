@@ -1,0 +1,97 @@
+---
+title: LanguageToggle
+description: A control for switching between configured site languages.
+section: primitives
+order: 11
+---
+
+import Example from '@alfadormx/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/pages/documentation/_api/ApiReferenceTable.astro';
+import Basic from '~/examples/primitives/LanguageToggle/basic.astro';
+import basicSource from '~/examples/primitives/LanguageToggle/basic.astro?raw';
+import Sizes from '~/examples/primitives/LanguageToggle/sizes.astro';
+import sizesSource from '~/examples/primitives/LanguageToggle/sizes.astro?raw';
+import Variants from '~/examples/primitives/LanguageToggle/variants.astro';
+import variantsSource from '~/examples/primitives/LanguageToggle/variants.astro?raw';
+import Intents from '~/examples/primitives/LanguageToggle/intents.astro';
+import intentsSource from '~/examples/primitives/LanguageToggle/intents.astro?raw';
+import Shapes from '~/examples/primitives/LanguageToggle/shapes.astro';
+import shapesSource from '~/examples/primitives/LanguageToggle/shapes.astro?raw';
+import Orientation from '~/examples/primitives/LanguageToggle/orientation.astro';
+import orientationSource from '~/examples/primitives/LanguageToggle/orientation.astro?raw';
+import LabelFormat from '~/examples/primitives/LanguageToggle/label-format.astro';
+import labelFormatSource from '~/examples/primitives/LanguageToggle/label-format.astro?raw';
+import Custom from '~/examples/primitives/LanguageToggle/custom.astro';
+import customSource from '~/examples/primitives/LanguageToggle/custom.astro?raw';
+import PreservePath from '~/examples/primitives/LanguageToggle/preserve-path.astro';
+import preservePathSource from '~/examples/primitives/LanguageToggle/preserve-path.astro?raw';
+import UsageInContext from '~/examples/primitives/LanguageToggle/usage-in-context.astro';
+import usageInContextSource from '~/examples/primitives/LanguageToggle/usage-in-context.astro?raw';
+
+> **Note:** The Language Toggle component displays all languages configured in the `i18n.languages` array in `src/config.yaml`. Add more languages to the configuration to see additional options in the toggle.
+
+## Basic toggle
+
+<Example name="basic" source={basicSource}>
+  <Basic />
+</Example>
+
+## Sizes
+
+<Example name="sizes" source={sizesSource}>
+  <Sizes />
+</Example>
+
+## Variants
+
+<Example name="variants" source={variantsSource}>
+  <Variants />
+</Example>
+
+## Intent colors (active vs inactive)
+
+<Example name="intents" source={intentsSource}>
+  <Intents />
+</Example>
+
+## Shapes
+
+<Example name="shapes" source={shapesSource}>
+  <Shapes />
+</Example>
+
+## Orientation
+
+<Example name="orientation" source={orientationSource}>
+  <Orientation />
+</Example>
+
+## Label display
+
+<Example name="label-format" source={labelFormatSource}>
+  <LabelFormat />
+</Example>
+
+## Custom configuration
+
+<Example name="custom" source={customSource}>
+  <Custom />
+</Example>
+
+## Path preservation
+
+By default each button keeps the current path, so `/pricing` links to `/es/pricing`. Pages that exist in one language only should pass `preservePath={false}` so every button links to that language's `basePath`. The demos on this page do, because documentation is English-only.
+
+<Example name="preserve-path" source={preservePathSource}>
+  <PreservePath />
+</Example>
+
+## Usage in context
+
+The Language Toggle component automatically detects the current language from the URL path and highlights the active language button. The buttons below link to each language's home page, because the documentation is not translated.
+
+<Example name="usage-in-context" source={usageInContextSource}>
+  <UsageInContext />
+</Example>
+
+<ApiReferenceTable component="LanguageToggle" category="primitives" />

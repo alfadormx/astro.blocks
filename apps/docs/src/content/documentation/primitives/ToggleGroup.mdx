@@ -1,0 +1,101 @@
+---
+title: ToggleGroup
+description: A compact set of mutually exclusive options, built on native radio inputs
+section: primitives
+order: 18
+---
+
+import Example from '@alfadormx/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/pages/documentation/_api/ApiReferenceTable.astro';
+import Basic from '~/examples/primitives/ToggleGroup/basic.astro';
+import basicSource from '~/examples/primitives/ToggleGroup/basic.astro?raw';
+import Events from '~/examples/primitives/ToggleGroup/events.astro';
+import eventsSource from '~/examples/primitives/ToggleGroup/events.astro?raw';
+import Labelledby from '~/examples/primitives/ToggleGroup/labelledby.astro';
+import labelledbySource from '~/examples/primitives/ToggleGroup/labelledby.astro?raw';
+import Cell from '~/examples/primitives/ToggleGroup/cell.astro';
+import cellSource from '~/examples/primitives/ToggleGroup/cell.astro?raw';
+import CellNeutral from '~/examples/primitives/ToggleGroup/cell-neutral.astro';
+import cellNeutralSource from '~/examples/primitives/ToggleGroup/cell-neutral.astro?raw';
+import Vertical from '~/examples/primitives/ToggleGroup/vertical.astro';
+import verticalSource from '~/examples/primitives/ToggleGroup/vertical.astro?raw';
+import Media from '~/examples/primitives/ToggleGroup/media.astro';
+import mediaSource from '~/examples/primitives/ToggleGroup/media.astro?raw';
+import Font from '~/examples/primitives/ToggleGroup/font.astro';
+import fontSource from '~/examples/primitives/ToggleGroup/font.astro?raw';
+import Custom from '~/examples/primitives/ToggleGroup/custom.astro';
+import customSource from '~/examples/primitives/ToggleGroup/custom.astro?raw';
+import Disabled from '~/examples/primitives/ToggleGroup/disabled.astro';
+import disabledSource from '~/examples/primitives/ToggleGroup/disabled.astro?raw';
+
+## Radio
+
+<Example name="basic" source={basicSource}>
+  <Basic />
+</Example>
+
+## Listening to `selection:change`
+
+ToggleGroup is a `single` selection group, so a subscriber sees the same payload it would get from a single-mode ItemsGrid. Both instances below publish to one selection group, so choosing in either updates the other. Instance B marks no option as selected, so it does not clear A's selection when it connects. The two textures can share a group.
+
+<Example name="events" source={eventsSource}>
+  <Events />
+</Example>
+
+## labelledBy
+
+<Example name="labelledby" source={labelledbySource}>
+  <Labelledby />
+</Example>
+
+## Cell variants
+
+<Example name="cell" source={cellSource}>
+  <Cell />
+</Example>
+
+## Neutral cells
+
+`intent="neutral"` selects with the emphasis colour in every cell variant.
+
+<Example name="cell-neutral" source={cellNeutralSource}>
+  <CellNeutral />
+</Example>
+
+## Vertical
+
+<Example name="vertical" source={verticalSource}>
+  <Vertical />
+</Example>
+
+## Icons
+
+<Example name="media" source={mediaSource}>
+  <Media />
+</Example>
+
+## Image-only cells
+
+With `hideLabel`, the label is screen-reader-only but still names the input, and the image keeps its own size. An image without `alt` gets `alt=""`.
+
+<Example name="font" source={fontSource}>
+  <Font />
+</Example>
+
+## Custom state config
+
+<Example name="custom" source={customSource}>
+  <Custom />
+</Example>
+
+## Disabled group
+
+<Example name="disabled" source={disabledSource}>
+  <Disabled />
+</Example>
+
+## Props
+
+`appearance` is `'radio'` (default) or `'cell'`; a cell also takes `variant`: `'solid'` (default), `'outline'` or `'ghost'`. Option presentation is layered in order: internal defaults, `defaultOptionConfig`, `selectedOptionConfig` (selected state only), the option itself, then `disabledOptionConfig` (disabled options only). One of `label` / `labelledBy` is required; `labelledBy` wins. Invalid configurations throw at build time.
+
+<ApiReferenceTable component="ToggleGroup" category="primitives" />

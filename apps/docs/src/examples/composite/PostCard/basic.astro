@@ -1,0 +1,20 @@
+---
+import PostCard from '@alfadormx/blocks/composite/PostCard.astro';
+
+const post = {
+  headline: { title: 'Writing in two languages' },
+  href: '/demos/saas/blog/second-post',
+  description: 'Translations live in a folder per language and link by filename.',
+  date: new Date('2026-10-15T12:00:00Z'),
+  readingTime: 2,
+  tags: ['i18n'],
+  image: {
+    src: '~/assets/images/content/dictionary-page.jpg',
+    alt: 'An open dictionary showing the entry for Esperanto',
+  },
+};
+---
+
+<div class="max-w-sm">
+  <PostCard {...post} />
+</div>

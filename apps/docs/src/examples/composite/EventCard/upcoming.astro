@@ -1,0 +1,16 @@
+---
+import EventCard from '@alfadormx/blocks/composite/EventCard.astro';
+---
+
+<div class="max-w-sm">
+  <EventCard
+    headline={{ title: 'New York bagel workshop' }}
+    href="/demos/local/events/new-york-workshop"
+    description="Our guest baker from Brooklyn shows how to boil, seed and bake a proper bagel."
+    start={new Date('2030-05-20T17:00:00Z')}
+    end={new Date('2030-05-20T21:00:00Z')}
+    timezone="America/New_York"
+    location={{ name: 'Example Loft, Brooklyn' }}
+    tags={['workshop', 'guest']}
+  />
+</div>

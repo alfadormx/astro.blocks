@@ -1,0 +1,63 @@
+---
+title: ThreeColumnContainer
+description: A pre-built layout wrapper for three equal columns. Perfect for features, services, or card layouts.
+section: layout
+order: 6
+---
+
+import Example from '@alfadormx/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/pages/documentation/_api/ApiReferenceTable.astro';
+import BasicThreeColumnLayout from '~/examples/layout/ThreeColumnContainer/basic-three-column-layout.astro';
+import basicThreeColumnLayoutSource from '~/examples/layout/ThreeColumnContainer/basic-three-column-layout.astro?raw';
+import FeatureCards from '~/examples/layout/ThreeColumnContainer/feature-cards.astro';
+import featureCardsSource from '~/examples/layout/ThreeColumnContainer/feature-cards.astro?raw';
+import WithBackgroundGradient from '~/examples/layout/ThreeColumnContainer/with-background-gradient.astro';
+import withBackgroundGradientSource from '~/examples/layout/ThreeColumnContainer/with-background-gradient.astro?raw';
+import ResponsiveStacksOnMobile from '~/examples/layout/ThreeColumnContainer/responsive-stacks-on-mobile.astro';
+import responsiveStacksOnMobileSource from '~/examples/layout/ThreeColumnContainer/responsive-stacks-on-mobile.astro?raw';
+import TeamMembers from '~/examples/layout/ThreeColumnContainer/team-members.astro';
+import teamMembersSource from '~/examples/layout/ThreeColumnContainer/team-members.astro?raw';
+import PricingPlans from '~/examples/layout/ThreeColumnContainer/pricing-plans.astro';
+import pricingPlansSource from '~/examples/layout/ThreeColumnContainer/pricing-plans.astro?raw';
+
+## Basic Examples
+
+### 1. Basic Three Column Layout
+
+<Example name="basic-three-column-layout" source={basicThreeColumnLayoutSource}>
+  <BasicThreeColumnLayout />
+</Example>
+
+### 2. Feature Cards
+
+<Example name="feature-cards" source={featureCardsSource}>
+  <FeatureCards />
+</Example>
+
+### 3. With Background Gradient
+
+<Example name="with-background-gradient" source={withBackgroundGradientSource}>
+  <WithBackgroundGradient />
+</Example>
+
+### 4. Responsive (Stacks on Mobile)
+
+<Example name="responsive-stacks-on-mobile" source={responsiveStacksOnMobileSource}>
+  <ResponsiveStacksOnMobile />
+</Example>
+
+## Practical Use Cases
+
+### 5. Team Members
+
+<Example name="team-members" source={teamMembersSource}>
+  <TeamMembers />
+</Example>
+
+### 6. Pricing Plans
+
+<Example name="pricing-plans" source={pricingPlansSource}>
+  <PricingPlans />
+</Example>
+
+<ApiReferenceTable component="ThreeColumnContainer" category="layout" />

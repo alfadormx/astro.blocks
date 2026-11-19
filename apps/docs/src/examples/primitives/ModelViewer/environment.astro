@@ -1,0 +1,22 @@
+---
+import ModelViewer from '@alfadormx/blocks/primitives/ModelViewer.astro';
+
+const hdr = '/hdr/studio_small_08_1k.hdr';
+---
+
+<div class="grid gap-4 md:grid-cols-2">
+  <ModelViewer
+    src="/models/ring.glb"
+    label="A ring lit by a studio HDR"
+    lighting="neutral"
+    environment={{ src: hdr }}
+    height="300px"
+  />
+  <ModelViewer
+    src="/models/ring.glb"
+    label="A ring lit by the same studio HDR turned half a turn"
+    lighting="neutral"
+    environment={{ src: hdr, rotation: 180 }}
+    height="300px"
+  />
+</div>

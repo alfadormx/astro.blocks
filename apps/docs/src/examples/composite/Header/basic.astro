@@ -1,0 +1,21 @@
+---
+import HeaderBlock from '@alfadormx/blocks/composite/Header.astro';
+import type { NavigationTreeItem } from '@alfadormx/blocks/types/navigationtree';
+
+const navItems: NavigationTreeItem[] = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+];
+---
+
+<HeaderBlock
+  logo={{
+    image: {
+      src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
+      alt: 'Logo',
+      width: 48,
+      height: 48,
+    },
+  }}
+  rightNavigationTreeHorizontal={{ items: navItems }}
+/>
