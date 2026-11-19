@@ -93,7 +93,7 @@ const twitter = merged.twitter
       creator: merged.twitter.handle,
       title: merged.twitter.title,
       description: merged.twitter.description,
-      image: merged.twitter.image,
+      image: merged.twitter.image && new URL(merged.twitter.image, Astro.site ?? Astro.url).href,
       imageAlt: merged.twitter.imageAlt,
     }
   : undefined;
