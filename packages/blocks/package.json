@@ -65,11 +65,11 @@
     "unpic": "^4.2.2"
   },
   "devDependencies": {
-    "astro": "^7.4.5",
-    "tailwindcss": "^4.3.4",
     "@types/js-yaml": "^4.0.9",
     "@types/leaflet": "^1.9.22",
     "@types/lodash.merge": "^4.6.9",
-    "@types/three": "^0.187.0"
+    "@types/three": "^0.187.0",
+    "astro": "^7.4.5",
+    "tailwindcss": "^4.3.4"
   }
 }
