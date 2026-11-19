@@ -23,6 +23,8 @@ import Many from '~/examples/composite/Tabs/many.astro';
 import manySource from '~/examples/composite/Tabs/many.astro?raw';
 import Sticky from '~/examples/composite/Tabs/sticky.astro';
 import stickySource from '~/examples/composite/Tabs/sticky.astro?raw';
+import StickyRow from '~/examples/composite/Tabs/sticky-row.astro';
+import stickyRowSource from '~/examples/composite/Tabs/sticky-row.astro?raw';
 import PanelClass from '~/examples/composite/Tabs/panel-class.astro';
 import panelClassSource from '~/examples/composite/Tabs/panel-class.astro?raw';
 
@@ -80,9 +82,11 @@ The panel count follows the item count — there is no cap. Twelve items render 
   <Many />
 </Example>
 
-## Sticky grid tab list
+## Sticky tab list
 
-In grid layout the tab list sits in a `@container` wrapper exactly as tall as the list, so `sticky` on `tabList.class` has no room to move. Put it on `tabList.wrapperClass` instead; the wrapper is rendered only in grid layout. Scroll the box below and the triggers stay at the top.
+`tabList.sticky` keeps the triggers in view while the panels scroll. Under a sticky Header the tab list stops directly below it: Header publishes its height as `--scroll-padding-top` and the tab list's default `top` reads it, falling back to `0` when no Header is sticky. The box below is its own scroll box under the docs page's sticky Header, so it cancels the offset with `top-0`; scroll it and the triggers stay at the top.
+
+The flag adds `sticky top-(--scroll-padding-top,0px) z-10 bg-background`, plus `self-start` in vertical orientation. In grid layout they land on the `@container` wrapper, so cancel them from `tabList.wrapperClass`; in row and column layouts they land on the tab list, so cancel them from `tabList.class`. Use `top-0` when the tabs sit in their own scroll box under a page-level sticky Header (`md:top-0` if that box only exists from a breakpoint up), and swap `bg-background` for the section's background, such as `bg-surface`, to avoid a visible band.
 
 <Example
   name="sticky"
@@ -90,6 +94,18 @@ In grid layout the tab list sits in a `@container` wrapper exactly as tall as th
   exampleSlot={{ class: 'max-w-lg max-h-80 overflow-y-auto p-0' }}
 >
   <Sticky />
+</Example>
+
+## Sticky row tab list
+
+`sticky` works in every layout; outside grid the defaults land on the tab list itself, as described above.
+
+<Example
+  name="sticky-row"
+  source={stickyRowSource}
+  exampleSlot={{ class: 'max-w-lg max-h-80 overflow-y-auto p-0' }}
+>
+  <StickyRow />
 </Example>
 
 ## Panel styling

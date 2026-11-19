@@ -225,7 +225,8 @@ const tabs: ConfiguratorProps['tabs'] = {
     layout: 'grid',
     columns: 3,
     spacing: { gap: 'gap-0', margin: 'mb-0' },
-    wrapperClass: 'sticky top-(--scroll-padding-top) md:top-0 z-10 bg-background',
+    sticky: true,
+    wrapperClass: 'md:top-0',
   },
   defaultItemConfig: {
     variant: 'ghost',

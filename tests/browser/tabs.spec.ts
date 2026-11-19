@@ -303,4 +303,14 @@ test.describe('Tabs', () => {
     const listTop = (await root.locator('[role="tablist"]').boundingBox())!.y;
     expect(Math.abs(listTop - boxTop)).toBeLessThanOrEqual(1);
   });
+
+  test('keeps a sticky row tab list at the top of its scrolling box', async ({ page }) => {
+    const root = await openTabs(page, 'sticky-row');
+    const box = page.locator('[data-doc-section="sticky-row"]');
+    await box.evaluate((el) => el.scrollTo(0, 200));
+    await expect.poll(() => box.evaluate((el) => el.scrollTop)).toBeGreaterThan(0);
+    const boxTop = (await box.boundingBox())!.y;
+    const listTop = (await root.locator('[role="tablist"]').boundingBox())!.y;
+    expect(Math.abs(listTop - boxTop)).toBeLessThanOrEqual(1);
+  });
 });
