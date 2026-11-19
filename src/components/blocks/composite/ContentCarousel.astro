@@ -188,7 +188,7 @@ const wrapperProps = container ? mergedContainer : {};
       <!-- Controls (inside) -->
       {hasNavButtons && controlsPosition === 'inside' && (
         <div
-          class="absolute inset-0 pointer-events-none flex items-center justify-between px-3 opacity-0 group-hover:opacity-100 transition-opacity"
+          class="absolute inset-0 pointer-events-none flex items-center justify-between px-3 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity"
           data-carousel-controls
         >
           {mergedPrevButton && <Button {...mergedPrevButton} data-carousel-prev />}
@@ -216,7 +216,7 @@ const wrapperProps = container ? mergedContainer : {};
 
       <!-- Autoplay pause/resume (inside) -->
       {autoplayConfig.enabled && controlsPosition === 'inside' && (
-        <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity">
           <Button {...mergedPauseButton} data-carousel-pause />
           <Button {...mergedPlayButton} data-carousel-play />
         </div>
@@ -424,19 +424,22 @@ const wrapperProps = container ? mergedContainer : {};
     const isRTL = document.dir === 'rtl' || getComputedStyle(root).direction === 'rtl';
     const rtlMultiplier = isRTL ? -1 : 1;
 
+    // Mid-wrap a loop sits on a clone before the real slides, so the raw offset goes negative.
+    function realIndex(): number {
+      if (!isLoop) return instance.currentIndex;
+      return (((instance.currentIndex - slideCount) % slideCount) + slideCount) % slideCount;
+    }
+
     // Debug helpers
     const debugOverlay = isDebug ? root.querySelector('[data-carousel-debug]') : null;
     function updateDebug() {
       if (!debugOverlay) return;
-      const realIndex = isLoop
-        ? (instance.currentIndex - slideCount) % slideCount
-        : instance.currentIndex;
       const dx = (instance.currentX - instance.startX) * rtlMultiplier;
       const dt = Date.now() - instance.startTime;
       const velocity = dt > 0 ? Math.abs(dx) / dt : 0;
       const threshold = viewport.clientWidth * 0.25;
 
-      debugOverlay.querySelector('[data-debug-index]')!.textContent = String(realIndex);
+      debugOverlay.querySelector('[data-debug-index]')!.textContent = String(realIndex());
       debugOverlay.querySelector('[data-debug-dragging]')!.textContent = String(
         instance.isDragging
       );
@@ -472,16 +475,30 @@ const wrapperProps = container ? mergedContainer : {};
       }
     }
 
+    function indicatorTargets(): HTMLElement[] {
+      if (!instance.indicatorsContainer) return [];
+      return Array.from(instance.indicatorsContainer.children).map(
+        (el) => (el.querySelector('button, a') as HTMLElement | null) ?? (el as HTMLElement)
+      );
+    }
+
+    function focusActiveIndicator(): boolean {
+      const target = indicatorTargets()[realIndex()];
+      target?.focus();
+      return Boolean(target);
+    }
+
+    // Read per keypress: the cached isRTL only drives positioning.
+    const isRtlNow = () => document.dir === 'rtl' || getComputedStyle(root).direction === 'rtl';
+
     // Update controls
     function updateControls(announce = true) {
-      const realIndex = isLoop
-        ? (instance.currentIndex - slideCount) % slideCount
-        : instance.currentIndex;
+      const active = realIndex();
 
       if (isDebug) {
         console.log('[Carousel] UpdateControls', {
           currentIndex: instance.currentIndex,
-          realIndex,
+          realIndex: active,
           isLoop,
           slideCount,
         });
@@ -501,28 +518,23 @@ const wrapperProps = container ? mergedContainer : {};
         instance.nextBtn.setAttribute('aria-disabled', isAtEnd.toString());
       }
 
-      // Update indicators (handle server-rendered wrapper + inner button/a)
-      if (instance.indicatorsContainer) {
-        Array.from(instance.indicatorsContainer.children).forEach((el, i) => {
-          const target =
-            (el.querySelector && (el.querySelector('button, a') as HTMLElement)) ||
-            (el as HTMLElement);
-          const isActive = i === realIndex;
-          target.setAttribute('aria-selected', isActive.toString());
-        });
-      }
+      indicatorTargets().forEach((target, i) => {
+        const isActive = i === active;
+        target.setAttribute('aria-selected', isActive.toString());
+        target.setAttribute('tabindex', isActive ? '0' : '-1');
+      });
 
       if (!announce) return;
 
       // Announce
       if (instance.announcer) {
-        instance.announcer.textContent = `Slide ${realIndex + 1} of ${slideCount}`;
+        instance.announcer.textContent = `Slide ${active + 1} of ${slideCount}`;
       }
 
       // Emit custom event
       root.dispatchEvent(
         new CustomEvent('carousel:change', {
-          detail: { index: realIndex, total: slideCount },
+          detail: { index: active, total: slideCount },
         })
       );
     }
@@ -531,12 +543,9 @@ const wrapperProps = container ? mergedContainer : {};
     function buildIndicators() {
       if (!instance.indicatorsContainer) return;
 
-      const existingChildren = Array.from(instance.indicatorsContainer.children);
-      if (existingChildren.length > 0) {
-        existingChildren.forEach((el, i) => {
-          const btn =
-            (el.querySelector && (el.querySelector('button, a') as HTMLElement)) ||
-            (el as HTMLElement);
+      const existing = indicatorTargets();
+      if (existing.length > 0) {
+        existing.forEach((btn, i) => {
           btn.setAttribute('role', 'tab');
           btn.setAttribute('aria-label', `${root.dataset.indicatorAria || 'Go to slide'} ${i + 1}`);
           btn.addEventListener('click', () => goTo(i));
@@ -897,33 +906,52 @@ const wrapperProps = container ? mergedContainer : {};
       hasMoved = false;
     }
 
-    // Keyboard
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.target !== root && root.contains(e.target as Node)) {
-        // Allow navigation within slides
-        return;
-      }
+    type KeySource = 'root' | 'indicator' | 'prev' | 'next';
 
+    // Slide content is not a key source, and a nested carousel's controls belong to it, not to us.
+    function keySource(target: EventTarget | null): KeySource | null {
+      if (target === root) return 'root';
+      if (!(target instanceof Element) || target.closest('[data-carousel]') !== root) return null;
+      if (target.closest('[data-carousel-indicator]')) return 'indicator';
+      if (target.closest('[data-carousel-prev]')) return 'prev';
+      if (target.closest('[data-carousel-next]')) return 'next';
+      return null;
+    }
+
+    // A button hidden at a non-loop end drops focus to <body>; hand it to a visible control.
+    function keepNavFocus(source: 'prev' | 'next') {
+      const button = source === 'prev' ? instance.prevBtn : instance.nextBtn;
+      if (!button || button.style.visibility !== 'hidden') return;
+      if (focusActiveIndicator()) return;
+      (source === 'prev' ? instance.nextBtn : instance.prevBtn)?.focus();
+    }
+
+    function onKeyDown(e: KeyboardEvent) {
+      const source = keySource(e.target);
+      if (!source) return;
+
+      const rtl = isRtlNow();
       switch (e.key) {
         case 'ArrowLeft':
-          e.preventDefault();
-          if (isRTL) next();
+          if (rtl) next();
           else prev();
           break;
         case 'ArrowRight':
-          e.preventDefault();
-          if (isRTL) prev();
+          if (rtl) prev();
           else next();
           break;
         case 'Home':
-          e.preventDefault();
           goTo(0);
           break;
         case 'End':
-          e.preventDefault();
           goTo(slideCount - 1);
           break;
+        default:
+          return;
       }
+      e.preventDefault();
+      if (source === 'indicator') focusActiveIndicator();
+      else if (source !== 'root') keepNavFocus(source);
     }
 
     // Bind events

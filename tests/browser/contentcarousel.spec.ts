@@ -270,3 +270,109 @@ test.describe('continuous autoplay', () => {
     expect((await offset(page)) - before).toBeGreaterThan(0);
   });
 });
+
+test.describe('keyboard', () => {
+  async function openSlotted(page: Page): Promise<Locator> {
+    await page.goto(PAGE_URL);
+    const root = page.locator('[data-doc-section="slotted"] [data-carousel]');
+    // role="tab" is set by buildIndicators, never server-rendered: the post-init signal.
+    await expect(root.locator('[data-carousel-indicator][role="tab"]').first()).toBeAttached();
+    return root;
+  }
+
+  const announcer = (root: Locator) => root.locator('[data-carousel-announcer]');
+  const indicator = (root: Locator, i: number) => root.locator('[data-carousel-indicator]').nth(i);
+
+  test('inside controls show while the next button has focus', async ({ page }) => {
+    const root = await openSlotted(page);
+    const controls = root.locator('[data-carousel-controls]');
+    const opacity = () => controls.evaluate((el) => getComputedStyle(el).opacity);
+
+    expect(await opacity()).toBe('0');
+    await root.locator('[data-carousel-next]').focus();
+    await expect.poll(opacity).toBe('1');
+  });
+  test('arrow keys on an indicator move the slide and the focus', async ({ page }) => {
+    const root = await openSlotted(page);
+    await indicator(root, 0).focus();
+
+    await page.keyboard.press('ArrowRight');
+    await expect(announcer(root)).toHaveText('Slide 2 of 3');
+    await expect(indicator(root, 1)).toHaveAttribute('aria-selected', 'true');
+    await expect(indicator(root, 1)).toHaveAttribute('tabindex', '0');
+    await expect(indicator(root, 0)).toHaveAttribute('tabindex', '-1');
+    await expect(indicator(root, 1)).toBeFocused();
+
+    await page.keyboard.press('ArrowLeft');
+    await expect(announcer(root)).toHaveText('Slide 1 of 3');
+    await expect(indicator(root, 0)).toBeFocused();
+  });
+
+  test('home and end on an indicator jump to the first and last slide', async ({ page }) => {
+    const root = await openSlotted(page);
+    await indicator(root, 0).focus();
+
+    await page.keyboard.press('End');
+    await expect(announcer(root)).toHaveText('Slide 3 of 3');
+    await expect(indicator(root, 2)).toBeFocused();
+
+    await page.keyboard.press('Home');
+    await expect(announcer(root)).toHaveText('Slide 1 of 3');
+    await expect(indicator(root, 0)).toBeFocused();
+  });
+
+  test('arrow keys swap direction in rtl', async ({ page }) => {
+    const root = await openSlotted(page);
+    await page.evaluate(() => (document.dir = 'rtl'));
+    await indicator(root, 0).focus();
+
+    await page.keyboard.press('ArrowLeft');
+    await expect(announcer(root)).toHaveText('Slide 2 of 3');
+    await expect(indicator(root, 1)).toBeFocused();
+  });
+
+  test('indicators are a single tab stop', async ({ page }) => {
+    const root = await openSlotted(page);
+    await expect(root.locator('[data-carousel-indicator][tabindex="0"]')).toHaveCount(1);
+    await indicator(root, 0).focus();
+
+    await page.keyboard.press('Tab');
+    await expect(root.locator('[data-carousel-indicator]:focus')).toHaveCount(0);
+  });
+  test('arrow keys on the next button move the slide and keep focus', async ({ page }) => {
+    const root = await openSlotted(page);
+    const next = root.locator('[data-carousel-next]');
+    await next.focus();
+
+    await page.keyboard.press('ArrowRight');
+    await expect(announcer(root)).toHaveText('Slide 2 of 3');
+    await expect(next).toBeFocused();
+  });
+
+  test('focus moves to the active indicator when the next button hides at the end', async ({
+    page,
+  }) => {
+    const root = await openSlotted(page);
+    await root.locator('[data-carousel-next]').focus();
+
+    await page.keyboard.press('ArrowRight');
+    await page.keyboard.press('ArrowRight');
+    await expect(announcer(root)).toHaveText('Slide 3 of 3');
+    await expect(root.locator('[data-carousel-next]')).toHaveAttribute('aria-disabled', 'true');
+    await expect(indicator(root, 2)).toBeFocused();
+  });
+  test('arrow left from the first indicator wraps focus to the last in a loop', async ({
+    page,
+  }) => {
+    await page.goto(PAGE_URL);
+    const root = page.locator('[data-doc-section="loop"] [data-carousel]');
+    await expect(root.locator('[data-carousel-indicator][role="tab"]').first()).toBeAttached();
+    const last = root.locator('[data-carousel-indicator]').last();
+    await root.locator('[data-carousel-indicator]').first().focus();
+
+    await page.keyboard.press('ArrowLeft');
+    await expect(last).toHaveAttribute('aria-selected', 'true');
+    await expect(last).toHaveAttribute('tabindex', '0');
+    await expect(last).toBeFocused();
+  });
+});
