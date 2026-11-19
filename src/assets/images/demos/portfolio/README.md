@@ -22,5 +22,3 @@ Used by the portfolio demo in `src/pages/[...lang]/demos/portfolio/` and the `ca
 | `team-chloe.jpg`          | [Portrait, woman in a blue top](https://www.pexels.com/photo/3763188/)           |
 | `team-dan.jpg`            | [Portrait, man with arms crossed](https://www.pexels.com/photo/2379004/)         |
 | `avatar-a.jpg`            | [Portrait, woman in a grey blazer](https://www.pexels.com/photo/2381069/)        |
-| `avatar-b.jpg`            | [Portrait, man in a green T-shirt](https://www.pexels.com/photo/1222271/)        |
-| `avatar-c.jpg`            | [Portrait, woman with curly hair](https://www.pexels.com/photo/774909/)          |
