@@ -1,7 +1,7 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 import { expectFocusRing } from './focusRing';
 
-const PAGE_URL = '/demos/jewellery-configurator';
+const PAGE_URL = '/demos/jewellery/configurator';
 // SwiftShader renders on the CPU; first load includes compiling three's shaders.
 const READY_TIMEOUT = 20_000;
 const MODEL = 'ring-model';
@@ -299,6 +299,28 @@ test.describe('Configurator', () => {
       expect(box.y + box.height).toBeLessThanOrEqual(STACKED.height);
     });
 
+    test('keeps the tab bar directly under the sticky header while scrolling when stacked', async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 390, height: 600 });
+      await open(page);
+      const header = page.locator('[data-header]').first();
+      await expect(header).toHaveAttribute('data-header-ready', '');
+      const tablist = page.locator('[data-configurator] [role="tablist"]');
+      await tablist.evaluate((el) => {
+        const headerHeight = document.querySelector<HTMLElement>('[data-header]')!.offsetHeight;
+        const stickAt = el.getBoundingClientRect().top + window.scrollY - headerHeight;
+        window.scrollTo({ top: stickAt + 100, behavior: 'instant' });
+      });
+      await expect
+        .poll(async () => {
+          const headerBox = (await header.boundingBox())!;
+          const tabsBox = (await tablist.boundingBox())!;
+          return Math.round(tabsBox.y - (headerBox.y + headerBox.height));
+        })
+        .toBe(0);
+    });
+
     test('renders a short 16:9 viewer when stacked', async ({ page }) => {
       await page.setViewportSize(STACKED);
       await open(page);
@@ -563,7 +585,7 @@ test.describe('panel slots', () => {
 });
 
 test('the Spanish configurator reads its labels from the es copy', async ({ page }) => {
-  await page.goto('/es/demos/jewellery-configurator');
+  await page.goto('/es/demos/jewellery/configurator');
   await expect(page.getByRole('heading', { level: 1, name: 'Solitario' })).toBeVisible();
   await expect(page.getByRole('tab', { name: 'Quilates' })).toBeVisible();
 });

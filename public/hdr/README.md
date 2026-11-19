@@ -1,6 +1,6 @@
 # Sample HDR environments
 
-Used by the ModelViewer documentation page, its browser specs and the jewellery configurator demo.
+Used by the ModelViewer documentation page, its browser specs and the jewellery store demo.
 
 | File                     | Source                                                                  | License |
 | ------------------------ | ----------------------------------------------------------------------- | ------- |

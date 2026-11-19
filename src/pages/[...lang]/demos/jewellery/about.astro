@@ -1,0 +1,87 @@
+---
+import JewelleryLayout from './_layouts/Layout.astro';
+import Content from '~/components/blocks/composite/Content.astro';
+import Container from '~/components/blocks/layout/Container.astro';
+import Headline from '~/components/blocks/primitives/Headline.astro';
+import ItemsTimeline from '~/components/blocks/composite/ItemsTimeline.astro';
+import ItemsContent from '~/components/blocks/composite/ItemsContent.astro';
+import Team from '~/components/blocks/composite/Team.astro';
+import type { TeamMember } from '~/types/team.types';
+import { renderRichText } from '~/utils/richText';
+import { localizedPaths, useCopy } from '../../../../../vendor/integration/copy/pages';
+import { LABEL, SECTION_HEADLINE } from './_site';
+
+export const getStaticPaths = () => localizedPaths();
+
+type Props = { langCode: string; basePath: string };
+
+const { langCode, copy } = useCopy(Astro, 'jewellery');
+const { about: c } = copy;
+
+const members: TeamMember[] = Object.entries(c.team.members).map(([key, m]) => ({
+  title: m.name,
+  content: m.role,
+  image: { src: `~/assets/images/demos/jewellery/team-${key}.jpg`, alt: m.photoAlt },
+}));
+---
+
+<JewelleryLayout langCode={langCode} metadata={{ title: { default: c.pageTitle } }}>
+  <Content
+    headline={{
+      ...SECTION_HEADLINE,
+      align: 'left',
+      title: c.title,
+      subtitle: c.subtitle,
+      htmlTag: 'h1',
+      titleClass: 'text-5xl md:text-6xl font-medium tracking-tight leading-tight mb-0',
+      subtitleClass: 'text-lg text-muted max-w-2xl',
+    }}
+    image={{ src: '~/assets/images/demos/jewellery/about.jpg', alt: c.imageAlt }}
+    twoColumnContainer={{ gap: 'loose', content: { class: 'items-center' } }}
+  >
+    <Fragment set:html={renderRichText(c.body)} />
+  </Content>
+
+  <Container class="bg-surface">
+    <Headline {...SECTION_HEADLINE} tagline={c.history.tagline} title={c.history.title} />
+    <ItemsTimeline
+      items={Object.values(c.history.items).map(({ title, content }) => ({ title, content }))}
+      defaultItemConfig={{
+        titleClass: 'font-title text-2xl font-medium mb-1',
+        textClass: 'text-muted mb-0',
+      }}
+    />
+  </Container>
+
+  <ItemsContent
+    headline={{ ...SECTION_HEADLINE, tagline: c.stats.tagline, title: c.stats.title }}
+    itemsGrid={{
+      columns: 4,
+      gap: 'none',
+      items: Object.values(c.stats.items).map(({ value, label }) => ({
+        title: value,
+        content: label,
+      })),
+      class: 'border-t border-l border-border',
+      defaultItemConfig: {
+        orientation: 'horizontal',
+        class: 'border-r border-b border-border p-8',
+        titleClass: 'font-title text-5xl md:text-6xl font-medium mb-2',
+        textClass: `${LABEL} text-muted mb-0`,
+      },
+    }}
+  />
+
+  <Container>
+    <Team
+      headline={{ ...SECTION_HEADLINE, title: c.team.title }}
+      members={members}
+      columns={4}
+      imageShape="square"
+      defaultMemberConfig={{
+        titleClass: 'font-title text-2xl font-medium mb-0',
+        textClass: `${LABEL} text-muted mb-0`,
+      }}
+    />
+  </Container>
+</JewelleryLayout>

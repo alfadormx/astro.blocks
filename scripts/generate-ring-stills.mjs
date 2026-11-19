@@ -4,7 +4,7 @@ import { chromium } from '@playwright/test';
 import sharp from 'sharp';
 
 const BASE_URL = 'http://localhost:4321';
-const PAGE_PATH = '/demos/jewellery-configurator';
+const PAGE_PATH = '/demos/jewellery/configurator';
 const GROUP = 'ring-model';
 const OUT_DIR = new URL('../src/assets/images/configurator/', import.meta.url);
 const CAPTURE_SIZE = 640;

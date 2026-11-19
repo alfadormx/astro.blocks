@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400..700;1,400..700&family=Instrument+Sans:wght@400..700&display=swap');
+
+/* Atelier: warm paper, warm ink, one burgundy, hairlines and square corners.
+   Tertiary is the deep burgundy band behind the call to action; it stays dark in both themes. */
+[data-demo='jewellery'] {
+  --font-title: 'Cormorant Garamond', Georgia, serif;
+  --font-subtitle: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Instrument Sans', sans-serif;
+
+  --color-background: color-mix(in oklch, var(--color-yellow-50) 15%, white);
+  --color-surface: white;
+  --color-normal: color-mix(in oklch, var(--color-stone-950) 40%, black);
+  --color-muted: color-mix(in oklch, var(--color-stone-500) 80%, black);
+  --color-emphasis: var(--color-muted);
+  --color-border: color-mix(in oklch, var(--color-stone-200) 60%, white);
+  --color-border-emphasis: var(--color-normal);
+
+  --color-primary: color-mix(in oklch, var(--color-maroon-900) 70%, black);
+  --color-primary-hover: color-mix(in oklch, var(--color-primary) 80%, black);
+  --color-secondary: var(--color-normal);
+  --color-secondary-hover: black;
+  --color-tertiary: var(--color-primary-hover);
+  --color-tertiary-hover: color-mix(in oklch, var(--color-tertiary) 85%, black);
+  --color-interactive: var(--color-primary);
+  --color-interactive-hover: var(--color-primary-hover);
+  --color-link: var(--color-primary);
+  --color-link-hover: var(--color-primary-hover);
+
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+}
+
+/* The palette flips to light pastels under dark, so warm darks mix peach and maroon into black. */
+[data-demo='jewellery'][data-theme='dark'] {
+  --color-background: color-mix(in oklch, var(--color-peach-950) 31%, black);
+  --color-surface: color-mix(in oklch, var(--color-peach-950) 38%, black);
+  --color-normal: color-mix(in oklch, var(--color-yellow-50) 97%, black);
+  --color-muted: color-mix(
+    in oklch,
+    color-mix(in oklch, var(--color-peach-950) 30%, var(--color-stone-500)) 85%,
+    white
+  );
+  --color-emphasis: var(--color-muted);
+  --color-border: color-mix(in oklch, var(--color-peach-950) 55%, black);
+  --color-border-emphasis: var(--color-normal);
+
+  --color-primary: var(--color-maroon-900);
+  --color-primary-hover: var(--color-maroon-800);
+  --color-secondary: var(--color-normal);
+  --color-secondary-hover: white;
+  --color-tertiary: color-mix(in oklch, var(--color-maroon-950) 45%, black);
+  --color-tertiary-hover: color-mix(in oklch, var(--color-maroon-950) 38%, black);
+  --color-interactive: var(--color-primary);
+  --color-interactive-hover: var(--color-primary-hover);
+  --color-link: var(--color-primary);
+  --color-link-hover: var(--color-primary-hover);
+}
+
+[data-demo='jewellery'] ::selection {
+  background-color: color-mix(in srgb, var(--color-primary) 25%, var(--color-background));
+  color: var(--color-normal);
+}

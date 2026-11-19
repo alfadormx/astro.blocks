@@ -1,0 +1,231 @@
+brand: 'Atelier Halden'
+nav:
+  collections: 'Colecciones'
+  configurator: 'Diseña tu anillo'
+  about: 'Nosotros'
+  contact: 'Contacto'
+  menuLabel: 'Abrir menú'
+footer:
+  disclaimer: 'Joyería fina, tallada y engastada a mano en nuestro taller de Amberes desde 1962.'
+  footnote: 'Una demo hecha con astro.blocks; aquí no se vende nada.'
+  instagram: 'Instagram'
+  pinterest: 'Pinterest'
+home:
+  pageTitle: 'Atelier Halden · Joyería fina'
+  description: 'Anillos, collares y pendientes hechos a mano en Amberes.'
+  hero:
+    tagline: 'Amberes, desde 1962'
+    title: 'Hecha para llevarse cada día'
+    subtitle: 'Joyería fina tallada, engastada y acabada a mano.'
+    primary: 'Diseña tu anillo'
+    secondary: 'Ver las colecciones'
+  collections:
+    tagline: 'Las colecciones'
+    title: 'Tres formas de llevarla'
+    link: 'Descubrir'
+    items:
+      rings:
+        title: 'Anillos'
+        content: 'Solitarios y alianzas, hechos a tu medida.'
+        imageAlt: 'Anillos de oro con diamantes sobre un paño de lino'
+      necklaces:
+        title: 'Collares'
+        content: 'Cadenas finas y colgantes que quedan junto a la piel.'
+        imageAlt: 'Un collar de oro a la altura de la clavícula'
+      earrings:
+        title: 'Pendientes'
+        content: 'Botones, aros y colgantes para el día y para la noche.'
+        imageAlt: 'Pendientes de oro con el pelo recogido'
+  craft:
+    tagline: 'Oficio'
+    title: 'Cada piedra, engastada a mano'
+    body: |
+      Cada pieza empieza como un dibujo en el banco y termina bajo la lupa del engastador. Fundimos oro reciclado, limamos y pulimos cada aro y engastamos cada piedra a mano, garra a garra.
+
+      Nada sale del taller hasta que uno de nosotros lo ha llevado puesto un día entero.
+    imageAlt: 'Un orfebre limando un anillo en el banco de trabajo'
+    action: 'Conoce el taller'
+  testimonials:
+    tagline: 'Llevadas, no posadas'
+    title: 'De nuestros clientes'
+    ratingLabel: '{rating} de 5'
+    items:
+      a:
+        quote: 'Diseñé mi anillo de compromiso en la web y lo recogí un mes después. Era igual que la imagen, solo que mejor.'
+        name: 'Sofie V.'
+        role: 'Amberes'
+      b:
+        quote: 'Ajustaron el anillo de mi abuela sin quitarle nada de su carácter. Ahora lo llevo todos los días.'
+        name: 'Marc D.'
+        role: 'Gante'
+      c:
+        quote: 'Una tienda tranquila, sin prisas, y me dejaron probarlo todo. Los aros que compré no se han separado de mis orejas.'
+        name: 'Lea K.'
+        role: 'Bruselas'
+  cta:
+    title: 'Diseña tu propio anillo'
+    subtitle: 'Elige el modelo, la piedra, el metal y el grabado, y comparte el resultado con un enlace.'
+    action: 'Empezar a diseñar'
+configurator:
+  pageTitle: 'Diseña tu anillo · Atelier Halden'
+  headline: 'Solitario'
+  modelViewerLabel: 'Tu anillo'
+  saveLabel: 'Guardar mi diseño'
+  model:
+    label: 'Modelo'
+    heading: 'Elige tu modelo'
+    classic: { title: 'Clásico', content: 'Aro fino' }
+    bold: { title: 'Ancho', content: 'Aro ancho' }
+    pave: { title: 'Pavé', content: 'Piedras de acento' }
+  carat:
+    label: 'Quilates'
+    heading: 'Elige los quilates'
+  color:
+    label: 'Color'
+    heading: 'Elige el color'
+    yellow: 'Oro amarillo'
+    white: 'Oro blanco'
+    rose: 'Oro rosa'
+  clarity:
+    label: 'Pureza'
+    heading: 'Elige la pureza'
+  extras:
+    label: 'Extras'
+    heading: 'Añade hasta dos extras'
+    giftbox: { title: 'Caja de regalo', content: 'Envuelto y listo para regalar.' }
+    certificate: { title: 'Certificado', content: 'Garantía de la piedra y el metal.' }
+    polish: { title: 'Pulido de por vida', content: 'Limpieza gratis, para siempre.' }
+  engraving:
+    label: 'Grabado'
+    heading: 'Graba tu anillo'
+    field: 'Grabado'
+    placeholder: 'Hasta 20 caracteres'
+    help: 'Se ve en el interior del aro.'
+collections:
+  pageTitle: 'Colecciones · Atelier Halden'
+  tagline: 'Las colecciones'
+  title: 'Colecciones'
+  subtitle: 'Cada pieza se hace por encargo en nuestro taller de Amberes.'
+  designLabel: 'Diseñar este anillo'
+  tabs:
+    rings:
+      label: 'Anillos'
+      products:
+        classic:
+          title: 'El Clásico'
+          content: 'Oro amarillo, 0,5 ct, sin inclusiones.'
+          imageAlt: 'Un solitario de oro amarillo'
+        bold:
+          title: 'El Ancho'
+          content: 'Oro rosa, 1 ct, VVS1.'
+          imageAlt: 'Un anillo con un diamante grande'
+        pave:
+          title: 'El Pavé'
+          content: 'Oro blanco, 0,25 ct, piedras de acento.'
+          imageAlt: 'Un anillo de oro blanco con piedras pequeñas'
+    necklaces:
+      label: 'Collares'
+      products:
+        pendant:
+          title: 'El Colgante'
+          content: 'Una sola piedra en una cadena fina de oro.'
+          imageAlt: 'Un colgante en una cadena fina'
+        riviere:
+          title: 'La Rivière'
+          content: 'Una línea de piedras iguales, engastadas una junto a otra.'
+          imageAlt: 'Un collar con una línea de piedras'
+        chain:
+          title: 'La Cadena'
+          content: 'Oro reciclado macizo, eslabones acabados a mano.'
+          imageAlt: 'Una cadena de oro lisa'
+    earrings:
+      label: 'Pendientes'
+      products:
+        studs:
+          title: 'Los Botones'
+          content: 'Dos piedras, cuatro garras, para cada día.'
+          imageAlt: 'Un par de pendientes de botón'
+        hoops:
+          title: 'Los Aros'
+          content: 'Aros ligeros de oro en tres tamaños.'
+          imageAlt: 'Un par de aros de oro'
+        drops:
+          title: 'Las Gotas'
+          content: 'Una piedra que se mueve contigo.'
+          imageAlt: 'Un par de pendientes colgantes'
+about:
+  pageTitle: 'Nosotros · Atelier Halden'
+  title: 'Un taller, no una fábrica'
+  subtitle: 'Nueve personas, un banco largo y sesenta años de anillos.'
+  body: |
+    Atelier Halden empezó en 1962 como un mostrador de reparaciones en el barrio de los diamantes de Amberes. Hoy el mismo taller diseña, funde, engasta y pule cada pieza que vendemos.
+
+    Trabajamos con oro reciclado, compramos piedras cuyo origen podemos rastrear y tenemos el banco en la tienda, para que veas cómo se hace tu anillo.
+  imageAlt: 'El banco del taller con herramientas y bandejas de piedras'
+  history:
+    tagline: 'Desde 1962'
+    title: 'Nuestra historia'
+    items:
+      founded:
+        title: '1962 · Un mostrador de reparaciones'
+        content: 'Jan Halden abre un pequeño taller de reparaciones junto al barrio de los diamantes.'
+      diamond:
+        title: '1978 · El primer engastador'
+        content: 'Empezamos a engastar las piedras en casa en lugar de enviarlas fuera.'
+      second:
+        title: '1996 · Una segunda generación'
+        content: 'Els Halden toma el banco y dibuja el primer Clásico.'
+      configurator:
+        title: '2024 · Diseño en línea'
+        content: 'Los clientes pueden diseñar su propio anillo y compartirlo con un enlace.'
+  stats:
+    tagline: 'En cifras'
+    title: 'Pequeños, a propósito'
+    items:
+      years: { value: '60+', label: 'años en el banco' }
+      pieces: { value: '12.000', label: 'piezas hechas' }
+      setters: { value: '9', label: 'engastadores y orfebres' }
+      recycled: { value: '100%', label: 'oro reciclado' }
+  team:
+    title: 'El taller'
+    members:
+      lotte: { name: 'Lotte Halden', role: 'Diseñadora', photoAlt: 'Retrato de Lotte Halden' }
+      bram: { name: 'Bram Peeters', role: 'Engastador', photoAlt: 'Retrato de Bram Peeters' }
+      ines: { name: 'Ines Moreau', role: 'Orfebre', photoAlt: 'Retrato de Ines Moreau' }
+      wout: { name: 'Wout Janssens', role: 'Pulidor', photoAlt: 'Retrato de Wout Janssens' }
+contact:
+  pageTitle: 'Contacto · Atelier Halden'
+  title: 'Visita el taller'
+  subtitle: 'Ven a probarte piezas, ajustar una talla o hablar de un diseño. Puedes pedir cita, pero no hace falta.'
+  street: 'Hoveniersstraat 30'
+  postalCode: '2018'
+  locality: 'Amberes'
+  phoneLabel: '+32 3 000 00 00'
+  addressTitle: 'Dirección'
+  callTitle: 'Llama'
+  mailTitle: 'Escribe'
+  fields:
+    name: 'Nombre'
+    email: 'Correo electrónico'
+    topic: '¿De qué se trata?'
+    message: 'Mensaje'
+  submit: 'Enviar'
+  mailtoMessage: 'Tu aplicación de correo debería abrirse con el mensaje listo para enviar.'
+  mapTitle: 'Mapa de la tienda de Atelier Halden'
+  markerTitle: 'Atelier Halden'
+  faq:
+    tagline: 'Preguntas'
+    title: 'Antes de tu visita'
+    items:
+      sizing:
+        title: '¿Cómo sé mi talla de anillo?'
+        content: 'Pásate y la medimos en un minuto, o pide un medidor gratuito y te lo enviamos por correo.'
+      resizing:
+        title: '¿Podéis ajustar un anillo?'
+        content: 'Sí: los nuestros, gratis el primer año, y otros anillos por un pequeño precio, normalmente en una semana.'
+      care:
+        title: '¿Cómo limpio mis joyas?'
+        content: 'Agua templada, una gota de jabón y un cepillo suave. Tráelas una vez al año y las pulimos gratis.'
+      engraving:
+        title: '¿Qué podéis grabar?'
+        content: 'Hasta veinte caracteres dentro del aro: nombres, fechas, iniciales o una palabra corta.'

@@ -1,0 +1,231 @@
+brand: 'Atelier Halden'
+nav:
+  collections: 'Collections'
+  configurator: 'Design your ring'
+  about: 'About'
+  contact: 'Contact'
+  menuLabel: 'Open menu'
+footer:
+  disclaimer: 'Fine jewellery, cut and set by hand in our Antwerp workshop since 1962.'
+  footnote: 'A demo built with astro.blocks; nothing here is for sale.'
+  instagram: 'Instagram'
+  pinterest: 'Pinterest'
+home:
+  pageTitle: 'Atelier Halden · Fine jewellery'
+  description: 'Rings, necklaces and earrings made by hand in Antwerp.'
+  hero:
+    tagline: 'Antwerp, since 1962'
+    title: 'Made to be worn every day'
+    subtitle: 'Fine jewellery cut, set and finished by hand.'
+    primary: 'Design your ring'
+    secondary: 'See the collections'
+  collections:
+    tagline: 'The collections'
+    title: 'Three ways to wear it'
+    link: 'Explore'
+    items:
+      rings:
+        title: 'Rings'
+        content: 'Solitaires and bands, made to your size.'
+        imageAlt: 'Gold rings with diamonds on a linen cloth'
+      necklaces:
+        title: 'Necklaces'
+        content: 'Fine chains and pendants that sit close to the skin.'
+        imageAlt: 'A gold necklace worn at the collarbone'
+      earrings:
+        title: 'Earrings'
+        content: 'Studs, hoops and drops for every day and every evening.'
+        imageAlt: 'Gold earrings worn with the hair pinned back'
+  craft:
+    tagline: 'Craftsmanship'
+    title: 'Every stone set by hand'
+    body: |
+      Each piece starts as a drawing on the bench and ends under a setter's loupe. We cast in recycled gold, file and polish every band, and set each stone by hand, one claw at a time.
+
+      Nothing leaves the workshop until it has been worn for a day by one of us.
+    imageAlt: 'A goldsmith filing a ring at the workbench'
+    action: 'Meet the workshop'
+  testimonials:
+    tagline: 'Worn, not staged'
+    title: 'From our customers'
+    ratingLabel: '{rating} out of 5'
+    items:
+      a:
+        quote: 'I designed my engagement ring online and picked it up a month later. It looked exactly like the render, only better.'
+        name: 'Sofie V.'
+        role: 'Antwerp'
+      b:
+        quote: "They resized my grandmother's ring without losing any of its character. I wear it every day now."
+        name: 'Marc D.'
+        role: 'Ghent'
+      c:
+        quote: 'Quiet shop, no pressure, and they let me try on everything. The hoops I bought have not left my ears since.'
+        name: 'Lea K.'
+        role: 'Brussels'
+  cta:
+    title: 'Design your own ring'
+    subtitle: 'Choose the model, stone, metal and engraving, and share the result with a link.'
+    action: 'Start designing'
+configurator:
+  pageTitle: 'Design your ring · Atelier Halden'
+  headline: 'Solitaire'
+  modelViewerLabel: 'Your ring'
+  saveLabel: 'Save my design'
+  model:
+    label: 'Model'
+    heading: 'Select your model'
+    classic: { title: 'Classic', content: 'Slim band' }
+    bold: { title: 'Bold', content: 'Wide band' }
+    pave: { title: 'Pavé', content: 'Accent stones' }
+  carat:
+    label: 'Carat'
+    heading: 'Select carat'
+  color:
+    label: 'Color'
+    heading: 'Select colour'
+    yellow: 'Yellow gold'
+    white: 'White gold'
+    rose: 'Rose gold'
+  clarity:
+    label: 'Clarity'
+    heading: 'Select clarity'
+  extras:
+    label: 'Extras'
+    heading: 'Add up to two extras'
+    giftbox: { title: 'Gift box', content: 'Wrapped and ready to give.' }
+    certificate: { title: 'Certificate', content: 'Proof of the stone and metal.' }
+    polish: { title: 'Lifetime polish', content: 'Free cleaning, forever.' }
+  engraving:
+    label: 'Engraving'
+    heading: 'Engrave your ring'
+    field: 'Engraving'
+    placeholder: 'Up to 20 characters'
+    help: 'Shown on the inside of the band.'
+collections:
+  pageTitle: 'Collections · Atelier Halden'
+  tagline: 'The collections'
+  title: 'Collections'
+  subtitle: 'Every piece is made to order in our Antwerp workshop.'
+  designLabel: 'Design this ring'
+  tabs:
+    rings:
+      label: 'Rings'
+      products:
+        classic:
+          title: 'The Classic'
+          content: 'Yellow gold, 0.5 ct, flawless.'
+          imageAlt: 'A yellow-gold solitaire ring'
+        bold:
+          title: 'The Bold'
+          content: 'Rose gold, 1 ct, VVS1.'
+          imageAlt: 'A ring with a large diamond'
+        pave:
+          title: 'The Pavé'
+          content: 'White gold, 0.25 ct, accent stones.'
+          imageAlt: 'A white-gold ring set with small stones'
+    necklaces:
+      label: 'Necklaces'
+      products:
+        pendant:
+          title: 'The Pendant'
+          content: 'A single stone on a fine gold chain.'
+          imageAlt: 'A pendant on a fine chain'
+        riviere:
+          title: 'The Rivière'
+          content: 'A line of matched stones, set edge to edge.'
+          imageAlt: 'A necklace set with a line of stones'
+        chain:
+          title: 'The Chain'
+          content: 'Solid recycled gold, hand-finished links.'
+          imageAlt: 'A plain gold chain'
+    earrings:
+      label: 'Earrings'
+      products:
+        studs:
+          title: 'The Studs'
+          content: 'Two stones, four claws, every day.'
+          imageAlt: 'A pair of stud earrings'
+        hoops:
+          title: 'The Hoops'
+          content: 'Light gold hoops in three sizes.'
+          imageAlt: 'A pair of gold hoop earrings'
+        drops:
+          title: 'The Drops'
+          content: 'A stone that moves when you do.'
+          imageAlt: 'A pair of drop earrings'
+about:
+  pageTitle: 'About · Atelier Halden'
+  title: 'A workshop, not a factory'
+  subtitle: 'Nine people, one long bench and sixty years of rings.'
+  body: |
+    Atelier Halden began in 1962 as a repair counter in Antwerp's diamond quarter. Today the same workshop designs, casts, sets and polishes every piece we sell.
+
+    We work in recycled gold, buy stones we can trace, and keep the bench in the shop, so you can watch your ring being made.
+  imageAlt: 'The workshop bench with tools and trays of stones'
+  history:
+    tagline: 'Since 1962'
+    title: 'Our story'
+    items:
+      founded:
+        title: '1962 · A repair counter'
+        content: 'Jan Halden opens a small repair shop near the diamond district.'
+      diamond:
+        title: '1978 · The first setter'
+        content: 'We start setting stones in house instead of sending them out.'
+      second:
+        title: '1996 · A second generation'
+        content: 'Els Halden takes over the bench and draws the first Classic.'
+      configurator:
+        title: '2024 · Design online'
+        content: 'Customers can design their own ring and share it with a link.'
+  stats:
+    tagline: 'In numbers'
+    title: 'Small, on purpose'
+    items:
+      years: { value: '60+', label: 'years at the bench' }
+      pieces: { value: '12,000', label: 'pieces made' }
+      setters: { value: '9', label: 'setters and goldsmiths' }
+      recycled: { value: '100%', label: 'recycled gold' }
+  team:
+    title: 'The workshop'
+    members:
+      lotte: { name: 'Lotte Halden', role: 'Designer', photoAlt: 'Portrait of Lotte Halden' }
+      bram: { name: 'Bram Peeters', role: 'Stone setter', photoAlt: 'Portrait of Bram Peeters' }
+      ines: { name: 'Ines Moreau', role: 'Goldsmith', photoAlt: 'Portrait of Ines Moreau' }
+      wout: { name: 'Wout Janssens', role: 'Polisher', photoAlt: 'Portrait of Wout Janssens' }
+contact:
+  pageTitle: 'Contact · Atelier Halden'
+  title: 'Visit the atelier'
+  subtitle: 'Come in to try on, resize or talk through a design. Appointments are welcome but not needed.'
+  street: 'Hoveniersstraat 30'
+  postalCode: '2018'
+  locality: 'Antwerp'
+  phoneLabel: '+32 3 000 00 00'
+  addressTitle: 'Address'
+  callTitle: 'Call'
+  mailTitle: 'Write'
+  fields:
+    name: 'Name'
+    email: 'Email'
+    topic: 'What is it about?'
+    message: 'Message'
+  submit: 'Send'
+  mailtoMessage: 'Your mail app should open with the message ready to send.'
+  mapTitle: 'Map of the Atelier Halden store'
+  markerTitle: 'Atelier Halden'
+  faq:
+    tagline: 'Questions'
+    title: 'Before you visit'
+    items:
+      sizing:
+        title: 'How do I find my ring size?'
+        content: 'Come by and we measure it in a minute, or order a free sizer and we post it to you.'
+      resizing:
+        title: 'Can you resize a ring?'
+        content: 'Yes, ours for free in the first year and other rings for a small fee, usually within a week.'
+      care:
+        title: 'How should I clean my jewellery?'
+        content: 'Warm water, a drop of soap and a soft brush. Bring it in once a year and we polish it for free.'
+      engraving:
+        title: 'What can you engrave?'
+        content: 'Up to twenty characters inside the band: names, dates, initials or a short word.'

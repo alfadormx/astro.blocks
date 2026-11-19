@@ -1,6 +1,6 @@
 # Configurator stills
 
-Model tile images for `/demos/jewellery-configurator`, one per Model option (`classic.webp`,
+Model tile images for `/demos/jewellery/configurator`, one per Model option (`classic.webp`,
 `bold.webp`, `pave.webp`). Each is an outline drawing of the ring in one flat grey, so a tile shows
 the model's shape and never a metal.
 
