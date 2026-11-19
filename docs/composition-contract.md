@@ -4,7 +4,7 @@ How a block exposes its children, layers their defaults, names its props and kee
 
 The history of how each rule was reached (findings, reviews, amendments A1–A19) lives in `thoughts/shared/tasks/EPIC-Block-Composition-Standardization/`. This file is the current state; where the two disagree, this file wins.
 
-`tests/unit/compositionContract.test.ts` and `tests/unit/classHooks.test.ts` check the mechanical rules (naming, layer types, `Partial`, `show*`, spacing words, imports, hooks, `!important`). The rest is for design and review.
+`packages/blocks/tests/unit/compositionContract.test.ts` and `packages/blocks/tests/unit/classHooks.test.ts` check the mechanical rules (naming, layer types, `Partial`, `show*`, spacing words, imports, hooks, `!important`). The rest is for design and review.
 
 ## Vocabulary
 
@@ -55,7 +55,7 @@ defaultButtonConfig?: LayerConfig<ButtonProps>;
 
 ## 3. Merge order
 
-**Rule.** Children are built with `mergeConfigs` (`src/utils/mergeConfigs.ts`) in this order, most specific last:
+**Rule.** Children are built with `mergeConfigs` (`packages/blocks/src/utils/mergeConfigs.ts`) in this order, most specific last:
 
 ```
 {} → internal base → internal state → default…Config → <state>…Config → structural → instance
@@ -115,7 +115,7 @@ mergeConfigs<ThemeToggleProps>(
 - A block may collapse an optional region by slot presence: when `Astro.slots.has(name)` is false it renders a single column instead of an empty one (ContactForm `aside`).
 - A block whose optional children are all absent may render nothing at all, slot included (Pager with neither `prevButton` nor `nextButton`).
 - A child that renders by default is typed `XProps | false`; `false` hides it (`closeButton?: ButtonProps | false`).
-- Exception: `show*` stays only for generated parts that have no instance field (ContentCarousel `showIndicators`, TextArea `showCounter`, Map `showMarker`) and for position-derived flags (Item `showConnector*`). The list lives in `SHOW_FLAGS` in `tests/unit/compositionContract.test.ts`; a new flag goes there and here.
+- Exception: `show*` stays only for generated parts that have no instance field (ContentCarousel `showIndicators`, TextArea `showCounter`, Map `showMarker`) and for position-derived flags (Item `showConnector*`). The list lives in `SHOW_FLAGS` in `packages/blocks/tests/unit/compositionContract.test.ts`; a new flag goes there and here.
 - A flag that picks a format rather than presence is a named enum, not `show*` (LanguageToggle `labelFormat: 'label' | 'code'`).
 - **Child props live in the child's field.** `twoColumnContainer.reverseOnMobile`, not `reverseOnMobile` on the parent.
 - **Child-wrapper props are flat on the parent**, named `<role>Class`, `<role>Align` or `<role>Gap`, where `<role>` is the field or text prop the wrapper holds (`actionsClass`, `buttonsGap`).
@@ -166,7 +166,7 @@ Named exceptions that stay classes:
 | `floating-player`                         | state that must beat consumer classes |
 | `color-btn`                               | page markup, not a block              |
 
-`tests/unit/classHooks.test.ts` enforces this list. Adding an exception means adding it here and there.
+`packages/blocks/tests/unit/classHooks.test.ts` enforces this list. Adding an exception means adding it here and there.
 
 **Note.** Tailwind preflight sets `[hidden]{display:none !important}`, so hover can't reveal an attribute-hidden element. For hover/open states, use a `data-open`-style attribute on a skeleton wrapper styled in `blocks.css`.
 
@@ -193,7 +193,7 @@ Named exceptions that stay classes:
 
 ## 11. Layer types
 
-**Rule.** Every layer is typed `LayerConfig<…>`, from `src/types/config.types.ts`:
+**Rule.** Every layer is typed `LayerConfig<…>`, from `packages/blocks/src/types/config.types.ts`:
 
 ```ts
 type PerInstanceKey = 'id' | 'name' | 'anchorId';
@@ -225,30 +225,38 @@ export type LayerConfig<T> = T extends unknown ? Partial<Omit<T, PerInstanceKey>
 
 **Rule.** A component split out of one parent:
 
-- declares `Props` inline in its `.astro` file, never in `src/types/`;
+- declares `Props` inline in its `.astro` file, never in `packages/blocks/src/types/`;
 - opens its frontmatter with `// Internal to <Parent>: <why it's split out>`;
 - has no docs page or nav entry;
 - is imported only by its parent. A component shared by several blocks lists every parent in its marker (`// Internal to Input, Select, …: <why>`) and is imported only by those.
 
-A public block's docs page is `src/content/documentation/<section>/<Block>.mdx`; the sidebar, pager, Overview and API type links all read it.
+A public block's docs page is `apps/docs/src/content/documentation/<section>/<Block>.mdx`; the sidebar, pager, Overview and API type links all read it.
 
 ## 13. Types files and imports
 
-- Every file under `src/types/`, `.d.ts` included, imports only through relative `./x.types`. Never `~/utils`, never the `~` alias.
-- Library code (`src/components`, `src/utils`, `src/layouts`, `vendor/integration`) imports across directories through the `package.json` subpath imports `#components/`, `#utils/`, `#types/` and `#styles/`, and imports siblings with `./`. Never `~/`, which is the consuming site's `src` once the library is installed, and never `../` in the three `src/` directories. Site code (pages, examples, MDX, tests) keeps `~/` until the workspace split.
-- Site code reaches the library's site-facing modules through one `#blocks/…` entry point each, never by path into `vendor/integration` or `src/utils/`. 0084 maps `#blocks/` to the package name.
+- Every file under `packages/blocks/src/types/`, `.d.ts` included, imports only through relative `./x.types`. Never `~/utils`, never the `~` alias.
+- Library code (`packages/blocks/src/{components,utils,layouts,integration}`) imports across directories through the package's `package.json` subpath imports `#components/`, `#utils/`, `#types/` and `#styles/`, and imports siblings with `./`. Never `~/`, which is the consuming site's `src`, and never `../` outside `src/integration`. The package's own tests may use `~/`, aliased to the package `src/`.
+- Site code (`apps/docs`, and any consuming site) reaches the library only through the package name, `@alfadormx/blocks/…`. The `"exports"` map in `packages/blocks/package.json` is the whole public surface; any other subpath fails to resolve. `~/` in a site is the site's own `src/` (`~/examples`, `~/assets`, `~/pages/…`), never library code, and nothing reaches into `packages/` by path.
 
-  | Specifier             | Module                                     | Used by                         |
-  | --------------------- | ------------------------------------------ | ------------------------------- |
-  | `#blocks/integration` | `vendor/integration/index.ts`              | `astro.config.mjs`              |
-  | `#blocks/collections` | `vendor/integration/collections/pages.ts`  | collection list and entry pages |
-  | `#blocks/content`     | `vendor/integration/collections/define.ts` | `src/content.config.ts`         |
-  | `#blocks/copy`        | `vendor/integration/copy/pages.ts`         | static pages with copy          |
-  | `#blocks/selection`   | `src/utils/selection.ts`                   | doc examples' client `<script>` |
-  | `#blocks/url-state`   | `src/utils/urlState.ts`                    | doc examples' client `<script>` |
+  | Specifier                                                 | Module                                                                                                    | Used by                            |
+  | --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+  | `@alfadormx/blocks/{primitives,layout,composite}/X.astro` | `packages/blocks/src/components/blocks/<section>/X.astro`                                                 | pages, examples, MDX               |
+  | `@alfadormx/blocks/meta/X.astro`                          | `packages/blocks/src/components/meta/X.astro`                                                             | site layouts                       |
+  | `@alfadormx/blocks/types/<name>`                          | `packages/blocks/src/types/<name>.types.ts`                                                               | examples, pages                    |
+  | `@alfadormx/blocks/Layout.astro`                          | `packages/blocks/src/layouts/Layout.astro`                                                                | pages                              |
+  | `@alfadormx/blocks/utils/<name>`                          | `packages/blocks/src/utils/<name>.ts` (`richText`, `styles`, `mergeConfigs`, `images`, `combinationCode`) | pages, examples                    |
+  | `@alfadormx/blocks/integration`                           | `packages/blocks/src/integration/index.ts`                                                                | `astro.config.mjs`                 |
+  | `@alfadormx/blocks/collections`                           | `packages/blocks/src/integration/collections/pages.ts`                                                    | collection list and entry pages    |
+  | `@alfadormx/blocks/content`                               | `packages/blocks/src/integration/collections/define.ts`                                                   | the site's `src/content.config.ts` |
+  | `@alfadormx/blocks/copy`                                  | `packages/blocks/src/integration/copy/pages.ts`                                                           | static pages with copy             |
+  | `@alfadormx/blocks/selection`                             | `packages/blocks/src/utils/selection.ts`                                                                  | doc examples' client `<script>`    |
+  | `@alfadormx/blocks/url-state`                             | `packages/blocks/src/utils/urlState.ts`                                                                   | doc examples' client `<script>`    |
+  | `@alfadormx/blocks/blocks.css`                            | `packages/blocks/src/styles/blocks.css`                                                                   | the site's Tailwind root CSS       |
 
-- Public props are expressed in our own types, never a third-party library's: `VideoProps.source` is our `VideoSource`, not a player's source type. Swapping the library then doesn't change what consumers pass in. Astro's own types (`HTMLAttributes`, `ImageMetadata`) are allowed. When the type alone can't reject bad input, validate it at render time with a `validate*` helper in `src/utils/`.
-- A media field may take a URL or an ordered list of sources (`video?: string | VideoFileSource[]`). The block normalises both to the list in a `src/utils/` helper and validates the list there; never add a second field for the list form. Don't set such a field in an internal or default layer: `mergeConfigs` merges arrays index by index.
+  Adding a public module means adding it to `"exports"` and to this table.
+
+- Public props are expressed in our own types, never a third-party library's: `VideoProps.source` is our `VideoSource`, not a player's source type. Swapping the library then doesn't change what consumers pass in. Astro's own types (`HTMLAttributes`, `ImageMetadata`) are allowed. When the type alone can't reject bad input, validate it at render time with a `validate*` helper in `packages/blocks/src/utils/`.
+- A media field may take a URL or an ordered list of sources (`video?: string | VideoFileSource[]`). The block normalises both to the list in a `packages/blocks/src/utils/` helper and validates the list there; never add a second field for the list form. Don't set such a field in an internal or default layer: `mergeConfigs` merges arrays index by index.
 - Any styled box reuses `CellProps` and extends it for extra fields. If the box is flex or grid, it re-adds `gap` under rule 6:
 
   ```ts
@@ -265,12 +273,12 @@ Decisions that apply to a family of blocks, not a single prop.
 
 - Panel intent covers the selected state and focus ring of every panel kind, `neutral` included.
 - Neutral uses the `--color-emphasis` family. `--color-border-emphasis` is decorative and never shows state.
-- Every focus ring colour comes from `focusRingClass(intent)` in `src/utils/intentStyles.ts`, Button included. Button's link variant keeps its `currentColor` base ring.
+- Every focus ring colour comes from `focusRingClass(intent)` in `packages/blocks/src/utils/intentStyles.ts`, Button included. Button's link variant keeps its `currentColor` base ring.
 - Tabs aren't panels: style the active tab through `tabs.activeItemConfig`.
 
 ### Form fields
 
-- Input, Select, Checkbox, CheckboxGroup and TextArea render label, help and error through the internal `Field`, and their classes through `fieldControlClass` in `src/utils/field.ts`. Shared props live in `FieldBaseProps` (`src/types/field.types.ts`).
+- Input, Select, Checkbox, CheckboxGroup and TextArea render label, help and error through the internal `Field`, and their classes through `fieldControlClass` in `packages/blocks/src/utils/field.ts`. Shared props live in `FieldBaseProps` (`packages/blocks/src/types/field.types.ts`).
 - **Required marker.** `required` renders `<span aria-hidden="true" data-field-required>*</span>` after the label text. The native `required` attribute conveys it to assistive tech. There is no marker class prop; restyle it through `labelClass` with `[&_[data-field-required]]:…`.
 - Help and error ids are `<id>-help` and `<id>-error`, listed first in `aria-describedby`, then the consumer's ids, each once. `error` forces `aria-invalid="true"`.
 
@@ -297,7 +305,7 @@ A category holds identity (`name`, `heading`, `camera`, `triggerButton`), conten
 - [ ] No field the block ignores.
 - [ ] Spacing words per rule 6.
 - [ ] Hooks are `data-*`; no `!important` in defaults.
-- [ ] `compositionContract.test.ts` and `classHooks.test.ts` pass.
+- [ ] `compositionContract.test.ts` and `classHooks.test.ts` pass, as do the boundary guards `packages/blocks/tests/unit/exports.test.ts` and `apps/docs/tests/unit/siteImports.test.ts`.
 - [ ] Titles through Headline with the right `htmlTag`.
-- [ ] Types file imports only relative `./x.types`; library code imports through `#…` or `./`, never `~/`; no third-party library types in public props.
-- [ ] A URL-or-list media field is normalised and validated in `src/utils/`, and no layer sets it.
+- [ ] Types file imports only relative `./x.types`; library code imports through `#…` or `./`, never `~/`; site code imports the library only as `@alfadormx/blocks/…`; no third-party library types in public props.
+- [ ] A URL-or-list media field is normalised and validated in `packages/blocks/src/utils/`, and no layer sets it.

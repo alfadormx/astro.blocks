@@ -4,10 +4,10 @@ Composable UI blocks for building sites quickly with [Astro](https://astro.build
 
 ```astro
 ---
-import Layout from '~/layouts/Layout.astro';
-import Header from '~/components/blocks/composite/Header.astro';
-import CallToAction from '~/components/blocks/composite/CallToAction.astro';
-import Footer from '~/components/blocks/composite/Footer.astro';
+import Layout from '@alfadormx/blocks/Layout.astro';
+import Header from '@alfadormx/blocks/composite/Header.astro';
+import CallToAction from '@alfadormx/blocks/composite/CallToAction.astro';
+import Footer from '@alfadormx/blocks/composite/Footer.astro';
 ---
 
 <Layout metadata={{ title: { default: 'My site' } }}>
@@ -20,9 +20,52 @@ import Footer from '~/components/blocks/composite/Footer.astro';
 </Layout>
 ```
 
+## Workspace
+
+This repository is a pnpm workspace:
+
+```text
+/                  workspace root: lint, prettier and check orchestration, docs/, thoughts/
+packages/blocks/   @alfadormx/blocks, the library
+├── src/           components/, layouts/, types/, utils/, styles/, integration/
+└── tests/         unit/, astro/ (container tests), fixture/ (minimal site for them)
+apps/docs/         the showcase site: docs, demos and home page
+├── src/           pages/, examples/, content/, copy/, assets/, config.yaml, styles/global.css
+├── public/
+├── scripts/       ring model and still generators, browser test runner
+└── tests/         unit/ (site rules), browser/ (Playwright)
+```
+
+The package ships source (`.astro`, `.ts`, CSS). Its `"exports"` map is the public surface: a subpath not listed there does not resolve.
+
+## Using the package in a site
+
+```sh
+pnpm add @alfadormx/blocks @iconify-json/heroicons @iconify-json/mdi
+```
+
+astro-icon loads only the icon sets named in the site's own `package.json`, so list `heroicons` and `mdi` (used by the blocks) next to any sets the site uses itself.
+
+```js
+// astro.config.mjs
+import { defineConfig } from 'astro/config';
+import blocks from '@alfadormx/blocks/integration';
+
+export default defineConfig({
+  integrations: [blocks({ config: './src/config.yaml', css: './src/styles/global.css' })],
+});
+```
+
+```css
+/* src/styles/global.css */
+@import '@alfadormx/blocks/blocks.css';
+```
+
+`blocks.css` tells Tailwind to scan the package, so the site CSS needs no `@source` for it. Import blocks by section, for example `import Hero from '@alfadormx/blocks/composite/Hero.astro'`, and prop types as `import type { HeroProps } from '@alfadormx/blocks/types/hero'`.
+
 ## Block catalogue
 
-Blocks live in `src/components/blocks/`, with prop types in `src/types/*.types.ts`. Live examples and API tables are served at `/documentation`.
+Blocks live in `packages/blocks/src/components/blocks/`, with prop types in `packages/blocks/src/types/*.types.ts`. Live examples and API tables are served at `/documentation`.
 
 ### Primitives
 
@@ -77,7 +120,7 @@ Blocks live in `src/components/blocks/`, with prop types in `src/types/*.types.t
 
 ### Meta
 
-`Metadata`, `CommonMeta`, `Favicons`, `Analytics` and `SiteVerification` are wired into `src/layouts/Layout.astro` and read from the site config.
+`Metadata`, `CommonMeta`, `Favicons`, `Analytics` and `SiteVerification` are wired into `@alfadormx/blocks/Layout.astro` and read from the site config.
 
 `metadata.structuredData` takes one schema.org object or an array of them, and `Metadata` emits each as its own `<script type="application/ld+json">` in `<head>`. It is page-only: it is not read from `config.yaml` or `metadata.localized`, where arrays would merge by index.
 
@@ -91,42 +134,20 @@ Blocks live in `src/components/blocks/`, with prop types in `src/types/*.types.t
 - **Layered defaults.** `default*Config` props set shared config for repeated children, and `selected*Config` or `active*Config` props layer state on top.
 - **Rich text.** Fields typed `RichText` (Item, Accordion, Footer and Container content) take Markdown; one line renders inline, and HTML passes through.
 - **Whitespace.** Write prose as Markdown (MDX pages, copy YAML, `RichText`). Astro's default `compressHTML: "jsx"` drops a line break next to a tag in `.astro` templates, so end that line with `{' '}`.
-- **Style tokens.** Buttons and items share an `intent`, `variant`, `size` and `shape` vocabulary. Colors come from `src/styles/colors.css`.
+- **Style tokens.** Buttons and items share an `intent`, `variant`, `size` and `shape` vocabulary. Colors come from `packages/blocks/src/styles/colors.css`.
 - **Internal sub-components stay internal.** Files that open with `// Internal to <Parent>` (or a list of parents) declare `Props` inline, have no docs page and are imported only by the parents they list; use a parent instead.
 
 ## Site configuration
 
-`src/config.yaml` holds the site name and URL, i18n languages, default metadata, theme color, favicons and analytics. It is exposed to components through the `site-config` virtual module from the integration (`#blocks/integration`).
+`src/config.yaml` holds the site name and URL, i18n languages, default metadata, theme color, favicons and analytics. It is exposed to components through the `site-config` virtual module from the integration (`@alfadormx/blocks/integration`).
 
-`astro.config.mjs` registers the library with one integration, `blocks({ config: './src/config.yaml', css: './src/styles/global.css' })`. It serves the `site-config` virtual module, hands the site stylesheet to layouts through `site-styles`, and registers Tailwind, MDX, astro-icon (every installed `@iconify-json/*` set), the Shiki config and the `three` pre-bundling. Add an icon set by installing `@iconify-json/<set>`.
+`astro.config.mjs` registers the library with one integration, `blocks({ config: './src/config.yaml', css: './src/styles/global.css' })`. It serves the `site-config` virtual module, hands the site stylesheet to layouts through `site-styles`, and registers Tailwind, MDX, astro-icon (every `@iconify-json/*` set in the site's `package.json`), the Shiki config and the `three` pre-bundling. Add an icon set by installing `@iconify-json/<set>`.
 
 ### Collections and copy
 
-`collections:` in `config.yaml` declares Markdown collections by preset (`post`, `caseStudy`, `event`). Content goes in `src/content/<name>/<lang>/*.md`, and `src/content.config.ts` is a one-line stub, so `getCollection('<name>')` is typed with no schema to write. Each collection needs two short pages, a list and an entry, built with the helpers from `#blocks/collections`.
+`collections:` in `config.yaml` declares Markdown collections by preset (`post`, `caseStudy`, `event`). Content goes in `src/content/<name>/<lang>/*.md`, and `src/content.config.ts` is a one-line stub, so `getCollection('<name>')` is typed with no schema to write. Each collection needs two short pages, a list and an entry, built with the helpers from `@alfadormx/blocks/collections`.
 
-Static-page copy lives in `src/copy/<page>/<lang>.yaml`, read with the helpers from `#blocks/copy`. The default-language file defines the typed keys, and a key missing in another language falls back with a build warning. The guide at `/documentation/guides/Collections` covers both.
-
-## Project structure
-
-```text
-src/
-├── components/
-│   ├── blocks/        primitives/, layout/, composite/
-│   └── meta/          head and SEO components
-├── config.yaml        site configuration
-├── content.config.ts  collections stub (reads config.yaml)
-├── content/           Markdown collections, one folder per language
-│   └── documentation/ docs pages, one MDX entry per block
-├── copy/              static-page copy, one YAML per language
-├── layouts/           page layout
-├── pages/
-│   └── [...lang]/     landing page and demos, one route for all locales
-├── styles/            global styles and color tokens
-├── types/             prop types per block
-└── utils/             shared helpers
-vendor/integration/    blocks() integration, collection and copy helpers
-tests/                 unit/, astro/, browser/
-```
+Static-page copy lives in `src/copy/<page>/<lang>.yaml`, read with the helpers from `@alfadormx/blocks/copy`. The default-language file defines the typed keys, and a key missing in another language falls back with a build warning. The guide at `/documentation/guides/Collections` covers both.
 
 ## Demos
 
@@ -139,16 +160,17 @@ tests/                 unit/, astro/, browser/
 
 ## Commands
 
-| Command                | Action                                                 |
-| :--------------------- | :----------------------------------------------------- |
-| `pnpm install`         | Install dependencies                                   |
-| `pnpm dev`             | Start the dev server at `localhost:4321`               |
-| `pnpm build`           | Build the site to `./dist/`                            |
-| `pnpm preview`         | Preview the build                                      |
-| `pnpm check`           | Run type check, lint, prettier and all test suites     |
-| `pnpm test:unit`       | Vitest unit tests                                      |
-| `pnpm test:astro`      | Vitest component tests                                 |
-| `pnpm test:browser`    | Playwright browser tests                               |
-| `pnpm fix`             | Apply ESLint and Prettier fixes                        |
-| `pnpm models:generate` | Regenerate ring models for the configurator demo       |
-| `pnpm stills:generate` | Regenerate ring still images for the configurator demo |
+Run from the repository root.
+
+| Command                                 | Action                                                           |
+| :-------------------------------------- | :--------------------------------------------------------------- |
+| `pnpm install`                          | Install dependencies for every workspace                         |
+| `pnpm dev`                              | Start the docs dev server at `localhost:4321`                    |
+| `pnpm build`                            | Build the docs site to `apps/docs/dist/`                         |
+| `pnpm check`                            | Lint, prettier, then each workspace's type check and test suites |
+| `pnpm check:quick`                      | Checks scoped to files changed since `HEAD`                      |
+| `pnpm fix`                              | Apply ESLint and Prettier fixes                                  |
+| `pnpm --filter @alfadormx/blocks check` | Package type check, unit and container tests                     |
+| `pnpm --filter docs check`              | Docs type check, unit and Playwright browser tests               |
+| `pnpm --filter docs models:generate`    | Regenerate ring models for the configurator demo                 |
+| `pnpm --filter docs stills:generate`    | Regenerate ring still images for the configurator demo           |
