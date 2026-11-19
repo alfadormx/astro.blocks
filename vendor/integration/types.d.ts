@@ -19,6 +19,14 @@ declare module 'site-copy' {
   export const COPY: Record<string, Record<string, unknown>>;
 }
 
+declare module 'site-images' {
+  import type { ImageMetadata } from 'astro';
+
+  /** The site's `src/assets/images/**` files, keyed `/src/assets/images/…`. */
+  const images: Record<string, () => Promise<{ default: ImageMetadata }>>;
+  export default images;
+}
+
 // Filled per site by the integration's injected types (`collections.d.ts`, `copy.d.ts`).
 declare namespace AstroBlocks {
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type

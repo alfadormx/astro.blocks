@@ -1,4 +1,4 @@
-import type { PricingProps } from '~/types/pricing.types';
+import type { PricingProps } from '#types/pricing.types';
 
 export type PricingColumns = 1 | 2 | 3 | 4;
 

@@ -1,4 +1,4 @@
-import type { HeroProps } from '~/types/hero.types';
+import type { HeroProps } from '#types/hero.types';
 
 function fail(message: string): never {
   throw new Error(`Hero: ${message}`);

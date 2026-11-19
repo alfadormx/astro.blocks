@@ -1,4 +1,4 @@
-import type { ModelViewerMutation, ModelViewerProps } from '~/types/modelviewer.types';
+import type { ModelViewerMutation, ModelViewerProps } from '#types/modelviewer.types';
 
 const HEX_COLOR = /^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i;
 

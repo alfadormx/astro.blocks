@@ -1,12 +1,12 @@
 ---
 // Internal to Testimonials: renders one already-merged testimonial; Testimonials owns layering and layout.
 import { Icon } from 'astro-icon/components';
-import Image from '~/components/blocks/primitives/Image.astro';
-import type { ImageProps } from '~/types/image.types';
-import type { Testimonial } from '~/types/testimonials.types';
-import { mergeConfigs } from '~/utils/mergeConfigs';
-import { ratingText, splitQuote } from '~/utils/testimonials';
-import { cn } from '~/utils/styles';
+import Image from '#components/blocks/primitives/Image.astro';
+import type { ImageProps } from '#types/image.types';
+import type { Testimonial } from '#types/testimonials.types';
+import { mergeConfigs } from '#utils/mergeConfigs';
+import { ratingText, splitQuote } from '#utils/testimonials';
+import { cn } from '#utils/styles';
 
 type Props = { testimonial: Testimonial };
 

@@ -26,6 +26,8 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
         const resolvedVirtualModuleId = '\0' + virtualModuleId;
         const copyModuleId = 'site-copy';
         const resolvedCopyModuleId = '\0' + copyModuleId;
+        const imagesModuleId = 'site-images';
+        const resolvedImagesModuleId = '\0' + imagesModuleId;
 
         const rawJsonConfig = (await loadConfig(_themeConfig)) as Config;
         const { SITE, I18N, METADATA, ANALYTICS, COLLECTIONS } = configBuilder(rawJsonConfig);
@@ -66,6 +68,9 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
                   if (id === copyModuleId) {
                     return resolvedCopyModuleId;
                   }
+                  if (id === imagesModuleId) {
+                    return resolvedImagesModuleId;
+                  }
                   return null;
                 },
                 load(id) {
@@ -80,6 +85,9 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
                   }
                   if (id === resolvedCopyModuleId) {
                     return `export const COPY = ${JSON.stringify(copy)};`;
+                  }
+                  if (id === resolvedImagesModuleId) {
+                    return `export default import.meta.glob('/src/assets/images/**/*.{jpeg,jpg,png,tiff,webp,gif,svg,JPEG,JPG,PNG,TIFF,WEBP,GIF,SVG}');`;
                   }
                   return null;
                 },

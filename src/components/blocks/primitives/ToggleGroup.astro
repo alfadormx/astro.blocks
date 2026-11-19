@@ -3,13 +3,13 @@ import type {
   ToggleGroupAppearance,
   ToggleGroupOptionConfig,
   ToggleGroupProps,
-} from '~/types/togglegroup.types';
-import ToggleGroupOptionContent from '~/components/blocks/primitives/ToggleGroupOptionContent.astro';
-import { cn } from '~/utils/styles';
-import { mergeConfigs } from '~/utils/mergeConfigs';
-import { intentClass, shapeClass, sizeClass } from '~/utils/buttonStyles';
-import { focusRingClass, selectedBorderClass, selectedFillClass } from '~/utils/intentStyles';
-import { toggleGroupName, validateToggleGroup } from '~/utils/toggleGroup';
+} from '#types/togglegroup.types';
+import ToggleGroupOptionContent from '#components/blocks/primitives/ToggleGroupOptionContent.astro';
+import { cn } from '#utils/styles';
+import { mergeConfigs } from '#utils/mergeConfigs';
+import { intentClass, shapeClass, sizeClass } from '#utils/buttonStyles';
+import { focusRingClass, selectedBorderClass, selectedFillClass } from '#utils/intentStyles';
+import { toggleGroupName, validateToggleGroup } from '#utils/toggleGroup';
 
 type Props = ToggleGroupProps & ToggleGroupAppearance;
 
@@ -202,7 +202,7 @@ const rootClass = cn(
 </div>
 
 <script>
-  import { getSelection, publish, subscribe } from '~/utils/selection';
+  import { getSelection, publish, subscribe } from '#utils/selection';
 
   const ROOT_SELECTOR = '[data-toggle-group]';
 

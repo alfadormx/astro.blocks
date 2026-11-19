@@ -3,8 +3,8 @@ import type {
   CombinationSpec,
   CombinationState,
   DecodeResult,
-} from '~/types/combinationcode.types';
-import type { Selection } from '~/types/selection.types';
+} from '#types/combinationcode.types';
+import type { Selection } from '#types/selection.types';
 
 const GROUP_SEPARATOR = '-';
 const ENTRY_SEPARATOR = '.';

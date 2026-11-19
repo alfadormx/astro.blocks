@@ -1,13 +1,13 @@
-import type { CombinationGroupSpec, CombinationSpec } from '~/types/combinationcode.types';
+import type { CombinationGroupSpec, CombinationSpec } from '#types/combinationcode.types';
 import type {
   ConfiguratorCategory,
   ConfiguratorProps,
   SummaryCategory,
   SummaryFormat,
-} from '~/types/configurator.types';
-import type { ModelViewerMutation, ModelViewerSelectionGroup } from '~/types/modelviewer.types';
-import type { Selection } from '~/types/selection.types';
-import { validateCombinationSpec } from '~/utils/combinationCode';
+} from '#types/configurator.types';
+import type { ModelViewerMutation, ModelViewerSelectionGroup } from '#types/modelviewer.types';
+import type { Selection } from '#types/selection.types';
+import { validateCombinationSpec } from '#utils/combinationCode';
 
 const SUMMARY_SEPARATOR = ' · ';
 const PRODUCT_PATTERN = /^[A-Za-z0-9]+$/;

@@ -1,13 +1,13 @@
 ---
 // Internal to LogoCloud: one logo, shared by the static and marquee layouts.
-import Image from '~/components/blocks/primitives/Image.astro';
-import Vector from '~/components/blocks/primitives/Vector.astro';
-import type { LayerConfig } from '~/types/config.types';
-import type { ImageProps } from '~/types/image.types';
-import type { LogoCloudLogo } from '~/types/logocloud.types';
-import type { VectorProps } from '~/types/vector.types';
-import { mergeConfigs } from '~/utils/mergeConfigs';
-import { cn } from '~/utils/styles';
+import Image from '#components/blocks/primitives/Image.astro';
+import Vector from '#components/blocks/primitives/Vector.astro';
+import type { LayerConfig } from '#types/config.types';
+import type { ImageProps } from '#types/image.types';
+import type { LogoCloudLogo } from '#types/logocloud.types';
+import type { VectorProps } from '#types/vector.types';
+import { mergeConfigs } from '#utils/mergeConfigs';
+import { cn } from '#utils/styles';
 
 interface Props {
   logo: LogoCloudLogo;

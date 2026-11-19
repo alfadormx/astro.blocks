@@ -1,4 +1,4 @@
-import type { SelectionState, Selections } from '~/utils/modelViewerMutations';
+import type { SelectionState, Selections } from '#utils/modelViewerMutations';
 
 // Kept free of three.js so the element's eager script can import it.
 export function effectiveSrc(src: string, selections: Selections, state: SelectionState): string {

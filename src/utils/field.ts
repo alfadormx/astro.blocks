@@ -1,6 +1,6 @@
-import type { FieldBaseProps, FieldVariant } from '~/types/field.types';
-import { focusBorderClass, focusRingClass } from '~/utils/intentStyles';
-import { cn } from '~/utils/styles';
+import type { FieldBaseProps, FieldVariant } from '#types/field.types';
+import { focusBorderClass, focusRingClass } from '#utils/intentStyles';
+import { cn } from '#utils/styles';
 
 type Size = NonNullable<FieldBaseProps['size']>;
 type Shape = NonNullable<FieldBaseProps['shape']>;

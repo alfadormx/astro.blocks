@@ -1,17 +1,17 @@
 ---
-import Container from '~/components/blocks/layout/Container.astro';
-import ContentCarousel from '~/components/blocks/composite/ContentCarousel.astro';
-import ContentCarouselItem from '~/components/blocks/primitives/ContentCarouselItem.astro';
-import Headline from '~/components/blocks/primitives/Headline.astro';
-import LogoCloudEntry from '~/components/blocks/composite/LogoCloudEntry.astro';
-import type { ContainerProps } from '~/types/container.types';
-import type { ContentCarouselProps } from '~/types/contentcarousel.types';
-import type { HeadlineProps } from '~/types/headline.types';
-import type { LogoCloudProps } from '~/types/logocloud.types';
-import { gridGapClass } from '~/utils/itemsGrid';
-import { validateLogoCloud } from '~/utils/logoCloud';
-import { mergeConfigs } from '~/utils/mergeConfigs';
-import { cn } from '~/utils/styles';
+import Container from '#components/blocks/layout/Container.astro';
+import ContentCarousel from '#components/blocks/composite/ContentCarousel.astro';
+import ContentCarouselItem from '#components/blocks/primitives/ContentCarouselItem.astro';
+import Headline from '#components/blocks/primitives/Headline.astro';
+import LogoCloudEntry from '#components/blocks/composite/LogoCloudEntry.astro';
+import type { ContainerProps } from '#types/container.types';
+import type { ContentCarouselProps } from '#types/contentcarousel.types';
+import type { HeadlineProps } from '#types/headline.types';
+import type { LogoCloudProps } from '#types/logocloud.types';
+import { gridGapClass } from '#utils/itemsGrid';
+import { validateLogoCloud } from '#utils/logoCloud';
+import { mergeConfigs } from '#utils/mergeConfigs';
+import { cn } from '#utils/styles';
 
 type Props = LogoCloudProps;
 

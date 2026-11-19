@@ -33,6 +33,20 @@ const componentFiles = files('components/', /\.(astro|ts)$/).map((path) => ({
   source: read(path),
 }));
 
+const SPECIFIER = /(?:\bfrom\s*|\bimport\s*\(?\s*|\bimport\.meta\.glob\(\s*)(['"])([^'"]+)\1/g;
+const specifiers = (source: string) => [...source.matchAll(SPECIFIER)].map((m) => m[2]);
+
+const srcLibraryFiles = [
+  ...files('components/', /\.(astro|ts)$/),
+  ...files('utils/', /\.ts$/),
+  ...files('layouts/', /\.astro$/),
+].map((path) => ({ path, source: read(path) }));
+
+const integrationFiles = files('../vendor/integration/', /\.ts$/).map((path) => ({
+  path,
+  source: read(path),
+}));
+
 function fields(source: string): { name: string; type: string }[] {
   return [...source.matchAll(/^\s+(\w+)\??:\s*([^;]*);/gm)].map((m) => ({
     name: m[1],
@@ -46,6 +60,38 @@ const allFields = typeFiles.flatMap((f) =>
 const where = ({ file, name }: { file: string; name: string }) => `${file}:${name}`;
 
 describe('composition contract', () => {
+  it('the import scan reads every import form and skips plain strings', () => {
+    expect(
+      specifiers(
+        [
+          `import a from '~/a';`,
+          `import "~/b.css";`,
+          `const c = import('~/c');`,
+          `type D = typeof import("~/d");`,
+          `import.meta.glob(\n  '~/e/**'\n);`,
+          `x.startsWith('~/assets/images');`,
+          `x.replace('~/', '/src/');`,
+        ].join('\n')
+      )
+    ).toEqual(['~/a', '~/b.css', '~/c', '~/d', '~/e/**']);
+  });
+
+  it('library code never imports through ~/ or ../', () => {
+    const bad = [
+      ...srcLibraryFiles.flatMap((f) =>
+        specifiers(f.source)
+          .filter((s) => s.startsWith('~/') || s.startsWith('../'))
+          .map((s) => `${f.path}: ${s}`)
+      ),
+      ...integrationFiles.flatMap((f) =>
+        specifiers(f.source)
+          .filter((s) => s.startsWith('~/'))
+          .map((s) => `${f.path}: ${s}`)
+      ),
+    ];
+    expect(bad).toEqual([]);
+  });
+
   it('types files import only sibling types files or Astro', () => {
     const imports = typeFiles.flatMap((f) =>
       [...f.source.matchAll(/from '([^']+)'/g)].map((m) => `${f.name}: ${m[1]}`)

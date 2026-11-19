@@ -1,4 +1,4 @@
-import type { ContentCarouselProps } from '~/types/contentcarousel.types';
+import type { ContentCarouselProps } from '#types/contentcarousel.types';
 
 export interface ResolvedAutoplay {
   enabled: boolean;

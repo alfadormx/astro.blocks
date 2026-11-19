@@ -1,8 +1,8 @@
 import { Color, Mesh, SRGBColorSpace, type Material, type Object3D } from 'three';
-import type { ModelViewerMutation, ModelViewerSelectionGroup } from '~/types/modelviewer.types';
-import { familyName } from '~/utils/modelViewerMaterials';
+import type { ModelViewerMutation, ModelViewerSelectionGroup } from '#types/modelviewer.types';
+import { familyName } from '#utils/modelViewerMaterials';
 
-export { effectiveSrc } from '~/utils/modelViewerSrc';
+export { effectiveSrc } from '#utils/modelViewerSrc';
 
 export type SelectionState = Readonly<Record<string, readonly string[]>>;
 export type Selections = Readonly<Record<string, ModelViewerSelectionGroup>>;

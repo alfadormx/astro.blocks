@@ -1,15 +1,15 @@
 ---
 import { I18N } from 'site-config';
-import Container from '~/components/blocks/layout/Container.astro';
-import Headline from '~/components/blocks/primitives/Headline.astro';
-import ToggleGroup from '~/components/blocks/primitives/ToggleGroup.astro';
-import PricingTierCard from '~/components/blocks/composite/PricingTier.astro';
-import type { ContainerProps } from '~/types/container.types';
-import type { HeadlineProps } from '~/types/headline.types';
-import type { PricingProps, PricingTier, PricingToggleGroup } from '~/types/pricing.types';
-import type { ToggleGroupAppearance, ToggleGroupProps } from '~/types/togglegroup.types';
-import { currentLanguage } from '~/utils/currentLanguage';
-import { mergeConfigs } from '~/utils/mergeConfigs';
+import Container from '#components/blocks/layout/Container.astro';
+import Headline from '#components/blocks/primitives/Headline.astro';
+import ToggleGroup from '#components/blocks/primitives/ToggleGroup.astro';
+import PricingTierCard from '#components/blocks/composite/PricingTier.astro';
+import type { ContainerProps } from '#types/container.types';
+import type { HeadlineProps } from '#types/headline.types';
+import type { PricingProps, PricingTier, PricingToggleGroup } from '#types/pricing.types';
+import type { ToggleGroupAppearance, ToggleGroupProps } from '#types/togglegroup.types';
+import { currentLanguage } from '#utils/currentLanguage';
+import { mergeConfigs } from '#utils/mergeConfigs';
 import {
   hasYearly,
   pricingColumnsClass,
@@ -18,8 +18,8 @@ import {
   pricingOrderClass,
   validatePricing,
   type PricingColumns,
-} from '~/utils/pricing';
-import { cn } from '~/utils/styles';
+} from '#utils/pricing';
+import { cn } from '#utils/styles';
 
 type Props = PricingProps;
 type TierLayer = Omit<PricingTier, 'features' | 'highlighted'>;
@@ -145,7 +145,7 @@ const announcement = {
 </Container>
 
 <script>
-  import { getSelection, subscribe } from '~/utils/selection';
+  import { getSelection, subscribe } from '#utils/selection';
 
   function connect(root: HTMLElement): void {
     const group = root.dataset.pricingGroup;

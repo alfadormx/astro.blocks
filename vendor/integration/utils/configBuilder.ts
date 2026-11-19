@@ -1,4 +1,4 @@
-import type { MetaData } from '~/types/metadata.types';
+import type { MetaData } from '#types/metadata.types';
 import merge from 'lodash.merge';
 
 export type Config = {

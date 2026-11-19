@@ -15,7 +15,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-import { isStone } from '~/utils/modelViewerMaterials';
+import { isStone } from '#utils/modelViewerMaterials';
 
 // Threshold is linear HDR read before tone mapping. Stone reflections are boosted well past white,
 // so it sits high enough that only the brightest facets qualify, not whole stones.

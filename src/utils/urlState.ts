@@ -1,7 +1,7 @@
-import type { CombinationState, ConnectUrlStateOptions } from '~/types/combinationcode.types';
-import type { Selection, SelectionChangeDetail } from '~/types/selection.types';
-import { decode, encode, validateCombinationSpec } from '~/utils/combinationCode';
-import { getSelection, publish, subscribe } from '~/utils/selection';
+import type { CombinationState, ConnectUrlStateOptions } from '#types/combinationcode.types';
+import type { Selection, SelectionChangeDetail } from '#types/selection.types';
+import { decode, encode, validateCombinationSpec } from '#utils/combinationCode';
+import { getSelection, publish, subscribe } from '#utils/selection';
 
 const PARAM_PATTERN = /^[A-Za-z0-9_]+$/;
 

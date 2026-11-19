@@ -1,4 +1,4 @@
-import type { ItemsGridItem, ItemsGridSelection } from '~/types/itemsgrid.types';
+import type { ItemsGridItem, ItemsGridSelection } from '#types/itemsgrid.types';
 
 type SelectableSelection = Exclude<ItemsGridSelection, { mode: 'none' }>;
 

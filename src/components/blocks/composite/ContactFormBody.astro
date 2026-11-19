@@ -1,24 +1,24 @@
 ---
 // Internal to ContactForm: one form rendered either alone or inside the aside layout.
-import Button from '~/components/blocks/primitives/Button.astro';
-import Checkbox from '~/components/blocks/primitives/Checkbox.astro';
-import CheckboxGroup from '~/components/blocks/primitives/CheckboxGroup.astro';
-import Input from '~/components/blocks/primitives/Input.astro';
-import Select from '~/components/blocks/primitives/Select.astro';
-import TextArea from '~/components/blocks/primitives/TextArea.astro';
-import type { ButtonProps } from '~/types/button.types';
-import type { CheckboxAttributes } from '~/types/checkbox.types';
-import type { CheckboxGroupProps } from '~/types/checkboxgroup.types';
+import Button from '#components/blocks/primitives/Button.astro';
+import Checkbox from '#components/blocks/primitives/Checkbox.astro';
+import CheckboxGroup from '#components/blocks/primitives/CheckboxGroup.astro';
+import Input from '#components/blocks/primitives/Input.astro';
+import Select from '#components/blocks/primitives/Select.astro';
+import TextArea from '#components/blocks/primitives/TextArea.astro';
+import type { ButtonProps } from '#types/button.types';
+import type { CheckboxAttributes } from '#types/checkbox.types';
+import type { CheckboxGroupProps } from '#types/checkboxgroup.types';
 import type {
   ContactFormAction,
   ContactFormField,
   ContactFormProps,
-} from '~/types/contactform.types';
-import type { InputAttributes } from '~/types/input.types';
-import type { SelectAttributes } from '~/types/select.types';
-import type { TextAreaAttributes } from '~/types/textarea.types';
-import { mergeConfigs } from '~/utils/mergeConfigs';
-import { cn } from '~/utils/styles';
+} from '#types/contactform.types';
+import type { InputAttributes } from '#types/input.types';
+import type { SelectAttributes } from '#types/select.types';
+import type { TextAreaAttributes } from '#types/textarea.types';
+import { mergeConfigs } from '#utils/mergeConfigs';
+import { cn } from '#utils/styles';
 
 interface Props {
   formId: string;

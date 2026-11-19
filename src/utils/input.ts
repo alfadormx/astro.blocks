@@ -1,5 +1,5 @@
-import type { InputProps } from '~/types/input.types';
-import { fieldId, validateFieldLabel } from '~/utils/field';
+import type { InputProps } from '#types/input.types';
+import { fieldId, validateFieldLabel } from '#utils/field';
 
 /** Throws on an Input config that cannot render a valid labelled field. */
 export function validateInput(props: Pick<InputProps, 'label'>): void {

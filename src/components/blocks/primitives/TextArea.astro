@@ -1,9 +1,9 @@
 ---
-import Field from '~/components/blocks/primitives/Field.astro';
-import type { TextAreaAttributes } from '~/types/textarea.types';
-import { ariaInvalid, describedBy, fieldControlClass, fieldDescriptionIds } from '~/utils/field';
-import { cn } from '~/utils/styles';
-import { textAreaId, validateTextArea } from '~/utils/textArea';
+import Field from '#components/blocks/primitives/Field.astro';
+import type { TextAreaAttributes } from '#types/textarea.types';
+import { ariaInvalid, describedBy, fieldControlClass, fieldDescriptionIds } from '#utils/field';
+import { cn } from '#utils/styles';
+import { textAreaId, validateTextArea } from '#utils/textArea';
 
 type Props = TextAreaAttributes;
 
@@ -108,8 +108,8 @@ const counterId = `${id}-counter`;
 </Field>
 
 <script>
-  import type { Selection } from '~/types/selection.types';
-  import { getSelection, publish, subscribe } from '~/utils/selection';
+  import type { Selection } from '#types/selection.types';
+  import { getSelection, publish, subscribe } from '#utils/selection';
 
   const ROOT_SELECTOR = '[data-textarea]';
 

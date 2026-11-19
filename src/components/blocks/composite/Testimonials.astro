@@ -1,17 +1,17 @@
 ---
-import Container from '~/components/blocks/layout/Container.astro';
-import ContentCarousel from '~/components/blocks/composite/ContentCarousel.astro';
-import ContentCarouselItem from '~/components/blocks/primitives/ContentCarouselItem.astro';
-import Headline from '~/components/blocks/primitives/Headline.astro';
-import TestimonialCard from '~/components/blocks/composite/TestimonialCard.astro';
-import type { ContainerProps } from '~/types/container.types';
-import type { ContentCarouselProps } from '~/types/contentcarousel.types';
-import type { HeadlineProps } from '~/types/headline.types';
-import type { Testimonial, TestimonialsProps } from '~/types/testimonials.types';
-import { gridColumnsClass, gridGapClass } from '~/utils/itemsGrid';
-import { mergeConfigs } from '~/utils/mergeConfigs';
-import { validateTestimonials } from '~/utils/testimonials';
-import { cn } from '~/utils/styles';
+import Container from '#components/blocks/layout/Container.astro';
+import ContentCarousel from '#components/blocks/composite/ContentCarousel.astro';
+import ContentCarouselItem from '#components/blocks/primitives/ContentCarouselItem.astro';
+import Headline from '#components/blocks/primitives/Headline.astro';
+import TestimonialCard from '#components/blocks/composite/TestimonialCard.astro';
+import type { ContainerProps } from '#types/container.types';
+import type { ContentCarouselProps } from '#types/contentcarousel.types';
+import type { HeadlineProps } from '#types/headline.types';
+import type { Testimonial, TestimonialsProps } from '#types/testimonials.types';
+import { gridColumnsClass, gridGapClass } from '#utils/itemsGrid';
+import { mergeConfigs } from '#utils/mergeConfigs';
+import { validateTestimonials } from '#utils/testimonials';
+import { cn } from '#utils/styles';
 
 type Props = TestimonialsProps;
 type TestimonialLayer = Omit<Testimonial, 'quote' | 'author' | 'rating' | 'source'>;

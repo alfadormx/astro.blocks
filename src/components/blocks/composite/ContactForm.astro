@@ -1,14 +1,14 @@
 ---
-import ContactFormBody from '~/components/blocks/composite/ContactFormBody.astro';
-import Container from '~/components/blocks/layout/Container.astro';
-import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
-import Headline from '~/components/blocks/primitives/Headline.astro';
-import type { ButtonProps } from '~/types/button.types';
-import type { ContactFormProps } from '~/types/contactform.types';
-import type { TwoColumnContainerProps } from '~/types/container.types';
-import type { HeadlineProps } from '~/types/headline.types';
-import { contactFormId, defaultContactFields, validateContactForm } from '~/utils/contactForm';
-import { mergeConfigs } from '~/utils/mergeConfigs';
+import ContactFormBody from '#components/blocks/composite/ContactFormBody.astro';
+import Container from '#components/blocks/layout/Container.astro';
+import TwoColumnContainer from '#components/blocks/layout/TwoColumnContainer.astro';
+import Headline from '#components/blocks/primitives/Headline.astro';
+import type { ButtonProps } from '#types/button.types';
+import type { ContactFormProps } from '#types/contactform.types';
+import type { TwoColumnContainerProps } from '#types/container.types';
+import type { HeadlineProps } from '#types/headline.types';
+import { contactFormId, defaultContactFields, validateContactForm } from '#utils/contactForm';
+import { mergeConfigs } from '#utils/mergeConfigs';
 
 type Props = ContactFormProps;
 
@@ -89,7 +89,7 @@ const asideSlot = asidePosition === 'left' ? 'left' : 'right';
     isHoneypotFilled,
     mailtoEntries,
     submitToEndpoint,
-  } from '~/utils/contactForm';
+  } from '#utils/contactForm';
 
   type State = 'idle' | 'submitting' | 'success' | 'error';
   type Messages = { success: string; error: string; mailto?: string };

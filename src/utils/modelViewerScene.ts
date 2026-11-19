@@ -32,15 +32,15 @@ import type {
   ModelViewerCameraPreset,
   ModelViewerConfig,
   ModelViewerErrorReason,
-} from '~/types/modelviewer.types';
-import type { BloomPipeline } from '~/utils/modelViewerBloom';
-import { mergeMaterials, tuneStones } from '~/utils/modelViewerMaterials';
+} from '#types/modelviewer.types';
+import type { BloomPipeline } from '#utils/modelViewerBloom';
+import { mergeMaterials, tuneStones } from '#utils/modelViewerMaterials';
 import {
   applyState,
   createBaseline,
   type Baseline,
   type SelectionState,
-} from '~/utils/modelViewerMutations';
+} from '#utils/modelViewerMutations';
 
 export class ModelViewerError extends Error {
   readonly reason: ModelViewerErrorReason;
@@ -410,7 +410,7 @@ export async function createScene(
       })
     : Promise.resolve(undefined);
 
-  const bloomLoad = config.bloom ? import('~/utils/modelViewerBloom') : Promise.resolve(undefined);
+  const bloomLoad = config.bloom ? import('#utils/modelViewerBloom') : Promise.resolve(undefined);
 
   try {
     const [gltf, hdr, bloomModule] = await Promise.all([

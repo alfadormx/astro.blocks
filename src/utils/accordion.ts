@@ -1,4 +1,4 @@
-import type { AccordionProps } from '~/types/accordion.types';
+import type { AccordionProps } from '#types/accordion.types';
 
 function fail(message: string): never {
   throw new Error(`Accordion: ${message}`);

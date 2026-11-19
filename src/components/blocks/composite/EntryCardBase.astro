@@ -1,13 +1,13 @@
 ---
 // Internal to PostCard, CaseStudyCard, EventCard: one link, focus ring and contrast in one place.
-import Headline from '~/components/blocks/primitives/Headline.astro';
-import Image from '~/components/blocks/primitives/Image.astro';
-import type { EntryCardProps } from '~/types/entrycard.types';
-import type { HeadlineProps } from '~/types/headline.types';
-import type { ImageProps } from '~/types/image.types';
-import { focusRingClass } from '~/utils/intentStyles';
-import { mergeConfigs } from '~/utils/mergeConfigs';
-import { cn } from '~/utils/styles';
+import Headline from '#components/blocks/primitives/Headline.astro';
+import Image from '#components/blocks/primitives/Image.astro';
+import type { EntryCardProps } from '#types/entrycard.types';
+import type { HeadlineProps } from '#types/headline.types';
+import type { ImageProps } from '#types/image.types';
+import { focusRingClass } from '#utils/intentStyles';
+import { mergeConfigs } from '#utils/mergeConfigs';
+import { cn } from '#utils/styles';
 
 interface Props extends Omit<EntryCardProps, 'langCode'> {
   eyebrow?: string;
