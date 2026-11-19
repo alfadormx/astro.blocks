@@ -1,12 +1,13 @@
 import type { ButtonProps } from './button.types';
+import type { VideoFileSource } from './video.types';
 
 export type BackgroundAttachment = 'scroll' | 'fixed';
 
 export interface BackgroundProps {
   /** Background image path or URL (supports `~/assets/`, public, and external URLs). */
   image?: string;
-  /** Background video source URL. */
-  video?: string;
+  /** Background video: a URL, or sources in order of preference (`[{ src, type }]`, smallest format first). A missing `type` is inferred from the file extension. */
+  video?: string | VideoFileSource[];
   /** Scroll behavior for the background image; defaults to `'scroll'`. */
   attachment?: BackgroundAttachment;
   /** Additional classes applied to the background layer (color, sizing, etc.). */

@@ -38,6 +38,8 @@ import videoSource from '~/examples/primitives/Background/video.astro?raw';
 
 A video starts muted and looping once the page loads, with a pause/play button in the bottom-end corner. It stays paused when the visitor prefers reduced motion, and pauses itself while off-screen. `poster` sets the still shown before playback and while paused.
 
+`video` also takes a list of `{ src, type }` sources in order of preference, such as a WebM file before an mp4 fallback; a missing `type` is inferred from the file extension.
+
 <Example name="video" source={videoSource}>
   <Video />
 </Example>

@@ -6,6 +6,7 @@ import { mergeConfigs } from '~/utils/mergeConfigs';
 import type { BackgroundProps } from '~/types/background.types';
 import type { ButtonProps } from '~/types/button.types';
 import { cn } from '~/utils/styles';
+import { resolveVideoSources, validateBackgroundVideo } from '~/utils/video';
 
 type Props = BackgroundProps;
 
@@ -19,6 +20,8 @@ const {
   pauseButton,
   playButton,
 } = Astro.props;
+
+validateBackgroundVideo(video);
 
 const internalPauseButton: Partial<ButtonProps> = {
   icon: { name: 'heroicons:pause' },
@@ -47,6 +50,7 @@ async function resolveUrl(source?: string): Promise<string> {
 
 const resolvedImageUrl = await resolveUrl(image);
 const resolvedPosterUrl = video ? await resolveUrl(poster) : '';
+const videoSources = video ? resolveVideoSources(video) : [];
 
 const layerClass = (zIndex: boolean) =>
   cn(
@@ -77,11 +81,13 @@ const overlay = overlayClass ?? '';
       poster={resolvedPosterUrl || undefined}
       aria-hidden="true"
     >
-      <source src={video} type="video/mp4" />
+      {videoSources.map(({ src, type }) => (
+        <source src={src} type={type} />
+      ))}
     </video>
     {overlay && <div class={cn('absolute inset-0', overlay)} />}
     <slot />
-    <div class="absolute bottom-4 end-4 z-2">
+    <div class="absolute bottom-4 inset-e-4 z-2">
       <Button {...mergedPauseButton} data-background-pause />
       <Button {...mergedPlayButton} data-background-play />
     </div>
