@@ -15,7 +15,7 @@ export interface CaseStudyLayoutProps extends EntryLayoutProps {
   map?: Omit<MapProps, 'lat' | 'lon'> | false;
   /** Images shown as a carousel after the body, before the map; renders only when non-empty. */
   gallery?: CarouselItem[];
-  /** Configuration for the gallery ContentCarousel (default: { ariaLabel: per-language "Project gallery", defaultImageConfig: { layout: 'responsive', aspectRatio: 16 / 9, widths: [640, 960, 1280], sizes: '(min-width: 768px) 768px, 100vw' } }). */
+  /** Configuration for the gallery ContentCarousel (default: { ariaLabel: per-language "Project gallery", defaultImageConfig: { widths: [640, 960, 1280], sizes: '(min-width: 768px) 768px, 100vw' } }); other image defaults are ContentCarousel's. */
   contentCarousel?: Omit<ContentCarouselProps, 'items'>;
   /** Classes on the results list (`data-case-study-results`). */
   resultsClass?: string;

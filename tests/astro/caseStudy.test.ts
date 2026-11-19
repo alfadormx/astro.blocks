@@ -18,6 +18,9 @@ const layout = (props: Record<string, unknown> = {}) =>
     ...props,
   });
 
+const imgStyles = (html: string) =>
+  [...html.matchAll(/<img\b[^>]*\sstyle="([^"]*)"/g)].map((m) => m[1]);
+
 describe('CaseStudyCard', () => {
   it('shows the client above a single title link', async () => {
     const html = await render(CaseStudyCard, {
@@ -35,6 +38,21 @@ describe('CaseStudyLayout', () => {
     { src: 'https://images.unsplash.com/photo-1?w=10', alt: 'A', width: 800, height: 450 },
     { src: 'https://images.unsplash.com/photo-2?w=10', alt: 'B', width: 800, height: 450 },
   ];
+
+  it('crops local gallery images to 16:9 without a fixed px height', async () => {
+    const html = await layout({
+      gallery: [
+        { src: '~/assets/images/demos/portfolio/brand-refresh-1.jpg', alt: 'A' },
+        { src: '~/assets/images/demos/portfolio/brand-refresh-2.jpg', alt: 'B' },
+      ],
+    });
+    const styles = imgStyles(html);
+    expect(styles).toHaveLength(2);
+    for (const style of styles) {
+      expect(style).not.toMatch(/(^|[;\s])height:\s*\d+(\.\d+)?px/);
+      expect(style).toContain(`aspect-ratio: ${16 / 9}`);
+    }
+  });
 
   it('renders the gallery as a carousel labelled in the layout language', async () => {
     expect(await layout({ gallery })).toMatch(/data-carousel[\s\S]*?aria-label="Project gallery"/);
