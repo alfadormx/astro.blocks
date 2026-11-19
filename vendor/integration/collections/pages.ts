@@ -2,11 +2,11 @@ import type { AstroGlobal } from 'astro';
 import type { z } from 'astro/zod';
 import { getCollection, render, type CollectionKey } from 'astro:content';
 import { COLLECTIONS, I18N, SITE } from 'site-config';
-import type { CollectionListEntry, CollectionListPage } from '~/types/collectionlist.types';
-import type { MetaData } from '~/types/metadata.types';
-import type { CaseStudyLayoutProps } from '~/types/casestudylayout.types';
-import type { EventLayoutProps } from '~/types/eventlayout.types';
-import type { PostLayoutProps } from '~/types/postlayout.types';
+import type { CollectionListEntry, CollectionListPage } from '#types/collectionlist.types';
+import type { MetaData } from '#types/metadata.types';
+import type { CaseStudyLayoutProps } from '#types/casestudylayout.types';
+import type { EventLayoutProps } from '#types/eventlayout.types';
+import type { PostLayoutProps } from '#types/postlayout.types';
 import type { CollectionSettings, PresetName } from '../utils/configBuilder';
 import {
   assertNoReservedSlug,

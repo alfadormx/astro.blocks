@@ -232,9 +232,10 @@ export type LayerConfig<T> = T extends unknown ? Partial<Omit<T, PerInstanceKey>
 
 A public block's docs page is `src/content/documentation/<section>/<Block>.mdx`; the sidebar, pager, Overview and API type links all read it.
 
-## 13. Types files
+## 13. Types files and imports
 
 - Every file under `src/types/`, `.d.ts` included, imports only through relative `./x.types`. Never `~/utils`, never the `~` alias.
+- Library code (`src/components`, `src/utils`, `src/layouts`, `vendor/integration`) imports across directories through the `package.json` subpath imports `#components/`, `#utils/`, `#types/` and `#styles/`, and imports siblings with `./`. Never `~/`, which is the consuming site's `src` once the library is installed, and never `../` in the three `src/` directories. Site code (pages, examples, MDX, tests) keeps `~/` until the workspace split.
 - Public props are expressed in our own types, never a third-party library's: `VideoProps.source` is our `VideoSource`, not a player's source type. Swapping the library then doesn't change what consumers pass in. Astro's own types (`HTMLAttributes`, `ImageMetadata`) are allowed. When the type alone can't reject bad input, validate it at render time with a `validate*` helper in `src/utils/`.
 - A media field may take a URL or an ordered list of sources (`video?: string | VideoFileSource[]`). The block normalises both to the list in a `src/utils/` helper and validates the list there; never add a second field for the list form. Don't set such a field in an internal or default layer: `mergeConfigs` merges arrays index by index.
 - Any styled box reuses `CellProps` and extends it for extra fields. If the box is flex or grid, it re-adds `gap` under rule 6:
@@ -287,5 +288,5 @@ A category holds identity (`name`, `heading`, `camera`, `triggerButton`), conten
 - [ ] Hooks are `data-*`; no `!important` in defaults.
 - [ ] `compositionContract.test.ts` and `classHooks.test.ts` pass.
 - [ ] Titles through Headline with the right `htmlTag`.
-- [ ] Types file imports only relative `./x.types`; no third-party library types in public props.
+- [ ] Types file imports only relative `./x.types`; library code imports through `#…` or `./`, never `~/`; no third-party library types in public props.
 - [ ] A URL-or-list media field is normalised and validated in `src/utils/`, and no layer sets it.

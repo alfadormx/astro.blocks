@@ -1,12 +1,12 @@
 ---
 import { getImage } from 'astro:assets';
-import Button from '~/components/blocks/primitives/Button.astro';
-import { findImage } from '~/utils/images';
-import { mergeConfigs } from '~/utils/mergeConfigs';
-import type { BackgroundProps } from '~/types/background.types';
-import type { ButtonProps } from '~/types/button.types';
-import { cn } from '~/utils/styles';
-import { resolveVideoSources, validateBackgroundVideo } from '~/utils/video';
+import Button from '#components/blocks/primitives/Button.astro';
+import { findImage } from '#utils/images';
+import { mergeConfigs } from '#utils/mergeConfigs';
+import type { BackgroundProps } from '#types/background.types';
+import type { ButtonProps } from '#types/button.types';
+import { cn } from '#utils/styles';
+import { resolveVideoSources, validateBackgroundVideo } from '#utils/video';
 
 type Props = BackgroundProps;
 

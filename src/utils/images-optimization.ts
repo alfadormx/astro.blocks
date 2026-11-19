@@ -3,7 +3,7 @@ import { transformUrl, parseUrl } from 'unpic';
 
 import type { ImageMetadata } from 'astro';
 import type { HTMLAttributes } from 'astro/types';
-import type { ImageProps } from '~/types/image.types';
+import type { ImageProps } from '#types/image.types';
 
 export type { ImageProps };
 

@@ -1,13 +1,13 @@
 ---
 // Internal to PostLayout, CaseStudyLayout, EventLayout: cover, title, body typography and tags in one place.
-import Headline from '~/components/blocks/primitives/Headline.astro';
-import Image from '~/components/blocks/primitives/Image.astro';
-import type { EntryLayoutProps } from '~/types/entrylayout.types';
-import type { HeadlineProps } from '~/types/headline.types';
-import type { ImageProps } from '~/types/image.types';
-import { entryStrings } from '~/utils/entryStrings';
-import { mergeConfigs } from '~/utils/mergeConfigs';
-import { cn } from '~/utils/styles';
+import Headline from '#components/blocks/primitives/Headline.astro';
+import Image from '#components/blocks/primitives/Image.astro';
+import type { EntryLayoutProps } from '#types/entrylayout.types';
+import type { HeadlineProps } from '#types/headline.types';
+import type { ImageProps } from '#types/image.types';
+import { entryStrings } from '#utils/entryStrings';
+import { mergeConfigs } from '#utils/mergeConfigs';
+import { cn } from '#utils/styles';
 
 type Props = EntryLayoutProps;
 

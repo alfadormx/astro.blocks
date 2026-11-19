@@ -1,18 +1,18 @@
 ---
-import Container from '~/components/blocks/layout/Container.astro';
-import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
-import Headline from '~/components/blocks/primitives/Headline.astro';
-import Button from '~/components/blocks/primitives/Button.astro';
-import Image from '~/components/blocks/primitives/Image.astro';
-import Video from '~/components/blocks/primitives/Video.astro';
-import type { ButtonProps } from '~/types/button.types';
-import type { ContainerProps, TwoColumnContainerProps } from '~/types/container.types';
-import type { HeadlineProps } from '~/types/headline.types';
-import type { HeroProps } from '~/types/hero.types';
-import type { ImageProps } from '~/types/image.types';
-import { validateHero } from '~/utils/hero';
-import { mergeConfigs } from '~/utils/mergeConfigs';
-import { cn } from '~/utils/styles';
+import Container from '#components/blocks/layout/Container.astro';
+import TwoColumnContainer from '#components/blocks/layout/TwoColumnContainer.astro';
+import Headline from '#components/blocks/primitives/Headline.astro';
+import Button from '#components/blocks/primitives/Button.astro';
+import Image from '#components/blocks/primitives/Image.astro';
+import Video from '#components/blocks/primitives/Video.astro';
+import type { ButtonProps } from '#types/button.types';
+import type { ContainerProps, TwoColumnContainerProps } from '#types/container.types';
+import type { HeadlineProps } from '#types/headline.types';
+import type { HeroProps } from '#types/hero.types';
+import type { ImageProps } from '#types/image.types';
+import { validateHero } from '#utils/hero';
+import { mergeConfigs } from '#utils/mergeConfigs';
+import { cn } from '#utils/styles';
 
 type Props = HeroProps;
 

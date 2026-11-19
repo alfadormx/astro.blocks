@@ -1,5 +1,5 @@
-import type { TextAreaProps } from '~/types/textarea.types';
-import { fieldId, validateFieldLabel } from '~/utils/field';
+import type { TextAreaProps } from '#types/textarea.types';
+import { fieldId, validateFieldLabel } from '#utils/field';
 
 function fail(message: string): never {
   throw new Error(`textArea: ${message}`);

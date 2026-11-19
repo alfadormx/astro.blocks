@@ -1,6 +1,12 @@
 {
   "name": "astroblocks",
   "type": "module",
+  "imports": {
+    "#components/*": "./src/components/*",
+    "#utils/*": "./src/utils/*.ts",
+    "#types/*": "./src/types/*.ts",
+    "#styles/*": "./src/styles/*"
+  },
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev --host",

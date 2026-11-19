@@ -1,4 +1,4 @@
-import type { ToggleGroupProps } from '~/types/togglegroup.types';
+import type { ToggleGroupProps } from '#types/togglegroup.types';
 
 function fail(message: string): never {
   throw new Error(`toggleGroup: ${message}`);

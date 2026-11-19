@@ -1,6 +1,6 @@
-import type { CheckboxProps } from '~/types/checkbox.types';
-import type { CheckboxGroupProps } from '~/types/checkboxgroup.types';
-import { fieldId, validateFieldLabel } from '~/utils/field';
+import type { CheckboxProps } from '#types/checkbox.types';
+import type { CheckboxGroupProps } from '#types/checkboxgroup.types';
+import { fieldId, validateFieldLabel } from '#utils/field';
 
 function fail(message: string): never {
   throw new Error(`checkboxGroup: ${message}`);

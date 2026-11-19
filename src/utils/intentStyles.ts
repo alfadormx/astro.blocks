@@ -1,4 +1,4 @@
-import type { ButtonProps } from '~/types/button.types';
+import type { ButtonProps } from '#types/button.types';
 
 export type Intent = NonNullable<ButtonProps['intent']>;
 

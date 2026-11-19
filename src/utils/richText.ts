@@ -1,5 +1,5 @@
 import { Marked } from 'marked';
-import type { RichText } from '~/types/richtext.types';
+import type { RichText } from '#types/richtext.types';
 
 const marked = new Marked({ gfm: true, breaks: false, async: false });
 

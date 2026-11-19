@@ -1,5 +1,5 @@
-import type { SelectProps } from '~/types/select.types';
-import { fieldId, validateFieldLabel } from '~/utils/field';
+import type { SelectProps } from '#types/select.types';
+import { fieldId, validateFieldLabel } from '#utils/field';
 
 function fail(message: string): never {
   throw new Error(`select: ${message}`);

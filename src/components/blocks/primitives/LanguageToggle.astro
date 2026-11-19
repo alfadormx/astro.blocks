@@ -1,12 +1,12 @@
 ---
-import type { LanguageToggleProps } from '~/types/languagetoggle.types';
-import type { ButtonProps } from '~/types/button.types';
+import type { LanguageToggleProps } from '#types/languagetoggle.types';
+import type { ButtonProps } from '#types/button.types';
 import Button from './Button.astro';
 import { I18N, SITE } from 'site-config';
-import { currentLanguage } from '~/utils/currentLanguage';
-import { applyTrailingSlash, languageUrl } from '~/utils/languageUrl';
-import { mergeConfigs } from '~/utils/mergeConfigs';
-import { cn } from '~/utils/styles';
+import { currentLanguage } from '#utils/currentLanguage';
+import { applyTrailingSlash, languageUrl } from '#utils/languageUrl';
+import { mergeConfigs } from '#utils/mergeConfigs';
+import { cn } from '#utils/styles';
 
 type Language = (typeof I18N.languages)[number];
 

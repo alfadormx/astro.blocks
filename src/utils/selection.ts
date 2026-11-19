@@ -1,4 +1,4 @@
-import type { Selection, SelectionChangeDetail, SelectionMode } from '~/types/selection.types';
+import type { Selection, SelectionChangeDetail, SelectionMode } from '#types/selection.types';
 
 type GroupState = {
   readonly mode: SelectionMode;

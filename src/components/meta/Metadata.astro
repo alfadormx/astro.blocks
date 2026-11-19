@@ -1,11 +1,11 @@
 ---
 import { SEO } from 'astro-seo';
 import { SITE, METADATA, I18N } from 'site-config';
-import type { MetaData } from '~/types/metadata.types';
+import type { MetaData } from '#types/metadata.types';
 import merge from 'lodash.merge';
-import { adaptOpenGraphImages } from '~/utils/images';
-import { currentLanguage } from '~/utils/currentLanguage';
-import { languageUrl } from '~/utils/languageUrl';
+import { adaptOpenGraphImages } from '#utils/images';
+import { currentLanguage } from '#utils/currentLanguage';
+import { languageUrl } from '#utils/languageUrl';
 
 export type Props = Partial<MetaData> & {
   /** `false` emits no hreflang links, for pages that exist in one language only. */

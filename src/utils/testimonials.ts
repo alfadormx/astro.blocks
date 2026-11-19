@@ -1,4 +1,4 @@
-import type { Testimonial } from '~/types/testimonials.types';
+import type { Testimonial } from '#types/testimonials.types';
 
 function fail(message: string): never {
   throw new Error(`Testimonials: ${message}`);

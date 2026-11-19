@@ -1,5 +1,5 @@
-import type { ContactFormAction, ContactFormField } from '~/types/contactform.types';
-import { fieldId } from '~/utils/field';
+import type { ContactFormAction, ContactFormField } from '#types/contactform.types';
+import { fieldId } from '#utils/field';
 
 function fail(message: string): never {
   throw new Error(`contactForm: ${message}`);

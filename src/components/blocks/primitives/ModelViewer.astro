@@ -1,7 +1,7 @@
 ---
-import type { ModelViewerConfig, ModelViewerProps } from '~/types/modelviewer.types';
-import { validateModelViewer } from '~/utils/modelViewer';
-import { cn } from '~/utils/styles';
+import type { ModelViewerConfig, ModelViewerProps } from '#types/modelviewer.types';
+import { validateModelViewer } from '#utils/modelViewer';
+import { cn } from '#utils/styles';
 
 type Props = ModelViewerProps;
 
@@ -95,14 +95,14 @@ const config: ModelViewerConfig = {
 </model-viewer-block>
 
 <script>
-  import type { ModelViewerConfig, ModelViewerErrorReason } from '~/types/modelviewer.types';
-  import type { SelectionMode } from '~/types/selection.types';
-  import type { SelectionState } from '~/utils/modelViewerMutations';
-  import type { SceneHandle } from '~/utils/modelViewerScene';
-  import { effectiveSrc } from '~/utils/modelViewerSrc';
-  import { getSelection } from '~/utils/selection';
+  import type { ModelViewerConfig, ModelViewerErrorReason } from '#types/modelviewer.types';
+  import type { SelectionMode } from '#types/selection.types';
+  import type { SelectionState } from '#utils/modelViewerMutations';
+  import type { SceneHandle } from '#utils/modelViewerScene';
+  import { effectiveSrc } from '#utils/modelViewerSrc';
+  import { getSelection } from '#utils/selection';
 
-  type SceneModule = typeof import('~/utils/modelViewerScene');
+  type SceneModule = typeof import('#utils/modelViewerScene');
 
   // Start loading ahead of the fold so the model is usually ready when it scrolls in.
   const ROOT_MARGIN = '200px';
@@ -110,7 +110,7 @@ const config: ModelViewerConfig = {
   let sceneModule: Promise<SceneModule> | undefined;
 
   function loadSceneModule(): Promise<SceneModule> {
-    sceneModule ??= import('~/utils/modelViewerScene').catch((err) => {
+    sceneModule ??= import('#utils/modelViewerScene').catch((err) => {
       sceneModule = undefined;
       throw err;
     });

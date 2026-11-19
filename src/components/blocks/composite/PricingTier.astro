@@ -1,10 +1,10 @@
 ---
 // Internal to Pricing: renders one already-merged tier card; Pricing owns layering, order and billing.
 import { Icon } from 'astro-icon/components';
-import Button from '~/components/blocks/primitives/Button.astro';
-import type { PricingFeature, PricingTier } from '~/types/pricing.types';
-import { formatPrice } from '~/utils/pricing';
-import { cn } from '~/utils/styles';
+import Button from '#components/blocks/primitives/Button.astro';
+import type { PricingFeature, PricingTier } from '#types/pricing.types';
+import { formatPrice } from '#utils/pricing';
+import { cn } from '#utils/styles';
 
 type Props = { tier: PricingTier; locale: string; billing: boolean };
 

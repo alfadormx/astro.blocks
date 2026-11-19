@@ -1,4 +1,4 @@
-import type { LogoCloudLogo, LogoCloudProps } from '~/types/logocloud.types';
+import type { LogoCloudLogo, LogoCloudProps } from '#types/logocloud.types';
 
 // One clone set per side covers the widest view (basis-1/6); fewer logos leave a gap.
 export const MARQUEE_MIN_LOGOS = 6;

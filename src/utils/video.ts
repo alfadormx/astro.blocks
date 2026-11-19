@@ -1,4 +1,4 @@
-import type { VideoFileSource, VideoSource } from '~/types/video.types';
+import type { VideoFileSource, VideoSource } from '#types/video.types';
 
 const PROVIDERS = new Set(['html5', 'youtube', 'vimeo']);
 

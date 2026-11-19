@@ -5,20 +5,20 @@ import type {
   ConfiguratorTextArea,
   ConfiguratorToggleGroup,
   SummaryFormat,
-} from '~/types/configurator.types';
-import type { ItemsGridSelection } from '~/types/itemsgrid.types';
-import type { TabsProps } from '~/types/tabs.types';
-import type { TwoColumnContainerProps } from '~/types/container.types';
-import type { HeadlineProps } from '~/types/headline.types';
-import type { ButtonProps } from '~/types/button.types';
-import TwoColumnContainer from '~/components/blocks/layout/TwoColumnContainer.astro';
-import Tabs from '~/components/blocks/composite/Tabs.astro';
-import ConfiguratorPanel from '~/components/blocks/composite/ConfiguratorPanel.astro';
-import ModelViewer from '~/components/blocks/primitives/ModelViewer.astro';
-import Button from '~/components/blocks/primitives/Button.astro';
-import Headline from '~/components/blocks/primitives/Headline.astro';
-import { mergeConfigs } from '~/utils/mergeConfigs';
-import { cn } from '~/utils/styles';
+} from '#types/configurator.types';
+import type { ItemsGridSelection } from '#types/itemsgrid.types';
+import type { TabsProps } from '#types/tabs.types';
+import type { TwoColumnContainerProps } from '#types/container.types';
+import type { HeadlineProps } from '#types/headline.types';
+import type { ButtonProps } from '#types/button.types';
+import TwoColumnContainer from '#components/blocks/layout/TwoColumnContainer.astro';
+import Tabs from '#components/blocks/composite/Tabs.astro';
+import ConfiguratorPanel from '#components/blocks/composite/ConfiguratorPanel.astro';
+import ModelViewer from '#components/blocks/primitives/ModelViewer.astro';
+import Button from '#components/blocks/primitives/Button.astro';
+import Headline from '#components/blocks/primitives/Headline.astro';
+import { mergeConfigs } from '#utils/mergeConfigs';
+import { cn } from '#utils/styles';
 import {
   buildCombinationSpec,
   buildSummaryModel,
@@ -28,7 +28,7 @@ import {
   initialSelections,
   stripMutations,
   validateConfigurator,
-} from '~/utils/configurator';
+} from '#utils/configurator';
 
 type Props = ConfiguratorProps;
 
@@ -211,12 +211,12 @@ const spec = urlState ? buildCombinationSpec(categories, urlState.product) : und
 </div>
 
 <script>
-  import { getSelection, subscribe } from '~/utils/selection';
-  import { connectUrlState } from '~/utils/urlState';
-  import { formatSummary } from '~/utils/configurator';
-  import type { CombinationSpec } from '~/types/combinationcode.types';
-  import type { SummaryCategory, SummaryFormat } from '~/types/configurator.types';
-  import type { Selection } from '~/types/selection.types';
+  import { getSelection, subscribe } from '#utils/selection';
+  import { connectUrlState } from '#utils/urlState';
+  import { formatSummary } from '#utils/configurator';
+  import type { CombinationSpec } from '#types/combinationcode.types';
+  import type { SummaryCategory, SummaryFormat } from '#types/configurator.types';
+  import type { Selection } from '#types/selection.types';
 
   const ROOT_SELECTOR = '[data-configurator]';
 

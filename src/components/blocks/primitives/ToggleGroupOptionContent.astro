@@ -4,13 +4,13 @@ import type {
   ToggleGroupOption,
   ToggleGroupOptionConfig,
   ToggleGroupProps,
-} from '~/types/togglegroup.types';
-import type { ImageProps } from '~/types/image.types';
+} from '#types/togglegroup.types';
+import type { ImageProps } from '#types/image.types';
 import { Icon } from 'astro-icon/components';
-import Image from '~/components/blocks/primitives/Image.astro';
-import { cn } from '~/utils/styles';
-import { mediaSizeClass } from '~/utils/buttonStyles';
-import { mergeConfigs } from '~/utils/mergeConfigs';
+import Image from '#components/blocks/primitives/Image.astro';
+import { cn } from '#utils/styles';
+import { mediaSizeClass } from '#utils/buttonStyles';
+import { mergeConfigs } from '#utils/mergeConfigs';
 
 type Props = {
   option: ToggleGroupOption;
