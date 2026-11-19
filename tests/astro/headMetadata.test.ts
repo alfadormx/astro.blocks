@@ -114,6 +114,14 @@ describe('Metadata', () => {
     expect(Object.keys(hreflangs(html))).toEqual(['es']);
   });
 
+  it('emits twitter:image as an absolute URL on the site', async () => {
+    const html = await render(Metadata, '/documentation');
+    const image =
+      html.match(/<meta[^>]*name="twitter:image"[^>]*content="([^"]+)"/)?.[1] ??
+      html.match(/<meta[^>]*content="([^"]+)"[^>]*name="twitter:image"/)?.[1];
+    expect(image).toBe(`${SITE.site}/twitter-image.png`);
+  });
+
   it('emits no hreflang links when alternates is false', async () => {
     expect(await render(Metadata, '/documentation', { alternates: false })).not.toContain(
       'hreflang'
