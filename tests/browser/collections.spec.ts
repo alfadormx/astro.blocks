@@ -194,9 +194,9 @@ test.describe('demo links', () => {
         .locator('a[href*="/demos/"]')
         .evaluateAll((as) => as.map((a) => a.getAttribute('href')!));
       expect(hrefs).toEqual([
-        `${prefix}/demos/saas`,
-        `${prefix}/demos/portfolio`,
-        `${prefix}/demos/local`,
+        `${prefix}/demos/preview/saas`,
+        `${prefix}/demos/preview/portfolio`,
+        `${prefix}/demos/preview/local`,
         `${prefix}/demos/jewellery-configurator`,
       ]);
       for (const href of hrefs) expect((await request.get(href)).status(), href).toBe(200);

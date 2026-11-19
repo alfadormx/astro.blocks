@@ -1,0 +1,10 @@
+pageTitle: '{demo} demo preview'
+frameTitle: '{demo} demo'
+demoLabel: 'Choose a demo'
+sizeLabel: 'Preview width'
+sizes:
+  desktop: 'Desktop'
+  tablet: 'Tablet'
+  mobile: 'Mobile'
+newTab: 'Open the demo in a new tab'
+close: 'Close'

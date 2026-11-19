@@ -1,0 +1,10 @@
+pageTitle: 'Vista previa de la demo {demo}'
+frameTitle: 'Demo {demo}'
+demoLabel: 'Elige una demo'
+sizeLabel: 'Ancho de la vista previa'
+sizes:
+  desktop: 'Escritorio'
+  tablet: 'Tableta'
+  mobile: 'Móvil'
+newTab: 'Abrir la demo en una pestaña nueva'
+close: 'Cerrar'
