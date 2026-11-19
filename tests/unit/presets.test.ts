@@ -4,7 +4,7 @@ import {
   eventSchema,
   locationSchema,
   postSchema,
-} from '../../vendor/integration/collections/presets';
+} from '../../src/integration/collections/presets';
 
 describe('locationSchema', () => {
   it('turns a string into a named location', () => {

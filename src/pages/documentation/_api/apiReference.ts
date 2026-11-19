@@ -2,7 +2,8 @@ import ts from 'typescript';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const SRC_ROOT = path.join(process.cwd(), 'src');
+const SITE_ROOT = path.join(process.cwd(), 'src');
+const LIBRARY_ROOT = path.join(process.cwd(), 'src');
 
 export interface PropRow {
   name: string;
@@ -12,7 +13,7 @@ export interface PropRow {
   link?: { label: string; href: string };
 }
 
-const DOCS_ROOT = path.join(SRC_ROOT, 'content', 'documentation');
+const DOCS_ROOT = path.join(SITE_ROOT, 'content', 'documentation');
 
 // Every docs entry is a link target, whatever its section (Header.container -> layout/Container).
 export function buildBlockRegistry(): Record<string, { label: string; href: string }> {
@@ -57,14 +58,14 @@ const TYPE_LINK_ALIASES: Record<string, string> = {
 
 function typesFilePath(componentName: string): string {
   const filename = TYPES_FILE_OVERRIDES[componentName] ?? `${componentName.toLowerCase()}.types.ts`;
-  return path.join(SRC_ROOT, 'types', filename);
+  return path.join(LIBRARY_ROOT, 'types', filename);
 }
 
 function astroFilePath(
   componentName: string,
   category: 'composite' | 'primitives' | 'layout'
 ): string {
-  return path.join(SRC_ROOT, 'components', 'blocks', category, `${componentName}.astro`);
+  return path.join(LIBRARY_ROOT, 'components', 'blocks', category, `${componentName}.astro`);
 }
 
 type Field = { name: string; type: string; description: string; jsdocDefault?: string };

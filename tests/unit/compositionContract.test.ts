@@ -42,7 +42,7 @@ const srcLibraryFiles = [
   ...files('layouts/', /\.astro$/),
 ].map((path) => ({ path, source: read(path) }));
 
-const integrationFiles = files('../vendor/integration/', /\.ts$/).map((path) => ({
+const integrationFiles = files('integration/', /\.ts$/).map((path) => ({
   path,
   source: read(path),
 }));
@@ -54,7 +54,7 @@ const siteEntryFiles = [
   '../astro.config.mjs',
 ].map((path) => ({ path, source: read(path) }));
 
-const DEEP_LIBRARY_PATH = /vendor\/integration|^~\/utils\/(selection|urlState)$/;
+const DEEP_LIBRARY_PATH = /src\/integration|^~\/(utils\/(selection|urlState)|integration\/)/;
 
 function fields(source: string): { name: string; type: string }[] {
   return [...source.matchAll(/^\s+(\w+)\??:\s*([^;]*);/gm)].map((m) => ({

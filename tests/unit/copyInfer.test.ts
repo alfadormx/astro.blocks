@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { copyRegistryDts, toTypeLiteral } from '../../vendor/integration/copy/infer';
+import { copyRegistryDts, toTypeLiteral } from '../../src/integration/copy/infer';
 
 const compact = (s: string) => s.replace(/\s+/g, ' ').trim();
 

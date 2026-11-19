@@ -36,7 +36,8 @@ export interface BlocksOptions {
   css?: string;
 }
 
-const LIBRARY_CSS = fileURLToPath(new URL('../../src/styles/blocks.css', import.meta.url));
+const LIBRARY_CSS = fileURLToPath(new URL('../styles/blocks.css', import.meta.url));
+const VIRTUAL_MODULE_TYPES = fileURLToPath(new URL('./types.d.ts', import.meta.url));
 
 export default function blocks({
   config: configPath = 'src/config.yaml',
@@ -61,7 +62,8 @@ export default function blocks({
         const resolvedStylesModuleId = '\0' + stylesModuleId;
         const cssFile = css ? fileURLToPath(new URL(css, config.root)) : LIBRARY_CSS;
 
-        const rawJsonConfig = (await loadConfig(configPath)) as Config;
+        const configFile = fileURLToPath(new URL(configPath, config.root));
+        const rawJsonConfig = (await loadConfig(configFile)) as Config;
         const { SITE, I18N, METADATA, ANALYTICS, COLLECTIONS } = configBuilder(rawJsonConfig);
         collections = COLLECTIONS;
         languageBasePaths = I18N.languages.map((l) => l.basePath);
@@ -153,11 +155,15 @@ export default function blocks({
           },
         });
 
-        addWatchFile(new URL(configPath, config.root));
+        addWatchFile(configFile);
         logger.info(`Site config \`${configPath}\` has been loaded.`);
       },
       'astro:config:done': async ({ config, injectTypes }) => {
         cfg = config;
+        injectTypes({
+          filename: 'virtual.d.ts',
+          content: `/// <reference path=${JSON.stringify(VIRTUAL_MODULE_TYPES)} />`,
+        });
         injectTypes({ filename: 'collections.d.ts', content: collectionRegistryDts(collections) });
         injectTypes({ filename: 'copy.d.ts', content: copyDts });
       },
