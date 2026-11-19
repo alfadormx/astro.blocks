@@ -45,21 +45,21 @@ const demos = [
     title: 'SaaS landing',
     description:
       'Hero, logos, features, pricing, testimonials, FAQ and a blog, with anchor navigation.',
-    href: '/demos/saas',
+    href: '/demos/preview/saas',
     image: '~/assets/images/demos/saas/content-a.jpg',
   },
   {
     title: 'Portfolio',
     description:
       'Hero, case study galleries, team, testimonials and a contact form across several pages.',
-    href: '/demos/portfolio',
+    href: '/demos/preview/portfolio',
     image: '~/assets/images/demos/portfolio/hero.jpg',
   },
   {
     title: 'Local business',
     description:
       'Hero, services, reviews, opening hours, a lazy map beside a contact form, and events.',
-    href: '/demos/local',
+    href: '/demos/preview/local',
     image: '~/assets/images/demos/local/hero.jpg',
   },
 ];
@@ -97,6 +97,7 @@ const demos = [
           label: demo.title,
           subtitle: demo.description,
           href: demo.href,
+          target: '_blank',
           image: { src: demo.image, alt: '', width: 480, height: 270, layout: 'cover' },
           imageSize: 'aspect-video w-full object-cover rounded',
         },
