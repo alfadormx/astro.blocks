@@ -34,7 +34,11 @@ if (lintable.length) run('eslint', 'pnpm', ['exec', 'eslint', '--no-warn-ignored
 if (changed.length)
   run('prettier', 'pnpm', ['exec', 'prettier', '--check', '--ignore-unknown', ...changed]);
 
-const packageChanged = changed.some((file) => file.startsWith('packages/blocks/'));
+// Root files (shared config, lockfile) can affect either workspace.
+const rootChanged = changed.some(
+  (file) => !/^(packages|apps|docs|thoughts)\//.test(file) && !file.endsWith('.md')
+);
+const packageChanged = rootChanged || changed.some((file) => file.startsWith('packages/blocks/'));
 // The docs app compiles the package source, so a package change can break docs too.
 const docsChanged = packageChanged || changed.some((file) => file.startsWith(DOCS_DIR));
 
