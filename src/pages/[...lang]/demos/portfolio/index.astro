@@ -11,8 +11,8 @@ import Headline from '~/components/blocks/primitives/Headline.astro';
 import type { HeadlineProps } from '~/types/headline.types';
 import type { ItemProps } from '~/types/item.types';
 import { cn } from '~/utils/styles';
-import { collectionUrl, getFeatured } from '../../../../../vendor/integration/collections/pages';
-import { localizedPaths, useCopy } from '../../../../../vendor/integration/copy/pages';
+import { collectionUrl, getFeatured } from '#blocks/collections';
+import { localizedPaths, useCopy } from '#blocks/copy';
 import { ARROW_LINK, MONO_LABEL, PROJECT_CARD, asProjects, portfolioHome } from './_site';
 
 export const getStaticPaths = () => localizedPaths();

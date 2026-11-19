@@ -3,11 +3,8 @@ import PortfolioLayout from '../_layouts/Layout.astro';
 import Container from '~/components/blocks/layout/Container.astro';
 import CollectionList from '~/components/blocks/composite/CollectionList.astro';
 import Headline from '~/components/blocks/primitives/Headline.astro';
-import {
-  collectionPages,
-  renderList,
-} from '../../../../../../vendor/integration/collections/pages';
-import { useCopy } from '../../../../../../vendor/integration/copy/pages';
+import { collectionPages, renderList } from '#blocks/collections';
+import { useCopy } from '#blocks/copy';
 
 export const getStaticPaths = () => collectionPages('cases');
 const { langCode, entries, page } = await renderList(Astro);

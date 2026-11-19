@@ -1,5 +1,5 @@
 ---
-import '~/styles/global.css';
+import 'site-styles';
 
 import { I18N, METADATA } from 'site-config';
 
@@ -185,7 +185,7 @@ const pagerButton = (l?: DocLink) => (l ? { href: l.href, subtitle: l.title } : 
       >
         {/* 57px: the sticky header (py-2, a 40px button, a 1px border). */}
         <aside
-          class="hidden md:block sticky top-[57px] self-start h-[calc(100vh-57px)] overflow-y-auto border-r border-border p-4"
+          class="hidden md:block sticky top-14.25 self-start h-[calc(100vh-57px)] overflow-y-auto border-r border-border p-4"
           data-docs-sidebar
         >
           <NavigationTree {...docsNav} />

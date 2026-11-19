@@ -5,7 +5,7 @@ import Headline from '~/components/blocks/primitives/Headline.astro';
 import ItemsGrid from '~/components/blocks/composite/ItemsGrid.astro';
 import Tabs from '~/components/blocks/composite/Tabs.astro';
 import type { ItemProps } from '~/types/item.types';
-import { localizedPaths, useCopy } from '../../../../../vendor/integration/copy/pages';
+import { localizedPaths, useCopy } from '#blocks/copy';
 import { LABEL, RING_PRESETS, SECTION_HEADLINE, configuratorUrl } from './_site';
 
 export const getStaticPaths = () => localizedPaths();

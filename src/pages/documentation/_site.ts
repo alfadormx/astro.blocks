@@ -1,5 +1,5 @@
 import { I18N } from 'site-config';
-import { collectionIndex } from '../../../vendor/integration/collections/pages';
+import { collectionIndex } from '#blocks/collections';
 import { assertEntry, orderLinks, trimSlash, type DocLink } from './_nav';
 import { sections } from './_sections';
 

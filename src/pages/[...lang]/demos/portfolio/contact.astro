@@ -2,7 +2,7 @@
 import PortfolioLayout from './_layouts/Layout.astro';
 import ContactForm from '~/components/blocks/composite/ContactForm.astro';
 import ItemsGrid from '~/components/blocks/composite/ItemsGrid.astro';
-import { localizedPaths, useCopy } from '../../../../../vendor/integration/copy/pages';
+import { localizedPaths, useCopy } from '#blocks/copy';
 import { CONTACT_ADDRESS, MONO_LABEL, contactDetails } from './_site';
 
 export const getStaticPaths = () => localizedPaths();

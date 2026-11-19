@@ -168,7 +168,7 @@ Named exceptions that stay classes:
 
 `tests/unit/classHooks.test.ts` enforces this list. Adding an exception means adding it here and there.
 
-**Note.** Tailwind preflight sets `[hidden]{display:none !important}`, so hover can't reveal an attribute-hidden element. For hover/open states, use a `data-open`-style attribute on a skeleton wrapper styled in `global.css`.
+**Note.** Tailwind preflight sets `[hidden]{display:none !important}`, so hover can't reveal an attribute-hidden element. For hover/open states, use a `data-open`-style attribute on a skeleton wrapper styled in `blocks.css`.
 
 ## 9. Composite wrappers and headings
 
@@ -236,6 +236,17 @@ A public block's docs page is `src/content/documentation/<section>/<Block>.mdx`;
 
 - Every file under `src/types/`, `.d.ts` included, imports only through relative `./x.types`. Never `~/utils`, never the `~` alias.
 - Library code (`src/components`, `src/utils`, `src/layouts`, `vendor/integration`) imports across directories through the `package.json` subpath imports `#components/`, `#utils/`, `#types/` and `#styles/`, and imports siblings with `./`. Never `~/`, which is the consuming site's `src` once the library is installed, and never `../` in the three `src/` directories. Site code (pages, examples, MDX, tests) keeps `~/` until the workspace split.
+- Site code reaches the library's site-facing modules through one `#blocks/…` entry point each, never by path into `vendor/integration` or `src/utils/`. 0084 maps `#blocks/` to the package name.
+
+  | Specifier             | Module                                     | Used by                         |
+  | --------------------- | ------------------------------------------ | ------------------------------- |
+  | `#blocks/integration` | `vendor/integration/index.ts`              | `astro.config.mjs`              |
+  | `#blocks/collections` | `vendor/integration/collections/pages.ts`  | collection list and entry pages |
+  | `#blocks/content`     | `vendor/integration/collections/define.ts` | `src/content.config.ts`         |
+  | `#blocks/copy`        | `vendor/integration/copy/pages.ts`         | static pages with copy          |
+  | `#blocks/selection`   | `src/utils/selection.ts`                   | doc examples' client `<script>` |
+  | `#blocks/url-state`   | `src/utils/urlState.ts`                    | doc examples' client `<script>` |
+
 - Public props are expressed in our own types, never a third-party library's: `VideoProps.source` is our `VideoSource`, not a player's source type. Swapping the library then doesn't change what consumers pass in. Astro's own types (`HTMLAttributes`, `ImageMetadata`) are allowed. When the type alone can't reject bad input, validate it at render time with a `validate*` helper in `src/utils/`.
 - A media field may take a URL or an ordered list of sources (`video?: string | VideoFileSource[]`). The block normalises both to the list in a `src/utils/` helper and validates the list there; never add a second field for the list form. Don't set such a field in an internal or default layer: `mergeConfigs` merges arrays index by index.
 - Any styled box reuses `CellProps` and extends it for extra fields. If the box is flex or grid, it re-adds `gap` under rule 6:

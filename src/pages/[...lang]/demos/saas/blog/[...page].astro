@@ -3,11 +3,8 @@ import SaasLayout from '../_layouts/Layout.astro';
 import Container from '~/components/blocks/layout/Container.astro';
 import CollectionList from '~/components/blocks/composite/CollectionList.astro';
 import Headline from '~/components/blocks/primitives/Headline.astro';
-import {
-  collectionPages,
-  renderList,
-} from '../../../../../../vendor/integration/collections/pages';
-import { useCopy } from '../../../../../../vendor/integration/copy/pages';
+import { collectionPages, renderList } from '#blocks/collections';
+import { useCopy } from '#blocks/copy';
 import { POST_CARD, SECTION_HEADLINE } from '../_site';
 
 export const getStaticPaths = () => collectionPages('posts');

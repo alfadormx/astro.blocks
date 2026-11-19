@@ -1,3 +1,3 @@
-import { defineBlocksCollections } from '../vendor/integration/collections/define';
+import { defineBlocksCollections } from '#blocks/content';
 
 export const collections = defineBlocksCollections();

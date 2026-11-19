@@ -1,7 +1,7 @@
 // @vitest-environment happy-dom
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { SelectionChangeDetail } from '~/types/selection.types';
-import { getSelection, publish, subscribe } from '~/utils/selection';
+import { getSelection, publish, subscribe } from '#blocks/selection';
 
 function swap(html: string): void {
   document.body.innerHTML = html;
