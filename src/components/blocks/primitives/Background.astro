@@ -1,68 +1,172 @@
 ---
 import { getImage } from 'astro:assets';
+import Button from '~/components/blocks/primitives/Button.astro';
 import { findImage } from '~/utils/images';
+import { mergeConfigs } from '~/utils/mergeConfigs';
 import type { BackgroundProps } from '~/types/background.types';
+import type { ButtonProps } from '~/types/button.types';
 import { cn } from '~/utils/styles';
 
 type Props = BackgroundProps;
 
-const { image, video, attachment = 'scroll', class: className = '', overlayClass } = Astro.props;
+const {
+  image,
+  video,
+  attachment = 'scroll',
+  class: className = '',
+  overlayClass,
+  poster,
+  pauseButton,
+  playButton,
+} = Astro.props;
 
-// Resolve image path (supports ~/assets/, public URLs, and external URLs)
-let resolvedImageUrl = '';
-if (image) {
-  const resolvedImage = await findImage(image);
+const internalPauseButton: Partial<ButtonProps> = {
+  icon: { name: 'heroicons:pause' },
+  variant: 'solid',
+  intent: 'neutral',
+  size: 'sm',
+  hidden: true,
+  'aria-label': 'Pause background video',
+};
 
-  if (typeof resolvedImage === 'string') {
-    // Already a URL (public or external)
-    resolvedImageUrl = resolvedImage;
-  } else if (resolvedImage) {
-    // ImageMetadata from ~/assets/ - optimize it
-    const optimizedImage = await getImage({ src: resolvedImage });
-    resolvedImageUrl = optimizedImage.src;
-  }
+const internalPlayButton: Partial<ButtonProps> = {
+  icon: { name: 'heroicons:play' },
+  'aria-label': 'Play background video',
+};
+
+const mergedPauseButton = mergeConfigs({}, internalPauseButton, pauseButton);
+const mergedPlayButton = mergeConfigs({}, internalPauseButton, internalPlayButton, playButton);
+
+async function resolveUrl(source?: string): Promise<string> {
+  if (!source) return '';
+  const resolved = await findImage(source);
+  if (typeof resolved === 'string') return resolved;
+  if (resolved) return (await getImage({ src: resolved })).src;
+  return '';
 }
 
-// Build background classes
-const bgClass = cn(
-  'absolute inset-0 z-0',
-  className,
-  resolvedImageUrl && !className.includes('bg-') && 'bg-cover bg-center',
-  resolvedImageUrl && attachment === 'fixed' && 'bg-fixed'
-);
+const resolvedImageUrl = await resolveUrl(image);
+const resolvedPosterUrl = video ? await resolveUrl(poster) : '';
 
-// Build inline styles for dynamic background-image URL
+const layerClass = (zIndex: boolean) =>
+  cn(
+    'absolute inset-0',
+    zIndex && 'z-0',
+    className,
+    resolvedImageUrl && !className.includes('bg-') && 'bg-cover bg-center',
+    resolvedImageUrl && attachment === 'fixed' && 'bg-fixed'
+  );
+
 let bgStyle = '';
 if (resolvedImageUrl) {
   bgStyle = `background-image:url('${resolvedImageUrl}');`;
 }
 
-// Overlay class for custom overlay
 const overlay = overlayClass ?? '';
 ---
 
 {video ? (
-  <div class={bgClass}>
+  // No z-index here: a stacking context would trap the control under Container's z-1 content.
+  <div class={layerClass(false)} data-background-video>
     <video
       class="absolute inset-0 w-full h-full object-cover"
-      autoplay
       loop
       muted
       playsinline
+      preload="metadata"
+      poster={resolvedPosterUrl || undefined}
       aria-hidden="true"
     >
       <source src={video} type="video/mp4" />
     </video>
     {overlay && <div class={cn('absolute inset-0', overlay)} />}
     <slot />
+    <div class="absolute bottom-4 end-4 z-2">
+      <Button {...mergedPauseButton} data-background-pause />
+      <Button {...mergedPlayButton} data-background-play />
+    </div>
   </div>
 ) : resolvedImageUrl ? (
-  <div class={bgClass} style={bgStyle}>
+  <div class={layerClass(true)} style={bgStyle}>
     {overlay && <div class={cn('absolute inset-0', overlay)} />}
     <slot />
   </div>
 ) : (
-  <div class={cn(bgClass, overlay)}>
+  <div class={cn(layerClass(true), overlay)}>
     <slot />
   </div>
 )}
+
+<script>
+  const ROOT_SELECTOR = '[data-background-video]';
+
+  const bound = new WeakSet<HTMLElement>();
+
+  function bind(root: HTMLElement): void {
+    const video = root.querySelector('video');
+    const pauseBtn = root.querySelector<HTMLElement>('[data-background-pause]');
+    const playBtn = root.querySelector<HTMLElement>('[data-background-play]');
+    if (!video || !pauseBtn || !playBtn) return;
+
+    const show = (playing: boolean): void => {
+      const active = document.activeElement;
+      const hadFocus = active === pauseBtn || active === playBtn;
+      pauseBtn.toggleAttribute('hidden', !playing);
+      playBtn.toggleAttribute('hidden', playing);
+      // Keep keyboard users on the control after the button they pressed disappears.
+      if (hadFocus) (playing ? pauseBtn : playBtn).focus();
+    };
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Buttons show what the visitor chose; an off-screen pause is not their choice.
+    let userPaused = reducedMotion;
+    let autoPaused = false;
+
+    const start = (): Promise<void> =>
+      video.play().catch(() => {
+        if (!autoPaused) show(false);
+      });
+
+    video.addEventListener('play', () => {
+      autoPaused = false;
+      show(true);
+    });
+    video.addEventListener('pause', () => {
+      if (!autoPaused) show(false);
+    });
+    pauseBtn.addEventListener('click', () => {
+      userPaused = true;
+      video.pause();
+    });
+    playBtn.addEventListener('click', () => {
+      userPaused = false;
+      void start();
+    });
+
+    new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        if (!userPaused && video.paused) void start();
+      } else if (!video.paused) {
+        autoPaused = true;
+        video.pause();
+      }
+    }).observe(root);
+
+    const ready = reducedMotion ? Promise.resolve() : start();
+    void ready.finally(() => {
+      show(!userPaused && (autoPaused || !video.paused));
+      root.dataset.backgroundReady = '';
+    });
+  }
+
+  function init(): void {
+    document.querySelectorAll<HTMLElement>(ROOT_SELECTOR).forEach((root) => {
+      if (bound.has(root)) return;
+      bind(root);
+      bound.add(root);
+    });
+  }
+
+  document.addEventListener('astro:after-swap', init);
+  init();
+</script>
