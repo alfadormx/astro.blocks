@@ -1,0 +1,25 @@
+---
+import ItemsTimeline from '@alfadormx/blocks/composite/ItemsTimeline.astro';
+---
+
+<ItemsTimeline
+  connectorStyle="dotted"
+  gap="loose"
+  items={[
+    {
+      icon: { name: 'heroicons:calendar', class: 'text-info' },
+      title: 'Q1 2024',
+      content: 'Initial release with core features.',
+    },
+    {
+      icon: { name: 'heroicons:calendar', class: 'text-info' },
+      title: 'Q2 2024',
+      content: 'Mobile app launch and API improvements.',
+    },
+    {
+      icon: { name: 'heroicons:calendar', class: 'text-info' },
+      title: 'Q3 2024',
+      content: 'Advanced analytics and integrations.',
+    },
+  ]}
+/>

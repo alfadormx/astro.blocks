@@ -1,0 +1,18 @@
+---
+import Content from '@alfadormx/blocks/composite/Content.astro';
+---
+
+<Content
+  twoColumnContainer={{ ratio: '3:2', gap: 'loose' }}
+  headline={{
+    tagline: 'Content Block',
+    title: 'Wider content column',
+  }}
+  image={{
+    src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=min&auto=format',
+    alt: 'Demo image',
+  }}
+>
+  <h3>Building on modern foundations</h3>
+  <p>The content column takes three fifths of the width, with looser spacing between columns.</p>
+</Content>

@@ -1,0 +1,107 @@
+---
+title: Video
+description: An embedded or self-hosted video player.
+section: primitives
+order: 20
+---
+
+import Example from '@alfadormx/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/pages/documentation/_api/ApiReferenceTable.astro';
+import Html5 from '~/examples/primitives/Video/html5.astro';
+import html5Source from '~/examples/primitives/Video/html5.astro?raw';
+import Youtube from '~/examples/primitives/Video/youtube.astro';
+import youtubeSource from '~/examples/primitives/Video/youtube.astro?raw';
+import Vimeo from '~/examples/primitives/Video/vimeo.astro';
+import vimeoSource from '~/examples/primitives/Video/vimeo.astro?raw';
+import RatioSquare from '~/examples/primitives/Video/ratio-square.astro';
+import ratioSquareSource from '~/examples/primitives/Video/ratio-square.astro?raw';
+import RatioPortrait from '~/examples/primitives/Video/ratio-portrait.astro';
+import ratioPortraitSource from '~/examples/primitives/Video/ratio-portrait.astro?raw';
+import RatioCinema from '~/examples/primitives/Video/ratio-cinema.astro';
+import ratioCinemaSource from '~/examples/primitives/Video/ratio-cinema.astro?raw';
+import Floating from '~/examples/primitives/Video/floating.astro';
+import floatingSource from '~/examples/primitives/Video/floating.astro?raw';
+import Autoplay from '~/examples/primitives/Video/autoplay.astro';
+import autoplaySource from '~/examples/primitives/Video/autoplay.astro?raw';
+import Floating2 from '~/examples/primitives/Video/floating-2.astro';
+import floating2Source from '~/examples/primitives/Video/floating-2.astro?raw';
+
+Video playback for self-hosted files, YouTube and Vimeo embeds, with aspect ratio options, a floating player, autoplay and hidden controls.
+
+## HTML5 video (default aspect)
+
+Standard video player with 16:9 aspect ratio. Supports all modern video formats with full controls.
+
+<Example name="html5" source={html5Source}>
+  <Html5 />
+</Example>
+
+## YouTube embed
+
+Embed YouTube videos with the same player controls.
+
+<Example name="youtube" source={youtubeSource}>
+  <Youtube />
+</Example>
+
+## Vimeo embed
+
+Embed Vimeo videos with the same player controls.
+
+<Example name="vimeo" source={vimeoSource}>
+  <Vimeo />
+</Example>
+
+## Square aspect ratio (1:1)
+
+Perfect for social media-style videos or profile content.
+
+<Example name="ratio-square" source={ratioSquareSource}>
+  <RatioSquare />
+</Example>
+
+## Portrait aspect ratio (9:16)
+
+Optimized for mobile-first vertical videos.
+
+<Example name="ratio-portrait" source={ratioPortraitSource}>
+  <RatioPortrait />
+</Example>
+
+## Cinema aspect ratio (21:9)
+
+Ultra-wide cinematic format for immersive content.
+
+<Example name="ratio-cinema" source={ratioCinemaSource}>
+  <RatioCinema />
+</Example>
+
+## Floating player behavior
+
+Video follows you as you scroll down the page. Try scrolling past this video to see it float in the corner. Click the arrow button to dismiss it.
+
+<Example name="floating" source={floatingSource} class="relative z-10">
+  <Floating />
+</Example>
+
+<div class="h-screen" aria-hidden="true"></div>
+
+## Autoplay with hidden controls
+
+Video starts playing automatically with no controls visible. Autoplay automatically enables muting to comply with browser autoplay policies. Use the `muted` prop to override this behavior if desired. Looping is also enabled in this example to allow continuous playback.
+
+<Example name="autoplay" source={autoplaySource}>
+  <Autoplay />
+</Example>
+
+## Several floating players
+
+Each floating video docks and closes on its own.
+
+<Example name="floating-2" source={floating2Source} class="relative z-10">
+  <Floating2 />
+</Example>
+
+<div class="h-screen" aria-hidden="true"></div>
+
+<ApiReferenceTable component="Video" category="primitives" />

@@ -1,0 +1,29 @@
+---
+import ThreeColumnContainer from '@alfadormx/blocks/layout/ThreeColumnContainer.astro';
+---
+
+<ThreeColumnContainer
+  containerWidthType="full"
+  background={{ class: 'bg-linear-to-br from-primary via-secondary to-tertiary' }}
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-12' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  gap="normal"
+  spacing={{ margin: 'mb-8' }}
+>
+  <div slot="left" class="bg-surface/90 backdrop-blur p-6 rounded shadow-lg">
+    <p class="font-semibold">Service 1</p>
+    <p>Premium quality service with attention to detail.</p>
+  </div>
+  <div slot="center" class="bg-surface/90 backdrop-blur p-6 rounded shadow-lg">
+    <p class="font-semibold">Service 2</p>
+    <p>Expert support available 24/7 for your needs.</p>
+  </div>
+  <div slot="right" class="bg-surface/90 backdrop-blur p-6 rounded shadow-lg">
+    <p class="font-semibold">Service 3</p>
+    <p>Flexible plans tailored to your requirements.</p>
+  </div>
+</ThreeColumnContainer>

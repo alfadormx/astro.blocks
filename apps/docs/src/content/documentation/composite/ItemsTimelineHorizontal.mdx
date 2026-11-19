@@ -1,0 +1,63 @@
+---
+title: ItemsTimelineHorizontal
+description: A horizontal sequence of items joined by connector lines.
+section: composite
+order: 19
+---
+
+import Example from '@alfadormx/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/pages/documentation/_api/ApiReferenceTable.astro';
+import Horizontal from '~/examples/composite/ItemsTimelineHorizontal/horizontal.astro';
+import horizontalSource from '~/examples/composite/ItemsTimelineHorizontal/horizontal.astro?raw';
+import Tight from '~/examples/composite/ItemsTimelineHorizontal/tight.astro';
+import tightSource from '~/examples/composite/ItemsTimelineHorizontal/tight.astro?raw';
+import Dashed from '~/examples/composite/ItemsTimelineHorizontal/dashed.astro';
+import dashedSource from '~/examples/composite/ItemsTimelineHorizontal/dashed.astro?raw';
+import Actions from '~/examples/composite/ItemsTimelineHorizontal/actions.astro';
+import actionsSource from '~/examples/composite/ItemsTimelineHorizontal/actions.astro?raw';
+import Dotted from '~/examples/composite/ItemsTimelineHorizontal/dotted.astro';
+import dottedSource from '~/examples/composite/ItemsTimelineHorizontal/dotted.astro?raw';
+
+The ItemsTimelineHorizontal component displays items in a horizontal timeline format with connecting lines, perfect for progress indicators, step-by-step guides, and process flows.
+
+## Horizontal Timeline (Default)
+
+Classic horizontal timeline with solid connectors and normal spacing.
+
+<Example name="horizontal" source={horizontalSource}>
+  <Horizontal />
+</Example>
+
+## Horizontal Timeline - Tight Spacing
+
+Compact horizontal timeline with reduced spacing between items.
+
+<Example name="tight" source={tightSource}>
+  <Tight />
+</Example>
+
+## Horizontal Timeline - Dashed Connectors
+
+Timeline with dashed connector lines for a different visual style.
+
+<Example name="dashed" source={dashedSource}>
+  <Dashed />
+</Example>
+
+## Horizontal Timeline with Actions
+
+Timeline items can include action buttons.
+
+<Example name="actions" source={actionsSource}>
+  <Actions />
+</Example>
+
+## Horizontal Timeline - Dotted Connectors
+
+Timeline with dotted connector style for subtle visual effect.
+
+<Example name="dotted" source={dottedSource}>
+  <Dotted />
+</Example>
+
+<ApiReferenceTable component="ItemsTimelineHorizontal" category="composite" />

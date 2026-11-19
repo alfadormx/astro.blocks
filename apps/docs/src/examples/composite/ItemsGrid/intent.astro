@@ -1,0 +1,18 @@
+---
+import ItemsGridBlock from '@alfadormx/blocks/composite/ItemsGrid.astro';
+---
+
+<ItemsGridBlock
+  columns={3}
+  selection={{
+    mode: 'single',
+    group: 'itemsgrid-doc-intent',
+    label: 'Finish',
+    intent: 'accent',
+  }}
+  items={[
+    { code: 'matte', icon: { name: 'heroicons:swatch' }, title: 'Matte', selected: true },
+    { code: 'satin', icon: { name: 'heroicons:swatch' }, title: 'Satin' },
+    { code: 'gloss', icon: { name: 'heroicons:swatch' }, title: 'Gloss' },
+  ]}
+/>

@@ -1,0 +1,103 @@
+---
+title: Input
+description: A labelled single-line field with help text, error text and native validation
+section: primitives
+order: 10
+---
+
+import Example from '@alfadormx/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/pages/documentation/_api/ApiReferenceTable.astro';
+import Basic from '~/examples/primitives/Input/basic.astro';
+import basicSource from '~/examples/primitives/Input/basic.astro?raw';
+import Help from '~/examples/primitives/Input/help.astro';
+import helpSource from '~/examples/primitives/Input/help.astro?raw';
+import Types from '~/examples/primitives/Input/types.astro';
+import typesSource from '~/examples/primitives/Input/types.astro?raw';
+import Sizes from '~/examples/primitives/Input/sizes.astro';
+import sizesSource from '~/examples/primitives/Input/sizes.astro?raw';
+import Variants from '~/examples/primitives/Input/variants.astro';
+import variantsSource from '~/examples/primitives/Input/variants.astro?raw';
+import Intents from '~/examples/primitives/Input/intents.astro';
+import intentsSource from '~/examples/primitives/Input/intents.astro?raw';
+import Shapes from '~/examples/primitives/Input/shapes.astro';
+import shapesSource from '~/examples/primitives/Input/shapes.astro?raw';
+import ErrorExample from '~/examples/primitives/Input/error.astro';
+import errorSource from '~/examples/primitives/Input/error.astro?raw';
+import ConsumerAria from '~/examples/primitives/Input/consumer-aria.astro';
+import consumerAriaSource from '~/examples/primitives/Input/consumer-aria.astro?raw';
+import States from '~/examples/primitives/Input/states.astro';
+import statesSource from '~/examples/primitives/Input/states.astro?raw';
+import Validation from '~/examples/primitives/Input/validation.astro';
+import validationSource from '~/examples/primitives/Input/validation.astro?raw';
+
+## Basic
+
+<Example name="basic" source={basicSource}>
+  <Basic />
+</Example>
+
+## Help text and hidden label
+
+<Example name="help" source={helpSource}>
+  <Help />
+</Example>
+
+## Types
+
+<Example name="types" source={typesSource}>
+  <Types />
+</Example>
+
+## Sizes
+
+<Example name="sizes" source={sizesSource}>
+  <Sizes />
+</Example>
+
+## Variants
+
+<Example name="variants" source={variantsSource}>
+  <Variants />
+</Example>
+
+## Intents
+
+<Example name="intents" source={intentsSource}>
+  <Intents />
+</Example>
+
+## Shapes
+
+<Example name="shapes" source={shapesSource}>
+  <Shapes />
+</Example>
+
+## Error
+
+<Example name="error" source={errorSource}>
+  <ErrorExample />
+</Example>
+
+## Consumer ARIA
+
+A consumer `aria-invalid` is kept unless `error` is set, and a consumer `aria-describedby` is appended to the generated ids without repeating them.
+
+<Example name="consumer-aria" source={consumerAriaSource}>
+  <ConsumerAria />
+</Example>
+
+## Disabled and read-only
+
+<Example name="states" source={statesSource}>
+  <States />
+</Example>
+
+## Native validation
+
+Native attributes such as `pattern`, `min` and `required` pass through to the `<input>`. A required field shows a `*` after its label.
+
+<Example name="validation" source={validationSource}>
+  <Validation />
+</Example>
+
+<ApiReferenceTable component="Input" category="primitives" />

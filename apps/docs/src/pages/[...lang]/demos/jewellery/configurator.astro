@@ -1,0 +1,275 @@
+---
+import JewelleryLayout from './_layouts/Layout.astro';
+import Configurator from '@alfadormx/blocks/composite/Configurator.astro';
+import type { ConfiguratorProps } from '@alfadormx/blocks/types/configurator';
+import type { ImageProps } from '@alfadormx/blocks/types/image';
+import type { ModelViewerMutation } from '@alfadormx/blocks/types/modelviewer';
+import { localizedPaths, useCopy } from '@alfadormx/blocks/copy';
+
+export const getStaticPaths = () => localizedPaths();
+
+type Props = { langCode: string; basePath: string };
+
+const { langCode, copy: site } = useCopy(Astro, 'jewellery');
+const copy = site.configurator;
+
+const metadata = { title: { default: copy.pageTitle } };
+
+const modelViewer: ConfiguratorProps['modelViewer'] = {
+  src: '/models/ring.glb',
+  label: copy.modelViewerLabel,
+  class: 'bg-surface h-auto aspect-video md:aspect-auto md:h-[600px]',
+  lighting: 'neutral',
+  environment: { src: '/hdr/studio_small_08_1k.hdr', rotation: 90 },
+  bloom: true,
+  cameraPresets: { band: { position: [0, -0.9, 2.4], target: [0, -0.6, 0], fov: 35 } },
+};
+
+// Empty alt: the tile's title and subtitle already name the image. width/height set the
+// displayed size: the Image block writes them as an inline max-width, which beats size classes.
+const still = (code: string): ImageProps => ({
+  src: `~/assets/images/configurator/${code}.webp`,
+  alt: '',
+  width: 112,
+  height: 112,
+});
+
+// Sized like the tab icons (size-6); the SVG's colours match the option's band mutation.
+const swatch = (metal: string): ImageProps => ({
+  src: `~/assets/images/configurator/metal-${metal}.svg`,
+  alt: '',
+  width: 24,
+  height: 24,
+});
+
+// Lower clarity grades look cloudier: the stone turns milkier and rougher step by step. IF repeats the
+// model's own Stone material so switching back restores it. Carat only toggles which stone is
+// visible, and every stone shares the Stone material, so the two compose.
+const cloudiness = (color: string, roughness: number): ModelViewerMutation => ({
+  type: 'material',
+  material: 'Stone',
+  color,
+  roughness,
+});
+
+const categories: ConfiguratorProps['categories'] = [
+  {
+    name: 'ring-model',
+    panel: 'grid',
+    mode: 'single',
+    triggerButton: { label: copy.model.label, icon: { name: 'tabler:rings' } },
+    heading: copy.model.heading,
+    itemsGrid: {
+      columns: 3,
+      defaultItemConfig: { mediaClass: 'w-full h-auto aspect-square' },
+    },
+    options: [
+      {
+        code: 'classic',
+        ...copy.model.classic,
+        image: still('classic'),
+        selected: true,
+        mutations: [{ type: 'model', src: '/models/ring.glb' }],
+      },
+      {
+        code: 'bold',
+        ...copy.model.bold,
+        image: still('bold'),
+        mutations: [{ type: 'model', src: '/models/ring-alt.glb' }],
+      },
+      {
+        code: 'pave',
+        ...copy.model.pave,
+        image: still('pave'),
+        mutations: [{ type: 'model', src: '/models/ring-pave.glb' }],
+      },
+    ],
+  },
+  {
+    name: 'ring-carat',
+    panel: 'grid',
+    mode: 'single',
+    triggerButton: { label: copy.carat.label, icon: { name: 'tabler:circle-dot' } },
+    heading: copy.carat.heading,
+    itemsGrid: { columns: 3 },
+    options: [
+      {
+        code: 'small',
+        title: '0.25 ct',
+        icon: { name: 'tabler:circle-dot' },
+        mediaClass: 'size-5',
+        mutations: [{ type: 'visible', parts: ['Stone_Small'] }],
+      },
+      {
+        code: 'medium',
+        title: '0.5 ct',
+        icon: { name: 'tabler:circle-dot' },
+        mediaClass: 'size-7',
+        selected: true,
+        mutations: [{ type: 'visible', parts: ['Stone_Medium'] }],
+      },
+      {
+        code: 'large',
+        title: '1 ct',
+        icon: { name: 'tabler:circle-dot' },
+        mediaClass: 'size-9',
+        mutations: [{ type: 'visible', parts: ['Stone_Large'] }],
+      },
+    ],
+  },
+  {
+    name: 'ring-color',
+    panel: 'grid',
+    mode: 'single',
+    triggerButton: { label: copy.color.label, icon: { name: 'tabler:rainbow' } },
+    heading: copy.color.heading,
+    itemsGrid: { columns: 3 },
+    options: [
+      {
+        code: 'yellow',
+        title: copy.color.yellow,
+        image: swatch('yellow'),
+        selected: true,
+        mutations: [{ type: 'material', material: 'Band', color: '#e6b422', roughness: 0.3 }],
+      },
+      {
+        code: 'white',
+        title: copy.color.white,
+        image: swatch('white'),
+        mutations: [{ type: 'material', material: 'Band', color: '#e5e4e2', roughness: 0.2 }],
+      },
+      {
+        code: 'rose',
+        title: copy.color.rose,
+        image: swatch('rose'),
+        mutations: [{ type: 'material', part: 'Band', use: 'RoseGold' }],
+      },
+    ],
+  },
+  {
+    name: 'ring-clarity',
+    panel: 'grid',
+    mode: 'single',
+    triggerButton: { label: copy.clarity.label, icon: { name: 'tabler:diamond' } },
+    heading: copy.clarity.heading,
+    itemsGrid: { columns: 3 },
+    options: [
+      { code: 'if', title: 'IF', selected: true, mutations: [cloudiness('#606060', 0)] },
+      { code: 'vvs1', title: 'VVS1', mutations: [cloudiness('#6c6c6c', 0.15)] },
+      { code: 'vvs2', title: 'VVS2', mutations: [cloudiness('#7a7a7a', 0.3)] },
+      { code: 'vs1', title: 'VS1', mutations: [cloudiness('#8a8a8a', 0.5)] },
+    ],
+  },
+  {
+    name: 'ring-extras',
+    panel: 'grid',
+    mode: 'multiple',
+    max: 2,
+    triggerButton: { label: copy.extras.label, icon: { name: 'tabler:gift' } },
+    heading: copy.extras.heading,
+    itemsGrid: { columns: 3 },
+    options: [
+      { code: 'giftbox', ...copy.extras.giftbox },
+      { code: 'certificate', ...copy.extras.certificate },
+      { code: 'polish', ...copy.extras.polish },
+    ],
+  },
+  {
+    name: 'ring-engraving',
+    panel: 'text',
+    triggerButton: { label: copy.engraving.label, icon: { name: 'tabler:signature' } },
+    heading: copy.engraving.heading,
+    camera: 'band',
+    fieldLabel: copy.engraving.field,
+    textArea: {
+      maxLength: 20,
+      placeholder: copy.engraving.placeholder,
+      spellcheck: false,
+      class: 'p-6',
+      shape: 'square',
+      help: copy.engraving.help,
+      labelClass: 'text-xs font-semibold uppercase tracking-widest text-muted',
+      fieldClass: 'border border-border',
+    },
+  },
+];
+
+const defaultItemsGridConfig: ConfiguratorProps['defaultItemsGridConfig'] = {
+  gap: 'none',
+  responsive: false,
+  defaultItemConfig: {
+    spacing: { padding: 'p-4' },
+    border: { width: 'border-r border-b', color: 'border-border' },
+    titleClass: 'text-sm font-medium uppercase tracking-wider',
+    textClass: 'text-xs text-muted',
+  },
+  selectedItemConfig: {
+    border: { width: 'border-r border-b-2', color: 'border-border border-b-emphasis' },
+  },
+};
+
+const twoColumnContainer: ConfiguratorProps['twoColumnContainer'] = {
+  ratio: '3:2',
+  gap: 'none',
+  leftColumn: { class: 'pb-4 md:pb-10 text-center md:border-r md:border-border' },
+  rightColumn: { class: 'md:contain-size md:overflow-y-auto' },
+};
+
+const summary: ConfiguratorProps['summary'] = {
+  categories: ['ring-color', 'ring-carat', 'ring-clarity'],
+  separator: ' ',
+};
+
+const tabs: ConfiguratorProps['tabs'] = {
+  tabList: {
+    layout: 'grid',
+    columns: 3,
+    spacing: { gap: 'gap-0', margin: 'mb-0' },
+    sticky: true,
+    wrapperClass: 'md:top-0',
+  },
+  defaultItemConfig: {
+    variant: 'ghost',
+    intent: 'neutral',
+    orientation: 'vertical',
+    shape: 'square',
+    size: 'sm',
+    iconSize: 'size-6',
+    class:
+      'h-full rounded-none border-r border-b border-border hover:bg-transparent text-xs uppercase tracking-wider',
+  },
+  activeItemConfig: {
+    variant: 'ghost',
+    intent: 'neutral',
+    class: 'border-b-2 border-b-emphasis',
+  },
+};
+
+const headingClass =
+  'm-0 border-b border-border px-4 py-5 text-center text-xs font-semibold uppercase tracking-[0.2em]';
+
+const actions: ConfiguratorProps['actions'] = [
+  { label: copy.saveLabel, variant: 'outline', intent: 'neutral', shape: 'square' },
+];
+---
+
+<JewelleryLayout langCode={langCode} metadata={metadata}>
+  <Configurator
+    categories={categories}
+    modelViewer={modelViewer}
+    headline={{
+      title: copy.headline,
+      htmlTag: 'h1',
+      align: 'center',
+      titleClass: 'text-4xl md:text-5xl font-medium tracking-tight mb-0',
+    }}
+    twoColumnContainer={twoColumnContainer}
+    summary={summary}
+    summaryClass="mt-1 text-sm uppercase tracking-widest text-muted"
+    actions={actions}
+    tabs={tabs}
+    headingClass={headingClass}
+    defaultItemsGridConfig={defaultItemsGridConfig}
+    urlState={{ product: 'RING01' }}
+  />
+</JewelleryLayout>

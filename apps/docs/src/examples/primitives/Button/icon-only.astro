@@ -1,0 +1,19 @@
+---
+import Button from '@alfadormx/blocks/primitives/Button.astro';
+---
+
+<div class="flex flex-col gap-4">
+  <div class="flex flex-wrap items-center gap-4">
+    <Button icon={{ name: 'heroicons:plus' }} size="xs" />
+    <Button icon={{ name: 'heroicons:plus' }} size="sm" />
+    <Button icon={{ name: 'heroicons:plus' }} size="md" />
+    <Button icon={{ name: 'heroicons:plus' }} size="lg" />
+    <Button icon={{ name: 'heroicons:plus' }} size="xl" />
+  </div>
+  <div class="flex flex-wrap gap-4">
+    <Button icon={{ name: 'heroicons:pencil' }} variant="outline" />
+    <Button icon={{ name: 'heroicons:trash' }} variant="outline" intent="error" />
+    <Button icon={{ name: 'heroicons:check' }} variant="ghost" intent="success" />
+    <Button icon={{ name: 'heroicons:x-mark' }} variant="ghost" intent="error" />
+  </div>
+</div>

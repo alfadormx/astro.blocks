@@ -1,0 +1,24 @@
+---
+import Container from '@alfadormx/blocks/layout/Container.astro';
+---
+
+<Container
+  containerWidthType="full"
+  layout={{ type: 'grid', class: 'grid-cols-2 md:grid-cols-4 gap-4' }}
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-8' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  spacing={{ margin: 'mb-8' }}
+>
+  <div class="bg-primary text-background p-4 rounded text-center">1</div>
+  <div class="bg-success text-background p-4 rounded text-center">2</div>
+  <div class="bg-secondary text-background p-4 rounded text-center">3</div>
+  <div class="bg-accent text-background p-4 rounded text-center">4</div>
+  <div class="bg-tertiary text-background p-4 rounded text-center">5</div>
+  <div class="bg-error text-background p-4 rounded text-center">6</div>
+  <div class="bg-info text-background p-4 rounded text-center">7</div>
+  <div class="bg-warning text-background p-4 rounded text-center">8</div>
+</Container>

@@ -1,0 +1,38 @@
+---
+import ItemsGridBlock from '@alfadormx/blocks/composite/ItemsGrid.astro';
+import TextAreaBlock from '@alfadormx/blocks/primitives/TextArea.astro';
+import ToggleGroupBlock from '@alfadormx/blocks/primitives/ToggleGroup.astro';
+import {
+  ENGRAVING_GROUP,
+  ENGRAVING_MAX_LENGTH,
+  EXTRAS_GROUP,
+  extrasItems,
+  FINISH_GROUP,
+  finishOptions,
+} from './demoSpec';
+---
+
+<div class="flex flex-col gap-6">
+  <ToggleGroupBlock group={FINISH_GROUP} label="Finish" options={finishOptions} />
+  <ItemsGridBlock
+    columns={4}
+    selection={{ mode: 'multiple', group: EXTRAS_GROUP, label: 'Extras' }}
+    items={extrasItems}
+  />
+  <div class="max-w-md">
+    <TextAreaBlock
+      group={ENGRAVING_GROUP}
+      label="Engraving"
+      maxLength={ENGRAVING_MAX_LENGTH}
+      showCounter
+      rows={2}
+    />
+  </div>
+</div>
+
+<script>
+  import { connectUrlState } from '@alfadormx/blocks/url-state';
+  import { demoSpec } from './demoSpec';
+
+  connectUrlState({ spec: demoSpec });
+</script>

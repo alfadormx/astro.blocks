@@ -1,0 +1,100 @@
+---
+import JewelleryLayout from './_layouts/Layout.astro';
+import ContactForm from '@alfadormx/blocks/composite/ContactForm.astro';
+import ItemsContent from '@alfadormx/blocks/composite/ItemsContent.astro';
+import ItemsGrid from '@alfadormx/blocks/composite/ItemsGrid.astro';
+import MapBlock from '@alfadormx/blocks/primitives/Map.astro';
+import { localizedPaths, useCopy } from '@alfadormx/blocks/copy';
+import { CONTACT_ADDRESS, GEO, LABEL, PHONE, SECTION_HEADLINE } from './_site';
+
+export const getStaticPaths = () => localizedPaths();
+
+type Props = { langCode: string; basePath: string };
+
+const { langCode, copy } = useCopy(Astro, 'jewellery');
+const { contact: c } = copy;
+const details = [
+  { title: c.addressTitle, content: `${c.street}  \n${c.postalCode} ${c.locality}` },
+  { title: c.callTitle, content: `[${c.phoneLabel}](tel:${PHONE})` },
+  { title: c.mailTitle, content: `[${CONTACT_ADDRESS}](mailto:${CONTACT_ADDRESS})` },
+];
+---
+
+<JewelleryLayout langCode={langCode} metadata={{ title: { default: c.pageTitle } }}>
+  <ContactForm
+    headline={{
+      ...SECTION_HEADLINE,
+      align: 'left',
+      title: c.title,
+      subtitle: c.subtitle,
+      htmlTag: 'h1',
+      titleClass: 'text-5xl md:text-6xl font-medium tracking-tight leading-tight mb-0',
+      subtitleClass: 'text-lg text-muted max-w-2xl',
+    }}
+    asidePosition="right"
+    twoColumnContainer={{ ratio: '1:1', gap: 'loose' }}
+    action={{ type: 'mailto', address: CONTACT_ADDRESS }}
+    fields={[
+      {
+        control: 'input',
+        name: 'name',
+        label: c.fields.name,
+        required: true,
+        autocomplete: 'name',
+      },
+      {
+        control: 'input',
+        name: 'email',
+        type: 'email',
+        label: c.fields.email,
+        required: true,
+        autocomplete: 'email',
+      },
+      { control: 'input', name: 'topic', label: c.fields.topic },
+      { control: 'textarea', name: 'message', label: c.fields.message, required: true, rows: 6 },
+    ]}
+    defaultFieldConfig={{ shape: 'square' }}
+    submitButton={{ label: c.submit, variant: 'solid', intent: 'primary', shape: 'square' }}
+    mailtoMessage={c.mailtoMessage}
+    asideClass="flex flex-col gap-8"
+  >
+    <ItemsGrid
+      slot="aside"
+      columns={1}
+      gap="tight"
+      items={details}
+      defaultItemConfig={{
+        orientation: 'horizontal',
+        class: 'items-start text-left',
+        contentClass: 'items-start text-left',
+        titleClass: `${LABEL} text-muted mb-1`,
+        textClass: 'mb-0',
+      }}
+    />
+    <MapBlock
+      slot="aside"
+      lat={GEO.lat}
+      lon={GEO.lon}
+      zoom={15}
+      markerTitle={c.markerTitle}
+      title={c.mapTitle}
+      height="360px"
+      class="border border-border"
+    />
+  </ContactForm>
+
+  <ItemsContent
+    container={{ class: 'bg-surface' }}
+    headline={{ ...SECTION_HEADLINE, tagline: c.faq.tagline, title: c.faq.title }}
+    itemsGrid={{
+      columns: 2,
+      gap: 'normal',
+      items: Object.values(c.faq.items),
+      defaultItemConfig: {
+        orientation: 'horizontal',
+        titleClass: 'font-title text-2xl font-medium mb-2',
+        textClass: 'text-muted mb-0',
+      },
+    }}
+  />
+</JewelleryLayout>

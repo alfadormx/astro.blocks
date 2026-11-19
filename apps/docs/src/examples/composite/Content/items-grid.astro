@@ -1,0 +1,42 @@
+---
+import Content from '@alfadormx/blocks/composite/Content.astro';
+---
+
+<Content
+  headline={{
+    tagline: 'Content Block',
+    title: 'Items in two columns',
+  }}
+  image={{
+    src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=min&auto=format',
+    alt: 'Demo image',
+  }}
+  itemsGrid={{
+    columns: 2,
+    items: [
+      {
+        icon: { name: 'heroicons:sparkles', class: 'text-accent' },
+        title: 'Composable',
+        content: 'Blocks can be combined in any way.',
+      },
+      {
+        icon: { name: 'heroicons:bolt', class: 'text-success' },
+        title: 'Fast',
+        content: 'Astro delivers lightning-fast sites.',
+      },
+      {
+        icon: { name: 'heroicons:star', class: 'text-warning' },
+        title: 'Flexible',
+        content: 'Customize every aspect of your UI.',
+      },
+      {
+        icon: { name: 'heroicons:heart', class: 'text-error' },
+        title: 'Accessible',
+        content: 'Semantic markup out of the box.',
+      },
+    ],
+  }}
+>
+  <h3>Building on modern foundations</h3>
+  <p>Gain a competitive advantage by incorporating industry leading practices</p>
+</Content>

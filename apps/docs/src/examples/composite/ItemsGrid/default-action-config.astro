@@ -1,0 +1,26 @@
+---
+import ItemsGridBlock from '@alfadormx/blocks/composite/ItemsGrid.astro';
+---
+
+<ItemsGridBlock
+  columns={2}
+  defaultItemConfig={{ defaultActionConfig: { variant: 'ghost', intent: 'primary' } }}
+  items={[
+    {
+      icon: { name: 'heroicons:book-open' },
+      title: 'Guides',
+      actions: [
+        { label: 'Read', href: '#' },
+        { label: 'Download', href: '#' },
+      ],
+    },
+    {
+      icon: { name: 'heroicons:play-circle' },
+      title: 'Videos',
+      actions: [
+        { label: 'Watch', href: '#' },
+        { label: 'Subscribe', href: '#' },
+      ],
+    },
+  ]}
+/>

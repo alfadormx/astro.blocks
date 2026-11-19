@@ -1,0 +1,15 @@
+---
+import CheckboxGroup from '@alfadormx/blocks/primitives/CheckboxGroup.astro';
+---
+
+<div class="flex flex-col gap-4 max-w-md">
+  <CheckboxGroup
+    label="Notifications"
+    name="notifications"
+    help="Pick every channel you want updates on."
+    options={[
+      { label: 'Email', value: 'email', checked: true },
+      { label: 'SMS', value: 'sms' },
+    ]}
+  />
+</div>

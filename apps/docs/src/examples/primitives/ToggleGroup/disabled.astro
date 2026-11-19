@@ -1,0 +1,13 @@
+---
+import ToggleGroup from '@alfadormx/blocks/primitives/ToggleGroup.astro';
+---
+
+<ToggleGroup
+  group="togglegroup-doc-disabled"
+  label="Shipping"
+  disabled
+  options={[
+    { code: 'standard', label: 'Standard' },
+    { code: 'express', label: 'Express' },
+  ]}
+/>

@@ -1,0 +1,93 @@
+---
+title: Image
+description: An optimized image with sizing, ratio, and fit controls.
+section: primitives
+order: 9
+---
+
+import Example from '@alfadormx/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/pages/documentation/_api/ApiReferenceTable.astro';
+import Constrained from '~/examples/primitives/Image/constrained.astro';
+import constrainedSource from '~/examples/primitives/Image/constrained.astro?raw';
+import FullWidth from '~/examples/primitives/Image/full-width.astro';
+import fullWidthSource from '~/examples/primitives/Image/full-width.astro?raw';
+import Fixed from '~/examples/primitives/Image/fixed.astro';
+import fixedSource from '~/examples/primitives/Image/fixed.astro?raw';
+import Responsive from '~/examples/primitives/Image/responsive.astro';
+import responsiveSource from '~/examples/primitives/Image/responsive.astro?raw';
+import Contained from '~/examples/primitives/Image/contained.astro';
+import containedSource from '~/examples/primitives/Image/contained.astro?raw';
+import Cover from '~/examples/primitives/Image/cover.astro';
+import coverSource from '~/examples/primitives/Image/cover.astro?raw';
+import AspectRatio from '~/examples/primitives/Image/aspect-ratio.astro';
+import aspectRatioSource from '~/examples/primitives/Image/aspect-ratio.astro?raw';
+import Eager from '~/examples/primitives/Image/eager.astro';
+import eagerSource from '~/examples/primitives/Image/eager.astro?raw';
+
+Demonstrating responsive image optimization with srcset, lazy loading, and multiple layout modes.
+
+## Constrained layout (default)
+
+Image scales down to fit container but never exceeds its natural size. Perfect for content images.
+
+<Example name="constrained" source={constrainedSource}>
+  <Constrained />
+</Example>
+
+## Full width layout
+
+Image always spans 100% of container width. Ideal for hero images and banners.
+
+<Example name="full-width" source={fullWidthSource}>
+  <FullWidth />
+</Example>
+
+## Fixed layout
+
+Image maintains exact dimensions regardless of screen size. Good for thumbnails and avatars.
+
+<Example name="fixed" source={fixedSource}>
+  <Fixed />
+</Example>
+
+## Responsive layout
+
+Width is 100%, height scales automatically. Maintains aspect ratio perfectly.
+
+<Example name="responsive" source={responsiveSource}>
+  <Responsive />
+</Example>
+
+## Contained layout
+
+Image fits within container using `object-fit: contain`. No cropping, maintains full visibility.
+
+<Example name="contained" source={containedSource}>
+  <Contained />
+</Example>
+
+## Cover layout
+
+Image covers container completely using `object-fit: cover`. May crop to fit.
+
+<Example name="cover" source={coverSource}>
+  <Cover />
+</Example>
+
+## Custom aspect ratio
+
+Force specific aspect ratio (16:9) regardless of source image dimensions.
+
+<Example name="aspect-ratio" source={aspectRatioSource}>
+  <AspectRatio />
+</Example>
+
+## Eager loading (above fold)
+
+Load immediately without lazy loading. Use for hero images and LCP elements.
+
+<Example name="eager" source={eagerSource}>
+  <Eager />
+</Example>
+
+<ApiReferenceTable component="Image" category="primitives" />

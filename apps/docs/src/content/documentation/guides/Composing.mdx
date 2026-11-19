@@ -1,0 +1,61 @@
+---
+title: Composing blocks
+description: How every block exposes its children, and how your config reaches them.
+section: guides
+order: 1
+---
+
+import Example from '@alfadormx/blocks/composite/Example.astro';
+import Presence from '~/examples/guides/Composing/presence.astro';
+import presenceSource from '~/examples/guides/Composing/presence.astro?raw';
+import Layers from '~/examples/guides/Composing/layers.astro';
+import layersSource from '~/examples/guides/Composing/layers.astro?raw';
+import Order from '~/examples/guides/Composing/order.astro';
+import orderSource from '~/examples/guides/Composing/order.astro?raw';
+import Classes from '~/examples/guides/Composing/classes.astro';
+import classesSource from '~/examples/guides/Composing/classes.astro?raw';
+
+Blocks are built from other blocks. A Header holds buttons, a Tabs block holds a row of tab buttons, a CallToAction holds a headline and actions. Every block exposes those children the same way, so once you know the pattern you can configure any of them.
+
+A prop with no suffix configures **one child** (`closeButton`, `headline`) or a list of them (`actions`, `items`). A prop ending in `Config` is a **layer**: settings merged into many children at once (`defaultItemConfig`, `activeItemConfig`). The API reference on each block's page links both kinds to the child block's own props.
+
+## Turning children on and off
+
+An optional child renders when you set its prop, and not otherwise. There are no `show…` switches. A child that renders by default is hidden by passing `false`.
+
+<Example name="presence" source={presenceSource}>
+  <Presence />
+</Example>
+
+## Styling many children at once
+
+A `default…Config` layer applies to every child in the list, in every state. A state layer such as `activeItemConfig`, `selectedItemConfig` or `highlightedTierConfig` sits on top of it and applies only while the child is in that state. Set the shared look once, then only what changes.
+
+<Example name="layers" source={layersSource}>
+  <Layers />
+</Example>
+
+## Who wins
+
+Each child is built from these layers, later ones overriding earlier ones:
+
+1. the block's own internal defaults;
+2. the `default…Config` layer;
+3. the state layer, while the child is in that state;
+4. the child's own entry (`items[n]`, `closeButton`, …).
+
+The child's own entry always wins, so anything you set on it applies in every state. To style a child only while it is active or selected, use the state layer instead. Below, the second tab's `underline` stays whether it is active or not.
+
+Settings that identify a single element, such as `id`, `name` and `anchorId`, can't go in a layer. Set them on the child's own entry.
+
+<Example name="order" source={orderSource}>
+  <Order />
+</Example>
+
+## Overriding classes
+
+Classes you pass are added to a block's defaults, never swapped for them. When your class and a default belong to the same group, yours wins: `shadow-none` removes a default `shadow-xl`, `rounded-none` removes a default `rounded-md`. Use the opposite utility to cancel a default; you never need `!`.
+
+<Example name="classes" source={classesSource}>
+  <Classes />
+</Example>

@@ -1,0 +1,19 @@
+---
+import Container from '@alfadormx/blocks/layout/Container.astro';
+---
+
+<Container
+  containerWidthType="full"
+  layout={{ type: 'flex', class: 'flex-col gap-4 items-stretch' }}
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-8' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  spacing={{ margin: 'mb-8' }}
+>
+  <div class="bg-primary text-background p-4 rounded">Item 1</div>
+  <div class="bg-success text-background p-4 rounded">Item 2</div>
+  <div class="bg-secondary text-background p-4 rounded">Item 3</div>
+</Container>

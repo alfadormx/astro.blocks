@@ -1,0 +1,8 @@
+---
+import CollectionListBlock from '@alfadormx/blocks/composite/CollectionList.astro';
+import { getFeatured } from '@alfadormx/blocks/collections';
+
+const featured = await getFeatured('posts', 3, 'en');
+---
+
+<CollectionListBlock entries={featured} columns={2} />

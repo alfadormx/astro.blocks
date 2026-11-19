@@ -1,0 +1,25 @@
+---
+import SidebarLeftContainer from '@alfadormx/blocks/layout/SidebarLeftContainer.astro';
+---
+
+<SidebarLeftContainer
+  htmlTag="section"
+  containerWidthType="full"
+  content={{
+    widthType: 'boxed',
+    spacing: { padding: 'py-8' },
+    border: { width: 'border', color: 'border-border-emphasis border-dotted' },
+  }}
+  border={{ width: 'border', color: 'border-border' }}
+  responsive={true}
+  spacing={{ margin: 'mb-8' }}
+>
+  <div slot="sidebar" class="bg-accent text-background p-6 rounded">
+    <p class="font-semibold">Sidebar</p>
+    <p class="text-sm">This sidebar stacks on top on mobile devices.</p>
+  </div>
+  <div slot="main" class="bg-error text-background p-6 rounded">
+    <p class="font-semibold">Main Content</p>
+    <p class="text-sm">Main content appears below sidebar on mobile.</p>
+  </div>
+</SidebarLeftContainer>

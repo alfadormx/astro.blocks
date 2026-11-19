@@ -1,0 +1,25 @@
+---
+import CaseStudyLayout from '@alfadormx/blocks/composite/CaseStudyLayout.astro';
+
+const location = {
+  name: 'Amsterdam',
+  address: 'Keizersgracht 1, 1015 CC Amsterdam',
+  lat: 52.3731,
+  lon: 4.8892,
+  zoom: 14,
+};
+---
+
+<CaseStudyLayout
+  headline={{ title: 'A ring configurator that sells', htmlTag: 'h2' }}
+  client="Example Jewellers"
+  date={new Date('2026-06-10T12:00:00Z')}
+  results={[
+    { label: 'Conversion', value: '+38%' },
+    { label: 'Returns', value: '−21%' },
+    { label: 'Time on page', value: '3m 40s' },
+  ]}
+  location={location}
+>
+  <p>The client wanted shoppers to see the ring they were buying, in every metal and stone.</p>
+</CaseStudyLayout>

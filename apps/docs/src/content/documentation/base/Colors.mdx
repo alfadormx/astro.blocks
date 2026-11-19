@@ -1,0 +1,24 @@
+---
+title: Colors
+description: The semantic color tokens and how they map across light and dark themes.
+section: base
+order: 1
+---
+
+import Example from '@alfadormx/blocks/composite/Example.astro';
+import Semantic from '~/examples/base/Colors/semantic.astro';
+import semanticSource from '~/examples/base/Colors/semantic.astro?raw';
+import Palette from '~/examples/base/Colors/palette.astro';
+import paletteSource from '~/examples/base/Colors/palette.astro?raw';
+
+## Semantic colours
+
+<Example name="semantic" source={semanticSource}>
+  <Semantic />
+</Example>
+
+## Spectrum colours
+
+<Example name="palette" source={paletteSource} code={false}>
+  <Palette />
+</Example>

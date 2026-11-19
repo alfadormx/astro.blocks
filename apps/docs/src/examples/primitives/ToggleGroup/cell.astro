@@ -1,0 +1,23 @@
+---
+import ToggleGroup from '@alfadormx/blocks/primitives/ToggleGroup.astro';
+---
+
+<div class="flex flex-col gap-4">
+  {(['solid', 'outline', 'ghost'] as const).map((variant) => (
+    <div class="flex flex-col gap-2">
+      <p class="text-sm text-muted">
+        <code>{variant}</code>
+      </p>
+      <ToggleGroup
+        group={`togglegroup-doc-cell-${variant}`}
+        label="Reveal price"
+        appearance="cell"
+        variant={variant}
+        options={[
+          { code: 'yes', label: 'Yes' },
+          { code: 'no', label: 'No', selected: true },
+        ]}
+      />
+    </div>
+  ))}
+</div>

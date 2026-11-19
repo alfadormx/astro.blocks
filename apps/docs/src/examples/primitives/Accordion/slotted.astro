@@ -1,0 +1,29 @@
+---
+import Accordion from '@alfadormx/blocks/primitives/Accordion.astro';
+import type { AccordionItem } from '@alfadormx/blocks/types/accordion';
+
+const items: AccordionItem[] = [
+  {
+    id: 'shipping',
+    title: 'How long does shipping take?',
+    content: '<p>Orders ship within two working days.</p>',
+  },
+  {
+    title: 'Can I return an item?',
+    content: '<p>Yes, within 30 days of delivery.</p>',
+  },
+  {
+    title: 'Do you ship abroad?',
+    content: '<p>We ship to every country in the EU.</p>',
+  },
+];
+---
+
+<Accordion items={[{ title: 'What is in the box?' }, items[1]]}>
+  <Fragment slot="item-0">
+    <ul>
+      <li>The device</li>
+      <li>A USB-C cable</li>
+    </ul>
+  </Fragment>
+</Accordion>

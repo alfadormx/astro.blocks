@@ -1,0 +1,13 @@
+---
+import Modal from '@alfadormx/blocks/layout/Modal.astro';
+import Button from '@alfadormx/blocks/primitives/Button.astro';
+import Headline from '@alfadormx/blocks/primitives/Headline.astro';
+---
+
+<Button data-modal-trigger="labelled-modal" label="Open Labelled Modal" />
+<Modal id="labelled-modal" closeButton={{ 'aria-label': 'Dismiss dialog' }}>
+  <div class="p-6">
+    <Headline title="Labelled Close Button" htmlTag="h2" class="my-0" titleClass="text-xl" />
+    <p class="text-muted mb-4">The close button is announced as "Dismiss dialog".</p>
+  </div>
+</Modal>

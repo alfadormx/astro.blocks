@@ -1,0 +1,31 @@
+---
+title: EventLayout
+description: 'The body of an event page: when and where, a Register button, and a map.'
+section: composite
+order: 10
+---
+
+import Example from '@alfadormx/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/pages/documentation/_api/ApiReferenceTable.astro';
+import Register from '~/examples/composite/EventLayout/register.astro';
+import registerSource from '~/examples/composite/EventLayout/register.astro?raw';
+import NoRegister from '~/examples/composite/EventLayout/no-register.astro';
+import noRegisterSource from '~/examples/composite/EventLayout/no-register.astro?raw';
+
+## With registration and map
+
+`registrationUrl` adds the Register button above the body. Coordinates in `location` add a Map after it.
+
+<Example name="register" source={registerSource}>
+  <Register />
+</Example>
+
+## Without the button
+
+`registerButton: false` hides the button even when a URL is set.
+
+<Example name="no-register" source={noRegisterSource}>
+  <NoRegister />
+</Example>
+
+<ApiReferenceTable component="EventLayout" category="composite" />

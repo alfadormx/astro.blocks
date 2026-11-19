@@ -1,0 +1,69 @@
+---
+import Team from '@alfadormx/blocks/composite/Team.astro';
+import type { ButtonProps } from '@alfadormx/blocks/types/button';
+import type { TeamMember } from '@alfadormx/blocks/types/team';
+
+const photo = (id: string) => ({
+  src: `https://images.unsplash.com/${id}?w=320&h=320&fit=crop&crop=faces`,
+});
+
+const NETWORK_ICONS = {
+  LinkedIn: 'mdi:linkedin',
+  GitHub: 'mdi:github',
+  Email: 'heroicons:envelope',
+} as const;
+
+const link = (first: string, network: keyof typeof NETWORK_ICONS, href: string): ButtonProps => ({
+  icon: { name: NETWORK_ICONS[network] },
+  href,
+  'aria-label': `${first} on ${network}`,
+});
+
+const member = (
+  name: string,
+  role: string,
+  bio: string,
+  id: string,
+  links: ButtonProps[]
+): TeamMember => ({
+  title: name,
+  content: `<p class="text-sm text-muted">${role}</p><p class="mt-2">${bio}</p>`,
+  image: photo(id),
+  actions: links,
+});
+
+const people: TeamMember[] = [
+  member(
+    'Ana Ruiz',
+    'Head of Product',
+    'Turns customer interviews into roadmaps.',
+    'photo-1494790108377-be9c29b29330',
+    [
+      link('Ana', 'LinkedIn', 'https://www.linkedin.com/'),
+      link('Ana', 'GitHub', 'https://github.com/'),
+    ]
+  ),
+  member(
+    'Ben Okafor',
+    'Lead Engineer',
+    'Keeps the build fast and the pages light.',
+    'photo-1507003211169-0a1dd7228f2d',
+    [link('Ben', 'GitHub', 'https://github.com/'), link('Ben', 'Email', 'mailto:ben@example.com')]
+  ),
+  member(
+    'Chloé Martin',
+    'Design Lead',
+    'Owns the design system and its tokens.',
+    'photo-1438761681033-6461ffad8d80',
+    [
+      link('Chloé', 'LinkedIn', 'https://www.linkedin.com/'),
+      link('Chloé', 'Email', 'mailto:chloe@example.com'),
+    ]
+  ),
+];
+---
+
+<Team
+  members={people}
+  defaultMemberConfig={{ defaultActionConfig: { variant: 'outline', intent: 'primary' } }}
+/>

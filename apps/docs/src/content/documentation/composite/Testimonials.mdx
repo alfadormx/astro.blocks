@@ -1,0 +1,71 @@
+---
+title: Testimonials
+description: Customer quotes with author, optional star rating and source, in a grid or a carousel.
+section: composite
+order: 29
+---
+
+import Example from '@alfadormx/blocks/composite/Example.astro';
+import ApiReferenceTable from '~/pages/documentation/_api/ApiReferenceTable.astro';
+import Grid from '~/examples/composite/Testimonials/grid.astro';
+import gridSource from '~/examples/composite/Testimonials/grid.astro?raw';
+import Rating from '~/examples/composite/Testimonials/rating.astro';
+import ratingSource from '~/examples/composite/Testimonials/rating.astro?raw';
+import AvatarSource from '~/examples/composite/Testimonials/avatar-source.astro';
+import avatarSourceSource from '~/examples/composite/Testimonials/avatar-source.astro?raw';
+import Layer from '~/examples/composite/Testimonials/layer.astro';
+import layerSource from '~/examples/composite/Testimonials/layer.astro?raw';
+import Carousel from '~/examples/composite/Testimonials/carousel.astro';
+import carouselSource from '~/examples/composite/Testimonials/carousel.astro?raw';
+import Single from '~/examples/composite/Testimonials/single.astro';
+import singleSource from '~/examples/composite/Testimonials/single.astro?raw';
+
+## Grid
+
+The default `layout="grid"` places cards in up to `columns` columns, stepping down as the container narrows. Blank lines in `quote` start new paragraphs.
+
+<Example name="grid" source={gridSource}>
+  <Grid />
+</Example>
+
+## Rating
+
+`rating` draws one to five stars. The stars are hidden from assistive tech; `ratingLabel` is read instead (default `'{rating} out of 5'`).
+
+<Example name="rating" source={ratingSource}>
+  <Rating />
+</Example>
+
+## Avatar and source
+
+`author.avatar` takes Image props and renders a small round photo. `source` adds a cited link to the original review.
+
+<Example name="avatar-source" source={avatarSourceSource}>
+  <AvatarSource />
+</Example>
+
+## Shared config
+
+`defaultTestimonialConfig` restyles or localizes every card, here a Spanish `ratingLabel` and the pull-quote font restored through `quoteClass`.
+
+<Example name="layer" source={layerSource}>
+  <Layer />
+</Example>
+
+## Carousel
+
+`layout="carousel"` puts one card per slide in a ContentCarousel, showing one, two or three at a time as the container widens (`slideClass`). Configure the carousel through `contentCarousel`. With more than one card per view, set `loop`: without it, the last positions leave empty space. Without JavaScript only the first cards show.
+
+<Example name="carousel" source={carouselSource}>
+  <Carousel />
+</Example>
+
+## Single quote
+
+One testimonial in one column, without role or rating.
+
+<Example name="single" source={singleSource}>
+  <Single />
+</Example>
+
+<ApiReferenceTable component="Testimonials" category="composite" />

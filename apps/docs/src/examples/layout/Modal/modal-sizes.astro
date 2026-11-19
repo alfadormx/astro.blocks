@@ -1,0 +1,47 @@
+---
+import Modal from '@alfadormx/blocks/layout/Modal.astro';
+import Button from '@alfadormx/blocks/primitives/Button.astro';
+import Headline from '@alfadormx/blocks/primitives/Headline.astro';
+---
+
+<div class="flex flex-wrap gap-4">
+  <Button data-modal-trigger="modal-sm" size="sm" label="Small" />
+  <Button data-modal-trigger="modal-md" size="sm" label="Medium" />
+  <Button data-modal-trigger="modal-lg" size="sm" label="Large" />
+  <Button data-modal-trigger="modal-xl" size="sm" label="Extra Large" />
+  <Button data-modal-trigger="modal-full" size="sm" label="Full Screen" />
+  <Modal id="modal-sm" size="sm">
+    <div class="p-6">
+      <Headline title="Small Modal" htmlTag="h2" class="my-0" titleClass="text-xl" />
+      <p class="text-sm text-muted">Compact modal for simple messages.</p>
+    </div>
+  </Modal>
+
+  <Modal id="modal-md" size="md">
+    <div class="p-6">
+      <Headline title="Medium Modal" htmlTag="h2" class="my-0" titleClass="text-xl" />
+      <p class="text-muted">Default size for most use cases.</p>
+    </div>
+  </Modal>
+
+  <Modal id="modal-lg" size="lg">
+    <div class="p-6">
+      <Headline title="Large Modal" htmlTag="h2" class="my-0" titleClass="text-xl" />
+      <p class="text-muted">More space for complex content or forms.</p>
+    </div>
+  </Modal>
+
+  <Modal id="modal-xl" size="xl">
+    <div class="p-6">
+      <Headline title="Extra Large Modal" htmlTag="h2" class="my-0" titleClass="text-xl" />
+      <p class="text-muted">Maximum width for detailed content.</p>
+    </div>
+  </Modal>
+
+  <Modal id="modal-full" size="full">
+    <div class="p-8">
+      <Headline title="Full Screen Modal" htmlTag="h2" class="my-0" titleClass="text-xl" />
+      <p class="text-muted">Takes up the entire viewport, ideal for immersive experiences.</p>
+    </div>
+  </Modal>
+</div>

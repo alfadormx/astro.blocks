@@ -1,0 +1,20 @@
+---
+import Input from '@alfadormx/blocks/primitives/Input.astro';
+
+const intents = [
+  'primary',
+  'secondary',
+  'tertiary',
+  'accent',
+  'success',
+  'warning',
+  'error',
+  'neutral',
+] as const;
+---
+
+<div class="flex flex-col gap-4 max-w-md">
+  {intents.map((intent) => (
+    <Input label={`Intent ${intent}`} intent={intent} />
+  ))}
+</div>

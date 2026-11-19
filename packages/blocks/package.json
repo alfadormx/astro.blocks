@@ -1,0 +1,75 @@
+{
+  "name": "@alfadormx/blocks",
+  "version": "0.0.1",
+  "type": "module",
+  "files": [
+    "src"
+  ],
+  "imports": {
+    "#components/*": "./src/components/*",
+    "#utils/*": "./src/utils/*.ts",
+    "#types/*": "./src/types/*.ts",
+    "#styles/*": "./src/styles/*"
+  },
+  "exports": {
+    "./primitives/*": "./src/components/blocks/primitives/*",
+    "./layout/*": "./src/components/blocks/layout/*",
+    "./composite/*": "./src/components/blocks/composite/*",
+    "./meta/*": "./src/components/meta/*",
+    "./types/*": "./src/types/*.types.ts",
+    "./Layout.astro": "./src/layouts/Layout.astro",
+    "./integration": "./src/integration/index.ts",
+    "./collections": "./src/integration/collections/pages.ts",
+    "./content": "./src/integration/collections/define.ts",
+    "./copy": "./src/integration/copy/pages.ts",
+    "./selection": "./src/utils/selection.ts",
+    "./url-state": "./src/utils/urlState.ts",
+    "./utils/richText": "./src/utils/richText.ts",
+    "./utils/styles": "./src/utils/styles.ts",
+    "./utils/mergeConfigs": "./src/utils/mergeConfigs.ts",
+    "./utils/images": "./src/utils/images.ts",
+    "./utils/combinationCode": "./src/utils/combinationCode.ts",
+    "./blocks.css": "./src/styles/blocks.css",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "check": "pnpm run check:types && pnpm run test:unit && pnpm run test:astro",
+    "check:types": "astro check --root tests/fixture",
+    "test:unit": "vitest run",
+    "test:astro": "vitest run --config vitest.astro.config.ts"
+  },
+  "peerDependencies": {
+    "astro": "^7.4.5",
+    "tailwindcss": "^4.3.4"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^8.1.6",
+    "@astrolib/analytics": "^0.6.1",
+    "@iconify-json/heroicons": "^1.2.3",
+    "@iconify-json/mdi": "^1.2.3",
+    "@tailwindcss/typography": "^0.5.20",
+    "@tailwindcss/vite": "^4.3.4",
+    "@videojs/html": "10.3.0",
+    "@videojs/vimeo-video": "10.3.0",
+    "@videojs/youtube-video": "10.3.0",
+    "astro-icon": "^1.2.0",
+    "astro-seo": "^1.2.0",
+    "clsx": "^2.1.1",
+    "js-yaml": "^5.5.0",
+    "leaflet": "^1.9.4",
+    "lodash.merge": "^4.6.2",
+    "marked": "^18.2.0",
+    "reading-time": "^1.5.0",
+    "tailwind-merge": "^3.7.0",
+    "three": "^0.187.0",
+    "unpic": "^4.2.2"
+  },
+  "devDependencies": {
+    "astro": "^7.4.5",
+    "tailwindcss": "^4.3.4",
+    "@types/js-yaml": "^4.0.9",
+    "@types/leaflet": "^1.9.22",
+    "@types/lodash.merge": "^4.6.9",
+    "@types/three": "^0.187.0"
+  }
+}

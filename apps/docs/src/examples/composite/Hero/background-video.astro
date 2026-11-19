@@ -1,0 +1,35 @@
+---
+import Hero from '@alfadormx/blocks/composite/Hero.astro';
+import type { ButtonProps } from '@alfadormx/blocks/types/button';
+
+const actions: ButtonProps[] = [
+  {
+    label: 'Get started',
+    intent: 'primary',
+    icon: { name: 'heroicons:arrow-right' },
+    iconPosition: 'right',
+  },
+  { label: 'View source', intent: 'secondary', variant: 'outline' },
+];
+const defaultActionConfig = { size: 'lg', shape: 'pill', variant: 'solid' } as const;
+---
+
+<Hero
+  container={{
+    minHeight: 'min-h-[80vh]',
+    background: {
+      video: [
+        { src: '/videos/demos/jewellery/hero.webm', type: 'video/webm' },
+        { src: '/videos/demos/jewellery/hero.mp4', type: 'video/mp4' },
+      ],
+    },
+  }}
+  headline={{
+    tagline: 'Hero',
+    title: 'Copy over motion',
+    subtitle: 'A full-bleed background video with an overlay for contrast.',
+    htmlTag: 'h2',
+  }}
+  defaultActionConfig={defaultActionConfig}
+  actions={actions}
+/>

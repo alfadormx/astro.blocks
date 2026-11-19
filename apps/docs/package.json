@@ -1,0 +1,37 @@
+{
+  "name": "docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host",
+    "build": "astro build",
+    "preview": "astro preview --host",
+    "astro": "astro",
+    "check": "astro check && pnpm run test:unit && pnpm run test:browser",
+    "test:unit": "vitest run",
+    "test:browser": "node scripts/test-browser.mjs",
+    "models:generate": "node scripts/generate-ring-models.mjs",
+    "stills:generate": "node scripts/generate-ring-stills.mjs"
+  },
+  "dependencies": {
+    "@alfadormx/blocks": "workspace:*",
+    "@iconify-json/flat-color-icons": "^1.2.3",
+    "@iconify-json/heroicons": "^1.2.3",
+    "@iconify-json/lucide": "^1.2.151",
+    "@iconify-json/mdi": "^1.2.3",
+    "@iconify-json/tabler": "^1.2.43",
+    "astro": "^7.4.5",
+    "lodash.merge": "^4.6.2",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^4.3.4",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "^4.5.1",
+    "@gltf-transform/extensions": "4.5.1",
+    "@playwright/test": "^1.64.1",
+    "@types/js-yaml": "^4.0.9",
+    "@types/lodash.merge": "^4.6.9",
+    "js-yaml": "^5.5.0"
+  }
+}

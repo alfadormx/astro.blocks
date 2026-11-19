@@ -1,0 +1,36 @@
+---
+import LogoCloud from '@alfadormx/blocks/composite/LogoCloud.astro';
+import type { LogoCloudLogo } from '@alfadormx/blocks/types/logocloud';
+
+const wordmark = (shape: string, label: string, colour: string) =>
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 32"><g fill="${colour}">${shape}<text x="40" y="22" font-family="system-ui, sans-serif" font-size="18" font-weight="700">${label}</text></g></svg>`;
+
+const marks: Record<string, string> = {
+  Acme: wordmark('<circle cx="16" cy="16" r="12"/>', 'Acme', '#e11d48'),
+  Globex: wordmark(
+    '<path d="M8 4h16a4 4 0 0 1 4 4v16a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z"/>',
+    'Globex',
+    '#2563eb'
+  ),
+  Initech: wordmark('<polygon points="16,3 29,28 3,28"/>', 'Initech', '#16a34a'),
+  Umbrella: wordmark(
+    '<path d="M4 18a12 12 0 0 1 24 0z"/><path d="M15 18h2v10h-2z"/>',
+    'Umbrella',
+    '#dc2626'
+  ),
+  Hooli: wordmark('<polygon points="16,2 30,16 16,30 2,16"/>', 'Hooli', '#9333ea'),
+  Vandelay: wordmark(
+    '<path d="M9 10h14a6 6 0 0 1 0 12H9a6 6 0 0 1 0-12z"/>',
+    'Vandelay',
+    '#ea580c'
+  ),
+  Stark: wordmark('<polygon points="16,2 29,9 29,23 16,30 3,23 3,9"/>', 'Stark', '#ca8a04'),
+  Wayne: wordmark('<path d="M2 8h8l6 12 6-12h8L18 28h-4z"/>', 'Wayne', '#0891b2'),
+};
+
+const vectorLogo = (name: string): LogoCloudLogo => ({ name, vector: { src: marks[name] } });
+
+const logos = Object.keys(marks).map(vectorLogo);
+---
+
+<LogoCloud logos={logos} layout="marquee" />

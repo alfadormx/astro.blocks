@@ -1,0 +1,24 @@
+---
+import Testimonials from '@alfadormx/blocks/composite/Testimonials.astro';
+import type { Testimonial } from '@alfadormx/blocks/types/testimonials';
+
+const headline = { title: 'What our customers say', subtitle: 'Real words from real teams.' };
+
+const testimonials: Testimonial[] = [
+  {
+    quote: 'Setup took ten minutes. We shipped our new landing page the same afternoon.',
+    author: { name: 'Ana Ruiz', role: 'Marketing lead, Northwind' },
+  },
+  {
+    quote:
+      'The blocks fit our design system without fighting it.\n\nOur designers stopped filing tickets about spacing.',
+    author: { name: 'Sam Okafor', role: 'Front-end engineer' },
+  },
+  {
+    quote: 'Docs are clear, and every example is live. That alone saved us days.',
+    author: { name: 'Lee Chen' },
+  },
+];
+---
+
+<Testimonials headline={headline} testimonials={testimonials} />

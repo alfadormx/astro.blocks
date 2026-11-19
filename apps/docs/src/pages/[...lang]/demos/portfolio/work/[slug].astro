@@ -1,0 +1,17 @@
+---
+import PortfolioLayout from '../_layouts/Layout.astro';
+import Container from '@alfadormx/blocks/layout/Container.astro';
+import CaseStudyLayout from '@alfadormx/blocks/composite/CaseStudyLayout.astro';
+import { collectionEntries, renderEntry } from '@alfadormx/blocks/collections';
+
+export const getStaticPaths = () => collectionEntries('cases');
+const { Content, langCode, layout, metadata } = await renderEntry(Astro, 'cases');
+---
+
+<PortfolioLayout langCode={langCode} metadata={metadata}>
+  <Container>
+    <CaseStudyLayout {...layout}>
+      <Content />
+    </CaseStudyLayout>
+  </Container>
+</PortfolioLayout>

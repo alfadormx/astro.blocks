@@ -1,0 +1,11 @@
+---
+import Checkbox from '@alfadormx/blocks/primitives/Checkbox.astro';
+
+const shapes = ['rounded', 'square'] as const;
+---
+
+<div class="flex flex-col gap-4 max-w-md">
+  {shapes.map((shape) => (
+    <Checkbox label={`Shape ${shape}`} shape={shape} checked />
+  ))}
+</div>

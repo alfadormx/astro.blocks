@@ -1,0 +1,184 @@
+---
+import '../saas/_theme.css';
+import '../portfolio/_theme.css';
+import '../local/_theme.css';
+import '../jewellery/_theme.css';
+import BaseLayout from '@alfadormx/blocks/Layout.astro';
+import Container from '@alfadormx/blocks/layout/Container.astro';
+import Button from '@alfadormx/blocks/primitives/Button.astro';
+import Logo from '@alfadormx/blocks/primitives/Logo.astro';
+import Select from '@alfadormx/blocks/primitives/Select.astro';
+import ToggleGroup from '@alfadormx/blocks/primitives/ToggleGroup.astro';
+import { localizedPaths, useCopy } from '@alfadormx/blocks/copy';
+import { DEMOS, type Demo } from './_demos';
+
+type LangPath = { params: { lang?: string }; props: { langCode: string; basePath: string } };
+
+export const getStaticPaths = () =>
+  localizedPaths().flatMap(({ params, props }: LangPath) =>
+    DEMOS.map((demo) => ({ params: { ...params, demo }, props: { ...props, demo } }))
+  );
+
+type Props = { langCode: string; basePath: string; demo: Demo };
+
+const { demo, basePath } = Astro.props;
+const { langCode, copy } = useCopy(Astro, 'preview');
+const { copy: home } = useCopy(Astro, 'home');
+
+const prefix = basePath === '/' ? '' : basePath;
+const demoUrl = (name: Demo) => `${prefix}/demos/${name}`;
+const previewUrl = (name: Demo) => `${prefix}/demos/preview/${name}`;
+const demoName = home.demos[demo].title;
+
+/** Text on the demo's dark band: light in both themes, since the band stays dark. */
+const ON_BAR = 'text-background dark:text-normal';
+const barButton = {
+  variant: 'ghost',
+  intent: 'neutral',
+  size: 'sm',
+  class: `${ON_BAR} hover:bg-background/10 dark:hover:bg-normal/10`,
+} as const;
+---
+
+<BaseLayout
+  langCode={langCode}
+  demo={demo}
+  metadata={{
+    title: { default: copy.pageTitle.replace('{demo}', demoName) },
+    robots: { index: false, follow: true },
+  }}
+  topmostContainer={{ class: 'h-dvh overflow-hidden', content: { class: 'flex flex-col' } }}
+>
+  <Container
+    htmlTag="header"
+    class={`bg-tertiary shrink-0 ${ON_BAR}`}
+    spacing={{ padding: 'px-3 py-2 md:px-4' }}
+    content={{ air: 'none', widthType: 'full', class: 'flex items-center gap-2 md:gap-4' }}
+  >
+    <Logo
+      label="AstroBlocks"
+      href={prefix || '/'}
+      icon={{ name: 'heroicons:cube' }}
+      labelClass="hidden sm:inline text-lg font-bold"
+      class={ON_BAR}
+    />
+    <Select
+      id="preview-demo"
+      name="preview-demo"
+      label={copy.demoLabel}
+      hideLabel
+      size="sm"
+      class="w-44 md:w-56"
+      options={DEMOS.map((name) => ({
+        value: previewUrl(name),
+        label: home.demos[name].title,
+        selected: name === demo,
+      }))}
+    />
+    <ToggleGroup
+      group="preview-size"
+      label={copy.sizeLabel}
+      appearance="cell"
+      variant="ghost"
+      intent="neutral"
+      size="sm"
+      class={`mx-auto hidden md:flex ${ON_BAR}`}
+      defaultOptionConfig={{
+        class: `border-transparent bg-transparent ${ON_BAR} opacity-70 hover:opacity-100`,
+      }}
+      selectedOptionConfig={{
+        class: `border-transparent bg-background/15 ${ON_BAR} opacity-100 dark:bg-normal/15`,
+      }}
+      options={[
+        {
+          code: 'desktop',
+          label: copy.sizes.desktop,
+          hideLabel: true,
+          icon: { name: 'heroicons:computer-desktop' },
+          selected: true,
+        },
+        {
+          code: 'tablet',
+          label: copy.sizes.tablet,
+          hideLabel: true,
+          icon: { name: 'heroicons:device-tablet' },
+        },
+        {
+          code: 'mobile',
+          label: copy.sizes.mobile,
+          hideLabel: true,
+          icon: { name: 'heroicons:device-phone-mobile' },
+        },
+      ]}
+    />
+    <div class="ml-auto flex items-center gap-1 md:ml-0">
+      <Button
+        {...barButton}
+        href={demoUrl(demo)}
+        target="_blank"
+        aria-label={copy.newTab}
+        icon={{ name: 'heroicons:arrow-top-right-on-square' }}
+        data-preview-exit
+      />
+      <Button
+        {...barButton}
+        href={demoUrl(demo)}
+        label={copy.close}
+        icon={{ name: 'heroicons:x-mark' }}
+        data-preview-exit
+      />
+    </div>
+  </Container>
+  <div class="flex min-h-0 flex-1 justify-center bg-tertiary">
+    <iframe
+      src={demoUrl(demo)}
+      title={copy.frameTitle.replace('{demo}', demoName)}
+      class="h-full w-full max-w-full border-0 bg-background transition-[width] duration-300"
+      data-preview-frame="desktop"
+    ></iframe>
+  </div>
+</BaseLayout>
+
+<script>
+  const WIDTHS: Record<string, string> = { desktop: '100%', tablet: '768px', mobile: '390px' };
+
+  function init() {
+    const frame = document.querySelector<HTMLIFrameElement>('[data-preview-frame]');
+    if (!frame) return;
+
+    document
+      .querySelectorAll<HTMLInputElement>(
+        '[data-selection-group="preview-size"] input[type="radio"]'
+      )
+      .forEach((input) =>
+        input.addEventListener('change', () => {
+          if (!input.checked) return;
+          frame.style.width = WIDTHS[input.value] ?? '100%';
+          frame.dataset.previewFrame = input.value;
+        })
+      );
+
+    document
+      .querySelector<HTMLSelectElement>('select[name="preview-demo"]')
+      ?.addEventListener('change', (event) => {
+        window.location.href = (event.target as HTMLSelectElement).value;
+      });
+
+    // Open and Close follow the page the visitor reached inside the frame, not the demo's home.
+    const exits = document.querySelectorAll<HTMLAnchorElement>('[data-preview-exit]');
+    frame.addEventListener('load', () => {
+      const location = frame.contentWindow?.location;
+      if (!location) return;
+      exits.forEach((link) => (link.href = location.pathname + location.search + location.hash));
+    });
+
+    // The demo's theme toggle writes localStorage; follow it so the bar matches the frame.
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'theme' && (event.newValue === 'light' || event.newValue === 'dark')) {
+        document.documentElement.setAttribute('data-theme', event.newValue);
+      }
+    });
+  }
+
+  init();
+</script>
