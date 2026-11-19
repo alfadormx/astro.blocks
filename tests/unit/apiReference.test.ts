@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { buildBlockRegistry, getPropRows, parseDefaults, stripWrapper } from '~/utils/apiReference';
+import {
+  buildBlockRegistry,
+  getPropRows,
+  parseDefaults,
+  stripWrapper,
+} from '~/pages/documentation/_api/apiReference';
 
 describe('stripWrapper', () => {
   it.each([

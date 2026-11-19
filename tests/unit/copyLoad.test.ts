@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { loadCopy, mergeCopy, resolveMdRefs } from '../../vendor/integration/copy/load';
+import { loadCopy, mergeCopy, resolveMdRefs } from '../../src/integration/copy/load';
 
 function copyRoot(files: Record<string, string>): string {
   const root = mkdtempSync(join(tmpdir(), 'copy-'));

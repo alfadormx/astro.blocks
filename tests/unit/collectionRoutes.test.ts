@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { collectionsWithoutEntryPages } from '../../vendor/integration/collections/routes';
+import { collectionsWithoutEntryPages } from '../../src/integration/collections/routes';
 
 const config = {
   entries: {
@@ -50,14 +50,14 @@ describe('collectionsWithoutEntryPages', () => {
 
 describe('getCollections', () => {
   it('rejects an unknown preset by name', async () => {
-    const { getCollections } = await import('../../vendor/integration/utils/configBuilder');
+    const { getCollections } = await import('../../src/integration/utils/configBuilder');
     expect(() => getCollections({ collections: { posts: { preset: 'posst' as never } } })).toThrow(
       'Collection "posts" has unknown preset "posst"'
     );
   });
 
   it('resolves path and sort defaults', async () => {
-    const { getCollections } = await import('../../vendor/integration/utils/configBuilder');
+    const { getCollections } = await import('../../src/integration/utils/configBuilder');
     expect(
       getCollections({ collections: { timezone: 'UTC', events: { preset: 'event' } } })
     ).toEqual({
@@ -75,7 +75,7 @@ describe('getCollections', () => {
   });
 
   it('defaults a doc collection to order-asc', async () => {
-    const { getCollections } = await import('../../vendor/integration/utils/configBuilder');
+    const { getCollections } = await import('../../src/integration/utils/configBuilder');
     expect(getCollections({ collections: { docs: { preset: 'doc' } } }).entries.docs.sort).toBe(
       'order-asc'
     );

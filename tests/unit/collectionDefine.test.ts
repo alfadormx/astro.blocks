@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { entryId, languageLayout } from '../../vendor/integration/collections/define';
+import { entryId, languageLayout } from '../../src/integration/collections/define';
 
 function folder(files: string[]): string {
   const dir = mkdtempSync(join(tmpdir(), 'collection-'));

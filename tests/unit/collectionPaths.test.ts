@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { entryId } from '../../vendor/integration/collections/define';
+import { entryId } from '../../src/integration/collections/define';
 import {
   assertNoReservedSlug,
   entryAlternates,
@@ -13,7 +13,7 @@ import {
   parseEntryId,
   sortEntries,
   type RawEntry,
-} from '../../vendor/integration/collections/paths';
+} from '../../src/integration/collections/paths';
 
 const entry = (id: string, data: Partial<RawEntry['data']> = {}): RawEntry => ({
   id,
