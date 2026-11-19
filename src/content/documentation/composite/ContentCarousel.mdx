@@ -123,11 +123,16 @@ Enable `loop` for continuous infinite scrolling using cloned-slide technique for
 
 ### Accessibility
 
-- Keyboard navigation: Left/Right arrows, Home/End
 - Screen reader announcements for slide changes
 - ARIA labels and roles for carousel structure
 - Respects `prefers-reduced-motion` for autoplay
-- Focusable indicators and controls
+
+### Keyboard
+
+- The indicators are one Tab stop. Left/Right arrows move to the previous or next slide, and Home/End to the first or last; focus follows the active indicator.
+- The same keys work while the previous or next button has focus. When a button hides at the first or last slide, focus moves to the active indicator.
+- In RTL, Left and Right swap.
+- With `controlsPosition: 'inside'`, the overlay controls show while anything inside the carousel has focus, as they do on hover.
 
 ### Responsive sizing
 
