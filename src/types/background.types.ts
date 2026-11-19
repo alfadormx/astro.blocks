@@ -1,3 +1,5 @@
+import type { ButtonProps } from './button.types';
+
 export type BackgroundAttachment = 'scroll' | 'fixed';
 
 export interface BackgroundProps {
@@ -11,9 +13,15 @@ export interface BackgroundProps {
   class?: string;
   /** Classes applied to the optional overlay div rendered on top of the background. */
   overlayClass?: string;
+  /** Still image shown before playback and while a background video is paused; same sources as `image`. Applies only with `video`. */
+  poster?: string;
+  /** Pause button shown over a playing background video. Restyle through this field; it cannot be removed. */
+  pauseButton?: ButtonProps;
+  /** Play button shown over a paused background video. Inherits `pauseButton`'s defaults. */
+  playButton?: ButtonProps;
 }
 
 export type SimpleBackgroundProps = Omit<
   BackgroundProps,
-  'image' | 'video' | 'attachment' | 'overlayClass'
+  'image' | 'video' | 'attachment' | 'overlayClass' | 'poster' | 'pauseButton' | 'playButton'
 >;
