@@ -1,0 +1,155 @@
+---
+import JewelleryLayout from './_layouts/Layout.astro';
+import Hero from '~/components/blocks/composite/Hero.astro';
+import ItemsContent from '~/components/blocks/composite/ItemsContent.astro';
+import Content from '~/components/blocks/composite/Content.astro';
+import Testimonials from '~/components/blocks/composite/Testimonials.astro';
+import CallToAction from '~/components/blocks/composite/CallToAction.astro';
+import type { ItemProps } from '~/types/item.types';
+import type { Testimonial } from '~/types/testimonials.types';
+import { renderRichText } from '~/utils/richText';
+import { localizedPaths, useCopy } from '../../../../../vendor/integration/copy/pages';
+import {
+  DARK_LINKS,
+  LABEL,
+  ON_DARK,
+  SECTION_HEADLINE,
+  configuratorUrl,
+  jewelleryHome,
+} from './_site';
+
+export const getStaticPaths = () => localizedPaths();
+
+type Props = { langCode: string; basePath: string };
+
+const { langCode, copy } = useCopy(Astro, 'jewellery');
+const { home: c } = copy;
+const home = jewelleryHome(langCode);
+const configurator = configuratorUrl(langCode);
+
+const collections: ItemProps[] = Object.entries(c.collections.items).map(([key, item]) => ({
+  title: item.title,
+  content: item.content,
+  image: {
+    src: `~/assets/images/demos/jewellery/collection-${key}.jpg`,
+    alt: item.imageAlt,
+    width: 600,
+    height: 800,
+  },
+  actions: [{ label: c.collections.link, href: `${home}/collections` }],
+}));
+
+const testimonials: Testimonial[] = Object.values(c.testimonials.items).map((t) => ({
+  quote: t.quote,
+  author: { name: t.name, role: t.role },
+  rating: 5,
+}));
+---
+
+<JewelleryLayout
+  langCode={langCode}
+  metadata={{ title: { default: c.pageTitle }, description: c.description }}
+>
+  <Hero
+    layout="centered"
+    container={{
+      background: { video: '/videos/demos/jewellery/hero.mp4', overlayClass: 'bg-tertiary/60' },
+      class: 'bg-tertiary',
+      minHeight: 'min-h-[85svh]',
+    }}
+    headline={{
+      tagline: c.hero.tagline,
+      title: c.hero.title,
+      subtitle: c.hero.subtitle,
+      taglineClass: `${LABEL} ${ON_DARK}`,
+      titleClass: `text-5xl md:text-7xl font-medium tracking-tight leading-[1.05] ${ON_DARK}`,
+      subtitleClass: `text-lg ${ON_DARK} opacity-90`,
+    }}
+    defaultActionConfig={{ shape: 'square', size: 'lg' }}
+    actions={[
+      { label: c.hero.primary, href: configurator, variant: 'solid', intent: 'primary' },
+      {
+        label: c.hero.secondary,
+        href: `${home}/collections`,
+        variant: 'outline',
+        intent: 'neutral',
+        class: `border-background/60 bg-transparent ${ON_DARK} hover:bg-background/10 dark:border-normal/60`,
+      },
+    ]}
+  />
+
+  <ItemsContent
+    headline={{ ...SECTION_HEADLINE, tagline: c.collections.tagline, title: c.collections.title }}
+    itemsGrid={{
+      columns: 3,
+      gap: 'normal',
+      items: collections,
+      defaultItemConfig: {
+        orientation: 'vertical',
+        class: 'items-start text-left gap-4',
+        contentClass: 'items-start text-left',
+        mediaClass: 'w-full aspect-3/4 object-cover',
+        titleClass: 'font-title text-2xl font-medium mb-1',
+        textClass: 'text-sm text-muted mb-0',
+        defaultActionConfig: { variant: 'link', intent: 'primary', class: `${LABEL} px-0` },
+      },
+    }}
+  />
+
+  <Content
+    container={{ class: 'bg-surface' }}
+    headline={{
+      ...SECTION_HEADLINE,
+      align: 'left',
+      tagline: c.craft.tagline,
+      title: c.craft.title,
+    }}
+    image={{ src: '~/assets/images/demos/jewellery/craft.jpg', alt: c.craft.imageAlt }}
+    imagePosition="left"
+    action={{
+      label: c.craft.action,
+      href: `${home}/about`,
+      variant: 'outline',
+      intent: 'neutral',
+      shape: 'square',
+    }}
+    twoColumnContainer={{ gap: 'loose', content: { class: 'items-center' } }}
+  >
+    <Fragment set:html={renderRichText(c.craft.body)} />
+  </Content>
+
+  <Testimonials
+    headline={{ ...SECTION_HEADLINE, tagline: c.testimonials.tagline, title: c.testimonials.title }}
+    testimonials={testimonials}
+    columns={3}
+    defaultTestimonialConfig={{
+      class: 'border border-border bg-surface p-8 gap-4',
+      quoteClass: 'font-title text-xl italic leading-snug text-normal',
+      ratingLabel: c.testimonials.ratingLabel,
+    }}
+  />
+
+  <CallToAction
+    container={{
+      class: `bg-tertiary ${DARK_LINKS}`,
+      content: { class: 'bg-transparent shadow-none' },
+    }}
+    headline={{
+      title: c.cta.title,
+      align: 'center',
+      subtitle: c.cta.subtitle,
+      titleClass: `text-4xl md:text-5xl font-medium ${ON_DARK}`,
+      subtitleClass: `${ON_DARK} opacity-85`,
+    }}
+    actions={[
+      {
+        label: c.cta.action,
+        href: configurator,
+        variant: 'outline',
+        intent: 'neutral',
+        shape: 'square',
+        class: `border-background/70 ${ON_DARK} hover:bg-background/10 dark:border-normal/70`,
+      },
+    ]}
+  />
+</JewelleryLayout>

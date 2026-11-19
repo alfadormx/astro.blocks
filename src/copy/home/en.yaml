@@ -22,7 +22,7 @@ inside:
 demos:
   tagline: 'Demos'
   title: 'See the blocks in a site'
-  subtitle: 'A product landing page, an agency portfolio, a local café and a 3D product configurator, in English and Spanish.'
+  subtitle: 'A product landing page, an agency portfolio, a local café and a jewellery store with a 3D configurator, in English and Spanish.'
   saas:
     title: 'SaaS landing'
     content: 'A one-page product site with pricing, testimonials, FAQ and a blog.'
@@ -35,10 +35,10 @@ demos:
     title: 'Local business'
     content: 'A café and bakery with services, reviews, opening hours, a map, a contact form and events.'
     link: 'Open the café'
-  configurator:
-    title: 'Ring configurator'
-    content: 'A 3D configurator with choices kept in a shareable code.'
-    link: 'Open the configurator'
+  jewellery:
+    title: 'Jewellery store'
+    content: 'A fine-jewellery shop with collections, a 3D ring configurator with shareable designs, and a store map.'
+    link: 'Open the shop'
 getStarted:
   tagline: 'Get Started'
   title: 'Ready to build?'

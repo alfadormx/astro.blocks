@@ -133,7 +133,7 @@ tests/                 unit/, astro/, browser/
 - `/demos/portfolio` is an agency site with home, work, about and contact pages, themed by token overrides on `[data-demo='portfolio']`, in English and Spanish.
 - `/demos/local` is a café and bakery site with a lazy map, a contact form, `LocalBusiness` JSON-LD and an events collection, themed by token overrides on `[data-demo='local']`, in English and Spanish.
 - `/demos/saas/blog`, `/demos/portfolio/work` and `/demos/local/events` are collection demos in English and Spanish, one per preset.
-- `/demos/jewellery-configurator` is a ring configurator built on `Configurator` and `ModelViewer`, in English and Spanish.
+- `/demos/jewellery` is a jewellery store with collections, about and contact pages and a ring configurator built on `Configurator` and `ModelViewer`, themed by token overrides on `[data-demo='jewellery']`, in English and Spanish.
 
 ## Commands
 

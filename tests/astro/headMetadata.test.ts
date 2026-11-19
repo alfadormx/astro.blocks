@@ -53,7 +53,7 @@ describe('Metadata', () => {
     expect(html).not.toContain('Your Name');
   });
 
-  it.each(['/documentation/primitives/button', '/demos/jewellery-configurator'])(
+  it.each(['/documentation/primitives/button', '/demos/jewellery/configurator'])(
     'derives the canonical from the request path %s',
     async (path) => {
       const canonical = canonicalOf(await render(Metadata, path));

@@ -3,7 +3,8 @@ import { docsPages } from './docsPages';
 import { localePaths } from './locales';
 
 const demoPages = [
-  '/demos/jewellery-configurator',
+  '/demos/jewellery',
+  '/demos/jewellery/configurator',
   '/demos/saas',
   '/es/demos/saas',
   '/demos/saas/blog',

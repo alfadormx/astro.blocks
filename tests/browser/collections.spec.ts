@@ -197,7 +197,7 @@ test.describe('demo links', () => {
         `${prefix}/demos/preview/saas`,
         `${prefix}/demos/preview/portfolio`,
         `${prefix}/demos/preview/local`,
-        `${prefix}/demos/jewellery-configurator`,
+        `${prefix}/demos/preview/jewellery`,
       ]);
       for (const href of hrefs) expect((await request.get(href)).status(), href).toBe(200);
     });
