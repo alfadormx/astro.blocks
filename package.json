@@ -5,13 +5,15 @@
   "scripts": {
     "dev": "pnpm --filter docs dev",
     "build": "pnpm --filter docs build",
-    "check": "pnpm run check:lint && pnpm run check:prettier && pnpm -r --workspace-concurrency=1 check",
+    "check": "pnpm run check:lint && pnpm run check:prettier && pnpm run test:scripts && pnpm -r --workspace-concurrency=1 check",
     "check:quick": "node scripts/check-quick.mjs",
     "check:lint": "eslint .",
     "check:prettier": "prettier --check .",
     "fix": "pnpm run fix:eslint && pnpm run fix:prettier",
     "fix:eslint": "eslint . --fix",
-    "fix:prettier": "prettier --write ."
+    "fix:prettier": "prettier --write .",
+    "release": "node scripts/release.mjs",
+    "test:scripts": "vitest run --dir scripts"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
