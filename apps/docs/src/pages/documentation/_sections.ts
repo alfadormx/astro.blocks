@@ -1,4 +1,4 @@
-export type SectionKey = 'base' | 'primitives' | 'layout' | 'composite' | 'utilities' | 'guides';
+export type SectionKey = 'guides' | 'base' | 'primitives' | 'layout' | 'composite' | 'utilities';
 
 export interface Section {
   key: SectionKey;
@@ -8,6 +8,11 @@ export interface Section {
 
 /** Docs sections, in tab and pager order. */
 export const sections: readonly Section[] = [
+  {
+    key: 'guides',
+    label: 'Guides',
+    description: 'How to install the library, compose blocks, and write content and copy for them.',
+  },
   {
     key: 'base',
     label: 'Base',
@@ -32,11 +37,6 @@ export const sections: readonly Section[] = [
     key: 'utilities',
     label: 'Utilities',
     description: 'Browser-side helpers that sit beside the blocks, such as URL state.',
-  },
-  {
-    key: 'guides',
-    label: 'Guides',
-    description: 'How blocks compose, and how to write content and copy for them.',
   },
 ];
 

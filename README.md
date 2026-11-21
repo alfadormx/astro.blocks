@@ -40,8 +40,10 @@ The package ships source (`.astro`, `.ts`, CSS). Its `"exports"` map is the publ
 
 ## Using the package in a site
 
+The package is installed from a tagged release on GitHub, not from a registry:
+
 ```sh
-pnpm add @alfadormx/blocks @iconify-json/heroicons @iconify-json/mdi
+pnpm add "github:alfadormx/astro.blocks#v0.1.0&path:packages/blocks" @iconify-json/heroicons @iconify-json/mdi
 ```
 
 astro-icon loads only the icon sets named in the site's own `package.json`, so list `heroicons` and `mdi` (used by the blocks) next to any sets the site uses itself.
@@ -62,6 +64,8 @@ export default defineConfig({
 ```
 
 `blocks.css` tells Tailwind to scan the package, so the site CSS needs no `@source` for it. Import blocks by section, for example `import Hero from '@alfadormx/blocks/composite/Hero.astro'`, and prop types as `import type { HeroProps } from '@alfadormx/blocks/types/hero'`.
+
+The Installing guide in the docs site (`/documentation`) covers upgrading to a new tag and cutting a release.
 
 ## Block catalogue
 

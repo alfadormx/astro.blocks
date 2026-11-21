@@ -1,0 +1,102 @@
+---
+title: Installing
+description: Add the library to an Astro site from a tagged release, upgrade it, and cut a new release.
+section: guides
+order: 0
+---
+
+The library is not on a package registry. A site installs a tagged release straight from GitHub, pointing pnpm at the `packages/blocks` folder of the repository.
+
+## Install
+
+Add the library, the two icon sets it renders, and its peers to the site's `package.json`:
+
+```json
+{
+  "dependencies": {
+    "@alfadormx/blocks": "github:alfadormx/astro.blocks#v0.1.0&path:packages/blocks",
+    "@iconify-json/heroicons": "^1.2.3",
+    "@iconify-json/mdi": "^1.2.3",
+    "astro": "^7.4.5",
+    "tailwindcss": "^4.3.4"
+  }
+}
+```
+
+Then run `pnpm install`.
+
+## Icon sets
+
+Several blocks render icons without the site naming them: CodeBlock, Select, ThemeToggle and Pricing use `heroicons`, NavigationTree uses `mdi`. astro-icon builds its list of icon sets from the site's own `package.json` and ignores sets that are only installed, so both sets must be listed there, next to any set the site uses itself. They are peer dependencies of the library for that reason.
+
+When either set is missing from the site's `package.json`, the integration logs a warning at startup with the `pnpm add` command that fixes it.
+
+## Setup
+
+Register the integration in `astro.config.mjs`. It adds Tailwind, MDX and astro-icon unless the site already registered them.
+
+```js
+import { defineConfig } from 'astro/config';
+import blocks from '@alfadormx/blocks/integration';
+
+export default defineConfig({
+  integrations: [blocks({ config: './src/config.yaml', css: './src/styles/global.css' })],
+});
+```
+
+Import the library CSS from the site's stylesheet. It tells Tailwind to scan the package, so no `@source` line is needed.
+
+```css
+/* src/styles/global.css */
+@import '@alfadormx/blocks/blocks.css';
+```
+
+Describe the site in `src/config.yaml`:
+
+```yaml
+site:
+  name: 'My site'
+  site: 'https://example.com'
+
+i18n:
+  default: 'en'
+  languages:
+    - code: 'en'
+      locale: 'en-US'
+      basePath: '/'
+      direction: 'ltr'
+      label: 'English'
+
+metadata:
+  title:
+    default: 'My site'
+    template: '%s | My site'
+  description: 'What the site is about.'
+```
+
+Import blocks by section, for example `import Hero from '@alfadormx/blocks/composite/Hero.astro'`, and wrap pages in `@alfadormx/blocks/Layout.astro`.
+
+## Upgrading
+
+Change the tag in the `@alfadormx/blocks` specifier, for example `#v0.1.0` to `#v0.2.0`, and run `pnpm install`.
+
+Before upgrading, read [`packages/blocks/CHANGELOG.md`](https://github.com/alfadormx/astro.blocks/blob/main/packages/blocks/CHANGELOG.md) for every version in between, starting with its Breaking changes. While the version is `0.x`, a breaking change bumps the minor number, so `0.1.0` to `0.2.0` can break a site.
+
+## Releasing
+
+For maintainers. Releases are cut from `main` when it is clean and in sync with `origin`:
+
+```sh
+pnpm release --dry-run
+pnpm release
+git push origin main vX.Y.Z
+```
+
+The dry run prints the next version, the changelog section and the commands it would run, and writes nothing. `pnpm release` sets the version in `packages/blocks/package.json`, prepends the section to `packages/blocks/CHANGELOG.md`, commits `chore(release): vX.Y.Z` and creates an annotated tag. It never pushes.
+
+Only Conventional Commits that touch `packages/blocks/` since the last tag count:
+
+- `feat` bumps the minor version and is listed under Features.
+- `fix` and `perf` bump the patch version and are listed under Fixes.
+- A `!` after the type or a `BREAKING CHANGE:` footer is listed under Breaking changes and bumps the major version, or the minor version while on `0.x`.
+- Other types (`refactor`, `docs`, `test`, `chore`, …) bump nothing. When nothing bumps, the release stops with "nothing to release".

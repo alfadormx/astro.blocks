@@ -8,12 +8,12 @@ test('the sidebar holds every section and marks only the current page', async ({
 
   const sidebar = page.locator('[data-docs-sidebar]');
   await expect(sidebar.locator('summary')).toHaveText([
+    'Guides',
     'Base',
     'Primitives',
     'Layout',
     'Composite',
     'Utilities',
-    'Guides',
   ]);
   await expect(sidebar.getByRole('link', { name: 'Button', exact: true })).toHaveAttribute(
     'aria-current',

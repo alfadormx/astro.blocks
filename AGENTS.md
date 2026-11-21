@@ -47,5 +47,6 @@ The rules most often missed:
 ## Workflow
 
 - Trunk-based: commit on `main`.
-- Use `pnpm`. Work is done when `pnpm check` is green at the root (lint, prettier, then each workspace's `check`).
+- Use `pnpm`. Work is done when `pnpm check` is green at the root (lint, prettier, the root `scripts/` specs, then each workspace's `check`).
+- Releases: `pnpm release --dry-run`, then `pnpm release` on a clean `main` in sync with `origin`; it bumps `packages/blocks`, writes `CHANGELOG.md`, commits and tags, and never pushes.
 - Tickets live in `thoughts/shared/tasks/ID-NNNN-<Name>/`, with QRSPI stage files `-00-ticket` through `-06-outcome`. Epics and their review history live beside them as `EPIC-*`.
