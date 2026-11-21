@@ -113,12 +113,6 @@ importers:
       '@astrolib/analytics':
         specifier: ^0.6.1
         version: 0.6.1(astro@7.4.5(@types/node@26.1.0)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
-      '@iconify-json/heroicons':
-        specifier: ^1.2.3
-        version: 1.2.3
-      '@iconify-json/mdi':
-        specifier: ^1.2.3
-        version: 1.2.3
       '@tailwindcss/typography':
         specifier: ^0.5.20
         version: 0.5.20(tailwindcss@4.3.4)
@@ -168,6 +162,12 @@ importers:
         specifier: ^4.2.2
         version: 4.2.2
     devDependencies:
+      '@iconify-json/heroicons':
+        specifier: ^1.2.3
+        version: 1.2.3
+      '@iconify-json/mdi':
+        specifier: ^1.2.3
+        version: 1.2.3
       '@types/js-yaml':
         specifier: ^4.0.9
         version: 4.0.9

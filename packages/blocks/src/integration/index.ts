@@ -14,6 +14,7 @@ import { collectionRegistryDts } from './collections/registry';
 import { collectionsWithoutEntryPages } from './collections/routes';
 import { copyRegistryDts } from './copy/infer';
 import { loadCopy } from './copy/load';
+import { missingIconSets, readSitePackageJson } from './utils/iconSets';
 
 // Deps reached only via dynamic import are discovered late; Vite then reloads the page mid-test.
 // three is the package's dependency, not the site's, so Vite must resolve it through the package.
@@ -84,6 +85,15 @@ export default function blocks({
           );
         }
         for (const file of files) addWatchFile(file);
+
+        // astro-icon builds its icon-set list from the site's package.json alone.
+        const sitePackage = readSitePackageJson(config.root);
+        const missingSets = sitePackage ? missingIconSets(sitePackage) : [];
+        if (missingSets.length) {
+          logger.warn(
+            `Blocks render icons from ${missingSets.join(' and ')}, which the site's package.json does not list, so astro-icon will not load them. Run: pnpm add ${missingSets.join(' ')}`
+          );
+        }
         copyDts = copyRegistryDts(copy, I18N.default);
 
         const registered = (name: string) => config.integrations.some((i) => i.name === name);
