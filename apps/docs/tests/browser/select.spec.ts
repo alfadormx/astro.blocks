@@ -101,7 +101,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
 
     test('the native dropdown follows the theme', async ({ page }) => {
       const control = await field(page, 'basic');
-      await expect(control).toHaveCSS('color-scheme', colorScheme === 'dark' ? 'dark' : 'normal');
+      await expect(control).toHaveCSS('color-scheme', colorScheme);
     });
   });
 }

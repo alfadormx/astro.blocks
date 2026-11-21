@@ -44,7 +44,7 @@ metadata:
     icon32: '/favicon-32x32.png'
     icon16: '/favicon-16x16.png'
     maskIcon: '/safari-pinned-tab.svg'
-    maskIconColor: '#5bbad5'
+    maskIconColor: '#1e66f5'
 
   # Open Graph
   openGraph:

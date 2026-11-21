@@ -70,6 +70,9 @@ importers:
       '@iconify-json/tabler':
         specifier: ^1.2.43
         version: 1.2.43
+      '@vercel/analytics':
+        specifier: ^2.0.1
+        version: 2.0.1(react@19.3.1)
       astro:
         specifier: ^7.4.5
         version: 7.4.5(@types/node@26.1.0)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)
@@ -1989,6 +1992,38 @@ packages:
       {
         integrity: sha512-60YRaenCQcVjYEKOcG824+DRGGIQ3VKErcBoAEDJZz5bKIs2ZG+X/H9Nk+Q6EVkwJk5QNApxbrc5QtBSwtrXAg==,
       }
+
+  '@vercel/analytics@2.0.1':
+    resolution:
+      {
+        integrity: sha512-MTQG6V9qQrt1tsDeF+2Uoo5aPjqbVPys1xvnIftXSJYG2SrwXRHnqEvVoYID7BTruDz4lCd2Z7rM1BdkUehk2g==,
+      }
+    peerDependencies:
+      '@remix-run/react': ^2
+      '@sveltejs/kit': ^1 || ^2
+      next: '>= 13'
+      nuxt: '>= 3'
+      react: ^18 || ^19 || ^19.0.0-rc
+      svelte: '>= 4'
+      vue: ^3
+      vue-router: ^4
+    peerDependenciesMeta:
+      '@remix-run/react':
+        optional: true
+      '@sveltejs/kit':
+        optional: true
+      next:
+        optional: true
+      nuxt:
+        optional: true
+      react:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
+      vue-router:
+        optional: true
 
   '@videojs/core@10.3.0':
     resolution:
@@ -5663,6 +5698,10 @@ snapshots:
       eslint-visitor-keys: 5.0.1
 
   '@ungap/structured-clone@1.3.3': {}
+
+  '@vercel/analytics@2.0.1(react@19.3.1)':
+    optionalDependencies:
+      react: 19.3.1
 
   '@videojs/core@10.3.0(@videojs/element@10.3.0)(react@19.3.1)':
     dependencies:

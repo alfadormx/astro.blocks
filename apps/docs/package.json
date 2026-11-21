@@ -20,6 +20,7 @@
     "@iconify-json/lucide": "^1.2.151",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify-json/tabler": "^1.2.43",
+    "@vercel/analytics": "^2.0.1",
     "astro": "^7.4.5",
     "lodash.merge": "^4.6.2",
     "sharp": "^0.35.5",
