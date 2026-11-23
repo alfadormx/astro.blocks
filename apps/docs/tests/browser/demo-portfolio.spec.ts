@@ -84,8 +84,11 @@ test('the case gallery is operable from the keyboard', async ({ page }) => {
   await expect(announcer).toHaveText(`Slide 2 of ${total}`);
   await expect(gallery.getByRole('tab').nth(1)).toHaveAttribute('aria-selected', 'true');
 
+  const prev = gallery.locator('[data-carousel-prev]');
+  // Button transitions visibility, so Prev only becomes focusable once that transition has started.
+  await expect(prev).toBeVisible();
   await page.keyboard.press('Shift+Tab');
-  await expect(gallery.locator('[data-carousel-prev]')).toBeFocused();
+  await expect(prev).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(announcer).toHaveText(`Slide 1 of ${total}`);
 
