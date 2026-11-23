@@ -316,8 +316,8 @@ export async function getImagesOptimized(
       }
     } else if (height) {
       width = Number(height * aspectRatio);
-    } else if (layout !== 'fullWidth') {
-      // Fullwidth images have 100% width, so aspectRatio is applicable
+    } else if (layout !== 'fullWidth' && layout !== 'responsive') {
+      // fullWidth and responsive images take 100% of their container's width, so the ratio alone sizes them.
       console.error('When aspectRatio is set, either width or height must also be set');
       console.error('Image', image);
     }
