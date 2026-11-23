@@ -349,6 +349,19 @@ test.describe('keyboard', () => {
     await expect(next).toBeFocused();
   });
 
+  test('the prev button takes focus as soon as it is shown, without waiting for a frame', async ({
+    page,
+  }) => {
+    const root = await openSlotted(page);
+    const focused = await root.evaluate((el) => {
+      const prev = el.querySelector<HTMLElement>('[data-carousel-prev]')!;
+      el.querySelector<HTMLElement>('[data-carousel-next]')!.click();
+      prev.focus();
+      return document.activeElement === prev;
+    });
+    expect(focused).toBe(true);
+  });
+
   test('focus moves to the active indicator when the next button hides at the end', async ({
     page,
   }) => {

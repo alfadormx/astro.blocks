@@ -52,13 +52,15 @@ const uid = `carousel-${Math.random().toString(36).slice(2, 9)}`;
 const autoplayConfig = resolveAutoplay(autoplay, loop);
 
 // Button configs
+// `transition` replaces Button's transition-all: the end buttons toggle visibility, and an animated
+// visibility keeps a just-shown button unfocusable until the next frame.
 const internalPrevButton: Partial<ButtonProps> = {
   icon: { name: 'heroicons:chevron-left' },
   variant: 'solid',
   intent: 'neutral',
   size: 'sm',
   shape: 'pill',
-  class: 'pointer-events-auto',
+  class: 'pointer-events-auto transition',
   'aria-label': 'Previous slide',
 };
 
@@ -68,7 +70,7 @@ const internalNextButton: Partial<ButtonProps> = {
   intent: 'neutral',
   size: 'sm',
   shape: 'pill',
-  class: 'pointer-events-auto',
+  class: 'pointer-events-auto transition',
   'aria-label': 'Next slide',
 };
 
