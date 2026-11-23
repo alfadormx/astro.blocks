@@ -132,6 +132,8 @@ test('loop clones leave each slide id in the DOM once', async ({ page }) => {
 test.describe('focus pause', () => {
   test.beforeEach(async ({ page }) => {
     await page.clock.install();
+    // Paused, so only runFor moves autoplay: a slow worker must not see the 3s delay elapse first.
+    await page.clock.pauseAt(new Date(Date.now() + 1000));
   });
 
   test('focus on a carousel control stops step autoplay', async ({ page }) => {
