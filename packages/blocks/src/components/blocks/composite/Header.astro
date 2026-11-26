@@ -102,7 +102,7 @@ const topClasses = cn(
         )}
       </div>
 
-      <Logo {...logo} />
+      {logo !== false && <Logo {...logo} />}
 
       <!-- Right Zone: rightNavigationTreeHorizontal + theme toggle + rightButtons -->
       <div class="flex min-w-fit flex-1 basis-0 flex-wrap items-center justify-end gap-2 whitespace-nowrap **:shrink-0">

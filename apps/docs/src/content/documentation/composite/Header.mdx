@@ -11,6 +11,8 @@ import Basic from '~/examples/composite/Header/basic.astro';
 import basicSource from '~/examples/composite/Header/basic.astro?raw';
 import TextLogo from '~/examples/composite/Header/text-logo.astro';
 import textLogoSource from '~/examples/composite/Header/text-logo.astro?raw';
+import NoLogo from '~/examples/composite/Header/no-logo.astro';
+import noLogoSource from '~/examples/composite/Header/no-logo.astro?raw';
 import ThemeToggle from '~/examples/composite/Header/theme-toggle.astro';
 import themeToggleSource from '~/examples/composite/Header/theme-toggle.astro?raw';
 import MobileMenu from '~/examples/composite/Header/mobile-menu.astro';
@@ -46,6 +48,14 @@ Header with text logo instead of image. Defaults to `SITE.name` from config if n
 
 <Example name="text-logo" source={textLogoSource}>
   <TextLogo />
+</Example>
+
+## No logo
+
+`logo={false}` renders no logo. Both zones keep their place.
+
+<Example name="no-logo" source={noLogoSource}>
+  <NoLogo />
 </Example>
 
 ## Theme toggle

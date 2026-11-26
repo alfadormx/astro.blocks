@@ -13,6 +13,8 @@ import SecondaryActions from '~/examples/composite/Footer/secondary-actions.astr
 import secondaryActionsSource from '~/examples/composite/Footer/secondary-actions.astro?raw';
 import LanguageToggle from '~/examples/composite/Footer/language-toggle.astro';
 import languageToggleSource from '~/examples/composite/Footer/language-toggle.astro?raw';
+import NoLogo from '~/examples/composite/Footer/no-logo.astro';
+import noLogoSource from '~/examples/composite/Footer/no-logo.astro?raw';
 
 Footer component combining a logo, secondary link actions, an optional disclaimer, social icon buttons, a footnote, and an optional language toggle.
 
@@ -38,6 +40,14 @@ Footer with link-style secondary actions next to the logo, a disclaimer block, a
 
 <Example name="language-toggle" source={languageToggleSource}>
   <LanguageToggle />
+</Example>
+
+## No logo
+
+`logo={false}` renders no logo and no wrapper, so the links sit at the top of the column.
+
+<Example name="no-logo" source={noLogoSource}>
+  <NoLogo />
 </Example>
 
 <ApiReferenceTable component="Footer" category="composite" />

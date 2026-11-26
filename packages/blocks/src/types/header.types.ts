@@ -20,8 +20,8 @@ export interface HeaderProps extends Omit<HTMLAttributes<'div'>, 'class'> {
   buttonsClass?: string;
   /** Container configuration wrapping the header content */
   container?: ContainerProps;
-  /** Logo rendered once between the zones; centred while the zones fit, pushed aside rather than covered, and wrapped onto its own line with the zones when they don't fit (A16). */
-  logo?: LogoProps;
+  /** Logo rendered once between the zones; centred while the zones fit, pushed aside rather than covered, and wrapped onto its own line with the zones when they don't fit (A16). `false` renders no logo. */
+  logo?: LogoProps | false;
   /** Horizontal navigation tree in the left zone */
   leftNavigationTreeHorizontal?: NavigationTreeHorizontalProps;
   /** Horizontal navigation tree in the right zone */

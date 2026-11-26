@@ -12,8 +12,8 @@ export interface FooterProps {
   disclaimer?: RichText;
   /** Additional custom classes applied to the disclaimer block. */
   disclaimerClass?: string;
-  /** Logo configuration rendered at the top of the footer. */
-  logo?: LogoProps;
+  /** Logo configuration rendered at the top of the footer; `false` renders no logo and no wrapper. */
+  logo?: LogoProps | false;
   /** Markdown (RichText) rendered as a footnote (e.g. copyright notice); HTML passes through. */
   footnote?: RichText;
   /** Additional custom classes applied to the footnote block. */

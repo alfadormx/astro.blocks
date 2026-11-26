@@ -77,9 +77,11 @@ const languageToggleAlignmentClass = {
 <Container {...mergedContainerConfig}>
   <div class="grid grid-cols-12 gap-4 gap-y-8 sm:gap-8 py-8 md:py-12">
     <div class="col-span-12 md:col-span-4">
-      <div class="mb-2">
-        <Logo {...logo} />
-      </div>
+      {logo !== false && (
+        <div class="mb-2">
+          <Logo {...logo} />
+        </div>
+      )}
       {secondaryButtons.length > 0 && (
         <div class={cn('flex flex-row gap-1', secondaryButtonsClass)}>
           {secondaryButtons.map((button, index) => {
