@@ -42,6 +42,8 @@ export interface BlocksOptions {
 
 const LIBRARY_CSS = fileURLToPath(new URL('../styles/blocks.css', import.meta.url));
 const VIRTUAL_MODULE_TYPES = fileURLToPath(new URL('./types.d.ts', import.meta.url));
+// astro-icon warns on every build when its iconDir is missing, and most sites use icon sets only.
+const NO_ICONS_DIR = fileURLToPath(new URL('./no-icons/', import.meta.url));
 
 export default function blocks({
   config: configPath = 'src/config.yaml',
@@ -117,7 +119,15 @@ export default function blocks({
 
           integrations: [
             ...(registered('@astrojs/mdx') ? [] : [mdx()]),
-            ...(registered('astro-icon') ? [] : [icon()]),
+            ...(registered('astro-icon')
+              ? []
+              : [
+                  icon(
+                    fs.existsSync(new URL('src/icons/', config.root))
+                      ? undefined
+                      : { iconDir: NO_ICONS_DIR }
+                  ),
+                ]),
           ],
           markdown: { shikiConfig },
 
