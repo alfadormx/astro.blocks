@@ -14,7 +14,7 @@ Add the library, the two icon sets it renders, and its peers to the site's `pack
 ```json
 {
   "dependencies": {
-    "@alfadormx/blocks": "github:alfadormx/astro.blocks#v0.1.0&path:packages/blocks",
+    "@alfadormx/blocks": "github:alfadormx/astro.blocks#v0.2.0&path:packages/blocks",
     "@iconify-json/heroicons": "^1.2.3",
     "@iconify-json/mdi": "^1.2.3",
     "astro": "^7.4.5",
@@ -51,36 +51,15 @@ Import the library CSS from the site's stylesheet. It tells Tailwind to scan the
 @import '@alfadormx/blocks/blocks.css';
 ```
 
-Describe the site in `src/config.yaml`:
-
-```yaml
-site:
-  name: 'My site'
-  site: 'https://example.com'
-
-i18n:
-  default: 'en'
-  languages:
-    - code: 'en'
-      locale: 'en-US'
-      basePath: '/'
-      direction: 'ltr'
-      label: 'English'
-
-metadata:
-  title:
-    default: 'My site'
-    template: '%s | My site'
-  description: 'What the site is about.'
-```
+Describe the site in `src/config.yaml`. [Start a site](/documentation/guides/Starting) walks through that file, the site Layout, pages and copy, and theming.
 
 Import blocks by section, for example `import Hero from '@alfadormx/blocks/composite/Hero.astro'`, and wrap pages in `@alfadormx/blocks/Layout.astro`.
 
 ## Upgrading
 
-Change the tag in the `@alfadormx/blocks` specifier, for example `#v0.1.0` to `#v0.2.0`, and run `pnpm install`.
+Change the tag in the `@alfadormx/blocks` specifier, for example `#v0.2.0` to `#v0.3.0`, and run `pnpm install`.
 
-Before upgrading, read [`packages/blocks/CHANGELOG.md`](https://github.com/alfadormx/astro.blocks/blob/main/packages/blocks/CHANGELOG.md) for every version in between, starting with its Breaking changes. While the version is `0.x`, a breaking change bumps the minor number, so `0.1.0` to `0.2.0` can break a site.
+Before upgrading, read [`packages/blocks/CHANGELOG.md`](https://github.com/alfadormx/astro.blocks/blob/main/packages/blocks/CHANGELOG.md) for every version in between, starting with its Breaking changes. While the version is `0.x`, a breaking change bumps the minor number, so `0.2.0` to `0.3.0` can break a site.
 
 ## Releasing
 

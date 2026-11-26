@@ -1,0 +1,98 @@
+---
+title: Start a site
+description: Build a new bilingual site on the library from an empty folder and theme it.
+section: guides
+order: 1
+---
+
+import CodeBlock from '@alfadormx/blocks/primitives/CodeBlock.astro';
+import {
+  fileTree,
+  packageJson,
+  tsconfig,
+  astroConfig,
+  configYaml,
+  copyFr,
+  layout,
+  page,
+  siteTs,
+  themeCss,
+} from '~/examples/guides/Starting/snippets';
+
+This guide builds a one-page site in French and English, from an empty folder to `pnpm build`. Every file below comes from a site that builds against the current release. When you are done, you have this tree:
+
+<CodeBlock code={fileTree} lang="plaintext" />
+
+## Package
+
+<CodeBlock code={packageJson} lang="json" title="package.json" />
+
+Run `pnpm install`. The library is installed from a GitHub tag, and both icon sets must stay listed here: [Installing](/documentation/guides/Installing) explains why, and how to upgrade.
+
+`sharp` optimises the images in `src/assets/images/`. If pnpm ever reports ignored build scripts for a package you add, list that package under `allowBuilds` in a `pnpm-workspace.yaml`. The packages above need none.
+
+## Astro and TypeScript
+
+<CodeBlock code={astroConfig} lang="js" title="astro.config.mjs" />
+
+The integration reads `config.yaml`, loads the stylesheet into every page, and adds Tailwind, MDX and astro-icon.
+
+<CodeBlock code={tsconfig} lang="json" title="tsconfig.json" />
+
+The `~/` alias points at `src/`, so `~/site` and `~/assets/images/…` work from any depth.
+
+Create an empty `src/icons/` folder with a `.gitkeep` in it. Without it, astro-icon warns on every build.
+
+## Site config
+
+<CodeBlock code={configYaml} lang="yaml" title="src/config.yaml" />
+
+The default language lives at `/`, and every other language at its `basePath`. `metadata.localized.<code>` overrides metadata per language. `theme.colorScheme` is covered under [Light-only sites](#light-only-sites).
+
+## Layout
+
+Wrap the library Layout in a site Layout that holds what every page shares: header, footer, analytics.
+
+<CodeBlock code={layout} lang="astro" title="src/layouts/Layout.astro" />
+
+Pass `langCode` through, so `<html lang dir>` is right. `metadata.title` is an object, `{ default: '…' }`, which the config's `title.template` wraps. The Footer's `languageToggle={{}}` links each language to the same page in the other one.
+
+## Pages and copy
+
+Write each page once under `src/pages/[...lang]/`. `localizedPaths()` builds one route per language, and `useCopy` returns the copy for the current one.
+
+<CodeBlock code={page} lang="astro" title="src/pages/[...lang]/index.astro" />
+
+<CodeBlock code={copyFr} lang="yaml" title="src/copy/home/fr.yaml" />
+
+Put any photo at `src/assets/images/studio.jpg`: the About section shows it, and `findImage()` resolves `~/assets/images/…` paths from that folder. `en.yaml` has the same keys in English. The default language's file defines the keys and types `copy`, so a typo fails `astro check`. [Localising a static page](/documentation/guides/Collections#localising-a-static-page) covers how languages merge and fall back, and how long sections move to Markdown files.
+
+Use the block props: section anchors go on `headline.anchorId`, and Button variants are `solid`, `outline`, `ghost` and `link`.
+
+## Shared presets
+
+Put constants and block configs used in more than one place in `src/site.ts`, typed with the library's own types.
+
+<CodeBlock code={siteTs} lang="ts" title="src/site.ts" />
+
+`AstroBlocks.CopyRegistry['home']` is the type of `copy` for the `home` page, so a helper can take part of the copy.
+
+## Theming
+
+Theme the site by overriding the library's tokens in `src/styles/global.css`, after importing the library stylesheet. Blocks use semantic tokens (`bg-primary`, `text-muted`, `border-border`), so changing a token restyles every block that uses it. [Colors](/documentation/base/Colors) lists them.
+
+<CodeBlock code={themeCss} lang="css" title="src/styles/global.css" />
+
+- **Fonts.** Set `--font-title`, `--font-subtitle`, `--font-body`, and `--font-quote` if quotes need their own.
+- **Neutrals.** `text`, `subtext0–1`, `overlay0–2`, `surface0–2`, `base`, `mantle` and `crust` feed the content, surface and border tokens. Override all twelve to move the page to your palette. This also brings the few blocks that still use `bg-base` directly into line.
+- **Brand colours.** Add a family as `--color-<name>` and `--color-<name>-50` … `-950`. Declare them in `@theme static`, not `@theme`: Tailwind v4 drops theme variables no class uses, so a shade you only reach from `var(--color-<name>-950)` or a runtime class would be missing from the built CSS.
+- **Semantic tokens.** Point `primary`, `secondary`, `tertiary` and `accent` at your families. Each has a `-hover` token set to a fixed shade of the library's colour, so remap the `-hover` with it. `--color-interactive-hover` is fixed to the library's blue and does not follow `primary`: remap it too, or hovers stay blue.
+- **`text-base` is a colour.** It is the `base` neutral, not 16px. For body size, use `text-[1rem]`.
+
+## Light-only sites
+
+Set `metadata.theme.colorScheme: 'only light'`, as in the config above, and leave `themeToggle` off the Header. The page then stays light whatever the visitor's system setting, so no dark overrides are needed.
+
+## Run and build
+
+`pnpm dev` starts the dev server in the background and prints its URL. `pnpm astro dev stop` stops it. `pnpm build` writes the static site to `dist/`, which is what a host serves.
