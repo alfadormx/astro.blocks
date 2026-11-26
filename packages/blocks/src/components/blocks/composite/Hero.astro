@@ -36,10 +36,12 @@ const defaultContainer: Partial<ContainerProps> = {
 };
 
 // Only a media background gets the overlay; any `background` key makes Container render Background.
+// A consumer overlay replaces the wash: twMerge cannot cancel a colour with a gradient.
 const hasMediaBackground = !!(container?.background?.image || container?.background?.video);
-const defaultBackground: Partial<ContainerProps> | undefined = hasMediaBackground
-  ? { background: { overlayClass: 'bg-base/60' } }
-  : undefined;
+const defaultBackground: Partial<ContainerProps> | undefined =
+  hasMediaBackground && container?.background?.overlayClass === undefined
+    ? { background: { overlayClass: 'bg-base/60' } }
+    : undefined;
 
 const mergedContainer = mergeConfigs<ContainerProps>(
   {},

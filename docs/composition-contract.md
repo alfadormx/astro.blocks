@@ -152,6 +152,7 @@ mergeConfigs<ThemeToggleProps>(
 - Class merging is add-only (tailwind-merge).
 - Internal defaults may only use utilities a consumer can cancel with a same-group counter-utility (`shadow-none`, `p-0`, `rounded-none`).
 - Defaults never use `!important`.
+- **A default a consumer replaces with another utility group is dropped, not merged.** Hero's `bg-base/60` overlay applies only while `container.background.overlayClass` is unset, because a gradient (`bg-linear-*`) cannot cancel a background colour. Setting the field, even to `''`, replaces the default.
 - **Positioning flags add cancellable internal defaults** placed before the consumer class (Tabs `tabList.sticky` → `sticky top-(--scroll-padding-top,0px) z-10 bg-background`). A sticky offset reads Header's `--scroll-padding-top` with a `0px` fallback and never writes it. Inside a nested scroll box under a page-level sticky Header, the consumer cancels the offset with `top-0`.
 - **Every class a stylesheet or a script selects is a hook, and must be `data-*`.** Dead hooks are deleted.
 - Script and CSS state lives in `data-*` attributes or the `hidden` attribute, never in a Tailwind utility inside a class string a consumer can merge into.
