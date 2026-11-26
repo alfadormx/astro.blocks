@@ -19,6 +19,7 @@ type Props = HeroProps;
 const {
   layout = 'centered',
   mediaPosition = 'right',
+  contentPosition = 'center',
   image,
   video,
   container,
@@ -29,11 +30,13 @@ const {
   actionsClass,
 } = Astro.props;
 
-validateHero({ layout, image, video });
+validateHero({ layout, contentPosition, image, video });
 
-const defaultContainer: Partial<ContainerProps> = {
-  content: { class: 'flex flex-col justify-center' },
-};
+// Container's content box is h-full of a min-height parent, so it only fills the hero as a flex child.
+const defaultContainer: Partial<ContainerProps> =
+  contentPosition === 'end'
+    ? { class: 'flex flex-col', content: { class: 'flex flex-col flex-1 justify-end' } }
+    : { content: { class: 'flex flex-col justify-center' } };
 
 // Only a media background gets the overlay; any `background` key makes Container render Background.
 // A consumer overlay replaces the wash: twMerge cannot cancel a colour with a gradient.

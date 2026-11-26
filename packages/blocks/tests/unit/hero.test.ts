@@ -26,6 +26,11 @@ describe('validateHero', () => {
       expected: /set image or video, not both/,
     },
     { name: 'both set wins over centered rule', input: { image, video }, expected: /not both/ },
+    {
+      name: 'split with contentPosition end',
+      input: { layout: 'split', contentPosition: 'end' },
+      expected: /contentPosition 'end' needs layout 'centered'/,
+    },
   ];
 
   it.each(throwCases)('throws: $name', ({ input, expected }) => {
@@ -42,6 +47,14 @@ describe('validateHero', () => {
 
   it('accepts split with video', () => {
     expect(() => validateHero({ layout: 'split', video })).not.toThrow();
+  });
+
+  it('accepts centered with contentPosition end', () => {
+    expect(() => validateHero({ layout: 'centered', contentPosition: 'end' })).not.toThrow();
+  });
+
+  it('accepts split with contentPosition center', () => {
+    expect(() => validateHero({ layout: 'split', contentPosition: 'center' })).not.toThrow();
   });
 
   it('accepts split without media', () => {

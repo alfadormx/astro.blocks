@@ -10,6 +10,8 @@ export interface HeroProps {
   layout?: 'centered' | 'split';
   /** Side the media column sits on in `split`; on small screens the copy always comes first (default: 'right') */
   mediaPosition?: 'left' | 'right';
+  /** Vertical position of the copy in a hero taller than its content (set `container.minHeight`); `centered` only (default: 'center') */
+  contentPosition?: 'center' | 'end';
   /** Image shown beside the copy; `split` only, and not together with `video` */
   image?: ImageProps;
   /** Video shown beside the copy; `split` only, and not together with `image` */

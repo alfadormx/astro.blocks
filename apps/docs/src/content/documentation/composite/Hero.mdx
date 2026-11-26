@@ -11,6 +11,8 @@ import Centered from '~/examples/composite/Hero/centered.astro';
 import centeredSource from '~/examples/composite/Hero/centered.astro?raw';
 import BackgroundVideo from '~/examples/composite/Hero/background-video.astro';
 import backgroundVideoSource from '~/examples/composite/Hero/background-video.astro?raw';
+import BottomAligned from '~/examples/composite/Hero/bottom-aligned.astro';
+import bottomAlignedSource from '~/examples/composite/Hero/bottom-aligned.astro?raw';
 import SplitRight from '~/examples/composite/Hero/split-right.astro';
 import splitRightSource from '~/examples/composite/Hero/split-right.astro?raw';
 import SplitLeft from '~/examples/composite/Hero/split-left.astro';
@@ -30,6 +32,14 @@ Hero renders its title as an `h1` by default, because it opens the page. The exa
 
 <Example name="background-video" source={backgroundVideoSource}>
   <BackgroundVideo />
+</Example>
+
+## Bottom-aligned copy
+
+`contentPosition: 'end'` puts the copy at the bottom of a hero taller than its content, such as one with `container.minHeight`. Without a min-height the hero is only as tall as its copy, so the setting has nothing to do. It applies to `layout: 'centered'` only.
+
+<Example name="bottom-aligned" source={bottomAlignedSource}>
+  <BottomAligned />
 </Example>
 
 ## Split, media on the right

@@ -2,7 +2,13 @@ import { expect, test, type Locator, type Page } from '@playwright/test';
 import { expectFocusRing } from './focusRing';
 
 const PAGE_URL = '/documentation/composite/Hero';
-const SECTIONS = ['centered', 'background-video', 'split-right', 'split-left'] as const;
+const SECTIONS = [
+  'centered',
+  'background-video',
+  'bottom-aligned',
+  'split-right',
+  'split-left',
+] as const;
 const SPLIT_SECTIONS = ['split-right', 'split-left'] as const;
 
 function section(page: Page, name: (typeof SECTIONS)[number]): Locator {
@@ -51,6 +57,20 @@ test.describe('rendering', () => {
     await expect(sources).toHaveCount(2);
     await expect(sources.nth(0)).toHaveAttribute('type', 'video/webm');
     await expect(sources.nth(1)).toHaveAttribute('type', 'video/mp4');
+  });
+
+  test('bottom-aligned leaves far less space below the copy than above it', async ({ page }) => {
+    const hero = await box(section(page, 'bottom-aligned').locator('section').first());
+    const copy = await box(section(page, 'bottom-aligned').locator('[data-hero-copy]'));
+    const above = copy.y - hero.y;
+    const below = hero.y + hero.height - (copy.y + copy.height);
+    expect(below).toBeLessThan(above / 2);
+  });
+
+  test('background-video keeps the copy centred in the hero', async ({ page }) => {
+    const hero = await box(section(page, 'background-video').locator('section').first());
+    const copy = await box(section(page, 'background-video').locator('[data-hero-copy]'));
+    expect(Math.abs(copy.y + copy.height / 2 - (hero.y + hero.height / 2))).toBeLessThan(40);
   });
 
   test('split-right puts the media right of the copy', async ({ page }) => {
