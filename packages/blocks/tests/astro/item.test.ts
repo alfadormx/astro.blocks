@@ -94,3 +94,32 @@ describe('Item tags', () => {
     expect(html).toMatch(/<p class="mb-2 md:mb-3">Text<\/p>/);
   });
 });
+
+describe('Item mediaClass', () => {
+  const image = {
+    src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4',
+    alt: 'Mountain',
+    width: 800,
+    height: 1000,
+  };
+
+  it('puts mediaClass on a non-shrinking box around an image', async () => {
+    const html = await render({ image, mediaClass: 'w-56', orientation: 'horizontal' });
+
+    expect(html).toMatch(/<div class="w-56 shrink-0"><div[^>]*><img [^>]*class="w-56"/);
+  });
+
+  it('merges image.class over mediaClass on the img only', async () => {
+    const html = await render({ image: { ...image, class: 'rounded-full' }, mediaClass: 'w-56' });
+
+    expect(html).toContain('<div class="w-56 shrink-0">');
+    expect(html).toMatch(/<img [^>]*class="w-56 rounded-full"/);
+  });
+
+  it('keeps mediaClass on the icon svg', async () => {
+    const html = await render({ icon: { name: 'mdi:star' }, mediaClass: 'size-6' });
+
+    expect(html).toMatch(/<svg [^>]*class="size-6 shrink-0"/);
+    expect(html).not.toContain('<div class="size-6 shrink-0">');
+  });
+});

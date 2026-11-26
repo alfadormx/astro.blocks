@@ -1,0 +1,29 @@
+---
+import Item from '@alfadormx/blocks/composite/Item.astro';
+import type { ImageProps } from '@alfadormx/blocks/types/image';
+
+const image: ImageProps = {
+  src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4',
+  alt: 'Mountain landscape',
+  width: 800,
+  height: 1000,
+};
+
+const content =
+  'A long paragraph next to the image. The media box keeps the width that mediaClass asks for, however much text the body holds, because it never shrinks to make room for it. Add a few more sentences and the image stays the same width.';
+---
+
+<div class="space-y-8">
+  <div data-orientation="horizontal">
+    <Item
+      image={image}
+      title="Horizontal"
+      content={content}
+      orientation="horizontal"
+      mediaClass="w-56"
+    />
+  </div>
+  <div data-orientation="vertical" class="max-w-md">
+    <Item image={image} title="Vertical" content={content} mediaClass="w-56" />
+  </div>
+</div>

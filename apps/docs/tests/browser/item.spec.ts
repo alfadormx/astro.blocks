@@ -70,3 +70,13 @@ test('textTag renders the text as a paragraph', async ({ page }) => {
 
   await expect(section(page, 'text-tag').locator('p')).toHaveCount(1);
 });
+
+for (const orientation of ['horizontal', 'vertical']) {
+  test(`mediaClass sets the image width in a ${orientation} item`, async ({ page }) => {
+    await page.goto(PAGE_URL);
+    const img = section(page, 'image-size').locator(`[data-orientation="${orientation}"] img`);
+
+    await expect(img).toHaveCount(1);
+    expect((await img.boundingBox())!.width).toBeCloseTo(224, 0);
+  });
+}

@@ -19,6 +19,8 @@ import Image from '~/examples/composite/Item/image.astro';
 import imageSource from '~/examples/composite/Item/image.astro?raw';
 import ImageConnectors from '~/examples/composite/Item/image-connectors.astro';
 import imageConnectorsSource from '~/examples/composite/Item/image-connectors.astro?raw';
+import ImageSize from '~/examples/composite/Item/image-size.astro';
+import imageSizeSource from '~/examples/composite/Item/image-size.astro?raw';
 import CustomTypography from '~/examples/composite/Item/custom-typography.astro';
 import customTypographySource from '~/examples/composite/Item/custom-typography.astro?raw';
 import ConnectorClass from '~/examples/composite/Item/connector-class.astro';
@@ -90,6 +92,14 @@ Images work under every connector variant, so ItemsTimeline and ItemsTimelineHor
 
 <Example name="image-connectors" source={imageConnectorsSource}>
   <ImageConnectors />
+</Example>
+
+## Image Size
+
+For an image, `mediaClass` sizes a box that doesn't shrink and that the image fills, so `w-56` keeps a 224 px image next to any amount of body text. The classes also reach the `<img>`, so `aspect-*`, `object-*` and `rounded-*` apply to the picture. The image never grows past its `width`, so give it a source at least as wide as the box.
+
+<Example name="image-size" source={imageSizeSource}>
+  <ImageSize />
 </Example>
 
 ## Custom Typography and Media Size

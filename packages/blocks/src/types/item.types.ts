@@ -46,7 +46,7 @@ export interface ItemProps {
   titleClass?: string;
   /** Classes on the content text; replaces the default spacing (default: 'mb-2 md:mb-3'). */
   textClass?: string;
-  /** Size classes for the icon or image; replaces the default sizes, while `icon.class`/`image.class` still merge on top (default: 'size-8 md:size-10 lg:size-12'). */
+  /** Size classes for the icon or image; replaces the default sizes, while `icon.class`/`image.class` still merge on top (default: 'size-8 md:size-10 lg:size-12'). For an image they size a box that doesn't shrink and that the image fills, and also reach the `<img>`, so `aspect-*`, `object-*` and `rounded-*` apply to it. */
   mediaClass?: string;
   /** Additional custom classes applied to the content element. */
   contentClass?: string;
