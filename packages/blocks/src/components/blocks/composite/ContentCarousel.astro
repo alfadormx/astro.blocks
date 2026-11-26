@@ -38,14 +38,11 @@ const {
 } = Astro.props;
 
 const hasSlot = Astro.slots && Astro.slots.has('default');
-let slideCount = items.length;
-
-if (hasSlot) {
-  const slotHtml = await Astro.slots.render('default');
-  // Count occurrences of carousel-item class in the rendered HTML
-  const matches = slotHtml.match(/class="[^"]*carousel-item[^"]*"/g);
-  slideCount = matches ? matches.length : 0;
-}
+// Render the slot exactly once: astro-icon emits a sprite <symbol> only on an icon's first render.
+const slotHtml = hasSlot ? await Astro.slots.render('default') : '';
+const slideCount = hasSlot
+  ? (slotHtml.match(/class="[^"]*carousel-item[^"]*"/g)?.length ?? 0)
+  : items.length;
 
 const uid = `carousel-${Math.random().toString(36).slice(2, 9)}`;
 
@@ -168,7 +165,7 @@ const wrapperProps = container ? mergedContainer : {};
         data-carousel-track
       >
         {hasSlot ? (
-          <slot />
+          <Fragment set:html={slotHtml} />
         ) : (
           items.map((item, index) => {
             const { class: slideClass, ...image } = item;

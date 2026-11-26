@@ -1,0 +1,16 @@
+---
+import ContentCarousel from '~/components/blocks/composite/ContentCarousel.astro';
+import Item from '~/components/blocks/composite/Item.astro';
+---
+
+<ContentCarousel ariaLabel="Quotes">
+  <div class="carousel-item basis-full">
+    <Item title="One" icon={{ name: 'mdi:format-quote-open' }} />
+  </div>
+  <div class="carousel-item basis-full">
+    <Item title="Two" icon={{ name: 'mdi:format-quote-open' }} />
+  </div>
+  <div class="carousel-item basis-full">
+    <Item title="Three" icon={{ name: 'mdi:format-quote-open' }} />
+  </div>
+</ContentCarousel>
