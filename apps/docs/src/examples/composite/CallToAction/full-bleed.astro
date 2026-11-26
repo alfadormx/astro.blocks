@@ -1,0 +1,21 @@
+---
+import CallToActionBlock from '@alfadormx/blocks/composite/CallToAction.astro';
+---
+
+<CallToActionBlock
+  surface="plain"
+  container={{
+    containerWidthType: 'full',
+    minHeight: 'min-h-96',
+    background: { image: '~/assets/images/demos/saas/background.jpg' },
+  }}
+  headline={{
+    tagline: 'Call to Action',
+    title: 'Full-bleed over an image',
+    subtitle: 'surface="plain" drops the card, so the container background shows through.',
+    align: 'center',
+  }}
+  actions={[
+    { label: 'Get template', intent: 'primary', size: 'lg', variant: 'solid', shape: 'pill' },
+  ]}
+/>

@@ -11,6 +11,8 @@ import Default from '~/examples/composite/CallToAction/default.astro';
 import defaultSource from '~/examples/composite/CallToAction/default.astro?raw';
 import SharedActionDefaults from '~/examples/composite/CallToAction/shared-action-defaults.astro';
 import sharedActionDefaultsSource from '~/examples/composite/CallToAction/shared-action-defaults.astro?raw';
+import FullBleed from '~/examples/composite/CallToAction/full-bleed.astro';
+import fullBleedSource from '~/examples/composite/CallToAction/full-bleed.astro?raw';
 
 ## Default configuration
 
@@ -24,6 +26,14 @@ import sharedActionDefaultsSource from '~/examples/composite/CallToAction/shared
 
 <Example name="shared-action-defaults" source={sharedActionDefaultsSource}>
   <SharedActionDefaults />
+</Example>
+
+## Full-bleed
+
+`surface="plain"` drops the card's background, rounding and shadow but keeps the centred text column, so a `container.background` image fills the block.
+
+<Example name="full-bleed" source={fullBleedSource}>
+  <FullBleed />
 </Example>
 
 <ApiReferenceTable component="CallToAction" category="composite" />

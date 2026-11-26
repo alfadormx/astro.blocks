@@ -10,12 +10,19 @@ import { mergeConfigs } from '#utils/mergeConfigs';
 
 type Props = CallToActionProps;
 
-const { container, headline, actions = [], defaultActionConfig, actionsClass } = Astro.props;
+const {
+  surface = 'card',
+  container,
+  headline,
+  actions = [],
+  defaultActionConfig,
+  actionsClass,
+} = Astro.props;
 
 const defaultContainer: Partial<ContainerProps> = {
   content: {
     boxWidth: 'w-full max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl px-8',
-    class: 'bg-elevated rounded-md shadow-xl overflow-hidden',
+    ...(surface === 'card' && { class: 'bg-elevated rounded-md shadow-xl overflow-hidden' }),
   },
 };
 

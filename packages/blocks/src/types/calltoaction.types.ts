@@ -4,7 +4,9 @@ import type { ContainerProps } from './container.types';
 import type { LayerConfig } from './config.types';
 
 export interface CallToActionProps {
-  /** Container/layout configuration wrapping the headline and actions; merged with the block's default centered card styling. */
+  /** `card` boxes the copy in an elevated card; `plain` drops the card so a `container.background` shows through (default: 'card') */
+  surface?: 'card' | 'plain';
+  /** Container/layout configuration wrapping the headline and actions; merged over the block's default centred box and, with `surface: 'card'`, its card styling. */
   container?: ContainerProps;
   /** Headline content rendered at the top of the call-to-action block. */
   headline?: HeadlineProps;
