@@ -1,0 +1,15 @@
+---
+import HeaderBlock from '@alfadormx/blocks/composite/Header.astro';
+import type { NavigationTreeItem } from '@alfadormx/blocks/types/navigationtree';
+
+const navItems: NavigationTreeItem[] = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+];
+---
+
+<HeaderBlock
+  rightNavigationTreeHorizontal={{ items: navItems }}
+  languageToggle={{ preservePath: false }}
+  themeToggle={{}}
+/>

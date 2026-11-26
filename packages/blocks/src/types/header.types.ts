@@ -5,6 +5,7 @@ import type { ButtonProps } from './button.types';
 import type { LogoProps } from './logo.types';
 import type { LayerConfig } from './config.types';
 import type { ThemeToggleProps } from './themetoggle.types';
+import type { LanguageToggleProps } from './languagetoggle.types';
 
 export type HeaderBreakpoint = 'sm' | 'md' | 'lg';
 export type HeaderButtonsGap = 'none' | 'tight' | 'normal' | 'loose';
@@ -28,6 +29,8 @@ export interface HeaderProps extends Omit<HTMLAttributes<'div'>, 'class'> {
   rightNavigationTreeHorizontal?: NavigationTreeHorizontalProps;
   /** NavigationTreeHorizontal config merged under both navigation trees; share nav button defaults through its `defaultItemConfig` */
   defaultNavigationTreeHorizontalConfig?: LayerConfig<Omit<NavigationTreeHorizontalProps, 'items'>>;
+  /** Language toggle in the right zone, before the theme toggle; rendered when set (`{}` for defaults) */
+  languageToggle?: LanguageToggleProps;
   /** Theme toggle in the right zone; rendered when set (`{}` for defaults) */
   themeToggle?: ThemeToggleProps;
   /** Buttons in the left zone */

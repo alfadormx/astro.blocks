@@ -15,6 +15,8 @@ import NoLogo from '~/examples/composite/Header/no-logo.astro';
 import noLogoSource from '~/examples/composite/Header/no-logo.astro?raw';
 import ThemeToggle from '~/examples/composite/Header/theme-toggle.astro';
 import themeToggleSource from '~/examples/composite/Header/theme-toggle.astro?raw';
+import LanguageToggle from '~/examples/composite/Header/language-toggle.astro';
+import languageToggleSource from '~/examples/composite/Header/language-toggle.astro?raw';
 import MobileMenu from '~/examples/composite/Header/mobile-menu.astro';
 import mobileMenuSource from '~/examples/composite/Header/mobile-menu.astro?raw';
 import ButtonSpacing from '~/examples/composite/Header/button-spacing.astro';
@@ -64,6 +66,14 @@ Header with theme toggle button.
 
 <Example name="theme-toggle" source={themeToggleSource}>
   <ThemeToggle />
+</Example>
+
+## Language toggle
+
+`languageToggle` renders a LanguageToggle in the right zone, before the theme toggle. It takes the LanguageToggle's props, so `{}` gives the defaults.
+
+<Example name="language-toggle" source={languageToggleSource}>
+  <LanguageToggle />
 </Example>
 
 ## Mobile menu

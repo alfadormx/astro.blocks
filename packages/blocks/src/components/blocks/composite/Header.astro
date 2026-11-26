@@ -4,6 +4,7 @@ import { cn } from '#utils/styles';
 import Container from '#components/blocks/layout/Container.astro';
 import NavigationTreeHorizontal from './NavigationTreeHorizontal.astro';
 import ThemeToggle from '#components/blocks/primitives/ThemeToggle.astro';
+import LanguageToggle from '#components/blocks/primitives/LanguageToggle.astro';
 import Button from '#components/blocks/primitives/Button.astro';
 import type { ButtonProps } from '#types/button.types';
 import type { ContainerProps } from '#types/container.types';
@@ -23,6 +24,7 @@ const {
   leftNavigationTreeHorizontal,
   rightNavigationTreeHorizontal,
   defaultNavigationTreeHorizontalConfig,
+  languageToggle,
   themeToggle,
   leftButtons = [],
   rightButtons = [],
@@ -109,6 +111,8 @@ const topClasses = cn(
         {mergedRightNavigationTreeHorizontal?.items && (
           <NavigationTreeHorizontal {...mergedRightNavigationTreeHorizontal} />
         )}
+
+        {languageToggle && <LanguageToggle {...languageToggle} />}
 
         {themeToggle && <ThemeToggle {...themeToggle} />}
 
