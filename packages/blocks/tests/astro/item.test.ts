@@ -62,6 +62,32 @@ describe('Item tags', () => {
     expect(html).toMatch(/<h3 [^>]*>Title<\/h3>/);
   });
 
+  it('renders Markdown emphasis inside a heading title', async () => {
+    const html = await render({ title: 'Morning at **Palais Royal**', titleTag: 'h3' });
+
+    expect(html).toMatch(/<h3 [^>]*>Morning at <strong>Palais Royal<\/strong><\/h3>/);
+  });
+
+  it('renders Markdown emphasis inside a div title', async () => {
+    const html = await render({ title: 'Morning at **Palais Royal**' });
+
+    expect(html).toMatch(
+      /<div class="font-bold text-lg[^"]*">Morning at <strong>Palais Royal<\/strong><\/div>/
+    );
+  });
+
+  it('keeps a multi-paragraph title inline inside the heading', async () => {
+    const html = await render({ title: 'One\n\nTwo', titleTag: 'h3' });
+
+    expect(html).not.toMatch(/<h3 [^>]*>\s*<p>/);
+  });
+
+  it('escapes HTML-significant characters in a plain title', async () => {
+    const html = await render({ title: `Tom & Jerry's "best" day`, titleTag: 'h3' });
+
+    expect(html).toMatch(/<h3 [^>]*>Tom &amp; Jerry&#39;s &quot;best&quot; day<\/h3>/);
+  });
+
   it('renders the text element with textTag', async () => {
     const html = await render({ content: 'Text', textTag: 'p' });
 

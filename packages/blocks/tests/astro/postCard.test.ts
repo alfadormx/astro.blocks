@@ -58,4 +58,16 @@ describe('PostCard', () => {
       /<ul[^>]*data-entry-card-tags[^>]*>[\s\S]*<li[^>]*>a<\/li>[\s\S]*<li[^>]*>b<\/li>/
     );
   });
+
+  it('renders Markdown emphasis inside the title link', async () => {
+    const links = anchors(await render({ headline: { title: 'Hello **world**' } }));
+
+    expect(links[0]!).toContain('Hello <strong>world</strong>');
+  });
+
+  it('renders Markdown emphasis inside the description', async () => {
+    const html = await render({ description: 'A **short** excerpt' });
+
+    expect(html).toMatch(/<p class="[^"]*">A <strong>short<\/strong> excerpt<\/p>/);
+  });
 });

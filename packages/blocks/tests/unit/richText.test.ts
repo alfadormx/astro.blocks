@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { dedent, isBlockRichText, renderRichText } from '~/utils/richText';
+import { dedent, isBlockRichText, renderInlineRichText, renderRichText } from '~/utils/richText';
 
 describe('renderRichText', () => {
   it('renders a single line inline, without a paragraph', () => {
@@ -51,6 +51,32 @@ describe('isBlockRichText', () => {
     ['<em>x</em>', false],
   ])('%s → %s', (input, expected) => {
     expect(isBlockRichText(input)).toBe(expected);
+  });
+});
+
+describe('renderInlineRichText', () => {
+  it('renders emphasis inline', () => {
+    expect(renderInlineRichText('Morning at **Palais Royal**')).toBe(
+      'Morning at <strong>Palais Royal</strong>'
+    );
+  });
+
+  it('never wraps blank-line-separated text in paragraphs', () => {
+    expect(renderInlineRichText('One\n\nTwo')).not.toContain('<p>');
+  });
+
+  it('keeps a leading list marker as text', () => {
+    expect(renderInlineRichText('1. First')).toBe('1. First');
+  });
+
+  it('escapes HTML-significant characters in plain text', () => {
+    expect(renderInlineRichText(`Tom & Jerry's "best" day`)).toBe(
+      'Tom &amp; Jerry&#39;s &quot;best&quot; day'
+    );
+  });
+
+  it('renders nothing for an empty value', () => {
+    expect(renderInlineRichText(undefined)).toBe('');
   });
 });
 

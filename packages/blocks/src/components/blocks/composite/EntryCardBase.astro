@@ -6,6 +6,7 @@ import type { EntryCardProps } from '#types/entrycard.types';
 import type { HeadlineProps } from '#types/headline.types';
 import type { ImageProps } from '#types/image.types';
 import { focusRingClass } from '#utils/intentStyles';
+import { renderInlineRichText } from '#utils/richText';
 import { mergeConfigs } from '#utils/mergeConfigs';
 import { cn } from '#utils/styles';
 
@@ -81,10 +82,10 @@ const hasFooter = Boolean(footerLead) || tags.length > 0;
         class="text-normal no-underline outline-none after:absolute after:inset-0 hover:text-normal hover:no-underline group-hover:underline"
         data-entry-card-link
       >
-        {mergedHeadline.title}
+        <Fragment set:html={renderInlineRichText(mergedHeadline.title)} />
       </a>
     </Headline>
-    {description && <p class="mb-0 text-emphasis">{description}</p>}
+    {description && <p class="mb-0 text-emphasis" set:html={renderInlineRichText(description)} />}
     {hasFooter && (
       <div class="flex flex-wrap items-center gap-2 text-sm">
         {footerLead && <span class="text-emphasis">{footerLead}</span>}

@@ -22,7 +22,7 @@ import singleSource from '~/examples/composite/Testimonials/single.astro?raw';
 
 ## Grid
 
-The default `layout="grid"` places cards in up to `columns` columns, stepping down as the container narrows. Blank lines in `quote` start new paragraphs.
+The default `layout="grid"` places cards in up to `columns` columns, stepping down as the container narrows. Blank lines in `quote` start new paragraphs. Each paragraph is inline Markdown, so `**…**` renders as `<strong>`, and HTML passes through unescaped.
 
 <Example name="grid" source={gridSource}>
   <Grid />

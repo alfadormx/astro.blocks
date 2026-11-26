@@ -3,6 +3,7 @@ import type { LayerConfig } from './config.types';
 import type { ContainerProps } from './container.types';
 import type { HeadlineProps } from './headline.types';
 import type { IconConfig } from './icon.types';
+import type { RichText } from './richtext.types';
 import type {
   ToggleGroupAppearance,
   ToggleGroupOption,
@@ -29,8 +30,8 @@ export interface PricingPeriod {
 export interface PricingTier {
   /** Tier name, rendered as a heading at `nameTag` */
   name: string;
-  /** Short line under the name */
-  description?: string;
+  /** Short line under the name, as inline Markdown (RichText) */
+  description?: RichText;
   /** Prices per billing period */
   price: PricingPrice;
   /** ISO 4217 currency code for numeric prices (default: 'USD') */

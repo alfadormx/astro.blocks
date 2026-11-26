@@ -1,5 +1,6 @@
 ---
 import type { HeadlineProps } from '#types/headline.types';
+import { renderInlineRichText } from '#utils/richText';
 import { cn } from '#utils/styles';
 
 type Props = HeadlineProps;
@@ -55,12 +56,14 @@ const mergedSubtitleClass = cn(
   {tagline && <p class={mergedTaglineClass}>{tagline}</p>}
   {title && (
     <TitleTag class={mergedTitleClass}>
-      {Astro.slots.has('title') ? <slot name="title" /> : title}
+      {Astro.slots.has('title') ? (
+        <slot name="title" />
+      ) : (
+        <Fragment set:html={renderInlineRichText(title)} />
+      )}
     </TitleTag>
   )}
   {subtitle && (
-    <p class={mergedSubtitleClass} data-subtitle>
-      {subtitle}
-    </p>
+    <p class={mergedSubtitleClass} data-subtitle set:html={renderInlineRichText(subtitle)} />
   )}
 </div>

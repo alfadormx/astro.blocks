@@ -14,7 +14,7 @@ import pastSource from '~/examples/composite/EventCard/past.astro?raw';
 
 ## Upcoming
 
-Times show in `timezone`, with the zone name. On a collection page the helpers pass the event’s own zone, else `collections.timezone` from `config.yaml`.
+Times show in `timezone`, with the zone name. On a collection page the helpers pass the event’s own zone, else `collections.timezone` from `config.yaml`. The title and `description` are inline Markdown; leave links out of both, since the whole card is already one link.
 
 <Example name="upcoming" source={upcomingSource}>
   <Upcoming />

@@ -4,8 +4,8 @@ import type { IconConfig } from './icon.types';
 export interface AccordionItem {
   /** Id set on the item's `<details>`, so the item can be linked to */
   id?: string;
-  /** Text shown in the item's summary row */
-  title: string;
+  /** Text shown in the item's summary row, as inline Markdown (RichText) */
+  title: RichText;
   /** Answer body as Markdown (RichText); HTML passes through. An `item-${index}` slot replaces it when present */
   content?: RichText;
 }

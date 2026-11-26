@@ -19,6 +19,12 @@ export function isBlockRichText(md: RichText): boolean {
   return /\n\s*\n/.test(text) || BLOCK_START.test(text);
 }
 
+/** Renders Markdown to inline HTML only, for text inside a heading, `<p>`, `<summary>` or link, where block elements are invalid. */
+export function renderInlineRichText(md: RichText | undefined | null): string {
+  if (!md) return '';
+  return marked.parseInline(dedent(md).trim()) as string;
+}
+
 /** Renders Markdown to HTML: one line inline (no `<p>`), several paragraphs or a list as blocks. */
 export function renderRichText(md: RichText | undefined | null): string {
   if (!md) return '';

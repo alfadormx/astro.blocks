@@ -1,14 +1,15 @@
 import type { HeadlineProps } from './headline.types';
 import type { ImageProps } from './image.types';
+import type { RichText } from './richtext.types';
 
 /** Fields every entry card shares. */
 export interface EntryCardProps {
-  /** Card title; the title text is the card's one link and its accessible name (default: htmlTag 'h3'). */
+  /** Card title; the title text is the card's one link and its accessible name, so a Markdown link in it is invalid (default: htmlTag 'h3'). */
   headline: HeadlineProps;
   /** Entry URL; the whole card is one link. */
   href: string;
-  /** Excerpt under the title. */
-  description?: string;
+  /** Excerpt under the title, as inline Markdown (RichText); a link in it would nest inside the card's link. */
+  description?: RichText;
   /** Cover image above the title. */
   image?: ImageProps;
   /** Tags in the card footer (default: []). */

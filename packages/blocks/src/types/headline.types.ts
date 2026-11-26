@@ -1,10 +1,12 @@
+import type { RichText } from './richtext.types';
+
 export interface HeadlineProps {
   /** Small label shown above the title */
   tagline?: string;
-  /** Main headline text */
-  title?: string;
-  /** Supporting text shown below the title */
-  subtitle?: string;
+  /** Main headline text as inline Markdown (RichText); block syntax stays text. A `title` slot replaces it */
+  title?: RichText;
+  /** Supporting text shown below the title, as inline Markdown (RichText) inside one paragraph */
+  subtitle?: RichText;
   /** Custom classes for the tagline element */
   taglineClass?: string;
   /** Custom classes for the title element */

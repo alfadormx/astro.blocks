@@ -37,6 +37,8 @@ import TitleTagDivHorizontal from '~/examples/composite/Item/title-tag-div-horiz
 import titleTagDivHorizontalSource from '~/examples/composite/Item/title-tag-div-horizontal.astro?raw';
 import TitleTagH3Horizontal from '~/examples/composite/Item/title-tag-h3-horizontal.astro';
 import titleTagH3HorizontalSource from '~/examples/composite/Item/title-tag-h3-horizontal.astro?raw';
+import TitleEmphasis from '~/examples/composite/Item/title-emphasis.astro';
+import titleEmphasisSource from '~/examples/composite/Item/title-emphasis.astro?raw';
 import TextTag from '~/examples/composite/Item/text-tag.astro';
 import textTagSource from '~/examples/composite/Item/text-tag.astro?raw';
 
@@ -148,6 +150,14 @@ Images work under every connector variant, so ItemsTimeline and ItemsTimelineHor
 
 <Example name="title-tag-h3-horizontal" source={titleTagH3HorizontalSource}>
   <TitleTagH3Horizontal />
+</Example>
+
+## Title Emphasis
+
+`title` is inline Markdown, so `**…**` renders as `<strong>` inside the title element and `titleTag` and `titleClass` still apply. Here a light caption carries one bold phrase.
+
+<Example name="title-emphasis" source={titleEmphasisSource}>
+  <TitleEmphasis />
 </Example>
 
 ## Text Tag

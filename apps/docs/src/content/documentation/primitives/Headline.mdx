@@ -25,6 +25,8 @@ import Compact from '~/examples/primitives/Headline/compact.astro';
 import compactSource from '~/examples/primitives/Headline/compact.astro?raw';
 import HeadingLevel from '~/examples/primitives/Headline/heading-level.astro';
 import headingLevelSource from '~/examples/primitives/Headline/heading-level.astro?raw';
+import RichText from '~/examples/primitives/Headline/rich-text.astro';
+import richTextSource from '~/examples/primitives/Headline/rich-text.astro?raw';
 
 ## Complete headline (left aligned)
 
@@ -80,6 +82,14 @@ import headingLevelSource from '~/examples/primitives/Headline/heading-level.ast
 
 <Example name="heading-level" source={headingLevelSource}>
   <HeadingLevel />
+</Example>
+
+## Rich text
+
+`title` and `subtitle` are inline Markdown: emphasis, code and links render inside the heading and the subtitle paragraph. A list marker stays text and blank lines collapse to a space, since neither element can hold a block.
+
+<Example name="rich-text" source={richTextSource}>
+  <RichText />
 </Example>
 
 <ApiReferenceTable component="Headline" category="primitives" />

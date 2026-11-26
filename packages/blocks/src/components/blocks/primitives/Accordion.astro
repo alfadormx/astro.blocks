@@ -3,7 +3,7 @@ import { Icon } from 'astro-icon/components';
 import type { AccordionProps } from '#types/accordion.types';
 import { nextAccordionName, validateAccordion } from '#utils/accordion';
 import { focusRingClass } from '#utils/intentStyles';
-import { renderRichText } from '#utils/richText';
+import { renderInlineRichText, renderRichText } from '#utils/richText';
 import { cn } from '#utils/styles';
 
 type Props = AccordionProps;
@@ -58,7 +58,7 @@ const contentClasses = cn('pb-4 text-muted', contentClass);
       data-accordion-item
     >
       <summary class={summaryClasses} data-accordion-summary>
-        <TitleTag class={titleClasses}>{item.title}</TitleTag>
+        <TitleTag class={titleClasses} set:html={renderInlineRichText(item.title)} />
         {icon && (
           <Icon
             name={icon.name ?? 'heroicons:chevron-down'}

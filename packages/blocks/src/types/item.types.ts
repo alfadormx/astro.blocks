@@ -18,8 +18,8 @@ export interface ItemProps {
    * required at runtime; the Image primitive throws without it.
    */
   image?: ImageProps;
-  /** Title text displayed for the item. Omitted or empty renders no title element. */
-  title?: string;
+  /** Title as inline Markdown (RichText): `**…**` becomes `<strong>` inside the title element, block syntax stays text. Omitted or empty renders no title element. */
+  title?: RichText;
   /** Markdown (RichText) displayed below/beside the title; HTML passes through. Omitted or empty renders no content element. */
   content?: RichText;
   /** Action buttons rendered below/beside the content (default: []). */

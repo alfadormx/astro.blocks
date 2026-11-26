@@ -3,6 +3,7 @@ import type { ContainerProps } from './container.types';
 import type { ContentCarouselProps } from './contentcarousel.types';
 import type { HeadlineProps } from './headline.types';
 import type { ImageProps } from './image.types';
+import type { RichText } from './richtext.types';
 
 export interface TestimonialAuthor {
   /** Name shown in the caption */
@@ -21,8 +22,8 @@ export interface TestimonialSource {
 }
 
 export interface Testimonial {
-  /** The quote as plain text; blank lines split it into paragraphs. HTML is escaped */
-  quote: string;
+  /** The quote as inline Markdown (RichText); blank lines split it into paragraphs, block syntax stays text */
+  quote: RichText;
   /** Who said it */
   author: TestimonialAuthor;
   /** Whole stars from 1 to 5; announced as text through `ratingLabel` */

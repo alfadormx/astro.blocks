@@ -5,6 +5,7 @@ import Image from '#components/blocks/primitives/Image.astro';
 import type { ImageProps } from '#types/image.types';
 import type { Testimonial } from '#types/testimonials.types';
 import { mergeConfigs } from '#utils/mergeConfigs';
+import { renderInlineRichText } from '#utils/richText';
 import { ratingText, splitQuote } from '#utils/testimonials';
 import { cn } from '#utils/styles';
 
@@ -56,7 +57,7 @@ const avatar = author.avatar && mergeConfigs<ImageProps>({}, internalAvatar, aut
   </span>
   <blockquote class={quoteClass}>
     {paragraphs.map((paragraph) => (
-      <p>{paragraph}</p>
+      <p set:html={renderInlineRichText(paragraph)} />
     ))}
   </blockquote>
   <figcaption class={authorClass}>
