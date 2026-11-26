@@ -17,8 +17,10 @@ import { loadCopy } from './copy/load';
 import { missingIconSets, readSitePackageJson } from './utils/iconSets';
 
 // Deps reached only via dynamic import are discovered late; Vite then reloads the page mid-test.
-// three is the package's dependency, not the site's, so Vite must resolve it through the package.
-const THREE_DEPS = [
+// Leaflet is UMD, so a site served it unbundled in dev gets no `L.Icon`.
+// Both are the package's dependencies, not the site's, so Vite must resolve them through the package.
+const PREBUNDLED_DEPS = [
+  'leaflet',
   'three',
   'three/addons/controls/OrbitControls.js',
   'three/addons/loaders/GLTFLoader.js',
@@ -120,7 +122,7 @@ export default function blocks({
           markdown: { shikiConfig },
 
           vite: {
-            optimizeDeps: { include: THREE_DEPS },
+            optimizeDeps: { include: PREBUNDLED_DEPS },
             plugins: [
               ...(hasTailwind ? [] : [tailwindcss()]),
               {
