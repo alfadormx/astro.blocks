@@ -110,3 +110,36 @@ describe('Background video sources', () => {
     await expect(render({ video: [{ src: ' ' }] })).rejects.toThrow(/background\.video\[0\]/);
   });
 });
+
+describe('Background image description', () => {
+  const imgTag = (html: string) => html.match(/<[a-z]+[^>]*role="img"[^>]*>/)?.[0] ?? '';
+
+  it('exposes alt as an image label', async () => {
+    const tag = imgTag(await render({ image: '/poster.jpg', alt: 'A field of poppies' }));
+    expect(tag).toContain('aria-label="A field of poppies"');
+  });
+
+  it('keeps slotted content outside the labelled image', async () => {
+    const container = await AstroContainer.create();
+    const html = await container.renderToString(Background, {
+      props: { image: '/poster.jpg', alt: 'A field of poppies' },
+      slots: { default: '<h4>Caption</h4>' },
+    });
+    const img = html.match(/<([a-z]+)[^>]*role="img"[^>]*>(.*?)<\/\1>/s);
+    expect(img).not.toBeNull();
+    expect(img?.[2]).not.toContain('Caption');
+    expect(html).toContain('<h4>Caption</h4>');
+  });
+
+  it('stays decorative without alt', async () => {
+    const html = await render({ image: '/poster.jpg' });
+    expect(html).not.toContain('role="img"');
+    expect(html).not.toContain('aria-label');
+  });
+
+  it('ignores alt without an image', async () => {
+    const html = await render({ alt: 'A field of poppies' });
+    expect(html).not.toContain('role="img"');
+    expect(html).not.toContain('aria-label');
+  });
+});

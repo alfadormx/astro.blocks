@@ -12,6 +12,7 @@ type Props = BackgroundProps;
 
 const {
   image,
+  alt,
   video,
   attachment = 'scroll',
   class: className = '',
@@ -94,6 +95,8 @@ const overlay = overlayClass ?? '';
   </div>
 ) : resolvedImageUrl ? (
   <div class={layerClass(true)} style={bgStyle}>
+    {/* role="img" makes its children presentational, so the label sits on an empty child and slotted content stays readable. */}
+    {alt && <div class="absolute inset-0" role="img" aria-label={alt} />}
     {overlay && <div class={cn('absolute inset-0', overlay)} />}
     <slot />
   </div>

@@ -6,6 +6,8 @@ export type BackgroundAttachment = 'scroll' | 'fixed';
 export interface BackgroundProps {
   /** Background image path or URL (supports `~/assets/`, public, and external URLs). */
   image?: string;
+  /** Describes `image` to assistive technology. Leave unset for a decorative image. Applies only with `image`, not `video`. */
+  alt?: string;
   /** Background video: a URL, or sources in order of preference (`[{ src, type }]`, smallest format first). A missing `type` is inferred from the file extension. */
   video?: string | VideoFileSource[];
   /** Scroll behavior for the background image; defaults to `'scroll'`. */
@@ -24,5 +26,12 @@ export interface BackgroundProps {
 
 export type SimpleBackgroundProps = Omit<
   BackgroundProps,
-  'image' | 'video' | 'attachment' | 'overlayClass' | 'poster' | 'pauseButton' | 'playButton'
+  | 'image'
+  | 'alt'
+  | 'video'
+  | 'attachment'
+  | 'overlayClass'
+  | 'poster'
+  | 'pauseButton'
+  | 'playButton'
 >;

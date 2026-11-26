@@ -18,6 +18,8 @@ import videoSource from '~/examples/primitives/Background/video.astro?raw';
 
 ## Image background
 
+An image background is decorative by default. When the image carries meaning, set `alt`: an empty `role="img"` element carries the text as its `aria-label`, so slotted content stays readable. `alt` applies to `image` only, not `video`.
+
 <Example name="image" source={imageSource}>
   <ImageExample />
 </Example>
