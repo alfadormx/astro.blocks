@@ -37,6 +37,10 @@ export interface MetaDataIcons {
   apple?: string;
   icon32?: string;
   icon16?: string;
+  /** Safari pinned-tab SVG, rendered as `<link rel="mask-icon">`. */
+  maskIcon?: string;
+  /** `color` of the mask-icon link. */
+  maskIconColor?: string;
 }
 
 export interface MetaDataImage {

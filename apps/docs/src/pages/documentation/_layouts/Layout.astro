@@ -4,7 +4,6 @@ import 'site-styles';
 import { I18N, METADATA } from 'site-config';
 
 import CommonMeta from '@alfadormx/blocks/meta/CommonMeta.astro';
-import Favicons from '@alfadormx/blocks/meta/Favicons.astro';
 import Analytics from '@alfadormx/blocks/meta/Analytics.astro';
 import Metadata from '@alfadormx/blocks/meta/Metadata.astro';
 import SiteVerification from '@alfadormx/blocks/meta/SiteVerification.astro';
@@ -108,7 +107,6 @@ const pagerButton = (l?: DocLink) => (l ? { href: l.href, subtitle: l.title } : 
 <html lang={htmlLang} dir={htmlDir}>
   <head>
     <CommonMeta />
-    <Favicons />
     <Metadata {...mergedMetadata} alternates={false} />
     <SiteVerification />
     <Analytics />

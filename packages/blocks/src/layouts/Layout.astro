@@ -4,7 +4,6 @@ import 'site-styles';
 import { I18N, METADATA } from 'site-config';
 
 import CommonMeta from '#components/meta/CommonMeta.astro';
-import Favicons from '#components/meta/Favicons.astro';
 import Analytics from '#components/meta/Analytics.astro';
 import Metadata from '#components/meta/Metadata.astro';
 import SiteVerification from '#components/meta/SiteVerification.astro';
@@ -53,7 +52,6 @@ const mergedTopmostContainer = mergeConfigs({}, defaultTopmostContainer, topmost
 <html lang={htmlLang} dir={htmlDir} data-demo={demo}>
   <head>
     <CommonMeta />
-    <Favicons />
     <Metadata {...localizedMetadata} alternates={langCode ? undefined : false} />
     <SiteVerification />
     <Analytics />

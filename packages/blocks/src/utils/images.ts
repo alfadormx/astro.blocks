@@ -57,6 +57,7 @@ export const adaptOpenGraphImages = async (
         const resolvedImage = (await findImage(image.url)) as ImageMetadata | string | undefined;
         if (!resolvedImage) {
           return {
+            ...image,
             url: '',
           };
         }
@@ -82,6 +83,7 @@ export const adaptOpenGraphImages = async (
             // Public folder images or external URLs without unpic support
             // Return as-is with default dimensions, converted to absolute URL
             return {
+              ...image,
               url: resolvedImage.startsWith('/')
                 ? String(new URL(resolvedImage, astroSite))
                 : resolvedImage,
@@ -108,6 +110,7 @@ export const adaptOpenGraphImages = async (
 
         if (typeof _image === 'object') {
           return {
+            ...image,
             url:
               'src' in _image && typeof _image.src === 'string'
                 ? String(new URL(_image.src, astroSite))
@@ -118,6 +121,7 @@ export const adaptOpenGraphImages = async (
           };
         }
         return {
+          ...image,
           url: '',
         };
       }

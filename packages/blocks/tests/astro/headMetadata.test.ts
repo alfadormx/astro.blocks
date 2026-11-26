@@ -157,3 +157,22 @@ describe('Metadata structuredData', () => {
     expect(ldScripts(html)).toEqual([data]);
   });
 });
+
+describe('Metadata Open Graph image', () => {
+  const ogMeta = (html: string, property: string) =>
+    html.match(new RegExp(`<meta[^>]*property="${property}"[^>]*content="([^"]*)"`))?.[1] ??
+    html.match(new RegExp(`<meta[^>]*content="([^"]*)"[^>]*property="${property}"`))?.[1];
+
+  it.each(['/og-image.png', '~/assets/images/hero.jpg'])(
+    'keeps alt and type for %s',
+    async (url) => {
+      const html = await render(Metadata, '/', {
+        openGraph: { images: [{ url, alt: 'A view of Paris', type: 'image/jpeg' }] },
+      });
+
+      expect(ogMeta(html, 'og:image')).toMatch(/^https:\/\/fixture\.example\//);
+      expect(ogMeta(html, 'og:image:alt')).toBe('A view of Paris');
+      expect(ogMeta(html, 'og:image:type')).toBe('image/jpeg');
+    }
+  );
+});

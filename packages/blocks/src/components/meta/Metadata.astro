@@ -6,6 +6,7 @@ import merge from 'lodash.merge';
 import { adaptOpenGraphImages } from '#utils/images';
 import { currentLanguage } from '#utils/currentLanguage';
 import { languageUrl } from '#utils/languageUrl';
+import Favicons from './Favicons.astro';
 
 export type Props = Partial<MetaData> & {
   /** `false` emits no hreflang links, for pages that exist in one language only. */
@@ -130,17 +131,6 @@ const extendedMeta = [
     ? { name: 'keywords', content: merged.keywords.join(', ') }
     : null,
 ].filter((item): item is { name: string; content: string } => item !== null);
-
-const extendedLinks = [
-  merged.icons?.favicon ? { rel: 'icon', href: merged.icons.favicon } : null,
-  merged.icons?.apple ? { rel: 'apple-touch-icon', href: merged.icons.apple } : null,
-  merged.icons?.icon16
-    ? { rel: 'icon', type: 'image/png', sizes: '16x16', href: merged.icons.icon16 }
-    : null,
-  merged.icons?.icon32
-    ? { rel: 'icon', type: 'image/png', sizes: '32x32', href: merged.icons.icon32 }
-    : null,
-].filter((item): item is NonNullable<typeof item> => item !== null);
 ---
 
 <SEO
@@ -154,11 +144,10 @@ const extendedLinks = [
   openGraph={openGraph}
   twitter={twitter}
   languageAlternates={languageAlternates}
-  extend={{
-    meta: extendedMeta,
-    link: extendedLinks,
-  }}
+  extend={{ meta: extendedMeta }}
 />
+
+<Favicons icons={merged.icons} />
 
 {merged.theme?.color && <meta name="theme-color" content={merged.theme.color} />}
 {merged.theme?.colorScheme && <meta name="color-scheme" content={merged.theme.colorScheme} />}
