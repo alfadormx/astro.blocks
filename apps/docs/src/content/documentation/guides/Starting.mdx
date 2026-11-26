@@ -55,7 +55,7 @@ Wrap the library Layout in a site Layout that holds what every page shares: head
 
 <CodeBlock code={layout} lang="astro" title="src/layouts/Layout.astro" />
 
-Pass `langCode` through, so `<html lang dir>` is right. `metadata.title` is an object, `{ default: '…' }`, which the config's `title.template` wraps. The Footer's `languageToggle={{}}` links each language to the same page in the other one.
+Pass `langCode` through, so `<html lang dir>` is right. `metadata.title` is an object, `{ default: '…' }`, which the config's `title.template` wraps. The Footer's `languageToggle={{}}` links each language to the same page in the other one. Anything in `slot="head"` lands at the end of `<head>`, after the library's tags: here, preconnects for the fonts the [theme](#theming) loads.
 
 ## Pages and copy
 

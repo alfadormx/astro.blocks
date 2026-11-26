@@ -58,3 +58,22 @@ describe('Layout icons', () => {
     expect(links.some((l) => l.includes('href="/favicon.ico"'))).toBe(false);
   });
 });
+
+describe('Layout head slot', () => {
+  it('renders slot="head" content inside head, after the library tags', async () => {
+    const container = await AstroContainer.create({ astroConfig: { site: SITE.site } });
+    const html = await container.renderToString(Layout, {
+      slots: {
+        default: '<p>Body</p>',
+        head: '<link rel="preconnect" href="https://fonts.gstatic.com">',
+      },
+      request: new Request('http://localhost/'),
+    });
+    const head = html.slice(html.indexOf('<head>'), html.indexOf('</head>'));
+    const preconnect = head.indexOf('rel="preconnect"');
+
+    expect(preconnect).toBeGreaterThan(-1);
+    expect(preconnect).toBeGreaterThan(head.lastIndexOf('</script>'));
+    expect(preconnect).toBeGreaterThan(head.indexOf('rel="canonical"'));
+  });
+});

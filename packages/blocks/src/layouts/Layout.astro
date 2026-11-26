@@ -93,6 +93,7 @@ const mergedTopmostContainer = mergeConfigs({}, defaultTopmostContainer, topmost
         localStorage.setItem('theme', theme);
       })();
     </script>
+    <slot name="head" />
   </head>
   <body>
     <Container {...mergedTopmostContainer}>

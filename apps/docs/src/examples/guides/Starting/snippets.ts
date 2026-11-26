@@ -130,6 +130,10 @@ const { copy } = useCopy(Astro, 'home');
 ---
 
 <BaseLayout langCode={langCode} metadata={metadata}>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </Fragment>
   <Header
     isSticky
     logo={{ href: homeUrl(langCode), 'aria-label': copy.nav.home }}
