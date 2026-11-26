@@ -30,8 +30,8 @@ const {
   languageToggleAlign = 'center',
 } = Astro.props;
 
-const defaultDisclaimerClass = 'text-xs text-subtle';
-const defaultFootnoteClass = 'text-sm mr-4 text-subtle';
+const defaultDisclaimerClass = 'text-xs text-muted';
+const defaultFootnoteClass = 'text-sm text-muted';
 
 const baseContainerConfig: ContainerProps = {
   htmlTag: 'footer',
@@ -107,7 +107,7 @@ const languageToggleAlignmentClass = {
       <Fragment set:html={renderRichText(disclaimer)} />
     </div>
   )}
-  <div class="md:flex md:items-center md:justify-between pt-6 pb-0 md:pt-8 md:pb-2">
+  <div class="md:flex md:items-center md:justify-between md:gap-4 pt-6 pb-0 md:pt-8 md:pb-2">
     {socialButtons.length > 0 && (
       <div class={cn('md:order-1 flex flex-row gap-1', socialButtonsClass)}>
         {socialButtons.map((button) => (
