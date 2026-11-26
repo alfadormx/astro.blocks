@@ -48,6 +48,7 @@ const containerClass = cn(
   containerWidthType === 'custom' && 'mx-auto',
   widthClass,
   minHeightClass,
+  minHeightClass && 'flex flex-col',
   overflow && `overflow-${overflow}`,
   cn(airSettings[containerAir], spacing?.padding),
   spacing?.margin,
@@ -63,8 +64,8 @@ const contentClass = cn(
   'w-full h-full relative z-1',
   layoutType,
   layoutClass,
-  containerWidthType === 'full' &&
-    contentWidthType === 'boxed' && [contentBoxWidth, 'mx-auto', minHeightClass],
+  containerWidthType === 'full' && contentWidthType === 'boxed' && [contentBoxWidth, 'mx-auto'],
+  minHeightClass && 'flex-1',
   containerWidthType === 'full' && contentWidthType === 'full' && 'w-full',
   contentSpacing?.padding,
   contentSpacing?.margin,

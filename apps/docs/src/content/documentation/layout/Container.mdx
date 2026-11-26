@@ -146,6 +146,8 @@ Control how child elements are arranged using the `layout` prop with Flexbox or 
   <LayoutGridResponsive />
 </Example>
 
+`minHeight` takes a Tailwind class such as `min-h-96` or `min-h-svh`. The air padding sits inside that height, so `min-h-svh` is exactly one screen tall. The content box fills the space inside the padding, so the `layout` classes can align items vertically within it. Content taller than that grows the container, as in the full-center example below at wide screens, where the stack plus the larger air no longer fits in `min-h-96`.
+
 ### 6. Min Height with Default Alignment (Top)
 
 <Example name="min-height-top" source={minHeightTopSource}>

@@ -67,6 +67,12 @@ test.describe('rendering', () => {
     expect(below).toBeLessThan(above / 2);
   });
 
+  test('a min-height hero is exactly its min-height tall, padding included', async ({ page }) => {
+    const hero = await box(section(page, 'background-video').locator('section').first());
+    const innerHeight = await page.evaluate(() => window.innerHeight);
+    expect(hero.height).toBeCloseTo(innerHeight * 0.8, 0);
+  });
+
   test('background-video keeps the copy centred in the hero', async ({ page }) => {
     const hero = await box(section(page, 'background-video').locator('section').first());
     const copy = await box(section(page, 'background-video').locator('[data-hero-copy]'));
@@ -90,6 +96,12 @@ test.describe('rendering', () => {
 
 test.describe('at 390px', () => {
   test.use({ viewport: { width: 390, height: 844 } });
+
+  test('a min-height hero is exactly its min-height tall, padding included', async ({ page }) => {
+    await page.goto(PAGE_URL);
+    const hero = await box(section(page, 'background-video').locator('section').first());
+    expect(hero.height).toBeCloseTo(844 * 0.8, 0);
+  });
 
   for (const name of SPLIT_SECTIONS) {
     test(`${name} stacks the copy above the media`, async ({ page }) => {

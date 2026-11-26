@@ -64,7 +64,7 @@ export interface ContainerProps {
   containerWidthType?: ContainerWidthType;
   /** Tailwind class or CSS value for the container's custom width (used when containerWidthType is 'custom') */
   width?: string;
-  /** Tailwind class or CSS value forcing a minimum height on the container */
+  /** Tailwind class forcing a minimum height on the container, air padding included; the content box fills that height */
   minHeight?: string;
   /** Stretches all direct children to equal height (default: false) */
   equalHeight?: boolean;
