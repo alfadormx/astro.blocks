@@ -1,0 +1,55 @@
+{
+  "site": "Atelier North (portfolio demo)",
+  "audience": {
+    "profile": "showcase",
+    "who": "People learning the blocks library who want to see how a real multi-page studio site is assembled from its blocks."
+  },
+  "language": "en",
+  "markdown": "SITE-GUIDE.md",
+  "images": "../../src/assets/guides/portfolio",
+  "theme": {
+    "colors": {
+      "background": "#F5F5F5",
+      "surface": "#FFFFFF",
+      "ink": "#0D0D0D",
+      "muted": "#555555",
+      "primary": "#1A1A1A",
+      "accent": "#717171",
+      "highlight": "#F5F5F5",
+      "line": "#C4C4C4",
+      "faint": "#8F8F8F"
+    },
+    "fonts": {
+      "title": "Fustat, 'Helvetica Neue', Arial, sans-serif",
+      "body": "Fustat, 'Helvetica Neue', Arial, sans-serif"
+    },
+    "googleFonts": "https://fonts.googleapis.com/css2?family=Fustat:wght@300..700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+  },
+  "pdf": {
+    "file": "portfolio-site-guide.pdf",
+    "cover": {
+      "kicker": "Astro Blocks · Demo sites",
+      "title": "How the portfolio<br>is <em>put together</em>",
+      "footLeft": "For people learning the library",
+      "footRight": "Atelier North, a fictional studio"
+    },
+    "kickers": {
+      "The big picture": "Start here",
+      "The home page, from top to bottom": "Home page",
+      "The other pages": "Other pages",
+      "Blocks this site could add": "Ideas"
+    },
+    "pagePerSection": ["The home page, from top to bottom", "The other pages"],
+    "cards": ["Blocks this site could add"],
+    "flow": ["Blocks this site could add"]
+  },
+  "mdx": {
+    "file": "../../src/content/documentation/demos/Portfolio.mdx",
+    "importPrefix": "~/assets/guides/portfolio/",
+    "frontmatter": {
+      "description": "How the Atelier North studio demo is assembled from blocks, page by page.",
+      "section": "demos",
+      "order": 2
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "site": "Atelier Halden (jewellery store demo)",
+  "audience": {
+    "profile": "showcase",
+    "who": "People learning the blocks library who want to see how a real store, with tabbed collections and a 3D ring configurator, is assembled from its blocks."
+  },
+  "language": "en",
+  "markdown": "SITE-GUIDE.md",
+  "images": "../../src/assets/guides/jewellery",
+  "theme": {
+    "colors": {
+      "background": "#FCF7F4",
+      "surface": "#FFFFFF",
+      "ink": "#1A1715",
+      "muted": "#635E5A",
+      "primary": "#62181F",
+      "accent": "#B08D57",
+      "highlight": "#FCF7F4",
+      "line": "#CFC9C4",
+      "faint": "#A39D98"
+    },
+    "fonts": {
+      "title": "'Cormorant Garamond', Georgia, serif",
+      "body": "'Instrument Sans', 'Helvetica Neue', Arial, sans-serif"
+    },
+    "googleFonts": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400..700;1,400..700&family=Instrument+Sans:wght@400..700&display=swap"
+  },
+  "pdf": {
+    "file": "jewellery-site-guide.pdf",
+    "cover": {
+      "kicker": "Astro Blocks · Demo sites",
+      "title": "How the jewellery store<br>is <em>put together</em>",
+      "footLeft": "For people learning the library",
+      "footRight": "Atelier Halden, a fictional jeweller"
+    },
+    "kickers": {
+      "The big picture": "Start here",
+      "The home page, from top to bottom": "Home page",
+      "The other pages": "Other pages",
+      "Blocks this site could add": "Ideas"
+    },
+    "pagePerSection": ["The home page, from top to bottom", "The other pages"],
+    "cards": ["Blocks this site could add"],
+    "flow": ["Blocks this site could add"]
+  },
+  "mdx": {
+    "file": "../../src/content/documentation/demos/Jewellery.mdx",
+    "importPrefix": "~/assets/guides/jewellery/",
+    "frontmatter": {
+      "description": "How the Atelier Halden jewellery demo is assembled from blocks, from the video hero to the 3D ring configurator.",
+      "section": "demos",
+      "order": 4
+    }
+  }
+}

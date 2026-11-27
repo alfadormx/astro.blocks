@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 967 660" width="967" height="660" role="img" aria-label="The events index, pulled apart into its layers">
+<title>The events index, pulled apart into its layers</title>
+<defs><filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
+<linearGradient id="bakery" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#C79A6B"/><stop offset="1" stop-color="#6B4325"/>
+</linearGradient>
+<linearGradient id="veil" x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0" stop-color="#1E1208" stop-opacity="1"/><stop offset="0.5" stop-color="#1E1208" stop-opacity="0.85"/><stop offset="1" stop-color="#1E1208" stop-opacity="0.4"/>
+</linearGradient>
+<linearGradient id="pill" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#A34E08"/><stop offset="1" stop-color="#8D4200"/>
+</linearGradient>
+<radialGradient id="glow" cx="0.5" cy="1.3" r="1">
+  <stop offset="0" stop-color="#8D4200" stop-opacity="0.8"/><stop offset="0.6" stop-color="#1E1208" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="crumb" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#E7CBA6"/><stop offset="1" stop-color="#A87545"/>
+</linearGradient>
+<linearGradient id="cup" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#D9C3AE"/><stop offset="1" stop-color="#7A5539"/>
+</linearGradient></defs>
+<rect width="967" height="660" fill="#FAF3EF"/>
+<polygon points="44.4,441.0 321.5,281.0 352.7,299.0 75.6,459.0" fill="#271501" opacity="0.16" filter="url(#soft)"/><polygon points="174.3,516.0 451.4,356.0 482.6,374.0 205.5,534.0" fill="#271501" opacity="0.08" filter="url(#soft)"/><polygon points="304.2,591.0 581.3,431.0 612.5,449.0 335.4,609.0" fill="#271501" opacity="0.08" filter="url(#soft)"/><g><polygon points="60.0,230.0 337.1,70.0 331.9,67.0 54.8,227.0" fill="#f3d6bd"/><polygon points="60.0,230.0 60.0,380.0 54.8,377.0 54.8,227.0" fill="#c3ac98"/><g transform="matrix(0.8660254037844387 -0.5 0 1 60.0 230.0)"><rect width="320" height="150" fill="#FAF3EF" fill-opacity="1"/><text x="16" y="28" text-anchor="start" font-family="Gelasio, Georgia, serif" font-size="16" fill="#271501" font-weight="700">Events</text><rect width="320" height="150" fill="none" stroke="#D9BFA9" stroke-width="1.2" vector-effect="non-scaling-stroke"/></g></g>
+<line x1="60.0" y1="230.0" x2="189.9" y2="305.0" stroke="#D9BFA9" stroke-width="1" stroke-dasharray="2 4"/><line x1="337.1" y1="70.0" x2="467.0" y2="145.0" stroke="#D9BFA9" stroke-width="1" stroke-dasharray="2 4"/><line x1="337.1" y1="220.0" x2="467.0" y2="295.0" stroke="#D9BFA9" stroke-width="1" stroke-dasharray="2 4"/><line x1="60.0" y1="380.0" x2="189.9" y2="455.0" stroke="#D9BFA9" stroke-width="1" stroke-dasharray="2 4"/>
+<g><g transform="matrix(0.8660254037844387 -0.5 0 1 189.9 305.0)"><rect width="320" height="150" fill="#FAF3EF" fill-opacity="0.15"/><rect x="16" y="40" width="90" height="84" rx="4" fill="#FFFFFF" stroke="#D9BFA9"/><rect x="20" y="44" width="82" height="34" rx="3" fill="url(#crumb)"/><ellipse cx="61" cy="64.4" rx="20.5" ry="5.44" fill="#FAF3EF" fill-opacity="0.35"/><rect x="22" y="86" width="40" height="3" rx="1.5" fill="#271501" fill-opacity="0.6"/><rect x="22" y="94" width="70" height="4" rx="2" fill="#271501" fill-opacity="0.6"/><rect x="22" y="102" width="56" height="3" rx="1.5" fill="#271501" fill-opacity="0.6"/><rect x="114" y="40" width="90" height="84" rx="4" fill="#FFFFFF" stroke="#D9BFA9"/><rect x="118" y="44" width="82" height="34" rx="3" fill="url(#cup)"/><ellipse cx="159" cy="64.4" rx="20.5" ry="5.44" fill="#FAF3EF" fill-opacity="0.35"/><rect x="120" y="86" width="40" height="3" rx="1.5" fill="#271501" fill-opacity="0.6"/><rect x="120" y="94" width="70" height="4" rx="2" fill="#271501" fill-opacity="0.6"/><rect x="120" y="102" width="56" height="3" rx="1.5" fill="#271501" fill-opacity="0.6"/><rect x="212" y="40" width="90" height="84" rx="4" fill="#FFFFFF" stroke="#D9BFA9"/><rect x="216" y="44" width="82" height="34" rx="3" fill="url(#bakery)"/><ellipse cx="257" cy="64.4" rx="20.5" ry="5.44" fill="#FAF3EF" fill-opacity="0.35"/><rect x="218" y="86" width="40" height="3" rx="1.5" fill="#271501" fill-opacity="0.6"/><rect x="218" y="94" width="70" height="4" rx="2" fill="#271501" fill-opacity="0.6"/><rect x="218" y="102" width="56" height="3" rx="1.5" fill="#271501" fill-opacity="0.6"/><rect width="320" height="150" fill="none" stroke="#68543F" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></g></g>
+<line x1="189.9" y1="305.0" x2="319.8" y2="380.0" stroke="#D9BFA9" stroke-width="1" stroke-dasharray="2 4"/><line x1="467.0" y1="145.0" x2="596.9" y2="220.0" stroke="#D9BFA9" stroke-width="1" stroke-dasharray="2 4"/><line x1="467.0" y1="295.0" x2="596.9" y2="370.0" stroke="#D9BFA9" stroke-width="1" stroke-dasharray="2 4"/><line x1="189.9" y1="455.0" x2="319.8" y2="530.0" stroke="#D9BFA9" stroke-width="1" stroke-dasharray="2 4"/>
+<g><g transform="matrix(0.8660254037844387 -0.5 0 1 319.8 380.0)"><rect width="320" height="150" fill="#FAF3EF" fill-opacity="0.15"/><rect x="130" y="132" width="14" height="12" rx="3" fill="#8D4200" stroke="#D9BFA9"/><text x="137" y="140.5" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="6.5" fill="#FFFFFF">1</text><rect x="150" y="132" width="14" height="12" rx="3" fill="#FFFFFF" stroke="#D9BFA9"/><text x="157" y="140.5" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="6.5" fill="#271501">2</text><rect x="170" y="132" width="14" height="12" rx="3" fill="#FFFFFF" stroke="#D9BFA9"/><text x="177" y="140.5" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="6.5" fill="#271501">3</text><rect width="320" height="150" fill="none" stroke="#68543F" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></g></g><g>
+  <line x1="337.1" y1="86.0" x2="656.9" y2="86.0" stroke="#68543F" stroke-width="1"/>
+  <circle cx="337.1" cy="86.0" r="3" fill="#8D4200"/>
+  <circle cx="670.9" cy="86.0" r="13" fill="#8D4200"/>
+  <text x="670.9" y="91.0" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#FAF3EF">1</text>
+  <text x="692.9" y="86.0" font-family="Gelasio, Georgia, serif" font-size="22" font-weight="600" fill="#271501">Container + h1</text>
+  <text x="692.9" y="104.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#68543F">Headline "Events"</text>
+</g>
+<g>
+  <line x1="467.0" y1="161.0" x2="656.9" y2="161.0" stroke="#68543F" stroke-width="1"/>
+  <circle cx="467.0" cy="161.0" r="3" fill="#8D4200"/>
+  <circle cx="670.9" cy="161.0" r="13" fill="#8D4200"/>
+  <text x="670.9" y="166.0" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#FAF3EF">2</text>
+  <text x="692.9" y="161.0" font-family="Gelasio, Georgia, serif" font-size="22" font-weight="600" fill="#271501">Default event cards</text>
+  <text x="692.9" y="179.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#68543F">CollectionList, no EVENT_CARD</text>
+</g>
+<g>
+  <line x1="596.9" y1="236.0" x2="656.9" y2="236.0" stroke="#68543F" stroke-width="1"/>
+  <circle cx="596.9" cy="236.0" r="3" fill="#8D4200"/>
+  <circle cx="670.9" cy="236.0" r="13" fill="#8D4200"/>
+  <text x="670.9" y="241.0" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#FAF3EF">3</text>
+  <text x="692.9" y="236.0" font-family="Gelasio, Georgia, serif" font-size="22" font-weight="600" fill="#271501">Pager</text>
+  <text x="692.9" y="254.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#68543F">page from the list helpers</text>
+</g>
+</svg>

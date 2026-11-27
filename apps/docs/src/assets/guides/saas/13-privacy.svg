@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 967 620" width="967" height="620" role="img" aria-label="The privacy band, pulled apart into its layers">
+<title>The privacy band, pulled apart into its layers</title>
+<defs><filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
+<linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0.35" stop-color="#14042A"/><stop offset="0.75" stop-color="#7731D2"/><stop offset="1" stop-color="#FAA08F"/>
+</linearGradient>
+<linearGradient id="wash" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#E4D6F6"/><stop offset="1" stop-color="#FCD9D2"/>
+</linearGradient>
+<linearGradient id="photoA" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#D9CFC3"/><stop offset="1" stop-color="#8C7F74"/>
+</linearGradient>
+<linearGradient id="photoB" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#B8C4CF"/><stop offset="1" stop-color="#55606E"/>
+</linearGradient>
+<linearGradient id="photoC" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#1B1640"/><stop offset="1" stop-color="#3D2E73"/>
+</linearGradient></defs>
+<rect width="967" height="620" fill="#FBFBFD"/>
+<polygon points="44.4,401.0 321.5,241.0 352.7,259.0 75.6,419.0" fill="#0A0B12" opacity="0.16" filter="url(#soft)"/><polygon points="174.3,476.0 451.4,316.0 482.6,334.0 205.5,494.0" fill="#0A0B12" opacity="0.08" filter="url(#soft)"/><polygon points="304.2,551.0 581.3,391.0 612.5,409.0 335.4,569.0" fill="#0A0B12" opacity="0.08" filter="url(#soft)"/><g><polygon points="60.0,230.0 337.1,70.0 331.9,67.0 54.8,227.0" fill="#c1c5d5"/><polygon points="60.0,230.0 60.0,340.0 54.8,337.0 54.8,227.0" fill="#9b9eab"/><g transform="matrix(0.8660254037844387 -0.5 0 1 60.0 230.0)"><rect width="320" height="110" fill="#E6E9EF" fill-opacity="1"/><rect width="320" height="110" fill="none" stroke="#ACB0BE" stroke-width="1.2" vector-effect="non-scaling-stroke"/></g></g>
+<line x1="60.0" y1="230.0" x2="189.9" y2="305.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/><line x1="337.1" y1="70.0" x2="467.0" y2="145.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/><line x1="337.1" y1="180.0" x2="467.0" y2="255.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/><line x1="60.0" y1="340.0" x2="189.9" y2="415.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/>
+<g><g transform="matrix(0.8660254037844387 -0.5 0 1 189.9 305.0)"><rect width="320" height="110" fill="#FBFBFD" fill-opacity="0.15"/><text x="16" y="28" text-anchor="start" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#0A0B12" letter-spacing="-0.3">Privacy first</text><rect x="16" y="38" width="200" height="4" rx="2" fill="#5C5F77" fill-opacity="0.7"/><rect x="16" y="46" width="160" height="4" rx="2" fill="#5C5F77" fill-opacity="0.7"/><rect width="320" height="110" fill="none" stroke="#5C5F77" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></g></g>
+<line x1="189.9" y1="305.0" x2="319.8" y2="380.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/><line x1="467.0" y1="145.0" x2="596.9" y2="220.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/><line x1="467.0" y1="255.0" x2="596.9" y2="330.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/><line x1="189.9" y1="415.0" x2="319.8" y2="490.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/>
+<g><g transform="matrix(0.8660254037844387 -0.5 0 1 319.8 380.0)"><rect width="320" height="110" fill="#FBFBFD" fill-opacity="0.15"/><g fill="none" stroke="#7731D2" stroke-width="1.3"><path d="M21 65 l4.5 2 v3 c0 3 -2 5 -4.5 6 c-2.5 -1 -4.5 -3 -4.5 -6 v-3 z"/><path d="M19 70.5 l1.5 1.5 l3 -3"/></g><text x="30" y="73" text-anchor="start" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="7.5" fill="#0A0B12">EU hosting</text><g fill="none" stroke="#7731D2" stroke-width="1.3"><path d="M131 65 l4.5 2 v3 c0 3 -2 5 -4.5 6 c-2.5 -1 -4.5 -3 -4.5 -6 v-3 z"/><path d="M129 70.5 l1.5 1.5 l3 -3"/></g><text x="140" y="73" text-anchor="start" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="7.5" fill="#0A0B12">No cookies by default</text><g fill="none" stroke="#7731D2" stroke-width="1.3"><path d="M21 83 l4.5 2 v3 c0 3 -2 5 -4.5 6 c-2.5 -1 -4.5 -3 -4.5 -6 v-3 z"/><path d="M19 88.5 l1.5 1.5 l3 -3"/></g><text x="30" y="91" text-anchor="start" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="7.5" fill="#0A0B12">One-click export</text><g fill="none" stroke="#7731D2" stroke-width="1.3"><path d="M131 83 l4.5 2 v3 c0 3 -2 5 -4.5 6 c-2.5 -1 -4.5 -3 -4.5 -6 v-3 z"/><path d="M129 88.5 l1.5 1.5 l3 -3"/></g><text x="140" y="91" text-anchor="start" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="7.5" fill="#0A0B12">Single sign-on</text><rect width="320" height="110" fill="none" stroke="#5C5F77" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></g></g><g>
+  <line x1="337.1" y1="86.0" x2="656.9" y2="86.0" stroke="#5C5F77" stroke-width="1"/>
+  <circle cx="337.1" cy="86.0" r="3" fill="#7731D2"/>
+  <circle cx="670.9" cy="86.0" r="13" fill="#7731D2"/>
+  <text x="670.9" y="91.0" text-anchor="middle" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#FBFBFD">1</text>
+  <text x="692.9" y="86.0" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#0A0B12">Grey band</text>
+  <text x="692.9" y="104.0" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#5C5F77">container.class bg-surface</text>
+</g>
+<g>
+  <line x1="467.0" y1="161.0" x2="656.9" y2="161.0" stroke="#5C5F77" stroke-width="1"/>
+  <circle cx="467.0" cy="161.0" r="3" fill="#7731D2"/>
+  <circle cx="670.9" cy="161.0" r="13" fill="#7731D2"/>
+  <text x="670.9" y="166.0" text-anchor="middle" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#FBFBFD">2</text>
+  <text x="692.9" y="161.0" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#0A0B12">Headline</text>
+  <text x="692.9" y="179.0" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#5C5F77">larger muted subtitle</text>
+</g>
+<g>
+  <line x1="596.9" y1="236.0" x2="656.9" y2="236.0" stroke="#5C5F77" stroke-width="1"/>
+  <circle cx="596.9" cy="236.0" r="3" fill="#7731D2"/>
+  <circle cx="670.9" cy="236.0" r="13" fill="#7731D2"/>
+  <text x="670.9" y="241.0" text-anchor="middle" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#FBFBFD">3</text>
+  <text x="692.9" y="236.0" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#0A0B12">Icon points</text>
+  <text x="692.9" y="254.0" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#5C5F77">two-column grid with icons</text>
+</g>
+</svg>

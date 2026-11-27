@@ -1,0 +1,54 @@
+{
+  "site": "Driftwave (SaaS landing demo)",
+  "audience": {
+    "profile": "showcase",
+    "who": "People learning the blocks library who want to see how a real one-page product site is assembled from its blocks."
+  },
+  "language": "en",
+  "markdown": "SITE-GUIDE.md",
+  "images": "../../src/assets/guides/saas",
+  "theme": {
+    "colors": {
+      "background": "#FBFBFD",
+      "surface": "#E6E9EF",
+      "ink": "#0A0B12",
+      "muted": "#5C5F77",
+      "primary": "#7731D2",
+      "accent": "#FAA08F",
+      "highlight": "#FBFBFD",
+      "line": "#ACB0BE",
+      "faint": "#9CA0B0"
+    },
+    "fonts": {
+      "title": "'Libre Franklin', 'Helvetica Neue', Arial, sans-serif",
+      "body": "'Libre Franklin', 'Helvetica Neue', Arial, sans-serif"
+    },
+    "googleFonts": "https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300..700&display=swap"
+  },
+  "pdf": {
+    "file": "saas-site-guide.pdf",
+    "cover": {
+      "kicker": "Astro Blocks · Demo sites",
+      "title": "How the SaaS landing<br>is <em>put together</em>",
+      "footLeft": "For people learning the library",
+      "footRight": "Driftwave, a fictional analytics product"
+    },
+    "kickers": {
+      "The big picture": "Start here",
+      "The sections, from top to bottom": "Section by section",
+      "Blocks this site could add": "Ideas"
+    },
+    "pagePerSection": ["The sections, from top to bottom"],
+    "cards": ["Blocks this site could add"],
+    "flow": ["Blocks this site could add"]
+  },
+  "mdx": {
+    "file": "../../src/content/documentation/demos/Saas.mdx",
+    "importPrefix": "~/assets/guides/saas/",
+    "frontmatter": {
+      "description": "How the Driftwave SaaS demo is assembled from blocks, section by section.",
+      "section": "demos",
+      "order": 1
+    }
+  }
+}

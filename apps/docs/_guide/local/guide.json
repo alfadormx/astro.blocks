@@ -1,0 +1,55 @@
+{
+  "site": "Olmo Café & Bakery (local business demo)",
+  "audience": {
+    "profile": "showcase",
+    "who": "People learning the blocks library who want to see how a real local business site, with opening hours, a map and events, is assembled from its blocks."
+  },
+  "language": "en",
+  "markdown": "SITE-GUIDE.md",
+  "images": "../../src/assets/guides/local",
+  "theme": {
+    "colors": {
+      "background": "#FAF3EF",
+      "surface": "#FFFFFF",
+      "ink": "#271501",
+      "muted": "#68543F",
+      "primary": "#8D4200",
+      "accent": "#F17900",
+      "highlight": "#FAF3EF",
+      "line": "#D9BFA9",
+      "faint": "#B49A85"
+    },
+    "fonts": {
+      "title": "Gelasio, Georgia, serif",
+      "body": "Inter, 'Helvetica Neue', Arial, sans-serif"
+    },
+    "googleFonts": "https://fonts.googleapis.com/css2?family=Gelasio:ital,wght@0,400..700;1,400..700&family=Inter:wght@400..700&display=swap"
+  },
+  "pdf": {
+    "file": "local-site-guide.pdf",
+    "cover": {
+      "kicker": "Astro Blocks · Demo sites",
+      "title": "How the local business site<br>is <em>put together</em>",
+      "footLeft": "For people learning the library",
+      "footRight": "Olmo Café & Bakery, a fictional business"
+    },
+    "kickers": {
+      "The big picture": "Start here",
+      "The home page, from top to bottom": "Home page",
+      "The events pages": "Events",
+      "Blocks this site could add": "Ideas"
+    },
+    "pagePerSection": ["The home page, from top to bottom", "The events pages"],
+    "cards": ["Blocks this site could add"],
+    "flow": ["Blocks this site could add"]
+  },
+  "mdx": {
+    "file": "../../src/content/documentation/demos/Local.mdx",
+    "importPrefix": "~/assets/guides/local/",
+    "frontmatter": {
+      "description": "How the Olmo café and bakery demo is assembled from blocks, section by section.",
+      "section": "demos",
+      "order": 3
+    }
+  }
+}

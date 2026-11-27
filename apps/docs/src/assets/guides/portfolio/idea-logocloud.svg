@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1097 765" width="1097" height="765" role="img" aria-label="A logo cloud block, with one logo pulled forward">
+<title>A logo cloud block, with one logo pulled forward</title>
+<defs><filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
+<linearGradient id="desk" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#E9E4DC"/><stop offset="1" stop-color="#B9B1A6"/>
+</linearGradient>
+<linearGradient id="cover" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#CFCAC4"/><stop offset="1" stop-color="#6E6A66"/>
+</linearGradient>
+<linearGradient id="coverDark" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#4A4744"/><stop offset="1" stop-color="#1E1C1B"/>
+</linearGradient>
+<linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#D8CEC4"/><stop offset="1" stop-color="#8F857C"/>
+</linearGradient></defs>
+<rect width="1097" height="765" fill="#F5F5F5"/>
+<g transform="translate(60 70) scale(1.2) translate(-60 -70)"><polygon points="44.4,471.0 321.5,311.0 352.7,329.0 75.6,489.0" fill="#0D0D0D" opacity="0.16" filter="url(#soft)"/>
+<polygon points="404.7,563.0 477.4,521.0 508.6,539.0 435.9,581.0" fill="#0D0D0D" opacity="0.08" filter="url(#soft)"/>
+<polygon points="60.0,230.0 337.1,70.0 331.9,67.0 54.8,227.0" fill="#dadada"/><polygon points="60.0,230.0 60.0,410.0 54.8,407.0 54.8,227.0" fill="#cacaca"/>
+<g transform="matrix(0.8660254037844387 -0.5 0 1 60.0 230.0)"><rect width="320" height="180" fill="#F5F5F5"/><text x="20" y="30" text-anchor="start" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="7" fill="#555555" letter-spacing="0.4">CLIENTS</text><rect x="20" y="60" width="84" height="40" fill="none" stroke="#C4C4C4"/><rect x="34" y="77" width="6" height="6" fill="#555555"/><rect x="44" y="78" width="44" height="4" rx="2" fill="#555555" fill-opacity="0.7"/><rect x="116" y="60" width="84" height="40" fill="none" stroke="#C4C4C4"/><rect x="130" y="77" width="6" height="6" fill="#555555"/><rect x="140" y="78" width="44" height="4" rx="2" fill="#555555" fill-opacity="0.7"/><rect x="212" y="60" width="84" height="40" fill="none" stroke="#C4C4C4"/><rect x="226" y="77" width="6" height="6" fill="#555555"/><rect x="236" y="78" width="44" height="4" rx="2" fill="#555555" fill-opacity="0.7"/><rect x="20" y="116" width="84" height="40" fill="none" stroke="#C4C4C4"/><rect x="34" y="133" width="6" height="6" fill="#555555"/><rect x="44" y="134" width="44" height="4" rx="2" fill="#555555" fill-opacity="0.7"/><rect x="116" y="116" width="84" height="40" fill="none" stroke="#C4C4C4"/><rect x="130" y="133" width="6" height="6" fill="#555555"/><rect x="140" y="134" width="44" height="4" rx="2" fill="#555555" fill-opacity="0.7"/><rect x="212" y="116" width="84" height="40" fill="none" stroke="#C4C4C4"/><rect x="226" y="133" width="6" height="6" fill="#555555"/><rect x="236" y="134" width="44" height="4" rx="2" fill="#555555" fill-opacity="0.7"/><rect width="320" height="180" fill="none" stroke="#C4C4C4"/></g>
+<line x1="160.5" y1="232.0" x2="420.3" y2="382.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="233.2" y1="190.0" x2="493.0" y2="340.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="233.2" y1="230.0" x2="493.0" y2="380.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="160.5" y1="272.0" x2="420.3" y2="422.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/>
+<polygon points="420.3,382.0 493.0,340.0 487.8,337.0 415.1,379.0" fill="#dadada"/><polygon points="420.3,382.0 420.3,422.0 415.1,419.0 415.1,379.0" fill="#cacaca"/>
+<g transform="matrix(0.8660254037844387 -0.5 0 1 420.3 382.0)"><rect width="84" height="40" fill="#F5F5F5"/><rect x="14" y="17" width="6" height="6" fill="#0D0D0D"/><text x="24" y="23" text-anchor="start" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="7" fill="#0D0D0D" font-weight="700">EXAMPLE CO.</text><rect width="84" height="40" fill="none" stroke="#C4C4C4"/></g></g>
+<g>
+  <line x1="392.6" y1="89.2" x2="786.8" y2="89.2" stroke="#555555" stroke-width="1"/>
+  <circle cx="392.6" cy="89.2" r="3" fill="#1A1A1A"/>
+  <circle cx="800.8" cy="89.2" r="13" fill="#1A1A1A"/>
+  <text x="800.8" y="94.2" text-anchor="middle" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#F5F5F5">1</text>
+  <text x="822.8" y="89.2" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#0D0D0D">LogoCloud</text>
+  <text x="822.8" y="107.2" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#555555">clients in grayscale</text>
+</g>
+<g>
+  <line x1="579.6" y1="406.0" x2="786.8" y2="406.0" stroke="#555555" stroke-width="1"/>
+  <circle cx="579.6" cy="406.0" r="3" fill="#1A1A1A"/>
+  <circle cx="800.8" cy="406.0" r="13" fill="#1A1A1A"/>
+  <text x="800.8" y="411.0" text-anchor="middle" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#F5F5F5">2</text>
+  <text x="822.8" y="406.0" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#0D0D0D">One client logo</text>
+  <text x="822.8" y="424.0" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#555555">any SVG or image</text>
+</g>
+</svg>

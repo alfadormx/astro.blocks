@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1097 755" width="1097" height="755" role="img" aria-label="The contact page, pulled apart into its layers">
+<title>The contact page, pulled apart into its layers</title>
+<defs><filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
+<linearGradient id="film" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#8A6B4E"/><stop offset="1" stop-color="#2E211A"/>
+</linearGradient>
+<linearGradient id="linen" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#EFE6DC"/><stop offset="1" stop-color="#B9A894"/>
+</linearGradient>
+<linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#E2C6AE"/><stop offset="1" stop-color="#9C7860"/>
+</linearGradient>
+<linearGradient id="bench" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#9A8574"/><stop offset="1" stop-color="#4A3B31"/>
+</linearGradient>
+<radialGradient id="metal" cx="0.35" cy="0.3" r="0.8">
+  <stop offset="0" stop-color="#FFF1C9"/><stop offset="0.5" stop-color="#C9A15A"/><stop offset="1" stop-color="#7A5A23"/>
+</radialGradient></defs>
+<rect width="1097" height="755" fill="#FCF7F4"/>
+<polygon points="44.4,461.0 321.5,301.0 352.7,319.0 75.6,479.0" fill="#1A1715" opacity="0.16" filter="url(#soft)"/><polygon points="174.3,536.0 451.4,376.0 482.6,394.0 205.5,554.0" fill="#1A1715" opacity="0.08" filter="url(#soft)"/><polygon points="304.2,611.0 581.3,451.0 612.5,469.0 335.4,629.0" fill="#1A1715" opacity="0.08" filter="url(#soft)"/><polygon points="434.1,686.0 711.3,526.0 742.4,544.0 465.3,704.0" fill="#1A1715" opacity="0.08" filter="url(#soft)"/><g><polygon points="60.0,230.0 337.1,70.0 331.9,67.0 54.8,227.0" fill="#e8e1dc"/><polygon points="60.0,230.0 60.0,400.0 54.8,397.0 54.8,227.0" fill="#bab5b0"/><g transform="matrix(0.8660254037844387 -0.5 0 1 60.0 230.0)"><rect width="320" height="170" fill="#FCF7F4" fill-opacity="1"/><text x="16" y="28" text-anchor="start" font-family="'Cormorant Garamond', Georgia, serif" font-size="16" fill="#1A1715" font-weight="500">Visit the atelier</text><rect x="16" y="38" width="180" height="3.5" rx="1.75" fill="#635E5A" fill-opacity="0.7"/><rect width="320" height="170" fill="none" stroke="#CFC9C4" stroke-width="1.2" vector-effect="non-scaling-stroke"/></g></g>
+<line x1="60.0" y1="230.0" x2="189.9" y2="305.0" stroke="#CFC9C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="337.1" y1="70.0" x2="467.0" y2="145.0" stroke="#CFC9C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="337.1" y1="240.0" x2="467.0" y2="315.0" stroke="#CFC9C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="60.0" y1="400.0" x2="189.9" y2="475.0" stroke="#CFC9C4" stroke-width="1" stroke-dasharray="2 4"/>
+<g><g transform="matrix(0.8660254037844387 -0.5 0 1 189.9 305.0)"><rect width="320" height="170" fill="#FCF7F4" fill-opacity="0.15"/><text x="16" y="55" text-anchor="start" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="5" fill="#1A1715" letter-spacing="1.4" font-weight="600">NAME</text><rect x="16" y="58" width="136" height="12" fill="#FFFFFF" stroke="#CFC9C4"/><text x="16" y="79" text-anchor="start" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="5" fill="#1A1715" letter-spacing="1.4" font-weight="600">EMAIL</text><rect x="16" y="82" width="136" height="12" fill="#FFFFFF" stroke="#CFC9C4"/><text x="16" y="103" text-anchor="start" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="5" fill="#1A1715" letter-spacing="1.4" font-weight="600">TOPIC</text><rect x="16" y="106" width="136" height="12" fill="#FFFFFF" stroke="#CFC9C4"/><text x="16" y="127" text-anchor="start" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="5" fill="#1A1715" letter-spacing="1.4" font-weight="600">MESSAGE</text><rect x="16" y="130" width="136" height="22" fill="#FFFFFF" stroke="#CFC9C4"/><rect x="16" y="156" width="40" height="11" fill="#62181F" stroke="#62181F"/><text x="36" y="163.9" text-anchor="middle" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="6" fill="#FFFFFF" font-weight="600">Send</text><rect width="320" height="170" fill="none" stroke="#635E5A" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></g></g>
+<line x1="189.9" y1="305.0" x2="319.8" y2="380.0" stroke="#CFC9C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="467.0" y1="145.0" x2="596.9" y2="220.0" stroke="#CFC9C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="467.0" y1="315.0" x2="596.9" y2="390.0" stroke="#CFC9C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="189.9" y1="475.0" x2="319.8" y2="550.0" stroke="#CFC9C4" stroke-width="1" stroke-dasharray="2 4"/>
+<g><g transform="matrix(0.8660254037844387 -0.5 0 1 319.8 380.0)"><rect width="320" height="170" fill="#FCF7F4" fill-opacity="0.15"/><text x="168" y="58" text-anchor="start" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="5" fill="#635E5A" letter-spacing="1.4" font-weight="600">ADDRESS</text><rect x="168" y="62" width="80" height="3.5" rx="1.75" fill="#1A1715" fill-opacity="0.6"/><text x="168" y="76" text-anchor="start" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="5" fill="#635E5A" letter-spacing="1.4" font-weight="600">CALL</text><rect x="168" y="80" width="80" height="3.5" rx="1.75" fill="#1A1715" fill-opacity="0.6"/><text x="168" y="94" text-anchor="start" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="5" fill="#635E5A" letter-spacing="1.4" font-weight="600">MAIL</text><rect x="168" y="98" width="80" height="3.5" rx="1.75" fill="#1A1715" fill-opacity="0.6"/><rect width="320" height="170" fill="none" stroke="#635E5A" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></g></g>
+<line x1="319.8" y1="380.0" x2="449.7" y2="455.0" stroke="#CFC9C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="596.9" y1="220.0" x2="726.8" y2="295.0" stroke="#CFC9C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="596.9" y1="390.0" x2="726.8" y2="465.0" stroke="#CFC9C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="319.8" y1="550.0" x2="449.7" y2="625.0" stroke="#CFC9C4" stroke-width="1" stroke-dasharray="2 4"/>
+<g><g transform="matrix(0.8660254037844387 -0.5 0 1 449.7 455.0)"><rect width="320" height="170" fill="#FCF7F4" fill-opacity="0.15"/><rect x="168" y="112" width="136" height="54" fill="#EEE6DD" stroke="#CFC9C4"/><path d="M168 136 L304 126 M200 112 L214 166 M262 112 L250 166" stroke="#FFFFFF" stroke-width="3"/><g fill="none" stroke="#62181F" stroke-width="1.3"><path d="M234 146 C228 140 229 134 234 134 C239 134 240 140 234 146 Z"/><circle cx="234" cy="138.5" r="1.8"/></g><rect width="320" height="170" fill="none" stroke="#635E5A" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></g></g><g>
+  <line x1="337.1" y1="86.0" x2="786.8" y2="86.0" stroke="#635E5A" stroke-width="1"/>
+  <circle cx="337.1" cy="86.0" r="3" fill="#62181F"/>
+  <circle cx="800.8" cy="86.0" r="13" fill="#62181F"/>
+  <text x="800.8" y="91.0" text-anchor="middle" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#FCF7F4">1</text>
+  <text x="822.8" y="86.0" font-family="'Cormorant Garamond', Georgia, serif" font-size="22" font-weight="600" fill="#1A1715">ContactForm heading</text>
+  <text x="822.8" y="104.0" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#635E5A">left-aligned h1</text>
+</g>
+<g>
+  <line x1="467.0" y1="161.0" x2="786.8" y2="161.0" stroke="#635E5A" stroke-width="1"/>
+  <circle cx="467.0" cy="161.0" r="3" fill="#62181F"/>
+  <circle cx="800.8" cy="161.0" r="13" fill="#62181F"/>
+  <text x="800.8" y="166.0" text-anchor="middle" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#FCF7F4">2</text>
+  <text x="822.8" y="161.0" font-family="'Cormorant Garamond', Georgia, serif" font-size="22" font-weight="600" fill="#1A1715">Square fields</text>
+  <text x="822.8" y="179.0" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#635E5A">fields + defaultFieldConfig</text>
+</g>
+<g>
+  <line x1="596.9" y1="236.0" x2="786.8" y2="236.0" stroke="#635E5A" stroke-width="1"/>
+  <circle cx="596.9" cy="236.0" r="3" fill="#62181F"/>
+  <circle cx="800.8" cy="236.0" r="13" fill="#62181F"/>
+  <text x="800.8" y="241.0" text-anchor="middle" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#FCF7F4">3</text>
+  <text x="822.8" y="236.0" font-family="'Cormorant Garamond', Georgia, serif" font-size="22" font-weight="600" fill="#1A1715">Aside: details</text>
+  <text x="822.8" y="254.0" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#635E5A">ItemsGrid, aside on the right</text>
+</g>
+<g>
+  <line x1="726.8" y1="311.0" x2="786.8" y2="311.0" stroke="#635E5A" stroke-width="1"/>
+  <circle cx="726.8" cy="311.0" r="3" fill="#62181F"/>
+  <circle cx="800.8" cy="311.0" r="13" fill="#62181F"/>
+  <text x="800.8" y="316.0" text-anchor="middle" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#FCF7F4">4</text>
+  <text x="822.8" y="311.0" font-family="'Cormorant Garamond', Georgia, serif" font-size="22" font-weight="600" fill="#1A1715">Aside: map</text>
+  <text x="822.8" y="329.0" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#635E5A">Map in the same slot</text>
+</g>
+</svg>

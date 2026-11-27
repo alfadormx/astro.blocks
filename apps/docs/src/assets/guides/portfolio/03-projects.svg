@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1097 755" width="1097" height="755" role="img" aria-label="The selected projects, pulled apart into their layers">
+<title>The selected projects, pulled apart into their layers</title>
+<defs><filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
+<linearGradient id="desk" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#E9E4DC"/><stop offset="1" stop-color="#B9B1A6"/>
+</linearGradient>
+<linearGradient id="cover" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#CFCAC4"/><stop offset="1" stop-color="#6E6A66"/>
+</linearGradient>
+<linearGradient id="coverDark" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#4A4744"/><stop offset="1" stop-color="#1E1C1B"/>
+</linearGradient>
+<linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#D8CEC4"/><stop offset="1" stop-color="#8F857C"/>
+</linearGradient></defs>
+<rect width="1097" height="755" fill="#F5F5F5"/>
+<polygon points="44.4,461.0 321.5,301.0 352.7,319.0 75.6,479.0" fill="#0D0D0D" opacity="0.16" filter="url(#soft)"/><polygon points="174.3,536.0 451.4,376.0 482.6,394.0 205.5,554.0" fill="#0D0D0D" opacity="0.08" filter="url(#soft)"/><polygon points="304.2,611.0 581.3,451.0 612.5,469.0 335.4,629.0" fill="#0D0D0D" opacity="0.08" filter="url(#soft)"/><polygon points="434.1,686.0 711.3,526.0 742.4,544.0 465.3,704.0" fill="#0D0D0D" opacity="0.08" filter="url(#soft)"/><g><polygon points="60.0,230.0 337.1,70.0 331.9,67.0 54.8,227.0" fill="#dcdcdc"/><polygon points="60.0,230.0 60.0,400.0 54.8,397.0 54.8,227.0" fill="#b0b0b0"/><g transform="matrix(0.8660254037844387 -0.5 0 1 60.0 230.0)"><rect width="320" height="170" fill="#F5F5F5" fill-opacity="1"/><text x="16" y="20" text-anchor="start" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="6.5" fill="#555555" letter-spacing="0.4">SELECTED PROJECTS</text><rect width="320" height="170" fill="none" stroke="#C4C4C4" stroke-width="1.2" vector-effect="non-scaling-stroke"/></g></g>
+<line x1="60.0" y1="230.0" x2="189.9" y2="305.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="337.1" y1="70.0" x2="467.0" y2="145.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="337.1" y1="240.0" x2="467.0" y2="315.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="60.0" y1="400.0" x2="189.9" y2="475.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/>
+<g><g transform="matrix(0.8660254037844387 -0.5 0 1 189.9 305.0)"><rect width="320" height="170" fill="#F5F5F5" fill-opacity="0.15"/><rect x="16" y="30" width="90" height="92" fill="url(#cover)"/><rect x="34" y="62.199999999999996" width="54" height="32.199999999999996" fill="#F5F5F5" fill-opacity="0.35"/><rect x="16" y="30" width="90" height="92" fill="none" stroke="#C4C4C4"/><rect x="114" y="30" width="90" height="92" fill="url(#coverDark)"/><rect x="132" y="62.199999999999996" width="54" height="32.199999999999996" fill="#F5F5F5" fill-opacity="0.35"/><rect x="114" y="30" width="90" height="92" fill="none" stroke="#C4C4C4"/><rect x="212" y="30" width="90" height="92" fill="url(#desk)"/><rect x="230" y="62.199999999999996" width="54" height="32.199999999999996" fill="#F5F5F5" fill-opacity="0.35"/><rect x="212" y="30" width="90" height="92" fill="none" stroke="#C4C4C4"/><rect width="320" height="170" fill="none" stroke="#555555" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></g></g>
+<line x1="189.9" y1="305.0" x2="319.8" y2="380.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="467.0" y1="145.0" x2="596.9" y2="220.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="467.0" y1="315.0" x2="596.9" y2="390.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="189.9" y1="475.0" x2="319.8" y2="550.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/>
+<g><g transform="matrix(0.8660254037844387 -0.5 0 1 319.8 380.0)"><rect width="320" height="170" fill="#F5F5F5" fill-opacity="0.15"/><text x="16" y="133" text-anchor="start" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="7.5" fill="#0D0D0D" font-weight="600">Brand refresh</text><text x="16" y="142" text-anchor="start" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="4.5" fill="#555555" letter-spacing="0.4">BRANDING + DESIGN SYSTEM</text><text x="114" y="133" text-anchor="start" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="7.5" fill="#0D0D0D" font-weight="600">Docs site</text><text x="114" y="142" text-anchor="start" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="4.5" fill="#555555" letter-spacing="0.4">DOCS + CODE</text><text x="212" y="133" text-anchor="start" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="7.5" fill="#0D0D0D" font-weight="600">Ring configurator</text><text x="212" y="142" text-anchor="start" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="4.5" fill="#555555" letter-spacing="0.4">PRODUCT + 3D</text><rect width="320" height="170" fill="none" stroke="#555555" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></g></g>
+<line x1="319.8" y1="380.0" x2="449.7" y2="455.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="596.9" y1="220.0" x2="726.8" y2="295.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="596.9" y1="390.0" x2="726.8" y2="465.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="319.8" y1="550.0" x2="449.7" y2="625.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/>
+<g><g transform="matrix(0.8660254037844387 -0.5 0 1 449.7 455.0)"><rect width="320" height="170" fill="#F5F5F5" fill-opacity="0.15"/><text x="226" y="160" text-anchor="start" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="10" fill="#0D0D0D" letter-spacing="-0.2">All projects</text><rect x="292.4" y="152" width="9" height="9" fill="#0D0D0D"/><path d="M294.4 156.5 h5 m-2 -2 l2 2 l-2 2" stroke="#F5F5F5" stroke-width="1" fill="none"/><line x1="226" x2="301.4" y1="164" y2="164" stroke="#0D0D0D"/><rect width="320" height="170" fill="none" stroke="#555555" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></g></g><g>
+  <line x1="337.1" y1="86.0" x2="786.8" y2="86.0" stroke="#555555" stroke-width="1"/>
+  <circle cx="337.1" cy="86.0" r="3" fill="#1A1A1A"/>
+  <circle cx="800.8" cy="86.0" r="13" fill="#1A1A1A"/>
+  <text x="800.8" y="91.0" text-anchor="middle" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#F5F5F5">1</text>
+  <text x="822.8" y="86.0" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#0D0D0D">Container + label</text>
+  <text x="822.8" y="104.0" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#555555">Headline with MONO_LABEL</text>
+</g>
+<g>
+  <line x1="467.0" y1="161.0" x2="786.8" y2="161.0" stroke="#555555" stroke-width="1"/>
+  <circle cx="467.0" cy="161.0" r="3" fill="#1A1A1A"/>
+  <circle cx="800.8" cy="161.0" r="13" fill="#1A1A1A"/>
+  <text x="800.8" y="166.0" text-anchor="middle" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#F5F5F5">2</text>
+  <text x="822.8" y="161.0" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#0D0D0D">4:5 covers</text>
+  <text x="822.8" y="179.0" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#555555">PROJECT_CARD image config</text>
+</g>
+<g>
+  <line x1="596.9" y1="236.0" x2="786.8" y2="236.0" stroke="#555555" stroke-width="1"/>
+  <circle cx="596.9" cy="236.0" r="3" fill="#1A1A1A"/>
+  <circle cx="800.8" cy="236.0" r="13" fill="#1A1A1A"/>
+  <text x="800.8" y="241.0" text-anchor="middle" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#F5F5F5">3</text>
+  <text x="822.8" y="236.0" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#0D0D0D">Title and disciplines</text>
+  <text x="822.8" y="254.0" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#555555">tags read as one line</text>
+</g>
+<g>
+  <line x1="726.8" y1="311.0" x2="786.8" y2="311.0" stroke="#555555" stroke-width="1"/>
+  <circle cx="726.8" cy="311.0" r="3" fill="#1A1A1A"/>
+  <circle cx="800.8" cy="311.0" r="13" fill="#1A1A1A"/>
+  <text x="800.8" y="316.0" text-anchor="middle" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#F5F5F5">4</text>
+  <text x="822.8" y="311.0" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#0D0D0D">All projects link</text>
+  <text x="822.8" y="329.0" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#555555">ARROW_LINK Button</text>
+</g>
+</svg>

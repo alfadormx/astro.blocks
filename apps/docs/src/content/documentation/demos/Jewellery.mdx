@@ -1,0 +1,325 @@
+---
+title: 'Jewellery store'
+description: 'How the Atelier Halden jewellery demo is assembled from blocks, from the video hero to the 3D ring configurator.'
+section: 'demos'
+order: 4
+---
+
+import ItemsGrid from '@alfadormx/blocks/composite/ItemsGrid.astro';
+import Img01Header from '~/assets/guides/jewellery/01-header.svg';
+import Img02Hero from '~/assets/guides/jewellery/02-hero.svg';
+import Img03Collections from '~/assets/guides/jewellery/03-collections.svg';
+import Img04Craft from '~/assets/guides/jewellery/04-craft.svg';
+import Img05Testimonials from '~/assets/guides/jewellery/05-testimonials.svg';
+import Img06Cta from '~/assets/guides/jewellery/06-cta.svg';
+import Img07Footer from '~/assets/guides/jewellery/07-footer.svg';
+import Img08CollectionsPage from '~/assets/guides/jewellery/08-collections-page.svg';
+import Img09Configurator from '~/assets/guides/jewellery/09-configurator.svg';
+import Img10About from '~/assets/guides/jewellery/10-about.svg';
+import Img11History from '~/assets/guides/jewellery/11-history.svg';
+import Img12Stats from '~/assets/guides/jewellery/12-stats.svg';
+import Img13Team from '~/assets/guides/jewellery/13-team.svg';
+import Img14Contact from '~/assets/guides/jewellery/14-contact.svg';
+import Img15Faq from '~/assets/guides/jewellery/15-faq.svg';
+import ImgIdeaAccordion from '~/assets/guides/jewellery/idea-accordion.svg';
+import ImgIdeaCarousel from '~/assets/guides/jewellery/idea-carousel.svg';
+
+Atelier Halden is a fictional jeweller in Antwerp, and its site is one of the demo sites built only from this library. It is the most interactive of the demos: a video hero, collections behind tabs, and a ring configurator where you pick a model, stone, metal and engraving on a live 3D ring and share the result as a link. This guide walks the home page from top to bottom, then the collections, configurator, about and contact pages, and pulls each section apart into the blocks it is made of. Open the live demo beside it as you read.
+
+<ItemsGrid
+  columns={2}
+  gap="tight"
+  class="mb-12"
+  defaultItemConfig={{
+    orientation: 'horizontal',
+    class: 'h-full',
+    contentClass: 'w-full h-full',
+    actionsClass: 'mt-0 md:mt-0 h-full',
+    defaultActionConfig: {
+      variant: 'outline',
+      intent: 'neutral',
+      width: 'full',
+      class: 'h-full items-start justify-start text-left font-normal',
+      labelClass: 'text-normal',
+      subtitleClass: 'text-sm text-muted',
+    },
+  }}
+  items={[
+    {
+      actions: [
+        {
+          label: 'Jewellery store',
+          subtitle:
+            'Hero video, tabbed collections, a 3D ring configurator under a sticky header, a map and a contact form.',
+          href: '/demos/preview/jewellery',
+          target: '_blank',
+          image: {
+            src: '~/assets/images/demos/jewellery/card.jpg',
+            alt: '',
+            width: 480,
+            height: 270,
+            layout: 'cover',
+          },
+          imageSize: 'aspect-video w-full object-cover rounded',
+        },
+      ],
+    },
+  ]}
+/>
+
+## The big picture
+
+The site has five pages: home, collections, the ring configurator, about and contact, in English and Spanish. Every page shares one layout with a light sticky header and a quiet footer. Its look is an atelier: warm paper, warm near-black ink, a single deep burgundy, hairline borders, square corners, a high-contrast serif for headings and small tracked capitals for labels.
+
+### Things that are shared by every page
+
+- **Theme by tokens.** `_theme.css` overrides semantic tokens on `[data-demo='jewellery']`: a warm `background`, white `surface`, near-black `normal`, a burgundy `primary` and a deeper burgundy `tertiary` for the dark band, with every `--radius-*` set to `0`. Cormorant Garamond sets the headings and Instrument Sans the body. Its dark theme is a separate set of warm darks, written out in the same file. Read [Colors](/documentation/base/Colors) for the token names.
+- **Shared prop objects.** `_site.ts` exports `SECTION_HEADLINE` (a centred heading with a tracked eyebrow and serif title), `LABEL` (the small tracked capitals class string), the navigation, and `RING_PRESETS`, the configurator codes for the rings on the collections page.
+- **Links into the configurator.** `configuratorUrl()` builds `/configurator?code=…`, so any button on the site can open the configurator with a ring already chosen.
+- **Copy by language.** Every word lives in `src/copy/jewellery/en.yaml` and `es.yaml`, read with `useCopy(Astro, 'jewellery')`, including the configurator's option names.
+- **Invented content.** The jeweller, its history, its customers and its team are placeholders; nothing is for sale.
+
+## The home page, from top to bottom
+
+### 1. Header and menu
+
+<figure>
+  <Img01Header
+    role="img"
+    aria-label={'The header, pulled apart into its layers'}
+    style={{ width: '100%', height: 'auto' }}
+  />
+</figure>
+
+**What you see:** a light bar that stays at the top, with the serif brand name in the middle, two links on each side, and a theme toggle. On phones the links fold into a menu that slides in from the right.
+
+**Built from:** [Header](/documentation/composite/Header) with `isSticky`, a `bg-background/95 backdrop-blur` background and a bottom hairline. The navigation is split: `leftNavigationTreeHorizontal` takes the first two links and `rightNavigationTreeHorizontal` the other two, with `defaultNavigationTreeHorizontalConfig` styling both at once. The logo is text (`logo.label`), and the Header places it between the two zones by default. A burger opens a [Modal](/documentation/layout/Modal) with a [NavigationTree](/documentation/composite/NavigationTree) of all four links.
+
+### 2. Hero
+
+<figure>
+  <Img02Hero
+    role="img"
+    aria-label={'The hero, pulled apart into its layers'}
+    style={{ width: '100%', height: 'auto' }}
+  />
+</figure>
+
+**What you see:** a slow video of jewellery being made, darkened, with a centred headline and two square buttons: "Design your ring" and "See the collections".
+
+**Built from:** [Hero](/documentation/composite/Hero) with `layout="centered"`. `container.background.video` takes a WebM and an MP4 source, the [Background](/documentation/primitives/Background) plays it muted behind the content, and `overlayClass` lays a semi-transparent burgundy over it. `defaultActionConfig` makes both actions square and large, so the two buttons only set their own variant.
+
+### 3. Collections
+
+<figure>
+  <Img03Collections
+    role="img"
+    aria-label={'The collections, pulled apart into their layers'}
+    style={{ width: '100%', height: 'auto' }}
+  />
+</figure>
+
+**What you see:** rings, necklaces and earrings as three tall portrait photos, each with a serif name, a line and an "Explore" link.
+
+**Built from:** [ItemsContent](/documentation/composite/ItemsContent) with a three-column `itemsGrid`. `defaultItemConfig` crops every image to 3:4 with `mediaClass`, sets the serif title, and through its own `defaultActionConfig` turns each item's action into a small tracked-capitals link. Three layers deep, one object: the grid configures its items, and the items configure their buttons.
+
+### 4. Craftsmanship
+
+<figure>
+  <Img04Craft
+    role="img"
+    aria-label={'The craft section, pulled apart into its layers'}
+    style={{ width: '100%', height: 'auto' }}
+  />
+</figure>
+
+**What you see:** on a white band, a photo of a goldsmith at the bench, the story of how each piece is made, and a "Meet the workshop" button.
+
+**Built from:** [Content](/documentation/composite/Content) with `imagePosition="left"`, a left-aligned `headline`, the body as rich text in its slot, and an `action` that links to the about page.
+
+### 5. From our customers
+
+<figure>
+  <Img05Testimonials
+    role="img"
+    aria-label={'The customer quotes, pulled apart into their layers'}
+    style={{ width: '100%', height: 'auto' }}
+  />
+</figure>
+
+**What you see:** three quotes in italic serif, each in a white hairline box with five stars, a name and a city.
+
+**Built from:** [Testimonials](/documentation/composite/Testimonials) with `columns={3}`. Every testimonial sets `rating: 5`; `defaultTestimonialConfig` supplies the hairline card, the serif `quoteClass` and the screen-reader `ratingLabel`.
+
+### 6. Design your own ring
+
+<figure>
+  <Img06Cta
+    role="img"
+    aria-label={'The call to action, pulled apart into its layers'}
+    style={{ width: '100%', height: 'auto' }}
+  />
+</figure>
+
+**What you see:** a deep burgundy band with a centred heading, a sentence and an outlined "Start designing" button.
+
+**Built from:** [CallToAction](/documentation/composite/CallToAction) with `container.class` set to `bg-tertiary` and its inner card made transparent with `container.content.class`. The button links to the configurator.
+
+### 7. Footer
+
+<figure>
+  <Img07Footer
+    role="img"
+    aria-label={'The footer, pulled apart into its layers'}
+    style={{ width: '100%', height: 'auto' }}
+  />
+</figure>
+
+**What you see:** the brand name, one line about the workshop, Instagram and Pinterest icons, the language switch and a credit line, above a hairline.
+
+**Built from:** [Footer](/documentation/composite/Footer) reusing the header's text logo, with a `disclaimer`, two `socialButtons`, an empty `languageToggle={{}}` (present means shown, with its defaults) and a `footnote`.
+
+## The other pages
+
+### 8. Collections
+
+<figure>
+  <Img08CollectionsPage
+    role="img"
+    aria-label={'The collections page, pulled apart into its layers'}
+    style={{ width: '100%', height: 'auto' }}
+  />
+</figure>
+
+**What you see:** Rings, Necklaces and Earrings as three tabs across the page; each tab shows its pieces as portrait photos, and every ring has a "Design this ring" link.
+
+**Built from:** a Headline and [Tabs](/documentation/composite/Tabs) whose `tabList` is a three-column grid with no gap, so the tabs fill the width. `defaultItemConfig` makes each tab a square ghost button with a hairline underneath; `activeItemConfig` thickens the line under the selected one. Each panel is an [ItemsGrid](/documentation/composite/ItemsGrid) passed into a `panel-<n>` slot. The ring links come from `RING_PRESETS`, so each one opens the configurator on that ring.
+
+### 9. Ring configurator
+
+<figure>
+  <Img09Configurator
+    role="img"
+    aria-label={'The configurator, pulled apart into its layers'}
+    style={{ width: '100%', height: 'auto' }}
+  />
+</figure>
+
+**What you see:** a 3D ring you can turn, with a title and a short summary of your choices above it; on the right, six categories (model, carat, metal, clarity, extras, engraving) as icon tabs, each opening a grid of options. Every choice changes the ring at once, and the address bar keeps a code you can share.
+
+**Built from:** one [Configurator](/documentation/composite/Configurator). It lays a [ModelViewer](/documentation/primitives/ModelViewer) (the GLB ring, a studio HDR environment, bloom and a camera preset that turns to the band for engraving) beside Tabs of `categories`. Each category lists `options`, and each option lists `mutations`: swap the model, show a different stone, recolour the band, or change the stone's material. Extras use `mode: 'multiple'` with a `max`; engraving uses a text panel. `summary` writes the chosen metal, carat and clarity under the title, `defaultItemsGridConfig` and `selectedItemConfig` draw the hairline option tiles, and `urlState` keeps the selection in the URL. [Composing blocks](/documentation/guides/Composing) explains the layers this page leans on most.
+
+### 10. About: intro
+
+<figure>
+  <Img10About
+    role="img"
+    aria-label={'The about intro, pulled apart into its layers'}
+    style={{ width: '100%', height: 'auto' }}
+  />
+</figure>
+
+**What you see:** "A workshop, not a factory", a short story and a photo of the bench.
+
+**Built from:** [Content](/documentation/composite/Content) with a left-aligned `h1` headline, the body in its slot and an image on the default right side.
+
+### 11. About: our story
+
+<figure>
+  <Img11History
+    role="img"
+    aria-label={'The history timeline, pulled apart into its layers'}
+    style={{ width: '100%', height: 'auto' }}
+  />
+</figure>
+
+**What you see:** four dated moments, from a repair counter in 1962 to online design in 2024, along a vertical line.
+
+**Built from:** [ItemsTimeline](/documentation/composite/ItemsTimeline) in a white Container, with `defaultItemConfig` setting the serif titles. The years are part of each title in the copy file.
+
+### 12. About: in numbers
+
+<figure>
+  <Img12Stats
+    role="img"
+    aria-label={'The numbers, pulled apart into their layers'}
+    style={{ width: '100%', height: 'auto' }}
+  />
+</figure>
+
+**What you see:** four figures in a row of hairline cells.
+
+**Built from:** ItemsContent with a four-column grid and `gap: 'none'`; the grid draws the top and left border and each item the right and bottom, which together make the cells.
+
+### 13. About: the workshop
+
+<figure>
+  <Img13Team
+    role="img"
+    aria-label={'The team, pulled apart into its layers'}
+    style={{ width: '100%', height: 'auto' }}
+  />
+</figure>
+
+**What you see:** four square portraits with a serif name and a tracked-capitals role.
+
+**Built from:** [Team](/documentation/composite/Team) with `columns={4}`, `imageShape="square"` and `defaultMemberConfig` for the type.
+
+### 14. Contact: visit the atelier
+
+<figure>
+  <Img14Contact
+    role="img"
+    aria-label={'The contact page, pulled apart into its layers'}
+    style={{ width: '100%', height: 'auto' }}
+  />
+</figure>
+
+**What you see:** a large heading, a four-field form on the left, and on the right the address, phone, email and a map of the shop.
+
+**Built from:** [ContactForm](/documentation/composite/ContactForm) with `asidePosition="right"` and a 1:1 `twoColumnContainer`. Two blocks share its `aside` slot: an ItemsGrid of the contact details and the [Map](/documentation/primitives/Map). The form sends through a `mailto` action.
+
+### 15. Contact: before you visit
+
+<figure>
+  <Img15Faq
+    role="img"
+    aria-label={'The contact FAQ, pulled apart into its layers'}
+    style={{ width: '100%', height: 'auto' }}
+  />
+</figure>
+
+**What you see:** questions about ring sizes, resizing, cleaning and engraving, answered in two columns on a white band.
+
+**Built from:** ItemsContent with a two-column grid. Each copy entry already has `title` and `content`, so the page passes the copy straight in as items.
+
+## Blocks this site could add
+
+### Accordion
+
+<figure>
+  <ImgIdeaAccordion
+    role="img"
+    aria-label={'An accordion, with one answer pulled forward'}
+    style={{ width: '100%', height: 'auto' }}
+  />
+</figure>
+
+As the questions grow, the contact page's answers could fold into an [Accordion](/documentation/primitives/Accordion), so the page stays short and each answer opens on demand.
+
+### Content carousel
+
+<figure>
+  <ImgIdeaCarousel
+    role="img"
+    aria-label={'A content carousel, with one commission pulled forward'}
+    style={{ width: '100%', height: 'auto' }}
+  />
+</figure>
+
+Finished commissions, rings designed in the configurator and then made, would fit a [ContentCarousel](/documentation/composite/ContentCarousel) on the home page, one ring per slide.
+
+## Where to read next
+
+- [Composing blocks](/documentation/guides/Composing) explains instances, layers and merge order, which every section above leans on.
+- [SaaS landing](/documentation/demos/Saas), [Portfolio](/documentation/demos/Portfolio) and [Local business](/documentation/demos/Local) show the same blocks with different themes.

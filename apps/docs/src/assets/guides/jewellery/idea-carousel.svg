@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1097 765" width="1097" height="765" role="img" aria-label="A content carousel, with one commission pulled forward">
+<title>A content carousel, with one commission pulled forward</title>
+<defs><filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
+<linearGradient id="film" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#8A6B4E"/><stop offset="1" stop-color="#2E211A"/>
+</linearGradient>
+<linearGradient id="linen" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#EFE6DC"/><stop offset="1" stop-color="#B9A894"/>
+</linearGradient>
+<linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#E2C6AE"/><stop offset="1" stop-color="#9C7860"/>
+</linearGradient>
+<linearGradient id="bench" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#9A8574"/><stop offset="1" stop-color="#4A3B31"/>
+</linearGradient>
+<radialGradient id="metal" cx="0.35" cy="0.3" r="0.8">
+  <stop offset="0" stop-color="#FFF1C9"/><stop offset="0.5" stop-color="#C9A15A"/><stop offset="1" stop-color="#7A5A23"/>
+</radialGradient></defs>
+<rect width="1097" height="765" fill="#FCF7F4"/>
+<g transform="translate(60 70) scale(1.2) translate(-60 -70)"><polygon points="44.4,471.0 321.5,311.0 352.7,329.0 75.6,489.0" fill="#1A1715" opacity="0.16" filter="url(#soft)"/>
+<polygon points="321.5,611.0 468.8,526.0 499.9,544.0 352.7,629.0" fill="#1A1715" opacity="0.08" filter="url(#soft)"/>
+<polygon points="60.0,230.0 337.1,70.0 331.9,67.0 54.8,227.0" fill="#e6dfda"/><polygon points="60.0,230.0 60.0,410.0 54.8,407.0 54.8,227.0" fill="#d5cfca"/>
+<g transform="matrix(0.8660254037844387 -0.5 0 1 60.0 230.0)"><rect width="320" height="180" fill="#FCF7F4"/><text x="160" y="24" text-anchor="middle" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="5" fill="#635E5A" letter-spacing="1.4" font-weight="600">COMMISSIONS</text><text x="160" y="38" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-size="12" fill="#1A1715" font-weight="500">Made from the configurator</text><rect x="20" y="58" width="170" height="104" fill="url(#linen)"/><circle cx="105" cy="115.2" r="16.64" fill="none" stroke="#C9A15A" stroke-width="2"/><rect x="198" y="58" width="102" height="104" fill="url(#skin)"/><circle cx="249" cy="115.2" r="16.32" fill="none" stroke="#C9A15A" stroke-width="2"/><rect x="140" y="170" width="6" height="2" fill="#1A1715"/><rect x="150" y="170" width="6" height="2" fill="#CFC9C4"/><rect x="160" y="170" width="6" height="2" fill="#CFC9C4"/><rect x="170" y="170" width="6" height="2" fill="#CFC9C4"/><rect width="320" height="180" fill="none" stroke="#CFC9C4"/></g>
+<line x1="77.3" y1="278.0" x2="337.1" y2="428.0" stroke="#CFC9C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="224.5" y1="193.0" x2="484.4" y2="343.0" stroke="#CFC9C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="224.5" y1="297.0" x2="484.4" y2="447.0" stroke="#CFC9C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="77.3" y1="382.0" x2="337.1" y2="532.0" stroke="#CFC9C4" stroke-width="1" stroke-dasharray="2 4"/>
+<polygon points="337.1,428.0 484.4,343.0 479.2,340.0 331.9,425.0" fill="#e6dfda"/><polygon points="337.1,428.0 337.1,532.0 331.9,529.0 331.9,425.0" fill="#d5cfca"/>
+<g transform="matrix(0.8660254037844387 -0.5 0 1 337.1 428.0)"><rect width="170" height="104" fill="#FFFFFF"/><rect width="170" height="76" fill="url(#linen)"/><ellipse cx="85" cy="40" rx="24" ry="13.200000000000001" fill="none" stroke="url(#metal)" stroke-width="5.28"/><path d="M80.68 26.799999999999997 l4.32 -7.199999999999999 l4.32 7.199999999999999 z" fill="#E9F2F7" stroke="#9FB4C2"/><text x="10" y="92" text-anchor="start" font-family="'Cormorant Garamond', Georgia, serif" font-size="9" fill="#1A1715" font-weight="500">Classic, rose gold, 1 ct</text><rect width="170" height="104" fill="none" stroke="#CFC9C4"/></g></g>
+<g>
+  <line x1="392.6" y1="89.2" x2="786.8" y2="89.2" stroke="#635E5A" stroke-width="1"/>
+  <circle cx="392.6" cy="89.2" r="3" fill="#62181F"/>
+  <circle cx="800.8" cy="89.2" r="13" fill="#62181F"/>
+  <text x="800.8" y="94.2" text-anchor="middle" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#FCF7F4">1</text>
+  <text x="822.8" y="89.2" font-family="'Cormorant Garamond', Georgia, serif" font-size="22" font-weight="600" fill="#1A1715">ContentCarousel</text>
+  <text x="822.8" y="107.2" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#635E5A">one ring per slide</text>
+</g>
+<g>
+  <line x1="569.2" y1="409.6" x2="786.8" y2="409.6" stroke="#635E5A" stroke-width="1"/>
+  <circle cx="569.2" cy="409.6" r="3" fill="#62181F"/>
+  <circle cx="800.8" cy="409.6" r="13" fill="#62181F"/>
+  <text x="800.8" y="414.6" text-anchor="middle" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#FCF7F4">2</text>
+  <text x="822.8" y="409.6" font-family="'Cormorant Garamond', Georgia, serif" font-size="22" font-weight="600" fill="#1A1715">One commission</text>
+  <text x="822.8" y="427.6" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#635E5A">photo and its configuration</text>
+</g>
+</svg>

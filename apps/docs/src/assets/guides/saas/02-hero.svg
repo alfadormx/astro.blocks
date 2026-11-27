@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1097 765" width="1097" height="765" role="img" aria-label="The hero, pulled apart into its layers">
+<title>The hero, pulled apart into its layers</title>
+<defs><filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
+<linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0.35" stop-color="#14042A"/><stop offset="0.75" stop-color="#7731D2"/><stop offset="1" stop-color="#FAA08F"/>
+</linearGradient>
+<linearGradient id="wash" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#E4D6F6"/><stop offset="1" stop-color="#FCD9D2"/>
+</linearGradient>
+<linearGradient id="photoA" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#D9CFC3"/><stop offset="1" stop-color="#8C7F74"/>
+</linearGradient>
+<linearGradient id="photoB" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#B8C4CF"/><stop offset="1" stop-color="#55606E"/>
+</linearGradient>
+<linearGradient id="photoC" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#1B1640"/><stop offset="1" stop-color="#3D2E73"/>
+</linearGradient></defs>
+<rect width="1097" height="765" fill="#FBFBFD"/>
+<polygon points="44.4,471.0 321.5,311.0 352.7,329.0 75.6,489.0" fill="#0A0B12" opacity="0.16" filter="url(#soft)"/><polygon points="174.3,546.0 451.4,386.0 482.6,404.0 205.5,564.0" fill="#0A0B12" opacity="0.08" filter="url(#soft)"/><polygon points="304.2,621.0 581.3,461.0 612.5,479.0 335.4,639.0" fill="#0A0B12" opacity="0.08" filter="url(#soft)"/><polygon points="434.1,696.0 711.3,536.0 742.4,554.0 465.3,714.0" fill="#0A0B12" opacity="0.08" filter="url(#soft)"/><g><polygon points="60.0,230.0 337.1,70.0 331.9,67.0 54.8,227.0" fill="#16042f"/><polygon points="60.0,230.0 60.0,410.0 54.8,407.0 54.8,227.0" fill="#120426"/><g transform="matrix(0.8660254037844387 -0.5 0 1 60.0 230.0)"><rect width="320" height="180" fill="url(#dusk)" fill-opacity="1"/><rect width="320" height="180" fill="none" stroke="#ACB0BE" stroke-width="1.2" vector-effect="non-scaling-stroke"/></g></g>
+<line x1="60.0" y1="230.0" x2="189.9" y2="305.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/><line x1="337.1" y1="70.0" x2="467.0" y2="145.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/><line x1="337.1" y1="250.0" x2="467.0" y2="325.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/><line x1="60.0" y1="410.0" x2="189.9" y2="485.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/>
+<g><g transform="matrix(0.8660254037844387 -0.5 0 1 189.9 305.0)"><rect width="320" height="180" fill="#FBFBFD" fill-opacity="0.15"/><text stroke="#14042A" stroke-width="5" stroke-linejoin="round" paint-order="stroke" x="20" y="42" text-anchor="start" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="20" fill="#FBFBFD" font-weight="300">Know what your users</text><text stroke="#14042A" stroke-width="5" stroke-linejoin="round" paint-order="stroke" x="20" y="64" text-anchor="start" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="20" fill="#FBFBFD" font-weight="300">do next</text><rect x="20" y="76" width="190" height="4" rx="2" fill="#FBFBFD" fill-opacity="0.8"/><rect x="20" y="84" width="150" height="4" rx="2" fill="#FBFBFD" fill-opacity="0.8"/><rect width="320" height="180" fill="none" stroke="#5C5F77" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></g></g>
+<line x1="189.9" y1="305.0" x2="319.8" y2="380.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/><line x1="467.0" y1="145.0" x2="596.9" y2="220.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/><line x1="467.0" y1="325.0" x2="596.9" y2="400.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/><line x1="189.9" y1="485.0" x2="319.8" y2="560.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/>
+<g><g transform="matrix(0.8660254037844387 -0.5 0 1 319.8 380.0)"><rect width="320" height="180" fill="#FBFBFD" fill-opacity="0.15"/><rect x="20" y="96" width="60" height="16" rx="4" fill="#FBFBFD" stroke="#0A0B12"/><text x="50" y="106.6" text-anchor="middle" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="7" fill="#0A0B12" font-weight="600">Get started  →</text><rect width="320" height="180" fill="none" stroke="#5C5F77" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></g></g>
+<line x1="319.8" y1="380.0" x2="449.7" y2="455.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/><line x1="596.9" y1="220.0" x2="726.8" y2="295.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/><line x1="596.9" y1="400.0" x2="726.8" y2="475.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/><line x1="319.8" y1="560.0" x2="449.7" y2="635.0" stroke="#ACB0BE" stroke-width="1" stroke-dasharray="2 4"/>
+<g><g transform="matrix(0.8660254037844387 -0.5 0 1 449.7 455.0)"><rect width="320" height="180" fill="#FBFBFD" fill-opacity="0.15"/><rect x="30" y="122" width="260" height="58" rx="10" fill="url(#photoA)"/><path d="M69 165.5 l52 -17.4 l39 8.7 l52 -20.299999999999997" fill="none" stroke="#FBFBFD" stroke-opacity="0.7" stroke-width="2"/><rect x="30" y="122" width="260" height="58" rx="10" fill="none" stroke="#ACB0BE"/><rect width="320" height="180" fill="none" stroke="#5C5F77" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></g></g><g>
+  <line x1="337.1" y1="86.0" x2="786.8" y2="86.0" stroke="#5C5F77" stroke-width="1"/>
+  <circle cx="337.1" cy="86.0" r="3" fill="#7731D2"/>
+  <circle cx="800.8" cy="86.0" r="13" fill="#7731D2"/>
+  <text x="800.8" y="91.0" text-anchor="middle" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#FBFBFD">1</text>
+  <text x="822.8" y="86.0" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#0A0B12">Dusk gradient</text>
+  <text x="822.8" y="104.0" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#5C5F77">container.background</text>
+</g>
+<g>
+  <line x1="467.0" y1="161.0" x2="786.8" y2="161.0" stroke="#5C5F77" stroke-width="1"/>
+  <circle cx="467.0" cy="161.0" r="3" fill="#7731D2"/>
+  <circle cx="800.8" cy="161.0" r="13" fill="#7731D2"/>
+  <text x="800.8" y="166.0" text-anchor="middle" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#FBFBFD">2</text>
+  <text x="822.8" y="161.0" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#0A0B12">Headline, left-aligned</text>
+  <text x="822.8" y="179.0" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#5C5F77">light, tightly tracked title</text>
+</g>
+<g>
+  <line x1="596.9" y1="236.0" x2="786.8" y2="236.0" stroke="#5C5F77" stroke-width="1"/>
+  <circle cx="596.9" cy="236.0" r="3" fill="#7731D2"/>
+  <circle cx="800.8" cy="236.0" r="13" fill="#7731D2"/>
+  <text x="800.8" y="241.0" text-anchor="middle" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#FBFBFD">3</text>
+  <text x="822.8" y="236.0" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#0A0B12">Get started button</text>
+  <text x="822.8" y="254.0" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#5C5F77">actions · jumps to pricing</text>
+</g>
+<g>
+  <line x1="726.8" y1="311.0" x2="786.8" y2="311.0" stroke="#5C5F77" stroke-width="1"/>
+  <circle cx="726.8" cy="311.0" r="3" fill="#7731D2"/>
+  <circle cx="800.8" cy="311.0" r="13" fill="#7731D2"/>
+  <text x="800.8" y="316.0" text-anchor="middle" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#FBFBFD">4</text>
+  <text x="822.8" y="311.0" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#0A0B12">Product photo</text>
+  <text x="822.8" y="329.0" font-family="'Libre Franklin', 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#5C5F77">Image, pulled up over the hero</text>
+</g>
+</svg>

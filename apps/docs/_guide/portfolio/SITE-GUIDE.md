@@ -1,0 +1,190 @@
+# Portfolio
+
+Atelier North is a fictional design and engineering studio, and its site is one of the demo sites built only from this library. Where the SaaS demo is one long page, this one has a home page, an about page, a contact page and a collection of case studies. This guide walks each page from top to bottom and pulls every section apart into the blocks it is made of, so you can see how a quiet, type-led look comes from a few props rather than custom markup. Open the live demo beside it as you read.
+
+<!-- mdx
+import ItemsGrid from '@alfadormx/blocks/composite/ItemsGrid.astro';
+
+<ItemsGrid
+  columns={2}
+  gap="tight"
+  class="mb-12"
+  defaultItemConfig={{
+    orientation: 'horizontal',
+    class: 'h-full',
+    contentClass: 'w-full h-full',
+    actionsClass: 'mt-0 md:mt-0 h-full',
+    defaultActionConfig: {
+      variant: 'outline',
+      intent: 'neutral',
+      width: 'full',
+      class: 'h-full items-start justify-start text-left font-normal',
+      labelClass: 'text-normal',
+      subtitleClass: 'text-sm text-muted',
+    },
+  }}
+  items={[
+    {
+      actions: [
+        {
+          label: 'Portfolio',
+          subtitle:
+            'Hero, case study galleries, team, testimonials and a contact form across several pages.',
+          href: '/demos/preview/portfolio',
+          target: '_blank',
+          image: {
+            src: '~/assets/images/demos/portfolio/hero.jpg',
+            alt: '',
+            width: 480,
+            height: 270,
+            layout: 'cover',
+          },
+          imageSize: 'aspect-video w-full object-cover rounded',
+        },
+      ],
+    },
+  ]}
+/>
+-->
+
+## The big picture
+
+The site has four kinds of page: home, about, contact, and the work collection (an index plus one page per case study), in English and Spanish. Every page shares one layout: a frosted sticky header at the top and a dark "ink" band with a newsletter form and footer columns at the bottom. Its look is ink on paper: near-black type on an off-white page, square corners everywhere, and small uppercase mono labels above each section.
+
+### Things that are shared by every page
+
+- **Theme by tokens.** `_theme.css` overrides semantic tokens on `[data-demo='portfolio']`: greys for `background`, `normal`, `muted` and the borders, `primary` set to the text colour so buttons are ink, and every `--radius-*` set to `0`, which squares the corners of every block at once. It also sets Fustat for headings and body, IBM Plex Mono for `--font-mono`, and widens `--container-max-width`. Read [Colors](/documentation/base/Colors) for the token names.
+- **Shared prop objects.** `_site.ts` exports the pieces the pages reuse: `MONO_LABEL` (the small uppercase mono class string), `ARROW_LINK` (a large underlined link [Button](/documentation/primitives/Button) with the arrow in a filled square), `PROJECT_CARD` (the case study card config) and the helpers that build the navigation and footer columns.
+- **Content as a collection.** The projects are Markdown files in `src/content/cases/<lang>/`, declared with the `caseStudy` preset in `config.yaml`. The home page picks the featured ones; the work pages list and render all of them. [Collections](/documentation/guides/Collections) explains the setup.
+- **Copy by language.** Every other word lives in `src/copy/portfolio/en.yaml` and `es.yaml`, read with `useCopy(Astro, 'portfolio')`.
+- **Invented content.** The studio, its clients, the numbers, the quote and the team are placeholders; the photos come from Pexels.
+
+## The home page, from top to bottom
+
+### 1. Header and menu
+
+![The header, pulled apart into its layers](images/01-header.svg)
+
+**What you see:** a light, slightly see-through bar that stays at the top, with the stretched square-and-name wordmark on the left and four page links on the right. On phones the links fold into a menu that slides in from the right.
+
+**Built from:** [Header](/documentation/composite/Header) with `isSticky` and a `bg-background/80 backdrop-blur` container background. The wordmark is an inline SVG built from the studio name and passed as `logo.vector`; the links are a `rightNavigationTreeHorizontal`, and the current page gets `aria-current`. A burger in `rightButtons` opens a [Modal](/documentation/layout/Modal) with `position="right"` holding a [NavigationTree](/documentation/composite/NavigationTree) of the same links.
+
+### 2. Hero
+
+![The hero, pulled apart into its layers](images/02-hero.svg)
+
+**What you see:** no photo, just a mono label and one long sentence about the studio, set large and filling the first screen.
+
+**Built from:** [Hero](/documentation/composite/Hero) with only a `headline`: `tagline` and `title`, left-aligned, the tagline styled with `MONO_LABEL`. `container.minHeight` set to the screen height minus the header keeps the statement on its own screen. A hero without an image or actions is still a Hero.
+
+### 3. Selected projects
+
+![The selected projects, pulled apart into their layers](images/03-projects.svg)
+
+**What you see:** a mono label, six projects as tall portrait covers with a title and the disciplines under each, and a large "All projects" arrow link.
+
+**Built from:** a [Container](/documentation/layout/Container) holding a [Headline](/documentation/primitives/Headline), a [CollectionList](/documentation/composite/CollectionList) of the featured case studies, and a Button. `defaultCaseStudyCardConfig` (the shared `PROJECT_CARD`) strips the card chrome, crops covers to 4:5 and sets the mono eyebrow. Before rendering, the page moves each entry's tags into its description, so they read as a "Branding + Design system" line instead of tag pills.
+
+### 4. Impact in numbers
+
+![The numbers, pulled apart into their layers](images/04-impact.svg)
+
+**What you see:** a mono label on the left and three huge numbers stacked on the right, each over a rule and a mono caption.
+
+**Built from:** a [TwoColumnContainer](/documentation/layout/TwoColumnContainer) with `ratio="1:1"`: a Headline in the `left` slot and an [ItemsGrid](/documentation/composite/ItemsGrid) with one column in the `right` slot. `defaultItemConfig` sets the very large, light title, the bottom border and the mono `textClass`.
+
+### 5. Client testimonial
+
+![The testimonial, pulled apart into its layers](images/05-testimonial.svg)
+
+**What you see:** a mono label, then one quote in a thin outlined box with the client's name, role and portrait.
+
+**Built from:** [Testimonials](/documentation/composite/Testimonials) with one testimonial and `columns={1}`, narrowed with `container.content.boxWidth`. `defaultTestimonialConfig` makes the card transparent with an emphasised border and a larger `quoteClass`. The square corners come from the theme, not from this config.
+
+### 6. Closing statement
+
+![The closing statement, pulled apart into its layers](images/06-closing.svg)
+
+**What you see:** a paragraph about how the studio works, set large, and a "Learn more" arrow link to the about page.
+
+**Built from:** a Container with a Headline that has only a `subtitle` (no title), and the shared `ARROW_LINK` Button. It is the home page's call to action, made from two primitives instead of [CallToAction](/documentation/composite/CallToAction), which suits the type-only look.
+
+### 7. Newsletter and footer columns
+
+![The ink band, pulled apart into its layers](images/07-newsletter.svg)
+
+**What you see:** the dark ink band at the bottom of every page, with a one-field newsletter form on the left and four columns (address, contact, sitemap, socials) on the right.
+
+**Built from:** a Container with `bg-tertiary`, holding a TwoColumnContainer with `ratio="2:3"`. On the left, a Headline over a [ContactForm](/documentation/composite/ContactForm) with a single email field, its label hidden through `defaultFieldConfig` and a square icon-only `submitButton`; it sends through a `mailto` action. On the right, an ItemsGrid of four columns whose contents are rich text, so the addresses and links are plain Markdown built in `_site.ts`. One class string, `INK_LINKS`, resets the link colour inside the band.
+
+### 8. Footer
+
+![The footer, pulled apart into its layers](images/08-footer.svg)
+
+**What you see:** the bottom strip of the ink band: the language switch on the left and the credit line.
+
+**Built from:** [Footer](/documentation/composite/Footer) on the same `bg-tertiary`, with its logo hidden (the wordmark is already in the header), a `languageToggle` aligned left with `languageToggleAlign`, and the `footnote`, which is rich text so the Pexels credit is a link.
+
+## The other pages
+
+### 9. About: intro
+
+![The about intro, pulled apart into its layers](images/09-about.svg)
+
+**What you see:** a title and subtitle, two paragraphs about the studio and a photo of the studio desk beside them.
+
+**Built from:** [Content](/documentation/composite/Content) with a `headline` (rendered as the page's `h1`), an `image`, and the body passed into its slot as rendered rich text. `twoColumnContainer.content.class` centres text and photo vertically.
+
+### 10. About: team
+
+![The team, pulled apart into its layers](images/10-team.svg)
+
+**What you see:** four square portraits in a row, each with a name and a role.
+
+**Built from:** [Team](/documentation/composite/Team) with `columns={4}` and `imageShape="square"`. Each member is a title, a role as content, and an image, mapped from the copy file.
+
+### 11. Contact
+
+![The contact page, pulled apart into its layers](images/11-contact.svg)
+
+**What you see:** a huge uppercase "Contact us", a sentence, then the studio's mail, address and phone on the left and a four-field form on the right.
+
+**Built from:** one [ContactForm](/documentation/composite/ContactForm). Its `headline` is the page title; its `aside` slot holds an ItemsGrid of the contact details, placed on the left with `asidePosition="left"` and a 2:3 `twoColumnContainer`. The fields are two inputs, an optional company input and a textarea, all square through `defaultFieldConfig`; the `submitButton` is a link-style "Send" with an arrow.
+
+### 12. Work index
+
+![The work index, pulled apart into its layers](images/12-work.svg)
+
+**What you see:** a "Work" title over every project as a card, with paging when there are more.
+
+**Built from:** a Container with a Headline and a paginated CollectionList fed by the collection page helpers. It uses the library's default case study cards rather than `PROJECT_CARD`, which shows what the block looks like before any styling.
+
+### 13. Case study
+
+![A case study page, pulled apart into its layers](images/13-case.svg)
+
+**What you see:** one project: its title and client, a cover, the result figures, the write-up and a gallery of photos.
+
+**Built from:** [CaseStudyLayout](/documentation/composite/CaseStudyLayout), spread from the entry with `renderEntry`. The front matter of each Markdown file supplies the client, date, `results` and `gallery`; the Markdown body renders in the layout's slot. The gallery is a [ContentCarousel](/documentation/composite/ContentCarousel) the layout builds for you.
+
+## Blocks this site could add
+
+### Logo cloud
+
+![A logo cloud block, with one logo pulled forward](images/idea-logocloud.svg)
+
+A studio usually shows who it has worked with. A [LogoCloud](/documentation/composite/LogoCloud) in grayscale between the projects and the numbers would fit the ink-on-paper look.
+
+### Timeline
+
+![A timeline block, with one year pulled forward](images/idea-timeline.svg)
+
+The about page could tell the studio's twelve years with an [ItemsTimeline](/documentation/composite/ItemsTimeline), one entry per milestone, under the team.
+
+## Where to read next
+
+- [Composing blocks](/documentation/guides/Composing) explains instances, layers and merge order, which every section above leans on.
+- [Collections](/documentation/guides/Collections) covers the case study collection and its pages.
+- [SaaS landing](/documentation/demos/Saas) shows the same blocks in a one-page product site.
+- [Local business](/documentation/demos/Local) shows them in a bakery site with opening hours, a map and events.
+- [Jewellery store](/documentation/demos/Jewellery) shows them in a store with tabbed collections and a 3D ring configurator.

@@ -1,0 +1,197 @@
+# Local business
+
+Olmo Café & Bakery is a fictional neighbourhood bakery in Madrid, and its site is one of the demo sites built only from this library. It covers what a local business needs: a welcoming photo, what it sells, reviews, opening hours, a map, a contact form and a calendar of events. This guide walks the home page from top to bottom, then the events pages, and pulls each section apart into the blocks it is made of. Open the live demo beside it as you read.
+
+<!-- mdx
+import ItemsGrid from '@alfadormx/blocks/composite/ItemsGrid.astro';
+
+<ItemsGrid
+  columns={2}
+  gap="tight"
+  class="mb-12"
+  defaultItemConfig={{
+    orientation: 'horizontal',
+    class: 'h-full',
+    contentClass: 'w-full h-full',
+    actionsClass: 'mt-0 md:mt-0 h-full',
+    defaultActionConfig: {
+      variant: 'outline',
+      intent: 'neutral',
+      width: 'full',
+      class: 'h-full items-start justify-start text-left font-normal',
+      labelClass: 'text-normal',
+      subtitleClass: 'text-sm text-muted',
+    },
+  }}
+  items={[
+    {
+      actions: [
+        {
+          label: 'Local business',
+          subtitle:
+            'Hero, services, reviews, opening hours, a lazy map beside a contact form, and events.',
+          href: '/demos/preview/local',
+          target: '_blank',
+          image: {
+            src: '~/assets/images/demos/local/hero.jpg',
+            alt: '',
+            width: 480,
+            height: 270,
+            layout: 'cover',
+          },
+          imageSize: 'aspect-video w-full object-cover rounded',
+        },
+      ],
+    },
+  ]}
+/>
+-->
+
+## The big picture
+
+The site is one long home page with anchor navigation (what we bake, our story, gallery, reviews, visit us, contact) plus an events collection with its own index and one page per event, in English and Spanish. Its look is a warm bakehouse: a cream page, white cards with soft shadows, a serif for headings, a rust-amber primary and a dark espresso band behind the header, the hero, the event banner and the footer.
+
+### Things that are shared by the whole site
+
+- **Theme by tokens.** `_theme.css` overrides semantic tokens on `[data-demo='local']`: a cream `background`, white `surface`, dark brown text, a rust `primary`, an espresso `tertiary` and an amber `accent`, which also becomes `--color-warning` so the review stars match. Gelasio sets the headings and Inter the body. Read [Colors](/documentation/base/Colors) for the token names.
+- **Shared prop objects.** `_site.ts` exports `SECTION_HEADLINE` (a left-aligned heading with a small ruled tagline), `CARD` (the white card class string), `PILL` (the gradient pill [Button](/documentation/primitives/Button)), `EVENT_CARD` and the navigation. Almost every section spreads one of them, which keeps a dozen sections consistent.
+- **Search engines.** The home page passes a `CafeOrCoffeeShop` JSON-LD object as `metadata.structuredData`, with the address, coordinates and opening hours, so the layout writes it into the page head.
+- **Content as a collection.** Events are Markdown files in `src/content/events/<lang>/`, declared with the `event` preset in `config.yaml`; [Collections](/documentation/guides/Collections) explains the setup.
+- **Copy by language.** Every other word lives in `src/copy/local/en.yaml` and `es.yaml`, read with `useCopy(Astro, 'local')`, including the business name, address and phone.
+- **Invented content.** The bakery, its reviews, its events and its address are placeholders; the photos come from Pexels.
+
+## The home page, from top to bottom
+
+### 1. Header and menu
+
+![The header, pulled apart into its layers](images/01-header.svg)
+
+**What you see:** a dark, slightly see-through bar with the bakery's name in serif on the left, the section links and a theme toggle on the right. On phones the links fold into a menu that slides in from the right.
+
+**Built from:** [Header](/documentation/composite/Header) with `isSticky` and a `bg-tertiary/90 backdrop-blur` background. The logo is text, not an image: `logo.label` with a serif `labelClass`. Links are a `rightNavigationTreeHorizontal`; a burger in `rightButtons` opens a [Modal](/documentation/layout/Modal) with a [NavigationTree](/documentation/composite/NavigationTree) of the same links.
+
+### 2. Hero
+
+![The hero, pulled apart into its layers](images/02-hero.svg)
+
+**What you see:** a bakery photo darkened from the left, a headline with two pill buttons and three small chips (rating, family-run, opening time), and a jagged edge where the hero meets the page.
+
+**Built from:** [Hero](/documentation/composite/Hero) with `container.background.image` and an `overlayClass` gradient that is solid espresso on the left and fades to the right, so the words stay readable while the photo shows. All five links are `actions`: two `PILL`-style buttons and three small outline chips that jump to the reviews and opening hours. The ridge underneath is a [Vector](/documentation/primitives/Vector) of an inline SVG in `currentColor`, pulled up over the hero with a negative margin.
+
+### 3. What we bake
+
+![The services, pulled apart into their layers](images/03-services.svg)
+
+**What you see:** four white cards, each with a gradient icon tile, a serif title and a short line.
+
+**Built from:** [ItemsContent](/documentation/composite/ItemsContent) with `anchorId="services"` and a four-column `itemsGrid`. `defaultItemConfig` turns every item into a `CARD`; its `icon` layer draws the rounded gradient tile, so each item only supplies an icon name, a title and a sentence.
+
+### 4. Our story
+
+![The story, pulled apart into its layers](images/04-story.svg)
+
+**What you see:** on a white band, a photo of a baker on the left and the bakery's story on the right.
+
+**Built from:** [Content](/documentation/composite/Content) with `imagePosition="left"`. Its own headline is hidden (`headline.class: 'hidden'`) and a [Headline](/documentation/primitives/Headline) goes into the slot together with the rich text, so the heading sits with the text instead of above both columns.
+
+### 5. Gallery
+
+![The gallery, pulled apart into its layers](images/05-gallery.svg)
+
+**What you see:** five photos in a mosaic: one large picture taking a two-by-two block and four small ones beside it.
+
+**Built from:** a [Container](/documentation/layout/Container) holding a Headline and a nested Container with `layout={{ type: 'grid', … }}` set to four columns. The first [Image](/documentation/primitives/Image) sits in one more Container spanning two columns and two rows. There is no gallery block: the mosaic is Container's grid layout with one cell made larger.
+
+### 6. Reviews
+
+![The reviews, pulled apart into their layers](images/06-reviews.svg)
+
+**What you see:** "In their words" with a big 4.8 score on the right, three review cards with stars and a source link, and a "Read all reviews" link.
+
+**Built from:** a Container on the white band. A Headline and an [Item](/documentation/composite/Item) (the score, aligned right) share a row; below them [Testimonials](/documentation/composite/Testimonials) in three columns, where each review sets `rating` and `source` and `defaultTestimonialConfig` supplies the `CARD` look and the screen-reader `ratingLabel`. The amber stars are the `warning` token the theme pointed at the accent.
+
+### 7. Events at Olmo
+
+![The upcoming events, pulled apart into their layers](images/07-events.svg)
+
+**What you see:** the next three events as cards with a cover, date and serif title, and a "See all events" link.
+
+**Built from:** a Headline, a [CollectionList](/documentation/composite/CollectionList) of the featured events, and a link Button. `defaultEventCardConfig` (the shared `EVENT_CARD`) turns the default [EventCard](/documentation/composite/EventCard) into a white rounded card with the date in the primary colour.
+
+### 8. Planning a celebration?
+
+![The event banner, pulled apart into its layers](images/08-banner.svg)
+
+**What you see:** an espresso band with a warm glow from below, a heading and sentence on the left and a "Request a quote" pill on the right.
+
+**Built from:** [CallToAction](/documentation/composite/CallToAction) with a radial gradient on `container.background.class`. Its card is made transparent and turned into a row with `container.content.class`, so the headline and the action sit side by side on wide screens and stack on phones.
+
+### 9. Frequently asked questions
+
+![The FAQ, pulled apart into its layers](images/09-faq.svg)
+
+**What you see:** four questions, each a white card with a plus sign that opens the answer.
+
+**Built from:** [Accordion](/documentation/primitives/Accordion) with a plus `icon`, and `itemClass` set to `CARD` so every item is its own card. `summaryClass`, `contentClass` and `iconClass` handle the padding and the primary-coloured plus.
+
+### 10. Visit us
+
+![The visit section, pulled apart into its layers](images/10-visit.svg)
+
+**What you see:** two cards: opening hours, one day per row, on the left; the address, Directions and Call buttons, and a map on the right.
+
+**Built from:** a [TwoColumnContainer](/documentation/layout/TwoColumnContainer) whose `leftColumn` and `rightColumn` classes turn each column into a `CARD`. The hours are an [ItemsGrid](/documentation/composite/ItemsGrid) with one column, each item laid out as a row with the day and time pushed apart. The address is an Item with rich text and two `actions`; the map is the [Map](/documentation/primitives/Map) primitive, which loads its tiles only when it scrolls into view.
+
+### 11. Write to us
+
+![The contact form, pulled apart into its layers](images/11-contact.svg)
+
+**What you see:** a heading and a four-field form (name, email, phone, message) with a "Send" pill.
+
+**Built from:** [ContactForm](/documentation/composite/ContactForm) with `anchorId="contact"` on its headline and a `mailto` action, so it needs no server. The `submitButton` spreads the shared `PILL`.
+
+### 12. Footer
+
+![The footer, pulled apart into its layers](images/12-footer.svg)
+
+**What you see:** the espresso band again: the bakery's name, its address, phone and email, social links, the language switch and the credit line.
+
+**Built from:** [Footer](/documentation/composite/Footer) reusing the header's text logo. The contact block is the `disclaimer`, written as rich text so the phone and email are links; `secondaryButtons` hold the socials, `languageToggle` the [LanguageToggle](/documentation/primitives/LanguageToggle) and `footnote` the credit. A class string, `DARK_LINKS`, recolours links on the dark band.
+
+## The events pages
+
+### 13. Events index
+
+![The events index, pulled apart into its layers](images/13-events-index.svg)
+
+**What you see:** an "Events" title over every event as a card, with paging when there are more.
+
+**Built from:** a Container with a Headline and a paginated CollectionList fed by the collection page helpers. It uses the default event cards, without `EVENT_CARD`, so you can compare the block before and after styling.
+
+### 14. Event page
+
+![An event page, pulled apart into its layers](images/14-event.svg)
+
+**What you see:** one event: when and where, a Register button, the description and a map of the venue.
+
+**Built from:** [EventLayout](/documentation/composite/EventLayout), spread from the entry with `renderEntry`. Each Markdown file's front matter gives `start`, `end`, `location` and `registrationUrl`; when the location has coordinates, the layout adds the map itself. Online events simply have no map.
+
+## Blocks this site could add
+
+### Content carousel
+
+![A content carousel, with one slide pulled forward](images/idea-carousel.svg)
+
+The weekly seasonal tart could rotate through a [ContentCarousel](/documentation/composite/ContentCarousel) above the services, one slide per week.
+
+### Tabs
+
+![A tabs block, with one panel pulled forward](images/idea-tabs.svg)
+
+A menu with prices fits [Tabs](/documentation/composite/Tabs): bread, pastries, coffee and breakfast as tabs, each panel a short list.
+
+## Where to read next
+
+- [Composing blocks](/documentation/guides/Composing) explains instances, layers and merge order, which every section above leans on.
+- [Collections](/documentation/guides/Collections) covers the events collection and its pages.
+- [SaaS landing](/documentation/demos/Saas), [Portfolio](/documentation/demos/Portfolio) and [Jewellery store](/documentation/demos/Jewellery) show the same blocks with different themes.

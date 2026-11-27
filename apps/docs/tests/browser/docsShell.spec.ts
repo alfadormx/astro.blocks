@@ -9,6 +9,7 @@ test('the sidebar holds every section and marks only the current page', async ({
   const sidebar = page.locator('[data-docs-sidebar]');
   await expect(sidebar.locator('summary')).toHaveText([
     'Guides',
+    'Demo sites',
     'Base',
     'Primitives',
     'Layout',

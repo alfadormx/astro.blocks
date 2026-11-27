@@ -19,8 +19,11 @@ const entries = await collectionIndex('documentation', I18N.default);
 const START_HERE: readonly SectionKey[] = ['guides', 'base'];
 const startHere = START_HERE.flatMap((key) => entries.filter((e) => e.data.section === key));
 
+// Demo guides are listed with their screenshots under "See it in a site", not again in the catalogue.
+const OWN_LIST: readonly SectionKey[] = [...START_HERE, 'demos'];
+
 const groups = sections
-  .filter((section) => !START_HERE.includes(section.key))
+  .filter((section) => !OWN_LIST.includes(section.key))
   .map((section) => ({ section, entries: entries.filter((e) => e.data.section === section.key) }))
   .filter((g) => g.entries.length);
 
@@ -45,28 +48,32 @@ const demos = [
     title: 'SaaS landing',
     description:
       'Hero, logos, features, pricing, testimonials, FAQ and a blog, with anchor navigation.',
-    href: '/demos/preview/saas',
+    guide: '/documentation/demos/Saas',
+    demo: '/demos/preview/saas',
     image: '~/assets/images/demos/saas/content-a.jpg',
   },
   {
     title: 'Portfolio',
     description:
       'Hero, case study galleries, team, testimonials and a contact form across several pages.',
-    href: '/demos/preview/portfolio',
+    guide: '/documentation/demos/Portfolio',
+    demo: '/demos/preview/portfolio',
     image: '~/assets/images/demos/portfolio/hero.jpg',
   },
   {
     title: 'Local business',
     description:
       'Hero, services, reviews, opening hours, a lazy map beside a contact form, and events.',
-    href: '/demos/preview/local',
+    guide: '/documentation/demos/Local',
+    demo: '/demos/preview/local',
     image: '~/assets/images/demos/local/hero.jpg',
   },
   {
     title: 'Jewellery store',
     description:
       'Hero video, tabbed collections, a 3D ring configurator under a sticky header, a map and a contact form.',
-    href: '/demos/preview/jewellery',
+    guide: '/documentation/demos/Jewellery',
+    demo: '/demos/preview/jewellery',
     image: '~/assets/images/demos/jewellery/card.jpg',
   },
 ];
@@ -92,21 +99,37 @@ const demos = [
   />
 
   <h2>See it in a site</h2>
-  <p>Demo sites built only from these blocks, themed with token overrides.</p>
+  <p>
+    Demo sites built only from these blocks, themed with token overrides. Open a demo, or read its
+    guide to see how each section is assembled from blocks.
+  </p>
   <ItemsGrid
     columns={2}
     gap="tight"
     class="mb-12"
-    defaultItemConfig={linkItem}
+    defaultItemConfig={{
+      orientation: 'vertical',
+      class: 'h-full items-start text-left gap-4 rounded border border-border p-5',
+      contentClass: 'items-start text-left',
+      mediaClass: 'w-full aspect-video object-cover rounded',
+      titleClass: 'text-lg font-semibold mb-1',
+      textClass: 'text-sm text-muted mb-0',
+      actionsClass: 'mt-auto flex-row flex-wrap gap-3',
+      defaultActionConfig: { size: 'sm', intent: 'neutral' },
+    }}
     items={demos.map((demo) => ({
+      image: { src: demo.image, alt: '', width: 480, height: 270, layout: 'cover' },
+      title: demo.title,
+      content: demo.description,
       actions: [
+        { label: 'Read the guide', href: demo.guide, variant: 'solid' },
         {
-          label: demo.title,
-          subtitle: demo.description,
-          href: demo.href,
+          label: 'Open the demo',
+          href: demo.demo,
           target: '_blank',
-          image: { src: demo.image, alt: '', width: 480, height: 270, layout: 'cover' },
-          imageSize: 'aspect-video w-full object-cover rounded',
+          variant: 'outline',
+          icon: { name: 'heroicons:arrow-top-right-on-square' },
+          iconPosition: 'right',
         },
       ],
     }))}

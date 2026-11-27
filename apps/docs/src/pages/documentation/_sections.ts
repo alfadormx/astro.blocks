@@ -1,4 +1,5 @@
-export type SectionKey = 'guides' | 'base' | 'primitives' | 'layout' | 'composite' | 'utilities';
+export type SectionKey =
+  'guides' | 'demos' | 'base' | 'primitives' | 'layout' | 'composite' | 'utilities';
 
 export interface Section {
   key: SectionKey;
@@ -12,6 +13,12 @@ export const sections: readonly Section[] = [
     key: 'guides',
     label: 'Guides',
     description: 'How to install the library, compose blocks, and write content and copy for them.',
+  },
+  {
+    key: 'demos',
+    label: 'Demo sites',
+    description:
+      'Tours of the demo sites, pulling each section apart into the blocks it is built from.',
   },
   {
     key: 'base',

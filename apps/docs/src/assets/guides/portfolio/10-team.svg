@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 967 640" width="967" height="640" role="img" aria-label="The team, pulled apart into its layers">
+<title>The team, pulled apart into its layers</title>
+<defs><filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
+<linearGradient id="desk" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#E9E4DC"/><stop offset="1" stop-color="#B9B1A6"/>
+</linearGradient>
+<linearGradient id="cover" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#CFCAC4"/><stop offset="1" stop-color="#6E6A66"/>
+</linearGradient>
+<linearGradient id="coverDark" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#4A4744"/><stop offset="1" stop-color="#1E1C1B"/>
+</linearGradient>
+<linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#D8CEC4"/><stop offset="1" stop-color="#8F857C"/>
+</linearGradient></defs>
+<rect width="967" height="640" fill="#F5F5F5"/>
+<polygon points="44.4,421.0 321.5,261.0 352.7,279.0 75.6,439.0" fill="#0D0D0D" opacity="0.16" filter="url(#soft)"/><polygon points="174.3,496.0 451.4,336.0 482.6,354.0 205.5,514.0" fill="#0D0D0D" opacity="0.08" filter="url(#soft)"/><polygon points="304.2,571.0 581.3,411.0 612.5,429.0 335.4,589.0" fill="#0D0D0D" opacity="0.08" filter="url(#soft)"/><g><polygon points="60.0,230.0 337.1,70.0 331.9,67.0 54.8,227.0" fill="#dcdcdc"/><polygon points="60.0,230.0 60.0,360.0 54.8,357.0 54.8,227.0" fill="#b0b0b0"/><g transform="matrix(0.8660254037844387 -0.5 0 1 60.0 230.0)"><rect width="320" height="130" fill="#F5F5F5" fill-opacity="1"/><text x="16" y="24" text-anchor="start" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#0D0D0D" font-weight="600">The team</text><rect width="320" height="130" fill="none" stroke="#C4C4C4" stroke-width="1.2" vector-effect="non-scaling-stroke"/></g></g>
+<line x1="60.0" y1="230.0" x2="189.9" y2="305.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="337.1" y1="70.0" x2="467.0" y2="145.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="337.1" y1="200.0" x2="467.0" y2="275.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="60.0" y1="360.0" x2="189.9" y2="435.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/>
+<g><g transform="matrix(0.8660254037844387 -0.5 0 1 189.9 305.0)"><rect width="320" height="130" fill="#F5F5F5" fill-opacity="0.15"/><rect x="16" y="36" width="66" height="66" fill="url(#face)"/><circle cx="49" cy="63.72" r="11.879999999999999" fill="#F5F5F5" fill-opacity="0.45"/><path d="M29.200000000000003 102 q19.8 -26.400000000000002 39.6 0" fill="#F5F5F5" fill-opacity="0.45"/><rect x="90" y="36" width="66" height="66" fill="url(#face)"/><circle cx="123" cy="63.72" r="11.879999999999999" fill="#F5F5F5" fill-opacity="0.45"/><path d="M103.2 102 q19.8 -26.400000000000002 39.6 0" fill="#F5F5F5" fill-opacity="0.45"/><rect x="164" y="36" width="66" height="66" fill="url(#face)"/><circle cx="197" cy="63.72" r="11.879999999999999" fill="#F5F5F5" fill-opacity="0.45"/><path d="M177.2 102 q19.8 -26.400000000000002 39.6 0" fill="#F5F5F5" fill-opacity="0.45"/><rect x="238" y="36" width="66" height="66" fill="url(#face)"/><circle cx="271" cy="63.72" r="11.879999999999999" fill="#F5F5F5" fill-opacity="0.45"/><path d="M251.2 102 q19.8 -26.400000000000002 39.6 0" fill="#F5F5F5" fill-opacity="0.45"/><rect width="320" height="130" fill="none" stroke="#555555" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></g></g>
+<line x1="189.9" y1="305.0" x2="319.8" y2="380.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="467.0" y1="145.0" x2="596.9" y2="220.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="467.0" y1="275.0" x2="596.9" y2="350.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/><line x1="189.9" y1="435.0" x2="319.8" y2="510.0" stroke="#C4C4C4" stroke-width="1" stroke-dasharray="2 4"/>
+<g><g transform="matrix(0.8660254037844387 -0.5 0 1 319.8 380.0)"><rect width="320" height="130" fill="#F5F5F5" fill-opacity="0.15"/><text x="16" y="114" text-anchor="start" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="7" fill="#0D0D0D" font-weight="600">Ana Ortega</text><text x="16" y="123" text-anchor="start" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="5.5" fill="#555555">Creative director</text><text x="90" y="114" text-anchor="start" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="7" fill="#0D0D0D" font-weight="600">Ben Hollis</text><text x="90" y="123" text-anchor="start" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="5.5" fill="#555555">Lead engineer</text><text x="164" y="114" text-anchor="start" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="7" fill="#0D0D0D" font-weight="600">Chloe Varga</text><text x="164" y="123" text-anchor="start" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="5.5" fill="#555555">Product designer</text><text x="238" y="114" text-anchor="start" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="7" fill="#0D0D0D" font-weight="600">Dan Moreno</text><text x="238" y="123" text-anchor="start" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="5.5" fill="#555555">Front-end developer</text><rect width="320" height="130" fill="none" stroke="#555555" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></g></g><g>
+  <line x1="337.1" y1="86.0" x2="656.9" y2="86.0" stroke="#555555" stroke-width="1"/>
+  <circle cx="337.1" cy="86.0" r="3" fill="#1A1A1A"/>
+  <circle cx="670.9" cy="86.0" r="13" fill="#1A1A1A"/>
+  <text x="670.9" y="91.0" text-anchor="middle" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#F5F5F5">1</text>
+  <text x="692.9" y="86.0" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#0D0D0D">Team block</text>
+  <text x="692.9" y="104.0" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#555555">headline, four columns</text>
+</g>
+<g>
+  <line x1="467.0" y1="161.0" x2="656.9" y2="161.0" stroke="#555555" stroke-width="1"/>
+  <circle cx="467.0" cy="161.0" r="3" fill="#1A1A1A"/>
+  <circle cx="670.9" cy="161.0" r="13" fill="#1A1A1A"/>
+  <text x="670.9" y="166.0" text-anchor="middle" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#F5F5F5">2</text>
+  <text x="692.9" y="161.0" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#0D0D0D">Square portraits</text>
+  <text x="692.9" y="179.0" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#555555">imageShape="square"</text>
+</g>
+<g>
+  <line x1="596.9" y1="236.0" x2="656.9" y2="236.0" stroke="#555555" stroke-width="1"/>
+  <circle cx="596.9" cy="236.0" r="3" fill="#1A1A1A"/>
+  <circle cx="670.9" cy="236.0" r="13" fill="#1A1A1A"/>
+  <text x="670.9" y="241.0" text-anchor="middle" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#F5F5F5">3</text>
+  <text x="692.9" y="236.0" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#0D0D0D">Name and role</text>
+  <text x="692.9" y="254.0" font-family="Fustat, 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="0.5" fill="#555555">title and content per member</text>
+</g>
+</svg>
