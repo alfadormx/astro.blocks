@@ -162,6 +162,17 @@ Static-page copy lives in `src/copy/<page>/<lang>.yaml`, read with the helpers f
 - `/demos/saas/blog`, `/demos/portfolio/work` and `/demos/local/events` are collection demos in English and Spanish, one per preset.
 - `/demos/jewellery` is a jewellery store with collections, about and contact pages and a ring configurator built on `Configurator` and `ModelViewer`, themed by token overrides on `[data-demo='jewellery']`, in English and Spanish.
 
+## Site guides
+
+`plugins/site-guide` is a Claude Code plugin that writes a guide to a site built with these blocks: every section explained for the reader you choose (the site owner, developers, or docs visitors), an isometric diagram of how its blocks are layered, exported as Markdown, MDX or PDF in the site's own colours and fonts. Install it once and it works in any project:
+
+```sh
+claude plugin marketplace add alfadormx/astro.blocks
+claude plugin install site-guide@astro-blocks
+```
+
+Then ask for a site guide from the site's repository. The skill writes everything to `_guide/` there.
+
 ## Commands
 
 Run from the repository root.

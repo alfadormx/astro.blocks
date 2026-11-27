@@ -1,0 +1,10 @@
+{
+  "name": "site-guide",
+  "version": "0.1.0",
+  "description": "Generate a site guide, written for its owner, its developers or docs readers, with isometric diagrams of how each section is built from blocks, for any site made with @alfadormx/blocks. Exports md, mdx or pdf.",
+  "author": {
+    "name": "alfadormx"
+  },
+  "repository": "https://github.com/alfadormx/astro.blocks",
+  "keywords": ["astro", "astro-blocks", "documentation", "site-guide"]
+}

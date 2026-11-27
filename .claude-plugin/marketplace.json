@@ -1,0 +1,14 @@
+{
+  "name": "astro-blocks",
+  "description": "Claude Code plugins for sites built with @alfadormx/blocks.",
+  "owner": {
+    "name": "alfadormx"
+  },
+  "plugins": [
+    {
+      "name": "site-guide",
+      "source": "./plugins/site-guide",
+      "description": "Site guides for owners, developers or docs readers, with isometric section diagrams, for sites built with @alfadormx/blocks."
+    }
+  ]
+}
